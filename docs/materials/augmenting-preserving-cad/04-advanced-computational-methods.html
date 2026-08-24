@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -107,6 +107,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -517,6 +520,78 @@ Dataset Available on Canvas
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{<span class="st">'index'</span>: <span class="st">'entity_type'</span>, <span class="dv">0</span>: <span class="st">'total_count'</span>})</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>totals[<span class="st">'entity_type'</span>] <span class="op">=</span> totals[<span class="st">'entity_type'</span>].<span class="bu">str</span>.replace(<span class="st">'_count'</span>, <span class="st">''</span>).<span class="bu">str</span>.upper()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="3909086d" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+
+<style>
+  #altair-viz-c6efa6652c0c4129879b3c3f4f354d2d.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-c6efa6652c0c4129879b3c3f4f354d2d.vega-embed details,
+  #altair-viz-c6efa6652c0c4129879b3c3f4f354d2d.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-c6efa6652c0c4129879b3c3f4f354d2d"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-c6efa6652c0c4129879b3c3f4f354d2d") {
+      outputDiv = document.getElementById("altair-viz-c6efa6652c0c4129879b3c3f4f354d2d");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.1.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.1.0"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-4fc42d5d7422479daaf9580027aa8c7c"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "entity_type", "legend": null, "type": "nominal"}, "tooltip": [{"field": "entity_type", "type": "nominal"}, {"field": "total_count", "type": "quantitative"}], "x": {"field": "total_count", "title": "Total Mentions", "type": "quantitative"}, "y": {"field": "entity_type", "sort": "-x", "title": null, "type": "nominal"}}, "height": 220, "title": "Total Entity Mentions by Type", "width": 450, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-4fc42d5d7422479daaf9580027aa8c7c": [{"entity_type": "PERSON", "total_count": 50615}, {"entity_type": "GPE", "total_count": 10969}, {"entity_type": "LOC", "total_count": 1532}, {"entity_type": "ORG", "total_count": 18165}, {"entity_type": "DATE", "total_count": 10367}, {"entity_type": "NORP", "total_count": 4702}, {"entity_type": "EVENT", "total_count": 148}]}}, {"vega_version": "6", "vegalite_version": "6.1.0", "vegaembed_version": "7", "mode": "vega-lite"});
+</script>
+</div>
+</div>
 <p>We can see that <code>PERSON</code> is by far the most frequent entity, which makes sense for novels, though interesting <code>EVENT</code> is the lowest. This extracting of entities is technically a form of <em>augmentation</em>. As a next step, we might go through and try to validate the entities, clean them up using additional libraries like <a href="https://github.com/booknlp/booknlp" target="_blank">BookNLP</a>, or use them to build more complex features like character networks.</p>
 <p><strong>But to augment data, we need to start thinking about <em>what</em> we want to add, and <em>why</em>.</strong></p>
 <p>In the last lesson, we looked at identified characters across novels, which tells us a bit about how names are used across novels, and might even be interesting for looking at character names as a way to categorize novels over time. But the community of characters in a novel is not the only thing we can extract. We can also look at places, organizations, dates, and so on. Each of those entity types gives us a different window into the novel’s content and style, and may relate to different ways to categorize and augment the data about the novel.</p>
@@ -537,7 +612,7 @@ Dataset Available on Canvas
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: (x <span class="op">-</span> x.<span class="bu">min</span>()) <span class="op">/</span> (x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice here though that I am normalizing the counts within each entity type, not across the whole dataset. This is because <code>PERSON</code> counts are on a completely different scale than <code>EVENT</code> counts, and I want to be able to compare genres within each entity type without one dominating the visualization.</p>
-<div id="ccd57339" class="cell">
+<div id="64da16df" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_entity_means.csv'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>stacked_bar <span class="op">=</span> alt.Chart(genre_means).mark_bar().encode(</span>
@@ -556,9 +631,79 @@ Dataset Available on Canvas
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>stacked_bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<style>
+  #altair-viz-33576ccb269a4e6abce10631fd45aada.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-33576ccb269a4e6abce10631fd45aada.vega-embed details,
+  #altair-viz-33576ccb269a4e6abce10631fd45aada.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-33576ccb269a4e6abce10631fd45aada"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-33576ccb269a4e6abce10631fd45aada") {
+      outputDiv = document.getElementById("altair-viz-33576ccb269a4e6abce10631fd45aada");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.1.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.1.0"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-56081ef355230725b7815e5a0cda1870"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "genre", "title": "Genre", "type": "nominal"}, "tooltip": [{"field": "entity_type", "type": "nominal"}, {"field": "genre", "type": "nominal"}, {"field": "mean_count", "format": ".1f", "title": "Mean per Novel", "type": "quantitative"}], "x": {"field": "mean_count", "title": "Mean Mentions per Novel (stacked across genres)", "type": "quantitative"}, "y": {"axis": {"labelAngle": 0}, "field": "entity_type", "title": "Entity Type", "type": "nominal"}}, "height": 350, "title": "Mean Entity Mentions per Novel by Type and Genre", "width": 500, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-56081ef355230725b7815e5a0cda1870": [{"genre": "action", "entity_type": "PERSON", "mean_count": 154.5625, "normalized": 0.9999999999935302}, {"genre": "allegories", "entity_type": "PERSON", "mean_count": 82.57142857142857, "normalized": 0.5342267922095874}, {"genre": "autobio", "entity_type": "PERSON", "mean_count": 33.5, "normalized": 0.2167408006455851}, {"genre": "bildung", "entity_type": "PERSON", "mean_count": 135.55555555555554, "normalized": 0.8770274520318869}, {"genre": "fantasy", "entity_type": "PERSON", "mean_count": 43.125, "normalized": 0.2790133441146525}, {"genre": "history", "entity_type": "PERSON", "mean_count": 70.90361445783132, "normalized": 0.4587374975001866}, {"genre": "horror", "entity_type": "PERSON", "mean_count": 5.141176470588236, "normalized": 0.0332627672983742}, {"genre": "mystery", "entity_type": "PERSON", "mean_count": 49.5, "normalized": 0.3202587949837751}, {"genre": "na", "entity_type": "PERSON", "mean_count": 101.68478260869566, "normalized": 0.6578877968979395}, {"genre": "political", "entity_type": "PERSON", "mean_count": 114.93333333333334, "normalized": 0.7436042593293312}, {"genre": "romance", "entity_type": "PERSON", "mean_count": 60.125, "normalized": 0.3890012130989794}, {"genre": "scifi", "entity_type": "PERSON", "mean_count": 34.095238095238095, "normalized": 0.2205919165063809}, {"genre": "thrillers", "entity_type": "PERSON", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "PERSON", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "GPE", "mean_count": 48.25, "normalized": 0.9999999999792748}, {"genre": "allegories", "entity_type": "GPE", "mean_count": 25.571428571428573, "normalized": 0.5299777942155149}, {"genre": "autobio", "entity_type": "GPE", "mean_count": 7.5, "normalized": 0.1554404145045504}, {"genre": "bildung", "entity_type": "GPE", "mean_count": 15.592592592592592, "normalized": 0.3231625407724234}, {"genre": "fantasy", "entity_type": "GPE", "mean_count": 4.25, "normalized": 0.0880829015525786}, {"genre": "history", "entity_type": "GPE", "mean_count": 21.97590361445783, "normalized": 0.4554591422591165}, {"genre": "horror", "entity_type": "GPE", "mean_count": 1.576470588235294, "normalized": 0.0326729655586035}, {"genre": "mystery", "entity_type": "GPE", "mean_count": 8.055555555555555, "normalized": 0.1669545192826653}, {"genre": "na", "entity_type": "GPE", "mean_count": 21.884057971014492, "normalized": 0.4535556056074806}, {"genre": "political", "entity_type": "GPE", "mean_count": 29.466666666666665, "normalized": 0.6107081174312116}, {"genre": "romance", "entity_type": "GPE", "mean_count": 7.984375, "normalized": 0.1654792746079693}, {"genre": "scifi", "entity_type": "GPE", "mean_count": 11.285714285714286, "normalized": 0.2339008142068473}, {"genre": "thrillers", "entity_type": "GPE", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "GPE", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "LOC", "mean_count": 10.3125, "normalized": 0.9999999999030303}, {"genre": "allegories", "entity_type": "LOC", "mean_count": 1.7142857142857142, "normalized": 0.1662337662176465}, {"genre": "autobio", "entity_type": "LOC", "mean_count": 1.0, "normalized": 0.0969696969602938}, {"genre": "bildung", "entity_type": "LOC", "mean_count": 1.5555555555555556, "normalized": 0.1508417508271237}, {"genre": "fantasy", "entity_type": "LOC", "mean_count": 2.125, "normalized": 0.2060606060406244}, {"genre": "history", "entity_type": "LOC", "mean_count": 2.6867469879518073, "normalized": 0.260533041230669}, {"genre": "horror", "entity_type": "LOC", "mean_count": 0.1058823529411764, "normalized": 0.0102673796781487}, {"genre": "mystery", "entity_type": "LOC", "mean_count": 0.7777777777777778, "normalized": 0.0754208754135618}, {"genre": "na", "entity_type": "LOC", "mean_count": 2.7644927536231885, "normalized": 0.2680720245677688}, {"genre": "political", "entity_type": "LOC", "mean_count": 3.2666666666666666, "normalized": 0.3167676767369599}, {"genre": "romance", "entity_type": "LOC", "mean_count": 0.640625, "normalized": 0.0621212121151882}, {"genre": "scifi", "entity_type": "LOC", "mean_count": 4.9523809523809526, "normalized": 0.4802308801843124}, {"genre": "thrillers", "entity_type": "LOC", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "LOC", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "ORG", "mean_count": 64.625, "normalized": 0.999999999984526}, {"genre": "allegories", "entity_type": "ORG", "mean_count": 48.142857142857146, "normalized": 0.744957170477558}, {"genre": "autobio", "entity_type": "ORG", "mean_count": 27.25, "normalized": 0.4216634429335139}, {"genre": "bildung", "entity_type": "ORG", "mean_count": 32.370370370370374, "normalized": 0.5008954796111331}, {"genre": "fantasy", "entity_type": "ORG", "mean_count": 18.229166666666668, "normalized": 0.2820760799440555}, {"genre": "history", "entity_type": "ORG", "mean_count": 35.397590361445786, "normalized": 0.5477383421415558}, {"genre": "horror", "entity_type": "ORG", "mean_count": 2.5647058823529414, "normalized": 0.0396859710996248}, {"genre": "mystery", "entity_type": "ORG", "mean_count": 14.27777777777778, "normalized": 0.2209327315676107}, {"genre": "na", "entity_type": "ORG", "mean_count": 34.14855072463768, "normalized": 0.5284108429262556}, {"genre": "political", "entity_type": "ORG", "mean_count": 40.8, "normalized": 0.6313346228142153}, {"genre": "romance", "entity_type": "ORG", "mean_count": 13.15625, "normalized": 0.2035783365539098}, {"genre": "scifi", "entity_type": "ORG", "mean_count": 25.47619047619047, "normalized": 0.3942157133585494}, {"genre": "thrillers", "entity_type": "ORG", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "ORG", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "DATE", "mean_count": 40.125, "normalized": 0.999999999975078}, {"genre": "allegories", "entity_type": "DATE", "mean_count": 25.428571428571427, "normalized": 0.6337338673629332}, {"genre": "autobio", "entity_type": "DATE", "mean_count": 10.0, "normalized": 0.2492211837944119}, {"genre": "bildung", "entity_type": "DATE", "mean_count": 20.666666666666668, "normalized": 0.515057113175118}, {"genre": "fantasy", "entity_type": "DATE", "mean_count": 6.270833333333333, "normalized": 0.1562824506710791}, {"genre": "history", "entity_type": "DATE", "mean_count": 14.421686746987952, "normalized": 0.3594189843396519}, {"genre": "horror", "entity_type": "DATE", "mean_count": 1.623529411764706, "normalized": 0.0404617921925045}, {"genre": "mystery", "entity_type": "DATE", "mean_count": 9.11111111111111, "normalized": 0.2270681896793531}, {"genre": "na", "entity_type": "DATE", "mean_count": 21.1231884057971, "normalized": 0.5264346020005151}, {"genre": "political", "entity_type": "DATE", "mean_count": 23.466666666666665, "normalized": 0.5848390446375533}, {"genre": "romance", "entity_type": "DATE", "mean_count": 10.265625, "normalized": 0.255841121488951}, {"genre": "scifi", "entity_type": "DATE", "mean_count": 12.857142857142858, "normalized": 0.320427236307101}, {"genre": "thrillers", "entity_type": "DATE", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "DATE", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "NORP", "mean_count": 17.1875, "normalized": 0.5300110131995152}, {"genre": "allegories", "entity_type": "NORP", "mean_count": 32.42857142857143, "normalized": 0.9999999999691632}, {"genre": "autobio", "entity_type": "NORP", "mean_count": 2.75, "normalized": 0.0848017621119224}, {"genre": "bildung", "entity_type": "NORP", "mean_count": 6.0, "normalized": 0.1850220264260125}, {"genre": "fantasy", "entity_type": "NORP", "mean_count": 1.5416666666666667, "normalized": 0.0475403817900171}, {"genre": "history", "entity_type": "NORP", "mean_count": 12.048192771084338, "normalized": 0.3715301735462099}, {"genre": "horror", "entity_type": "NORP", "mean_count": 0.5294117647058824, "normalized": 0.0163254729199422}, {"genre": "mystery", "entity_type": "NORP", "mean_count": 2.388888888888889, "normalized": 0.0736661771881346}, {"genre": "na", "entity_type": "NORP", "mean_count": 8.28623188405797, "normalized": 0.2555225691040402}, {"genre": "political", "entity_type": "NORP", "mean_count": 14.333333333333334, "normalized": 0.4419970631288077}, {"genre": "romance", "entity_type": "NORP", "mean_count": 2.515625, "normalized": 0.0775743392046563}, {"genre": "scifi", "entity_type": "NORP", "mean_count": 9.095238095238097, "normalized": 0.2804698972013364}, {"genre": "thrillers", "entity_type": "NORP", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "NORP", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "EVENT", "mean_count": 0.375, "normalized": 0.6136363626322314}, {"genre": "allegories", "entity_type": "EVENT", "mean_count": 0.1428571428571428, "normalized": 0.2337662333837072}, {"genre": "autobio", "entity_type": "EVENT", "mean_count": 0.25, "normalized": 0.4090909084214876}, {"genre": "bildung", "entity_type": "EVENT", "mean_count": 0.2592592592592592, "normalized": 0.4242424235482093}, {"genre": "fantasy", "entity_type": "EVENT", "mean_count": 0.125, "normalized": 0.2045454542107438}, {"genre": "history", "entity_type": "EVENT", "mean_count": 0.2771084337349397, "normalized": 0.4534501635515284}, {"genre": "horror", "entity_type": "EVENT", "mean_count": 0.0117647058823529, "normalized": 0.0192513368668935}, {"genre": "mystery", "entity_type": "EVENT", "mean_count": 0.6111111111111112, "normalized": 0.9999999983636364}, {"genre": "na", "entity_type": "EVENT", "mean_count": 0.2753623188405797, "normalized": 0.4505928846381603}, {"genre": "political", "entity_type": "EVENT", "mean_count": 0.4, "normalized": 0.6545454534743802}, {"genre": "romance", "entity_type": "EVENT", "mean_count": 0.125, "normalized": 0.2045454542107438}, {"genre": "scifi", "entity_type": "EVENT", "mean_count": 0.0476190476190476, "normalized": 0.077922077794569}, {"genre": "thrillers", "entity_type": "EVENT", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "EVENT", "mean_count": 0.0, "normalized": 0.0}]}}, {"vega_version": "6", "vegalite_version": "6.1.0", "vegaembed_version": "7", "mode": "vega-lite"});
+</script>
+</div>
 </div>
 <p>This graph gives us a much better sense of how different genres use different kinds of entities. But it is still tricky to see the relationship. A heatmap would be a much better option.</p>
-<div id="a0fd45c2" class="cell">
+<div id="028c66f3" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>heatmap <span class="op">=</span> alt.Chart(genre_means).mark_rect().encode(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'entity_type:N'</span>, title<span class="op">=</span><span class="st">'Entity Type'</span>),</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">'genre:N'</span>, title<span class="op">=</span><span class="st">'Genre'</span>, sort<span class="op">=</span><span class="st">'-x'</span>),</span>
@@ -578,6 +723,76 @@ Dataset Available on Canvas
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>heatmap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<style>
+  #altair-viz-60dbe3a5290742b5b713e80cbf4b2c39.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-60dbe3a5290742b5b713e80cbf4b2c39.vega-embed details,
+  #altair-viz-60dbe3a5290742b5b713e80cbf4b2c39.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-60dbe3a5290742b5b713e80cbf4b2c39"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-60dbe3a5290742b5b713e80cbf4b2c39") {
+      outputDiv = document.getElementById("altair-viz-60dbe3a5290742b5b713e80cbf4b2c39");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.1.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.1.0"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-56081ef355230725b7815e5a0cda1870"}, "mark": {"type": "rect"}, "encoding": {"color": {"field": "normalized", "scale": {"scheme": "blues"}, "title": "Normalized Mean Count", "type": "quantitative"}, "tooltip": [{"field": "genre", "type": "nominal"}, {"field": "entity_type", "type": "nominal"}, {"field": "mean_count", "format": ".1f", "title": "Mean per Novel", "type": "quantitative"}, {"field": "normalized", "format": ".2f", "title": "Normalized", "type": "quantitative"}], "x": {"field": "entity_type", "title": "Entity Type", "type": "nominal"}, "y": {"field": "genre", "sort": "-x", "title": "Genre", "type": "nominal"}}, "height": 350, "title": "Entity Type Composition by Genre (normalized within type)", "width": 400, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-56081ef355230725b7815e5a0cda1870": [{"genre": "action", "entity_type": "PERSON", "mean_count": 154.5625, "normalized": 0.9999999999935302}, {"genre": "allegories", "entity_type": "PERSON", "mean_count": 82.57142857142857, "normalized": 0.5342267922095874}, {"genre": "autobio", "entity_type": "PERSON", "mean_count": 33.5, "normalized": 0.2167408006455851}, {"genre": "bildung", "entity_type": "PERSON", "mean_count": 135.55555555555554, "normalized": 0.8770274520318869}, {"genre": "fantasy", "entity_type": "PERSON", "mean_count": 43.125, "normalized": 0.2790133441146525}, {"genre": "history", "entity_type": "PERSON", "mean_count": 70.90361445783132, "normalized": 0.4587374975001866}, {"genre": "horror", "entity_type": "PERSON", "mean_count": 5.141176470588236, "normalized": 0.0332627672983742}, {"genre": "mystery", "entity_type": "PERSON", "mean_count": 49.5, "normalized": 0.3202587949837751}, {"genre": "na", "entity_type": "PERSON", "mean_count": 101.68478260869566, "normalized": 0.6578877968979395}, {"genre": "political", "entity_type": "PERSON", "mean_count": 114.93333333333334, "normalized": 0.7436042593293312}, {"genre": "romance", "entity_type": "PERSON", "mean_count": 60.125, "normalized": 0.3890012130989794}, {"genre": "scifi", "entity_type": "PERSON", "mean_count": 34.095238095238095, "normalized": 0.2205919165063809}, {"genre": "thrillers", "entity_type": "PERSON", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "PERSON", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "GPE", "mean_count": 48.25, "normalized": 0.9999999999792748}, {"genre": "allegories", "entity_type": "GPE", "mean_count": 25.571428571428573, "normalized": 0.5299777942155149}, {"genre": "autobio", "entity_type": "GPE", "mean_count": 7.5, "normalized": 0.1554404145045504}, {"genre": "bildung", "entity_type": "GPE", "mean_count": 15.592592592592592, "normalized": 0.3231625407724234}, {"genre": "fantasy", "entity_type": "GPE", "mean_count": 4.25, "normalized": 0.0880829015525786}, {"genre": "history", "entity_type": "GPE", "mean_count": 21.97590361445783, "normalized": 0.4554591422591165}, {"genre": "horror", "entity_type": "GPE", "mean_count": 1.576470588235294, "normalized": 0.0326729655586035}, {"genre": "mystery", "entity_type": "GPE", "mean_count": 8.055555555555555, "normalized": 0.1669545192826653}, {"genre": "na", "entity_type": "GPE", "mean_count": 21.884057971014492, "normalized": 0.4535556056074806}, {"genre": "political", "entity_type": "GPE", "mean_count": 29.466666666666665, "normalized": 0.6107081174312116}, {"genre": "romance", "entity_type": "GPE", "mean_count": 7.984375, "normalized": 0.1654792746079693}, {"genre": "scifi", "entity_type": "GPE", "mean_count": 11.285714285714286, "normalized": 0.2339008142068473}, {"genre": "thrillers", "entity_type": "GPE", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "GPE", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "LOC", "mean_count": 10.3125, "normalized": 0.9999999999030303}, {"genre": "allegories", "entity_type": "LOC", "mean_count": 1.7142857142857142, "normalized": 0.1662337662176465}, {"genre": "autobio", "entity_type": "LOC", "mean_count": 1.0, "normalized": 0.0969696969602938}, {"genre": "bildung", "entity_type": "LOC", "mean_count": 1.5555555555555556, "normalized": 0.1508417508271237}, {"genre": "fantasy", "entity_type": "LOC", "mean_count": 2.125, "normalized": 0.2060606060406244}, {"genre": "history", "entity_type": "LOC", "mean_count": 2.6867469879518073, "normalized": 0.260533041230669}, {"genre": "horror", "entity_type": "LOC", "mean_count": 0.1058823529411764, "normalized": 0.0102673796781487}, {"genre": "mystery", "entity_type": "LOC", "mean_count": 0.7777777777777778, "normalized": 0.0754208754135618}, {"genre": "na", "entity_type": "LOC", "mean_count": 2.7644927536231885, "normalized": 0.2680720245677688}, {"genre": "political", "entity_type": "LOC", "mean_count": 3.2666666666666666, "normalized": 0.3167676767369599}, {"genre": "romance", "entity_type": "LOC", "mean_count": 0.640625, "normalized": 0.0621212121151882}, {"genre": "scifi", "entity_type": "LOC", "mean_count": 4.9523809523809526, "normalized": 0.4802308801843124}, {"genre": "thrillers", "entity_type": "LOC", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "LOC", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "ORG", "mean_count": 64.625, "normalized": 0.999999999984526}, {"genre": "allegories", "entity_type": "ORG", "mean_count": 48.142857142857146, "normalized": 0.744957170477558}, {"genre": "autobio", "entity_type": "ORG", "mean_count": 27.25, "normalized": 0.4216634429335139}, {"genre": "bildung", "entity_type": "ORG", "mean_count": 32.370370370370374, "normalized": 0.5008954796111331}, {"genre": "fantasy", "entity_type": "ORG", "mean_count": 18.229166666666668, "normalized": 0.2820760799440555}, {"genre": "history", "entity_type": "ORG", "mean_count": 35.397590361445786, "normalized": 0.5477383421415558}, {"genre": "horror", "entity_type": "ORG", "mean_count": 2.5647058823529414, "normalized": 0.0396859710996248}, {"genre": "mystery", "entity_type": "ORG", "mean_count": 14.27777777777778, "normalized": 0.2209327315676107}, {"genre": "na", "entity_type": "ORG", "mean_count": 34.14855072463768, "normalized": 0.5284108429262556}, {"genre": "political", "entity_type": "ORG", "mean_count": 40.8, "normalized": 0.6313346228142153}, {"genre": "romance", "entity_type": "ORG", "mean_count": 13.15625, "normalized": 0.2035783365539098}, {"genre": "scifi", "entity_type": "ORG", "mean_count": 25.47619047619047, "normalized": 0.3942157133585494}, {"genre": "thrillers", "entity_type": "ORG", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "ORG", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "DATE", "mean_count": 40.125, "normalized": 0.999999999975078}, {"genre": "allegories", "entity_type": "DATE", "mean_count": 25.428571428571427, "normalized": 0.6337338673629332}, {"genre": "autobio", "entity_type": "DATE", "mean_count": 10.0, "normalized": 0.2492211837944119}, {"genre": "bildung", "entity_type": "DATE", "mean_count": 20.666666666666668, "normalized": 0.515057113175118}, {"genre": "fantasy", "entity_type": "DATE", "mean_count": 6.270833333333333, "normalized": 0.1562824506710791}, {"genre": "history", "entity_type": "DATE", "mean_count": 14.421686746987952, "normalized": 0.3594189843396519}, {"genre": "horror", "entity_type": "DATE", "mean_count": 1.623529411764706, "normalized": 0.0404617921925045}, {"genre": "mystery", "entity_type": "DATE", "mean_count": 9.11111111111111, "normalized": 0.2270681896793531}, {"genre": "na", "entity_type": "DATE", "mean_count": 21.1231884057971, "normalized": 0.5264346020005151}, {"genre": "political", "entity_type": "DATE", "mean_count": 23.466666666666665, "normalized": 0.5848390446375533}, {"genre": "romance", "entity_type": "DATE", "mean_count": 10.265625, "normalized": 0.255841121488951}, {"genre": "scifi", "entity_type": "DATE", "mean_count": 12.857142857142858, "normalized": 0.320427236307101}, {"genre": "thrillers", "entity_type": "DATE", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "DATE", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "NORP", "mean_count": 17.1875, "normalized": 0.5300110131995152}, {"genre": "allegories", "entity_type": "NORP", "mean_count": 32.42857142857143, "normalized": 0.9999999999691632}, {"genre": "autobio", "entity_type": "NORP", "mean_count": 2.75, "normalized": 0.0848017621119224}, {"genre": "bildung", "entity_type": "NORP", "mean_count": 6.0, "normalized": 0.1850220264260125}, {"genre": "fantasy", "entity_type": "NORP", "mean_count": 1.5416666666666667, "normalized": 0.0475403817900171}, {"genre": "history", "entity_type": "NORP", "mean_count": 12.048192771084338, "normalized": 0.3715301735462099}, {"genre": "horror", "entity_type": "NORP", "mean_count": 0.5294117647058824, "normalized": 0.0163254729199422}, {"genre": "mystery", "entity_type": "NORP", "mean_count": 2.388888888888889, "normalized": 0.0736661771881346}, {"genre": "na", "entity_type": "NORP", "mean_count": 8.28623188405797, "normalized": 0.2555225691040402}, {"genre": "political", "entity_type": "NORP", "mean_count": 14.333333333333334, "normalized": 0.4419970631288077}, {"genre": "romance", "entity_type": "NORP", "mean_count": 2.515625, "normalized": 0.0775743392046563}, {"genre": "scifi", "entity_type": "NORP", "mean_count": 9.095238095238097, "normalized": 0.2804698972013364}, {"genre": "thrillers", "entity_type": "NORP", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "NORP", "mean_count": 0.0, "normalized": 0.0}, {"genre": "action", "entity_type": "EVENT", "mean_count": 0.375, "normalized": 0.6136363626322314}, {"genre": "allegories", "entity_type": "EVENT", "mean_count": 0.1428571428571428, "normalized": 0.2337662333837072}, {"genre": "autobio", "entity_type": "EVENT", "mean_count": 0.25, "normalized": 0.4090909084214876}, {"genre": "bildung", "entity_type": "EVENT", "mean_count": 0.2592592592592592, "normalized": 0.4242424235482093}, {"genre": "fantasy", "entity_type": "EVENT", "mean_count": 0.125, "normalized": 0.2045454542107438}, {"genre": "history", "entity_type": "EVENT", "mean_count": 0.2771084337349397, "normalized": 0.4534501635515284}, {"genre": "horror", "entity_type": "EVENT", "mean_count": 0.0117647058823529, "normalized": 0.0192513368668935}, {"genre": "mystery", "entity_type": "EVENT", "mean_count": 0.6111111111111112, "normalized": 0.9999999983636364}, {"genre": "na", "entity_type": "EVENT", "mean_count": 0.2753623188405797, "normalized": 0.4505928846381603}, {"genre": "political", "entity_type": "EVENT", "mean_count": 0.4, "normalized": 0.6545454534743802}, {"genre": "romance", "entity_type": "EVENT", "mean_count": 0.125, "normalized": 0.2045454542107438}, {"genre": "scifi", "entity_type": "EVENT", "mean_count": 0.0476190476190476, "normalized": 0.077922077794569}, {"genre": "thrillers", "entity_type": "EVENT", "mean_count": 0.0, "normalized": 0.0}, {"genre": "war", "entity_type": "EVENT", "mean_count": 0.0, "normalized": 0.0}]}}, {"vega_version": "6", "vegalite_version": "6.1.0", "vegaembed_version": "7", "mode": "vega-lite"});
+</script>
+</div>
 </div>
 <p>Now we can see that while <code>PERSON</code> entities are the most common across the board, they actually appear much more in <code>action</code> and <code>bildung</code>. Whereas though <code>EVENT</code> is much less frequent, it occurs the most in <code>mystery</code>. This type of datafication is the kind of insight that can lead us to ask deeper questions about how genre conventions shape the kinds of entities that appear in novels, and how those entities in turn shape our understanding of genre.</p>
 <section id="information-extraction-methods" class="level3">
@@ -843,7 +1058,7 @@ Note
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.DataFrame(fingerprint_rows)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Which gives us the following genre vocabulary fingerprints:</p>
-<div id="aaebdfb0" class="cell">
+<div id="edc76c94" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint.csv'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>alt.Chart(fingerprint_df).mark_bar().encode(</span>
@@ -853,6 +1068,76 @@ Note
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    facet<span class="op">=</span>alt.Facet(<span class="st">'genre:N'</span>, columns<span class="op">=</span><span class="dv">2</span>),</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    tooltip<span class="op">=</span>[<span class="st">'genre'</span>, <span class="st">'term'</span>, <span class="st">'centroid_score'</span>]</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>).properties(width<span class="op">=</span><span class="dv">300</span>, height<span class="op">=</span><span class="dv">220</span>).resolve_scale(y<span class="op">=</span><span class="st">'independent'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<style>
+  #altair-viz-46877187488948fb9cee449f2e2502f4.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-46877187488948fb9cee449f2e2502f4.vega-embed details,
+  #altair-viz-46877187488948fb9cee449f2e2502f4.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-46877187488948fb9cee449f2e2502f4"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-46877187488948fb9cee449f2e2502f4") {
+      outputDiv = document.getElementById("altair-viz-46877187488948fb9cee449f2e2502f4");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.1.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.1.0"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-983802257636376dc51bbda552c906fd"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "genre", "type": "nominal"}, "facet": {"columns": 2, "field": "genre", "type": "nominal"}, "tooltip": [{"field": "genre", "type": "nominal"}, {"field": "term", "type": "nominal"}, {"field": "centroid_score", "type": "quantitative"}], "x": {"field": "centroid_score", "title": "Mean TF-IDF Score", "type": "quantitative"}, "y": {"field": "term", "sort": "-x", "type": "nominal"}}, "height": 220, "resolve": {"scale": {"y": "independent"}}, "width": 300, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-983802257636376dc51bbda552c906fd": [{"genre": "action", "term": "fogg", "centroid_score": 0.1100060154842377}, {"genre": "action", "term": "fang", "centroid_score": 0.1087882508077885}, {"genre": "action", "term": "buck", "centroid_score": 0.1085627214213478}, {"genre": "action", "term": "tom", "centroid_score": 0.1068558337752191}, {"genre": "action", "term": "kim", "centroid_score": 0.0989510761417469}, {"genre": "action", "term": "captain", "centroid_score": 0.0951195828525139}, {"genre": "action", "term": "henry", "centroid_score": 0.077475080394794}, {"genre": "action", "term": "sancho", "centroid_score": 0.0751756605056199}, {"genre": "action", "term": "thou", "centroid_score": 0.0718443557677562}, {"genre": "action", "term": "island", "centroid_score": 0.0681685700065047}, {"genre": "action", "term": "quixote", "centroid_score": 0.0668359424009255}, {"genre": "action", "term": "jim", "centroid_score": 0.0563966977244646}, {"genre": "fantasy", "term": "alice", "centroid_score": 0.2796267457886692}, {"genre": "fantasy", "term": "dorothy", "centroid_score": 0.1186855000809431}, {"genre": "fantasy", "term": "peter", "centroid_score": 0.1172662226998331}, {"genre": "fantasy", "term": "toad", "centroid_score": 0.1008110420250402}, {"genre": "fantasy", "term": "mole", "centroid_score": 0.0662109364423641}, {"genre": "fantasy", "term": "rat", "centroid_score": 0.0657974390562545}, {"genre": "fantasy", "term": "majesty", "centroid_score": 0.0642797952133545}, {"genre": "fantasy", "term": "scarecrow", "centroid_score": 0.0634234194277518}, {"genre": "fantasy", "term": "ye", "centroid_score": 0.0537291996537253}, {"genre": "fantasy", "term": "knight", "centroid_score": 0.0493567541647585}, {"genre": "fantasy", "term": "hook", "centroid_score": 0.0480573440845409}, {"genre": "fantasy", "term": "emperor", "centroid_score": 0.0453446078257791}, {"genre": "romance", "term": "mrs", "centroid_score": 0.138557411310349}, {"genre": "romance", "term": "clym", "centroid_score": 0.0841357047892178}, {"genre": "romance", "term": "catherine", "centroid_score": 0.0699865780890844}, {"genre": "romance", "term": "bathsheba", "centroid_score": 0.0696156802808413}, {"genre": "romance", "term": "rochester", "centroid_score": 0.069077878442826}, {"genre": "romance", "term": "elinor", "centroid_score": 0.0641543721689483}, {"genre": "romance", "term": "fanny", "centroid_score": 0.0624403557924882}, {"genre": "romance", "term": "bella", "centroid_score": 0.0613189491319198}, {"genre": "romance", "term": "levin", "centroid_score": 0.0612181324180653}, {"genre": "romance", "term": "jane", "centroid_score": 0.0581671886925233}, {"genre": "romance", "term": "tilney", "centroid_score": 0.055201608806502}, {"genre": "romance", "term": "elliot", "centroid_score": 0.0531028226912105}, {"genre": "na", "term": "mrs", "centroid_score": 0.080838731050034}, {"genre": "na", "term": "stephen", "centroid_score": 0.051728055686919}, {"genre": "na", "term": "bloom", "centroid_score": 0.0481938002361454}, {"genre": "na", "term": "anne", "centroid_score": 0.0249231570231936}, {"genre": "na", "term": "dr", "centroid_score": 0.0229348468411514}, {"genre": "na", "term": "thou", "centroid_score": 0.0212839613538328}, {"genre": "na", "term": "dedalus", "centroid_score": 0.0206205798971326}, {"genre": "na", "term": "mulligan", "centroid_score": 0.0193169800185783}, {"genre": "na", "term": "martin", "centroid_score": 0.0183504491705873}, {"genre": "na", "term": "peter", "centroid_score": 0.0175145633742909}, {"genre": "na", "term": "tom", "centroid_score": 0.0172799488995756}, {"genre": "na", "term": "madame", "centroid_score": 0.016861915467594}, {"genre": "allegories", "term": "grandet", "centroid_score": 0.2701411170027017}, {"genre": "allegories", "term": "thou", "centroid_score": 0.1908260681825975}, {"genre": "allegories", "term": "lawyer", "centroid_score": 0.1801217567712126}, {"genre": "allegories", "term": "eugenie", "centroid_score": 0.1728701550968782}, {"genre": "allegories", "term": "painter", "centroid_score": 0.128469629123307}, {"genre": "allegories", "term": "thee", "centroid_score": 0.116529663056041}, {"genre": "allegories", "term": "director", "centroid_score": 0.1065720380722152}, {"genre": "allegories", "term": "hath", "centroid_score": 0.0909839063279409}, {"genre": "allegories", "term": "thy", "centroid_score": 0.0841272072381378}, {"genre": "allegories", "term": "yea", "centroid_score": 0.0732501647802883}, {"genre": "allegories", "term": "uncle", "centroid_score": 0.0718874711491606}, {"genre": "allegories", "term": "deputy", "centroid_score": 0.0598738862812859}, {"genre": "bildung", "term": "philip", "centroid_score": 0.1068881432331624}, {"genre": "bildung", "term": "julien", "centroid_score": 0.1061420237322728}, {"genre": "bildung", "term": "stephen", "centroid_score": 0.0966896607069627}, {"genre": "bildung", "term": "oliver", "centroid_score": 0.0889129026383116}, {"genre": "bildung", "term": "harvey", "centroid_score": 0.0860858618769545}, {"genre": "bildung", "term": "mrs", "centroid_score": 0.0735263546301007}, {"genre": "bildung", "term": "nicholas", "centroid_score": 0.0731674049452477}, {"genre": "bildung", "term": "peggotty", "centroid_score": 0.0700050319023607}, {"genre": "bildung", "term": "joe", "centroid_score": 0.0662840112425617}, {"genre": "bildung", "term": "eugene", "centroid_score": 0.0643064618261866}, {"genre": "bildung", "term": "mme", "centroid_score": 0.0637024541423244}, {"genre": "bildung", "term": "goriot", "centroid_score": 0.0590364954534637}, {"genre": "history", "term": "thou", "centroid_score": 0.0855543684167839}, {"genre": "history", "term": "prince", "centroid_score": 0.0653992968327331}, {"genre": "history", "term": "artagnan", "centroid_score": 0.0634321518559679}, {"genre": "history", "term": "ye", "centroid_score": 0.0535563951590609}, {"genre": "history", "term": "thy", "centroid_score": 0.0530249351016386}, {"genre": "history", "term": "thee", "centroid_score": 0.052898807082917}, {"genre": "history", "term": "alan", "centroid_score": 0.0420883955059543}, {"genre": "history", "term": "glaucus", "centroid_score": 0.0417871052762373}, {"genre": "history", "term": "brett", "centroid_score": 0.0391780974489498}, {"genre": "history", "term": "uncle", "centroid_score": 0.037940607348093}, {"genre": "history", "term": "bishop", "centroid_score": 0.0378945326127302}, {"genre": "history", "term": "dick", "centroid_score": 0.0366005358050544}, {"genre": "horror", "term": "christine", "centroid_score": 0.3091813052734375}, {"genre": "horror", "term": "erik", "centroid_score": 0.2534574139624314}, {"genre": "horror", "term": "raoul", "centroid_score": 0.2433405000926108}, {"genre": "horror", "term": "elizabeth", "centroid_score": 0.2282097727920304}, {"genre": "horror", "term": "cottage", "centroid_score": 0.0918670920262386}, {"genre": "horror", "term": "persian", "centroid_score": 0.0888017029161187}, {"genre": "horror", "term": "fiend", "centroid_score": 0.0848112293597692}, {"genre": "horror", "term": "victor", "centroid_score": 0.0711409894119865}, {"genre": "horror", "term": "richard", "centroid_score": 0.0703901412526131}, {"genre": "horror", "term": "monster", "centroid_score": 0.069638821918158}, {"genre": "horror", "term": "lake", "centroid_score": 0.0676882578042059}, {"genre": "horror", "term": "opera", "centroid_score": 0.0638500886362228}, {"genre": "political", "term": "mrs", "centroid_score": 0.1448277633742215}, {"genre": "political", "term": "gould", "centroid_score": 0.1293796753199523}, {"genre": "political", "term": "\u00e9tienne", "centroid_score": 0.1282313893616803}, {"genre": "political", "term": "fielding", "centroid_score": 0.1102765432303113}, {"genre": "political", "term": "inspector", "centroid_score": 0.0787341016673646}, {"genre": "political", "term": "barnaby", "centroid_score": 0.0782730661950935}, {"genre": "political", "term": "dollars", "centroid_score": 0.0729495674464804}, {"genre": "political", "term": "tom", "centroid_score": 0.0684300339288166}, {"genre": "political", "term": "commissioner", "centroid_score": 0.0664955407180679}, {"genre": "political", "term": "eva", "centroid_score": 0.065128228808249}, {"genre": "political", "term": "hugh", "centroid_score": 0.0608845364063926}, {"genre": "political", "term": "clare", "centroid_score": 0.0568430136251023}, {"genre": "scifi", "term": "_nautilus_", "centroid_score": 0.1494522098665235}, {"genre": "scifi", "term": "machine", "centroid_score": 0.1461119273946253}, {"genre": "scifi", "term": "uncle", "centroid_score": 0.1268084849438532}, {"genre": "scifi", "term": "harding", "centroid_score": 0.1159951096425764}, {"genre": "scifi", "term": "hans", "centroid_score": 0.1050409420628156}, {"genre": "scifi", "term": "traveller", "centroid_score": 0.0892871460689526}, {"genre": "scifi", "term": "nemo", "centroid_score": 0.084438412073521}, {"genre": "scifi", "term": "pit", "centroid_score": 0.0806911050372213}, {"genre": "scifi", "term": "neb", "centroid_score": 0.078935534769268}, {"genre": "scifi", "term": "cyrus", "centroid_score": 0.0732061835518091}, {"genre": "scifi", "term": "conseil", "centroid_score": 0.0722451642890779}, {"genre": "scifi", "term": "captain", "centroid_score": 0.0706078104721993}, {"genre": "mystery", "term": "holmes", "centroid_score": 0.4846958584019585}, {"genre": "mystery", "term": "watson", "centroid_score": 0.1808513500212649}, {"genre": "mystery", "term": "ralph", "centroid_score": 0.1644003835202964}, {"genre": "mystery", "term": "caroline", "centroid_score": 0.1605690444405889}, {"genre": "mystery", "term": "parker", "centroid_score": 0.1331298832035454}, {"genre": "mystery", "term": "moor", "centroid_score": 0.120037377201836}, {"genre": "mystery", "term": "inspector", "centroid_score": 0.1130594019338148}, {"genre": "mystery", "term": "flora", "centroid_score": 0.112981242621756}, {"genre": "mystery", "term": "mortimer", "centroid_score": 0.1017824443225247}, {"genre": "mystery", "term": "dr", "centroid_score": 0.0915368818590969}, {"genre": "mystery", "term": "henry", "centroid_score": 0.0886593592690856}, {"genre": "mystery", "term": "mrs", "centroid_score": 0.0740604722070836}, {"genre": "autobio", "term": "swann", "centroid_score": 0.7364210917709381}, {"genre": "autobio", "term": "odette", "centroid_score": 0.5084175795717306}, {"genre": "autobio", "term": "mme", "centroid_score": 0.2676473299831033}, {"genre": "autobio", "term": "verdurin", "centroid_score": 0.1886794128632867}, {"genre": "autobio", "term": "fran\u00e7oise", "centroid_score": 0.1747562402328285}, {"genre": "autobio", "term": "combray", "centroid_score": 0.161563808619461}, {"genre": "autobio", "term": "gilberte", "centroid_score": 0.1152413180362589}, {"genre": "autobio", "term": "aunt", "centroid_score": 0.0601814834055488}, {"genre": "autobio", "term": "saint", "centroid_score": 0.0346138021188245}, {"genre": "autobio", "term": "grandmother", "centroid_score": 0.0280988045293172}, {"genre": "autobio", "term": "mamma", "centroid_score": 0.0278294090367461}, {"genre": "autobio", "term": "des", "centroid_score": 0.0261936701222161}]}}, {"vega_version": "6", "vegalite_version": "6.1.0", "vegaembed_version": "7", "mode": "vega-lite"});
+</script>
+</div>
 </div>
 <p>Notice that we are still getting A LOT of character names. That is somewhat expected, since character names are often distinctive to specific novels and genres. One option we could do is use our NER dataset to filter out terms that are likely to be character names.</p>
 <p>Here’s some updated code to do that:</p>
@@ -913,7 +1198,7 @@ Note
 <span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Matrix shape: </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then if we visualize the genre centroids again, we should see fewer character names and more genre-distinctive terms:</p>
-<div id="54e6933f" class="cell">
+<div id="21c98bf6" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint_without_entities.csv'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the updated genre centroids</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>alt.Chart(fingerprint_df).mark_bar().encode(</span>
@@ -923,6 +1208,76 @@ Note
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    facet<span class="op">=</span>alt.Facet(<span class="st">'genre:N'</span>, columns<span class="op">=</span><span class="dv">2</span>),</span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    tooltip<span class="op">=</span>[<span class="st">'genre'</span>, <span class="st">'term'</span>, <span class="st">'centroid_score'</span>]</span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>).properties(width<span class="op">=</span><span class="dv">300</span>, height<span class="op">=</span><span class="dv">220</span>).resolve_scale(y<span class="op">=</span><span class="st">'independent'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<style>
+  #altair-viz-d38d4465f82e489dab13aee124ddaef0.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-d38d4465f82e489dab13aee124ddaef0.vega-embed details,
+  #altair-viz-d38d4465f82e489dab13aee124ddaef0.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-d38d4465f82e489dab13aee124ddaef0"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-d38d4465f82e489dab13aee124ddaef0") {
+      outputDiv = document.getElementById("altair-viz-d38d4465f82e489dab13aee124ddaef0");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.1.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.1.0"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-8503821c97dd1b5aa84e330778bb4392"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "genre", "type": "nominal"}, "facet": {"columns": 2, "field": "genre", "type": "nominal"}, "tooltip": [{"field": "genre", "type": "nominal"}, {"field": "term", "type": "nominal"}, {"field": "centroid_score", "type": "quantitative"}], "x": {"field": "centroid_score", "title": "Mean TF-IDF Score", "type": "quantitative"}, "y": {"field": "term", "sort": "-x", "type": "nominal"}}, "height": 220, "resolve": {"scale": {"y": "independent"}}, "width": 300, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-8503821c97dd1b5aa84e330778bb4392": [{"genre": "action", "term": "captain", "centroid_score": 0.1282454068384}, {"genre": "action", "term": "thou", "centroid_score": 0.110675435407823}, {"genre": "action", "term": "fang", "centroid_score": 0.1080838601710608}, {"genre": "action", "term": "lama", "centroid_score": 0.0874869555121373}, {"genre": "action", "term": "island", "centroid_score": 0.0865784399706453}, {"genre": "action", "term": "ain", "centroid_score": 0.0826927587346789}, {"genre": "action", "term": "thee", "centroid_score": 0.077693092549779}, {"genre": "action", "term": "cave", "centroid_score": 0.0604315189164599}, {"genre": "action", "term": "camp", "centroid_score": 0.0602576213158216}, {"genre": "action", "term": "sahib", "centroid_score": 0.0568773375405843}, {"genre": "action", "term": "friday", "centroid_score": 0.0568136779575248}, {"genre": "action", "term": "ye", "centroid_score": 0.0564726851825692}, {"genre": "fantasy", "term": "couldn", "centroid_score": 0.102308984137107}, {"genre": "fantasy", "term": "turtle", "centroid_score": 0.081384739558547}, {"genre": "fantasy", "term": "pirates", "centroid_score": 0.0806570479916018}, {"genre": "fantasy", "term": "dinah", "centroid_score": 0.0770508901693855}, {"genre": "fantasy", "term": "emerald", "centroid_score": 0.075796011230304}, {"genre": "fantasy", "term": "mrs", "centroid_score": 0.0644030506754305}, {"genre": "fantasy", "term": "majesty", "centroid_score": 0.0638531925958833}, {"genre": "fantasy", "term": "ye", "centroid_score": 0.0621761239509977}, {"genre": "fantasy", "term": "em", "centroid_score": 0.0585686709361615}, {"genre": "fantasy", "term": "mock", "centroid_score": 0.0566934986636215}, {"genre": "fantasy", "term": "duchess", "centroid_score": 0.0555856189796495}, {"genre": "fantasy", "term": "paw", "centroid_score": 0.055219889147645}, {"genre": "romance", "term": "mrs", "centroid_score": 0.3408790598832447}, {"genre": "romance", "term": "rochester", "centroid_score": 0.0749704529432084}, {"genre": "romance", "term": "bathsheba", "centroid_score": 0.0741560645758284}, {"genre": "romance", "term": "dinah", "centroid_score": 0.0733377521283019}, {"genre": "romance", "term": "alexey", "centroid_score": 0.0605599380596128}, {"genre": "romance", "term": "henry", "centroid_score": 0.0590745571996166}, {"genre": "romance", "term": "alexandrovitch", "centroid_score": 0.0580048523998918}, {"genre": "romance", "term": "colonel", "centroid_score": 0.0539582847265509}, {"genre": "romance", "term": "admiral", "centroid_score": 0.0533432223591969}, {"genre": "romance", "term": "aunt", "centroid_score": 0.0501143183287079}, {"genre": "romance", "term": "bradley", "centroid_score": 0.048627968020799}, {"genre": "romance", "term": "boldwood", "centroid_score": 0.0446204012490455}, {"genre": "na", "term": "mrs", "centroid_score": 0.1707780233821341}, {"genre": "na", "term": "bloom", "centroid_score": 0.0626901361027957}, {"genre": "na", "term": "dr", "centroid_score": 0.0464683280127613}, {"genre": "na", "term": "couldn", "centroid_score": 0.0389879351703554}, {"genre": "na", "term": "madame", "centroid_score": 0.0385864984586067}, {"genre": "na", "term": "miss", "centroid_score": 0.0366523572443868}, {"genre": "na", "term": "chapter", "centroid_score": 0.0341549797806267}, {"genre": "na", "term": "tea", "centroid_score": 0.031155064577006}, {"genre": "na", "term": "em", "centroid_score": 0.0308760759046245}, {"genre": "na", "term": "wasn", "centroid_score": 0.025228544984958}, {"genre": "na", "term": "doesn", "centroid_score": 0.025071886860476}, {"genre": "na", "term": "ain", "centroid_score": 0.0248961993528829}, {"genre": "allegories", "term": "francs", "centroid_score": 0.1952959657325284}, {"genre": "allegories", "term": "lawyer", "centroid_score": 0.1801079002908513}, {"genre": "allegories", "term": "thee", "centroid_score": 0.1605786323808205}, {"genre": "allegories", "term": "uncle", "centroid_score": 0.1378461878593081}, {"genre": "allegories", "term": "cousin", "centroid_score": 0.1291886441832988}, {"genre": "allegories", "term": "painter", "centroid_score": 0.127835966484514}, {"genre": "allegories", "term": "hath", "centroid_score": 0.1224152266537774}, {"genre": "allegories", "term": "notary", "centroid_score": 0.1166532177739496}, {"genre": "allegories", "term": "thy", "centroid_score": 0.1153373613588851}, {"genre": "allegories", "term": "director", "centroid_score": 0.1055066476838315}, {"genre": "allegories", "term": "president", "centroid_score": 0.089379514153134}, {"genre": "allegories", "term": "paris", "centroid_score": 0.0691720181066124}, {"genre": "bildung", "term": "mrs", "centroid_score": 0.1329984728216376}, {"genre": "bildung", "term": "madame", "centroid_score": 0.1130799429263828}, {"genre": "bildung", "term": "mildred", "centroid_score": 0.0915049061115115}, {"genre": "bildung", "term": "francs", "centroid_score": 0.0895801584265626}, {"genre": "bildung", "term": "cranly", "centroid_score": 0.084180156028347}, {"genre": "bildung", "term": "dora", "centroid_score": 0.0748727246534697}, {"genre": "bildung", "term": "la", "centroid_score": 0.0738228263585435}, {"genre": "bildung", "term": "estella", "centroid_score": 0.0714957669731223}, {"genre": "bildung", "term": "mantalini", "centroid_score": 0.0670419645186317}, {"genre": "bildung", "term": "em", "centroid_score": 0.06399665629513}, {"genre": "bildung", "term": "jew", "centroid_score": 0.0611040167103821}, {"genre": "bildung", "term": "paris", "centroid_score": 0.0596102159073035}, {"genre": "history", "term": "ye", "centroid_score": 0.1068891250182684}, {"genre": "history", "term": "thee", "centroid_score": 0.0866007993026152}, {"genre": "history", "term": "thy", "centroid_score": 0.0825430600332433}, {"genre": "history", "term": "aramis", "centroid_score": 0.0539640634802745}, {"genre": "history", "term": "porthos", "centroid_score": 0.0433538855600452}, {"genre": "history", "term": "monseigneur", "centroid_score": 0.0403053503209226}, {"genre": "history", "term": "hath", "centroid_score": 0.0401657926944628}, {"genre": "history", "term": "madame", "centroid_score": 0.0394952387468009}, {"genre": "history", "term": "caroline", "centroid_score": 0.0384407749337048}, {"genre": "history", "term": "nastasia", "centroid_score": 0.0365697089688485}, {"genre": "history", "term": "priest", "centroid_score": 0.0361029999066107}, {"genre": "history", "term": "athos", "centroid_score": 0.0356464065499798}, {"genre": "horror", "term": "erik", "centroid_score": 0.4483193083147724}, {"genre": "horror", "term": "persian", "centroid_score": 0.1529958311972205}, {"genre": "horror", "term": "chapter", "centroid_score": 0.1224811328141788}, {"genre": "horror", "term": "opera", "centroid_score": 0.1129390027528303}, {"genre": "horror", "term": "cottage", "centroid_score": 0.1024026923439871}, {"genre": "horror", "term": "fiend", "centroid_score": 0.0943613434606147}, {"genre": "horror", "term": "lake", "centroid_score": 0.0884617634492532}, {"genre": "horror", "term": "monster", "centroid_score": 0.0870999686550326}, {"genre": "horror", "term": "william", "centroid_score": 0.073041771240751}, {"genre": "horror", "term": "sensations", "centroid_score": 0.0680887598420278}, {"genre": "horror", "term": "endeavoured", "centroid_score": 0.0676364976187006}, {"genre": "horror", "term": "mountains", "centroid_score": 0.0663475539230938}, {"genre": "political", "term": "mrs", "centroid_score": 0.1613686018316316}, {"genre": "political", "term": "locksmith", "centroid_score": 0.10146743396072}, {"genre": "political", "term": "inspector", "centroid_score": 0.0927656923639743}, {"genre": "political", "term": "commissioner", "centroid_score": 0.0776868285883119}, {"genre": "political", "term": "dollars", "centroid_score": 0.0737290559511426}, {"genre": "political", "term": "eva", "centroid_score": 0.0727119086556076}, {"genre": "political", "term": "dolly", "centroid_score": 0.0702522878833087}, {"genre": "political", "term": "clare", "centroid_score": 0.0649860548639815}, {"genre": "political", "term": "captain", "centroid_score": 0.0647995034272262}, {"genre": "political", "term": "mas", "centroid_score": 0.0606988940442248}, {"genre": "political", "term": "india", "centroid_score": 0.0606804919360927}, {"genre": "political", "term": "miss", "centroid_score": 0.0597870788014034}, {"genre": "scifi", "term": "nautilus", "centroid_score": 0.2008089125292193}, {"genre": "scifi", "term": "machine", "centroid_score": 0.1486962138037876}, {"genre": "scifi", "term": "professor", "centroid_score": 0.1110807873433843}, {"genre": "scifi", "term": "island", "centroid_score": 0.0980449244800915}, {"genre": "scifi", "term": "granite", "centroid_score": 0.0958686064578395}, {"genre": "scifi", "term": "engineer", "centroid_score": 0.0900534126751881}, {"genre": "scifi", "term": "traveller", "centroid_score": 0.0893462370106396}, {"genre": "scifi", "term": "raft", "centroid_score": 0.08255903962275}, {"genre": "scifi", "term": "reporter", "centroid_score": 0.0768863265202148}, {"genre": "scifi", "term": "chapter", "centroid_score": 0.0696336284937893}, {"genre": "scifi", "term": "colonists", "centroid_score": 0.0637835089172065}, {"genre": "scifi", "term": "curate", "centroid_score": 0.0589225267664866}, {"genre": "mystery", "term": "inspector", "centroid_score": 0.2467504762897814}, {"genre": "mystery", "term": "moor", "centroid_score": 0.2444747336257803}, {"genre": "mystery", "term": "mrs", "centroid_score": 0.1897341377520512}, {"genre": "mystery", "term": "dr", "centroid_score": 0.1889949258659485}, {"genre": "mystery", "term": "lucy", "centroid_score": 0.149586526665617}, {"genre": "mystery", "term": "detective", "centroid_score": 0.1291491260141191}, {"genre": "mystery", "term": "cab", "centroid_score": 0.1288232478139041}, {"genre": "mystery", "term": "ursula", "centroid_score": 0.1159855892467762}, {"genre": "mystery", "term": "baronet", "centroid_score": 0.0968913317613901}, {"genre": "mystery", "term": "police", "centroid_score": 0.0831695323362787}, {"genre": "mystery", "term": "murder", "centroid_score": 0.0749343781074787}, {"genre": "mystery", "term": "murderer", "centroid_score": 0.0651802293648774}, {"genre": "autobio", "term": "odette", "centroid_score": 0.8069253525456814}, {"genre": "autobio", "term": "verdurin", "centroid_score": 0.2994589641669529}, {"genre": "autobio", "term": "oise", "centroid_score": 0.2662739360379654}, {"genre": "autobio", "term": "fran", "centroid_score": 0.1914940067179913}, {"genre": "autobio", "term": "gilberte", "centroid_score": 0.1829030799103544}, {"genre": "autobio", "term": "forcheville", "centroid_score": 0.1775235775600499}, {"genre": "autobio", "term": "guermantes", "centroid_score": 0.1775235775600499}, {"genre": "autobio", "term": "aunt", "centroid_score": 0.1061308868725041}, {"genre": "autobio", "term": "grandmother", "centroid_score": 0.0458279046699704}, {"genre": "autobio", "term": "des", "centroid_score": 0.042234329159352}, {"genre": "autobio", "term": "paris", "centroid_score": 0.0397442512909969}, {"genre": "autobio", "term": "grandfather", "centroid_score": 0.0369956672087494}]}}, {"vega_version": "6", "vegalite_version": "6.1.0", "vegaembed_version": "7", "mode": "vega-lite"});
+</script>
+</div>
 </div>
 <p>Now we can see far more distinctive words per genre, and we can start to interpret these as signals of genre conventions. For instance, the <code>action</code> genre has <code>captain</code>, whereas <code>fantasy</code> has <code>pirates</code>. Now we could save the top genre terms as a kind of “vocabulary fingerprint” for each genre, and use that to augment our dataset. But first, let’s look at another way to group documents by their latent thematic structure: topic modeling with LDA.</p>
 </section>
@@ -1102,7 +1457,7 @@ Note
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: (x <span class="op">-</span> x.<span class="bu">min</span>()) <span class="op">/</span> (x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will give us a dataframe where each row is a genre-topic pair with the mean topic weight for that genre, normalized to a 0–1 scale within each topic. Now we can visualize this as a heatmap:</p>
-<div id="4fce49c7" class="cell">
+<div id="a285d034" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>topic_genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_topic_genre_means.csv'</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>alt.Chart(topic_genre_means).mark_rect().encode(</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'topic:N'</span>, title<span class="op">=</span><span class="st">'LDA Topic'</span>),</span>
@@ -1121,6 +1476,76 @@ Note
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">500</span>,</span>
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">350</span></span>
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+
+<style>
+  #altair-viz-6e72404142324a8b8430d0ba95604fad.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-6e72404142324a8b8430d0ba95604fad.vega-embed details,
+  #altair-viz-6e72404142324a8b8430d0ba95604fad.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-6e72404142324a8b8430d0ba95604fad"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-6e72404142324a8b8430d0ba95604fad") {
+      outputDiv = document.getElementById("altair-viz-6e72404142324a8b8430d0ba95604fad");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.1.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.1.0"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-476f9f393ccec3ae4a8e1bc758076961"}, "mark": {"type": "rect"}, "encoding": {"color": {"field": "normalized", "scale": {"scheme": "oranges"}, "title": "Normalized Mean Weight", "type": "quantitative"}, "tooltip": [{"field": "genre", "type": "nominal"}, {"field": "topic", "type": "nominal"}, {"field": "weight", "format": ".3f", "title": "Mean Weight", "type": "quantitative"}, {"field": "normalized", "format": ".2f", "title": "Normalized", "type": "quantitative"}], "x": {"field": "topic", "title": "LDA Topic", "type": "nominal"}, "y": {"field": "genre", "title": "Genre", "type": "nominal"}}, "height": 350, "title": "Topic-Genre Alignment (normalized within topic)", "width": 500, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-476f9f393ccec3ae4a8e1bc758076961": [{"genre": "action", "topic": "topic_0", "weight": 1.4011167294556907e-05, "normalized": 9.0241252576779e-05}, {"genre": "action", "topic": "topic_1", "weight": 0.1653793613185775, "normalized": 0.3282421699708054}, {"genre": "action", "topic": "topic_10", "weight": 0.0655838716985183, "normalized": 0.6221026109470443}, {"genre": "action", "topic": "topic_11", "weight": 0.0405808656173193, "normalized": 0.0793701586051875}, {"genre": "action", "topic": "topic_2", "weight": 0.0053423770544793, "normalized": 0.0}, {"genre": "action", "topic": "topic_3", "weight": 0.0006060490479187, "normalized": 0.0062035844543317}, {"genre": "action", "topic": "topic_4", "weight": 0.4580905130944537, "normalized": 0.6513700043170955}, {"genre": "action", "topic": "topic_5", "weight": 0.0471744051037368, "normalized": 0.1370592344661723}, {"genre": "action", "topic": "topic_6", "weight": 0.0793957459946018, "normalized": 0.3735039691843006}, {"genre": "action", "topic": "topic_7", "weight": 0.0012989308223627, "normalized": 0.0060624971425071}, {"genre": "action", "topic": "topic_8", "weight": 0.0117995175711893, "normalized": 0.0678950593526033}, {"genre": "action", "topic": "topic_9", "weight": 0.1247343515095476, "normalized": 0.6954211219413682}, {"genre": "allegories", "topic": "topic_0", "weight": 1.8674462406622163e-05, "normalized": 0.0001392641325053}, {"genre": "allegories", "topic": "topic_1", "weight": 0.1425034786232481, "normalized": 0.2819761399462317}, {"genre": "allegories", "topic": "topic_10", "weight": 0.0996427540888238, "normalized": 0.945198404958765}, {"genre": "allegories", "topic": "topic_11", "weight": 0.0453543124556387, "normalized": 0.0887075618597654}, {"genre": "allegories", "topic": "topic_2", "weight": 0.0717383698319838, "normalized": 0.0669637915554489}, {"genre": "allegories", "topic": "topic_3", "weight": 1.867461462138475e-05, "normalized": 0.000136829589296}, {"genre": "allegories", "topic": "topic_4", "weight": 0.005057908871578, "normalized": 0.007184331566603}, {"genre": "allegories", "topic": "topic_5", "weight": 0.0114078000003169, "normalized": 0.0331319561610474}, {"genre": "allegories", "topic": "topic_6", "weight": 0.2125609155189582, "normalized": 0.999999995295346}, {"genre": "allegories", "topic": "topic_7", "weight": 0.1566830804739993, "normalized": 0.7343293616333029}, {"genre": "allegories", "topic": "topic_8", "weight": 0.1737160123113324, "normalized": 0.9999999942432984}, {"genre": "allegories", "topic": "topic_9", "weight": 0.0812980187470923, "normalized": 0.4532435887133063}, {"genre": "autobio", "topic": "topic_0", "weight": 5.426979815960309e-06, "normalized": 0.0}, {"genre": "autobio", "topic": "topic_1", "weight": 0.0030825450167623, "normalized": 0.0}, {"genre": "autobio", "topic": "topic_10", "weight": 5.426996824841986e-06, "normalized": 0.0}, {"genre": "autobio", "topic": "topic_11", "weight": 5.4269946918258124e-06, "normalized": 0.0}, {"genre": "autobio", "topic": "topic_2", "weight": 0.9968631850655062, "normalized": 0.9999999989914484}, {"genre": "autobio", "topic": "topic_3", "weight": 5.426971646014934e-06, "normalized": 0.0}, {"genre": "autobio", "topic": "topic_4", "weight": 5.426991125809631e-06, "normalized": 0.0}, {"genre": "autobio", "topic": "topic_5", "weight": 5.4269983332133935e-06, "normalized": 0.0}, {"genre": "autobio", "topic": "topic_6", "weight": 5.426979822500679e-06, "normalized": 0.0}, {"genre": "autobio", "topic": "topic_7", "weight": 5.4270132712797126e-06, "normalized": 0.0}, {"genre": "autobio", "topic": "topic_8", "weight": 5.427003654024973e-06, "normalized": 0.0}, {"genre": "autobio", "topic": "topic_9", "weight": 5.42698854602216e-06, "normalized": 0.0}, {"genre": "bildung", "topic": "topic_0", "weight": 0.0299149203063579, "normalized": 0.3144234848614027}, {"genre": "bildung", "topic": "topic_1", "weight": 0.1861777785421635, "normalized": 0.3703065662848548}, {"genre": "bildung", "topic": "topic_10", "weight": 0.0062387012144021, "normalized": 0.0591312615470369}, {"genre": "bildung", "topic": "topic_11", "weight": 0.1224672812130317, "normalized": 0.2395492722283129}, {"genre": "bildung", "topic": "topic_2", "weight": 0.0722830460913011, "normalized": 0.067513125724099}, {"genre": "bildung", "topic": "topic_3", "weight": 0.0434567730924185, "normalized": 0.448791521263033}, {"genre": "bildung", "topic": "topic_4", "weight": 0.0503340926869435, "normalized": 0.0715643975018297}, {"genre": "bildung", "topic": "topic_5", "weight": 0.3441557365492463, "normalized": 0.9999999970942928}, {"genre": "bildung", "topic": "topic_6", "weight": 0.0126463005703795, "normalized": 0.0594709344744052}, {"genre": "bildung", "topic": "topic_7", "weight": 0.090545530780118, "normalized": 0.4243506022253945}, {"genre": "bildung", "topic": "topic_8", "weight": 0.008403310835123, "normalized": 0.0483441107992954}, {"genre": "bildung", "topic": "topic_9", "weight": 0.0333765281185144, "normalized": 0.18605923748115}, {"genre": "fantasy", "topic": "topic_0", "weight": 3.144030272530121e-05, "normalized": 0.0002734650016528}, {"genre": "fantasy", "topic": "topic_1", "weight": 0.4975248526215652, "normalized": 0.9999999979775192}, {"genre": "fantasy", "topic": "topic_10", "weight": 0.0631918343523354, "normalized": 0.5994108151090624}, {"genre": "fantasy", "topic": "topic_11", "weight": 0.0309763150451775, "normalized": 0.0605825686709823}, {"genre": "fantasy", "topic": "topic_2", "weight": 0.007638125699961, "normalized": 0.0023153812049305}, {"genre": "fantasy", "topic": "topic_3", "weight": 3.1440453694843376e-05, "normalized": 0.0002686828193905}, {"genre": "fantasy", "topic": "topic_4", "weight": 0.1584791869353093, "normalized": 0.2253403501455736}, {"genre": "fantasy", "topic": "topic_5", "weight": 0.0991327728285261, "normalized": 0.2880350323424398}, {"genre": "fantasy", "topic": "topic_6", "weight": 0.052499090015459, "normalized": 0.2469645133581523}, {"genre": "fantasy", "topic": "topic_7", "weight": 3.144032514041944e-05, "normalized": 0.0001219212713293}, {"genre": "fantasy", "topic": "topic_8", "weight": 0.0054619927586292, "normalized": 0.0314118204938326}, {"genre": "fantasy", "topic": "topic_9", "weight": 0.0850015086614764, "normalized": 0.4738922483666323}, {"genre": "history", "topic": "topic_0", "weight": 0.0951302966291124, "normalized": 0.999999989487502}, {"genre": "history", "topic": "topic_1", "weight": 0.0888181952125873, "normalized": 0.1733986932423933}, {"genre": "history", "topic": "topic_10", "weight": 0.0773425074578185, "normalized": 0.7336495992952908}, {"genre": "history", "topic": "topic_11", "weight": 0.0593692481285113, "normalized": 0.1161223651239516}, {"genre": "history", "topic": "topic_2", "weight": 0.0850813356063626, "normalized": 0.0804208624037022}, {"genre": "history", "topic": "topic_3", "weight": 0.0007673316137623, "normalized": 0.0078694073698512}, {"genre": "history", "topic": "topic_4", "weight": 0.0914070853305652, "normalized": 0.1299677732222023}, {"genre": "history", "topic": "topic_5", "weight": 0.0590733219456953, "normalized": 0.1716340015872912}, {"genre": "history", "topic": "topic_6", "weight": 0.1402552816912578, "normalized": 0.6598270174791816}, {"genre": "history", "topic": "topic_7", "weight": 0.0589658054069806, "normalized": 0.276340218730446}, {"genre": "history", "topic": "topic_8", "weight": 0.0644267647234718, "normalized": 0.3708544141674468}, {"genre": "history", "topic": "topic_9", "weight": 0.1793628262538742, "normalized": 0.99999999442454}, {"genre": "horror", "topic": "topic_0", "weight": 1.2976909560850192e-05, "normalized": 7.936862035507765e-05}, {"genre": "horror", "topic": "topic_1", "weight": 0.1764016753549429, "normalized": 0.3505345867898023}, {"genre": "horror", "topic": "topic_10", "weight": 0.003324466336307, "normalized": 0.0314856969896161}, {"genre": "horror", "topic": "topic_11", "weight": 0.1617730266634872, "normalized": 0.3164357670241581}, {"genre": "horror", "topic": "topic_2", "weight": 0.1927773712483146, "normalized": 0.1890378825037355}, {"genre": "horror", "topic": "topic_3", "weight": 1.2976905504337042e-05, "normalized": 7.798023776510368e-05}, {"genre": "horror", "topic": "topic_4", "weight": 0.0865528338491684, "normalized": 0.1230653136042952}, {"genre": "horror", "topic": "topic_5", "weight": 0.0014232604885369, "normalized": 0.0041198088356628}, {"genre": "horror", "topic": "topic_6", "weight": 0.0022600021692625, "normalized": 0.0106069958217895}, {"genre": "horror", "topic": "topic_7", "weight": 0.2133669796249149, "normalized": 0.99999999531312}, {"genre": "horror", "topic": "topic_8", "weight": 1.2976950646648851e-05, "normalized": 4.346279149188591e-05}, {"genre": "horror", "topic": "topic_9", "weight": 0.1620814534993532, "normalized": 0.9036483929352443}, {"genre": "mystery", "topic": "topic_0", "weight": 2.225302722982734e-05, "normalized": 0.0001768837875838}, {"genre": "mystery", "topic": "topic_1", "weight": 0.3625487634976538, "normalized": 0.7270134699743203}, {"genre": "mystery", "topic": "topic_10", "weight": 0.0119360256743179, "normalized": 0.1131782954169103}, {"genre": "mystery", "topic": "topic_11", "weight": 0.149444814685408, "normalized": 0.2923203865567033}, {"genre": "mystery", "topic": "topic_2", "weight": 0.1222589446553518, "normalized": 0.1179164033052303}, {"genre": "mystery", "topic": "topic_3", "weight": 2.225320563575477e-05, "normalized": 0.0001737914201413}, {"genre": "mystery", "topic": "topic_4", "weight": 0.154607315350701, "normalized": 0.2198347768639045}, {"genre": "mystery", "topic": "topic_5", "weight": 0.0984103366840611, "normalized": 0.2859358445099241}, {"genre": "mystery", "topic": "topic_6", "weight": 2.225318992916234e-05, "normalized": 7.916149398514411e-05}, {"genre": "mystery", "topic": "topic_7", "weight": 0.0792613021097281, "normalized": 0.3714627764696387}, {"genre": "mystery", "topic": "topic_8", "weight": 0.0214434847476511, "normalized": 0.123412500065055}, {"genre": "mystery", "topic": "topic_9", "weight": 2.225317233221121e-05, "normalized": 9.381371363154029e-05}, {"genre": "na", "topic": "topic_0", "weight": 0.0075952822459687, "normalized": 0.0797883373122769}, {"genre": "na", "topic": "topic_1", "weight": 0.2895169160014433, "normalized": 0.5793079718297769}, {"genre": "na", "topic": "topic_10", "weight": 0.0617597500385655, "normalized": 0.5858255067848841}, {"genre": "na", "topic": "topic_11", "weight": 0.1285220882345021, "normalized": 0.2513931612885758}, {"genre": "na", "topic": "topic_2", "weight": 0.1320190156346023, "normalized": 0.1277599395079505}, {"genre": "na", "topic": "topic_3", "weight": 0.0968239799373883, "normalized": 0.9999999896714012}, {"genre": "na", "topic": "topic_4", "weight": 0.0692673633469508, "normalized": 0.0984863929251076}, {"genre": "na", "topic": "topic_5", "weight": 0.0960624661753759, "normalized": 0.2791136205086532}, {"genre": "na", "topic": "topic_6", "weight": 0.0316927378767984, "normalized": 0.1490778288797931}, {"genre": "na", "topic": "topic_7", "weight": 0.0259008304303812, "normalized": 0.1213686485628254}, {"genre": "na", "topic": "topic_8", "weight": 0.0206516248360848, "normalized": 0.1188539988913631}, {"genre": "na", "topic": "topic_9", "weight": 0.0401879452419382, "normalized": 0.2240360207828011}, {"genre": "political", "topic": "topic_0", "weight": 7.000977250618787e-06, "normalized": 1.6546644677830302e-05}, {"genre": "political", "topic": "topic_1", "weight": 0.3214786247731823, "normalized": 0.6439499092520158}, {"genre": "political", "topic": "topic_10", "weight": 0.0422421606379666, "normalized": 0.4006740689803313}, {"genre": "political", "topic": "topic_11", "weight": 0.0464509510260867, "normalized": 0.0908527112462832}, {"genre": "political", "topic": "topic_2", "weight": 0.1116854157803389, "normalized": 0.1072524527568205}, {"genre": "political", "topic": "topic_3", "weight": 7.001002833672601e-06, "normalized": 1.6257536630991333e-05}, {"genre": "political", "topic": "topic_4", "weight": 0.1599739384890555, "normalized": 0.2274657987915856}, {"genre": "political", "topic": "topic_5", "weight": 0.184600188712938, "normalized": 0.5363783092890633}, {"genre": "political", "topic": "topic_6", "weight": 0.0428928416410133, "normalized": 0.2017704400586387}, {"genre": "political", "topic": "topic_7", "weight": 0.0281160575951586, "normalized": 0.131751152473579}, {"genre": "political", "topic": "topic_8", "weight": 0.0324423833246373, "normalized": 0.186729876459749}, {"genre": "political", "topic": "topic_9", "weight": 0.0301034360395382, "normalized": 0.1678102437171112}, {"genre": "romance", "topic": "topic_0", "weight": 0.0239707711697368, "normalized": 0.251935629729007}, {"genre": "romance", "topic": "topic_1", "weight": 0.077281971817927, "normalized": 0.1500669046921522}, {"genre": "romance", "topic": "topic_10", "weight": 0.1054196190056945, "normalized": 0.9999999905136114}, {"genre": "romance", "topic": "topic_11", "weight": 0.5112232355049721, "normalized": 0.9999999980438866}, {"genre": "romance", "topic": "topic_2", "weight": 0.0725050578581665, "normalized": 0.0677370360695478}, {"genre": "romance", "topic": "topic_3", "weight": 1.252877004426902e-05, "normalized": 7.335162639143466e-05}, {"genre": "romance", "topic": "topic_4", "weight": 0.0081723065123943, "normalized": 0.0116128215268417}, {"genre": "romance", "topic": "topic_5", "weight": 0.113470595297022, "normalized": 0.3296965448529007}, {"genre": "romance", "topic": "topic_6", "weight": 0.002360386064415, "normalized": 0.0110792672995584}, {"genre": "romance", "topic": "topic_7", "weight": 0.0384437533100198, "normalized": 0.1801558230435145}, {"genre": "romance", "topic": "topic_8", "weight": 0.0424312881462278, "normalized": 0.2442330202456895}, {"genre": "romance", "topic": "topic_9", "weight": 0.0047084865433796, "normalized": 0.0262217201402129}, {"genre": "scifi", "topic": "topic_0", "weight": 0.0004106308023898, "normalized": 0.0042597043213629}, {"genre": "scifi", "topic": "topic_1", "weight": 0.0905051684769048, "normalized": 0.1768105640207611}, {"genre": "scifi", "topic": "topic_10", "weight": 1.417296073304102e-05, "normalized": 8.296761241119721e-05}, {"genre": "scifi", "topic": "topic_11", "weight": 0.0050895061752772, "normalized": 0.0099450353371995}, {"genre": "scifi", "topic": "topic_2", "weight": 0.173461261907129, "normalized": 0.1695565875418556}, {"genre": "scifi", "topic": "topic_3", "weight": 1.4172946946849582e-05, "normalized": 9.033366996918036e-05}, {"genre": "scifi", "topic": "topic_4", "weight": 0.7032694434731561, "normalized": 0.999999998578059}, {"genre": "scifi", "topic": "topic_5", "weight": 0.0194794369099465, "normalized": 0.0565857688183964}, {"genre": "scifi", "topic": "topic_6", "weight": 1.417311596235812e-05, "normalized": 4.114754297252389e-05}, {"genre": "scifi", "topic": "topic_7", "weight": 1.417286211903393e-05, "normalized": 4.099074411350244e-05}, {"genre": "scifi", "topic": "topic_8", "weight": 0.0005752863182522, "normalized": 0.0032805099948768}, {"genre": "scifi", "topic": "topic_9", "weight": 0.0071525740511826, "normalized": 0.0398486321281625}]}}, {"vega_version": "6", "vegalite_version": "6.1.0", "vegaembed_version": "7", "mode": "vega-lite"});
+</script>
+</div>
 </div>
 <p>Now we have even more augmented data to work with. We might compare how the top terms for each topic align with the top terms for each genre from our TF-IDF analysis. We might also look at how the dominant topic column aligns with genre labels, or use the full set of topic weights as features in a classifier. The key point is that LDA gives us a different kind of signal — thematic structure rather than vocabulary — that we can use to analyze genre patterns in a complementary way to TF-IDF.</p>
 </section>
