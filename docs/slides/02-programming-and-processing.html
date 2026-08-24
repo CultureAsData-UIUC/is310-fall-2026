@@ -1,0 +1,2651 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../assets/images/favicon.ico" rel="icon">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.27">
+
+  <title>IS310 - Culture As Data Fall 2026 – Programming &amp; Processing</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Programming &amp; Processing</h1>
+  <p class="subtitle">How will we work in this class, and how are new technologies changing those workflows?</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section>
+<section id="any-questions-about-course-tools" class="title-slide slide level1 center">
+<h1>Any Questions About Course Tools?</h1>
+
+</section>
+<section id="reminder-these-are-required" class="slide level2">
+<h2>Reminder: These Are Required</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Slack Account with DH@UIUC Server.</label></li>
+<li><label><input type="checkbox">GitHub Account.</label></li>
+<li><label><input type="checkbox">Local Python 3 Installation.</label></li>
+<li><label><input type="checkbox">Git.</label></li>
+<li><label><input type="checkbox">Local Text Editor (VS Code Recommended).</label></li>
+</ul>
+</section>
+<section id="reminder-these-are-optional" class="slide level2">
+<h2>Reminder: These Are Optional</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">AI Tooling of Your Choice:</label>
+<ul class="task-list">
+<li><label><input type="checkbox">Recommend GitHub Co-Pilot and using GitHub Education Benefits to get access to Co-Pilot.</label></li>
+</ul></li>
+<li><label><input type="checkbox">IDE of Your Choice:</label>
+<ul class="task-list">
+<li><label><input type="checkbox">Recommend Visual Studio Code and Visual Studio Code Extensions.</label></li>
+</ul></li>
+<li><label><input type="checkbox">Oh-My-Zsh.</label></li>
+</ul>
+</section></section>
+<section>
+<section id="modern-software-is-a-problem" class="title-slide slide level1 center">
+<h1>Modern Software Is A Problem</h1>
+<p>The best representation of what I’m talking about is this <a href="https://xkcd.com/2347/" target="_blank">xkcd comic, entitled Dependency</a>.</p>
+
+<img data-src="https://imgs.xkcd.com/comics/dependency.png" class="r-stretch quarto-figure-center"><p class="caption">Dependency by Randall Munroe</p><aside class="notes">
+<p>Essentially, modern software is a bit of a house of cards, and it’s not uncommon to spend hours trying to get something to work, only to find out that you were missing a single character in a configuration file or have some conflicting dependency. The key thing to know is that this is not a reflection of your ability to work with computers, but rather a reflection of the state of modern software.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="any-python-issues" class="slide level2">
+<h2>Any Python Issues?</h2>
+
+<img data-src="https://imgs.xkcd.com/comics/python_environment.png" class="r-stretch quarto-figure-center"><p class="caption">Python Environment by Russell Monroe</p></section>
+<section id="why-python" class="slide level2">
+<h2>Why Python?</h2>
+<table>
+<tbody><tr>
+<td>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/python_twitter.png"></p>
+<figcaption>Jake VanderPlas Tweet</figcaption>
+</figure>
+</div>
+</td>
+<td>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/python_so.png"></p>
+<figcaption>Stack Overflow’s Annual Survey</figcaption>
+</figure>
+</div>
+</td>
+</tr>
+</tbody></table>
+</section></section>
+<section>
+<section id="lets-discuss-github-ai" class="title-slide slide level1 center">
+<h1>Let’s Discuss GitHub &amp; AI</h1>
+
+<img data-src="https://github.blog/wp-content/uploads/2023/01/100million-header.png?resize=1200%2C627" class="r-stretch quarto-figure-center"><p class="caption">100 million users</p></section>
+<section id="alternatives-to-github" class="slide level2">
+<h2>Alternatives to GitHub</h2>
+
+<img data-src="https://rewind.com/wp-content/uploads/2023/05/gitvgit1.png" class="r-stretch"><aside class="notes">
+<p>While alternatives to GitHub exist (primarily <a href="https://about.gitlab.com/">GitLab</a> or <a href="https://bitbucket.org/product">Bitbucket</a>), it is hard to overstate how much in the last decade GitHub has become <strong>the</strong> platform for this type of work. Such a centralization is truly a double-edged sword</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="arctic-code-vault" class="slide level2">
+<h2>Arctic Code Vault</h2>
+
+<img data-src="../assets/images/artic_code_vault.png" class="r-stretch quarto-figure-center"><p class="caption">GitHub Arctic Code Vault</p><aside class="notes">
+<p>For example, GitHub has created what amounts to the largest code archive in the world through their GitHub Arctic Code Vault, an initiative to take a snapshot of all code hosted on their platform on February 2, 2020 and store it in the Svalbard Global Seed Vault. Such an initiative is impressive and was done in partnership with some academic institutions (the exact partners were the Long Now Foundation, the Internet Archive, the Software Heritage Foundation, Arctic World Archive, Microsoft Research, the Bodleian Library, and Stanford Libraries). But it also raises a number of ethical, archival, and political questions. For example, this Arctic Code Vault has been criticized for its erasure of the indigenous Sami people who live on Svalbard and its performative approach to archives. GitHub also has contracts with U.S. Immigrations and Customs Enforcement (ICE) led to protests and boycotts from some sectors of the developer community.[^4] While we plan to use this platform, it’s important to do so with these issues in mind.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-is-data-labor-why-does-data-labor-matter" class="slide level2">
+<h2>What is Data Labor? Why Does Data Labor Matter?</h2>
+<p><a href="https://www.psagroup.org/blogposts/101" target="_blank"><img data-src="../assets/images/data_labor.png"></a></p>
+</section></section>
+<section>
+<section id="models-all-the-way-down" class="title-slide slide level1 center">
+<h1>Models All the Way Down</h1>
+<p>Jer Thorp &amp; Christo Buschek, <em>Knowing Machines</em> (2024)</p>
+<p><a href="https://knowingmachines.org/models-all-the-way" target="_blank"><img data-src="../assets/images/models_all_way_down.png"></a></p>
+<aside class="notes">
+<p>General thoughts on this piece? What did you make of the format?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-is-laion-5b" class="slide level2">
+<h2>What is LAION-5B?</h2>
+
+<img data-src="https://laion.ai/images/blog/laion_pop.jpg" class="r-stretch"><aside class="notes">
+<p>LAION-5B is a “foundation dataset” for generative AI - it’s what models like Stable Diffusion and Midjourney are trained on. The scale makes human review essentially impossible, which is precisely why problems emerge.</p>
+<ul>
+<li>Released in 2022 by LAION, a German non-profit</li>
+<li>Images and text captions scraped from the internet</li>
+<li>Built to give AI models “a comprehensive representation of the world”</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="how-was-laion-5b-built" class="slide level2">
+<h2>How was LAION-5B Built?</h2>
+<p><a href="https://commoncrawl.org/" target="_blank"><img data-src="https://www.searchengineworld.com/wp-content/uploads/2025/07/image-62.png"></a></p>
+<aside class="notes">
+<p>LAION-5B was built from <strong>Common Crawl</strong> using automated methods:</p>
+<ol type="1">
+<li>Search for HTML <code>&lt;img&gt;</code> tags with <code>alt</code> attributes</li>
+</ol>
+<p>ALT tags describe what <strong>site owners want algorithms to see</strong>, not what humans see</p>
+<p>Only about 40% of images on the web have ALT tags. Sites like Pinterest, Shopify, and SlidePlayer have high ALT tag coverage because they auto-generate them for SEO purposes. This means LAION-5B is “powerfully shaped by commercial logics” - it reflects how search engines see the world, not how humans do.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-is-in-common-crawl" class="slide level2">
+<h2>What is in Common Crawl?</h2>
+<p>Schaul, Kevin, Szu Yu Chen, and Nitasha Tiku. “Inside the Secret List of Websites That Make AI like ChatGPT Sound Smart.” <em>Washington Post</em>, April 19, 2023.</p>
+<p><a href="https://www.washingtonpost.com/technology/interactive/2023/ai-chatbot-learning/" target="_blank"><img data-src="https://i0.wp.com/librarian.aedileworks.com/wp-content/uploads/2023/04/image-3.png?resize=921%2C485&amp;ssl=1"></a></p>
+</section>
+<section id="about-me" class="slide level2">
+<h2>About Me</h2>
+<p>Lucy, Li, Suchin Gururangan, Luca Soldaini, et al.&nbsp;“AboutMe: Using Self-Descriptions in Webpages to Document the Effects of English Pretraining Data Filters.” arXiv:2401.06408. Preprint, arXiv, January 12, 2024. <a href="https://doi.org/10.48550/arXiv.2401.06408" target="_blank">https://doi.org/10.48550/arXiv.2401.06408</a>.</p>
+
+<img data-src="https://arxiv.org/html/2401.06408v3/x4.png" class="r-stretch"></section>
+<section id="about-me-1" class="slide level2">
+<h2>About Me</h2>
+
+<img data-src="https://arxiv.org/html/2401.06408v3/x1.png" class="r-stretch"></section>
+<section id="what-is-seeing-like-an-algorithm" class="slide level2">
+<h2>What is seeing like an algorithm?</h2>
+
+<img data-src="https://images.squarespace-cdn.com/content/v1/5d6567d1afafe900010b2c70/1568820946043-99CKAL1Q2TTLIDM2ONPJ/imagenet-interface-2.jpg?format=2500w" class="r-stretch"><aside class="notes">
+<ol start="2" type="1">
+<li>Use OpenAI’s CLIP model to score image-text similarity</li>
+<li>Include pairs above a threshold (0.26-0.28)</li>
+<li>ALT tags describe what <strong>site owners want algorithms to see</strong>, not what humans see</li>
+</ol>
+<p>Only about 40% of images on the web have ALT tags. Sites like Pinterest, Shopify, and SlidePlayer have high ALT tag coverage because they auto-generate them for SEO purposes. This means LAION-5B is “powerfully shaped by commercial logics” - it reflects how search engines see the world, not how humans do.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="excavating-ai" class="slide level2">
+<h2>Excavating AI</h2>
+<p><em>The Politics of Images in Machine Learning Training Sets </em></p>
+<p>By Kate Crawford and Trevor Paglen</p>
+<p><a href="https://excavating.ai/" target="_blank"><img data-src="https://images.squarespace-cdn.com/content/v1/5d6567d1afafe900010b2c70/1568733732627-LH2V5HQB2CTBWWP7L9SM/top-banner-skulls.png?format=2500w"></a></p>
+</section>
+<section id="why-models-all-the-way-down-what-is-the-circularity-problem" class="slide level2">
+<h2>Why Models All the Way Down? What is the Circularity Problem?</h2>
+<blockquote>
+<p>“There are models on top of models, and training sets on top of training sets.”</p>
+</blockquote>
+<div class="fragment">
+<blockquote>
+<p>“Omissions and biases and blind spots from these stacked-up models and training sets shape all of the resulting new models and new training sets.”</p>
+</blockquote>
+<aside class="notes">
+<p>There’s a deep circularity here. LAION-5B’s similarity score comes from CLIP (trained on undisclosed data). To set thresholds, they trained another model and compared to ImageNet benchmarks. ImageNet’s gold standard was set by ResNet50. Each layer inherits biases from the previous ones.</p>
+<p>“Omissions and biases and blind spots from these stacked-up models and training sets shape all of the resulting new models and new training sets.” This is why investigating datasets is so important - it’s perhaps the only way to understand what these models actually contain.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="what-are-the-problems-with-this-data" class="slide level2">
+<h2>What are the problems with this data?</h2>
+<div class="fragment">
+<p>Why is scale a problem?</p>
+</div>
+<div class="fragment">
+<p><strong>The Problem:</strong> In December 2023, researchers found over 1,000 images of Child Sexual Abuse Material (CSAM) in the dataset</p>
+<aside class="notes">
+<blockquote>
+<p>“If your full-time, eight-hours-a-day, five-days-a-week job were to look at each image in the dataset for just one second, it would take you <strong>781 years</strong>.”</p>
+</blockquote>
+<p>LAION-5B contains <strong>5.85 billion</strong> image-text pairs</p>
+<p>LAION-5B is a “foundation dataset” for generative AI - it’s what models like Stable Diffusion and Midjourney are trained on. The scale makes human review essentially impossible, which is precisely why problems emerge. The stated goal was research into automated dataset curation - building a dataset with “no humans in the mix.” The creators explicitly warned against using it for “ready-to-go industrial products.” This warning was largely ignored by Midjourney and Stable Diffusion.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="how-are-these-datsets-curated" class="slide level2">
+<h2>How are these datsets “curated”?</h2>
+<p><a href="https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words" target="_blank"><img data-src="../assets/images/dirty_words.png"></a></p>
+</section>
+<section id="curation-by-statistics" class="slide level2">
+<h2>Curation by Statistics</h2>
+<blockquote>
+<p>“The tiniest of shifts in LAION’s thresholds could have excluded or included <strong>hundreds of millions of images</strong>”</p>
+</blockquote>
+<div class="fragment">
+<ul>
+<li>16% of images are within 0.01 of the lower threshold</li>
+<li>Raising the threshold by just 0.01 would remove <strong>937 million</strong> image pairs</li>
+</ul>
+<aside class="notes">
+<p>This is what “curation by statistics” looks like: tiny tweaks to code can have profound effects on the content of training sets. The thresholds are “very often poorly understood” - even by the developers who set them.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="whose-images" class="slide level2">
+<h2>Whose Images?</h2>
+<p>For every <strong>English speaker</strong>: 1.6 image captions</p>
+<p>For every <strong>French speaker</strong>: 0.5 image captions</p>
+<p>For every <strong>Swahili speaker</strong>: 0.03 image captions</p>
+<div class="fragment">
+<blockquote>
+<p>“For models trained on LAION-5B, English (and English-speaking culture) is valued more than the other 107 languages combined.”</p>
+</blockquote>
+<aside class="notes">
+<p>The language distribution in LAION differs significantly from Common Crawl. CLD3 (the language detector) miscategorized millions of captions - for example, labeling 34 million captions as Luxembourgian (a language only 300,000 people speak). These are mostly actually English.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="whose-aesthetics" class="slide level2">
+<h2>Whose Aesthetics?</h2>
+<blockquote>
+<p>“The concepts of what is and isn’t visually appealing can be influenced in outsized ways by the tastes of <strong>a very small group of individuals</strong>”</p>
+</blockquote>
+<div class="fragment">
+<p>Midjourney’s aesthetic fine-tuning: shaped by a handful of Discord users and a 65-year-old mechanical engineer from Wisconsin</p>
+<aside class="notes">
+<p>LAION-Aesthetics: a subset for “high visual quality” images</p>
+<p>The aesthetic model was trained on:</p>
+<ul>
+<li>15,000 logos</li>
+<li>238,000 synthetic AI images rated by Discord users</li>
+<li>250,000 photos rated on dpchallenge.com</li>
+</ul>
+<p>The Discord raters were described as “WEIRD” (Western, Educated, Industrialized, Rich, Democratic) and “nerdy” and “esoteric.” The dpchallenge.com top 50 reviewers are 95% from the US, Canada, or Europe - “mostly middle-aged photography enthusiasts from small American cities.”</p>
+<p>The SAC dataset creators acknowledge that “most of the ratings in the dataset were submitted by a handful of users” whose “aesthetic preferences dominate the dataset.” Yet this shapes what millions of users see when they generate images.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="what-does-this-mean-for-how-we-use-ai" class="slide level2">
+<h2>What does this mean for how we use AI?</h2>
+<ul>
+<li>What sorts of use cases are appropriate for AI?</li>
+<li>What dangers exist because of the reliance on training data?</li>
+<li>Do we understand the difference between and LLM and a chatbot? <em>hint: models all the way down!</em></li>
+</ul>
+</section></section>
+<section>
+<section id="time-to-prompt-the-command-line" class="title-slide slide level1 center">
+<h1>Time To Prompt: The Command Line</h1>
+
+</section>
+<section id="what-is-a-terminal" class="slide level2">
+<h2>What is a Terminal?</h2>
+<p>A <strong>terminal</strong> is a way to interact with your computer via <strong>text</strong> commands.</p>
+<div class="fragment">
+<p>Instead of clicking on icons (GUI), we type explicit commands.</p>
+</div>
+<div class="fragment">
+<p>You’ve already used it!</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">python3</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>So far, you have been installing software via something called the terminal, but we have yet to explain what the terminal is or how it works.</p>
+<p>Terminals are a way to interact with your computer via text commands. Today, we usually give commands to a computer via a Graphical User Interface (GUI), pronounced “gooey”. Any time you download an app, whether on your phone or computer, you are using a GUI. GUIs let us click on icons, drag items, and interact with our computers in a visual way. Terminals let us do many of the same functions, but we have to be more explicit and write these commands.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="a-brief-history-of-computing" class="slide level2">
+<h2>A Brief History of Computing</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://www.computerhope.com/cdn/eniac.jpg" height="400"></p>
+<figcaption>Early computer (ENIAC)</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>Back in the 1950s and 1960s, computers were the size of entire rooms and functioned through the use of something called punch cards. These early computers required teams of operators, often comprised of women, who inputted punch cards to prompt the computers to process and output results on paper.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="punch-cards" class="slide level2">
+<h2>Punch Cards</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://theoreti.ca/wp-content/uploads/2016/03/IMG_1628.jpg" height="400"></p>
+<figcaption>Example punch card from the Index Thomisticus</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>Punch cards contained a series of holes that encoded information like numbers, letters, and even instructions for programs. These cards were fed into machines called card readers, translating the hole patterns into electrical signals the computer could understand. This enabled data entry for tasks like payroll calculations, statistical analysis, and even early gaming. The punch cards and computers were run by teams of <em>operator</em>, often comprised of women, who inputted these punch cards, prompting the computers to process and output the results on paper.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="punch-cards-1" class="slide level2">
+<h2>Punch Cards</h2>
+<ul>
+<li>One of the first Computing in the Humanities projects started in the 1940s to digitize the writings of Thomas Aquinas. More information available here <a href="https://theoreti.ca/?p=6096" target="_blank">https://theoreti.ca/?p=6096</a></li>
+<li>For more on this history, I would highly recommend watching “Computer History: Punch Cards Historical Overview -IBM Remington Rand UNIVAC - History 1900’s-1960’s”, 2016. <a href="https://www.youtube.com/watch?v=kKJxzay85Vk" target="_blank">https://www.youtube.com/watch?v=kKJxzay85Vk</a>.</li>
+</ul>
+<aside class="notes">
+<p>The term <em>terminal</em> then refers to the device that allowed operators to interact with the computer, and the <em>command line</em> refers to the text-based interface that allowed operators to input commands to the computer.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-first-gui" class="slide level2">
+<h2>The First GUI</h2>
+
+<img data-src="https://cdn.arstechnica.net/wp-content/uploads/archive/images/gui/7-AltoST-small.jpg" class="r-stretch quarto-figure-center"><p class="caption">SmallTalk: The First GUI</p><p>Reimer, Jeremy. “A History of the GUI.” <em>Ars Technica</em>, May 5, 2005. <a href="https://arstechnica.com/features/2005/05/gui/" target="_blank">https://arstechnica.com/features/2005/05/gui/</a>.</p>
+<aside class="notes">
+<p>The command line was the only way to interact with computers until the 1970s, when the first Graphical User Interface (GUI) was developed at Xerox PARC. This GUI was later adopted by Apple and Microsoft, and is the basis for the GUIs we use today. Smalltalk was conceived as a programming language and development environment so easy to use that a child could understand it, and in many respects was successful in this goal. Smalltalk was the world’s first object-oriented programming language, where program code and data could be encapsulated into single units called objects that could then be reused by other programs without having to know the details of the object’s implementation. It also had modern, Java-like features like automatic memory management, to take some of the hard work away from the programmer. The development environment of Smalltalk was also the user interface that Smalltalk programs ran in, and introduced many modern GUI concepts. It first began to take shape around 1974, and was continuously updated and enhanced.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="shells" class="slide level2">
+<h2>Shells?</h2>
+
+<img data-src="https://phoenixnap.com/kb/wp-content/uploads/2023/09/bourne-again-shell-history-1.png" class="r-stretch"><aside class="notes">
+<p>Today when we use <strong>terminals</strong>, we are not just using the terminal but also using often using something called a <strong>shell</strong>. A “shell” is a program within a terminal that interprets user commands and processes computer output. Originating from the Unix operating system, the term “shell” signifies a user-friendly interface that encapsulates the complexities of various computer systems. Popular shell programs include <strong>bash</strong> (Bourne Again SHell), which is the default shell for most Linux distributions and MacOS; <strong>PowerShell</strong>, which is Windows default option, and <strong>zsh</strong> (Z Shell) – the optional configuration from our course tools. Each shell has its own set of commands and syntax, but they all share the same basic functionality.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="key-terminology" class="slide level2">
+<h2>Key Terminology</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 66%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Terminal</strong></td>
+<td>The device/program that allows you to interact with the computer</td>
+</tr>
+<tr class="even">
+<td><strong>Shell</strong></td>
+<td>A program that interprets your commands (bash, zsh, PowerShell)</td>
+</tr>
+<tr class="odd">
+<td><strong>Command Line</strong></td>
+<td>The text-based interface where you type commands</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>The term “terminal” refers to the device that allowed operators to interact with the computer. The “command line” refers to the text-based interface that allowed operators to input commands. The command line was the only way to interact with computers until the 1970s, when the first GUI was developed at Xerox PARC.</p>
+<p>A “shell” is a program within a terminal that interprets user commands and processes computer output. Popular shells include bash (default for most Linux/MacOS), PowerShell (Windows), and zsh.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="gui-vs-cli" class="slide level2">
+<h2>GUI vs CLI</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>GUI (Graphical)</strong> <img data-src="https://melaniewalsh.github.io/Intro-Cultural-Analytics/_images/GUI-example.gif" height="300" alt="GUI example"></p>
+</div><div class="column" style="width:50%;">
+<p><strong>CLI (Command Line)</strong> <img data-src="https://melaniewalsh.github.io/Intro-Cultural-Analytics/_images/CLI-example.gif" height="300" alt="CLI example"></p>
+</div></div>
+<aside class="notes">
+<p>In the GUI example, we see using the Mac Finder App to interact graphically with file folders - clicking and moving files around with a mouse.</p>
+<p>In the CLI example, we see typing commands in the terminal like <code>mkdir</code> and <code>rmdir</code> to create and remove directories. The shell being used is bash.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="working-with-the-command-line" class="title-slide slide level1 center">
+<h1>Working With The Command Line</h1>
+
+</section>
+<section id="creating-a-directory" class="slide level2">
+<h2>Creating a Directory</h2>
+<p>Open your terminal in VS Code: <strong>Terminal &gt; New Terminal</strong></p>
+<div class="fragment">
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="fu">mkdir</span> Intro-CA-Notes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>But how do we know it worked?</p>
+<aside class="notes">
+<p>To create a directory (folder), we use the mkdir command followed by the name we want. But after pressing enter, there’s no visual confirmation - we need to use other commands to verify it worked.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="writing-vs.-prompting" class="slide level2">
+<h2>Writing Vs. Prompting</h2>
+<p>We have two options: - look at the <a href="../materials/introducing-defining-cad/04-command-line-cheatsheet.html" target="_blank">Command Line cheatsheet</a> that contains a number of these commands and see what would be the best option to help us check if this worked.</p>
+</section>
+<section id="writing-vs.-prompting-1" class="slide level2">
+<h2>Writing Vs. Prompting</h2>
+<p>Our other option is to try and start testing out these AI Chatbots, and specifically GitHub Co-Pilot (though again you are welcome to use any AI tool that is free and helps you understand these materials).</p>
+</section></section>
+<section>
+<section id="prompt-engineering" class="title-slide slide level1 center">
+<h1>Prompt Engineering</h1>
+
+</section>
+<section id="what-is-a-prompt" class="slide level2">
+<h2>What is a Prompt?</h2>
+<p>In the terminal: the symbol that indicates where you type</p>
+<ul>
+<li><code>$</code> (bash)</li>
+<li><code>%</code> (zsh)</li>
+<li><code>&gt;</code> (PowerShell)</li>
+</ul>
+<div class="fragment">
+<p>In AI: the text input you give to a chatbot</p>
+<aside class="notes">
+<p>So far we have been doing a form of prompting, called <strong>Command Prompt</strong>, which refers to where we write the text commands in the terminal. Often times the command prompt is a symbol that indicates the start of a new command. For example, in Melanie’s example, the command prompt is the <code>$</code> symbol. This symbol is called a <strong>prompt</strong> because it prompts you to enter a command. The prompt is followed by a <strong>cursor</strong>, which is the blinking vertical line that indicates where your next character will appear. Other symbols you might see include <code>#</code>, <code>%</code>, and <code>&gt;</code>.</p>
+<p>The term “prompt” has become incredibly popular since the release of GPT-3 by OpenAI in Summer 2020. In the terminal, the prompt is a symbol like $ or % that indicates where your next command will appear. In AI contexts, it refers to the text commands or questions you give to chatbots.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="the-ai-explosion" class="slide level2">
+<h2>The AI Explosion</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://github.com/Mooler0410/LLMsPracticalGuide/raw/main/imgs/tree.jpg" height="450"></p>
+<figcaption>Evolution of LLMs</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>While there idea of prompt engineering has a longer history in natural language processing, the term has taken over, with the proliferation of new AI chatbots and models.</p>
+<p>In some ways our idea of giving text prompts to the terminal via the command line echoes how we do prompt engineering for AI chatbots, since both require writing text (something we’ll discuss more later in this lesson).</p>
+<p>The term “prompt engineering” describes giving commands or prompts to chatbots for certain outputs or results. While prompt engineering has a longer history in natural language processing, the term has taken over with the proliferation of new AI chatbots and models since 2020.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="terminal-vs-ai-prompting" class="slide level2">
+<h2>Terminal vs AI Prompting</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Terminal Commands</th>
+<th>AI Prompts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fixed, specific syntax</td>
+<td>Natural language</td>
+</tr>
+<tr class="even">
+<td>Predictable outputs</td>
+<td>Variable outputs</td>
+</tr>
+<tr class="odd">
+<td>Must use exact commands</td>
+<td>Flexible phrasing</td>
+</tr>
+<tr class="even">
+<td>Reproducible</td>
+<td>Rarely reproducible</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Both require writing text, but depending on your operating system, terminal, and shell, you have to give the command line certain set of commands that have been previously programmed. With AI chatbots, you can write without those set structures - but that doesn’t mean there aren’t helpful guidelines.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="prompting-guidelines" class="slide level2">
+<h2>Prompting Guidelines?</h2>
+
+<img data-src="https://miro.medium.com/v2/resize:fit:1170/1*97Rixvja91FR6-q6kdPIaA.jpeg" class="r-stretch quarto-figure-center"><p class="caption">Infographics Abound</p><aside class="notes">
+<p>But while depending on your operating system, terminal, and shell, you have to give the command line certain set of commands that have been previously programmed, with AI chatbots you can write without those set structures.</p>
+<p>However, that doesn’t mean there aren’t some helpful guidelines for prompt engineering, even if the process often requires lots of trial and error, and is rarely reproducible or transparent.</p>
+<p>If you search for tips on prompt engineering, you’ll find lots of infographics like this one:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-4s-of-prompt-engineering" class="slide level2">
+<h2>The 4S of Prompt Engineering</h2>
+<p>Microsoft’s guidelines for GitHub Copilot:</p>
+<div class="fragment">
+<ul>
+<li><strong>Single</strong> - One task or question at a time</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><strong>Specific</strong> - Detailed requests and specifications</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><strong>Short</strong> - Be concise</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><strong>Surround</strong> - Keep relevant files open for context</li>
+</ul>
+<aside class="notes">
+<p>Microsoft provides these guidelines specifically for Copilot since it has been trained primarily for coding tasks. The final one is particularly important for Copilot since it works best when it has code examples to learn from - this is called “few-shot learning.”</p>
+<p>While these are general guidelines, the final one is particularly important for Co-Pilot, since it works best when it has code examples to learn from (something called <em>few-shot learning</em>, for those that are interested).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="how-copilot-processes-prompts" class="slide level2">
+<h2>How Copilot Processes Prompts</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://learn.microsoft.com/en-us/training/github/introduction-prompt-engineering-with-github-copilot/media/3-prompt-processing-flow-diagram.png" height="400"></p>
+<figcaption>Copilot processing flow</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>This diagram details what GitHub Copilot does with your prompt. The key thing to understand is that it looks for patterns in the prompt and tries to match those patterns to code examples it has seen before. So the more specific and detailed your prompt is, the more likely it is to find a match.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="important-warning" class="slide level2">
+<h2>Important Warning</h2>
+<p><strong>Never share sensitive information in prompts!</strong></p>
+<div class="fragment">
+<ul>
+<li>Personal data can be leaked</li>
+<li>Copilot scrapes GitHub repositories</li>
+<li>The legality and ethics remain hazy</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Use AI tools with a <strong>critical lens</strong></p>
+<aside class="notes">
+<p>Even though Copilot claims to be secure, there’s a lot of potential for personal data to be leaked through this process. The legality of Copilot remains hazy, not to mention the ethics or politics of it. You’ll see why as we continue to work with it, as it autocompletes file names and other information from GitHub that it has scraped.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="example-prompts-for-the-cli" class="slide level2">
+<h2>Example Prompts for the CLI</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try these prompts!</strong></p>
+</div>
+<div class="callout-content">
+<pre><code>How can I check if my directory was created in my terminal?</code></pre>
+<pre><code>Should I use the command ls or pwd to check if my directory
+was created? And what is the difference between these two?</code></pre>
+<pre><code>How can I create a directory named is310-computing-humanities
+in my terminal?</code></pre>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>These are examples of good prompts for getting help with command line tasks. Notice they are specific, ask one thing at a time, and are concise. When you get answers, always verify them using the command line cheatsheet or by testing carefully.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="directories-file-paths" class="title-slide slide level1 center">
+<h1>Directories &amp; File Paths</h1>
+<p>So returning to our original question, hopefully by now we have discovered some of the commands we can use to check if our directory was created. Any thoughts?</p>
+</section>
+<section id="essential-commands" class="slide level2">
+<h2>Essential Commands</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pwd</code></td>
+<td>Print working directory (where am I?)</td>
+</tr>
+<tr class="even">
+<td><code>ls</code></td>
+<td>List directory contents</td>
+</tr>
+<tr class="odd">
+<td><code>cd</code></td>
+<td>Change directory</td>
+</tr>
+<tr class="even">
+<td><code>mkdir</code></td>
+<td>Make a new directory</td>
+</tr>
+<tr class="odd">
+<td><code>touch</code></td>
+<td>Create a new file</td>
+</tr>
+<tr class="even">
+<td><code>mv</code></td>
+<td>Move or rename files</td>
+</tr>
+<tr class="odd">
+<td><code>rmdir</code></td>
+<td>Remove an empty directory</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>These are the fundamental commands you’ll use constantly. pwd shows your current location, ls shows what’s in your current folder, cd moves you around, mkdir creates folders, touch creates files, mv moves things, and rmdir removes empty folders.</p>
+<p>See the Command Line cheatsheet for more commands and details!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="making-directories" class="slide level2">
+<h2>Making Directories?</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="fu">mkdir</span> is310-computing-humanities</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>With the help of the cheatsheet and GitHub Co-Pilot, we should see that the command <code>ls</code> lists the contents of a directory, and <code>pwd</code> prints the full working path. So we can use these commands to check if our directory was created.</p>
+<p>And then we can use the command <code>mkdir</code> to create a directory named <code>is310-computing-humanities</code>.</p>
+<p>Using these commands, we can see that our directory was created. But what does this mean exactly?</p>
+<p>As we read this week, how we interact with computers has increasingly made it difficult to understand where our files are stored. While search functionality often takes care of this for us in GUI applications, in the command line we have to be more explicit about where we want to store our files and we have to know where we are located.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="understanding-file-paths" class="slide level2">
+<h2>Understanding File Paths</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://heardlibrary.github.io/digital-scholarship/computer/images-2-pc/file-tree.png" height="400"></p>
+<figcaption>File tree structure</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>In this figure, we see a representation of how folders and files are organized on a Windows computer. The top level is the <strong>root directory</strong>, which on Windows is the <code>C:</code> drive. On Macs and Linux machines, we have a similar root directory, but it is represented by a <code>/</code> symbol. This root directory contains all of the files and folders on your computer. The root directory is also called the <strong>parent directory</strong> because it is the parent of all the other directories on your computer.</p>
+<p><strong>Important to know: directory is the same as folder, and the two are often used interchangeably.</strong> Directory is the original term, but with GUIs we often use the term folder.</p>
+<p>In this diagram, we can see that there is a Users folder or directory. This is where most of your files that you download or create are stored: under your user account and in the <code>Documents</code>, <code>Downloads</code>, and <code>Desktop</code> folders.</p>
+<p>If I use the <code>pwd</code> command, I can start to see this structure.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="working-directories" class="slide level2">
+<h2>Working Directories</h2>
+
+<img data-src="../assets/images/pwd_example.png" class="r-stretch quarto-figure-center"><p class="caption">Current Directory</p><aside class="notes">
+<p>You’ll notice the command prints out a long string that has names like <code>Users</code>, followed by a series of names separated by a forward slash <code>/</code> (in PowerShell, you’ll see backslashes <code>\</code>). Each of these are my folders or directories, and this represents the <strong>absolute file path</strong> from my root directory to my current directory – that is the current location of my terminal. I realize this might be a bit confusing initially, but eventually as you use the command line more, you’ll start to get a sense of how this works.</p>
+<p>Each file path is unique to your computer, and so if you are following along with this lesson, you’ll see a different file path, though there should be a <code>Users</code> folder as your root or home directory.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="absolute-vs-relative-paths" class="slide level2">
+<h2>Absolute vs Relative Paths</h2>
+<p><strong>Absolute path:</strong> Full path from root</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">/Users/zleblanc/Documents/is310</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p><strong>Relative path:</strong> Path from current location</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="bu">cd</span> ~        <span class="co"># Go to home directory</span></span>
+<span id="cb8-2"><a></a><span class="bu">cd</span> ..       <span class="co"># Go up one directory</span></span>
+<span id="cb8-3"><a></a><span class="bu">cd</span> ../..    <span class="co"># Go up two directories</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>You’ll also notice I did the command <code>cd ~</code>. What do you think this command does? What does <code>cd</code> stand for do you think?</p>
+<p>A core distinction with how I used this final command is the fact that I used a tilde <code>~</code> symbol. This symbol is a <strong>relative file path</strong>, meaning it is relative to my current directory. So if I am in the <code>Documents</code> folder, <code>cd ~</code> will take me to my home directory. You can also use <code>cd ..</code> to go up one directory, and <code>cd ../..</code> to go up two directories, and so on.</p>
+<p>An absolute file path is the complete path from the root directory to a specific location. It’s unique to your computer. A relative path is relative to your current directory. The tilde ~ represents your home directory, and .. means “parent directory” (one level up).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="putting-it-together" class="slide level2">
+<h2>Putting It Together</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="co"># Create a file</span></span>
+<span id="cb9-2"><a></a><span class="fu">touch</span> is310-computing-humanities.txt</span>
+<span id="cb9-3"><a></a></span>
+<span id="cb9-4"><a></a><span class="co"># Move it into a folder</span></span>
+<span id="cb9-5"><a></a><span class="fu">mv</span> is310-computing-humanities.txt is310-computing-humanities</span>
+<span id="cb9-6"><a></a></span>
+<span id="cb9-7"><a></a><span class="co"># Change into the folder</span></span>
+<span id="cb9-8"><a></a><span class="bu">cd</span> is310-computing-humanities</span>
+<span id="cb9-9"><a></a></span>
+<span id="cb9-10"><a></a><span class="co"># List contents to verify</span></span>
+<span id="cb9-11"><a></a><span class="fu">ls</span></span>
+<span id="cb9-12"><a></a></span>
+<span id="cb9-13"><a></a><span class="co"># Go back up and remove the folder</span></span>
+<span id="cb9-14"><a></a><span class="bu">cd</span> ..</span>
+<span id="cb9-15"><a></a><span class="fu">rmdir</span> is310-computing-humanities</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>This sequence demonstrates a typical workflow: creating a file, moving it into a directory, navigating into that directory to verify, then cleaning up by going back and removing the directory. Note that rmdir only works on empty directories.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="in-class-exercise" class="title-slide slide level1 center">
+<h1>In-Class Exercise</h1>
+
+</section>
+<section id="your-tasks" class="slide level2">
+<h2>Your Tasks</h2>
+<p>Using the cheatsheet and/or your preferred AI chatbot:</p>
+<ol type="1">
+<li>Create <code>is310-computing-humanities</code> directory in your <code>Desktop</code> folder</li>
+<li>Inside it, create <code>is310-computing-humanities.txt</code></li>
+<li>Add text to your file using the command line <em>(new command!)</em></li>
+<li>Display the file contents <em>(new command!)</em></li>
+<li>Return to your home directory</li>
+</ol>
+<div class="fragment">
+<p><strong>Bonus:</strong> Copy your folder, then delete the copy</p>
+<aside class="notes">
+<p>This exercise combines what we’ve learned about the command line with using AI tools for help. The new commands you’ll need to look up are for adding text to a file (like echo or cat with redirection) and displaying file contents (like cat). Remember to ask the instructors if you need help!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="additional-resources" class="slide level2">
+<h2>Additional Resources</h2>
+<ol type="1">
+<li><a href="https://programminghistorian.org/en/lessons/intro-to-bash">Introduction to the Bash Command Line</a> - <em>Programming Historian</em></li>
+<li><a href="https://youtu.be/eH8Z9zeywq0?t=885">Bash Basics Part 1</a> - Video tutorial</li>
+<li><a href="https://www.youtube.com/watch?v=oxuRxtrO2Ag">Beginner’s Guide to the Bash Terminal</a></li>
+<li><a href="https://www.codecademy.com/learn/learn-the-command-line">CodeAcademy Command Line Course</a></li>
+</ol>
+<aside class="notes">
+<p>These resources provide additional depth on the command line. The Programming Historian tutorial is particularly good for humanities contexts. The videos are helpful if you prefer visual learning. And the CodeAcademy course provides interactive practice.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="questions" class="slide level2">
+<h2>Questions?</h2>
+<p>Remember:</p>
+<ul>
+<li>The <strong>terminal</strong> is the interface</li>
+<li>The <strong>shell</strong> interprets commands</li>
+<li>The <strong>command line</strong> is where you type</li>
+<li><strong>Prompts</strong> work for both CLI and AI!</li>
+</ul>
+<div class="fragment">
+<p>See also: <a href="../materials/introducing-defining-cad/04-command-line-cheatsheet.html" target="_blank">Command Line Cheatsheet</a></p>
+</div>
+</section></section>
+<section>
+<section id="what-is-version-control" class="title-slide slide level1 center">
+<h1>What is Version Control?</h1>
+
+</section>
+<section id="the-problem" class="slide level2">
+<h2>The Problem</h2>
+<p>Have you ever had files like this?</p>
+<div class="fragment">
+<ul>
+<li><code>essay_final.docx</code></li>
+<li><code>essay_final_v2.docx</code></li>
+<li><code>essay_FINAL_FINAL.docx</code></li>
+<li><code>essay_FINAL_FINAL_actually_final.docx</code></li>
+</ul>
+</div>
+<div class="fragment">
+<p>Version control solves this problem!</p>
+<aside class="notes">
+<p>So far, we have been using the command line in the terminal, installed GitHub Co-Pilot and <code>git</code>, but we have yet to use either for their main purpose: version control and collaborative coding. In this lesson, we will explore what version control is and how it works, as well as how to use GitHub to collaborate with others and share our code and datasets.</p>
+<p>Version control is the practice of tracking and managing changes to files over time. We’ve all experienced the chaos of multiple file versions. Git provides a systematic way to track changes, collaborate, and maintain a clean history of your work.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="what-is-git" class="slide level2">
+<h2>What is Git?</h2>
+<p><strong>Git</strong> is software for version control - tracking changes in files over time.</p>
+<div class="fragment">
+<ul>
+<li>Created in 2005 by Linus Torvalds (creator of Linux)</li>
+<li>Most popular version control system in the world</li>
+<li>Used by millions of developers and researchers</li>
+</ul>
+<aside class="notes">
+<p>Git requires changes to be saved (committed) before they can be combined (merged) with the main project. You’re already familiar with this concept if you’ve used Google Docs or Word’s “Track Changes” - but with those you get version history automatically. With git, we have to tell it what to track and when to track it.</p>
+<p>Created in 2005 by Linus Torvalds, the creator of Linux, the open-source operating system that powers much of the internet, Git is now the most popular version control system in the world.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="git-vs-github" class="slide level2">
+<h2>Git vs GitHub</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Git</th>
+<th>GitHub</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>What</strong></td>
+<td>Version control system</td>
+<td>Platform for hosting git repositories</td>
+</tr>
+<tr class="even">
+<td><strong>Where</strong></td>
+<td>Local (on your computer)</td>
+<td>Remote (website)</td>
+</tr>
+<tr class="odd">
+<td><strong>Install?</strong></td>
+<td>Yes</td>
+<td>No (it’s a website)</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>They are <strong>two separate technologies</strong> often used together!</p>
+<aside class="notes">
+<p>A very important thing to understand is that while git and GitHub sound the same, they are two separate technologies. Git is a version control system, while GitHub is a platform for hosting git repositories. In git, a folder is called a repository. We’ll be using both in this course, but it’s important to realize they are not identical.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="git-github-together" class="slide level2">
+<h2>Git + GitHub Together</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://miro.medium.com/v2/resize:fit:1400/1*tDz-Vkeg-yoBRcnAZ5SDow.png" height="450"></p>
+<figcaption>Git and GitHub workflow</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>Even though these two technologies are separate, they are often used together. You can use git to track changes in your files locally on your computer, and then push those changes to a remote repository on GitHub. This is what we will be doing in this course.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-git-for-culture-as-data" class="slide level2">
+<h2>Why Git for Culture as Data?</h2>
+<p>Git allows you to:</p>
+<ul>
+<li>Keep track of changes in plain text files</li>
+<li>Collaborate in real-time with other researchers</li>
+<li>Easily revert to earlier versions</li>
+<li>Create different branches to explore new ideas</li>
+<li>See who added what to the project</li>
+</ul>
+<aside class="notes">
+<p>Although Git and version control systems are predominantly used in software development, they offer several advantages for scholars in Digital Humanities. Similar to how you might handle versions of a paper, essay, or dataset, Git provides systematic version tracking.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-version-tracking-looks-like" class="slide level2">
+<h2>What Version Tracking Looks Like</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/github_diff.png" height="400"></p>
+<figcaption>Example of a git diff</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>This screenshot is from GitHub but shows what git tracks. You can see on the left, the previous erroneous line was deleted, and on the right is the corrected version. This is a very simple example, but it gives you a sense of how git tracks changes - showing exactly what was removed and what was added.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="working-with-git" class="title-slide slide level1 center">
+<h1>Working with Git</h1>
+
+</section>
+<section id="check-your-installation" class="slide level2">
+<h2>Check Your Installation</h2>
+<p>First, verify git is installed:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>You should see something like:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="fu">git</span> version 2.39.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Remember that we run our commands in the terminal! If you don’t see a version number, you may need to install git. Let the instructors know if you’re having issues.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="create-a-project-folder" class="slide level2">
+<h2>Create a Project Folder</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="co"># Create a new folder</span></span>
+<span id="cb12-2"><a></a><span class="fu">mkdir</span> is310-first-repo</span>
+<span id="cb12-3"><a></a></span>
+<span id="cb12-4"><a></a><span class="co"># Navigate into it</span></span>
+<span id="cb12-5"><a></a><span class="bu">cd</span> is310-first-repo</span>
+<span id="cb12-6"><a></a></span>
+<span id="cb12-7"><a></a><span class="co"># Create a file</span></span>
+<span id="cb12-8"><a></a><span class="fu">touch</span> first_file.txt <span class="co"># For Unix/Linux</span></span>
+<span id="cb12-9"><a></a><span class="ex">New-Item</span> <span class="at">-ItemType</span> File <span class="at">-Path</span> . <span class="at">-Name</span> first_file.txt <span class="co"># For PowerShell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Add some text to the file:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="bu">echo</span> <span class="st">"This is my first file"</span> <span class="op">&gt;</span> first_file.txt <span class="co"># For Unix/Linux</span></span>
+<span id="cb13-2"><a></a></span>
+<span id="cb13-3"><a></a><span class="st">"This is my first file"</span> <span class="kw">|</span> <span class="ex">Out-File</span> <span class="at">-FilePath</span> first_file.txt <span class="co">#For PowerShell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Let’s create a new folder for our project. We use mkdir to create the folder, cd to navigate into it, and touch to create an empty file. Then we use echo with the redirect operator &gt; to add text to the file.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="initialize-a-git-repository" class="slide level2">
+<h2>Initialize a Git Repository</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="fu">git</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Output:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="ex">Initialized</span> empty Git repository in /Users/YOU/is310-first-repo/.git/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>A hidden <code>.git</code> folder is created. We can use <code>ls -a</code> for Unix/Linux or <code>Get-ChildItem -Force</code> for PowerShell to see it.</p>
+<aside class="notes">
+<p>To start tracking changes, we need to initialize a git repository. The git init command creates a hidden .git folder that contains all the information about our repository. The <code>.git</code> folder is hidden by default, so we need to use the <code>-a</code> or <code>-Force</code> flag to see it. This means that if you try looking at your folder either in a file explorer or in the terminal with just <code>ls</code>, or even in the VS Code Explorer, you won’t see the <code>.git</code> folder.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="the-git-workflow" class="slide level2">
+<h2>The Git Workflow</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/dhri_git.png" height="400"></p>
+<figcaption>Git as a camera</figcaption>
+</figure>
+</div>
+<p><em>Think of git as a camera taking snapshots of your project</em></p>
+<aside class="notes">
+<p>Thinking of git as a camera taking a photo of your project at a particular point in time is helpful. Every time you commit your changes, you are taking a snapshot. You can then go back to that snapshot at any time. Like save points in a video game!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="step-1-add-to-staging-area" class="slide level2">
+<h2>Step 1: Add to Staging Area</h2>
+<p>Git doesn’t track automatically - you must tell it what to track:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a></a><span class="fu">git</span> add first_file.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Check the status:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a></a><span class="ex">On</span> branch main</span>
+<span id="cb18-2"><a></a></span>
+<span id="cb18-3"><a></a><span class="ex">No</span> commits yet</span>
+<span id="cb18-4"><a></a></span>
+<span id="cb18-5"><a></a><span class="ex">Changes</span> to be committed:</span>
+<span id="cb18-6"><a></a>    <span class="ex">new</span> file:   first_file.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>After initializing a repository, tracking is NOT automatic. We have to tell git which files to pay attention to by adding them to the staging area. The staging area is like selecting which photos you want to include in an album before actually printing them.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="step-2-commit-changes" class="slide level2">
+<h2>Step 2: Commit Changes</h2>
+<p>Finalize your snapshot with a descriptive message:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Added first file to our repository"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Check status again:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a></a><span class="ex">On</span> branch main</span>
+<span id="cb21-2"><a></a><span class="ex">nothing</span> to commit, working tree clean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Committing is like actually taking the photo. The -m flag lets you add a message describing what changed. Your commit messages should be short and descriptive - they help you (and collaborators) understand the history of your project.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="if-you-forget-the--m-flag" class="slide level2">
+<h2>If You Forget the -m Flag…</h2>
+<p>You’ll see Vim (a text editor):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://miro.medium.com/v2/resize:fit:1400/1*p-tiZIHNuZYJbxMlkis-Dw.png" height="350"></p>
+<figcaption>Vim editor</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>Ideally, your commit messages should be short and descriptive. They should describe the changes you made to the file.</p>
+<p>If you don’t add a message, git will automatically open a text editor in your terminal and ask you to add a message. You’ll likely see something that looks like the following.</p>
+<p>This looks very intimidating, but it’s actually not that bad. This is the default text editor (think like VS Code, but much simpler) for git, which is called <code>Vim</code>. Vim is a very powerful text editor, but it has a steep learning curve. If you want to learn more about Vim, you can read this <a href="https://www.freecodecamp.org/news/vim-beginners-guide/">https://www.freecodecamp.org/news/vim-beginners-guide/</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="if-you-forget-the--m-flag-1" class="slide level2">
+<h2>If You Forget the -m Flag…</h2>
+<ul>
+<li>Press <code>i</code> to type, then <code>esc</code>, then <code>:wq</code> to save and exit</li>
+<li>Or press <code>esc</code>, then <code>:q!</code> to exit without saving</li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a></a><span class="ex">Aborting</span> commit due to empty commit message.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>The key thing to know is that if you get this screen you can either add a message or exit the text editor. To add a message, you need to press <code>i</code> on your keyboard. This will put you in insert mode, which means you can type. Then you can add your message. Once you have added your message, you need to press <code>esc</code> on your keyboard. This will take you out of insert mode. Then you need to type <code>:wq</code> and press enter. This will save your message and exit the text editor.</p>
+<p>If you just want to exit the text editor, you can press <code>esc</code> on your keyboard. Then you need to type <code>:q!</code> and press enter. This will exit the text editor without saving your message. In which case, you’ll see the following message:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="quotes" class="slide level2">
+<h2>Quotes</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a></a><span class="ex">quote</span><span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>While doing this once or twice is fine, it can get annoying so it’s better to add a message to your commit with the <code>-m</code> flag. Be sure that you use quotations marks around your message, and that you use the same type of quotations marks. So if you use double quotes, use double quotes around your message. If you use single quotes, use single quotes around your message. If for some reason you end up mixing them, you’ll get a quote prompt in your terminal. This is just git telling you that you didn’t close your quotation marks, so if you add the correct quotation marks and press enter, it will add your message.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="step-3-view-history" class="slide level2">
+<h2>Step 3: View History</h2>
+<p>See your commit history:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a></a><span class="fu">git</span> log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a></a><span class="ex">commit</span> 8bb8306c1392eed52d4407eb16867a49b49a46ac <span class="er">(</span><span class="ex">HEAD</span> <span class="at">-</span><span class="op">&gt;</span> main<span class="kw">)</span></span>
+<span id="cb25-2"><a></a><span class="ex">Author:</span> Your Name <span class="op">&lt;</span>your-email@gmail.com<span class="op">&gt;</span></span>
+<span id="cb25-3"><a></a><span class="ex">Date:</span>   Tue Jan 22 16:03:39 2024 <span class="at">-0400</span></span>
+<span id="cb25-4"><a></a></span>
+<span id="cb25-5"><a></a>    <span class="ex">Added</span> first file to our repository</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Now that we have committed our changes, we can view the version history of our file. To do this, we use the <code>git log</code> command. This will show us the commit history of our file. We can see the commit message, the author, the date, and the commit hash. The commit hash is a unique identifier for each commit. It is a long string of letters and numbers that is used to identify each commit. We can use this commit hash to revert to a previous version of our file.</p>
+<p>This is telling us that we have one commit, the commit is identified with that long string of letters and numbers (this is the <em>commit hash</em>), the commit is on the <code>main</code> branch. The Author and Date should correspond to your information and when you made the commit. Finally, we see our commit message.</p>
+<p>We could now update the file and commit our changes again. If we did that, then our version history via git log would show the two commits.</p>
+<p>These activities are the core features of git. The next step is to connect our local repository to a remote repository on GitHub.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="git-commands-summary" class="slide level2">
+<h2>Git Commands Summary</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git init</code></td>
+<td>Initialize a repository</td>
+</tr>
+<tr class="even">
+<td><code>git add &lt;file&gt;</code></td>
+<td>Add file to staging area</td>
+</tr>
+<tr class="odd">
+<td><code>git commit -m "msg"</code></td>
+<td>Commit with message</td>
+</tr>
+<tr class="even">
+<td><code>git status</code></td>
+<td>Check current status</td>
+</tr>
+<tr class="odd">
+<td><code>git log</code></td>
+<td>View commit history</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>These are the core local git commands. You’ll use these constantly: init to start, add to stage, commit to save snapshots, status to check where you are, and log to see history.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="working-with-github" class="title-slide slide level1 center">
+<h1>Working with GitHub</h1>
+<p>By now you should have your git configuration setup and have a GitHub account, but feel free to look back at our <a href="../materials/introducing-defining-cad/01-CAD-tools.html#git" target="_blank">course tools lesson</a> if you’re having any issues.</p>
+</section>
+<section id="creating-a-repository-on-github" class="slide level2">
+<h2>Creating a Repository on GitHub</h2>
+<ol type="1">
+<li>Go to <a href="https://github.com/" target="_blank">github.com</a></li>
+<li>Click the <strong>New</strong> button</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://docs.github.com/assets/cb-31554/images/help/repository/repo-create.png" height="300"></p>
+<figcaption>Create repo button</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>To get our local git repository onto GitHub, we first need to create a new repository on the website. Click the New button in the top right corner of GitHub.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="repository-settings" class="slide level2">
+<h2>Repository Settings</h2>
+<p><img data-src="../assets/images/new_repository.webp" height="400"></p>
+</section>
+<section id="repository-settings-1" class="slide level2">
+<h2>Repository Settings</h2>
+<ul>
+<li>Name it <code>is310-first-repo</code></li>
+<li>Choose <strong>Public</strong> so we can see each other’s work</li>
+<li>Leave README unchecked for now</li>
+</ul>
+<aside class="notes">
+<p>Give your repository a name, add a description if you want, and choose whether it’s public or private. For class purposes, choose public so we can see each other’s repositories. Leave the README option unchecked since we’ll push our existing local repo.</p>
+<p>You also have the option to <code>initialize the repository with a README</code>, which is a file that provides information about the project. We will be discussing this more later so for now leave this option unchecked. You can also add a <code>.gitignore</code> file, which is a file that tells Git to ignore certain files in the repository. Again, something we’ll discuss more in-depth in the coming weeks.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="repository-settings-2" class="slide level2">
+<h2>Repository Settings</h2>
+
+<img data-src="https://www.dataquest.io/wp-content/uploads/2019/01/repo_options.png" class="r-stretch quarto-figure-center"><p class="caption">First Commit</p><aside class="notes">
+<p>Once you create your repository it should like the photo above. If you selected the <code>Initialize this repository with a README</code> option, you will see a blank repository that looks like the photo below.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="repository-settings-3" class="slide level2">
+<h2>Repository Settings</h2>
+
+<img data-src="../assets/images/create_readme.png" class="r-stretch quarto-figure-center"><p class="caption">First Commit With README</p><p>To understand what each button does feel free to browse through our <a href="../materials/introducing-defining-cad/05-advanced-git-github.html" target="_blank">advanced git and GitHub resource</a>, but first let’s try to get our local repository onto GitHub.</p>
+</section>
+<section id="connect-local-to-remote" class="slide level2">
+<h2>Connect Local to Remote</h2>
+<p>Add your GitHub repo as a “remote”:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a></a><span class="fu">git</span> remote add origin https://github.com/USERNAME/is310-first-repo.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Now that we have created a new repository on GitHub, we need to connect it to our local repository. To do this, we need to add a remote repository. We can do this by using the <code>git remote add</code> command and then the name of the remote repository and the URL of the remote repository. Let’s call our remote repository <code>origin</code> and use the URL of our GitHub repository.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="connect-local-to-remote-1" class="slide level2">
+<h2>Connect Local to Remote</h2>
+<p>Verify it worked:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a></a><span class="fu">git</span> remote <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a></a><span class="ex">origin</span>  https://github.com/username/repository.git <span class="er">(</span><span class="ex">fetch</span><span class="kw">)</span></span>
+<span id="cb28-2"><a></a><span class="ex">origin</span>  https://github.com/username/repository.git <span class="er">(</span><span class="ex">push</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>In this case, we would replace <code>OWNER</code> with our GitHub username and <code>REPOSITORY</code> with the name of our repository. So for me, it would be <code>ZoeLeBlanc/is310-first-repo</code>.</p>
+<p>We can check this by using the <code>git remote -v</code> command. This will show us the remote repositories we have added to our local repository.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="push-to-github" class="slide level2">
+<h2>Push to GitHub</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a></a><span class="fu">git</span> push [remote repository] <span class="pp">[</span><span class="ss">flags</span><span class="pp">]</span> [local repository]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>So all we need to do is specify the name of our remote repository and the name of our local repository. What’s a bit confusing is that we don’t need to write our GitHub URL here but instead can just write <code>origin</code>. If you look at the output from <code>git remote -v</code> again, you’ll notice it says <code>origin</code> next to our GitHub URL. This is because <code>origin</code> is the default name for our remote repository. We can change this, but for now we’ll just use <code>origin</code>.</p>
+<p>Then for our local repository, we don’t need to say our directory name but instead need to specify the name of the branch we want to push. We’ll discuss branches more later, but for now we can just use <code>main</code>. So our command will look like this:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="push-to-github-1" class="slide level2">
+<h2>Push to GitHub</h2>
+<p>Send your local commits to GitHub:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a></a><span class="ex">Enumerating</span> objects: 3, done.</span>
+<span id="cb31-2"><a></a><span class="ex">Counting</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb31-3"><a></a><span class="ex">Writing</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> 226 bytes <span class="kw">|</span> <span class="ex">226.00</span> KiB/s, done.</span>
+<span id="cb31-4"><a></a><span class="ex">To</span> github.com:username/is310-first-repo.git</span>
+<span id="cb31-5"><a></a> <span class="ex">*</span> [new branch]      main <span class="at">-</span><span class="op">&gt;</span> main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>The push command sends your local commits to the remote repository. “origin” is the name we gave our remote, and “main” is the branch we’re pushing. After this, you’ll see your files on GitHub!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<h3 id="fatal-errors">Fatal Errors?</h3>
+<p>If you see a <code>fatal</code> error that looks like this:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a></a><span class="ex">fatal:</span> <span class="st">'origin'</span> does not appear to be a git repository</span>
+<span id="cb32-2"><a></a><span class="ex">fatal:</span> Could not read from remote repository.</span>
+<span id="cb32-3"><a></a></span>
+<span id="cb32-4"><a></a><span class="ex">Please</span> make sure you have the correct access rights</span>
+<span id="cb32-5"><a></a><span class="ex">and</span> the repository exists.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>That just means you forgot to add your remote repository. If you fix that and try again, it should work.</p>
+<p>Now if we go to our GitHub repository, we will see that our local repository has been pushed to our remote repository.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="ssh-keys-optional-but-recommended" class="slide level2">
+<h2>SSH Keys (Optional but Recommended)</h2>
+<p>Tired of entering your username/password?</p>
+<div class="fragment">
+<p>SSH keys let you connect securely without credentials.</p>
+</div>
+<div class="fragment">
+<p>You can find instructions on how to do it <a href="../materials/introducing-defining-cad/03-intro-versioning.html#configuring-ssh-keys-optional-but-recommended" target="_blank">here</a></p>
+</div>
+</section></section>
+<section>
+<section id="editing-on-github" class="title-slide slide level1 center">
+<h1>Editing on GitHub</h1>
+
+</section>
+<section id="create-files-in-the-browser" class="slide level2">
+<h2>Create Files in the Browser</h2>
+<p>Click <strong>Add file &gt; Create new file</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://docs.github.com/assets/cb-70797/mw-1440/images/help/repository/add-file-buttons.webp" height="300"></p>
+<figcaption>Add file button</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>So far, we have been editing our files locally and <em>pushing</em> them up to GitHub. However, we can also edit files in GitHub. This is a great way to make quick changes to a file or add a new file to a repository. Let’s try adding using the GitHub interface in the browser and add a special type of file called a <code>README.md</code> file.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="create-a-readme.md" class="slide level2">
+<h2>Create a README.md</h2>
+
+<img data-src="https://docs.github.com/assets/cb-70797/mw-1440/images/help/repository/add-file-buttons.webp" class="r-stretch"></section>
+<section id="create-a-readme.md-1" class="slide level2">
+<h2>Create a README.md</h2>
+<p>Name your file <code>README.md</code> and add:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a></a><span class="fu"># IS 310 Test Repository</span></span>
+<span id="cb33-2"><a></a></span>
+<span id="cb33-3"><a></a>This is my first repository.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Let’s create a README file - the .md extension means Markdown, which is a way to format text. README files are special - GitHub displays them automatically on your repository’s main page. They typically describe what the project is about.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="create-a-readme.md-2" class="slide level2">
+<h2>Create a README.md</h2>
+
+<img data-src="https://docs.github.com/assets/cb-84722/mw-1440/images/help/repository/new-file-preview.webp" class="r-stretch"><ul>
+<li>Click <strong>Preview</strong> to see formatted output</li>
+<li>Click <strong>Commit changes</strong></li>
+<li>Add a commit message</li>
+<li>Select <strong>main</strong> branch</li>
+</ul>
+<aside class="notes">
+<p>Now we need to commit our changes and file by clicking the green <code>Commit changes</code> box. This will prompt us for a commit message. Let’s add the following message Finally, we need to tell GitHub whether to create a new branch or commit to the <code>main</code> branch. Click <code>main</code> for now and then click <code>Commit changes</code>. Now we have added a new file to our repository and you should see it when you navigate to your repository.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="github-dev-bonus-feature" class="slide level2">
+<h2>GitHub Dev (Bonus Feature)</h2>
+<p>Change <code>github.com</code> to <code>github.dev</code> in your URL. So for us, we would change <code>https://github.com/[USER NAME]/is310-first-repo</code> to <code>https://github.dev/[USER NAME]/is310-first-repo</code>.</p>
+
+<img data-src="https://user-images.githubusercontent.com/856858/130119109-4769f2d7-9027-4bc4-a38c-10f297499e8f.gif" class="r-stretch quarto-figure-center"><p class="caption">GitHub Dev</p></section>
+<section id="github-dev-bonus-feature-1" class="slide level2">
+<h2>GitHub Dev (Bonus Feature)</h2>
+<p>Or press <code>.</code> on any repository</p>
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/github_dev.png" height="300"></p>
+<figcaption>GitHub Dev interface</figcaption>
+</figure>
+</div>
+<p><em>It’s VS Code in your browser!</em> You can read more about it <a href="https://docs.github.com/en/codespaces/the-githubdev-web-based-editor">https://docs.github.com/en/codespaces/the-githubdev-web-based-editor</a>.</p>
+<aside class="notes">
+<p>GitHub Dev is a new feature that gives you a VS Code-like editor right in the browser. Just change .com to .dev in the URL or press the period key. You can edit files and commit changes through this interface.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section></section>
+<section>
+<section id="pulling-changes" class="title-slide slide level1 center">
+<h1>Pulling Changes</h1>
+
+</section>
+<section id="the-problem-1" class="slide level2">
+<h2>The Problem</h2>
+<p>Now we have <strong>two versions</strong>:</p>
+<ul>
+<li>Local repository (on your computer)</li>
+<li>Remote repository (on GitHub)</li>
+</ul>
+<div class="fragment">
+<p>They have different files! How do we sync them?</p>
+<aside class="notes">
+<p>After creating a file on GitHub, our local and remote repositories are out of sync. The remote has a README that our local doesn’t have. We need to pull those changes down.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="pull-from-github" class="slide level2">
+<h2>Pull from GitHub</h2>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a></a><span class="fu">git</span> pull origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a></a><span class="ex">remote:</span> Enumerating objects: 4, done.</span>
+<span id="cb35-2"><a></a><span class="ex">remote:</span> Counting objects: 100% <span class="er">(</span><span class="ex">4/4</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb35-3"><a></a><span class="ex">remote:</span> Compressing objects: 100% <span class="er">(</span><span class="ex">2/2</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb35-4"><a></a><span class="ex">remote:</span> Total 3 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> reused 0 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> pack-reused 0</span>
+<span id="cb35-5"><a></a><span class="ex">Unpacking</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> 935 bytes <span class="kw">|</span> <span class="ex">233.00</span> KiB/s, done.</span>
+<span id="cb35-6"><a></a><span class="ex">From</span> github.com:ZoeLeBlanc/is310-first-repo</span>
+<span id="cb35-7"><a></a> <span class="ex">*</span> branch            main       <span class="at">-</span><span class="op">&gt;</span> FETCH_HEAD</span>
+<span id="cb35-8"><a></a>   <span class="ex">d8dad7b..832b673</span>  main       <span class="at">-</span><span class="op">&gt;</span> origin/main</span>
+<span id="cb35-9"><a></a><span class="ex">Updating</span> d8dad7b..832b673</span>
+<span id="cb35-10"><a></a><span class="ex">Fast-forward</span></span>
+<span id="cb35-11"><a></a> <span class="ex">README.md</span> <span class="kw">|</span> <span class="ex">1</span> +</span>
+<span id="cb35-12"><a></a> <span class="ex">1</span> file changed, 1 insertion<span class="er">(</span><span class="ex">+</span><span class="kw">)</span></span>
+<span id="cb35-13"><a></a> <span class="ex">create</span> mode 100644 README.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Now <code>ls</code> shows the README.md file locally!</p>
+<aside class="notes">
+<p>The git pull command downloads changes from GitHub to your local repository. After pulling, you’ll see the README.md file that was created on GitHub is now on your local computer. We’ve closed the loop!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="the-complete-workflow" class="slide level2">
+<h2>The Complete Workflow</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://www.edureka.co/blog/wp-content/uploads/2016/11/Git-Architechture-Git-Tutorial-Edureka-2.png" height="400"></p>
+<figcaption>Git architecture</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>This diagram shows the complete workflow. Your working directory is where you edit files. You add changes to the staging area, commit them to your local repository, then push to the remote (GitHub). And you pull from GitHub to get others’ changes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="core-workflow-summary" class="slide level2">
+<h2>Core Workflow Summary</h2>
+<ol type="1">
+<li><strong>Edit</strong> files locally</li>
+<li><strong>Add</strong> to staging: <code>git add &lt;file&gt;</code></li>
+<li><strong>Commit</strong> snapshot: <code>git commit -m "message"</code></li>
+<li><strong>Push</strong> to GitHub: <code>git push origin main</code></li>
+<li><strong>Pull</strong> from GitHub: <code>git pull origin main</code></li>
+</ol>
+<aside class="notes">
+<p>This is the core git/GitHub workflow you’ll use constantly. Edit locally, add, commit, push. When working with others or after editing on GitHub, pull first to get the latest changes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="homework-init-is310" class="title-slide slide level1 center">
+<h1>Homework: Init IS310</h1>
+
+</section>
+<section id="your-assignment" class="slide level2">
+<h2>Your Assignment</h2>
+<ul>
+<li>Create a new GitHub repository called <code>is310-coding-assignments</code>.</li>
+<li>Create a new directory in your local computer called <code>is310-coding-assignments</code> and enable it as a git repository.</li>
+<li>Create a Markdown file called <code>README.md</code> within <code>is310-coding-assignments</code>.</li>
+<li>Create a folder called <code>images</code> within <code>is310-coding-assignments</code>.</li>
+</ul>
+<aside class="notes">
+<p>For homework, you’ll practice this entire workflow. Create a repository for your coding assignments, add proof that you’ve installed all the required course tools, and push it to GitHub. Post the link in our discussion forum when done.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="readme-template" class="slide level2">
+<h2>README Template</h2>
+<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a></a><span class="fu"># Init IS310 Homework</span></span>
+<span id="cb36-2"><a></a></span>
+<span id="cb36-3"><a></a><span class="fu">## Proof of Installation</span></span>
+<span id="cb36-4"><a></a></span>
+<span id="cb36-5"><a></a><span class="ss">1. </span>Python</span>
+<span id="cb36-6"><a></a></span>
+<span id="cb36-7"><a></a><span class="al">![Python Installation](images/python-installation.png)</span></span>
+<span id="cb36-8"><a></a></span>
+<span id="cb36-9"><a></a><span class="ss">2. </span>Git</span>
+<span id="cb36-10"><a></a></span>
+<span id="cb36-11"><a></a><span class="al">![Git Installation](images/git-installation.png)</span></span>
+<span id="cb36-12"><a></a></span>
+<span id="cb36-13"><a></a><span class="ss">3. </span>VS Code</span>
+<span id="cb36-14"><a></a></span>
+<span id="cb36-15"><a></a><span class="al">![VS Code Installation](images/vscode-installation.png)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Use this template for your README. Take screenshots of each tool running on your computer, save them in the images folder, and reference them in your markdown file.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="pushing-your-homework" class="slide level2">
+<h2>Pushing Your Homework</h2>
+<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a></a><span class="fu">git</span> add .</span>
+<span id="cb37-2"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Init IS310 Homework"</span></span>
+<span id="cb37-3"><a></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Remember to connect local to remote first:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a></a><span class="fu">git</span> remote add origin https://github.com/USERNAME/is310-coding-assignments.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Post your repo link in the <a href="https://github.com/cultureasdata-uiuc/is310-spring-2026/discussions/1" target="_blank">discussion forum</a>!</p>
+<aside class="notes">
+<p>Use git add . (with the period) to add all files at once. Commit with a descriptive message, then push. Make sure you’ve connected your local and remote repositories first! When done, share your repository link in the class discussion forum.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
+<ul>
+<li><a href="../materials/introducing-defining-cad/05-advanced-git-github.html">Advanced Git &amp; GitHub Resource</a></li>
+<li><a href="../materials/introducing-defining-cad/05-advanced-git-github.html#git-commands-cheat-sheet">Git Commands Cheat Sheet</a></li>
+<li><a href="https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories">GitHub Docs: Managing Remote Repositories</a></li>
+<li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh">GitHub Docs: SSH Keys</a></li>
+</ul>
+</section>
+<section id="questions-1" class="slide level2">
+<h2>Questions?</h2>
+<p>Key takeaways:</p>
+<ul>
+<li><strong>Git</strong> = local version control</li>
+<li><strong>GitHub</strong> = remote hosting platform</li>
+<li><strong>Workflow</strong>: edit → add → commit → push/pull</li>
+<li>Commit messages should be descriptive!</li>
+</ul>
+<div class="fragment">
+<p>See also: <a href="../materials/introducing-defining-cad/05-advanced-git-github.html" target="_blank">Advanced Git &amp; GitHub</a></p>
+
+
+</div>
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../assets/images/favicon.ico" rel="icon">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.27">
+
+  <title>IS310 - Culture As Data Fall 2026 – (Re)Introduction to Notebooks</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">(Re)Introduction to Notebooks</h1>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section class="slide level2">
+
+<p>So far in the course, when we’ve been writing Python code, we’ve either been using the Python interpreter in the terminal or saving a Python script. However, there’s a third way to write Python code that’s very popular - that is with Jupyter notebooks <a href="https://jupyter.org/" target="_blank">https://jupyter.org/</a>. While many of you are familiar with Jupyter notebooks, this lesson will serve as a refresher and introduction to some of the features of Jupyter notebooks, as well as how to use them with the Pandas library.</p>
+</section>
+<section id="what-are-jupyter-notebooks" class="slide level2">
+<h2>What Are Jupyter Notebooks?</h2>
+
+<img data-src="https://jupyter-notebook.readthedocs.io/en/stable/_images/notebook-running-code.png" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>Jupyter notebooks are a type of computational notebook, which is a type of document that can contain both code and rich text elements, such as figures, images, links, equations, and more. When you run code in a Jupyter notebook, the results appear directly beneath the code, which differs from running scripts where we need to print the output to see it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="brief-history-of-jupyter-notebooks" class="slide level2">
+<h2>Brief History of Jupyter Notebooks</h2>
+<p><a href="https://www.youtube.com/watch?v=NuRiz8CbvBg" target="_blank" data-fig-align="center"><img data-src="https://files.speakerdeck.com/presentations/3044d88d14d4413fbd579fd408203035/slide_0.jpg"></a></p>
+<aside class="notes">
+<p>Jupyter notebooks originated as part of <em>Project Jupyter</em> initially in 2011, but fully released in 2014. However, the idea of code notebooks goes back much further. I can’t cover all the details here, but there’s a great Youtube talk about this history if you want a deeper dive: William Horton “A Brief History of Jupyter Notebooks” 2020. <a href="https://www.youtube.com/watch?v=NuRiz8CbvBg" target="_blank">https://www.youtube.com/watch?v=NuRiz8CbvBg</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="brief-history-of-jupyter-notebooks-1" class="slide level2">
+<h2>Brief History of Jupyter Notebooks</h2>
+
+<img data-src="https://upload.wikimedia.org/wikipedia/en/6/62/Literate_Programming_book_cover.jpg" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>The idea for Jupyter notebooks draws heavily from the idea of <em>literate programming</em>, which was introduced by Donald Knuth in the 1980s. Knuth created projects like LaTeX and TeX, and he argued that code should be written in a way that is understandable to humans, and that the code and the documentation should be intertwined. While developers debate whether Jupyter notebooks actually fulfill this vision, they do provide at least a partial way to combine code and documentation in a single document.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="connection-to-cu" class="slide level2">
+<h2>Connection To CU</h2>
+
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Mathematica_logistic_bifurcation.png" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>This idea was also core to the development <em>Wolfram Mathematica</em> by the company <em>Wolfram Research</em>. For those unfamiliar, Mathematica is a computational software program used for symbolic and numerical calculations, and it has a notebook interface that allows users to combine code, text, and visualizations. If you drive to south Champaign, you’ll actually see one of the headquarters for Wolfram Alpha, which was founded here by Stephen Wolfram and Theodore Gray in 1987.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="rise-of-ipython" class="slide level2">
+<h2>Rise of IPython</h2>
+<p><a href="https://en.wikipedia.org/wiki/Project_Jupyter" target="_blank" data-fig-align="center"><img data-src="../assets/images/history_jupyter.png"></a></p>
+<aside class="notes">
+<p>What really got Jupyter notebooks off the ground was the creation of <em>IPython</em> in 2001 as part of the creation of the <code>Scipy</code> and <code>Numpy</code> libraries, which was an interactive shell for Python. In particular, a group of developers, lead by Fernando Pérez, created the IPython notebook interface, which allowed users to create and share documents that contained live code, equations, visualizations, and narrative text for the first time in Python in 2011. This was the first version of Jupyter notebooks, and the name Jupyter is a nod to Galileo’s discovery of the moons of Jupiter (you can read more details on the wikipedia page <a href="https://en.wikipedia.org/wiki/Project_Jupyter">https://en.wikipedia.org/wiki/Project_Jupyter</a>).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-notebook-wars" class="slide level2">
+<h2>The Notebook Wars</h2>
+<p><a href="https://yihui.org/en/2018/09/notebook-war/" data-fig-align="center" target="_blank"><img data-src="../assets/images/notebook_wars.png"></a></p>
+<aside class="notes">
+<p>Jupyter notebooks since their release have become enormously popular and a key infrastructure for the growth of data science since the mid-2010s. One of the things that made them so useful is that you could use them not just for Python, but also for R and Julia. For those unfamiliar, R is a programming language that is particularly popular in statistics and data science, while Julia is a newer programming language that is designed for high-performance numerical and scientific computing. R developed largely at the same time as Python, and Julia was created in 2012.</p>
+<p>One of the big things that has happened in the last few years is the convergence of Project Jupyter with R and RStudio, through the creation of Posit, which was founded in 2022. This might be surprising to learn if you’ve heard people debate Python vs R, or if you’ve heard of the “notebook wars” of the late 2010s (you can read more about that here <a href="https://yihui.org/en/2018/09/notebook-war/">https://yihui.org/en/2018/09/notebook-war/</a>).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-rise-of-quarto" class="slide level2">
+<h2>The Rise of Quarto</h2>
+
+<img data-src="../assets/images/quarto.png" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>While developers are still debating which programming language is better, there have also been some new developments, specifically the creation and release of <em>Quarto</em>, which is like Jupyter on steroids. You can learn more about Quarto here <a href="https://quarto.org/">https://quarto.org/</a> and you’ve already come across examples of Quarto: <em>The Responsible Datasets in Context Project</em> uses it to create their website and interactive documents. While there’s more to this history, I want to flag that Jupyter notebooks didn’t emerge out of thin air, and it is likely that in a decade we’ll be using something else entirely.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="alternatives-to-jupyter" class="slide level2">
+<h2>Alternatives to Jupyter</h2>
+<p><a href="https://marimo.io/" target="_blank" data-fig-align="center"><img data-src="https://miro.medium.com/v2/resize:fit:2000/1*8SjQ2svUj5Hf-4e2PXXDEg.gif"></a></p>
+<aside class="notes">
+<p>While there’s more to this history of Jupyter notebooks and the rise of modern data science, I want to flag that Jupyter notebooks didn’t emerge out of thin air, and it is likely that in a decade we’ll be using something else entirely. For instance, already there is a new notebook called <em>Marimo</em> that is increasingly popular, and it is possible that it will become more widely used in the future (you can learn more about Marimo here <a href="https://marimo.io/">https://marimo.io/</a>).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-use-jupyter-notebooks" class="slide level2">
+<h2>Why Use Jupyter Notebooks?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/welcome.html" target="_blank" data-fig-align="center"><img data-src="../assets/images/walsh_book.png"></a></p>
+</div><div class="column" style="width:50%;">
+<p><a href="https://journalofdigitalhistory.org/en/articles/" target="_blank" data-fig-align="center"><img data-src="../assets/images/journal_of_digital_history_articles.png"></a></p>
+</div></div>
+<aside class="notes">
+<p>While this history might make you hesitant to use or learn Jupyter notebooks, they are incredibly useful for a number of reasons.For example, we already mentioned that rather than writing a script and running it, you can write code in a Jupyter notebook and then run the <em>cell</em> to see the results. This is particularly useful for data analysis and debugging, as you can see the results of your code immediately.</p>
+<p>Some people even use Jupyter notebooks to publish books and articles. For example, Melanie Walsh’s textbook <em>Introduction to Cultural Analytics &amp; Python</em> is a collection of Jupyter notebooks, combined into a Jupyter book (you can explore the code in this GitHub repository: <a href="https://github.com/melaniewalsh/Intro-Cultural-Analytics">https://github.com/melaniewalsh/Intro-Cultural-Analytics</a>). Another great example is the <em>Journal of Digital History</em>, which publishes Jupyter notebooks as articles (you can explore their articles here: <a href="https://journalofdigitalhistory.org/">https://journalofdigitalhistory.org/</a>).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="getting-started-installation" class="slide level2">
+<h2>Getting Started: Installation</h2>
+<p><a href="https://pypi.org/project/jupyter/" data-fig-align="center" target="_blank"><img data-src="../assets/images/install_jupyter.png"></a></p>
+</section>
+<section id="getting-started-installation-1" class="slide level2">
+<h2>Getting Started: Installation</h2>
+<p><em>Before we install Jupyter, what should we do?</em></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">pip</span> install jupyter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What to follow along interactively?</strong></p>
+</div>
+<div class="callout-content">
+<p>Download the Jupyter notebook version of this lesson: <a href="../assets/files/01-intro-notebooks.ipynb" download="" target="_blank">01-intro-notebooks.ipynb</a></p>
+<p>Open it in Jupyter and run the code examples as you read through the lesson. You can experiment, modify examples, and practice everything in real time!</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>The first step to trying out Jupyter notebooks is to install Jupyter. We can install Jupyter with pip (if you are using anaconda, you already have Jupyter installed). First, activate your virtual environment, then run the pip install command.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="getting-started-virtual-environment-setup" class="slide level2">
+<h2>Getting Started: Virtual Environment Setup</h2>
+<p><em>Next, we need to tell Jupyter about our virtual environment</em></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span><span class="op">=</span>is310-class-env <span class="co">#Or whatever you named your virtual environment</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Since we are using a virtual environment, we also need to make it so that our Jupyter notebook can access our virtual environment (i.e.&nbsp;it knows where your Python libraries are).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="running-jupyter-notebooks-localhost" class="slide level2">
+<h2>Running Jupyter Notebooks &amp; Localhost</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="ex">jupyter</span> notebook</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>You should see the Jupyter interface open in your browser. What is the domain name?</em></p>
+<aside class="notes">
+<p>This command immediately opens the Jupyter interface in our browser, usually at the following address: <a href="http://localhost:8888/tree">http://localhost:8888/tree</a>. If it doesn’t open automatically, you can copy and paste this address into your browser.</p>
+<p>Localhost is a special name that refers to the computer you are on. So when you open a Jupyter notebook, you are opening a server on your computer that is running the Jupyter notebook interface. This is why you can only access the notebook from the computer it is running on and can’t just send someone a link to your notebook.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="new-notebook" class="slide level2">
+<h2>New Notebook</h2>
+
+<img data-src="../assets/images/create_notebook.png" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>Our first step is to create a new Python 3 notebook using the <code>new</code> button. You’ll notice that when you select <code>new</code>, you have the option to create a new Python 3 notebook or to use a virtual environment. We want to create a new notebook with our virtual environment so that we have access to all the libraries we’ve installed.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="new-notebook-1" class="slide level2">
+<h2>New Notebook</h2>
+
+<img data-src="../assets/images/empty_notebook.png" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>This opens up an empty notebook. You’ll notice that on the right hand side there’s a box that says <code>Trusted</code> and then next to that is the name of our virtual environment. This means that our notebook is running in our virtual environment. If you want to change this, you can select the <code>Kernel</code> dropdown menu and select a different virtual environment.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="renaming-saving-notebooks" class="slide level2">
+<h2>Renaming &amp; Saving Notebooks</h2>
+
+<img data-src="../assets/images/rename_notebook.png" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>Now currently our notebook is named <code>Untitled</code>, but if we click on that name we can rename it. I renamed my notebook <code>IntroNotebooks</code> (generally Jupyter notebooks are named using camel case, but you can name them whatever you want). Jupyter notebook autosaves your notebook, but it is always a good idea to explicitly save it, which you can do by clicking on <code>File</code> and then <code>Save and Checkpoint</code>, or by clicking the save icon in the toolbar (it is the floppy disk icon 💾).</p>
+<p>Now when you look at your directory, you should see a new file called <code>IntroNotebooks.ipynb</code>. This is your Jupyter notebook file. Notice the extension <code>.ipynb</code> - this is the file extension for Jupyter notebooks.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="key-shortcuts" class="slide level2">
+<h2>Key Shortcuts</h2>
+<div class="r-fit-text">
+<table class="caption-top">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 65%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Mac</th>
+<th style="text-align: center;">Jupyter Function</th>
+<th style="text-align: center;">Windows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>Shift</code> + <code>Return</code></td>
+<td style="text-align: center;">Run cell (<strong>Both modes</strong>)</td>
+<td style="text-align: center;"><code>Shift</code> + <code>Enter</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Option</code> + <code>Return</code></td>
+<td style="text-align: center;">Create new cell below (<strong>Both modes</strong>)</td>
+<td style="text-align: center;"><code>Alt</code> + <code>Enter</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>B</code></td>
+<td style="text-align: center;">Create new cell below (<strong>Command mode</strong>)</td>
+<td style="text-align: center;"><code>B</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>A</code></td>
+<td style="text-align: center;">Create new cell above (<strong>Command mode</strong>)</td>
+<td style="text-align: center;"><code>A</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>D</code> + <code>D</code></td>
+<td style="text-align: center;">Delete cell (<strong>Command mode</strong>)</td>
+<td style="text-align: center;"><code>D</code> + <code>D</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Z</code></td>
+<td style="text-align: center;">Undo cell action (<strong>Command mode</strong>)</td>
+<td style="text-align: center;"><code>Z</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Shift</code> + <code>M</code></td>
+<td style="text-align: center;">Merge cells (<strong>Command mode</strong>)</td>
+<td style="text-align: center;"><code>Shift</code> + <code>m</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Control</code> + <code>Shift</code> + <code>-</code></td>
+<td style="text-align: center;">Split cell into two cells (<strong>Edit mode</strong>)</td>
+<td style="text-align: center;"><code>Control</code> + <code>Shift</code> + <code>-</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Tab</code></td>
+<td style="text-align: center;">Autocomplete file/variable/function name (<strong>Edit mode</strong>)</td>
+<td style="text-align: center;"><code>Tab</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<aside class="notes">
+<p>Just like in the terminal, there are shortcuts for working with Jupyter notebooks. These shortcuts work in both Mac and Windows, with some variations in the modifier keys.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="jupyter-notebooks-in-vs-code" class="slide level2">
+<h2>Jupyter Notebooks in VS Code</h2>
+<p><em>How can we quit the Jupyter notebook server and work in VS Code instead?</em></p>
+
+<img data-src="../assets/images/open_vscode.png" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>While we can run our notebooks in the browser, we can also run them in VS Code. The benefit to running them in VS Code is that we can use the same interface for writing code and running notebooks, and we can take advantage of the other features of VS Code, such as the debugger, autocomplete, and GitHub Co-Pilot.</p>
+<p>First, we should stop the Jupyter notebook server, which you can do by either pressing the <code>Quit</code> button on the main page or type <code>Ctrl</code>+<code>c</code> in the terminal and confirming by typing <code>y</code> and pressing <code>enter</code>. Then we can open VS Code and navigate to the directory where our notebook is located. You can either open the file only or open the entire directory.</p>
+<p>Once you have your notebook open, you’ll again see a <code>Select Kernel</code> option in the top right corner. You can select your virtual environment from this dropdown menu. And if you want, you can create a new notebook entirely in VS Code by pressing <code>ctrl + shift + p</code> and then typing <code>Jupyter: Create New Blank Notebook</code>.</p>
+<p>And finally to save your notebook, you can press <code>ctrl/cmd + s</code> or go to <code>File</code> and then <code>Save</code>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="writing-code-markdown-in-jupyter-notebooks" class="slide level2">
+<h2>Writing Code &amp; Markdown in Jupyter Notebooks</h2>
+
+<img data-src="https://code.visualstudio.com/assets/docs/datascience/jupyter/native-add-cells.png" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>Now that we have our notebook, we can start writing some code. Jupyter notebooks have two types of cells: code cells and markdown cells.</p>
+<p>Initially, the notebook will create a code cell, which is where we can write Python code. We can also change the type of cell by clicking on the cell and then selecting the type from the dropdown menu in the toolbar. We can also hover at the top or bottom of the cell and that will display a <code>+ Code</code> or <code>+ Markdown</code> button.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="writing-code-markdown-in-jupyter-notebooks-1" class="slide level2">
+<h2>Writing Code &amp; Markdown in Jupyter Notebooks</h2>
+
+<img data-src="../assets/images/markdown_cell.png" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>Let’s first add our title to the notebook, by hovering at the top and selecting <code>+ Markdown</code> cell. That will create a new cell above the existing one Then type <code># Introduction to Jupyter Notebooks</code> and press <code>Shift</code> + <code>Return</code> on a Mac or <code>Shift</code> + <code>Enter</code> on Windows to run the cell.</p>
+<p>Now we should see the title at the top. We can use any of the Markdown syntax we have learned so far to format our text. For example, we can use <code>##</code> for a subheading, <code>*</code> for italics, <code>**</code> for bold, and <code>---</code> for a horizontal line, etc.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="writing-code-markdown-in-jupyter-notebooks-2" class="slide level2">
+<h2>Writing Code &amp; Markdown in Jupyter Notebooks</h2>
+<div class="r-fit-text">
+<p>Try pasting the following within the first cell of the Jupyter notebook. <em>What should we see in our Notebook?</em></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">def</span> check_movie_release(movie):</span>
+<span id="cb4-2"><a></a>    <span class="cf">if</span> movie[<span class="st">'release_year'</span>] <span class="op">&lt;</span> <span class="dv">2000</span>:</span>
+<span id="cb4-3"><a></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released before 2000"</span>)</span>
+<span id="cb4-4"><a></a>    <span class="cf">else</span>:</span>
+<span id="cb4-5"><a></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released after 2000"</span>)</span>
+<span id="cb4-6"><a></a>        <span class="cf">return</span> movie[<span class="st">'name'</span>]</span>
+<span id="cb4-7"><a></a></span>
+<span id="cb4-8"><a></a>recent_movies <span class="op">=</span> []</span>
+<span id="cb4-9"><a></a></span>
+<span id="cb4-10"><a></a>favorite_movies <span class="op">=</span>[</span>
+<span id="cb4-11"><a></a>    {</span>
+<span id="cb4-12"><a></a>        <span class="st">"name"</span>: <span class="st">"The Matrix IV"</span>,</span>
+<span id="cb4-13"><a></a>        <span class="st">"release_year"</span>: <span class="dv">2022</span>,</span>
+<span id="cb4-14"><a></a>        <span class="st">"sequels"</span>: [<span class="st">"The Matrix I"</span>, <span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>]</span>
+<span id="cb4-15"><a></a>    },</span>
+<span id="cb4-16"><a></a>    {</span>
+<span id="cb4-17"><a></a>        <span class="st">"name"</span>: <span class="st">"Star Wars IV"</span>,</span>
+<span id="cb4-18"><a></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span>,</span>
+<span id="cb4-19"><a></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
+<span id="cb4-20"><a></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
+<span id="cb4-21"><a></a>    },</span>
+<span id="cb4-22"><a></a>    {</span>
+<span id="cb4-23"><a></a>        <span class="st">"name"</span>: <span class="st">"The Lord of the Rings: The Fellowship of the Ring"</span>,</span>
+<span id="cb4-24"><a></a>        <span class="st">"release_year"</span>: <span class="dv">2001</span>,</span>
+<span id="cb4-25"><a></a>        <span class="st">"sequels"</span>: [<span class="st">"The Two Towers"</span>, <span class="st">"The Return of the King"</span>]</span>
+<span id="cb4-26"><a></a>    }</span>
+<span id="cb4-27"><a></a>]</span>
+<span id="cb4-28"><a></a></span>
+<span id="cb4-29"><a></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
+<span id="cb4-30"><a></a>    result <span class="op">=</span> check_movie_release(movie)</span>
+<span id="cb4-31"><a></a>    <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb4-32"><a></a>        recent_movies.append(result)</span>
+<span id="cb4-33"><a></a></span>
+<span id="cb4-34"><a></a><span class="bu">print</span>(recent_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<aside class="notes">
+<p>Now in a Jupyter notebook, we can still use much of the same Python syntax as our scripts. For example, going back to our <a href="../materials/creating-curating-cad/02-python-refresher-advanced">Python Refresher II: Advanced Python</a>, we could reuse some of the same code in this notebook (though I did add a few tweaks).</p>
+<p>Unlike with our scripts where we would need to save our file and then type <code>python3 script.py</code>, we can just click on the cell and either press <code>Shift</code> + <code>Return</code> on a Mac or <code>Shift</code> + <code>Enter</code> on Windows to run the cell.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="important-notebooks-hold-state" class="slide level2">
+<h2>Important: Notebooks Hold State</h2>
+<div class="r-fit-text">
+<p>Unlike with scripts, notebooks hold variables in memory, which means that our function now exists in the notebook and we can call in a new cell.</p>
+<p>To test this out, add a new cell below our function one by pressing the <code>+ Code</code> symbol when you hover. Then paste the following code and run it.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> updated_check_movie_release(movie, released_after_year, released_before_year<span class="op">=</span><span class="dv">2024</span>):</span>
+<span id="cb5-2"><a></a>    <span class="cf">if</span> released_after_year <span class="op">&lt;</span> movie[<span class="st">'release_year'</span>] <span class="kw">and</span> movie[<span class="st">'release_year'</span>] <span class="op">&lt;</span> released_before_year:</span>
+<span id="cb5-3"><a></a>        movie[<span class="st">'recent'</span>] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb5-4"><a></a>    <span class="cf">else</span>:</span>
+<span id="cb5-5"><a></a>        movie[<span class="st">'recent'</span>] <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb5-6"><a></a>    <span class="cf">return</span> movie</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can call this function in our for-loop by updating the original code:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
+<span id="cb6-2"><a></a>    updated_movie <span class="op">=</span> updated_check_movie_release(movie, <span class="dv">2020</span>)</span>
+<span id="cb6-3"><a></a>    <span class="cf">if</span> updated_movie[<span class="st">'recent'</span>]:</span>
+<span id="cb6-4"><a></a>        recent_movies.append(updated_movie[<span class="st">'name'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<aside class="notes">
+<p>Now we should see just the <code>The Matrix IV</code> in our list of recent movies. You’ll notice I didn’t have to move the new function above our for-loop. But what happens if I save and close, then reopen the notebook?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="important-notebooks-hold-state-1" class="slide level2">
+<h2>Important: Notebooks Hold State</h2>
+
+<img data-src="../assets/images/name_error.png" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p>You’ll notice that we get a <code>NameError</code> when we try to run the cell. This is because the function <code>updated_check_movie_release</code> is no longer in memory. This is one of the things that makes Jupyter notebooks great to use, but easy to mess up. We can run cells in any order, which means that we can easily lose track of what’s in memory. So to fix our mistake, we would need to move the updated function before we call it in the for-loop.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="introduction-to-pandas" class="slide level2">
+<h2>Introduction to Pandas</h2>
+
+<img data-src="https://miro.medium.com/v2/resize:fit:481/1*n_ms1q5YoHAQXXUIfeADKQ.png" class="quarto-figure quarto-figure-center r-stretch"><p><em>The Pandas Library <a href="https://pandas.pydata.org/docs/index.html" target="_blank">https://pandas.pydata.org/docs/index.html</a></em></p>
+<aside class="notes">
+<p>Jupyter notebooks are particularly useful for working with tabular data (that is data in spreadsheets), especially with the Python Library <code>pandas</code> <a href="https://pandas.pydata.org/docs/index.html">https://pandas.pydata.org/docs/index.html</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="history-of-pandas" class="slide level2">
+<h2>History of Pandas</h2>
+<p><a href="https://github.com/pandas-dev/pandas" data-fig-align="center" target="_blank"><img data-src="../assets/images/pandas_commit_history.png"></a></p>
+<aside class="notes">
+<p>The library was started by Wes McKinney in 2008 as a tool for working with financial data, but has since become one of the most popular libraries for data analysis in Python. We can see the growth in the number of contributors to the library over the years by going to the GitHub repository <a href="https://github.com/pandas-dev/pandas">https://github.com/pandas-dev/pandas</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="history-of-pandas-1" class="slide level2">
+<h2>History of Pandas</h2>
+<p><a href="https://pandas.pydata.org/about/team.html" data-fig-align="center" target="_blank"><img data-src="../assets/images/pandas_team.png"></a></p>
+<aside class="notes">
+<p>The library also has very active documentation and we can see more about the team behind it here <a href="https://pandas.pydata.org/about/team.html">https://pandas.pydata.org/about/team.html</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bdfl-of-pandas" class="slide level2">
+<h2>BDFL of Pandas</h2>
+<div class="r-fit-text">
+<p><em>Who is Wes McKinney?</em></p>
+<p><a href="https://pandas.pydata.org/about/governance.html#bdfl" data-fig-align="center" target="_blank"><img data-src="../assets/images/bfdl_pandas.png"></a></p>
+<p>Highly recommend checking out his recent blog post <a href="https://wesmckinney.com/transcripts/2026-02-10-rill-data-podcast" target="_blank">https://wesmckinney.com/transcripts/2026-02-10-rill-data-podcast</a> where he talks about his vision for the future of data science.</p>
+</div>
+<aside class="notes">
+<p>Notice that though Wes McKinney is no longer the lead developer, he is listed as the Benevolent Dictator For Life! While that’s a bit of a tongue-in-cheek title, I do recommend the open-source version of McKinney’s book <em>Python for Data Analysis</em> if you want to learn more about using Pandas <a href="https://wesmckinney.com/book/">https://wesmckinney.com/book/</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="pandas-basics" class="slide level2">
+<h2>Pandas Basics</h2>
+<p>First we need to install <code>pandas</code>, which we can do by visiting the documentation and following the steps under the <code>Getting Started</code> and <code>Installation</code> <a href="https://pandas.pydata.org/docs/getting_started/install.html">https://pandas.pydata.org/docs/getting_started/install.html</a>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">pip</span> install pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’re welcome to use any installation method, but I highly recommend installing into a virtual environment, and using <code>pip</code> to install <a href="https://pandas.pydata.org/docs/getting_started/install.html#installing-from-pypi">https://pandas.pydata.org/docs/getting_started/install.html#installing-from-pypi</a>.</p>
+</section>
+<section id="using-pandas-in-jupyter-notebooks" class="slide level2">
+<h2>Using Pandas in Jupyter Notebooks</h2>
+<p>Now if we start to go through the tutorials in the <code>Getting Started</code> section, we can start to learn how to work with <code>pandas</code>. Specifically, this tutorial on reading and writing data with <code>pandas</code>: <a href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/02_read_write.html">https://pandas.pydata.org/docs/getting_started/intro_tutorials/02_read_write.html</a>.</p>
+<p>You’ll notice the first line of the tutorial is the following syntax:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>How can we check the version of Pandas?</em></p>
+<aside class="notes">
+<p>Remember the <code>as</code> keyword is used to give a library an alias, so that we don’t have to type <code>pandas</code> each time we want to use a feature of the library. We can check that this worked, by outputting the version of Pandas, with the following:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>pd.__version__</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="reading-data-with-pandas" class="slide level2">
+<h2>Reading Data with Pandas</h2>
+
+<img data-src="https://pandas.pydata.org/docs/_images/02_io_readwrite.svg" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
+<p><code>pandas</code> is particularly powerful for reading in data from a variety of sources, including local files, remote files, and databases. It also can read in a variety of file types, including <code>.csv</code>, <code>.json</code>, <code>.xlsx</code>, and more.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="reading-data-with-pandas-1" class="slide level2">
+<h2>Reading Data with Pandas</h2>
+<p><a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html#pandas-read-csv" data-fig-align="center" target="_blank"><img data-src="../assets/images/read_csv_docs.png"></a></p>
+<aside class="notes">
+<p>In the tutorial, we can see they have the following code <code>titanic = pd.read_csv("data/titanic.csv")</code> and in the <code>read_csv</code> documentation, we can learn that the first argument to the method is the file path to the data we want to read in, specifically:</p>
+<blockquote>
+<p>Any valid string path is acceptable. The string could be a URL. Valid URL schemes include http, ftp, s3, gs, and file. For file URLs, a host is expected.</p>
+</blockquote>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="reading-data-with-pandas-2" class="slide level2">
+<h2>Reading Data with Pandas</h2>
+<p><a href="https://www.responsible-datasets-in-context.com/posts/np-data/?tab=explore-the-data" data-fig-align="center" target="_blank"><img data-src="../assets/images/parks_data.png"></a></p>
+<p><em>How could we use a remote URL to read data?</em></p>
+<aside class="notes">
+<p>For today’s lesson, we will use the US National Parks Visit dataset. You can download the dataset from here <a href="https://www.responsible-datasets-in-context.com/posts/np-data/?tab=explore-the-data">https://www.responsible-datasets-in-context.com/posts/np-data/?tab=explore-the-data</a>. You’ll notice you can either download the data as a <code>.csv</code> file or use the copy url option to get the remote data. We can use either a downloaded local copy or the remote url to read the data into our notebook so that we can access the data using the built-in method from <code>pandas</code> called <code>read_csv()</code>, which we can read about here <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html#pandas-read-csv">https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html#pandas-read-csv</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="read-csv-with-pandas" class="slide level2">
+<h2>Read CSV with Pandas</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-2"><a></a></span>
+<span id="cb10-3"><a></a>parks_data_df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>How can we see the type of data we have in our <code>parks_data_df</code> variable?</em></p>
+<aside class="notes">
+<p>I named the variable holding the data <code>parks_data_df</code>, which is a common convention in data science to use the <code>_df</code> suffix to indicate that the variable is a DataFrame. I could’ve been a bit more expressive and named it <code>national_parks_visits_df</code>, but I wanted to keep it short for typing. You’re welcome to use any naming convention you prefer, but I would recommend being consistent and using the <code>_df</code> suffix for DataFrames.</p>
+<p>So now let’s explore <code>parks_data_df</code>.</p>
+<p>First, we can test what the variable contains by using <code>type(parks_data_df)</code>, which tells us that it is a <code>pandas.core.frame.DataFrame</code>. Notice how we aren’t using the <code>print()</code> method here, but rather just typing the variable name and running the cell. That’s because Jupyter notebooks will automatically print the output of the last line of a cell.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="bu">type</span>(parks_data_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-is-a-dataframe" class="slide level2">
+<h2>What is a DataFrame?</h2>
+<div class="r-fit-text">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" data-fig-align="center" target="_blank"><img data-src="https://pandas.pydata.org/docs/_images/01_table_dataframe.svg"></a></p>
+</div><div class="column" style="width:50%;">
+<p>DataFrames are the primary data structures or Classes in <code>pandas</code> and are defined as:</p>
+<blockquote>
+<p>A DataFrame is a 2-dimensional data structure that can store data of different types (including characters, integers, floating point values, categorical data and more) in columns. It is similar to a spreadsheet, a SQL table or the data.frame in R.</p>
+</blockquote>
+<p><em>Is there a built-in Python method we could use to learn more?</em></p>
+</div></div>
+</div>
+<aside class="notes">
+<p>DataFrames are the primary data structures in pandas. They are two-dimensional, meaning they have both rows and columns, and can store different types of data. Each column is essentially a Series, which is a one-dimensional data structure.</p>
+<p>We can either visit the documentation for <code>DataFrame</code> directly here <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame">https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame</a> or we can also use the Python built-in <code>help()</code> function to learn more about the DataFrame class.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="bu">help</span>(pd.DataFrame)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These details are very technical but we can start to get a sense that DataFrames are powerful data structures, containing both rows and columns, and that they can hold different types of data.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="exploring-dataframes" class="slide level2">
+<h2>Exploring DataFrames</h2>
+<ul>
+<li>How could we see what is in our DataFrame?</li>
+<li>What are some of the built-in methods we can use to explore our DataFrame?</li>
+<li>How might we see the first few rows of our DataFrame?</li>
+<li>How might we see the number of rows and columns in our DataFrame?</li>
+</ul>
+</section>
+<section id="exploring-dataframes-1" class="slide level2">
+<h2>Exploring DataFrames</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>parks_data_df.head()        <span class="co"># First few rows</span></span>
+<span id="cb13-2"><a></a>parks_data_df.shape         <span class="co"># Number of rows and columns</span></span>
+<span id="cb13-3"><a></a>parks_data_df.dtypes        <span class="co"># Data types of each column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>These methods help you explore your data. <code>head()</code> shows the first few rows, <code>shape</code> tells you the dimensions, <code>dtypes</code> shows data types, <code>info()</code> gives a comprehensive summary, and <code>describe()</code> provides statistical summaries of numeric columns.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="pandas-data-types" class="slide level2">
+<h2>Pandas Data Types</h2>
+<div class="r-fit-text">
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Pandas dtype</th>
+<th style="text-align: center;">Python type</th>
+<th style="text-align: center;">NumPy type</th>
+<th style="text-align: center;">Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">object</td>
+<td style="text-align: center;">str or mixed</td>
+<td style="text-align: center;">string_, unicode_, mixed types</td>
+<td style="text-align: center;">Text or mixed numeric and non-numeric values</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">int64</td>
+<td style="text-align: center;">int</td>
+<td style="text-align: center;">int_, int8, int16, int32, int64, uint8, uint16, uint32, uint64</td>
+<td style="text-align: center;">Integer numbers</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">float64</td>
+<td style="text-align: center;">float</td>
+<td style="text-align: center;">float_, float16, float32, float64</td>
+<td style="text-align: center;">Floating point numbers</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">bool</td>
+<td style="text-align: center;">bool</td>
+<td style="text-align: center;">bool_</td>
+<td style="text-align: center;">True/False values</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">datetime64</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">datetime64[ns]</td>
+<td style="text-align: center;">Date and time values</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">timedelta[ns]</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">Differences between two datetimes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">category</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">Finite list of text values</td>
+</tr>
+</tbody>
+</table>
+<p>Pandas data types build from ones available in Python. This table compares Pandas to Python and another library called <code>numpy</code> (you can read more about Pandas data types here <a href="https://pandas.pydata.org/docs/reference/arrays.html#pandas-arrays-scalars-and-data-types">https://pandas.pydata.org/docs/reference/arrays.html#pandas-arrays-scalars-and-data-types</a>.</p>
+</div>
+<aside class="notes">
+<p>You’ll notice that some of the data types are only available in Pandas. It’s important to check what data types exist in your columns, since it informs the types of data manipulation you can do with your dataset.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="exploring-dataframes-2" class="slide level2">
+<h2>Exploring DataFrames</h2>
+<p>We can get an overview of our data using two additional methods: <code>info()</code> and <code>describe()</code>. The <code>info()</code> method gives us a summary of the DataFrame, including the number of non-null values in each column, while the <code>describe()</code> method gives us summary statistics for the numeric columns.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>parks_data_df.info()</span>
+<span id="cb14-2"><a></a></span>
+<span id="cb14-3"><a></a>parks_data_df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>We can see that the <code>info()</code> method gives us a lot of useful information about our DataFrame, including the number of entries, the number of columns, the names of the columns, the number of non-null values, and the data types of each column.</p>
+<p>We can also see that the <code>describe()</code> method gives us summary statistics for the numeric columns, including the count, mean, standard deviation, minimum, maximum, and the quartiles. Notably, we can see that the <code>Year</code> column is an integer, while the <code>RecreationVisits</code> column is a float. Because these are the only two numeric columns, they are the only ones included in the summary statistics.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="indexing-selecting-data-with-pandas" class="slide level2">
+<h2>Indexing &amp; Selecting Data with Pandas</h2>
+<div class="r-fit-text">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html" data-fig-align="center" target="_blank"><img data-src="../assets/images/pandas_selection.png"></a></p>
+</div><div class="column" style="width:&quot;50%;">
+<p>At a high level, we can select data using the following methods:</p>
+<ul>
+<li><strong>Selecting columns</strong>: We can select a single column using a single bracket, or multiple columns using double brackets.</li>
+<li><strong>Selecting rows</strong>: We can select rows using the <code>loc[]</code> and <code>iloc[]</code> methods.</li>
+<li><strong>Boolean indexing</strong>: We can filter data based on conditions.</li>
+<li><strong>Setting values</strong>: We can set values in the DataFrame using the <code>loc[]</code> method.</li>
+<li><strong>Using the <code>query()</code> method</strong>: We can filter data using a query string.</li>
+<li><strong>Using the <code>filter()</code> method</strong>: We can filter data based on labels.</li>
+<li><strong>Using the <code>at[]</code> and <code>iat[]</code> methods</strong>: We can access a single value for a row/column label pair or by integer position.</li>
+</ul>
+</div></div>
+</div>
+</section>
+<section id="selecting-columns" class="slide level2">
+<h2>Selecting Columns</h2>
+<div class="r-fit-text">
+<p>Let’s start by trying to select columns and explore the <code>Year</code> column. Try typing in one cell <code>parks_data_df['Year']</code> and then in the following cell <code>parks_data_df[['Year']]</code>.</p>
+<p><em>What differences do you notice?</em></p>
+<p>Let’s try out some examples:</p>
+<ul>
+<li>Type <code>parks_data_df[0:5]</code> in a cell and run it. What results do you get?</li>
+<li>Type <code>parks_data_df[['Year', 'Region']]</code> in a cell and run it. What results do you get?</li>
+</ul>
+</div>
+<aside class="notes">
+<p>The difference in the output for each of these syntaxes has to do with how Pandas handles <code>indexing</code> (as a refresher, we index in Python using single square brackets).</p>
+<p>In Pandas, using a single bracket is used to index either a single column or selected rows, and essentially refers to one dimension of the DataFrame (rather than two). Whereas two square brackets allows us to both index for a column, but then also potentially request a list of columns.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="selecting-columns-1" class="slide level2">
+<h2>Selecting Columns</h2>
+<div class="r-fit-text">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="../assets/images/columns.png"></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/images/series.png"></p>
+</div></div>
+</div>
+<aside class="notes">
+<p>The difference in the output for each of these syntaxes has to do with how Pandas handles <code>indexing</code> (as a refresher, we index in Python using single square brackets).</p>
+<p>In Pandas, using a single bracket is used to index either a single column or selected rows, and essentially refers to one dimension of the DataFrame (rather than two). Whereas two square brackets allows us to both index for a column, but then also potentially request a list of columns.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="series-vs-dataframe" class="slide level2">
+<h2>Series vs DataFrame</h2>
+<p><a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.html#pandas-series" data-fig-align="center" target="_blank"><img data-src="../assets/images/pandas_series.png"></a></p>
+<aside class="notes">
+<p>The output here tells us that the first example is returning a class type <code>Series</code>, while the second example is returning a class type <code>DataFrame</code>. While DataFrames are two-dimensional data structures, in Pandas, Series are used to store one-dimensional data (like a column), and we can read more about them here <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.html#pandas-series">https://pandas.pydata.org/docs/reference/api/pandas.Series.html#pandas-series</a>.</p>
+<p>We can see the methods that exist for <code>Series</code> are similar to those for <code>DataFrame</code>, but since Series deal with one dimension of data, some methods work slightly differently or return different types of output.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="exploring-series" class="slide level2">
+<h2>Exploring Series</h2>
+<p><em>How could we get a list of all unique values in a Year column?</em></p>
+<p>Let’s try the <code>to_list()</code> method, which we can read about here <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.to_list.html" target="_blank">https://pandas.pydata.org/docs/reference/api/pandas.Series.to_list.html</a>.</p>
+<p>You should get a long list of all the values in the column as your output. However, it might be hard to tell if we have unique values. We can use the <code>unique()</code> method to see just the unique values in the column, <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.unique.html" target="_blank">https://pandas.pydata.org/docs/reference/api/pandas.Series.unique.html</a>.</p>
+</section>
+<section id="renaming-columns" class="slide level2">
+<h2>Renaming Columns</h2>
+<p>While the columns in the <code>parks_data_df</code> are capitalized, usually we try to keep column names lowercase and use underscores instead of spaces for ease of typing. <em>How could we rename them to be lowercased and have underscores instead of spaces?</em></p>
+<aside class="notes">
+<p>While the columns in the <code>parks_data_df</code> are capitalized, usually we try to keep column names lowercase and use underscores instead of spaces for ease of typing. So let’s try renaming all of the columns programmatically. First, we need to get all the column names using the <code>columns</code> attribute of the <code>DataFrame</code>, which can see is an attribute in the documentation <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.columns.html">https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.columns.html</a>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>parks_data_df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then we can use a list comprehension to create a new list of column names that are all lowercase and have underscores instead of spaces.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>new_column_names <span class="op">=</span> [col.lower().replace(<span class="st">' '</span>, <span class="st">'_'</span>) <span class="cf">for</span> col <span class="kw">in</span> parks_data_df.columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, we can assign this new list to the <code>columns</code> attribute of the DataFrame.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>parks_data_df.columns <span class="op">=</span> new_column_names</span>
+<span id="cb17-2"><a></a>parks_data_df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img data-src="../../assets/images/col_names.png"></p>
+<p>You’ll notice that column names like <code>RecreationVisits</code> are now <code>recreationvisits</code>, which is much easier to work with but still a bit hard to read. We could use the following code</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="im">import</span> re</span>
+<span id="cb18-2"><a></a></span>
+<span id="cb18-3"><a></a><span class="co"># We need to reload the data to reset the column names back to their original state</span></span>
+<span id="cb18-4"><a></a>parks_data_df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv'</span>) <span class="co"># or use the local path pd.read_csv('US-National-Parks_RecreationVisits_1979-2023.csv')</span></span>
+<span id="cb18-5"><a></a></span>
+<span id="cb18-6"><a></a><span class="co"># Function to split on uppercase letters and insert underscores</span></span>
+<span id="cb18-7"><a></a><span class="kw">def</span> split_on_uppercase(name):</span>
+<span id="cb18-8"><a></a>    <span class="cf">return</span> re.sub(<span class="vs">r'</span><span class="kw">(</span><span class="fu">?&lt;</span><span class="vs">!</span><span class="dv">^</span><span class="kw">)</span><span class="ex">(</span><span class="fu">?=</span><span class="pp">[A-Z]</span><span class="ex">)</span><span class="vs">'</span>, <span class="st">'_'</span>, name).lower()</span>
+<span id="cb18-9"><a></a></span>
+<span id="cb18-10"><a></a><span class="co"># Apply the function to each column name</span></span>
+<span id="cb18-11"><a></a>new_column_names <span class="op">=</span> [split_on_uppercase(col) <span class="cf">for</span> col <span class="kw">in</span> parks_data_df.columns]</span>
+<span id="cb18-12"><a></a>parks_data_df.columns <span class="op">=</span> new_column_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now if we check the column names again, we should see that they are all lowercase and have underscores instead of spaces. However, we will only see that if we reload the original dataset, otherwise it will not work. Why is that? <strong>Hint: Remember Jupyter Notebooks are not Python scripts!</strong></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="filtering-data" class="slide level2">
+<h2>Filtering Data</h2>
+<p>One of the things that makes Pandas so powerful is that it allows us to filter data easily. We can filter data using boolean indexing, which allows us to select rows based on conditions, just like <code>if</code> statements in Python.</p>
+<p>For example, if we want to filter the DataFrame to only include rows for visits to Illinois, we could select the <code>state</code> column and see how many rows have the value <code>IL</code>, we can do the following:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>parks_data_df[parks_data_df[<span class="st">'state'</span>] <span class="op">==</span> <span class="st">'IL'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="filtering-data-1" class="slide level2">
+<h2>Filtering Data</h2>
+<p>Now we’ll see that this gives us zero values because this dataset is only for “the current 63 National Parks administered by the United States National Park Service (NPS), from 1979 to 2023.”</p>
+
+<img data-src="../assets/images/parks_map.png" class="quarto-figure quarto-figure-center r-stretch"><p><em>How else could we have discovered this using Pandas?</em></p>
+<aside class="notes">
+<p>While we could’ve checked this map prior to filtering, we can also check the unique values in the <code>state</code> column to see what values exist.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>parks_data_df[<span class="st">'state'</span>].unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However, <code>unique()</code> only gives us the unique values in the column, but it doesn’t tell us how many times each value appears.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="value-counts-method" class="slide level2">
+<h2>Value Counts Method</h2>
+<p>We can use the <code>value_counts()</code> method to see how many times each value appears in the <code>state</code> column! We can read more about the method here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.value_counts.html#pandas-dataframe-value-counts" target="_blank">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.value_counts.html#pandas-dataframe-value-counts</a>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>parks_data_df[<span class="st">'state'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Now what if we only wanted to include rows for a specific state?</em></p>
+</section>
+<section id="filtering-data-with-boolean-indexing" class="slide level2">
+<h2>Filtering Data with Boolean Indexing</h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a><span class="co"># Boolean indexing</span></span>
+<span id="cb22-2"><a></a>parks_data_df[parks_data_df[<span class="st">'state'</span>] <span class="op">==</span> <span class="st">'CA'</span>]</span>
+<span id="cb22-3"><a></a></span>
+<span id="cb22-4"><a></a><span class="co"># Multiple values</span></span>
+<span id="cb22-5"><a></a>parks_data_df[parks_data_df[<span class="st">'state'</span>].isin([<span class="st">'CA'</span>, <span class="st">'AK'</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>What if we wanted to see how many rows there are for parks are in each state?</em></p>
+<aside class="notes">
+<p>We can filter data using boolean indexing, which allows us to select rows based on conditions just like <code>if</code> statements in Python. The <code>isin()</code> method checks if a value is in a list of values. <code>unique()</code> shows unique values in a column, and <code>value_counts()</code> shows how many times each value appears.</p>
+<p>We could also filter for multiple states using the <code>isin()</code> method, which checks if a value is in a list of values (more info here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.isin.html#pandas.DataFrame.isin">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.isin.html#pandas.DataFrame.isin</a>). For example, if we want to filter for both <code>California</code> and <code>Alaska</code>, we could do the following:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="grouping-data" class="slide level2">
+<h2>Grouping Data</h2>
+<div class="r-fit-text">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="https://pandas.pydata.org/docs/user_guide/groupby.html#group-by-split-apply-combine" data-fig-align="center" target="_blank"><img data-src="../assets/images/pandas_groupby.png"></a></p>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/groupby_mech.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+</div>
+<aside class="notes">
+<p>To get that information, we can use the <code>groupby()</code> method, which allows us to group rows by a specific column and then perform an aggregation function on the grouped data. There’s detailed documentation available here <a href="https://pandas.pydata.org/docs/user_guide/groupby.html#group-by-split-apply-combine">https://pandas.pydata.org/docs/user_guide/groupby.html#group-by-split-apply-combine</a>. The above figures start to explain the logic of <code>groupby()</code>, but let’s break it down further.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="grouping-data-1" class="slide level2">
+<h2>Grouping Data</h2>
+<p>First, we select a or multiple columns we want to group our data by. For example, in our case we could group by <code>state</code> so that we could see how many parks exist in each state.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>parks_data_df.groupby(<span class="st">'state'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>While this code works, we’ll see that it only returns a <code>DataFrameGroupBy</code> object, which is not very useful on its own. To see the actual data, we could use the <code>get_group()</code> method to see the data for a specific state.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>parks_data_df.groupby(<span class="st">'state'</span>).get_group(<span class="st">'CA'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>How could we use groupby to count the number of parks in each state?</em></p>
+</section>
+<section id="grouping-data-2" class="slide level2">
+<h2>Grouping Data</h2>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>parks_data_df.groupby(<span class="st">'state'</span>).size()</span>
+<span id="cb25-2"><a></a></span>
+<span id="cb25-3"><a></a>parks_data_df.groupby(<span class="st">'state'</span>)[<span class="st">'park_name'</span>].nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Now we see that we are getting a subset of our data! However, where <code>groupby()</code> really shines is when we want to perform a transformation on the grouped data. For example, if we want to count the number of parks in each state, we could do the following:</p>
+<p>This code uses the <code>size()</code> method to count the number of rows in each group (you can read more about it here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.size.html#pandas.core.groupby.DataFrameGroupBy.size">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.size.html#pandas.core.groupby.DataFrameGroupBy.size</a>). In this code, we’re getting all the rows in the DataFrame, grouping them by the <code>state</code> column, and then counting the number of rows in each group. However, if we wanted the number of unique parks, we could use the <code>nunique()</code> method instead (you can read more about it here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.nunique.html#pandas.core.groupby.DataFrameGroupBy.nunique">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.nunique.html#pandas.core.groupby.DataFrameGroupBy.nunique</a>).</p>
+<p>While we are getting results, notice how they look slightly different than what we got when we used <code>size()</code>. This is because <code>nunique()</code> is returning a Series, while <code>size()</code> is returning a DataFrame. When you use <code>groupby()</code>, you can not only specify what columns you want to group by, but also what columns you want to aggregate, which is what we are doing with the <code>park_name</code> column.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="reseting-index" class="slide level2">
+<h2>Reseting Index</h2>
+<p>Because we are getting a Series, we can also convert it back to a DataFrame using the <code>reset_index()</code> method, which will turn the Series back into a DataFrame.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>parks_data_df.groupby(<span class="st">'state'</span>)[<span class="st">'park_name'</span>].nunique().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<img data-src="https://pynative.com/wp-content/uploads/2021/02/dataframe.png" class="r-stretch"><aside class="notes">
+<p>You’ll often see <code>reset_index()</code> being used in Pandas. But what is the index? The index is a special column in Pandas that is used to identify rows. By default, Pandas assigns a unique index to each row, but we can also set our own index using the <code>set_index()</code> method. You can read more about <code>reset_index()</code> here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#pandas-dataframe-reset-index">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#pandas-dataframe-reset-index</a> and <code>set_index()</code> here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.set_index.html#pandas.DataFrame.set_index">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.set_index.html#pandas.DataFrame.set_index</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="common-aggregation-methods" class="slide level2">
+<h2>Common Aggregation Methods</h2>
+<div class="r-fit-text">
+<p>How could we create a new variable <code>parks_per_state_df</code> and what aggregation should we use to count the number of unique parks in each state?</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Pandas method</th>
+<th style="text-align: center;">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>.count()</code></td>
+<td style="text-align: center;">Number of non-null observations</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>.sum()</code></td>
+<td style="text-align: center;">Sum of values</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>.mean()</code></td>
+<td style="text-align: center;">Mean of values</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>.median()</code></td>
+<td style="text-align: center;">Median of values</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>.min()</code></td>
+<td style="text-align: center;">Minimum value</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>.max()</code></td>
+<td style="text-align: center;">Maximum value</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>.mode()</code></td>
+<td style="text-align: center;">Mode</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>.std()</code></td>
+<td style="text-align: center;">Sample standard deviation of values</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>.describe()</code></td>
+<td style="text-align: center;">Compute set of summary statistics for Series or each DataFrame column</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>.value_counts()</code></td>
+<td style="text-align: center;">Count unique values in a Series</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>.nunique()</code></td>
+<td style="text-align: center;">Count unique values in a Series</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>.size()</code></td>
+<td style="text-align: center;">Count number of rows in each group</td>
+</tr>
+</tbody>
+</table>
+</div>
+<aside class="notes">
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a>parks_per_state_df <span class="op">=</span> parks_data_df.groupby(<span class="st">'state'</span>)[<span class="st">'park_name'</span>].nunique().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>nunique()</code> is just one of many methods we could use with <code>groupby()</code>. We could also use <code>sum()</code>, <code>mean()</code>, <code>min()</code>, <code>max()</code>, and more. Here’s a short summary table of some of the built-in methods we can use with both Series, DataFrames, and GroupBy objects, and you can see more in the user guide here: <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/basics.html#descriptive-statistics">https://pandas.pydata.org/pandas-docs/stable/user_guide/basics.html#descriptive-statistics</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="renaming-columns-1" class="slide level2">
+<h2>Renaming Columns</h2>
+<p><em>How could we rename the <code>park_name</code> column to <code>num_parks</code> to more accurately reflect its content?</em></p>
+<p>More info available here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html#pandas-dataframe-rename" target="_blank">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html#pandas-dataframe-rename</a>.</p>
+<aside class="notes">
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a></a>parks_per_state_df.rename(columns<span class="op">=</span>{<span class="st">'park_name'</span>: <span class="st">'num_parks'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we have a new DataFrame that contains the number of parks in each state, but you’ll notice that the column names are identical to the original <code>parks_data_df</code>. That’s because <code>groupby()</code> does not automatically rename the columns. So we can rename the columns to something more descriptive using the <code>rename()</code> method (more info available here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html#pandas-dataframe-rename">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html#pandas-dataframe-rename</a>). We can rename columns to something more descriptive. The <code>rename()</code> method takes a dictionary mapping old column names to new ones. The <code>inplace=True</code> argument modifies the DataFrame directly rather than returning a new one.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="inplace-vs-not-in-place" class="slide level2">
+<h2>Inplace vs Not In Place</h2>
+
+<img data-src="../assets/images/rename_column.png" class="r-stretch"><aside class="notes">
+<p>As you can see in this figure, we can use the <code>rename()</code> method, which requires passing a dictionary to the <code>columns</code> parameter, where the keys are the old column names and the values are the new column names.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a>parks_per_state_df.rename(columns<span class="op">=</span>{<span class="st">'park_name'</span>: <span class="st">'num_parks'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However one issue with this code is that if we use <code>parks_per_state_df</code> in a new cell, it won’t show this new column name. To save our result we need to use the <code>inplace</code> argument in rename.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a>parks_per_state_df.rename(columns<span class="op">=</span>{<span class="st">'park_name'</span>: <span class="st">'num_parks'</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="inplace-vs-not-in-place-1" class="slide level2">
+<h2>Inplace vs Not In Place</h2>
+<p>Many methods in Pandas have an <code>inplace</code> argument, which allows us to modify the DataFrame directly rather than returning a new DataFrame. For example, the <code>sort_values()</code> method also has an <code>inplace</code> argument.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a></a>parks_per_state_df.sort_values(by<span class="op">=</span><span class="st">'num_parks'</span>, ascending<span class="op">=</span><span class="va">False</span>, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now when we run this cell, <code>parks_per_state_df</code> will have the new column, and be sorted by the number of parks in descending order.</p>
+</section>
+<section id="adding-new-data" class="slide level2">
+<h2>Adding New Data</h2>
+<p><em>How could we add Illinois to our DataFrame?</em></p>
+<aside class="notes">
+<p>Finally, so far we have been using only data from the <code>parks_data_df</code> DataFrame, but we can also add new data. For example, if we wanted to add <code>IL</code> to our DataFrame, we could do the following:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adding-new-data-1" class="slide level2">
+<h2>Adding New Data</h2>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a>new_state <span class="op">=</span> pd.DataFrame({<span class="st">'state'</span>: [<span class="st">'IL'</span>], <span class="st">'num_parks'</span>: [<span class="dv">0</span>]})</span>
+<span id="cb32-2"><a></a>parks_per_state_df <span class="op">=</span> pd.concat([parks_per_state_df, new_state], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Any alternatives?</em></p>
+<aside class="notes">
+<p>Let’s break this down. First, we create a new DataFrame called <code>new_state</code> that contains the new data we want to add. There are many ways we could create this DataFrame, but we used a dictionary where the keys are the column names and the values are lists of the data we want to add. Alternatively, we could also use a list of dictionaries, like the following:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a></a>new_state <span class="op">=</span> pd.DataFrame([{<span class="st">'state'</span>: <span class="st">'IL'</span>, <span class="st">'num_parks'</span>: <span class="dv">0</span>}])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The core thing is that we are using the <code>DataFrame</code> class to create a new DataFrame, and passing in data that has the same column names as the original DataFrame. You’ll notice I’m assigning <code>num_parks</code> as <code>0</code>, since we know that there are no parks in Illinois. However, we could also have used <code>NaN</code> to indicate that we don’t have data for that state.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adding-new-data-2" class="slide level2">
+<h2>Adding New Data</h2>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb34-2"><a></a></span>
+<span id="cb34-3"><a></a>new_state <span class="op">=</span> pd.DataFrame({<span class="st">'state'</span>: [<span class="st">'IL'</span>], <span class="st">'num_parks'</span>: [np.nan]})</span>
+<span id="cb34-4"><a></a>new_state <span class="op">=</span> pd.DataFrame([{<span class="st">'state'</span>: <span class="st">'IL'</span>, <span class="st">'num_parks'</span>: <span class="va">None</span>}])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p><code>NaN</code> stands for “Not a Number” and is Pandas’ way of indicating missing data. There’s two ways we could create a <code>NaN</code>. We could either use the Python keyword <code>None</code> or we could use the <code>numpy</code> library, which has a built-in <code>nan</code> value. The choice of when to use zero or <code>NaN</code> requires thinking about how we want to use this data. In our case, <code>0</code> makes more sense since we know that there are no national parks run by NPS in Illinois.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="combining-dataframes" class="slide level2">
+<h2>Combining DataFrames</h2>
+<p><em>How can we combine DataFrames?</em></p>
+<div class="fragment">
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a></a>combined_parks_per_state_df <span class="op">=</span> pd.concat([parks_per_state_df, new_state], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Finally, in this code, we are using a new method, the <code>pd.concat()</code> method. This method is one of many that exist for joining two DataFrames together. The <code>ignore_index=True</code> argument tells Pandas to reset the index of the new DataFrame. We’ll get more into merging and joining DataFrames in the next lesson, but for now, just understand that this method is letting us combine two DataFrames together.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="quick-exercise-answering-questions-with-pandas" class="slide level2">
+<h2>Quick Exercise: Answering Questions with Pandas</h2>
+<div class="r-fit-text">
+<p>In the documentation for the National Parks Dataset, Walsh and Keyes have an <code>Exercises</code> page that you can find here: <a href="https://www.responsible-datasets-in-context.com/posts/np-data/exercises-python/NP-Data-Groupby-Pandas.html">https://www.responsible-datasets-in-context.com/posts/np-data/exercises-python/NP-Data-Groupby-Pandas.html</a>.</p>
+<p>In that exercise, they have three questions:</p>
+<ol type="1">
+<li>What is the average number of visits for each state?</li>
+<li>What is the average number of visits for each National Park?</li>
+<li>How many National Parks are there in each state?</li>
+</ol>
+</div>
+</section>
+<section id="quick-exercise-answering-questions-with-pandas-1" class="slide level2">
+<h2>Quick Exercise: Answering Questions with Pandas</h2>
+<div class="r-fit-text">
+<p>Let’s try and answer them together with what we have learned so far! In your <code>is310-coding-assignments</code> repository, create a new folder called <code>pandas-eda</code> and in that folder create a new Jupyter Notebook called <code>NationalParksEDA.ipynb</code>. Feel free to also move your <code>IntroNotebooks.ipynb</code> into that folder as well.</p>
+<p>In the Notebook, you should start by adding a title in Markdown and a brief description of what you are doing. Then, you can import the necessary libraries and read in the dataset.</p>
+<p>Then you should create a section for each question, where you can write the code to answer the question. You can use the methods we learned in this lesson, such as <code>groupby()</code>, <code>mean()</code>, and <code>size()</code>, to help you answer the questions.</p>
+<p>To create a section, you can use the <code>#</code> symbol in Markdown to create a header. For example, you could use <code>## Average Number of Visits for Each State</code> for the first question, which would create a second-level header.</p>
+</div>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

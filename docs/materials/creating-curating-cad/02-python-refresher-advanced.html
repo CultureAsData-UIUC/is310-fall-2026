@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Python Refresher II: Advanced Python – IS310 - Culture As Data Fall 2026</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/images/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6c49c5477b92c77c9eb341f9299c235f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6bd77949012616049cccce2f6cb6e61f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    window.setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      window.setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    window.hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(darkModeDefault) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const darkModeDefault = false;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !window.hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+    };
+    // Switch to dark mode if need be
+    if (window.hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">IS310 - Culture As Data Fall 2026</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../schedule/index.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../assessments/index.html"> 
+<span class="menu-text">Assessments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../policies.html"> 
+<span class="menu-text">Policies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/introducing-defining-cad/01-CAD-tools.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#advanced-python" id="toc-advanced-python" class="nav-link active" data-scroll-target="#advanced-python">Advanced Python</a>
+  <ul class="collapse">
+  <li><a href="#writing-and-running-scripts" id="toc-writing-and-running-scripts" class="nav-link" data-scroll-target="#writing-and-running-scripts">Writing and Running Scripts</a></li>
+  <li><a href="#built-in-methods" id="toc-built-in-methods" class="nav-link" data-scroll-target="#built-in-methods">Built-In Methods</a></li>
+  <li><a href="#built-in-methods-for-strings" id="toc-built-in-methods-for-strings" class="nav-link" data-scroll-target="#built-in-methods-for-strings">Built-In Methods for Strings</a></li>
+  <li><a href="#control-flow" id="toc-control-flow" class="nav-link" data-scroll-target="#control-flow">Control Flow</a></li>
+  <li><a href="#homework-scripting-python-foundations-optional-but-recommended" id="toc-homework-scripting-python-foundations-optional-but-recommended" class="nav-link" data-scroll-target="#homework-scripting-python-foundations-optional-but-recommended">Homework: Scripting Python Foundations (Optional But Recommended)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Python Refresher II: Advanced Python</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Now that we have covered the foundations, it is time to get a little bit more advanced. In this lesson, we will cover some more advanced ways to use Python, including how to write and run scripts, and how to use built-in methods for strings and data structures. We will also cover how to use control flow structures like loops, functions, and conditional statements.</p>
+<section id="advanced-python" class="level2">
+<h2 class="anchored" data-anchor-id="advanced-python">Advanced Python</h2>
+<p>Python interpreter is great, but why might we not want to write all our code in the interpreter? What happens every time you quit?</p>
+<p><em>It gets erased!</em></p>
+<p>Rather than having to start from scratch every time, we can write our code in a script and then run that script. This is also how we can share our code with others.</p>
+<section id="writing-and-running-scripts" class="level3">
+<h3 class="anchored" data-anchor-id="writing-and-running-scripts">Writing and Running Scripts</h3>
+<p>Open your <code>is310-coding-assignments</code> folder in VS Code, and create a new folder <code>python-scripting</code>. This is where we will store all our scripts for this lesson. Inside the <code>python-scripting</code> folder, create a new file called <code>first_script.py</code>. You can do this in the terminal by typing:</p>
+<p>For Mac:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> first_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For Windows PowerShell:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ni</span> first_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We’re going to copy our code from the interpreter into this file:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>favorite_movies <span class="op">=</span>[</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"The Matrix I"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1999</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Star Wars IV"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now save this file. You can do this by clicking <code>File</code> and then <code>Save</code> or by using the keyboard shortcut <code>Cmd + S</code> or <code>Ctrl + S</code>. Our next step is to run this script.</p>
+<p>In our terminal, we can run the script by typing (but make sure you aren’t in the Python interpreter):</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> first_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What happens?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.giphy.com/media/3KCOFfdqmptLi/giphy.gif" class="img-fluid figure-img"></p>
+<figcaption>First Script</figcaption>
+</figure>
+</div>
+<p>Because we aren’t in the interpreter any more, unless we tell the computer to output a value it won’t show us anything (unless there’s an error).</p>
+<p>One solution is the <strong>print</strong> method.</p>
+<p>In <code>first_script.py</code>, add the line to the bottom of the script:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This time you should see the list of movies printed out in the terminal when you run the script.</p>
+<p><em>So what’s the print statement?</em></p>
+</section>
+<section id="built-in-methods" class="level3">
+<h3 class="anchored" data-anchor-id="built-in-methods">Built-In Methods</h3>
+<p>Print is a <em>built-in Python method</em>, which means it comes installed with Python and we can use it whenever we are writing Python.</p>
+<p>Print is used to display (or print out) variables, values, and data to the terminal, which is useful for seeing what our code is doing. It’s also useful for debugging, which is the process of finding and fixing errors in our code.</p>
+<p>Print is just one of many built-in methods though. Let’s take a look at a few more.</p>
+<ol type="1">
+<li><code>Len()</code> In <code>first_script.py</code>, after our existing code, add the following:</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>total_favorite_movies <span class="op">=</span> <span class="bu">len</span>(favorite movies)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"How many total favorite movies do we have?"</span>, total_favorite_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then try saving your file and running the code in the terminal. You should see first our favorite movies, and then the total number of favorite movies printed out. While this example might seem trivial since we can easily count the number of items in our list, imagine we had hundreds or thousands of items in our list. This is where the <strong>len</strong> method comes in handy.</p>
+<p>The <strong>len</strong> method can return the length of any list, dictionary, or string in Python.</p>
+<ol type="1">
+<li><code>Type()</code></li>
+</ol>
+<p>So far we’ve been writing all our variables, but sometimes you will be working with code that you didn’t write. When that happens you might want to know what type of variable you are working with, which is where the <strong>type</strong> method comes in.</p>
+<p>In <code>first_script.py</code>, add to the bottom of the script:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(favorite_movies), <span class="bu">type</span>(favorite_movies[<span class="dv">0</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once you save and run the script you should see that we have both a <code>list</code> and a <code>dictionary</code>. With print statements you can add multiple items as long as they are separated by commas, and you can use built-in methods inside the print statement, instead of assigning them to a variable first.</p>
+<ol start="2" type="1">
+<li><code>Input()</code></li>
+</ol>
+<p>Now we have been writing all our data in our script, but what if we wanted to get input from the user? This is where the <strong>input</strong> method comes in.</p>
+<p>In <code>first_script.py</code>, type the following at the bottom of the script:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Enter your favorite movie of the last year:'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>recent_favorite_movie <span class="op">=</span> <span class="bu">input</span>()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Your favorite movie is of the last year:'</span>, recent_favorite_movie)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDVhZGNmdmUxd2xmazEwZGZ3cWlqenJxY2RkNWs2aWVlMXJwcG0ybCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WRQBXSCnEFJIuxktnw/giphy.gif" class="img-fluid figure-img"></p>
+<figcaption>First Script</figcaption>
+</figure>
+</div>
+<p><em>What did we just do?</em></p>
+<p>First we printed out a prompt (i.e.&nbsp;we used the <code>print()</code> method to display some text to our user). Then we assigned the input method to a variable called <code>recent_favorite_methods</code>, and then we printed out the value of that variable, along with some explanatory text.</p>
+<p>You’ve now used built-in methods before for both dictionaries and lists. But they exist for data types too.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>print()</code></td>
+<td>Prints out a value to the terminal</td>
+<td><code>print('Hello World')</code></td>
+</tr>
+<tr class="even">
+<td><code>len()</code></td>
+<td>Returns the length of a list, dictionary, or string</td>
+<td><code>len([1,2,3,4,5])</code></td>
+</tr>
+<tr class="odd">
+<td><code>type()</code></td>
+<td>Returns the type of a variable</td>
+<td><code>type('Hello World')</code></td>
+</tr>
+<tr class="even">
+<td><code>input()</code></td>
+<td>Gets input from the user</td>
+<td><code>input('What is your name?')</code></td>
+</tr>
+</tbody>
+</table>
+<p>For more information about built-in methods, check out the <a href="https://docs.python.org/3/library/functions.html">Python documentation</a>.</p>
+</section>
+<section id="built-in-methods-for-strings" class="level3">
+<h3 class="anchored" data-anchor-id="built-in-methods-for-strings">Built-In Methods for Strings</h3>
+<p>Now that we have mastered more complex data structures, we can start manipulating our data. With cultural data, we are often working <code>text</code> which in Python is represented as a <code>string</code>. Strings are a sequence of characters, and Python has many built-in methods for manipulating strings.</p>
+<ol type="1">
+<li><code>Split()</code></li>
+</ol>
+<p>The <strong>split</strong> method lets us split up a string and turn it into a list. In <code>first_script.py</code>, add the following description of the movie <code>The Matrix</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>] <span class="op">=</span> <span class="st">"The Matrix is a 1999 science fiction action film written and directed by the Wachowskis. It is the first installment in The Matrix film series, starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving, and Joe Pantoliano. The Waschowskis created a plot set in a dystopian future where humanity is unknowingly trapped inside a simulated reality, the Matrix, created by intelligent machines to distract humans while using their bodies as an energy source. In the movie, the main character, Neo, is a computer programmer who learns this truth and is drawn into a rebellion against the machines, which involves other people who have been freed from the Matrix."</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When we save and rerun our code, we should now see this <code>long_description</code> printed out. As a reminder, to create <code>long_description</code> we are using indexing of our list and then adding a new key to the dictionary called <code>long_description</code>. We are then assigning a string to that key.</p>
+<p>But what if we wanted to get a list of all the words in the description? We can use the <strong>split</strong> method to do this.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>split_description <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].split(<span class="st">' '</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(split_description)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <strong>split</strong> method takes a string and splits it up into a list of substrings. In this case, we are splitting the description of the movie <code>The Matrix</code> into a list of words. We are using the space character as the <strong>delimiter</strong>, which means that every time there is a space in the string, it will split the string into a new item in the list. You can use any character as a delimiter, and you can also use multiple characters as a delimiter.</p>
+<p>Now that we have this split list, we could use <code>len</code> to count the number of words in the description:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(split_description))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We could also decide that we want to create a shorter description key in our dictionary and use indexing range to get the first 10 words of the description:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>favorite_movies[<span class="dv">0</span>][<span class="st">'short_description'</span>] <span class="op">=</span> <span class="st">' '</span>.join(split_description[:<span class="dv">10</span>])</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'short_description'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><code>Join()</code></li>
+</ol>
+<p>You’ll notice that we use a new method in the example above called <strong>join</strong>. This method lets us take a list and join all the values together.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">' '</span>.join(split_description))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Like <code>split()</code>, join requires a delimiter, which in this case is a space. This means that every item in the list will be joined together with a space in between. You can use any character as a delimiter, and often you’ll see people use a comma to join lists together into a string.</p>
+<ol start="3" type="1">
+<li><code>Replace()</code></li>
+</ol>
+<p>Now currently our description names the directors as <code>the Wachowskis</code>. But what if we wanted to change that to <code>Lana and Lilly Wachowski</code>? We can use the <strong>replace</strong> method to do this.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>edited_description <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].replace(<span class="st">'the Wachowskis'</span>, <span class="st">'Lana and Lilly Wachowski'</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(edited_description)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <strong>replace</strong> method lets us find a string and replace it with another string. You can also specify how many times you want to replace a string. For example, if you only wanted to replace the first instance of <code>the Wachowskis</code> you could use the following:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>edited_description <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].replace(<span class="st">'the Wachowskis'</span>, <span class="st">'Lana and Lilly Wachowski'</span>, <span class="dv">1</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(edited_description)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><code>Lower()</code>, <code>Upper()</code>, <code>Title()</code>, <code>Strip()</code></li>
+</ol>
+<p>Some additional methods that can be helpful include <strong>lower</strong>, <strong>upper</strong>, <strong>title</strong>, and <strong>strip</strong>. These methods let you change the case of a string, remove white space from the beginning and end of a string, and capitalize the first letter of each word in a string.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].lower())</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].upper())</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].title())</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].strip())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Explanation</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>split('delim')</code></td>
+<td>Returns a list of substrings separated by the given delimiter</td>
+<td><code>split_description = favorite_movies[0]['long_description'].split(' ')</code></td>
+</tr>
+<tr class="even">
+<td><code>join(list)</code></td>
+<td>Opposite of split(), joins the elements in the given list together using the string</td>
+<td><code>' '.join(split_description)</code></td>
+</tr>
+<tr class="odd">
+<td><code>replace('old string', 'new string')</code></td>
+<td>Replaces old string with new string</td>
+<td><code>favorite_movies[0]['long_description'].replace('the Wachowskis', 'Lana and Lilly Wachowski')</code></td>
+</tr>
+<tr class="even">
+<td><code>lower()</code></td>
+<td>Makes the string lowercase</td>
+<td><code>favorite_movies[0]['long_description'].lower()</code></td>
+</tr>
+<tr class="odd">
+<td><code>upper()</code></td>
+<td>Makes the string uppercase</td>
+<td><code>favorite_movies[0]['long_description'].upper()</code></td>
+</tr>
+<tr class="even">
+<td><code>title()</code></td>
+<td>Makes the string titlecase</td>
+<td><code>favorite_movies[0]['long_description'].title()</code></td>
+</tr>
+<tr class="odd">
+<td><code>strip()</code></td>
+<td>Removes lead and trailing white spaces</td>
+<td><code>favorite_movies[0]['long_description'].strip()</code></td>
+</tr>
+</tbody>
+</table>
+<p>You can find more information about string methods here <a href="https://www.w3schools.com/python/python_ref_string.asp">https://www.w3schools.com/python/python_ref_string.asp</a></p>
+<section id="quick-exercise-for-practice-optional-but-recommended" class="level4">
+<h4 class="anchored" data-anchor-id="quick-exercise-for-practice-optional-but-recommended">Quick Exercise For Practice (Optional But Recommended)</h4>
+<ol type="1">
+<li>Create two variables in your script, one for your favorite movie and one for your favorite book. You can use any data structure you want.</li>
+<li>The variables should include the title, the year it was released, and any sequels or prequels or series.</li>
+<li>The script should then ask for input from the user for a description of their favorite movie and book. These should be assigned to new keys in the dictionary.</li>
+<li>The script should print out the length of the list of your favorite movies and books, should create a short description of your favorite movie and book, and should print out the length of the long description of your favorite movie and book.</li>
+</ol>
+</section>
+</section>
+<section id="control-flow" class="level3">
+<h3 class="anchored" data-anchor-id="control-flow">Control Flow</h3>
+<p>So far we have been writing code that runs from top to bottom, but what if we moved our latest print statement to the top of our script? What would happen?</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>favorite_movies <span class="op">=</span>[</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"The Matrix I"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1999</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>]</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Star Wars IV"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.giphy.com/media/qQI16x8tgp7nW/giphy.gif" class="img-fluid figure-img"></p>
+<figcaption>First Script</figcaption>
+</figure>
+</div>
+<p>We’ve hit a problem. Let’s break down what happened here. If the print statement was at the bottom of the script it worked, but if it was at the top it didn’t.</p>
+<p>That’s because the print statement within it’s parentheses references the variable <code>favorite_movies</code>, but we haven’t <strong>defined</strong> that variable yet. This is an example of a <strong>NameError</strong>. But it’s also helping us understand that Python reads code from top to bottom, line by line. This is called <strong>sequential execution</strong> and we can manipulate this with <strong>control flow structures</strong>.</p>
+<p>Understanding control flow structures is essential to writing more complex code. These structures let us control the flow of our code, and they include <strong>loops</strong>, <strong>functions</strong>, and <strong>conditional statements</strong>.</p>
+<section id="looping" class="level4">
+<h4 class="anchored" data-anchor-id="looping">Looping</h4>
+<p>So far, we have been working with a list of dictionaries and writing out individual print statements for each value. But this gets tedious quickly, especially as we add more values (imagine if we had hundreds or thousands of movies, for example).</p>
+<p>There’s a much faster way to traverse data structures and types in Python, called <code>Looping</code>. With various types of loops in Python, you can travel through a sequence (i.e.&nbsp;a list, dictionary, string, etc…) to be able to manipulate items within the sequence.</p>
+<p><strong>For Loops</strong> are one of the most common ways in python to loop over a sequence. But what does looping mean exactly?</p>
+<p>Let’s take our list of favorite movies and print out the name of each movie.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie[<span class="st">'name'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://www.learnbyexample.org/wp-content/uploads/python/Python-for-Loop-Syntax.png" class="img-fluid"></p>
+<p>This diagram helps us understand this new syntax. We start with the <code>for</code> keyword (which is another reserved word in Python), followed by a variable name (in this case <code>movie</code>) and the <code>in</code> keyword (reserved word again), followed by the sequence we want to loop over (in this case <code>favorite_movies</code>). We then end the line with a colon, and indent the code we want to run for each item in the sequence.</p>
+<p><strong>Indenting</strong> is very important in Python. It tells Python that the indented code is part of the loop. If we don’t indent, Python will throw an error. To indent in Python, we use either two or four spaces (or tabs). You can use any number of spaces or tabs, but they have to be consistent. This use of white space is called <strong>indentation</strong> and is a core part of Python’s syntax.</p>
+<p>Within the loop, we can use the variable <code>movie</code> to access each item in the sequence. This is called <strong>iteration</strong>. In this code, we are using the print statement to print out the name of each movie.</p>
+<p>While we named our variable <code>movie</code>, we could have named it anything. For example, we could have named it <code>film</code> or <code>item</code>. The name of the variable is up to you, but ideally it should be descriptive of the items in the sequence.</p>
+<p>Now what would happen if we tried to print movie outside of the loop?</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie[<span class="st">'name'</span>])</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(movie)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We would either get an error or the last movie in the list. This is because the variable <code>movie</code> only exists within the local scope of the loop. This is called <strong>local scope</strong>. This is also why we can use the same variable name in different loops and not have to worry about them conflicting with each other. We’ll go into detail about this more later in this lesson.</p>
+<p>We can also use <code>For Loops</code> on dictionaries. The syntax is slightly different because dictionaries are not one long sequence, but rather a sequence of key/value pairs. Let’s try and loop through all the keys in our favorite movies.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>individual_movie <span class="op">=</span> favorite_movies[<span class="dv">0</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key, value <span class="kw">in</span> individual_movie.items():</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(key, value)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll notice that we are using the <code>items</code> method to get the key/value pairs of the dictionary. This is a built-in method for dictionaries. We are then using the <code>for</code> keyword, followed by two variables (in this case <code>key</code> and <code>value</code>), and the <code>in</code> keyword, followed by the sequence we want to loop over (in this case <code>individual_movie.items()</code>). We then end the line with a colon, and indent the code we want to run for each item in the sequence. We can then use the <code>key</code> and <code>value</code> variables to access each item in the sequence. Instead of key and value, we could’ve used any name we wanted, like <code>metadata</code> and <code>data</code>.</p>
+<p>Finally we can even loop through a string. Let’s try and print out each letter in the first name of our favorite movie.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>first_movie_name <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'name'</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> letter <span class="kw">in</span> first_movie_name:</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(letter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Looping is fairly complex, but the core thing to remember is the reserved words <code>for</code> and <code>in</code>, and the colon at the end of the line. We then indent the code we want to run for each item in the sequence.</p>
+<p>For more about looping in Python, check out the <a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements">Python documentation</a> and the <a href="https://www.w3schools.com/python/python_for_loops.asp">W3Schools tutorial</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Looping keyword</th>
+<th>Explanation</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>for</code></td>
+<td>Used to loop over a sequence</td>
+<td><code>for movie in favorite_movies:</code></td>
+</tr>
+<tr class="even">
+<td><code>in</code></td>
+<td>Used to specify the sequence to loop over</td>
+<td><code>for movie in favorite_movies:</code></td>
+</tr>
+<tr class="odd">
+<td><code>items()</code></td>
+<td>Used to get the key/value pairs of a dictionary</td>
+<td><code>for key, value in individual_movie.items():</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions" class="level4">
+<h4 class="anchored" data-anchor-id="functions">Functions</h4>
+<p>Looping is very powerful, but if we want to loop through a second list of movies or a different variable, we would have to repeat our code later in the script. An alternative is to create a function.</p>
+<p>A function is a way to organize code into a reusable block. It’s a way to avoid repeating code, and also to make our code more readable. Functions are also a way to make our code more modular and easier to fix.</p>
+<p><strong>Function Syntax</strong></p>
+<p><img src="https://www.askpython.com/wp-content/uploads/2019/06/python-functions.png" class="img-fluid"></p>
+<p>To create a function, we use the reserved word <code>def</code> and then create a unique name for our function, followed by parentheses and colon. Similar to variables, function names can contain letters, numbers, and underscores, but they cannot start with a number. We usually write function names in lowercase and use underscores to separate words.</p>
+<p>Then we can pass <em>arguments</em> (also called parameters) in the parentheses, that we can that use <em>inside</em> of the functions. Those arguments will be <em>variables</em> and we can do any transformation you would normally do to a value. Finally we can <em>return</em> the result of our manipulation.</p>
+<p>For example let’s create a function that takes a movie and prints out the name of the movie.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name(movie):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie[<span class="st">'name'</span>])</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>print_movie_name(favorite_movies[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This function takes a movie as an argument and then prints out the name of the movie. We can then call this function and pass in a movie as an argument. This is called <strong>calling</strong> the function.</p>
+<p>Now we could do a more complex function that takes a movie and a year and returns a string with the name of the movie and the year.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name_and_year(movie):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    movie_data <span class="op">=</span> movie[<span class="st">'name'</span>] <span class="op">+</span> <span class="st">' was released in '</span> <span class="op">+</span> <span class="bu">str</span>(movie[<span class="st">'release_year'</span>])</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie_data)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>print_movie_name_and_year(favorite_movies[<span class="dv">0</span>], favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll notice in this example that we are using the <code>+</code> operator to concatenate the strings together. We are also using the <code>str</code> method to convert the integer to a string. This is because you can’t concatenate a string and an integer together. This type of transformation is called <strong>type casting</strong>, which is when we change the type of a variable. Finally we are assigning the result of our manipulation to a new variable called <code>movie_data</code> and printing that out.</p>
+<p>What would happen if you try to access the variable <code>movie_data</code> outside of the function?</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name_and_year(movie):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    movie_data <span class="op">=</span> movie[<span class="st">'name'</span>] <span class="op">+</span> <span class="st">' was released in '</span> <span class="op">+</span> <span class="bu">str</span>(movie[<span class="st">'release_year'</span>])</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie_data)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>print_movie_name_and_year(favorite_movies[<span class="dv">0</span>])</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(movie_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">NameError:</span> name <span class="st">'movie_data'</span> is not defined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Similar to our looping example, the variable <code>movie_data</code> only exists within the local scope of the function. In functions, everything indented within the function is part of the local scope. This is also why we can use the same variable name in different functions and not have to worry about them conflicting with each other.</p>
+<p><img src="https://pbs.twimg.com/media/GnGjXKtbgAQbvoI.png" class="img-fluid"></p>
+<p>In this diagram, we can start to see how where we define our variables impacts whether it is <code>global</code> or <code>local</code> scope. This is a core concept in Python and is called <strong>variable scope</strong>. So our favorite movies list is in the global scope, but the variable <code>movie</code> and <code>movie_data</code> are in the local scope of the function. Knowing the scope of your variables is essential because if you try to access something globally but it only exists locally, you’ll get an error. Alternatively, if you want to only change a variable locally but it exists globally, you’ll also end up overwriting the global variable. This is all very complex, but I promise with practice and time it will start to make sense.</p>
+<p>The final part of a function is the <strong>return statement</strong>. This is used to pass data back from the function, which can then be assigned to a new variable that’s accessible in the rest of the script, also known as the <strong>global scope</strong>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name_and_year(movie):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    movie_data <span class="op">=</span> movie[<span class="st">'name'</span>] <span class="op">+</span> <span class="st">' was released in '</span> <span class="op">+</span> <span class="bu">str</span>(movie[<span class="st">'release_year'</span>])</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> movie_data</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>new_movie_data <span class="op">=</span> print_movie_name_and_year(favorite_movies[<span class="dv">0</span>])</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(new_movie_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can see that we are assigning the result of our manipulation to a new variable called <code>new_movie_data</code>. This variable is accessible in the rest of the script, also known as the <strong>global scope</strong>.</p>
+<p>For more about functions in Python, check out the <a href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions">Python documentation</a> and the <a href="https://www.w3schools.com/python/python_functions.asp">W3Schools tutorial</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function keyword</th>
+<th>Explanation</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>def</code></td>
+<td>Used to define a function</td>
+<td><code>def print_movie_name(movie):</code></td>
+</tr>
+<tr class="even">
+<td><code>return</code></td>
+<td>Used to pass data back from the function</td>
+<td><code>return movie_data</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conditional-statements" class="level4">
+<h4 class="anchored" data-anchor-id="conditional-statements">Conditional Statements</h4>
+<p>So far we have been manipulating all our code the same way, but what if we wanted to have a different manipulation for different types of movies? Or for movies versus books? This is where <strong>conditional statements</strong> come in.</p>
+<p>Earlier we learned about <em>booleans</em> (<code>True or False</code>). So we could test if our two movies are the same.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>] <span class="op">==</span> favorite_movies[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This should output <code>False</code>, but we can also use this type of condition to perform different actions with our code.</p>
+<p><img src="../../assets/images/python_conditionals.jpg" class="img-fluid"></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>] <span class="op">==</span> favorite_movies[<span class="dv">1</span>]:</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The same'</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Different'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, we are doing the same comparison as before, but now we are using the <code>if</code> keyword, followed by the condition we want to test, followed by a colon. We then indent the code we want to run if the condition is <code>True</code>. We can also use the <code>else</code> keyword to run code if the condition is <code>False</code>. This is called an <strong>if/else statement</strong>. Both <code>if</code> and <code>else</code> are reserved words in Python. And with these keywords, we can create complex logic in our code.</p>
+<p>We can also use the <code>elif</code> keyword to add more complexity to our code. Each of the conditional blocks (the three <code>print()</code> statements) are only run if the associated conditional statement is <code>True</code> (in the boolean logic sense). We can have multiple <code>elif</code> blocks if we want. We can also omit <code>elif</code> and <code>else</code> blocks altogether.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>] <span class="op">==</span> favorite_movies[<span class="dv">1</span>]:</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The same'</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> favorite_movies[<span class="dv">0</span>] <span class="op">!=</span> favorite_movies[<span class="dv">1</span>]:</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Different'</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'No idea'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, if our initial condition is True, we print out <code>The same</code>. If it’s False, we then test the next condition with the <code>elif</code> (which stands for else if). If that’s True, we print out <code>Different</code>. Finally, if that is also False, we print out <code>No idea</code>.</p>
+<p>In conditional statements, we can use any of the previous operators we’ve learned about, including <code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, and <code>&lt;=</code>. We can also test more complicated comparisons using various comparison operators:</p>
+<p><img src="https://introcs.cs.princeton.edu/python/appendix_cheatsheet/images/ComparisonOperators.png" class="img-fluid"></p>
+<p>For strings, we can use use <code>==</code> for comparison and some special operators like <code>in</code> to see if one string exists inside of another.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'Matrix'</span> <span class="kw">in</span> favorite_movies[<span class="dv">0</span>][<span class="st">'name'</span>]:</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Matrix'</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'No Matrix'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can also use <code>==</code> to test numbers:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">==</span> <span class="dv">1999</span>:</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The Matrix'</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Not The Matrix'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For numbers, we can also use <code>&gt;</code>, <code>&gt;=</code>, <code>==</code>, <code>&lt;</code>, and <code>&lt;=</code> to make numeric comparisons.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">&gt;</span> favorite_movies[<span class="dv">1</span>][<span class="st">'release_year'</span>]:</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The Matrix'</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Star Wars'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/bool.png" class="img-fluid"></p>
+<p>We can also do more than one condition, we can use <code>and</code>, <code>or</code>, and <code>not</code>:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">&gt;</span> <span class="dv">1999</span> <span class="kw">and</span> <span class="st">'Matrix'</span> <span class="kw">in</span> favorite_movies[<span class="dv">0</span>][<span class="st">'name'</span>]:</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The Matrix'</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Star Wars'</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">&gt;</span> <span class="dv">1999</span>:</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The Matrix'</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Star Wars'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally we can also check if a variable exists or not using <code>is</code> and <code>is not</code>:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'sequels'</span>] <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Sequels'</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'No Sequels'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll notice we’re using a new keyword <code>None</code>. This is a special Python object that represents the absence of a value. It’s similar to <code>null</code> in other programming languages. We can use <code>is</code> and <code>is not</code> to check if a variable is <code>None</code> or not.</p>
+<p>For more about conditional statements in Python, check out the <a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">Python documentation</a> and the <a href="https://www.w3schools.com/python/python_conditions.asp">W3Schools tutorial</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Conditional keyword</th>
+<th>Explanation</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>if</code></td>
+<td>Used to test a condition</td>
+<td><code>if favorite_movies[0] == favorite_movies[1]:</code></td>
+</tr>
+<tr class="even">
+<td><code>elif</code></td>
+<td>Used to test another condition</td>
+<td><code>elif favorite_movies[0] != favorite_movies[1]:</code></td>
+</tr>
+<tr class="odd">
+<td><code>else</code></td>
+<td>Used to run code if the condition is False</td>
+<td><code>else:</code></td>
+</tr>
+<tr class="even">
+<td><code>in</code></td>
+<td>Used to test if a string exists in another string</td>
+<td><code>if 'Matrix' in favorite_movies[0]['name']:</code></td>
+</tr>
+<tr class="odd">
+<td><code>and</code></td>
+<td>Used to test if two conditions are True</td>
+<td><code>if favorite_movies[0]['release_year'] &gt; 1999 and 'Matrix' in favorite_movies[0]['name']:</code></td>
+</tr>
+<tr class="even">
+<td><code>or</code></td>
+<td>Used to test if one of two conditions is True</td>
+<td><code>if favorite_movies[0]['release_year'] &gt; 1999 or 'Matrix' in favorite_movies[0]['name']:</code></td>
+</tr>
+<tr class="odd">
+<td><code>not</code></td>
+<td>Used to test if a condition is False</td>
+<td><code>if not favorite_movies[0]['release_year'] &gt; 1999:</code></td>
+</tr>
+<tr class="even">
+<td><code>is</code></td>
+<td>Used to test if a variable is None</td>
+<td><code>if favorite_movies[0]['sequels'] is not None:</code></td>
+</tr>
+<tr class="odd">
+<td><code>is not</code></td>
+<td>Used to test if a variable is not None</td>
+<td><code>if favorite_movies[0]['sequels'] is not None:</code></td>
+</tr>
+<tr class="even">
+<td><code>None</code></td>
+<td>A special Python object that represents the absence of a value</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="homework-scripting-python-foundations-optional-but-recommended" class="level3">
+<h3 class="anchored" data-anchor-id="homework-scripting-python-foundations-optional-but-recommended">Homework: Scripting Python Foundations (Optional But Recommended)</h3>
+<p>This homework assignment is <strong>optional but highly recommended</strong> for those that do not have experience with writing Python scripts. If you decide to complete the homework, it will be <strong>added to your grade as extra credit but if you do not complete it, it will not be counted against you.</strong></p>
+<p>In the first quick exercise, you created a script that asked for input from the user and then printed out the length of the list of your favorite movies and books, created a short description of your favorite movie and book, and printed out the length of the long description of your favorite movie and book.</p>
+<p>Now we will augment this script to include loops, functions, and conditional statements.</p>
+<p>In your <code>first_script.py</code>, try to complete the following tasks:</p>
+<ol type="1">
+<li>Create a function that takes a movie as an argument. Inside the function, it should check if the movie was released before 2000. If it was, it should print a string that says “This movie was released before 2000”. If it wasn’t, it should print a string that says “This movie was released after 2000”. The function should only return the movie name if it was released after 2000.</li>
+<li>Below the function create an empty list called <code>recent_movies</code>.</li>
+<li>Outside and below the function and <code>recent_movies</code>, use a for loop to loop through all the movies in your list of favorite movies. For each movie, call the function and pass in the movie as an argument. If the function returns a value, append the movie to the <code>recent_movies</code> list. You can check if the function returns a value by using the <code>if</code> keyword and checking if the result is <code>None</code> or not.</li>
+<li>Finally, outside of the loop, print out the <code>recent_movies</code> list.</li>
+</ol>
+<p>Once you have completed this script, save it and run it in the terminal. You should see a list of all the movies that were released after 2000. If you prefer, you can use books or another cultural object instead of movies.</p>
+<p>After confirming that the script works, you should push it up to your GitHub repository. You can do this by using the following commands in the terminal:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Completed homework for Python Foundations"</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main <span class="co"># or master if you haven't changed the default branch name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should then put a link to our GitHub discussion <a href="https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/5">https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/5</a>.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>IS310 Culture As Data - Fall 2026</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

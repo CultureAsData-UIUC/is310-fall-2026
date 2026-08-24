@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../assets/images/favicon.ico" rel="icon">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.27">
+
+  <title>IS310 - Culture As Data Fall 2026 – Structuring Unstructured Data: Tokenization, NER &amp; Networks</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Structuring Unstructured Data: Tokenization, NER &amp; Networks</h1>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section class="slide level2">
+
+<p>In the last lesson, we used Pandas string methods to do some initial exploration of the novel texts in our combined dataset — counting characters, searching for patterns, and comparing pronoun frequencies across genres. These methods are fast and useful, but they treat text as a raw sequence of characters rather than as language.</p>
+</section>
+<section class="slide level2">
+
+<p>Today we look at what it actually means to <strong>structure</strong> unstructured text data.</p>
+<ul>
+<li>Tokenization</li>
+<li>Named Entity Recognition (NER) to extract meaningful entities from our novels</li>
+<li>Build a network that captures relationships between characters across our corpus.</li>
+</ul>
+</section>
+<section id="from-structured-to-unstructured-data" class="slide level2">
+<h2>From Structured to Unstructured Data</h2>
+<p>When we looked at the Top 500 Novels dataset, most of the columns were already structured: genres, rankings, publication years.</p>
+<p><strong>unstructured data</strong> — text that is not easily searchable or analyzable without additional processing.</p>
+</section>
+<section class="slide level2">
+
+
+<img data-src="https://i.pinimg.com/736x/b0/04/b5/b004b543748ba1350c5d66c16c678607.jpg" class="r-stretch"></section>
+<section class="slide level2">
+
+<p>The challenge of structuring cultural data like this sits at the heart of several overlapping fields:</p>
+
+<img data-src="https://miro.medium.com/max/1200/0*ewkxRItArykG27dU.png" class="r-stretch"></section>
+<section class="slide level2">
+
+<p><strong>Information Retrieval (IR)</strong> first developed in the 1950s and 1960s (think Vannevar Bush and the Memex!) and its goal is to find relevant documents for a user’s needs or queries. IR doesn’t necessarily require <em>understanding</em> the content of documents — it can treat them as a “bag of words” and find patterns in word frequencies.</p>
+</section>
+<section class="slide level2">
+
+<p><strong>Information Extraction (IE)</strong> is different. Rather than finding documents, it extracts specific structured facts <em>from</em> documents — things like who is mentioned, what organizations are named, what events are described. It requires understanding both syntax and semantics.</p>
+</section>
+<section class="slide level2">
+
+<p>Both approaches require a common first step: <strong>tokenization</strong>.</p>
+</section>
+<section id="tokenization" class="slide level2">
+<h2>Tokenization</h2>
+<p>The process of breaking text into smaller units called <em>tokens</em>, which can be words, phrases, or characters.</p>
+
+<img data-src="https://miro.medium.com/v2/resize:fit:2000/1*pj8KnjxgCszpDqJSS2741w.jpeg" class="r-stretch"></section>
+<section class="slide level2">
+
+<p>The field of corpus linguistics replaced the informal term “word” with the more precise terms <strong>token</strong> (a specific occurrence in a text) and <strong>type</strong> (the abstract word form). For example, “run,” “running,” and “ran” are three different tokens but they all belong to the same type. This distinction matters a lot for analysis.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="why-tokenization-matters-zipfs-law">Why Tokenization Matters: Zipf’s Law</h3>
+<p>One of the most important scholars in this area was George Zipf, who in the 1930s discovered that in any corpus, the most common word appears roughly twice as often as the second most common, three times as often as the third, and so on. This distribution is known as <strong>Zipf’s Law</strong>.</p>
+<p>A small number of words dominate any text, which has major implications for analysis. When we look at word frequencies, we’ll always see common function words (the, and, of, in) swamping everything else unless we handle them deliberately.</p>
+</section>
+<section class="slide level2">
+
+<p>We can explore this with NLTK (remember to <code>pip install nltk</code>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a></a><span class="im">from</span> nltk <span class="im">import</span> word_tokenize, FreqDist</span>
+<span id="cb1-3"><a></a></span>
+<span id="cb1-4"><a></a><span class="co"># Load the pre-scraped combined dataset</span></span>
+<span id="cb1-5"><a></a>combined_novels_nyt_df <span class="op">=</span> pd.read_csv(<span class="st">"combined_novels_with_text.csv"</span>)</span>
+<span id="cb1-6"><a></a></span>
+<span id="cb1-7"><a></a><span class="co"># Look at token frequency in the first two novels</span></span>
+<span id="cb1-8"><a></a>tokens <span class="op">=</span> FreqDist(<span class="bu">sum</span>(</span>
+<span id="cb1-9"><a></a>    combined_novels_nyt_df[<span class="dv">0</span>:<span class="dv">2</span>][<span class="st">'eng_text'</span>].dropna().<span class="bu">map</span>(word_tokenize),</span>
+<span id="cb1-10"><a></a>    []</span>
+<span id="cb1-11"><a></a>))</span>
+<span id="cb1-12"><a></a>tokens.plot(<span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will show the characteristic “long tail” distribution of Zipf’s Law — a few words with very high frequency, and then a sharp dropoff.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="tokenization-choices-are-interpretive-choices">Tokenization Choices Are Interpretive Choices</h3>
+<p>There is no single “correct” way to tokenize text. Every choice shapes your analysis:</p>
+<ul>
+<li><strong>Lowercasing</strong> — should “The” and “the” count as the same token?</li>
+<li><strong>Punctuation</strong> — removing it simplifies counting but loses information (question marks, em-dashes)</li>
+<li><strong>Stemming vs.&nbsp;lemmatization</strong> — reducing “running” to “run” normalizes forms, but collapses distinctions</li>
+<li><strong>Stop words</strong> — common words like “the” and “of” often overwhelm analyses and get removed, but the choice of which words to remove is itself interpretive</li>
+<li><strong>Bigrams</strong> — sometimes two-word phrases (“New York”, “not good”) carry more meaning than single tokens</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p>Let’s compare two approaches on our data. First, a simple space-split:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>combined_novels_nyt_df[<span class="st">'word_count_split'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">str</span>.split().<span class="bu">str</span>.<span class="bu">len</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>Then NLTK’s word tokenizer, which is smarter about punctuation and contractions:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="kw">def</span> tokenize_text(text):</span>
+<span id="cb3-2"><a></a>    <span class="cf">if</span> pd.notna(text):</span>
+<span id="cb3-3"><a></a>        <span class="cf">return</span> word_tokenize(text)</span>
+<span id="cb3-4"><a></a>    <span class="cf">return</span> []</span>
+<span id="cb3-5"><a></a></span>
+<span id="cb3-6"><a></a>combined_novels_nyt_df[<span class="st">'tokens'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">apply</span>(tokenize_text)</span>
+<span id="cb3-7"><a></a>combined_novels_nyt_df[<span class="st">'word_count_nltk'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'tokens'</span>].<span class="bu">apply</span>(<span class="bu">len</span>)</span>
+<span id="cb3-8"><a></a></span>
+<span id="cb3-9"><a></a><span class="co"># Compare the two</span></span>
+<span id="cb3-10"><a></a>combined_novels_nyt_df[[<span class="st">'title'</span>, <span class="st">'word_count_split'</span>, <span class="st">'word_count_nltk'</span>]].head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll find the NLTK counts are slightly higher, because it correctly separates punctuation attached to words (like “said.” becoming “said” and “.”).</p>
+</section>
+<section class="slide level2">
+
+<h3 id="stop-words">Stop Words</h3>
+<p><em>Stop words</em> are the most common words in a language, and they are often removed from text data because they don’t carry much content meaning. The term was coined by Hans Peter Luhn in 1958, when he was developing the concept of Keywords In Context (KWIC) indexing.</p>
+</section>
+<section class="slide level2">
+
+<p>NLTK has a built-in stop words list:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a>stop_words <span class="op">=</span> <span class="bu">set</span>(stopwords.words(<span class="st">'english'</span>))</span>
+<span id="cb4-4"><a></a></span>
+<span id="cb4-5"><a></a><span class="kw">def</span> remove_stop_words(text):</span>
+<span id="cb4-6"><a></a>    <span class="cf">if</span> pd.notna(text):</span>
+<span id="cb4-7"><a></a>        <span class="cf">return</span> <span class="st">' '</span>.join([w <span class="cf">for</span> w <span class="kw">in</span> text.split() <span class="cf">if</span> w.lower() <span class="kw">not</span> <span class="kw">in</span> stop_words])</span>
+<span id="cb4-8"><a></a>    <span class="cf">return</span> text</span>
+<span id="cb4-9"><a></a></span>
+<span id="cb4-10"><a></a>combined_novels_nyt_df[<span class="st">'text_no_stopwords'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">apply</span>(remove_stop_words)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>However, this is another interpretive decision. For example, “not” is on the NLTK stop words list, but it’s clearly important for sentiment analysis. We’ve also discussed earlier in the course how crude filtering lists can inadvertently remove content from marginalized communities. Before removing stop words, always inspect the list and consider what you might be losing.</p>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># You can remove specific words from the stop list</span></span>
+<span id="cb5-2"><a></a>stop_words.discard(<span class="st">'not'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="named-entity-recognition-ner" class="slide level2">
+<h2>Named Entity Recognition (NER)</h2>
+<p>Now that we have a sense of how to structure text at the word level, we can move to something more powerful: extracting <em>named entities</em> — the people, places, organizations, and other specific referents that appear in a text.</p>
+<p>From <a href="https://en.wikipedia.org/wiki/Named-entity_recognition">Wikipedia</a>:</p>
+<p>“Named-entity recognition (NER) is a subtask of information extraction that seeks to locate and classify named entities mentioned in unstructured text into pre-defined categories such as person names, organizations, locations, medical codes, time expressions, quantities, monetary values, percentages, etc.”</p>
+</section>
+<section class="slide level2">
+
+
+<img data-src="ner_diagram.png" class="r-stretch quarto-figure-center"><p class="caption">Named Entity Recognition diagram</p></section>
+<section class="slide level2">
+
+<p>The concept of “named entity” first developed at the Message Understanding Conference-6 in 1995. The field really takes off with the Text Analysis Conferences beginning in 2009 and has since become central to computational humanities.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="ner-with-spacy">NER with spaCy</h3>
+<p>We’ll use <a href="https://spacy.io/">spaCy</a>, a powerful and widely used NLP library. First, install it and download the English model:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a></a>pip install spacy</span>
+<span id="cb6-2"><a></a>python -m spacy download en_core_web_sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>Now let’s load the library and try a quick example:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="im">import</span> spacy</span>
+<span id="cb7-2"><a></a>nlp <span class="op">=</span> spacy.load(<span class="st">'en_core_web_sm'</span>)</span>
+<span id="cb7-3"><a></a></span>
+<span id="cb7-4"><a></a>doc <span class="op">=</span> nlp(<span class="st">"Apple is looking at buying U.K. startup for $1 billion"</span>)</span>
+<span id="cb7-5"><a></a></span>
+<span id="cb7-6"><a></a><span class="cf">for</span> ent <span class="kw">in</span> doc.ents:</span>
+<span id="cb7-7"><a></a>    <span class="bu">print</span>(ent.text, ent.start_char, ent.end_char, ent.label_)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>We should see:</p>
+<pre><code>Apple 0 5 ORG
+U.K. 27 31 GPE
+$1 billion 44 54 MONEY</code></pre>
+<p>This is telling us the text of the entity, its character positions in the document, and its label.</p>
+</section>
+<section class="slide level2">
+
+<p>spaCy uses the following entity types among others:</p>
+
+<img data-src="https://devopedia.org/images/article/256/8660.1580659054.png" class="r-stretch quarto-figure-center"><p class="caption">ner entities</p></section>
+<section class="slide level2">
+
+<h3 id="how-spacy-works">How spaCy Works</h3>
+<p>spaCy uses a pipeline of statistical models to process text:</p>
+
+<img data-src="https://d33wubrfki0l68.cloudfront.net/3ad0582d97663a1272ffc4ccf09f1c5b335b17e9/7f49c/pipeline-fde48da9b43661abcdf62ab70a546d71.svg" class="r-stretch quarto-figure-center"><p class="caption">spacy pipeline</p><p>The key thing to understand is that spaCy’s NER is based on trained machine learning models — it makes predictions about which label most likely applies based on patterns learned from large annotated datasets. This means it can generalize well to new text, but it also inherits the biases and limitations of its training data.</p>
+</section>
+<section class="slide level2">
+
+<p>We can also visualize how spaCy is analyzing a sentence using its built-in <code>displacy</code> visualizer:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="im">from</span> spacy <span class="im">import</span> displacy</span>
+<span id="cb9-2"><a></a></span>
+<span id="cb9-3"><a></a>doc <span class="op">=</span> nlp(<span class="st">"Elizabeth Bennet and Mr. Darcy meet at Netherfield in Hertfordshire."</span>)</span>
+<span id="cb9-4"><a></a>displacy.render(doc, style<span class="op">=</span><span class="st">"ent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="applying-ner-to-our-novels">Applying NER to Our Novels</h3>
+<p>Now let’s apply NER to our novel texts. Since spaCy needs to process each text individually, we’ll write a function and use <code>apply()</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="kw">def</span> get_entities(text, entity_type<span class="op">=</span><span class="st">'PERSON'</span>):</span>
+<span id="cb10-2"><a></a>    <span class="co">"""Extract all entities of a given type from a text."""</span></span>
+<span id="cb10-3"><a></a>    <span class="cf">if</span> pd.notna(text) <span class="kw">and</span> <span class="bu">len</span>(<span class="bu">str</span>(text)) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb10-4"><a></a>        <span class="co"># Limit to first 100,000 characters to keep things fast</span></span>
+<span id="cb10-5"><a></a>        doc <span class="op">=</span> nlp(<span class="bu">str</span>(text)[:<span class="dv">100000</span>])</span>
+<span id="cb10-6"><a></a>        <span class="cf">return</span> [ent.text <span class="cf">for</span> ent <span class="kw">in</span> doc.ents <span class="cf">if</span> ent.label_ <span class="op">==</span> entity_type]</span>
+<span id="cb10-7"><a></a>    <span class="cf">return</span> []</span>
+<span id="cb10-8"><a></a></span>
+<span id="cb10-9"><a></a><span class="op">-------------------------------------------------------------------------</span></span>
+<span id="cb10-10"><a></a></span>
+<span id="cb10-11"><a></a><span class="co"># Extract person entities from each novel</span></span>
+<span id="cb10-12"><a></a><span class="co"># This will take a few minutes — a good time to grab coffee!</span></span>
+<span id="cb10-13"><a></a>combined_novels_nyt_df[<span class="st">'person_entities'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">apply</span>(</span>
+<span id="cb10-14"><a></a>    <span class="kw">lambda</span> x: get_entities(x, <span class="st">'PERSON'</span>)</span>
+<span id="cb10-15"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Processing full novel texts through spaCy’s pipeline is slow. For in-class work, it’s fine to limit to the first 100,000 characters of each text, or to work with a small subset of novels. The code above uses that character limit.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>Now let’s take a look at what entities were found in a few novels:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="cf">for</span> _, row <span class="kw">in</span> combined_novels_nyt_df[<span class="dv">0</span>:<span class="dv">5</span>].iterrows():</span>
+<span id="cb11-2"><a></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>row[<span class="st">'title'</span>]<span class="sc">}</span><span class="ss"> by </span><span class="sc">{</span>row[<span class="st">'author'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-3"><a></a>    <span class="co"># Show the 10 most common person entities</span></span>
+<span id="cb11-4"><a></a>    <span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb11-5"><a></a>    entity_counts <span class="op">=</span> Counter(row[<span class="st">'person_entities'</span>])</span>
+<span id="cb11-6"><a></a>    <span class="bu">print</span>(entity_counts.most_common(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>You’ll immediately notice something important: spaCy is imperfect. It might tag “Mr.” or “Chapter” as a PERSON, or miss characters referred to only by pronoun. This is a known limitation of statistical NER on literary texts, where characters may be addressed differently throughout a novel (by name, title, nickname, or pronoun).</p>
+</section>
+<section class="slide level2">
+
+<h3 id="building-a-named-entities-dataframe">Building a Named Entities DataFrame</h3>
+<p>Rather than keeping entities as lists inside our existing DataFrame, it’s often more useful to create a separate <strong>entities DataFrame</strong> — one row per entity mention — which we can then analyze and merge back in:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>entity_rows <span class="op">=</span> []</span>
+<span id="cb12-2"><a></a></span>
+<span id="cb12-3"><a></a><span class="cf">for</span> _, row <span class="kw">in</span> combined_novels_nyt_df.iterrows():</span>
+<span id="cb12-4"><a></a>    <span class="cf">for</span> entity <span class="kw">in</span> row[<span class="st">'person_entities'</span>]:</span>
+<span id="cb12-5"><a></a>        entity_rows.append({</span>
+<span id="cb12-6"><a></a>            <span class="st">'title'</span>: row[<span class="st">'title'</span>],</span>
+<span id="cb12-7"><a></a>            <span class="st">'author'</span>: row[<span class="st">'author'</span>],</span>
+<span id="cb12-8"><a></a>            <span class="st">'genre'</span>: row[<span class="st">'genre'</span>],</span>
+<span id="cb12-9"><a></a>            <span class="st">'pub_year'</span>: row[<span class="st">'pub_year'</span>],</span>
+<span id="cb12-10"><a></a>            <span class="st">'entity'</span>: entity</span>
+<span id="cb12-11"><a></a>        })</span>
+<span id="cb12-12"><a></a></span>
+<span id="cb12-13"><a></a>entities_df <span class="op">=</span> pd.DataFrame(entity_rows)</span>
+<span id="cb12-14"><a></a><span class="bu">print</span>(entities_df.shape)</span>
+<span id="cb12-15"><a></a>entities_df.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>Now we can ask questions like: which person entities appear most frequently across the entire corpus?</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>entities_df[<span class="st">'entity'</span>].value_counts().head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>Or which entities are most common within each genre?</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>entities_df.groupby([<span class="st">'genre'</span>, <span class="st">'entity'</span>]).size().reset_index(name<span class="op">=</span><span class="st">'count'</span>).sort_values(<span class="st">'count'</span>, ascending<span class="op">=</span><span class="va">False</span>).groupby(<span class="st">'genre'</span>).head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="from-ner-to-networks" class="slide level2">
+<h2>From NER to Networks</h2>
+<p>Now we get to one of the most powerful applications of NER: using extracted entities to build a <strong>network</strong> that represents relationships across a corpus.</p>
+</section>
+<section class="slide level2">
+
+<p>Networks are an abstraction that let us represent and compute over relationships between entities. A network has two components:</p>
+<ul>
+<li><strong>Nodes</strong> — the entities (in our case, character names)</li>
+<li><strong>Edges</strong> — connections between entities (in our case, co-occurrence: two characters appearing in the same novel)</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p>The key interpretive question is: what counts as a relationship? We’ll start with the simplest approach — two characters are “connected” if they both appear in the same novel. Later you might want to use a sliding window approach (characters co-occurring within N words of each other), which captures more local interaction patterns.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="creating-a-co-occurrence-network">Creating a Co-Occurrence Network</h3>
+<p>Let’s build a network where nodes are the most common named persons across our corpus, and edges connect characters who appear in the same novel.</p>
+<p>First, let’s identify the most frequently occurring entities to use as our nodes, filtering out noise:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="co"># Get the top 50 most common entity names across the corpus</span></span>
+<span id="cb15-2"><a></a>top_entities <span class="op">=</span> entities_df[<span class="st">'entity'</span>].value_counts().head(<span class="dv">50</span>).index.tolist()</span>
+<span id="cb15-3"><a></a></span>
+<span id="cb15-4"><a></a><span class="co"># Filter our entities DataFrame to just these</span></span>
+<span id="cb15-5"><a></a>filtered_entities_df <span class="op">=</span> entities_df[entities_df[<span class="st">'entity'</span>].isin(top_entities)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>Now we’ll build an edge list. For each novel, any two entities that appear together create an edge (or strengthen an existing one):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
+<span id="cb16-2"><a></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb16-3"><a></a></span>
+<span id="cb16-4"><a></a>edge_counts <span class="op">=</span> {}</span>
+<span id="cb16-5"><a></a></span>
+<span id="cb16-6"><a></a><span class="cf">for</span> title, group <span class="kw">in</span> filtered_entities_df.groupby(<span class="st">'title'</span>):</span>
+<span id="cb16-7"><a></a>    <span class="co"># Get unique entities in this novel</span></span>
+<span id="cb16-8"><a></a>    novel_entities <span class="op">=</span> group[<span class="st">'entity'</span>].unique().tolist()</span>
+<span id="cb16-9"><a></a>    <span class="co"># Create edges for all pairs</span></span>
+<span id="cb16-10"><a></a>    <span class="cf">for</span> entity1, entity2 <span class="kw">in</span> combinations(novel_entities, <span class="dv">2</span>):</span>
+<span id="cb16-11"><a></a>        pair <span class="op">=</span> <span class="bu">tuple</span>(<span class="bu">sorted</span>([entity1, entity2]))</span>
+<span id="cb16-12"><a></a>        edge_counts[pair] <span class="op">=</span> edge_counts.get(pair, <span class="dv">0</span>) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb16-13"><a></a></span>
+<span id="cb16-14"><a></a><span class="co"># Convert to a DataFrame</span></span>
+<span id="cb16-15"><a></a>edges_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb16-16"><a></a>    [(e1, e2, w) <span class="cf">for</span> (e1, e2), w <span class="kw">in</span> edge_counts.items()],</span>
+<span id="cb16-17"><a></a>    columns<span class="op">=</span>[<span class="st">'source'</span>, <span class="st">'target'</span>, <span class="st">'weight'</span>]</span>
+<span id="cb16-18"><a></a>)</span>
+<span id="cb16-19"><a></a></span>
+<span id="cb16-20"><a></a><span class="bu">print</span>(<span class="ss">f"Number of edges: </span><span class="sc">{</span><span class="bu">len</span>(edges_df)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-21"><a></a>edges_df.sort_values(<span class="st">'weight'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>Now we can create a <code>networkx</code> graph from this edge list:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb17-2"><a></a></span>
+<span id="cb17-3"><a></a>G <span class="op">=</span> nx.from_pandas_edgelist(edges_df, source<span class="op">=</span><span class="st">'source'</span>, target<span class="op">=</span><span class="st">'target'</span>, edge_attr<span class="op">=</span><span class="st">'weight'</span>)</span>
+<span id="cb17-4"><a></a></span>
+<span id="cb17-5"><a></a><span class="bu">print</span>(<span class="ss">f"Nodes: </span><span class="sc">{</span>G<span class="sc">.</span>number_of_nodes()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-6"><a></a><span class="bu">print</span>(<span class="ss">f"Edges: </span><span class="sc">{</span>G<span class="sc">.</span>number_of_edges()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h3 id="visualizing-the-network">Visualizing the Network</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">14</span>))</span>
+<span id="cb18-2"><a></a>nx.draw(</span>
+<span id="cb18-3"><a></a>    G,</span>
+<span id="cb18-4"><a></a>    with_labels<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb18-5"><a></a>    font_size<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb18-6"><a></a>    node_size<span class="op">=</span><span class="dv">800</span>,</span>
+<span id="cb18-7"><a></a>    node_color<span class="op">=</span><span class="st">'steelblue'</span>,</span>
+<span id="cb18-8"><a></a>    edge_color<span class="op">=</span><span class="st">'lightgray'</span>,</span>
+<span id="cb18-9"><a></a>    alpha<span class="op">=</span><span class="fl">0.8</span></span>
+<span id="cb18-10"><a></a>)</span>
+<span id="cb18-11"><a></a>plt.title(<span class="st">"Character Co-occurrence Network Across Top 500 Novels"</span>)</span>
+<span id="cb18-12"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>You’ll see a force-directed graph where nodes that are more central tend to be pulled toward the middle. But we can do better than a generic layout — let’s use network algorithms to surface what’s actually interesting.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="network-centrality">Network Centrality</h3>
+<p>Network analysis gives us computational measures of how important each node is. Two of the most useful:</p>
+<ul>
+<li><strong>Degree centrality</strong> — how many other nodes does this node connect to? A high degree means an entity co-occurs with many others.</li>
+<li><strong>Betweenness centrality</strong> — how often does this node lie on the shortest path between two other nodes? High betweenness means an entity is a “bridge” between otherwise disconnected parts of the network.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>degree_centrality <span class="op">=</span> nx.degree_centrality(G)</span>
+<span id="cb19-2"><a></a>betweenness_centrality <span class="op">=</span> nx.betweenness_centrality(G)</span>
+<span id="cb19-3"><a></a></span>
+<span id="cb19-4"><a></a><span class="co"># Build a summary DataFrame</span></span>
+<span id="cb19-5"><a></a>centrality_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb19-6"><a></a>    <span class="st">'entity'</span>: <span class="bu">list</span>(degree_centrality.keys()),</span>
+<span id="cb19-7"><a></a>    <span class="st">'degree_centrality'</span>: <span class="bu">list</span>(degree_centrality.values()),</span>
+<span id="cb19-8"><a></a>    <span class="st">'betweenness_centrality'</span>: [betweenness_centrality[n] <span class="cf">for</span> n <span class="kw">in</span> degree_centrality.keys()]</span>
+<span id="cb19-9"><a></a>}).sort_values(<span class="st">'degree_centrality'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb19-10"><a></a></span>
+<span id="cb19-11"><a></a><span class="bu">print</span>(<span class="st">"Top 10 by Degree Centrality:"</span>)</span>
+<span id="cb19-12"><a></a><span class="bu">print</span>(centrality_df.head(<span class="dv">10</span>))</span>
+<span id="cb19-13"><a></a></span>
+<span id="cb19-14"><a></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top 10 by Betweenness Centrality:"</span>)</span>
+<span id="cb19-15"><a></a><span class="bu">print</span>(centrality_df.sort_values(<span class="st">'betweenness_centrality'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>The two measures often highlight different entities. A character like “God” might have very high degree centrality (appearing across many novels) but low betweenness centrality (not bridging distinct communities). Conversely, an entity that bridges, say, a cluster of 19th-century novels and a cluster of 20th-century ones might rank highly on betweenness even if it doesn’t appear in that many books.</p>
+</section>
+<section class="slide level2">
+
+<p>We can visualize the network with node size proportional to degree centrality:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">14</span>))</span>
+<span id="cb20-2"><a></a>node_sizes <span class="op">=</span> [G.degree(v) <span class="op">*</span> <span class="dv">150</span> <span class="cf">for</span> v <span class="kw">in</span> G]</span>
+<span id="cb20-3"><a></a>nx.draw(</span>
+<span id="cb20-4"><a></a>    G,</span>
+<span id="cb20-5"><a></a>    with_labels<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb20-6"><a></a>    font_size<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb20-7"><a></a>    node_size<span class="op">=</span>node_sizes,</span>
+<span id="cb20-8"><a></a>    node_color<span class="op">=</span><span class="st">'steelblue'</span>,</span>
+<span id="cb20-9"><a></a>    edge_color<span class="op">=</span><span class="st">'lightgray'</span>,</span>
+<span id="cb20-10"><a></a>    alpha<span class="op">=</span><span class="fl">0.8</span></span>
+<span id="cb20-11"><a></a>)</span>
+<span id="cb20-12"><a></a>plt.title(<span class="st">"Character Co-occurrence Network (node size = degree centrality)"</span>)</span>
+<span id="cb20-13"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="community-detection">Community Detection</h3>
+<p>Beyond individual nodes, we can also look for <strong>communities</strong> — groups of nodes that are more densely connected to each other than to the rest of the network. The Louvain algorithm is a popular method for this:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a><span class="im">from</span> networkx.algorithms <span class="im">import</span> community</span>
+<span id="cb21-2"><a></a></span>
+<span id="cb21-3"><a></a>communities <span class="op">=</span> community.louvain_communities(G, seed<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb21-4"><a></a></span>
+<span id="cb21-5"><a></a><span class="co"># Map each node to its community number</span></span>
+<span id="cb21-6"><a></a>community_map <span class="op">=</span> {}</span>
+<span id="cb21-7"><a></a><span class="cf">for</span> i, com <span class="kw">in</span> <span class="bu">enumerate</span>(communities):</span>
+<span id="cb21-8"><a></a>    <span class="cf">for</span> node <span class="kw">in</span> com:</span>
+<span id="cb21-9"><a></a>        community_map[node] <span class="op">=</span> i</span>
+<span id="cb21-10"><a></a></span>
+<span id="cb21-11"><a></a>colors <span class="op">=</span> [community_map[node] <span class="cf">for</span> node <span class="kw">in</span> G.nodes()]</span>
+<span id="cb21-12"><a></a></span>
+<span id="cb21-13"><a></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">14</span>))</span>
+<span id="cb21-14"><a></a>nx.draw(</span>
+<span id="cb21-15"><a></a>    G,</span>
+<span id="cb21-16"><a></a>    node_color<span class="op">=</span>colors,</span>
+<span id="cb21-17"><a></a>    with_labels<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb21-18"><a></a>    font_size<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb21-19"><a></a>    node_size<span class="op">=</span><span class="dv">800</span>,</span>
+<span id="cb21-20"><a></a>    edge_color<span class="op">=</span><span class="st">'lightgray'</span>,</span>
+<span id="cb21-21"><a></a>    alpha<span class="op">=</span><span class="fl">0.8</span></span>
+<span id="cb21-22"><a></a>)</span>
+<span id="cb21-23"><a></a>plt.title(<span class="st">"Character Co-occurrence Network with Community Detection"</span>)</span>
+<span id="cb21-24"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<p>Each color represents a detected community. Do the communities correspond to anything meaningful — a genre, a time period, a set of canonically linked authors? This is where the computational result becomes a <em>humanities</em> result: the network hands you a pattern, and you have to interpret it.</p>
+</section>
+<section id="interpreting-networks-as-cultural-humanists" class="slide level2">
+<h2>Interpreting Networks as Cultural Humanists</h2>
+<p>At this point it’s worth stepping back to think critically about what our network actually represents.</p>
+</section>
+<section class="slide level2">
+
+<p>Our network has made several interpretive choices, each of which loses something:</p>
+<ol type="1">
+<li><strong>Entity extraction</strong> — spaCy makes errors, especially on literary texts. “Mr.” may be tagged as a person; a character’s nickname may not match their full name.</li>
+<li><strong>Filtering to top entities</strong> — by keeping only the 50 most common names, we’ve already shaped what the network can see.</li>
+</ol>
+</section>
+<section class="slide level2">
+
+<ol start="3" type="1">
+<li><strong>Co-occurrence at the novel level</strong> — two characters are “connected” because they appear in the same book, not because they interact directly. This is a very coarse definition of relationship.</li>
+<li><strong>Treating all co-occurrences as equal</strong> — the edge between “Elizabeth” and “Darcy” in <em>Pride and Prejudice</em> carries a very different meaning than two names that both happen to appear in a long Victorian novel.</li>
+</ol>
+</section>
+<section class="slide level2">
+
+<p>None of these choices are wrong — they are tradeoffs. The question is whether the pattern that emerges at this level of abstraction is still meaningful for your research question.</p>
+</section>
+<section class="slide level2">
+
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

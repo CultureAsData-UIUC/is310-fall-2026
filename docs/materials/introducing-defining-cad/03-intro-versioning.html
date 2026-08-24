@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction to Versioning &amp; Git – IS310 - Culture As Data Fall 2026</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/images/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6c49c5477b92c77c9eb341f9299c235f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6bd77949012616049cccce2f6cb6e61f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    window.setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      window.setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    window.hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(darkModeDefault) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const darkModeDefault = false;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !window.hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+    };
+    // Switch to dark mode if need be
+    if (window.hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">IS310 - Culture As Data Fall 2026</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../schedule/index.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../assessments/index.html"> 
+<span class="menu-text">Assessments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../policies.html"> 
+<span class="menu-text">Policies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../materials/introducing-defining-cad/01-CAD-tools.html" aria-current="page"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/introducing-defining-cad/01-CAD-tools.html">Introducing &amp; Defining Culture as Data</a></li><li class="breadcrumb-item"><a href="../../materials/introducing-defining-cad/03-intro-versioning.html">Introduction to Versioning &amp; Git</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introducing &amp; Defining Culture as Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/01-CAD-tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software &amp; Tools for Culture as Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/02-intro-cli-prompt-engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Command Line &amp; Prompt Engineering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/03-intro-versioning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Introduction to Versioning &amp; Git</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/04-command-line-cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Command Line Cheatsheet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/05-advanced-git-github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced Git and GitHub</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-git" id="toc-what-is-git" class="nav-link active" data-scroll-target="#what-is-git">What is Git?</a>
+  <ul class="collapse">
+  <li><a href="#why-is-git-useful-for-computing-in-the-humanities" id="toc-why-is-git-useful-for-computing-in-the-humanities" class="nav-link" data-scroll-target="#why-is-git-useful-for-computing-in-the-humanities">Why is Git Useful for Computing in the Humanities?</a></li>
+  </ul></li>
+  <li><a href="#working-with-git" id="toc-working-with-git" class="nav-link" data-scroll-target="#working-with-git">Working with Git</a>
+  <ul class="collapse">
+  <li><a href="#initializing-a-git-repository" id="toc-initializing-a-git-repository" class="nav-link" data-scroll-target="#initializing-a-git-repository">Initializing a Git Repository</a></li>
+  <li><a href="#adding-files-to-the-staging-area" id="toc-adding-files-to-the-staging-area" class="nav-link" data-scroll-target="#adding-files-to-the-staging-area">Adding Files to the Staging Area</a></li>
+  <li><a href="#committing-changes" id="toc-committing-changes" class="nav-link" data-scroll-target="#committing-changes">Committing Changes</a></li>
+  <li><a href="#viewing-the-version-history" id="toc-viewing-the-version-history" class="nav-link" data-scroll-target="#viewing-the-version-history">Viewing the Version History</a></li>
+  </ul></li>
+  <li><a href="#working-with-github" id="toc-working-with-github" class="nav-link" data-scroll-target="#working-with-github">Working with GitHub</a>
+  <ul class="collapse">
+  <li><a href="#creating-a-new-repository" id="toc-creating-a-new-repository" class="nav-link" data-scroll-target="#creating-a-new-repository">Creating a New Repository</a></li>
+  <li><a href="#pushing-to-github" id="toc-pushing-to-github" class="nav-link" data-scroll-target="#pushing-to-github">Pushing to GitHub</a></li>
+  <li><a href="#editing-files-in-github" id="toc-editing-files-in-github" class="nav-link" data-scroll-target="#editing-files-in-github">Editing Files in GitHub</a></li>
+  <li><a href="#pulling-from-github" id="toc-pulling-from-github" class="nav-link" data-scroll-target="#pulling-from-github">Pulling from GitHub</a></li>
+  </ul></li>
+  <li><a href="#homework-init-is310" id="toc-homework-init-is310" class="nav-link" data-scroll-target="#homework-init-is310">Homework: Init IS310</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/introducing-defining-cad/01-CAD-tools.html">Introducing &amp; Defining Culture as Data</a></li><li class="breadcrumb-item"><a href="../../materials/introducing-defining-cad/03-intro-versioning.html">Introduction to Versioning &amp; Git</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Introduction to Versioning &amp; Git</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>⚡️ This lesson has been adapted from the Digital Humanities Research Institute’s Workshop on git <a href="https://github.com/DHRI-Curriculum/DHRIFT/blob/main/workshops/git.md">https://github.com/DHRI-Curriculum/DHRIFT/blob/main/workshops/git.md</a>. Many thanks to the authors for sharing their materials!</p>
+</div>
+</div>
+<p>So far, we have been using the command line in the terminal, installed GitHub Co-Pilot and <code>git</code>, but we have yet to use either for their main purpose: version control and collaborative coding. In this lesson, we will explore what version control is and how it works, as well as how to use GitHub to collaborate with others and share our code and datasets.</p>
+<section id="what-is-git" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-git">What is Git?</h2>
+<p>While we already discussed what GitHub is in-depth (link <a href="../introducing-defining-cad/01-CAD-tools/#github">here</a>), we have yet to discuss git much.</p>
+<p>Git is a software used for version control, that is keeping track of changes in your files and folders over time. Git requires changes to be saved (<em>committed</em>) before they can be combined (<em>merged</em>) with the main project. What that means in lay terms is that Git is the software that allows you to track changes in your project and collaborate with others. You are already familiar with this concept if you’ve ever used Google Docs or Microsoft Word’s “Track Changes” feature, but in those you get the version history automatically. With git, we have to tell it what to track and when to track it.</p>
+<p>Created in 2005 by Linus Torvalds, the creator of Linux, the open-source operating system that powers much of the internet, Git is now the most popular version control system in the world.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> It is used by millions of developers and researchers to collaborate on projects and keep track of changes in their code and data</p>
+<p>A very important thing to understand is that while git and GitHub sound the same, they are <strong>two separate technologies</strong>. Git is a version control system, while GitHub is a platform for hosting git repositories (in git, a folder is called a <em>repository</em>). We’ll be using both in this course, but it’s important to realize they are not identical.</p>
+<p>So here’s a few bullet points to remember this distinction:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Git</th>
+<th>GitHub</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Description</td>
+<td>is a version control system (aka a software that tracks changes in files and folders)</td>
+<td>is a <strong>remote</strong> platform for hosting git repositories (aka folders)</td>
+</tr>
+<tr class="even">
+<td>Location</td>
+<td>exists <strong>locally</strong> on your computer (you need to install it)</td>
+<td>is a website (you don’t need to install it)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://miro.medium.com/v2/resize:fit:1400/1*tDz-Vkeg-yoBRcnAZ5SDow.png" class="img-fluid"></p>
+<p>Even though these two technologies are separate, they are often used together. For example, you can use git to track changes in your files and folders locally on your computer, and then push those changes to a remote repository on GitHub. This is what we will be doing in this course.</p>
+<section id="why-is-git-useful-for-computing-in-the-humanities" class="level3">
+<h3 class="anchored" data-anchor-id="why-is-git-useful-for-computing-in-the-humanities">Why is Git Useful for Computing in the Humanities?</h3>
+<p>Although Git and version control systems are predominantly used in software development, they offer several advantages for scholars in Digital Humanities. Similar to how you might handle versions of a paper, essay, or data set, Git allows you to:</p>
+<ul>
+<li>Keep track of changes in plain text files</li>
+<li>Collaborate in real-time with other researchers</li>
+<li>Easily revert to earlier versions</li>
+<li>Create different branches to explore new ideas without disturbing the main project, and see who added what to the project</li>
+</ul>
+<p>To give a sense of what this version tracking looks like, here’s an example of an error I corrected in last week’s CLI tutorial, after one of your peers pointed it out to me:</p>
+<p><img src="../../assets/images/github_diff.png" class="img-fluid"></p>
+<p>This screenshot is from GitHub but shows what git tracks (confusing to combine both, but this visual is hopefully helpful!). You can see on the left, I deleted the previous erroneous line, and on the right, is the corrected version. This is a very simple example, but it gives you a sense of how git tracks changes.</p>
+</section>
+</section>
+<section id="working-with-git" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-git">Working with Git</h2>
+<p>First things first, let’s double check we all have git installed. To do this, we can use the <code>git --version</code> command. This will tell us what version of git we have installed.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Remember that we run our commands in the terminal!</em></p>
+<p>Hopefully that worked for everyone! If not, please let the instructors know.</p>
+<p>Since we have already installed git, we can start using it in our projects. But first, let’s create a new folder for our project in our home directory. We can do this by using the <code>mkdir</code> command and then the name of the folder we want to create. Let’s call our folder <code>is310-first-repo</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> is310-first-repo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now let’s navigate into this folder using the <code>cd</code> command and then create a new file using the <code>touch</code> command (or if you’re on PowerShell <code>New-Item -ItemType File -Path . -Name [file-name]</code>). Let’s call this file <code>first_file.txt</code>.</p>
+<p>Next, we can add some text to this file using the following commands. Let’s add the following text to the file:</p>
+<p><em>Unix/Linux</em></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"This is my first file"</span> <span class="op">&gt;</span> first_file.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>PowerShell</em></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="st">"This is my first file"</span> <span class="kw">|</span> <span class="ex">Out-File</span> <span class="at">-FilePath</span> first_file.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So now we have a new folder and a new file. But what if we want to track the changes we make to this file? This is where git comes in.</p>
+<section id="initializing-a-git-repository" class="level3">
+<h3 class="anchored" data-anchor-id="initializing-a-git-repository">Initializing a Git Repository</h3>
+<p>To start tracking changes to our file, we need to initialize a git repository. We can do this by using the <code>git init</code> command. This will initialize a git repository in our current folder.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see the following output:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Initialized</span> empty Git repository in /Users/YOU/is310-first-repo/.git/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now if we type <code>ls -a</code> or <code>Get-ChildItem -Force</code> we will see a new folder called <code>.git</code>. This is the folder that contains all of the information about our git repository. The <code>.git</code> folder is hidden by default, so we need to use the <code>-a</code> or <code>-Force</code> flag to see it. This means that if you try looking at your folder either in a file explorer or in the terminal with just <code>ls</code>, or even in the VS Code Explorer, you won’t see the <code>.git</code> folder.</p>
+<p>With our git repository initialized, we can now start tracking changes to our file, but this is <strong>not automatic</strong>. Instead, we have to tell git which files to pay attention to and track, and also when to take a snapshot of our changes.</p>
+</section>
+<section id="adding-files-to-the-staging-area" class="level3">
+<h3 class="anchored" data-anchor-id="adding-files-to-the-staging-area">Adding Files to the Staging Area</h3>
+<p>To do this, we need to add our file to the staging area. We can do this by using the <code>git add</code> command and then the name of the file we want to add. Let’s add our <code>first_file.txt</code> file.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add first_file.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now if we type <code>git status</code> we will see that our file has been added to the staging area. This means that git is now tracking changes to our file.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We should see the following output:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch main</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">No</span> commits yet</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> to be committed:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git rm --cached &lt;file&gt;..."</span> to unstage<span class="kw">)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">new</span> file:   first_file.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is telling us that we are on the <code>main</code> branch, we have not made any commits yet, and we have one file in the staging area. You can run <code>git status</code> at any time to see the status of your repository.</p>
+</section>
+<section id="committing-changes" class="level3">
+<h3 class="anchored" data-anchor-id="committing-changes">Committing Changes</h3>
+<p>Now that we have added our file to the staging area, git knows that we want it to track this file, but we have to tell it to finalize our snapshot of the file, which we do by <strong>committing</strong> our changes. To do this, we use the <code>git commit</code> command and then the <code>-m</code> flag to add a message to our commit. This message should describe the changes we made to the file. Let’s add the following message:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Added first file to our repository"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="commit-messages" class="level4">
+<h4 class="anchored" data-anchor-id="commit-messages">Commit Messages</h4>
+<p>Ideally, your commit messages should be short and descriptive. They should describe the changes you made to the file.</p>
+<p>If you don’t add a message, git will automatically open a text editor in your terminal and ask you to add a message. You’ll likely see something that looks like the following:</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:1400/1*p-tiZIHNuZYJbxMlkis-Dw.png" class="img-fluid"></p>
+<p>This looks very intimidating, but it’s actually not that bad. This is the default text editor (think like VS Code, but much simpler) for git, which is called <code>Vim</code>. Vim is a very powerful text editor, but it has a steep learning curve. If you want to learn more about Vim, you can read this <a href="https://www.freecodecamp.org/news/vim-beginners-guide/">https://www.freecodecamp.org/news/vim-beginners-guide/</a>.</p>
+<p>The key thing to know is that if you get this screen you can either add a message or exit the text editor. To add a message, you need to press <code>i</code> on your keyboard. This will put you in insert mode, which means you can type. Then you can add your message. Once you have added your message, you need to press <code>esc</code> on your keyboard. This will take you out of insert mode. Then you need to type <code>:wq</code> and press enter. This will save your message and exit the text editor.</p>
+<p>If you just want to exit the text editor, you can press <code>esc</code> on your keyboard. Then you need to type <code>:q!</code> and press enter. This will exit the text editor without saving your message. In which case, you’ll see the following message:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Aborting</span> commit due to empty commit message.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>While doing this once or twice is fine, it can get annoying so it’s better to add a message to your commit with the <code>-m</code> flag. Be sure that you use quotations marks around your message, and that you use the same type of quotations marks. So if you use double quotes, use double quotes around your message. If you use single quotes, use single quotes around your message. If for some reason you end up mixing them, you’ll get a quote prompt in your terminal.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quote</span><span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is just git telling you that you didn’t close your quotation marks, so if you add the correct quotation marks and press enter, it will add your message.</p>
+<p>Now if we type <code>git status</code> again we will see that our file is no longer in the staging area. This means that our changes have been committed to our repository.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We should see the following output:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch main</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nothing</span> to commit, working tree clean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is telling us that we are on the <code>main</code> branch, we have no changes to commit, and our working tree is clean. You can run <code>git status</code> at any time to see the status of your repository.</p>
+<p>The DHRI lesson has the following metaphor/explanation for how we can conceptualize this process that I find very helpful:</p>
+<p><img src="../../assets/images/dhri_git.png" class="img-fluid"></p>
+<p>Thinking of git as a camera taking a photo of your project at a particular point in time is a helpful way to understand how git works (also like thinking of it as a save point in a video game). Every time you commit your changes, you are taking a snapshot of your project. You can then go back to that snapshot at any time. But also sometimes you don’t want to save a snapshot or you want to redo it, git let’s you do that too.</p>
+</section>
+</section>
+<section id="viewing-the-version-history" class="level3">
+<h3 class="anchored" data-anchor-id="viewing-the-version-history">Viewing the Version History</h3>
+<p>Now that we have committed our changes, we can view the version history of our file. To do this, we use the <code>git log</code> command. This will show us the commit history of our file. We can see the commit message, the author, the date, and the commit hash. The commit hash is a unique identifier for each commit. It is a long string of letters and numbers that is used to identify each commit. We can use this commit hash to revert to a previous version of our file.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Which should output something that looks like the following:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> 8bb8306c1392eed52d4407eb16867a49b49a46ac <span class="er">(</span><span class="ex">HEAD</span> <span class="at">-</span><span class="op">&gt;</span> main<span class="kw">)</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> Your Name <span class="op">&lt;</span>your-email-here@gmail.com<span class="op">&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Tue Jan 22 16:03:39 2024 <span class="at">-0400</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Added</span> first file to our repository</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is telling us that we have one commit, the commit is identified with that long string of letters and numbers (this is the <em>commit hash</em>), the commit is on the <code>main</code> branch. The Author and Date should correspond to your information and when you made the commit. Finally, we see our commit message.</p>
+<p>We could now update the file and commit our changes again. If we did that, then our version history via git log would show the two commits.</p>
+<p>These activities are the core features of git. The next step is to connect our local repository to a remote repository on GitHub.</p>
+</section>
+</section>
+<section id="working-with-github" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-github">Working with GitHub</h2>
+<p>By now you should have your git configuration setup and have a GitHub account, but feel free to look back at our <a href="../introducing-defining-cad/01-CAD-tools/#git">course tools lesson</a> if you’re having any issues.</p>
+<section id="creating-a-new-repository" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-new-repository">Creating a New Repository</h3>
+<p>To get our local git repository into GitHub, the first thing we need is open a web browser and navigate to <a href="https://github.com/">GitHub</a>. The homepage is very full featured, and we’ll be discussing some of those later. First, we need to create a new repository. To do this, we need to click on the <code>New</code> button in the top right-hand corner of the screen. This will take us to a page where we can create a new repository.</p>
+<p><img src="https://docs.github.com/assets/cb-31554/images/help/repository/repo-create.png" class="img-fluid"></p>
+<p>Now you’ll be asked to give your repository a name. Let’s create a repository called <code>is310-first-repo</code>. You can also add a description, choose whether it’s public or private, and add a license (this essentially tells others if they can reuse your materials or not). For us to see each other’s repositories, we need to select public.</p>
+<p><img src="../../assets/images/new_repository.webp" class="img-fluid"></p>
+<p>You also have the option to <code>initialize the repository with a README</code>, which is a file that provides information about the project. We will be discussing this more later so for now leave this option unchecked. You can also add a <code>.gitignore</code> file, which is a file that tells Git to ignore certain files in the repository. Again, something we’ll discuss more in-depth in the coming weeks.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.dataquest.io/wp-content/uploads/2019/01/repo_options.png" class="img-fluid figure-img"></p>
+<figcaption>First Commit</figcaption>
+</figure>
+</div>
+<p>Once you create your repository it should like the photo above. If you selected the <code>Initialize this repository with a README</code> option, you will see a blank repository that looks like the photo below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/create_readme.png" class="img-fluid figure-img"></p>
+<figcaption>First Commit With README</figcaption>
+</figure>
+</div>
+<p>To understand what each button does feel free to browse through our <a href="../introducing-defining-cad/05-advanced-git-github">advanced git and GitHub resource</a>, but first let’s try to get our local repository onto GitHub.</p>
+</section>
+<section id="pushing-to-github" class="level3">
+<h3 class="anchored" data-anchor-id="pushing-to-github">Pushing to GitHub</h3>
+<p>Now that we have created a new repository on GitHub, we need to connect it to our local repository. To do this, we need to add a remote repository. We can do this by using the <code>git remote add</code> command and then the name of the remote repository and the URL of the remote repository. Let’s call our remote repository <code>origin</code> and use the URL of our GitHub repository.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin https://github.com/OWNER/REPOSITORY.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this case, we would replace <code>OWNER</code> with our GitHub username and <code>REPOSITORY</code> with the name of our repository. So for me, it would be <code>ZoeLeBlanc/is310-first-repo</code>.</p>
+<p>We can check this by using the <code>git remote -v</code> command. This will show us the remote repositories we have added to our local repository.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Which should output something that looks like the following:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">origin</span>  https://github.com/username/repository.git <span class="er">(</span><span class="ex">fetch</span><span class="kw">)</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">origin</span>  https://github.com/username/repository.git <span class="er">(</span><span class="ex">push</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now that we can see that we have added our remote repository, we can push our local repository to our remote repository. We can do this by using the <code>git push</code> command.</p>
+<p>This command has the following structure:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push [remote repository] <span class="pp">[</span><span class="ss">flags</span><span class="pp">]</span> [local repository]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So all we need to do is specify the name of our remote repository and the name of our local repository. What’s a bit confusing is that we don’t need to write our GitHub URL here but instead can just write <code>origin</code>. If you look at the output from <code>git remote -v</code> again, you’ll notice it says <code>origin</code> next to our GitHub URL. This is because <code>origin</code> is the default name for our remote repository. We can change this, but for now we’ll just use <code>origin</code>.</p>
+<p>Then for our local repository, we don’t need to say our directory name but instead need to specify the name of the branch we want to push. We’ll discuss branches more later, but for now we can just use <code>main</code>. So our command will look like this:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Which should output something that looks like the following (though the exact details will be different depending on your repository, files, etc.):</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Enumerating</span> objects: 3, done.</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Counting</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Writing</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> 226 bytes <span class="kw">|</span> <span class="ex">226.00</span> KiB/s, done.</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Total</span> 3 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> reused 0 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> pack-reused 0</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> github.com:ZoeLeBlanc/is310-first-repo.git</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">*</span> [new branch]      main <span class="at">-</span><span class="op">&gt;</span> main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you see a <code>fatal</code> error that looks like this:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fatal:</span> <span class="st">'origin'</span> does not appear to be a git repository</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">fatal:</span> Could not read from remote repository.</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Please</span> make sure you have the correct access rights</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="ex">and</span> the repository exists.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That just means you forgot to add your remote repository. If you fix that and try again, it should work.</p>
+<p>Now if we go to our GitHub repository, we will see that our local repository has been pushed to our remote repository.</p>
+<section id="configuring-ssh-keys-optional-but-recommended" class="level4">
+<h4 class="anchored" data-anchor-id="configuring-ssh-keys-optional-but-recommended">Configuring SSH Keys (Optional But Recommended)</h4>
+<p><img src="https://devconnected.com/wp-content/uploads/2020/02/git-push-2.png" class="img-fluid"></p>
+<p>Now when you pushed to GitHub, you likely saw something similar to this image, where it was asking you to enter your username and password for your GitHub account. This is fine, but it can be annoying to have to do this every time you want to push changes from your local computer to your remote GitHub Repository.</p>
+<p>So, instead we can configure SSH keys. SSH keys are a way to securely connect to a remote server without having to enter your username and password every time. To do this, we need to generate a new SSH key and then add it to our GitHub account.</p>
+<p>First, we should check for existing SSH keys. We can do this by using the <code>ls</code> command and then the name of the file we want to check.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~/.ssh/id_<span class="pp">*</span>.pub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice that we are using the <code>~</code> symbol. Remember, this is a shortcut for our home directory. So if we are using a Mac, this would be <code>/Users/[USER NAME]/.ssh/id_*.pub</code>. If we are using a Windows machine, this would be <code>C:\Users\[USER NAME]\.ssh\id_*.pub</code>. We can run this command from any directory and it will search our home directory for the file (which is why it’s important to know about relative and absolute file paths!).</p>
+<p>If you see a file called <code>id_rsa.pub</code> or <code>id_ed25519.pub</code> then you already have an SSH key. If you don’t see this file, then you need to generate a new SSH key.</p>
+<p>To generate a new SSH key, we need to use the <code>ssh-keygen</code> command and then the <code>-t</code> flag to specify the type of key we want to generate. Let’s generate a new RSA key.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">"your_email@example.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should replace <code>your_email@example.com</code> with the email you use for your GitHub account. Be sure to wrap your email in quotations, like in the example. If you get an error, you might be working with an older version of SSH. In that case, you can use the following command.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> rsa <span class="at">-b</span> 4096 <span class="at">-C</span> <span class="st">"your_email@example.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Both <code>rsa</code> and <code>ed25519</code> are types of encryption, which is a way to secure your data. You can read more about encryption <a href="https://www.cloudflare.com/learning/ssl/what-is-encryption/">https://www.cloudflare.com/learning/ssl/what-is-encryption/</a>.</p>
+<p>You’ll be prompted to save your SSH key into a file. You can just press enter to save it in the default location, which is your home directory.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Enter <span class="ex">a</span> file in which to save the key <span class="er">(</span><span class="ex">/Users/YOU/.ssh/id_ALGORITHM</span><span class="kw">)</span><span class="bu">:</span> [Press enter]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll then be prompted to enter a passphrase. You can enter a passphrase or leave it blank. If you enter a passphrase, you’ll have to enter it every time you use your SSH key. If you leave it blank, you won’t have to enter it every time you use your SSH key (I would recommend leaving it blank unless you’re very good at remembering/storing pass phrases, but it’s up to you!).</p>
+<hr>
+<p>Next we need to start the ssh-agent in the background. We can do this by using the <code>eval</code> command and then the <code>ssh-agent</code> command.</p>
+<p>For <em>Unix/Linux/WSL</em>:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">"</span><span class="va">$(</span><span class="fu">ssh-agent</span> <span class="at">-s</span><span class="va">)</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For <em>PowerShell</em>, make sure you are running PowerShell as an administrator and then run the following command:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Start-Service</span> ssh-agent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Which should output something that looks like the following:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Agent <span class="ex">pid</span> 59566</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you are getting errors, you might need to use a slightly different command depending on your operating system. You can read more about this <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent">https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent</a>.</p>
+<section id="mac-users-configuration-also-for-those-running-wsl-on-windows" class="level5">
+<h5 class="anchored" data-anchor-id="mac-users-configuration-also-for-those-running-wsl-on-windows">Mac Users Configuration (Also for those running WSL on Windows)</h5>
+<p>If you are on a MacBook running Sierra 10.12.2 or later, you will need to do some manual configuration (you can check operating system version by clicking on the Apple icon in the top left-hand corner of your screen and then clicking on <code>About This Mac</code>).</p>
+<p>First, you’ll need to check if this file exists with this command:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span> ~/.ssh/config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you don’t see a file called <code>config</code>, then you need to create one. You can do this by using the <code>touch</code> command and then the name of the file you want to create.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> ~/.ssh/config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then you need to open it with a text editor. You can do this by using the <code>open</code> command and then the name of the file you want to open.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> ~/.ssh/config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will open the file in your default text editor. Then you need to add the following lines to the file.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> <span class="pp">*</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">AddKeysToAgent</span> yes</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">IdentityFile</span>  ~/.ssh/id_ed25519</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you added a passcode, you’ll need to add <code>UseKeychain yes</code> underneath the <code>AddKeysToAgent yes</code>.</p>
+<p>Then you need to save the file and exit the text editor. You can do this by pressing <code>Command + S</code> and then <code>Command + Q</code>.</p>
+</section>
+<section id="adding-ssh-key-to-ssh-agent" class="level5">
+<h5 class="anchored" data-anchor-id="adding-ssh-key-to-ssh-agent">Adding SSH Key to SSH Agent</h5>
+<p>Now we need to add our SSH key to the ssh-agent. We can do this by using the <code>ssh-add</code> command and then the name of the file we want to add.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span> ~/.ssh/id_ed25519</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you added a passcode and are on a Macbook, you will need to alter the command slightly.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span> <span class="at">--apple-use-keychain</span> ~/.ssh/id_ed25519</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, we need to add our SSH key to our GitHub account. To do this, we need to copy our SSH key to our clipboard.</p>
+<p>If you are running either <em>Unix/Linux</em>, we can use the <code>pbcopy</code> command and then the name of the file we want to copy.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pbcopy</span> <span class="op">&lt;</span> ~/.ssh/id_ed25519.pub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you are running <em>WSL/PowerShell</em>, we can use the <code>clip</code> command and then the name of the file we want to copy.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/id_ed25519.pub <span class="kw">|</span> <span class="ex">clip.exe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And now we can add our SSH key to our GitHub account. To do this, we need to go to our GitHub account and click on the <code>Settings</code> tab. Then we need to click on the <code>SSH and GPG keys</code> tab. Finally, we need to click on the <code>New SSH key</code> button and then paste our SSH key into the <code>Key</code> box. We can also add a title for our SSH key. Let’s call it <code>My SSH Key</code>.</p>
+<p>Once we have add the SSH key, we can click on the <code>Add SSH key</code> button. Now we have added our SSH key to our GitHub account. Then we can just update our remote repository URL to use SSH instead of HTTPS. We can do this by using the <code>git remote set-url</code> command and then the name of the remote repository and the URL of the remote repository. Let’s call our remote repository <code>origin</code> and use the URL of our GitHub repository.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote set-url origin git@github.com:OWNER/REPOSITORY.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now you should try pushing to GitHub again. The first time you do this, you might see something like the following:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> authenticity of host <span class="st">'github.com (IP ADDRESS)'</span> can<span class="st">'t be established.</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="st">RSA key fingerprint is SHA256:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="st">Are you sure you want to continue connecting (yes/no/[fingerprint])?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is just git asking you if you want to connect to GitHub. You can type <code>yes</code> and press enter. Then you should see something like the following:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Warning:</span> Permanently added <span class="st">'github.com,IP ADDRESS'</span> <span class="er">(</span><span class="ex">RSA</span><span class="kw">)</span> <span class="ex">to</span> the list of known hosts.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is just git telling you that it has added GitHub and we can now push to our GitHub repository without having to enter our username and password every time 🥳.</p>
+<p>You can read more about managing remote repositories <a href="https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories">here</a> and managing SSH keys <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh">here</a>.</p>
+</section>
+</section>
+</section>
+<section id="editing-files-in-github" class="level3">
+<h3 class="anchored" data-anchor-id="editing-files-in-github">Editing Files in GitHub</h3>
+<p>So far, we have been editing our files locally and <em>pushing</em> them up to GitHub. However, we can also edit files in GitHub. This is a great way to make quick changes to a file or add a new file to a repository. Let’s try adding using the GitHub interface in the browser and add a special type of file called a <code>README.md</code> file.</p>
+<p>We can do this through the web browser interface, by clicking the <code>add file</code> button and then selecting <code>create new file</code>.</p>
+<p><img src="https://docs.github.com/assets/cb-70797/mw-1440/images/help/repository/add-file-buttons.webp" class="img-fluid"></p>
+<p>Then we need to give our file a name. Let’s call it <code>README.md</code>. The <code>.md</code> extension stands for markdown, which is a way to format text. We’ll be discussing this more later, but for now just know that <code>.md</code> files are used to format text. For now, let’s just add some text to our file. We can do this by typing in the text box. Let’s add the following text:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># IS 310 Test Repository</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>This is my first repository.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can see what this looks like by clicking on the <code>Preview</code> tab. This will show us a preview of our file.</p>
+<p><img src="https://docs.github.com/assets/cb-84722/mw-1440/images/help/repository/new-file-preview.webp" class="img-fluid"></p>
+<p>Now we need to commit our changes and file by clicking the green <code>Commit changes</code> box. This will prompt us for a commit message. Let’s add the following message:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>Added README.md file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, we need to tell GitHub whether to create a new branch or commit to the <code>main</code> branch. Click <code>main</code> for now and then click <code>Commit changes</code>. Now we have added a new file to our repository and you should see it when you navigate to your repository.</p>
+<section id="github-dev-optional-additional-feature" class="level4">
+<h4 class="anchored" data-anchor-id="github-dev-optional-additional-feature">GitHub Dev (Optional, Additional Feature)</h4>
+<p>Besides using the normal web interface, there’s also a new way to edit files in the GitHub browser interface, called <code>GitHub Dev</code>. This is a new feature that similar to what we just did, allows you to edit files in the browser and commit them to your repository. To access it, all you have to do is change <code>github.com</code> in your URL to <code>github.dev</code>.</p>
+<p>So for us, we would change <code>https://github.com/[USER NAME]/is310-first-repo</code> to <code>https://github.dev/[USER NAME]/is310-first-repo</code>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://user-images.githubusercontent.com/856858/130119109-4769f2d7-9027-4bc4-a38c-10f297499e8f.gif" class="img-fluid figure-img"></p>
+<figcaption>GitHub Dev</figcaption>
+</figure>
+</div>
+<p>You can also just hit the <code>.</code> key on your keyboard when you’re in a repository to open GitHub Dev.</p>
+<p>Now you should see a new interface that looks like this:</p>
+<p><img src="../../assets/images/github_dev.png" class="img-fluid"></p>
+<p>You’ll likely recognize this interface, since it’s an instance of Visual Studio Code (VS Code). This feature is completely optional, but can be helpful to know it exists, since you can also commit changes through this interface. You can read more about it <a href="https://docs.github.com/en/codespaces/the-githubdev-web-based-editor">https://docs.github.com/en/codespaces/the-githubdev-web-based-editor</a>.</p>
+</section>
+</section>
+<section id="pulling-from-github" class="level3">
+<h3 class="anchored" data-anchor-id="pulling-from-github">Pulling from GitHub</h3>
+<p>Now we have two versions of our repository. One on our local computer and one on GitHub, and these two have separate files. How can we get this remote version into our local one? This is where <strong>pulling</strong> becomes useful.</p>
+<p>To pull from GitHub, we need to use the <code>git pull</code> command and then the name of the remote repository and the name of the branch we want to pull. Let’s pull from our <code>origin</code> remote repository and the <code>main</code> branch.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Which should output something that looks like the following:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Enumerating objects: 4, done.</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Counting objects: 100% <span class="er">(</span><span class="ex">4/4</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Compressing objects: 100% <span class="er">(</span><span class="ex">2/2</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Total 3 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> reused 0 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> pack-reused 0</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Unpacking</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> 935 bytes <span class="kw">|</span> <span class="ex">233.00</span> KiB/s, done.</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="ex">From</span> github.com:ZoeLeBlanc/is310-first-repo</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">*</span> branch            main       <span class="at">-</span><span class="op">&gt;</span> FETCH_HEAD</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>   <span class="ex">d8dad7b..832b673</span>  main       <span class="at">-</span><span class="op">&gt;</span> origin/main</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Updating</span> d8dad7b..832b673</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Fast-forward</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a> <span class="ex">README.md</span> <span class="kw">|</span> <span class="ex">1</span> +</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a> <span class="ex">1</span> file changed, 1 insertion<span class="er">(</span><span class="ex">+</span><span class="kw">)</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a> <span class="ex">create</span> mode 100644 README.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now if we type <code>ls</code> we will see that we have a new file called <code>README.md</code>. This is the file we created in GitHub. We can also see the file in VS Code and edit it there.</p>
+<p>We’ve officially closed the loop between our local and remote repositories. We can now edit our files locally and push them to GitHub, or edit our files in GitHub and pull them to our local repository.</p>
+<p><img src="https://www.edureka.co/blog/wp-content/uploads/2016/11/Git-Architechture-Git-Tutorial-Edureka-2.png" class="img-fluid"></p>
+<p>This is the core workflow for using git and GitHub.</p>
+</section>
+</section>
+<section id="homework-init-is310" class="level2">
+<h2 class="anchored" data-anchor-id="homework-init-is310">Homework: Init IS310</h2>
+<p>Now it’s your turn to try this out! Trying following the steps above to create a new GitHub repository called <code>is310-coding-assignments</code> in your GitHub account. For this assignment, I would highly recommend you use this <a href="../../materials/introducing-defining-cad/05-advanced-git-github#git-commands-cheat-sheet"><code>git</code> cheatsheet</a> and also take a look at <a href="../../materials/introducing-defining-cad/05-advanced-git-github#general-best-practices-for-git-and-github">this overview of best practices</a>, though we will be discussing this in-class as well.</p>
+<p>For this assignment, you need to do the following:</p>
+<ul>
+<li>Create a new GitHub repository called <code>is310-coding-assignments</code>.</li>
+<li>Create a new directory in your local computer called <code>is310-coding-assignments</code> and enable it as a git repository.</li>
+<li>Create a Markdown file called <code>README.md</code> within <code>is310-coding-assignments</code>.</li>
+<li>Create a folder called <code>images</code> within <code>is310-coding-assignments</code>.</li>
+</ul>
+<p>The final piece is updating your <code>README.md</code> file with evidence that you have completed all <strong>Required</strong> tool installations for the course, listed <a href="../../materials/introducing-defining-cad/01-CAD-tools/#assigned-list-of-software--tools">here</a> (though you are welcome to post also proof of Optional tools). <strong>If you are using your own setup, please also post proof of your equivalent.</strong> You can do this by adding a list of the tools you have installed and adding screenshots of the tools running on your computer. You can use the <code>images</code> folder to store these screenshots.</p>
+<p>We have yet to learn much about Markdown but you can use the following template to structure your <code>README.md</code> file:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Init IS310 Homework</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Proof of Installation</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Python</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="al">![Python Installation](images/python-installation.png)</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Git</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="al">![Git Installation](images/git-installation.png)</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>VS Code</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a><span class="al">![VS Code Installation](images/vscode-installation.png)</span></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>AI Tool/Workflow </span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>How will you work with AI? What tools if any do you plan to use?</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please also include proof of what AI tool you will be using this semester! If you plan, not to use AI in class, you can just note that in your Markdown file.</p>
+</div>
+</div>
+<p>Once you have created everything locally, you will need to add, commit, and push your changes to your GitHub repository. You can use the following commands to do this:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Init IS310 Homework"</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However, remember to connect your <strong>local repository with your GitHub repository</strong> (hint: <code>git remote add origin</code> if your GitHub repository is empty OR <code>git remote set-url origin</code> if you have files in your GitHub). If you get any errors, you can always ask for help in the Slack channel or reach out to the Instructors directly.</p>
+<p>You are also encouraged to try out using GitHub Co-Pilot or any other AI chatbot to help you complete this assignment, and we also have a mored detailed <a href="../../materials/introducing-defining-cad/05-advanced-git-github">lesson on git &amp; GitHub</a> that should cover most issues you might face.</p>
+<p>Once you have completed this assignment, post the link to your GitHub repository in our first discussion forum <a href="https://github.com/cultureasdata-uiuc/is310-spring-2026/discussions/1">https://github.com/cultureasdata-uiuc/is310-spring-2026/discussions/1</a>.</p>
+<hr>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<ul>
+<li>Once you’ve worked through this lesson, feel free to read through our <a href="../../materials/introducing-defining-cad/05-advanced-git-github">Advanced git and GitHub resource</a>. In particular, it has a helpful section on <a href="../../materials/introducing-defining-cad/05-advanced-git-github#git-commands-cheat-sheet">git cheatsheet</a> that you’re welcome to refer to as you work through the assignments/throughout the semester.</li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Before Git, there were several generations of version control systems that evolved to meet the changing demands of software development. The first generation, represented by tools like Source Code Control System (SCCS) developed in 1972 by Marc Rochkind at Bell Labs, was centralized and relied on simple single-file locking-based concurrency. The Revision Control System (RCS), developed a decade later in 1982, followed the same lines but became widely popular due to its open-source nature. The second generation included the Concurrent Versions System (CVS), which allowed for more networked, collaborative work by introducing a merging-based approach instead of a file-locking approach. However, CVS had limitations that were addressed by its successor, Subversion, released in 2000, which allowed for more robust file set operations with atomic commits. Git represents the third generation of version control, combining lessons from these previous systems with new features suited for modern, large-scale software development. For more information, see Shane Lin’s <a href="https://shane-et-al.github.io/git_slab/"><em>Git for Humanists</em></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>IS310 Culture As Data - Fall 2026</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

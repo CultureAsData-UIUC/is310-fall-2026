@@ -1,0 +1,1320 @@
+---
+title: "Programming & Processing"
+subtitle: "How will we work in this class, and how are new technologies changing those workflows?"
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+    chalkboard: true
+    preview-links: auto
+---
+
+# Any Questions About Course Tools?
+
+## Reminder: These Are Required
+
+- [ ] Slack Account with DH@UIUC Server. 
+- [ ] GitHub Account.
+- [ ] Local Python 3 Installation.
+- [ ] Git.
+- [ ] Local Text Editor (VS Code Recommended).
+
+## Reminder: These Are Optional
+
+- [ ] AI Tooling of Your Choice:
+  - [ ] Recommend GitHub Co-Pilot and using GitHub Education Benefits to get access to Co-Pilot.
+- [ ] IDE of Your Choice:
+  - [ ] Recommend Visual Studio Code and Visual Studio Code Extensions.
+- [ ] Oh-My-Zsh.
+
+# Modern Software Is A Problem
+
+The best representation of what I'm talking about is this [xkcd comic, entitled Dependency](https://xkcd.com/2347/){target="_blank"}.
+
+![Dependency by Randall Munroe](https://imgs.xkcd.com/comics/dependency.png)
+
+::: {.notes}
+Essentially, modern software is a bit of a house of cards, and it's not uncommon to spend hours trying to get something to work, only to find out that you were missing a single character in a configuration file or have some conflicting dependency. The key thing to know is that this is not a reflection of your ability to work with computers, but rather a reflection of the state of modern software.
+:::
+
+## Any Python Issues?
+
+![Python Environment by Russell Monroe](https://imgs.xkcd.com/comics/python_environment.png)
+
+## Why Python?
+
+<table>
+  <tr>
+    <td>
+      ![Jake VanderPlas Tweet](../assets/images/python_twitter.png)
+    </td>
+    <td>
+      ![Stack Overflow's Annual Survey](../assets/images/python_so.png)
+    </td>
+  </tr>
+</table>
+
+# Let's Discuss GitHub & AI
+
+![100 million users](https://github.blog/wp-content/uploads/2023/01/100million-header.png?resize=1200%2C627)
+
+## Alternatives to GitHub
+
+![](https://rewind.com/wp-content/uploads/2023/05/gitvgit1.png)
+
+:::{.notes}
+While alternatives to GitHub exist (primarily [GitLab](https://about.gitlab.com/) or [Bitbucket](https://bitbucket.org/product)), it is hard to overstate how much in the last decade GitHub has become **the** platform for this type of work. Such a centralization is truly a double-edged sword
+:::
+
+## Arctic Code Vault
+
+![GitHub Arctic Code Vault](../assets/images/artic_code_vault.png)
+
+:::{.notes}
+For example, GitHub has created what amounts to the largest code archive in the world through their GitHub Arctic Code Vault, an initiative to take a snapshot of all code hosted on their platform on February 2, 2020 and store it in the Svalbard Global Seed Vault. Such an initiative is impressive and was done in partnership with some academic institutions (the exact partners were the Long Now Foundation, the Internet Archive, the Software Heritage Foundation, Arctic World Archive, Microsoft Research, the Bodleian Library, and Stanford Libraries). But it also raises a number of ethical, archival, and political questions.
+For example, this Arctic Code Vault has been criticized for its erasure of the indigenous Sami people who live on Svalbard and its performative approach to archives. GitHub also has contracts with U.S. Immigrations and Customs Enforcement (ICE) led to protests and boycotts from some sectors of the developer community.[^4] While we plan to use this platform, it's important to do so with these issues in mind.
+:::
+
+## What is Data Labor? Why Does Data Labor Matter?
+
+[![](../assets/images/data_labor.png)](https://www.psagroup.org/blogposts/101){target="_blank"}
+
+# Models All the Way Down
+
+Jer Thorp & Christo Buschek, *Knowing Machines* (2024)
+
+[![](../assets/images/models_all_way_down.png)](https://knowingmachines.org/models-all-the-way){target="_blank"}
+
+::: {.notes}
+General thoughts on this piece? What did you make of the format?
+:::
+
+## What is LAION-5B?
+
+![](https://laion.ai/images/blog/laion_pop.jpg)
+
+::: {.notes}
+LAION-5B is a "foundation dataset" for generative AI - it's what models like Stable Diffusion and Midjourney are trained on. The scale makes human review essentially impossible, which is precisely why problems emerge.
+
+- Released in 2022 by LAION, a German non-profit
+- Images and text captions scraped from the internet
+- Built to give AI models "a comprehensive representation of the world"
+:::
+
+## How was LAION-5B Built?
+
+[![](https://www.searchengineworld.com/wp-content/uploads/2025/07/image-62.png)](https://commoncrawl.org/){target="_blank"}
+
+::: {.notes}
+LAION-5B was built from **Common Crawl** using automated methods:
+
+1. Search for HTML `<img>` tags with `alt` attributes
+
+ALT tags describe what **site owners want algorithms to see**, not what humans see
+
+Only about 40% of images on the web have ALT tags. Sites like Pinterest, Shopify, and SlidePlayer have high ALT tag coverage because they auto-generate them for SEO purposes. This means LAION-5B is "powerfully shaped by commercial logics" - it reflects how search engines see the world, not how humans do.
+:::
+
+## What is in Common Crawl?
+
+Schaul, Kevin, Szu Yu Chen, and Nitasha Tiku. "Inside the Secret List of Websites That Make AI like ChatGPT Sound Smart." *Washington Post*, April 19, 2023.
+
+[![](https://i0.wp.com/librarian.aedileworks.com/wp-content/uploads/2023/04/image-3.png?resize=921%2C485&ssl=1)](https://www.washingtonpost.com/technology/interactive/2023/ai-chatbot-learning/){target="_blank"}
+
+## About Me
+
+Lucy, Li, Suchin Gururangan, Luca Soldaini, et al. “AboutMe: Using Self-Descriptions in Webpages to Document the Effects of English Pretraining Data Filters.” arXiv:2401.06408. Preprint, arXiv, January 12, 2024. [https://doi.org/10.48550/arXiv.2401.06408](https://doi.org/10.48550/arXiv.2401.06408){target="_blank"}.
+
+![](https://arxiv.org/html/2401.06408v3/x4.png)
+
+## About Me
+
+![](https://arxiv.org/html/2401.06408v3/x1.png)
+
+## What is seeing like an algorithm?
+
+![](https://images.squarespace-cdn.com/content/v1/5d6567d1afafe900010b2c70/1568820946043-99CKAL1Q2TTLIDM2ONPJ/imagenet-interface-2.jpg?format=2500w)
+
+::: {.notes}
+2. Use OpenAI's CLIP model to score image-text similarity
+3. Include pairs above a threshold (0.26-0.28)
+4. ALT tags describe what **site owners want algorithms to see**, not what humans see
+
+Only about 40% of images on the web have ALT tags. Sites like Pinterest, Shopify, and SlidePlayer have high ALT tag coverage because they auto-generate them for SEO purposes. This means LAION-5B is "powerfully shaped by commercial logics" - it reflects how search engines see the world, not how humans do.
+:::
+
+## Excavating AI
+
+*The Politics of Images in Machine Learning Training Sets *
+
+By Kate Crawford and Trevor Paglen 
+
+[![](https://images.squarespace-cdn.com/content/v1/5d6567d1afafe900010b2c70/1568733732627-LH2V5HQB2CTBWWP7L9SM/top-banner-skulls.png?format=2500w)](https://excavating.ai/){target="_blank"}
+
+## Why Models All the Way Down? What is the Circularity Problem?
+
+> "There are models on top of models, and training sets on top of training sets."
+
+. . .
+
+> "Omissions and biases and blind spots from these stacked-up models and training sets shape all of the resulting new models and new training sets."
+
+::: {.notes}
+
+There's a deep circularity here. LAION-5B's similarity score comes from CLIP (trained on undisclosed data). To set thresholds, they trained another model and compared to ImageNet benchmarks. ImageNet's gold standard was set by ResNet50. Each layer inherits biases from the previous ones.
+
+"Omissions and biases and blind spots from these stacked-up models and training sets shape all of the resulting new models and new training sets." This is why investigating datasets is so important - it's perhaps the only way to understand what these models actually contain.
+:::
+
+## What are the problems with this data?
+
+. . .
+
+Why is scale a problem?
+
+. . .
+
+**The Problem:** In December 2023, researchers found over 1,000 images of Child Sexual Abuse Material (CSAM) in the dataset
+
+::: {.notes}
+
+> "If your full-time, eight-hours-a-day, five-days-a-week job were to look at each image in the dataset for just one second, it would take you **781 years**."
+
+LAION-5B contains **5.85 billion** image-text pairs
+
+LAION-5B is a "foundation dataset" for generative AI - it's what models like Stable Diffusion and Midjourney are trained on. The scale makes human review essentially impossible, which is precisely why problems emerge.
+The stated goal was research into automated dataset curation - building a dataset with "no humans in the mix." The creators explicitly warned against using it for "ready-to-go industrial products." This warning was largely ignored by Midjourney and Stable Diffusion.
+:::
+
+## How are these datsets "curated"?
+
+[![](../assets/images/dirty_words.png)](https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words){target="_blank"}
+
+## Curation by Statistics
+
+> "The tiniest of shifts in LAION's thresholds could have excluded or included **hundreds of millions of images**"
+
+. . .
+
+- 16% of images are within 0.01 of the lower threshold
+- Raising the threshold by just 0.01 would remove **937 million** image pairs
+
+::: {.notes}
+This is what "curation by statistics" looks like: tiny tweaks to code can have profound effects on the content of training sets. The thresholds are "very often poorly understood" - even by the developers who set them.
+:::
+
+## Whose Images?
+
+For every **English speaker**: 1.6 image captions
+
+For every **French speaker**: 0.5 image captions
+
+For every **Swahili speaker**: 0.03 image captions
+
+. . .
+
+> "For models trained on LAION-5B, English (and English-speaking culture) is valued more than the other 107 languages combined."
+
+::: {.notes}
+The language distribution in LAION differs significantly from Common Crawl. CLD3 (the language detector) miscategorized millions of captions - for example, labeling 34 million captions as Luxembourgian (a language only 300,000 people speak). These are mostly actually English.
+:::
+
+## Whose Aesthetics?
+
+> "The concepts of what is and isn't visually appealing can be influenced in outsized ways by the tastes of **a very small group of individuals**"
+
+. . .
+
+Midjourney's aesthetic fine-tuning: shaped by a handful of Discord users and a 65-year-old mechanical engineer from Wisconsin
+
+::: {.notes}
+LAION-Aesthetics: a subset for "high visual quality" images
+
+The aesthetic model was trained on:
+
+- 15,000 logos
+- 238,000 synthetic AI images rated by Discord users
+- 250,000 photos rated on dpchallenge.com
+
+The Discord raters were described as "WEIRD" (Western, Educated, Industrialized, Rich, Democratic) and "nerdy" and "esoteric." The dpchallenge.com top 50 reviewers are 95% from the US, Canada, or Europe - "mostly middle-aged photography enthusiasts from small American cities."
+
+The SAC dataset creators acknowledge that "most of the ratings in the dataset were submitted by a handful of users" whose "aesthetic preferences dominate the dataset." Yet this shapes what millions of users see when they generate images.
+:::
+
+## What does this mean for how we use AI?
+
+- What sorts of use cases are appropriate for AI?
+- What dangers exist because of the reliance on training data?
+- Do we understand the difference between and LLM and a chatbot? *hint: models all the way down!*
+
+# Time To Prompt: The Command Line
+
+## What is a Terminal?
+
+A **terminal** is a way to interact with your computer via **text** commands.
+
+. . .
+
+Instead of clicking on icons (GUI), we type explicit commands.
+
+. . .
+
+You've already used it!
+
+```sh
+python3 --version
+```
+
+::: {.notes}
+So far, you have been installing software via something called the terminal, but we have yet to explain what the terminal is or how it works.
+
+Terminals are a way to interact with your computer via text commands. Today, we usually give commands to a computer via a Graphical User Interface (GUI), pronounced "gooey". Any time you download an app, whether on your phone or computer, you are using a GUI. GUIs let us click on icons, drag items, and interact with our computers in a visual way. Terminals let us do many of the same functions, but we have to be more explicit and write these commands.
+:::
+
+## A Brief History of Computing
+
+![Early computer (ENIAC)](https://www.computerhope.com/cdn/eniac.jpg){height="400"}
+
+::: {.notes}
+Back in the 1950s and 1960s, computers were the size of entire rooms and functioned through the use of something called punch cards. These early computers required teams of operators, often comprised of women, who inputted punch cards to prompt the computers to process and output results on paper.
+:::
+
+## Punch Cards
+
+![Example punch card from the Index Thomisticus](https://theoreti.ca/wp-content/uploads/2016/03/IMG_1628.jpg){height="400"}
+
+::: {.notes}
+Punch cards contained a series of holes that encoded information like numbers, letters, and even instructions for programs. These cards were fed into machines called card readers, translating the hole patterns into electrical signals the computer could understand. This enabled data entry for tasks like payroll calculations, statistical analysis, and even early gaming.  The punch cards and computers were run by teams of *operator*, often comprised of women, who inputted these punch cards, prompting the computers to process and output the results on paper.
+:::
+
+## Punch Cards
+
+- One of the first Computing in the Humanities projects started in the 1940s to digitize the writings of Thomas Aquinas. More information available here [https://theoreti.ca/?p=6096](https://theoreti.ca/?p=6096){target="_blank"}
+- For more on this history, I would highly recommend watching "Computer History: Punch Cards Historical Overview -IBM Remington Rand UNIVAC - History 1900’s-1960’s", 2016. [https://www.youtube.com/watch?v=kKJxzay85Vk](https://www.youtube.com/watch?v=kKJxzay85Vk){target="_blank"}.
+
+::: {.notes}
+The term *terminal* then refers to the device that allowed operators to interact with the computer, and the *command line* refers to the text-based interface that allowed operators to input commands to the computer.
+:::
+
+## The First GUI
+
+![SmallTalk: The First GUI](https://cdn.arstechnica.net/wp-content/uploads/archive/images/gui/7-AltoST-small.jpg)
+
+Reimer, Jeremy. “A History of the GUI.” *Ars Technica*, May 5, 2005. [https://arstechnica.com/features/2005/05/gui/](https://arstechnica.com/features/2005/05/gui/){target="_blank"}.
+
+::: {.notes}
+The command line was the only way to interact with computers until the 1970s, when the first Graphical User Interface (GUI) was developed at Xerox PARC. This GUI was later adopted by Apple and Microsoft, and is the basis for the GUIs we use today.
+Smalltalk was conceived as a programming language and development environment so easy to use that a child could understand it, and in many respects was successful in this goal. Smalltalk was the world’s first object-oriented programming language, where program code and data could be encapsulated into single units called objects that could then be reused by other programs without having to know the details of the object’s implementation. It also had modern, Java-like features like automatic memory management, to take some of the hard work away from the programmer. The development environment of Smalltalk was also the user interface that Smalltalk programs ran in, and introduced many modern GUI concepts. It first began to take shape around 1974, and was continuously updated and enhanced.
+:::
+
+## Shells?
+
+![](https://phoenixnap.com/kb/wp-content/uploads/2023/09/bourne-again-shell-history-1.png)
+
+::: {.notes}
+Today when we use **terminals**, we are not just using the terminal but also using often using something called a **shell**. A "shell" is a program within a terminal that interprets user commands and processes computer output. Originating from the Unix operating system, the term "shell" signifies a user-friendly interface that encapsulates the complexities of various computer systems. Popular shell programs include **bash** (Bourne Again SHell), which is the default shell for most Linux distributions and MacOS; **PowerShell**, which is Windows default option, and **zsh** (Z Shell) -- the optional configuration from our course tools. Each shell has its own set of commands and syntax, but they all share the same basic functionality.
+:::
+
+## Key Terminology
+
+| Term | Definition |
+|------|------------|
+| **Terminal** | The device/program that allows you to interact with the computer |
+| **Shell** | A program that interprets your commands (bash, zsh, PowerShell) |
+| **Command Line** | The text-based interface where you type commands |
+
+::: {.notes}
+The term "terminal" refers to the device that allowed operators to interact with the computer. The "command line" refers to the text-based interface that allowed operators to input commands. The command line was the only way to interact with computers until the 1970s, when the first GUI was developed at Xerox PARC.
+
+A "shell" is a program within a terminal that interprets user commands and processes computer output. Popular shells include bash (default for most Linux/MacOS), PowerShell (Windows), and zsh.
+:::
+
+## GUI vs CLI
+
+::: {.columns}
+::: {.column width="50%"}
+**GUI (Graphical)**
+![GUI example](https://melaniewalsh.github.io/Intro-Cultural-Analytics/_images/GUI-example.gif){height="300"}
+:::
+::: {.column width="50%"}
+**CLI (Command Line)**
+![CLI example](https://melaniewalsh.github.io/Intro-Cultural-Analytics/_images/CLI-example.gif){height="300"}
+:::
+:::
+
+::: {.notes}
+In the GUI example, we see using the Mac Finder App to interact graphically with file folders - clicking and moving files around with a mouse.
+
+In the CLI example, we see typing commands in the terminal like `mkdir` and `rmdir` to create and remove directories. The shell being used is bash.
+:::
+
+# Working With The Command Line
+
+## Creating a Directory
+
+Open your terminal in VS Code: **Terminal > New Terminal**
+
+. . .
+
+```sh
+mkdir Intro-CA-Notes
+```
+
+. . .
+
+But how do we know it worked?
+
+::: {.notes}
+To create a directory (folder), we use the mkdir command followed by the name we want. But after pressing enter, there's no visual confirmation - we need to use other commands to verify it worked.
+:::
+
+## Writing Vs. Prompting
+
+We have two options: 
+- look at the [Command Line cheatsheet](../materials/introducing-defining-cad/04-command-line-cheatsheet.qmd){target="_blank"} that contains a number of these commands and see what would be the best option to help us check if this worked.
+
+## Writing Vs. Prompting
+
+Our other option is to try and start testing out these AI Chatbots, and specifically GitHub Co-Pilot (though again you are welcome to use any AI tool that is free and helps you understand these materials).
+
+# Prompt Engineering
+
+## What is a Prompt?
+
+In the terminal: the symbol that indicates where you type
+
+- `$` (bash)
+- `%` (zsh)
+- `>` (PowerShell)
+
+. . .
+
+In AI: the text input you give to a chatbot
+
+::: {.notes}
+So far we have been doing a form of prompting, called **Command Prompt**, which refers to where we write the text commands in the terminal. Often times the command prompt is a symbol that indicates the start of a new command. For example, in Melanie's example, the command prompt is the `$` symbol. This symbol is called a **prompt** because it prompts you to enter a command. The prompt is followed by a **cursor**, which is the blinking vertical line that indicates where your next character will appear. Other symbols you might see include `#`, `%`, and `>`.
+
+The term "prompt" has become incredibly popular since the release of GPT-3 by OpenAI in Summer 2020. In the terminal, the prompt is a symbol like $ or % that indicates where your next command will appear. In AI contexts, it refers to the text commands or questions you give to chatbots.
+:::
+
+## The AI Explosion
+
+![Evolution of LLMs](https://github.com/Mooler0410/LLMsPracticalGuide/raw/main/imgs/tree.jpg){height="450"}
+
+::: {.notes}
+While there idea of prompt engineering has a longer history in natural language processing, the term has taken over, with the proliferation of new AI chatbots and models.
+
+In some ways our idea of giving text prompts to the terminal via the command line echoes how we do prompt engineering for AI chatbots, since both require writing text (something we'll discuss more later in this lesson).
+
+The term "prompt engineering" describes giving commands or prompts to chatbots for certain outputs or results. While prompt engineering has a longer history in natural language processing, the term has taken over with the proliferation of new AI chatbots and models since 2020.
+:::
+
+## Terminal vs AI Prompting
+
+| Terminal Commands | AI Prompts |
+|-------------------|------------|
+| Fixed, specific syntax | Natural language |
+| Predictable outputs | Variable outputs |
+| Must use exact commands | Flexible phrasing |
+| Reproducible | Rarely reproducible |
+
+::: {.notes}
+Both require writing text, but depending on your operating system, terminal, and shell, you have to give the command line certain set of commands that have been previously programmed. With AI chatbots, you can write without those set structures - but that doesn't mean there aren't helpful guidelines.
+:::
+
+## Prompting Guidelines?
+
+![Infographics Abound](https://miro.medium.com/v2/resize:fit:1170/1*97Rixvja91FR6-q6kdPIaA.jpeg)
+
+::: {.notes}
+But while depending on your operating system, terminal, and shell, you have to give the command line certain set of commands that have been previously programmed, with AI chatbots you can write without those set structures.
+
+However, that doesn't mean there aren't some helpful guidelines for prompt engineering, even if the process often requires lots of trial and error, and is rarely reproducible or transparent.
+
+If you search for tips on prompt engineering, you'll find lots of infographics like this one:
+:::
+
+## The 4S of Prompt Engineering
+
+Microsoft's guidelines for GitHub Copilot:
+
+. . .
+
+- **Single** - One task or question at a time
+
+. . .
+
+- **Specific** - Detailed requests and specifications
+
+. . .
+
+- **Short** - Be concise
+
+. . .
+
+- **Surround** - Keep relevant files open for context
+
+::: {.notes}
+Microsoft provides these guidelines specifically for Copilot since it has been trained primarily for coding tasks. The final one is particularly important for Copilot since it works best when it has code examples to learn from - this is called "few-shot learning."
+
+While these are general guidelines, the final one is particularly important for Co-Pilot, since it works best when it has code examples to learn from (something called *few-shot learning*, for those that are interested).
+:::
+
+## How Copilot Processes Prompts
+
+![Copilot processing flow](https://learn.microsoft.com/en-us/training/github/introduction-prompt-engineering-with-github-copilot/media/3-prompt-processing-flow-diagram.png){height="400"}
+
+::: {.notes}
+This diagram details what GitHub Copilot does with your prompt. The key thing to understand is that it looks for patterns in the prompt and tries to match those patterns to code examples it has seen before. So the more specific and detailed your prompt is, the more likely it is to find a match.
+:::
+
+## Important Warning
+
+**Never share sensitive information in prompts!**
+
+. . .
+
+- Personal data can be leaked
+- Copilot scrapes GitHub repositories
+- The legality and ethics remain hazy
+
+. . .
+
+Use AI tools with a **critical lens**
+
+::: {.notes}
+Even though Copilot claims to be secure, there's a lot of potential for personal data to be leaked through this process. The legality of Copilot remains hazy, not to mention the ethics or politics of it. You'll see why as we continue to work with it, as it autocompletes file names and other information from GitHub that it has scraped.
+:::
+
+## Example Prompts for the CLI
+
+::: {.callout-note}
+## Try these prompts!
+
+```
+How can I check if my directory was created in my terminal?
+```
+
+```
+Should I use the command ls or pwd to check if my directory
+was created? And what is the difference between these two?
+```
+
+```
+How can I create a directory named is310-computing-humanities
+in my terminal?
+```
+:::
+
+::: {.notes}
+These are examples of good prompts for getting help with command line tasks. Notice they are specific, ask one thing at a time, and are concise. When you get answers, always verify them using the command line cheatsheet or by testing carefully.
+:::
+
+# Directories & File Paths
+
+So returning to our original question, hopefully by now we have discovered some of the commands we can use to check if our directory was created. Any thoughts?
+
+## Essential Commands
+
+| Command | What it does |
+|---------|--------------|
+| `pwd` | Print working directory (where am I?) |
+| `ls` | List directory contents |
+| `cd` | Change directory |
+| `mkdir` | Make a new directory |
+| `touch` | Create a new file |
+| `mv` | Move or rename files |
+| `rmdir` | Remove an empty directory |
+
+::: {.notes}
+These are the fundamental commands you'll use constantly. pwd shows your current location, ls shows what's in your current folder, cd moves you around, mkdir creates folders, touch creates files, mv moves things, and rmdir removes empty folders.
+
+See the Command Line cheatsheet for more commands and details!
+:::
+
+## Making Directories?
+
+```sh
+mkdir is310-computing-humanities
+```
+
+::: {.notes}
+With the help of the cheatsheet and GitHub Co-Pilot, we should see that the command `ls` lists the contents of a directory, and `pwd` prints the full working path. So we can use these commands to check if our directory was created.
+
+And then we can use the command `mkdir` to create a directory named `is310-computing-humanities`.
+
+Using these commands, we can see that our directory was created. But what does this mean exactly?
+
+As we read this week, how we interact with computers has increasingly made it difficult to understand where our files are stored. While search functionality often takes care of this for us in GUI applications, in the command line we have to be more explicit about where we want to store our files and we have to know where we are located.
+:::
+
+## Understanding File Paths
+
+![File tree structure](https://heardlibrary.github.io/digital-scholarship/computer/images-2-pc/file-tree.png){height="400"}
+
+::: {.notes}
+In this figure, we see a representation of how folders and files are organized on a Windows computer. The top level is the **root directory**, which on Windows is the `C:` drive. On Macs and Linux machines, we have a similar root directory, but it is represented by a `/` symbol. This root directory contains all of the files and folders on your computer. The root directory is also called the **parent directory** because it is the parent of all the other directories on your computer.
+
+**Important to know: directory is the same as folder, and the two are often used interchangeably.** Directory is the original term, but with GUIs we often use the term folder.
+
+In this diagram, we can see that there is a Users folder or directory. This is where most of your files that you download or create are stored: under your user account and in the `Documents`, `Downloads`, and `Desktop` folders.
+
+If I use the `pwd` command, I can start to see this structure.
+:::
+
+## Working Directories
+
+![Current Directory](../assets/images/pwd_example.png)
+
+::: {.notes}
+You'll notice the command prints out a long string that has names like `Users`, followed by a series of names separated by a forward slash `/` (in PowerShell, you'll see backslashes `\`). Each of these are my folders or directories, and this represents the **absolute file path** from my root directory to my current directory -- that is the current location of my terminal. I realize this might be a bit confusing initially, but eventually as you use the command line more, you'll start to get a sense of how this works.
+
+Each file path is unique to your computer, and so if you are following along with this lesson, you'll see a different file path, though there should be a `Users` folder as your root or home directory.
+:::
+
+## Absolute vs Relative Paths
+
+**Absolute path:** Full path from root
+
+```sh
+/Users/zleblanc/Documents/is310
+```
+
+. . .
+
+**Relative path:** Path from current location
+
+```sh
+cd ~        # Go to home directory
+cd ..       # Go up one directory
+cd ../..    # Go up two directories
+```
+
+::: {.notes}
+You'll also notice I did the command `cd ~`. What do you think this command does? What does `cd` stand for do you think?
+
+A core distinction with how I used this final command is the fact that I used a tilde `~` symbol. This symbol is a **relative file path**, meaning it is relative to my current directory. So if I am in the `Documents` folder, `cd ~` will take me to my home directory. You can also use `cd ..` to go up one directory, and `cd ../..` to go up two directories, and so on.
+
+An absolute file path is the complete path from the root directory to a specific location. It's unique to your computer. A relative path is relative to your current directory. The tilde ~ represents your home directory, and .. means "parent directory" (one level up).
+:::
+
+## Putting It Together
+
+```sh
+# Create a file
+touch is310-computing-humanities.txt
+
+# Move it into a folder
+mv is310-computing-humanities.txt is310-computing-humanities
+
+# Change into the folder
+cd is310-computing-humanities
+
+# List contents to verify
+ls
+
+# Go back up and remove the folder
+cd ..
+rmdir is310-computing-humanities
+```
+
+::: {.notes}
+This sequence demonstrates a typical workflow: creating a file, moving it into a directory, navigating into that directory to verify, then cleaning up by going back and removing the directory. Note that rmdir only works on empty directories.
+:::
+
+
+# In-Class Exercise
+
+## Your Tasks
+
+Using the cheatsheet and/or your preferred AI chatbot:
+
+1. Create `is310-computing-humanities` directory in your `Desktop` folder
+2. Inside it, create `is310-computing-humanities.txt`
+3. Add text to your file using the command line *(new command!)*
+4. Display the file contents *(new command!)*
+5. Return to your home directory
+
+. . .
+
+**Bonus:** Copy your folder, then delete the copy
+
+::: {.notes}
+This exercise combines what we've learned about the command line with using AI tools for help. The new commands you'll need to look up are for adding text to a file (like echo or cat with redirection) and displaying file contents (like cat). Remember to ask the instructors if you need help!
+:::
+
+## Additional Resources
+
+1. [Introduction to the Bash Command Line](https://programminghistorian.org/en/lessons/intro-to-bash) - *Programming Historian*
+2. [Bash Basics Part 1](https://youtu.be/eH8Z9zeywq0?t=885) - Video tutorial
+3. [Beginner's Guide to the Bash Terminal](https://www.youtube.com/watch?v=oxuRxtrO2Ag)
+4. [CodeAcademy Command Line Course](https://www.codecademy.com/learn/learn-the-command-line)
+
+::: {.notes}
+These resources provide additional depth on the command line. The Programming Historian tutorial is particularly good for humanities contexts. The videos are helpful if you prefer visual learning. And the CodeAcademy course provides interactive practice.
+:::
+
+## Questions?
+
+Remember:
+
+- The **terminal** is the interface
+- The **shell** interprets commands
+- The **command line** is where you type
+- **Prompts** work for both CLI and AI!
+
+. . .
+
+See also: [Command Line Cheatsheet](../materials/introducing-defining-cad/04-command-line-cheatsheet.qmd){target="_blank"}
+
+# What is Version Control?
+
+## The Problem
+
+Have you ever had files like this?
+
+. . .
+
+- `essay_final.docx`
+- `essay_final_v2.docx`
+- `essay_FINAL_FINAL.docx`
+- `essay_FINAL_FINAL_actually_final.docx`
+
+. . .
+
+Version control solves this problem!
+
+::: {.notes}
+So far, we have been using the command line in the terminal, installed GitHub Co-Pilot and `git`, but we have yet to use either for their main purpose: version control and collaborative coding. In this lesson, we will explore what version control is and how it works, as well as how to use GitHub to collaborate with others and share our code and datasets.
+
+Version control is the practice of tracking and managing changes to files over time. We've all experienced the chaos of multiple file versions. Git provides a systematic way to track changes, collaborate, and maintain a clean history of your work. 
+:::
+
+## What is Git?
+
+**Git** is software for version control - tracking changes in files over time.
+
+. . .
+
+- Created in 2005 by Linus Torvalds (creator of Linux)
+- Most popular version control system in the world
+- Used by millions of developers and researchers
+
+::: {.notes}
+Git requires changes to be saved (committed) before they can be combined (merged) with the main project. You're already familiar with this concept if you've used Google Docs or Word's "Track Changes" - but with those you get version history automatically. With git, we have to tell it what to track and when to track it.
+
+Created in 2005 by Linus Torvalds, the creator of Linux, the open-source operating system that powers much of the internet, Git is now the most popular version control system in the world.
+:::
+
+## Git vs GitHub
+
+|     | Git | GitHub |
+|-----|-----|--------|
+| **What** | Version control system | Platform for hosting git repositories |
+| **Where** | Local (on your computer) | Remote (website) |
+| **Install?** | Yes | No (it's a website) |
+
+. . .
+
+They are **two separate technologies** often used together!
+
+::: {.notes}
+A very important thing to understand is that while git and GitHub sound the same, they are two separate technologies. Git is a version control system, while GitHub is a platform for hosting git repositories. In git, a folder is called a repository. We'll be using both in this course, but it's important to realize they are not identical.
+:::
+
+## Git + GitHub Together
+
+![Git and GitHub workflow](https://miro.medium.com/v2/resize:fit:1400/1*tDz-Vkeg-yoBRcnAZ5SDow.png){height="450"}
+
+::: {.notes}
+Even though these two technologies are separate, they are often used together. You can use git to track changes in your files locally on your computer, and then push those changes to a remote repository on GitHub. This is what we will be doing in this course.
+:::
+
+## Why Git for Culture as Data?
+
+Git allows you to:
+
+- Keep track of changes in plain text files
+- Collaborate in real-time with other researchers
+- Easily revert to earlier versions
+- Create different branches to explore new ideas
+- See who added what to the project
+
+::: {.notes}
+Although Git and version control systems are predominantly used in software development, they offer several advantages for scholars in Digital Humanities. Similar to how you might handle versions of a paper, essay, or dataset, Git provides systematic version tracking.
+:::
+
+## What Version Tracking Looks Like
+
+![Example of a git diff](../assets/images/github_diff.png){height="400"}
+
+::: {.notes}
+This screenshot is from GitHub but shows what git tracks. You can see on the left, the previous erroneous line was deleted, and on the right is the corrected version. This is a very simple example, but it gives you a sense of how git tracks changes - showing exactly what was removed and what was added.
+:::
+
+# Working with Git
+
+## Check Your Installation
+
+First, verify git is installed:
+
+```sh
+git --version
+```
+
+. . .
+
+You should see something like:
+
+```sh
+git version 2.39.0
+```
+
+::: {.notes}
+Remember that we run our commands in the terminal! If you don't see a version number, you may need to install git. Let the instructors know if you're having issues.
+:::
+
+## Create a Project Folder
+
+```sh
+# Create a new folder
+mkdir is310-first-repo
+
+# Navigate into it
+cd is310-first-repo
+
+# Create a file
+touch first_file.txt # For Unix/Linux
+New-Item -ItemType File -Path . -Name first_file.txt # For PowerShell
+```
+
+. . .
+
+Add some text to the file:
+
+```sh
+echo "This is my first file" > first_file.txt # For Unix/Linux
+
+"This is my first file" | Out-File -FilePath first_file.txt #For PowerShell
+```
+
+::: {.notes}
+Let's create a new folder for our project. We use mkdir to create the folder, cd to navigate into it, and touch to create an empty file. Then we use echo with the redirect operator > to add text to the file.
+:::
+
+## Initialize a Git Repository
+
+```sh
+git init
+```
+
+. . .
+
+Output:
+
+```sh
+Initialized empty Git repository in /Users/YOU/is310-first-repo/.git/
+```
+
+. . .
+
+A hidden `.git` folder is created. We can use `ls -a` for Unix/Linux or `Get-ChildItem -Force` for PowerShell to see it.
+
+::: {.notes}
+To start tracking changes, we need to initialize a git repository. The git init command creates a hidden .git folder that contains all the information about our repository. The `.git` folder is hidden by default, so we need to use the `-a` or `-Force` flag to see it. This means that if you try looking at your folder either in a file explorer or in the terminal with just `ls`, or even in the VS Code Explorer, you won't see the `.git` folder.
+:::
+
+## The Git Workflow
+
+![Git as a camera](../assets/images/dhri_git.png){height="400"}
+
+*Think of git as a camera taking snapshots of your project*
+
+::: {.notes}
+Thinking of git as a camera taking a photo of your project at a particular point in time is helpful. Every time you commit your changes, you are taking a snapshot. You can then go back to that snapshot at any time. Like save points in a video game!
+:::
+
+## Step 1: Add to Staging Area
+
+Git doesn't track automatically - you must tell it what to track:
+
+```sh
+git add first_file.txt
+```
+
+. . .
+
+Check the status:
+
+```sh
+git status
+```
+
+```sh
+On branch main
+
+No commits yet
+
+Changes to be committed:
+    new file:   first_file.txt
+```
+
+::: {.notes}
+After initializing a repository, tracking is NOT automatic. We have to tell git which files to pay attention to by adding them to the staging area. The staging area is like selecting which photos you want to include in an album before actually printing them.
+:::
+
+## Step 2: Commit Changes
+
+Finalize your snapshot with a descriptive message:
+
+```sh
+git commit -m "Added first file to our repository"
+```
+
+. . .
+
+Check status again:
+
+```sh
+git status
+```
+
+```sh
+On branch main
+nothing to commit, working tree clean
+```
+
+::: {.notes}
+Committing is like actually taking the photo. The -m flag lets you add a message describing what changed. Your commit messages should be short and descriptive - they help you (and collaborators) understand the history of your project.
+:::
+
+## If You Forget the -m Flag...
+
+You'll see Vim (a text editor):
+
+![Vim editor](https://miro.medium.com/v2/resize:fit:1400/1*p-tiZIHNuZYJbxMlkis-Dw.png){height="350"}
+
+::: {.notes}
+Ideally, your commit messages should be short and descriptive. They should describe the changes you made to the file.
+
+If you don't add a message, git will automatically open a text editor in your terminal and ask you to add a message. You'll likely see something that looks like the following.
+
+This looks very intimidating, but it's actually not that bad. This is the default text editor (think like VS Code, but much simpler) for git, which is called `Vim`. Vim is a very powerful text editor, but it has a steep learning curve. If you want to learn more about Vim, you can read this [https://www.freecodecamp.org/news/vim-beginners-guide/](https://www.freecodecamp.org/news/vim-beginners-guide/).
+:::
+
+## If You Forget the -m Flag...
+
+- Press `i` to type, then `esc`, then `:wq` to save and exit
+- Or press `esc`, then `:q!` to exit without saving
+
+```sh
+Aborting commit due to empty commit message.
+```
+
+::: {.notes}
+The key thing to know is that if you get this screen you can either add a message or exit the text editor. To add a message, you need to press `i` on your keyboard. This will put you in insert mode, which means you can type. Then you can add your message. Once you have added your message, you need to press `esc` on your keyboard. This will take you out of insert mode. Then you need to type `:wq` and press enter. This will save your message and exit the text editor.
+
+If you just want to exit the text editor, you can press `esc` on your keyboard. Then you need to type `:q!` and press enter. This will exit the text editor without saving your message. In which case, you'll see the following message:
+:::
+
+## Quotes
+
+```sh
+quote>
+```
+
+::: {.notes}
+While doing this once or twice is fine, it can get annoying so it's better to add a message to your commit with the `-m` flag. Be sure that you use quotations marks around your message, and that you use the same type of quotations marks. So if you use double quotes, use double quotes around your message. If you use single quotes, use single quotes around your message. If for some reason you end up mixing them, you'll get a quote prompt in your terminal.
+This is just git telling you that you didn't close your quotation marks, so if you add the correct quotation marks and press enter, it will add your message.
+:::
+
+## Step 3: View History
+
+See your commit history:
+
+```sh
+git log
+```
+
+```sh
+commit 8bb8306c1392eed52d4407eb16867a49b49a46ac (HEAD -> main)
+Author: Your Name <your-email@gmail.com>
+Date:   Tue Jan 22 16:03:39 2024 -0400
+
+    Added first file to our repository
+```
+
+::: {.notes}
+Now that we have committed our changes, we can view the version history of our file. To do this, we use the `git log` command. This will show us the commit history of our file. We can see the commit message, the author, the date, and the commit hash. The commit hash is a unique identifier for each commit. It is a long string of letters and numbers that is used to identify each commit. We can use this commit hash to revert to a previous version of our file.
+
+This is telling us that we have one commit, the commit is identified with that long string of letters and numbers (this is the *commit hash*), the commit is on the `main` branch. The Author and Date should correspond to your information and when you made the commit. Finally, we see our commit message.
+
+We could now update the file and commit our changes again. If we did that, then our version history via git log would show the two commits.
+
+These activities are the core features of git. The next step is to connect our local repository to a remote repository on GitHub.
+:::
+
+## Git Commands Summary
+
+| Command | What it does |
+|---------|--------------|
+| `git init` | Initialize a repository |
+| `git add <file>` | Add file to staging area |
+| `git commit -m "msg"` | Commit with message |
+| `git status` | Check current status |
+| `git log` | View commit history |
+
+::: {.notes}
+These are the core local git commands. You'll use these constantly: init to start, add to stage, commit to save snapshots, status to check where you are, and log to see history.
+:::
+
+# Working with GitHub
+
+By now you should have your git configuration setup and have a GitHub account, but feel free to look back at our [course tools lesson](../materials/introducing-defining-cad/01-CAD-tools.qmd#git){target="_blank"} if you're having any issues.
+
+## Creating a Repository on GitHub
+
+1. Go to [github.com](https://github.com/){target="_blank"}
+2. Click the **New** button
+
+![Create repo button](https://docs.github.com/assets/cb-31554/images/help/repository/repo-create.png){height="300"}
+
+::: {.notes}
+To get our local git repository onto GitHub, we first need to create a new repository on the website. Click the New button in the top right corner of GitHub.
+:::
+
+## Repository Settings
+
+![](../assets/images/new_repository.webp){height="400"}
+
+## Repository Settings
+
+- Name it `is310-first-repo`
+- Choose **Public** so we can see each other's work
+- Leave README unchecked for now
+
+::: {.notes}
+Give your repository a name, add a description if you want, and choose whether it's public or private. For class purposes, choose public so we can see each other's repositories. Leave the README option unchecked since we'll push our existing local repo.
+
+You also have the option to `initialize the repository with a README`, which is a file that provides information about the project. We will be discussing this more later so for now leave this option unchecked. You can also add a `.gitignore` file, which is a file that tells Git to ignore certain files in the repository. Again, something we'll discuss more in-depth in the coming weeks.
+:::
+
+## Repository Settings
+
+![First Commit](https://www.dataquest.io/wp-content/uploads/2019/01/repo_options.png)
+
+::: {.notes}
+Once you create your repository it should like the photo above. If you selected the `Initialize this repository with a README` option, you will see a blank repository that looks like the photo below.
+:::
+
+## Repository Settings
+
+![First Commit With README](../assets/images/create_readme.png)
+
+To understand what each button does feel free to browse through our [advanced git and GitHub resource](../materials/introducing-defining-cad/05-advanced-git-github.qmd){target="_blank"}, but first let's try to get our local repository onto GitHub.
+
+## Connect Local to Remote
+
+Add your GitHub repo as a "remote":
+
+```sh
+git remote add origin https://github.com/USERNAME/is310-first-repo.git
+```
+
+::: {.notes}
+Now that we have created a new repository on GitHub, we need to connect it to our local repository. To do this, we need to add a remote repository. We can do this by using the `git remote add` command and then the name of the remote repository and the URL of the remote repository. Let's call our remote repository `origin` and use the URL of our GitHub repository.
+:::
+
+## Connect Local to Remote
+
+Verify it worked:
+
+```sh
+git remote -v
+```
+
+```sh
+origin  https://github.com/username/repository.git (fetch)
+origin  https://github.com/username/repository.git (push)
+```
+
+::: {.notes}
+In this case, we would replace `OWNER` with our GitHub username and `REPOSITORY` with the name of our repository. So for me, it would be `ZoeLeBlanc/is310-first-repo`.
+
+We can check this by using the `git remote -v` command. This will show us the remote repositories we have added to our local repository.
+:::
+
+## Push to GitHub
+
+```sh
+git push [remote repository] [flags] [local repository]
+```
+
+::: {.notes}
+So all we need to do is specify the name of our remote repository and the name of our local repository. What's a bit confusing is that we don't need to write our GitHub URL here but instead can just write `origin`. If you look at the output from `git remote -v` again, you'll notice it says `origin` next to our GitHub URL. This is because `origin` is the default name for our remote repository. We can change this, but for now we'll just use `origin`.
+
+Then for our local repository, we don't need to say our directory name but instead need to specify the name of the branch we want to push. We'll discuss branches more later, but for now we can just use `main`. So our command will look like this:
+::: 
+
+## Push to GitHub
+
+Send your local commits to GitHub:
+
+```sh
+git push origin main
+```
+
+```sh
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 226 bytes | 226.00 KiB/s, done.
+To github.com:username/is310-first-repo.git
+ * [new branch]      main -> main
+```
+
+::: {.notes}
+The push command sends your local commits to the remote repository. "origin" is the name we gave our remote, and "main" is the branch we're pushing. After this, you'll see your files on GitHub!
+:::
+
+### Fatal Errors?
+
+
+If you see a `fatal` error that looks like this:
+
+```sh
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+```
+
+::: {.notes}
+
+That just means you forgot to add your remote repository. If you fix that and try again, it should work.
+
+Now if we go to our GitHub repository, we will see that our local repository has been pushed to our remote repository.
+:::
+
+## SSH Keys (Optional but Recommended)
+
+Tired of entering your username/password?
+
+. . .
+
+SSH keys let you connect securely without credentials.
+
+. . .
+
+You can find instructions on how to do it [here](../materials/introducing-defining-cad/03-intro-versioning.qmd#configuring-ssh-keys-optional-but-recommended){target="_blank"}
+
+# Editing on GitHub
+
+## Create Files in the Browser
+
+Click **Add file > Create new file**
+
+![Add file button](https://docs.github.com/assets/cb-70797/mw-1440/images/help/repository/add-file-buttons.webp){height="300"}
+
+::: {.notes}
+So far, we have been editing our files locally and *pushing* them up to GitHub. However, we can also edit files in GitHub. This is a great way to make quick changes to a file or add a new file to a repository. Let's try adding using the GitHub interface in the browser and add a special type of file called a `README.md` file.
+:::
+
+## Create a README.md
+
+![](https://docs.github.com/assets/cb-70797/mw-1440/images/help/repository/add-file-buttons.webp)
+
+## Create a README.md
+
+Name your file `README.md` and add:
+
+```md
+# IS 310 Test Repository
+
+This is my first repository.
+```
+::: {.notes}
+Let's create a README file - the .md extension means Markdown, which is a way to format text. README files are special - GitHub displays them automatically on your repository's main page. They typically describe what the project is about.
+:::
+
+## Create a README.md
+
+![](https://docs.github.com/assets/cb-84722/mw-1440/images/help/repository/new-file-preview.webp)
+
+- Click **Preview** to see formatted output
+- Click **Commit changes**
+- Add a commit message
+- Select **main** branch
+
+::: {.notes}
+Now we need to commit our changes and file by clicking the green `Commit changes` box. This will prompt us for a commit message. Let's add the following message
+Finally, we need to tell GitHub whether to create a new branch or commit to the `main` branch. Click `main` for now and then click `Commit changes`. Now we have added a new file to our repository and you should see it when you navigate to your repository.
+:::
+
+## GitHub Dev (Bonus Feature)
+
+Change `github.com` to `github.dev` in your URL. So for us, we would change `https://github.com/[USER NAME]/is310-first-repo` to `https://github.dev/[USER NAME]/is310-first-repo`.
+
+![GitHub Dev](https://user-images.githubusercontent.com/856858/130119109-4769f2d7-9027-4bc4-a38c-10f297499e8f.gif)
+
+## GitHub Dev (Bonus Feature)
+
+Or press `.` on any repository
+
+. . .
+
+![GitHub Dev interface](../assets/images/github_dev.png){height="300"}
+
+*It's VS Code in your browser!* You can read more about it [https://docs.github.com/en/codespaces/the-githubdev-web-based-editor](https://docs.github.com/en/codespaces/the-githubdev-web-based-editor).
+
+::: {.notes}
+GitHub Dev is a new feature that gives you a VS Code-like editor right in the browser. Just change .com to .dev in the URL or press the period key. You can edit files and commit changes through this interface.
+:::
+
+# Pulling Changes
+
+## The Problem
+
+Now we have **two versions**:
+
+- Local repository (on your computer)
+- Remote repository (on GitHub)
+
+. . .
+
+They have different files! How do we sync them?
+
+::: {.notes}
+After creating a file on GitHub, our local and remote repositories are out of sync. The remote has a README that our local doesn't have. We need to pull those changes down.
+:::
+
+## Pull from GitHub
+
+```sh
+git pull origin main
+```
+
+```sh
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 935 bytes | 233.00 KiB/s, done.
+From github.com:ZoeLeBlanc/is310-first-repo
+ * branch            main       -> FETCH_HEAD
+   d8dad7b..832b673  main       -> origin/main
+Updating d8dad7b..832b673
+Fast-forward
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+```
+
+. . .
+
+Now `ls` shows the README.md file locally!
+
+::: {.notes}
+The git pull command downloads changes from GitHub to your local repository. After pulling, you'll see the README.md file that was created on GitHub is now on your local computer. We've closed the loop!
+:::
+
+## The Complete Workflow
+
+![Git architecture](https://www.edureka.co/blog/wp-content/uploads/2016/11/Git-Architechture-Git-Tutorial-Edureka-2.png){height="400"}
+
+::: {.notes}
+This diagram shows the complete workflow. Your working directory is where you edit files. You add changes to the staging area, commit them to your local repository, then push to the remote (GitHub). And you pull from GitHub to get others' changes.
+:::
+
+## Core Workflow Summary
+
+1. **Edit** files locally
+2. **Add** to staging: `git add <file>`
+3. **Commit** snapshot: `git commit -m "message"`
+4. **Push** to GitHub: `git push origin main`
+5. **Pull** from GitHub: `git pull origin main`
+
+::: {.notes}
+This is the core git/GitHub workflow you'll use constantly. Edit locally, add, commit, push. When working with others or after editing on GitHub, pull first to get the latest changes.
+:::
+
+# Homework: Init IS310
+
+## Your Assignment
+
+- Create a new GitHub repository called `is310-coding-assignments`.
+- Create a new directory in your local computer called `is310-coding-assignments` and enable it as a git repository.
+- Create a Markdown file called `README.md` within `is310-coding-assignments`.
+- Create a folder called `images` within `is310-coding-assignments`.
+
+::: {.notes}
+For homework, you'll practice this entire workflow. Create a repository for your coding assignments, add proof that you've installed all the required course tools, and push it to GitHub. Post the link in our discussion forum when done.
+:::
+
+## README Template
+
+```md
+# Init IS310 Homework
+
+## Proof of Installation
+
+1. Python
+
+![Python Installation](images/python-installation.png)
+
+2. Git
+
+![Git Installation](images/git-installation.png)
+
+3. VS Code
+
+![VS Code Installation](images/vscode-installation.png)
+```
+
+::: {.notes}
+Use this template for your README. Take screenshots of each tool running on your computer, save them in the images folder, and reference them in your markdown file.
+:::
+
+## Pushing Your Homework
+
+```sh
+git add .
+git commit -m "Init IS310 Homework"
+git push origin main
+```
+
+. . .
+
+Remember to connect local to remote first:
+
+```sh
+git remote add origin https://github.com/USERNAME/is310-coding-assignments.git
+```
+
+. . .
+
+Post your repo link in the [discussion forum](https://github.com/cultureasdata-uiuc/is310-spring-2026/discussions/1){target="_blank"}!
+
+::: {.notes}
+Use git add . (with the period) to add all files at once. Commit with a descriptive message, then push. Make sure you've connected your local and remote repositories first! When done, share your repository link in the class discussion forum.
+:::
+
+## Resources
+
+- [Advanced Git & GitHub Resource](../materials/introducing-defining-cad/05-advanced-git-github.qmd)
+- [Git Commands Cheat Sheet](../materials/introducing-defining-cad/05-advanced-git-github.qmd#git-commands-cheat-sheet)
+- [GitHub Docs: Managing Remote Repositories](https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories)
+- [GitHub Docs: SSH Keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+
+## Questions?
+
+Key takeaways:
+
+- **Git** = local version control
+- **GitHub** = remote hosting platform
+- **Workflow**: edit → add → commit → push/pull
+- Commit messages should be descriptive!
+
+. . .
+
+See also: [Advanced Git & GitHub](../materials/introducing-defining-cad/05-advanced-git-github.qmd){target="_blank"}

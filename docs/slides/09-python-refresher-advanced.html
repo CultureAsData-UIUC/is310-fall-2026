@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../assets/images/favicon.ico" rel="icon">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.27">
+
+  <title>IS310 - Culture As Data Fall 2026 – From Python Refresher To Complex Structures</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">From Python Refresher To Complex Structures</h1>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section>
+<section id="quick-review-time" class="title-slide slide level1 center">
+<h1>Quick Review Time!</h1>
+
+</section>
+<section id="how-can-i-start-writing-python-quickly" class="slide level2">
+<h2>How Can I Start Writing Python Quickly?</h2>
+<aside class="notes">
+<p>Once you have Python working, you can type <code>python3</code> (or <code>python</code> if it refers to a Python 3 version) and this will open the interactive Python interpreter where you can write your python code and have the computer execute it. This Python interpreter is a type of program that reads and executes Python code (i.e.&nbsp;either Python syntax or files that end with <code>.py</code>). The interactive Python interpreter is an excellent way to sandbox your ideas or check your syntax. You can exit using <code>exit()</code>.</p>
+<p>Type <code>"Hello world"</code> in the interpreter and press enter. Make sure to use single or double quotes around the this text (otherwise you’ll see a <code>SyntaxError</code>, something we’ll discuss later in this lesson). The Python interpreter is great for testing code and learning, but it’s not practical for real work. Once you quit the interpreter, you lose all your code. That’s where scripts come in—they let us write code that persists, can be run again and again, and can be shared with others.</p>
+<p>You’ll notice that unlike with <code>"Hello World"</code> the interpreter doesn’t just show our data back to us. Instead, it <em>prints</em> out the result of our calculations. This is because the interpreter is designed to show us the results of our calculations. In our first example, we weren’t doing any calculations, so the interpreter just showed us our data. In our second example, we were doing calculations, so the interpreter showed us the results of our calculations.</p>
+<p>Now, you can experiment with the interpreter, and you’ll notice that if you use the up arrow, you can access your previous commands. However, the interpreter can do more than just print out data and do calculations. It can also store data.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="fragment">
+<p>How do we check our python version?</p>
+</div>
+<div class="fragment">
+<p>How do we open the interpreter?</p>
+</div>
+<div class="fragment">
+<p>How do we enter data into the interpreter?</p>
+</div>
+<div class="fragment">
+<p>What happens when you quit?</p>
+</div>
+</section>
+<section id="what-are-variables" class="slide level2">
+<h2>What Are Variables?</h2>
+<aside class="notes">
+<p>Rather than retyping our <code>"Hello World"</code>, we can save it into something called a <em>variable</em> that let’s us reuse it again and again. The key thing to understand is that in Python we use the = symbol to assign values to variables. The variable is always on the left side of the = equal sign, and the value you want to store in the variable is on the right side of the =.</p>
+<p>Once we do this though, you’ll notice that our strings that were stored in these variables will be erased! This is because in Python if you assign a new value to a variable, it will overwrite the old value of the variable.</p>
+<p>If you’re curious, this is due to the fact that Python is a dynamically typed language, which means that the data type of a variable can change. This is different from statically typed languages, like Java, where the data type of a variable cannot change. This is a key difference between Python and other programming languages, but don’t worry if this is confusing. You’ll get used to it as you work with Python more and eventually learn other programming languages, as well!</p>
+<p><u>Here are some rules for naming variables in Python:</u></p>
+<ul>
+<li>A variable name must start with a letter or the underscore character (so you could do both <code>_one</code> and <code>one</code>). Your variable name can also start with or contain a capital letter, but by convention, we don’t do this. So you’re better off doing <code>one</code> rather than <code>One</code>.</li>
+<li>A variable name cannot start with a number (so you can’t do <code>1one</code>)</li>
+<li>A variable name can only contain alpha-numeric characters and underscores (A-z, 0-9, and _ ). So no spaces or special punctuation characters, like <code>!</code>, <code>@</code>, <code>#</code>, <code>$</code>, <code>%</code>, etc.</li>
+<li>A variable also can’t have a space in the name, so you can’t do <code>one one</code>. Python uses spaces to separate different parts of the code, so if you use a space in a variable name, Python will think you’re trying to separate two different parts of your code.</li>
+<li>A variable can’t have a <strong>reserved word</strong> as a name. The creators and developers of Python have selected a series of words that have a special meaning and function when you are programming in Python. If you try to use these words, then your computer will get confused. For example, if you try to use <code>and</code> as a variable name, you’ll get a Syntax Error again . You can see a list of reserved words <a href="https://www.w3schools.com/python/python_ref_keywords.asp">here</a>, as well as in the figure below. Don’t worry about memorizing these, but it’s helpful to know that they exist.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://i.ytimg.com/vi/AxBOzm6v3bg/maxresdefault.jpg"></p>
+<figcaption>Python Keywords</figcaption>
+</figure>
+</div>
+<p>Finally, you should know that variable names are <strong>case-sensitive</strong>. So, <code>one</code> and <code>One</code> are two different variables.</p>
+<p><em>What makes a good variable name?</em></p>
+<p>As a general rule of thumb, I would recommend choosing names that are relatively short and descriptive. You’ll often see the use of <code>x</code> or <code>y</code> as variable names in Python, but I find these are too short to be helpful. Instead, I would recommend you try to balance describing what’s stored within the variable and keeping it shorter so that you don’t have too much to type. Also to reiterate, in Python we tend to use underscores for naming variables versus Javascript where you use camelCase, so <code>one_one</code> is better than <code>oneOne</code> in Python.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="fragment">
+<p>How do we write variables?</p>
+</div>
+<div class="fragment">
+<p>What happens if we assign new values to an existing variable?</p>
+</div>
+<div class="fragment">
+<p>What are best practices for writing variable names? What are reserved keywords?</p>
+</div>
+</section>
+<section id="what-are-data-types" class="slide level2">
+<h2>What are Data Types?</h2>
+<div class="fragment">
+<p>When do we use quotations?</p>
+</div>
+<div class="fragment">
+<p>What are the differences between intergers and floats?</p>
+</div>
+<div class="fragment">
+<p>How do we check for true or false?</p>
+</div>
+</section>
+<section id="what-are-operators" class="slide level2">
+<h2>What Are Operators?</h2>
+<div class="fragment">
+<p>How can we add variables together or subtract them?</p>
+</div>
+<div class="fragment">
+<p>How can we check if variables contain the same values?</p>
+</div>
+</section>
+<section id="what-are-data-structures" class="slide level2">
+<h2>What Are Data Structures?</h2>
+<div class="fragment">
+<p>How do we write lists? What can they contain? . . .</p>
+<p>How do we access values in a list? How can we get the last two values or the first two?</p>
+</div>
+<div class="fragment">
+<p>How do we combine lists?</p>
+</div>
+<div class="fragment">
+<p>How do we write dictionaries? What can they contain?</p>
+</div>
+<div class="fragment">
+<p>How do we add new values to a dictionary?</p>
+</div>
+<div class="fragment">
+<p>When should we use a list or a dictionary structure?</p>
+</div>
+</section>
+<section id="why-scripts" class="slide level2">
+<h2>Why Scripts?</h2>
+<p>What is the value of using a script rather than the interpreter?</p>
+<div class="fragment">
+<p>How do we create a Python script?</p>
+</div>
+<div class="fragment">
+<p>How do we run a Python script?</p>
+</div>
+<div class="fragment">
+<p>How can we output from a script?</p>
+</div>
+</section>
+<section id="what-are-built-in-methods" class="slide level2">
+<h2>What are Built-In Methods?</h2>
+<p>What are some of the built-in methods you have learned so far?</p>
+<div class="fragment">
+<p>How can we check the type or length of a variable?</p>
+</div>
+<div class="fragment">
+<p>How can we shorten text with a built-in method? What is a delimiter and how can we use it to manipulate strings?</p>
+<p>. . . How could we ask for user input with a built-in method?</p>
+</div>
+</section>
+<section id="what-is-control-flow" class="slide level2">
+<h2>What is Control Flow?</h2>
+<p>What happens if we call a variable before it is defined?</p>
+<div class="fragment">
+<p>What is a <code>for-loop</code>? How do we write them in Python and why does indentation matter?</p>
+</div>
+<div class="fragment">
+<p>When we loop through a list, what does the variable represent and what is iteration?</p>
+</div>
+<div class="fragment">
+<p>What happens to that variable after the loop ends?</p>
+</div>
+<div class="fragment">
+<p>How would you loop through the keys and values of a dictionary?</p>
+</div>
+<div class="fragment">
+<p>What’s the <code>.items()</code> method?</p>
+</div>
+</section>
+<section id="what-are-functions" class="slide level2">
+<h2>What Are Functions?</h2>
+<p>What’s the syntax for creating a function?</p>
+<div class="fragment">
+<p>What are arguments?</p>
+</div>
+<div class="fragment">
+<p>How do you pass data into a function?</p>
+</div>
+<div class="fragment">
+<p>Why would you use <code>return</code> in a function?</p>
+</div>
+<div class="fragment">
+<p>What happens to the returned value?</p>
+</div>
+<div class="fragment">
+<p>If you create a variable inside a function, can you use it outside?</p>
+</div>
+<div class="fragment">
+<p>What’s <strong>local scope</strong> vs <strong>global scope</strong>?</p>
+</div>
+</section></section>
+<section id="what-are-conditionals" class="title-slide slide level1 center">
+<h1>What Are Conditionals?</h1>
+<p>What’s the structure of a conditional statement?</p>
+<div class="fragment">
+<p>What operators could you use to test conditions?</p>
+</div>
+<div class="fragment">
+<p>What’s the difference between <code>=</code> and <code>==</code>?</p>
+<p>. . . How could you test more than one condition?</p>
+</div>
+<div class="fragment">
+<p>What keywords let you combine conditions?</p>
+</div>
+<div class="fragment">
+<p>What if you have more than two possibilities?</p>
+</div>
+<div class="fragment">
+<p>When would you use <code>elif</code> instead of multiple <code>if</code> statements?</p>
+<aside class="notes">
+<p>elif (else if) lets you test multiple conditions in sequence. If the first if is False, it checks the elif. You can have many elifs. This is cleaner and more efficient than multiple separate if statements.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+
+<section id="check-in" class="title-slide slide level1 center">
+<h1>Check In?</h1>
+<p>Any questions??</p>
+<p>Ideally this is just review but please speak up now before we start new content! Also optional homework for those newer to Python is available at the end of the Advanced Python lesson.</p>
+</section>
+
+<section>
+<section id="complex-python" class="title-slide slide level1 center">
+<h1>Complex Python</h1>
+
+</section>
+<section id="advanced-data-structures" class="slide level2">
+<h2>Advanced Data Structures</h2>
+<div class="r-fit-text">
+<p>We’ve learned a lot about storing data in different structures. But what if we want to combine <strong>data and functions</strong> into one cohesive unit? What if we wanted to build upon this initial list to add more metadata and information about each movie, and also maybe even reuse this code in multiple scripts? Then we might want to consider rewriting the code into a <strong>class</strong>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="kw">def</span> check_movie_release(movie):</span>
+<span id="cb1-2"><a></a>    <span class="cf">if</span> movie[<span class="st">'release_year'</span>] <span class="op">&lt;</span> <span class="dv">2000</span>:</span>
+<span id="cb1-3"><a></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released before 2000"</span>)</span>
+<span id="cb1-4"><a></a>    <span class="cf">else</span>:</span>
+<span id="cb1-5"><a></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released after 2000"</span>)</span>
+<span id="cb1-6"><a></a>        <span class="cf">return</span> movie[<span class="st">'name'</span>]</span>
+<span id="cb1-7"><a></a></span>
+<span id="cb1-8"><a></a>recent_movies <span class="op">=</span> []</span>
+<span id="cb1-9"><a></a></span>
+<span id="cb1-10"><a></a>favorite_movies <span class="op">=</span>[</span>
+<span id="cb1-11"><a></a>    {</span>
+<span id="cb1-12"><a></a>        <span class="st">"name"</span>: <span class="st">"The Matrix I"</span>,</span>
+<span id="cb1-13"><a></a>        <span class="st">"release_year"</span>: <span class="dv">1999</span>,</span>
+<span id="cb1-14"><a></a>        <span class="st">"sequels"</span>: [<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>]</span>
+<span id="cb1-15"><a></a>    },</span>
+<span id="cb1-16"><a></a>    {</span>
+<span id="cb1-17"><a></a>        <span class="st">"name"</span>: <span class="st">"Star Wars IV"</span>,</span>
+<span id="cb1-18"><a></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span>,</span>
+<span id="cb1-19"><a></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
+<span id="cb1-20"><a></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
+<span id="cb1-21"><a></a>    }</span>
+<span id="cb1-22"><a></a>]</span>
+<span id="cb1-23"><a></a></span>
+<span id="cb1-24"><a></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
+<span id="cb1-25"><a></a>    result <span class="op">=</span> check_movie_release(movie)</span>
+<span id="cb1-26"><a></a>    <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb1-27"><a></a>        recent_movies.append(result)</span>
+<span id="cb1-28"><a></a></span>
+<span id="cb1-29"><a></a><span class="bu">print</span>(recent_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<aside class="notes">
+<p>Dictionaries are great for describing complex data, but when we want to add behavior (functions) to our data, classes become more powerful.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-is-a-class" class="slide level2">
+<h2>What is a Class?</h2>
+<div class="r-fit-text">
+<p>While dictionaries are great for describing complex data within a single object, a class is really useful to encapsulate both data and functions in a single cohesive unit.</p>
+<p>A class is a particular type of <strong>object</strong>. We can create (“instantiate”) an object of a class and store it as a variable. A variable therefore contains (technically, contains a reference to) an <em>instance</em> of a class.</p>
+<p>We’ve already used a lot of built-in classes. Strings, lists, dictionaries are all classes. We can have Python tell us what kind of class it is using the built-in function <code>type()</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="op">&gt;&gt;&gt;</span> a <span class="ex">=</span> <span class="pp">[</span><span class="ss">1,2,3</span><span class="pp">]</span></span>
+<span id="cb2-2"><a></a><span class="op">&gt;&gt;&gt;</span> type<span class="kw">(</span><span class="ex">a</span><span class="kw">)</span></span>
+<span id="cb2-3"><a></a><span class="op">&lt;</span>class <span class="st">'list'</span><span class="op">&gt;</span></span>
+<span id="cb2-4"><a></a><span class="op">&gt;&gt;&gt;</span> b <span class="ex">=</span> <span class="st">"123"</span></span>
+<span id="cb2-5"><a></a><span class="op">&gt;&gt;&gt;</span> type<span class="kw">(</span><span class="ex">b</span><span class="kw">)</span></span>
+<span id="cb2-6"><a></a><span class="op">&lt;</span>class <span class="st">'str'</span><span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<aside class="notes">
+<p>You can check what class something is by using the type() function. Every object in Python is an instance of a class.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-simplest-class" class="slide level2">
+<h2>The Simplest Class</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="co"># Define a class</span></span>
+<span id="cb3-2"><a></a><span class="kw">class</span> Blank:</span>
+<span id="cb3-3"><a></a>    <span class="cf">pass</span>  <span class="co"># Pass means "Move along, please. Nothing to see here."</span></span>
+<span id="cb3-4"><a></a></span>
+<span id="cb3-5"><a></a><span class="co"># Create an instance of the class and invoke it</span></span>
+<span id="cb3-6"><a></a>Blank()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This class does nothing when instantiated, but it shows the basic syntax.</p>
+<aside class="notes">
+<p>To first define a class, we need to use the keyword <code>class</code> followed by the name of the class (which can be anything!) and then a semi colon. All the logic of the class is indented (just like with functions, loops, and conditionals) and then we call the class similar to a function, using its name and parentheses to pass arguments to the class.</p>
+<p>In this case, since the class has no actual logic in it, just the keyword <code>pass</code>, which is a reserved keyword in Python and that tells Python to do nothing. So when we call the class, nothing actually happens. For any class, when you invoke it, it executes the <code>__init__</code> method, which is another built in method from Python (this one is called a <strong>constructor</strong> method). Thus, since our example above didn’t define any logic for the built-in <code>__init__</code> method, nothing happened.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-simple-movie-class" class="slide level2">
+<h2>A Simple Movie Class</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">class</span> Movie:</span>
+<span id="cb4-2"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
+<span id="cb4-3"><a></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
+<span id="cb4-4"><a></a></span>
+<span id="cb4-5"><a></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix"</span>)</span>
+<span id="cb4-6"><a></a>a_movie.movie_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>__init__</code> method runs when you create an instance. <code>self</code> represents the instance itself. Self references the class <strong>instance</strong> that is created when you call a class, which is why <code>self</code> is the first argument to <strong><em>any</em></strong> function defined in a class. You can read more about <a href="https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces">class scope here</a>.{target=“_blank”}</p>
+<aside class="notes">
+<p><code>self</code> is the first argument to any method in a class. It refers to the specific instance you’ve created. When you set <code>self.movie_name = name</code>, you’re creating an attribute on that instance.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adding-methods" class="slide level2">
+<h2>Adding Methods</h2>
+<p>Methods are functions <strong>inside</strong> a class. They operate on the instance’s data.</p>
+<div class="fragment">
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
+<span id="cb5-2"><a></a>    <span class="co">"""Adds directors to the movie"""</span></span>
+<span id="cb5-3"><a></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(directors, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
+<span id="cb5-4"><a></a>        directors <span class="op">=</span> [directors]</span>
+<span id="cb5-5"><a></a>    <span class="va">self</span>.directors.extend(directors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Methods always take <code>self</code> as the first argument. This allows them to access and modify the instance’s attributes. Notice the docstring—this documents what the method does.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="a-more-complex-class" class="slide level2">
+<h2>A More Complex Class</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="kw">class</span> Movie:</span>
+<span id="cb6-2"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
+<span id="cb6-3"><a></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
+<span id="cb6-4"><a></a>        <span class="va">self</span>.directors <span class="op">=</span> []</span>
+<span id="cb6-5"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb6-6"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-7"><a></a>        <span class="va">self</span>.sequels <span class="op">=</span> []</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Initialize attributes as empty or None to structure your data.</p>
+<aside class="notes">
+<p>By initializing attributes in <code>__init__</code>, you define the shape of your class. This makes it clear what data the class will hold.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="class-attributes-vs-methods" class="slide level2">
+<h2>Class Attributes vs Methods</h2>
+<p><strong>Attributes</strong>: Data stored in the class (like <code>self.movie_name</code>)</p>
+<p><strong>Methods</strong>: Functions that operate on that data (like <code>add_directors()</code>)</p>
+<aside class="notes">
+<p>This separation of data and behavior is the core of object-oriented programming. It makes code more organized and reusable.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adding-more-functionality" class="slide level2">
+<h2>Adding More Functionality</h2>
+<p>So what’s going in this code block?</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="kw">class</span> Movie:</span>
+<span id="cb7-2"><a></a>    <span class="co">"""Contains methods for data about a movie</span></span>
+<span id="cb7-3"><a></a></span>
+<span id="cb7-4"><a></a><span class="co">    Methods:</span></span>
+<span id="cb7-5"><a></a><span class="co">    --------</span></span>
+<span id="cb7-6"><a></a><span class="co">    add_directors</span></span>
+<span id="cb7-7"><a></a><span class="co">    add_release_year</span></span>
+<span id="cb7-8"><a></a><span class="co">    calculate_age</span></span>
+<span id="cb7-9"><a></a><span class="co">    """</span></span>
+<span id="cb7-10"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
+<span id="cb7-11"><a></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
+<span id="cb7-12"><a></a>        <span class="va">self</span>.directors <span class="op">=</span> []</span>
+<span id="cb7-13"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb7-14"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-15"><a></a>        <span class="va">self</span>.sequels <span class="op">=</span> []</span>
+<span id="cb7-16"><a></a>        <span class="va">self</span>.prequels <span class="op">=</span> []</span>
+<span id="cb7-17"><a></a></span>
+<span id="cb7-18"><a></a></span>
+<span id="cb7-19"><a></a>    <span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
+<span id="cb7-20"><a></a>        <span class="co">"""Adds a list of directors of the movie</span></span>
+<span id="cb7-21"><a></a></span>
+<span id="cb7-22"><a></a><span class="co">        Method argument:</span></span>
+<span id="cb7-23"><a></a><span class="co">        -----------------</span></span>
+<span id="cb7-24"><a></a><span class="co">        directors(list) -- A list of people who director the movie</span></span>
+<span id="cb7-25"><a></a><span class="co">        """</span></span>
+<span id="cb7-26"><a></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(directors, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
+<span id="cb7-27"><a></a>            directors <span class="op">=</span> [directors]</span>
+<span id="cb7-28"><a></a></span>
+<span id="cb7-29"><a></a>        <span class="va">self</span>.directors.extend(directors)</span>
+<span id="cb7-30"><a></a></span>
+<span id="cb7-31"><a></a></span>
+<span id="cb7-32"><a></a>    <span class="kw">def</span> add_release_year(<span class="va">self</span>, year):</span>
+<span id="cb7-33"><a></a>        <span class="co">"""Adds the release year of the movie</span></span>
+<span id="cb7-34"><a></a></span>
+<span id="cb7-35"><a></a><span class="co">        Method argument:</span></span>
+<span id="cb7-36"><a></a><span class="co">        -----------------</span></span>
+<span id="cb7-37"><a></a><span class="co">        year(integer or string) -- A year the movie was released</span></span>
+<span id="cb7-38"><a></a><span class="co">        """</span></span>
+<span id="cb7-39"><a></a></span>
+<span id="cb7-40"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(year)</span>
+<span id="cb7-41"><a></a></span>
+<span id="cb7-42"><a></a>    <span class="kw">def</span> add_sequels(<span class="va">self</span>, sequels):</span>
+<span id="cb7-43"><a></a>        <span class="co">"""Adds a list of sequels to the movie</span></span>
+<span id="cb7-44"><a></a></span>
+<span id="cb7-45"><a></a><span class="co">        Method argument:</span></span>
+<span id="cb7-46"><a></a><span class="co">        -----------------</span></span>
+<span id="cb7-47"><a></a><span class="co">        sequels(list) -- A list of sequels to the movie</span></span>
+<span id="cb7-48"><a></a><span class="co">        """</span></span>
+<span id="cb7-49"><a></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(sequels, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
+<span id="cb7-50"><a></a>            sequels <span class="op">=</span> [sequels]</span>
+<span id="cb7-51"><a></a></span>
+<span id="cb7-52"><a></a>        <span class="va">self</span>.sequels.extend(sequels)</span>
+<span id="cb7-53"><a></a></span>
+<span id="cb7-54"><a></a>    <span class="kw">def</span> add_prequels(<span class="va">self</span>, prequels):</span>
+<span id="cb7-55"><a></a>        <span class="co">"""Adds a list of prequels to the movie</span></span>
+<span id="cb7-56"><a></a></span>
+<span id="cb7-57"><a></a><span class="co">        Method argument:</span></span>
+<span id="cb7-58"><a></a><span class="co">        -----------------</span></span>
+<span id="cb7-59"><a></a><span class="co">        prequels(list) -- A list of prequels to the movie</span></span>
+<span id="cb7-60"><a></a><span class="co">        """</span></span>
+<span id="cb7-61"><a></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(prequels, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
+<span id="cb7-62"><a></a>            prequels <span class="op">=</span> [prequels]</span>
+<span id="cb7-63"><a></a></span>
+<span id="cb7-64"><a></a>        <span class="va">self</span>.prequels.extend(prequels)</span>
+<span id="cb7-65"><a></a></span>
+<span id="cb7-66"><a></a></span>
+<span id="cb7-67"><a></a>    <span class="kw">def</span> calculate_movie_age(<span class="va">self</span>):</span>
+<span id="cb7-68"><a></a>        <span class="co">"""Calculates the age of the movie</span></span>
+<span id="cb7-69"><a></a><span class="co">        """</span></span>
+<span id="cb7-70"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">2024</span> <span class="op">-</span> <span class="va">self</span>.release_year</span>
+<span id="cb7-71"><a></a></span>
+<span id="cb7-72"><a></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb7-73"><a></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
+<span id="cb7-74"><a></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
+<span id="cb7-75"><a></a>a_movie.add_sequels([<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>])</span>
+<span id="cb7-76"><a></a>a_movie.calculate_movie_age()</span>
+<span id="cb7-77"><a></a><span class="bu">print</span>(a_movie.age)</span>
+<span id="cb7-78"><a></a><span class="bu">print</span>(a_movie.add_directors.__doc__) <span class="co"># To view the docstring for the method</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>First we’re taking our <code>Movie</code> class and expanding it so that it can contain more information about each movie. We still only initially create the class with one argument - the movie’s name. But we’ve also added additional attributes to the <code>__init__</code> function. First, we have <code>directors</code>, which holds a list; then release year, which is an integer; age, which is also an integer; sequels, which is a list; and prequels, which is also a list.</p>
+<p>Do you notice that the syntax here looks like a dictionary? That’s because we can use a similar pattern to dictionaries for creating our attributes.</p>
+<p>While this function is somewhat similar to our <code>Movie</code> class, we’ve also added a number of functions, which we call <strong>methods</strong> to the class.</p>
+<p>The first method <code>add_directors</code> takes two arguments, <code>self</code> and <code>directors</code>. Just like in the <code>__init__</code> method, <code>self</code> represents the class instance and directors is a list of directors. In the <code>__init__</code> method, we define the directors attribute on <code>self</code> as an empty list. Then in our <code>add_directors</code> method we extend this initial empty list, adding the new directors to the list.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adding-more-methods" class="slide level2">
+<h2>Adding More Methods</h2>
+<p>What if we wanted to add a method for printing out an entire movie’s information? What is this code doing and how can we call this method?</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="kw">def</span> get_movie_info(<span class="va">self</span>):</span>
+<span id="cb8-2"><a></a>    <span class="co">"""Prints out the movie's information</span></span>
+<span id="cb8-3"><a></a><span class="co">    """</span></span>
+<span id="cb8-4"><a></a>    <span class="cf">for</span> key, value <span class="kw">in</span> <span class="va">self</span>.__dict__.items():</span>
+<span id="cb8-5"><a></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>What if we wanted to add a method for printing out an entire movie’s information? We could try looping through the class object and print out each attribute. Or we could use the built-in <code>__dict__</code> functionality that prints out the values for a class. We can then call this method on our <code>a_movie</code> object. This is a very simple example of a class, but it’s a good start. We can use classes to store complex data structures and then use methods to manipulate that data. We can also use classes to create reusable code that can be used in multiple scripts.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adding-more-classes" class="slide level2">
+<h2>Adding More Classes</h2>
+<p>What if we wanted to store prequels and sequels as instances of our <code>Movie</code> Class? What is this code doing exactly?</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="kw">class</span> Movie:</span>
+<span id="cb9-2"><a></a>    <span class="co">"""Contains methods for data about a movie</span></span>
+<span id="cb9-3"><a></a></span>
+<span id="cb9-4"><a></a><span class="co">    Methods:</span></span>
+<span id="cb9-5"><a></a><span class="co">    --------</span></span>
+<span id="cb9-6"><a></a><span class="co">    add_directors</span></span>
+<span id="cb9-7"><a></a><span class="co">    add_release_year</span></span>
+<span id="cb9-8"><a></a><span class="co">    calculate_age</span></span>
+<span id="cb9-9"><a></a><span class="co">    """</span></span>
+<span id="cb9-10"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, release_year<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb9-11"><a></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
+<span id="cb9-12"><a></a>        <span class="va">self</span>.directors <span class="op">=</span> []</span>
+<span id="cb9-13"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> release_year</span>
+<span id="cb9-14"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-15"><a></a>        <span class="va">self</span>.sequels <span class="op">=</span> []</span>
+<span id="cb9-16"><a></a>        <span class="va">self</span>.prequels <span class="op">=</span> []</span>
+<span id="cb9-17"><a></a></span>
+<span id="cb9-18"><a></a>    <span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
+<span id="cb9-19"><a></a>        <span class="co">"""Adds a list of directors of the movie</span></span>
+<span id="cb9-20"><a></a></span>
+<span id="cb9-21"><a></a><span class="co">        Method argument:</span></span>
+<span id="cb9-22"><a></a><span class="co">        -----------------</span></span>
+<span id="cb9-23"><a></a><span class="co">        directors(list) -- A list of people who director the movie</span></span>
+<span id="cb9-24"><a></a><span class="co">        """</span></span>
+<span id="cb9-25"><a></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(directors, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
+<span id="cb9-26"><a></a>            directors <span class="op">=</span> [directors]</span>
+<span id="cb9-27"><a></a></span>
+<span id="cb9-28"><a></a>        <span class="va">self</span>.directors.extend(directors)</span>
+<span id="cb9-29"><a></a></span>
+<span id="cb9-30"><a></a>    <span class="kw">def</span> add_release_year(<span class="va">self</span>, year):</span>
+<span id="cb9-31"><a></a>        <span class="co">"""Adds the release year of the movie</span></span>
+<span id="cb9-32"><a></a></span>
+<span id="cb9-33"><a></a><span class="co">        Method argument:</span></span>
+<span id="cb9-34"><a></a><span class="co">        -----------------</span></span>
+<span id="cb9-35"><a></a><span class="co">        year(integer or string) -- A year the movie was released</span></span>
+<span id="cb9-36"><a></a><span class="co">        """</span></span>
+<span id="cb9-37"><a></a></span>
+<span id="cb9-38"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(year)</span>
+<span id="cb9-39"><a></a></span>
+<span id="cb9-40"><a></a>    <span class="kw">def</span> calculate_movie_age(<span class="va">self</span>):</span>
+<span id="cb9-41"><a></a>        <span class="co">"""Calculates the age of the movie</span></span>
+<span id="cb9-42"><a></a><span class="co">        """</span></span>
+<span id="cb9-43"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">2024</span> <span class="op">-</span> <span class="va">self</span>.release_year</span>
+<span id="cb9-44"><a></a></span>
+<span id="cb9-45"><a></a>    <span class="kw">def</span> add_sequel(<span class="va">self</span>, sequel, release_year):</span>
+<span id="cb9-46"><a></a>        <span class="co">"""Adds a sequel to the movie</span></span>
+<span id="cb9-47"><a></a></span>
+<span id="cb9-48"><a></a><span class="co">        Method argument:</span></span>
+<span id="cb9-49"><a></a><span class="co">        -----------------</span></span>
+<span id="cb9-50"><a></a><span class="co">        sequel(string) -- The name of the sequel</span></span>
+<span id="cb9-51"><a></a><span class="co">        release_year(integer) -- The release year of the sequel</span></span>
+<span id="cb9-52"><a></a><span class="co">        """</span></span>
+<span id="cb9-53"><a></a>        sequel_movie <span class="op">=</span> Movie(sequel, release_year)</span>
+<span id="cb9-54"><a></a>        <span class="va">self</span>.sequels.append(sequel_movie)</span>
+<span id="cb9-55"><a></a></span>
+<span id="cb9-56"><a></a>    <span class="kw">def</span> add_prequel(<span class="va">self</span>, prequel, release_year):</span>
+<span id="cb9-57"><a></a>        <span class="co">"""Adds a prequel to the movie</span></span>
+<span id="cb9-58"><a></a></span>
+<span id="cb9-59"><a></a><span class="co">        Method argument:</span></span>
+<span id="cb9-60"><a></a><span class="co">        -----------------</span></span>
+<span id="cb9-61"><a></a><span class="co">        prequel(string) -- The name of the prequel</span></span>
+<span id="cb9-62"><a></a><span class="co">        release_year(integer) -- The release year of the prequel</span></span>
+<span id="cb9-63"><a></a><span class="co">        """</span></span>
+<span id="cb9-64"><a></a>        prequel_movie <span class="op">=</span> Movie(prequel, release_year)</span>
+<span id="cb9-65"><a></a>        <span class="va">self</span>.prequels.append(prequel_movie)</span>
+<span id="cb9-66"><a></a></span>
+<span id="cb9-67"><a></a>    <span class="kw">def</span> get_movie_info(<span class="va">self</span>):</span>
+<span id="cb9-68"><a></a>        <span class="co">"""Prints out the movie's information</span></span>
+<span id="cb9-69"><a></a><span class="co">        """</span></span>
+<span id="cb9-70"><a></a>        <span class="cf">for</span> key, value <span class="kw">in</span> <span class="va">self</span>.__dict__.items():</span>
+<span id="cb9-71"><a></a>            <span class="cf">if</span> key <span class="kw">in</span> [<span class="st">'sequels'</span>, <span class="st">'prequels'</span>]:</span>
+<span id="cb9-72"><a></a>                <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>[movie.movie_name <span class="cf">for</span> movie <span class="kw">in</span> value]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-73"><a></a>            <span class="cf">else</span>:</span>
+<span id="cb9-74"><a></a>                <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-75"><a></a></span>
+<span id="cb9-76"><a></a>    <span class="kw">def</span> get_release_year(movie):</span>
+<span id="cb9-77"><a></a>    <span class="co">"""Returns the release year of the movie"""</span></span>
+<span id="cb9-78"><a></a>    <span class="cf">return</span> movie.release_year</span>
+<span id="cb9-79"><a></a></span>
+<span id="cb9-80"><a></a>    <span class="kw">def</span> calculate_movie_order(<span class="va">self</span>):</span>
+<span id="cb9-81"><a></a>        <span class="co">"""Calculates the order of movies based on release year</span></span>
+<span id="cb9-82"><a></a><span class="co">        """</span></span>
+<span id="cb9-83"><a></a>        all_movies <span class="op">=</span> [<span class="va">self</span>] <span class="op">+</span> <span class="va">self</span>.sequels <span class="op">+</span> <span class="va">self</span>.prequels</span>
+<span id="cb9-84"><a></a>        all_movies.sort(key<span class="op">=</span>get_release_year)</span>
+<span id="cb9-85"><a></a>        <span class="cf">return</span> [movie.movie_name <span class="cf">for</span> movie <span class="kw">in</span> all_movies]</span>
+<span id="cb9-86"><a></a></span>
+<span id="cb9-87"><a></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb9-88"><a></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
+<span id="cb9-89"><a></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
+<span id="cb9-90"><a></a>a_movie.calculate_movie_age()</span>
+<span id="cb9-91"><a></a>a_movie.add_sequel(<span class="st">"The Matrix II"</span>, <span class="dv">2003</span>)</span>
+<span id="cb9-92"><a></a>a_movie.add_sequel(<span class="st">"The Matrix III"</span>, <span class="dv">2003</span>)</span>
+<span id="cb9-93"><a></a>a_movie.add_sequel(<span class="st">"The Matrix IV"</span>, <span class="dv">2021</span>)</span>
+<span id="cb9-94"><a></a>a_movie.add_prequel(<span class="st">"The Matrix 0"</span>, <span class="dv">1998</span>)</span>
+<span id="cb9-95"><a></a>a_movie.get_movie_info()</span>
+<span id="cb9-96"><a></a><span class="bu">print</span>(a_movie.calculate_movie_order())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>This is a more complex version of our <code>Movie</code> class. We’ve added two new methods, <code>add_sequel</code> and <code>add_prequel</code>, which take the name of the sequel or prequel and the release year of the sequel or prequel. We then create a new instance of the <code>Movie</code> class and append it to the <code>sequels</code> or <code>prequels</code> list. We also added a new method, <code>calculate_movie_order</code>, which sorts all the movies based on their release year and then returns a list of the movie names in order. To do this we use the built-in <code>sort</code> method, which sorts a list in place, and the <code>key</code> argument, which takes a function that returns a value that the list should be sorted by. In this case, we use the <code>get_release_year</code> method to get each release year, and then sort the list of movies by their release year.</p>
+<p>This type of programming is called <strong>object-oriented programming</strong> and it’s a very powerful way to organize your code. It’s also a very common way to organize code in Python, and you’ll see it often, even if you don’t write it yourself.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="quick-exercise-for-practice-optional-but-recommended" class="slide level2">
+<h2>Quick Exercise for Practice (Optional But Recommended)</h2>
+<ol type="1">
+<li>Try copying the <code>Movie</code> class into your <code>first_script.py</code> and then create a new instance of the class. Then try adding a sequel and prequel to the movie and then printing out the movie’s information. Remember that if you’re creating a new movie, you’ll need to create a new variable to save the new instance of the <code>Movie</code> class and then add the directors and release year to the movie.</li>
+<li>Try adding a function to the <code>Movie</code> class that saves their rating. Then try adding a rating to the movie and printing out the movie’s information.</li>
+</ol>
+</section></section>
+<section>
+<section id="comments-and-documentation" class="title-slide slide level1 center">
+<h1>Comments and Documentation</h1>
+<p>You’ll notice in our <code>Movie</code> class that we’ve added a lot of comments. Comments are a way to add human-readable text to your code that explains what the code is doing. Comments are not executed by the Python interpreter, so they don’t affect the code’s behavior. They are just there to help you and other people understand the code. I highly recommend adding comments to your code, especially if you’re working on a team or if you’re writing code that you might not look at for a while.</p>
+</section>
+<section id="inline-comments" class="slide level2">
+<h2>Inline Comments</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>movie <span class="op">=</span> <span class="bu">dict</span>()  <span class="co"># Could also write {}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use <code>#</code> to comment a single line.</p>
+<aside class="notes">
+<p>Inline comments are useful for explaining <strong>why</strong> you did something, not necessarily what the code does (the code itself should be clear about that).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="block-comments-docstrings" class="slide level2">
+<h2>Block Comments (Docstrings)</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
+<span id="cb11-2"><a></a>    <span class="co">"""Adds directors to the movie</span></span>
+<span id="cb11-3"><a></a></span>
+<span id="cb11-4"><a></a><span class="co">    Arguments:</span></span>
+<span id="cb11-5"><a></a><span class="co">    directors (list) -- List of director names</span></span>
+<span id="cb11-6"><a></a><span class="co">    """</span></span>
+<span id="cb11-7"><a></a>    <span class="co"># implementation here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Docstrings are triple-quoted strings at the start of functions/classes.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="bu">print</span>(a_movie.add_directors.__doc__) <span class="co"># To view the docstring for the method</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>You’ll notice that earlier we were able to print out the block comment for the <code>add_directors</code> method. This is because the block comment is actually a special type of comment called a <strong>docstring</strong> that is used to document a function or a class. The docstring is the first thing that appears in a function or class and is enclosed in triple quotes. It’s a good idea to add a docstring to every function and class you write, as it helps other people understand your code and also helps you remember what your code does.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="documentation" class="slide level2">
+<h2>Documentation</h2>
+<div class="columns">
+<div class="column r-fit-text" style="width:40%;">
+<p>In addition to comments, the other main resource for understanding how to use a class or function is the documentation. The documentation is a set of instructions that explains how to use a class or function.</p>
+<p>This documentation explains how to define a class, how to create an instance of a class, and how to use methods in a class. It also explains how to use inheritance, which is a way to create a new class that inherits the attributes and methods of an existing class.</p>
+<p>Learning to read documentation is a critical skill, so would highly recommend taking a look at the documentation when it is available.</p>
+</div><div class="column r-fit-text" style="width:60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="https://docs.python.org/3/tutorial/classes.html" target="blank"><img data-src="../assets/images/python_documentation.png"></a></p>
+<figcaption>Python Documentation</figcaption>
+</figure>
+</div>
+</div></div>
+<aside class="notes">
+<p>Good documentation helps others (and future you) understand the code. It’s an investment that pays off when you revisit code months later.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="python-libraries-imports" class="title-slide slide level1 center">
+<h1>Python Libraries &amp; Imports</h1>
+<p>So you’re probably wondering when to use classes? Mostly we won’t be delving into code complicated enough to require to write your own classes, but you will be using lots of code that is based on this pattern. That’s because the class is the primary way that Python organizes its standard library and the wider ecosystem of external libraries.</p>
+<p>Let’s dig into the Python documentation to understand more!</p>
+</section>
+<section id="the-standard-library" class="slide level2">
+<h2>The Standard Library</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="https://docs.python.org/3/library/" target="_blank"><img data-src="../assets/images/python_standard_library.png"></a></p>
+<figcaption>Python Standard Library</figcaption>
+</figure>
+</div>
+<p>The Python Standard Library contains modules built into Python.</p>
+<aside class="notes">
+<p>pathlib is a great example. Instead of working with file paths as strings, you can use Path objects that are smarter and cross-platform.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="pathlib" class="slide level2">
+<h2>PathLib</h2>
+<p>Let’s scroll down to the <a href="https://docs.python.org/3/library/pathlib.html" target="_blank">Pathlib module</a>.</p>
+
+<img data-src="../assets/images/pathlib_link.png" class="r-stretch quarto-figure-center"><p class="caption">Pathlib</p><p>Now click on the link to the <code>pathlib</code> module.</p>
+</section>
+<section id="pathlib-methods" class="slide level2">
+<h2>PathLib Methods</h2>
+
+<img data-src="../assets/images/pathlib_source_link.png" class="r-stretch quarto-figure-center"><p class="caption">Pathlib Methods</p><p>First take a look at the <a href="https://github.com/python/cpython/blob/3.8/Lib/pathlib.py" target="_blank">source code!</a> Notice how it’s organized, and try and find the documentation for the <code>class Path</code> (<em>hint</em> use control F).</p>
+<p>Let’s take a look at the methods in the <code>class Path</code> <a href="https://docs.python.org/3/library/pathlib.html#methods" target="_blank">https://docs.python.org/3/library/pathlib.html#methods</a>. How would we would print out the current working directory using <code>pathlib</code>?</p>
+</section>
+<section id="importing-libraries" class="slide level2">
+<h2>Importing Libraries</h2>
+<p>Let’s try importing in <code>Pathlib</code> into our script.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="im">import</span> pathlib</span>
+<span id="cb13-2"><a></a></span>
+<span id="cb13-3"><a></a>pathlib.Path()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Or import a specific class:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>We can easily bring classes into other code using the <code>import</code> keyword (another reserved word!), which does some magic to allow us to use classes defined in other files. This is how we can use parts of the Python Standard Library that aren’t directly built into the base language. It’s also how we use modules written by other programmers from the larger Python community. We can even use <code>import</code> to import our own classes.</p>
+<p>The syntax for importing is <code>import</code> followed by the name of the module. In this case, we’re importing the <code>pathlib</code> module. Once we’ve imported the module, we can use the classes and functions defined in the module. There’s two ways to do this. We can either use the <code>.</code> operator to access the class or function:</p>
+<p>Or we can use the <code>from</code> keyword (reserved word) to import a specific class or function from the module. Both options work exactly the same when we use them in our code, but the second option is a little more concise and is often used when we only need to use one class or function.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="aliasing-imports" class="slide level2">
+<h2>Aliasing Imports</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="im">import</span> pathlib <span class="im">as</span> pl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Now you can use <code>pl.Path()</code> instead of <code>pathlib.Path()</code>.</p>
+<aside class="notes">
+<p>With import statements, you can also alias the module or class you’re importing. This is often used to make the code more readable or to avoid conflicts with other classes or functions that have the same name.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="using-pathlib" class="slide level2">
+<h2>Using pathlib</h2>
+<p>So now that we’ve explored ways to import <code>pathlib</code>, let’s try using this module. We’ll start by using <code>pathlib</code> to print out the current working directory.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb16-2"><a></a></span>
+<span id="cb16-3"><a></a>current_directory <span class="op">=</span> Path.cwd()</span>
+<span id="cb16-4"><a></a><span class="bu">print</span>(current_directory)</span>
+<span id="cb16-5"><a></a></span>
+<span id="cb16-6"><a></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'data.csv'</span>)</span>
+<span id="cb16-7"><a></a><span class="bu">print</span>(<span class="bu">file</span>.read_text())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Path objects have methods like <code>.cwd()</code> to get the current working directory and <code>.read_text()</code> to read file contents as a string.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="file-input-and-output" class="slide level2">
+<h2>File Input and Output</h2>
+<p>But <code>pathlib</code> is useful not just for printing out working directories, it can also let us load in files.</p>
+</section>
+<section id="reading-in-data" class="slide level2">
+<h2>Reading in Data</h2>
+<p>Let’s try it out with Pathlib by passing in one of the datasets from the <em>Responsible Datasets in Context</em> Project that we have been reviewing each week. You can use any of the datasets, but I’m selecting the one by Os Keyes and Melanie Walsh. “U.S. National Park Visit Data (1979-2023) – Responsible Datasets in Context.” <em>Responsible Datasets in Context</em>, June 1, 2024. <a href="https://www.responsible-datasets-in-context.com/posts/np-data/" target="_blank">https://www.responsible-datasets-in-context.com/posts/np-data/</a>.</p>
+<p>Once you’ve downloaded the data, you should have a file called <code>US-National-Parks_RecreationVisits_1979-2023.csv</code>. Now let’s try using <code>pathlib</code> to read in the data.</p>
+</section>
+<section id="reading-files" class="slide level2">
+<h2>Reading Files</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb17-2"><a></a></span>
+<span id="cb17-3"><a></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
+<span id="cb17-4"><a></a><span class="bu">print</span>(<span class="bu">file</span>, <span class="bu">type</span>(<span class="bu">file</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now if this code worked, it should show you the exact file path of your spreadsheet and then the type of the object, either <code>&lt;class 'pathlib.PosixPath'&gt;</code> or <code>&lt;class 'pathlib.WindowsPath'&gt;</code>. Not to get too complicated but this is because the <code>Path</code> class is a subclass of the <code>PosixPath</code> class (not really going to get into subclassing but think of it as building classes on top of one another - like Lego or Jenga).</p>
+<aside class="notes">
+<p>Now depending on where you file is located, you might need to change the path (often files are in your Downloads folder, in which case you might write <code>Users/user_name/Downloads/US-National-Parks_RecreationVisits_1979-2023.csv</code>). Remember computers need the <strong>exact path</strong>, so if you’re not sure where your file is located, you can use the <code>cwd</code> method to print out the current working directory and then add the file name to the end of the path.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="reading-files-1" class="slide level2">
+<h2>Reading Files</h2>
+<p>We can also look at the methods built-in to the <code>Path</code> class. One in particular is useful for us <code>read_text</code> which reads in the contents of a file and returns it as a string. Read more about it here <a href="https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_text">https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_text</a> and test it out in your script.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb18-2"><a></a></span>
+<span id="cb18-3"><a></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
+<span id="cb18-4"><a></a><span class="bu">print</span>(<span class="bu">file</span>, <span class="bu">type</span>(<span class="bu">file</span>))</span>
+<span id="cb18-5"><a></a></span>
+<span id="cb18-6"><a></a><span class="bu">print</span>(<span class="bu">file</span>.read_text())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What does this do?</p>
+<aside class="notes">
+<p>Now when you save you script and rerun your code in the terminal, you should now see the entirety of our csv file in your terminal. If you try saving that to a variable and checking the type you should see that it’s a string.</p>
+<p>So now we can simply manipulate that string so that we don’t have to hand enter the data.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="beyond-pathlib-using-the-open-function" class="title-slide slide level1 center">
+<h1>Beyond Pathlib: Using the <code>open</code> Function</h1>
+
+</section>
+<section id="the-open-built-in-function" class="slide level2">
+<h2>The <code>open</code> Built-in Function</h2>
+<p>So far we’ve been using Pathlib to work with files, but there are number of libraries and even some methods built into Python for reading in and writing files.</p>
+<p>For example we could use the <a href="https://docs.python.org/3/library/functions.html#open"><code>open</code> built-in function in Python</a>.</p>
+<aside class="notes">
+<p>The <code>open</code> function is a built-in function that lets you read and write files. It’s very flexible and is commonly used in Python code.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="file-input---basic-approach" class="slide level2">
+<h2>File Input - Basic Approach</h2>
+<p>To open a file for reading (input), we just do:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span>,<span class="st">"r"</span>)</span>
+<span id="cb19-2"><a></a>text <span class="op">=</span> input_file.read()</span>
+<span id="cb19-3"><a></a><span class="bu">print</span>(text)</span>
+<span id="cb19-4"><a></a>input_file.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here, we use the <code>open</code> function to open a file in mode “r” (read). <code>open</code> returns a <a href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files">File Object</a> that provides methods for reading and writing.</p>
+<aside class="notes">
+<p>In this case, the <code>read</code> method reads in data from the <code>input_file</code> file object and stores it as a string in <code>text</code>. We can also pass a Path object to the <code>open</code> function.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="using-path-objects-with-open" class="slide level2">
+<h2>Using Path Objects with <code>open</code></h2>
+<p>We could even just pass in our Path object to the <code>open</code> function:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
+<span id="cb20-2"><a></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="bu">file</span>,<span class="st">"r"</span>)</span>
+<span id="cb20-3"><a></a>text <span class="op">=</span> input_file.read()</span>
+<span id="cb20-4"><a></a><span class="bu">print</span>(text)</span>
+<span id="cb20-5"><a></a>input_file.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>At the end, we can close the file to save some memory, but Python will eventually close it automatically if we don’t.</p>
+<aside class="notes">
+<p>This isn’t a huge concern unless you’re opening thousands of files or the files you’re opening are very, very large.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-with-statement" class="slide level2">
+<h2>The <code>with</code> Statement</h2>
+<p>Often, you’ll see file handling used with the <code>with</code> keyword:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span>,<span class="st">"r"</span>) <span class="im">as</span> input_file:</span>
+<span id="cb21-2"><a></a>    <span class="bu">print</span>(input_file.read())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is functionally the same as our last example. The only difference is that the file is automatically closed at the end of the block.</p>
+<aside class="notes">
+<p>The <code>with</code> statement is a context manager that ensures the file is closed automatically. This is the preferred way to handle files in Python.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="file-output" class="slide level2">
+<h2>File Output</h2>
+<div class="r-fit-text">
+<p>File output is very similar. We just use mode <code>w</code>, which overwrites the file specified. We can also use <code>x</code> (which only works for new files) or <code>a</code> (which appends data at the end of the file).</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Character</th>
+<th>Mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>r</code></td>
+<td>Read (default)</td>
+<td>Open a file for read only</td>
+</tr>
+<tr class="even">
+<td><code>w</code></td>
+<td>Write</td>
+<td>Open a file for write only (overwrite) and will also create a new file if it doesn’t exist</td>
+</tr>
+<tr class="odd">
+<td><code>a</code></td>
+<td>Append</td>
+<td>Open a file for write only (append)</td>
+</tr>
+<tr class="even">
+<td><code>r+</code></td>
+<td>Read+</td>
+<td>Write open a file for both reading and writing</td>
+</tr>
+<tr class="odd">
+<td><code>x</code></td>
+<td>Create</td>
+<td>Create a new file</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="writing-to-a-file-example" class="slide level2">
+<h2>Writing to a File Example</h2>
+<p>To understand file output, let’s try working with a file that doesn’t exist:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">"new_text.txt"</span>,<span class="st">"w"</span>)</span>
+<span id="cb22-2"><a></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">100</span>):</span>
+<span id="cb22-3"><a></a>    f.write(<span class="bu">str</span>(i<span class="op">**</span><span class="dv">2</span>)<span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once you run it, you should see a new file in your directory called <code>new_text.txt</code>, containing a list of numbers.</p>
+<aside class="notes">
+<p>We created those numbers using the built-in <code>range</code> function and the <code>write</code> method.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="type-conversion-with-write" class="slide level2">
+<h2>Type Conversion with <code>write()</code></h2>
+<p>Here’s something tricky: <code>i</code> and <code>i**2</code> are integers, but the file object expects a string. If we try <code>f.write(i**2)</code>, we’ll get: <code>TypeError: write() argument must be str, not int</code></p>
+<p>To get around this, we can convert from int to string using <code>str()</code>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a><span class="co">"4"</span><span class="op">+</span><span class="bu">str</span>(<span class="dv">4</span>)  <span class="co"># produces "44"</span></span>
+<span id="cb23-2"><a></a><span class="bu">int</span>(<span class="st">"4"</span>)<span class="op">+</span><span class="dv">4</span>  <span class="co"># returns 8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The newline character <code>"\n"</code> inserts a line break. Without it, all the numbers would be on the same line.</p>
+</section>
+<section id="practice-file-io-with-classes" class="slide level2">
+<h2>Practice: File I/O with Classes</h2>
+<ol type="1">
+<li>Try adding a function to your <code>Movie</code> class that saves the movie’s information to a file.</li>
+<li>Try adding a function to your <code>Movie</code> class that reads in a file and sets the movie’s information.</li>
+</ol>
+<aside class="notes">
+<p>These exercises will help you understand how to integrate file I/O into your class methods.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="example-save-movie-info" class="slide level2">
+<h2>Example: Save Movie Info</h2>
+<p>Here’s a function to save the movie’s information to a file:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a><span class="kw">def</span> save_movie_info(<span class="va">self</span>, file_name):</span>
+<span id="cb24-2"><a></a>    <span class="co">"""Saves the movie's information to a file</span></span>
+<span id="cb24-3"><a></a></span>
+<span id="cb24-4"><a></a><span class="co">    Method argument:</span></span>
+<span id="cb24-5"><a></a><span class="co">    -----------------</span></span>
+<span id="cb24-6"><a></a><span class="co">    file_name(string) -- The name of the file to save the movie's information to</span></span>
+<span id="cb24-7"><a></a><span class="co">    """</span></span>
+<span id="cb24-8"><a></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb24-9"><a></a>        f.write(<span class="ss">f"Movie Name: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>movie_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb24-10"><a></a>        f.write(<span class="ss">f"Directors: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(<span class="va">self</span>.directors)<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb24-11"><a></a>        f.write(<span class="ss">f"Release Year: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>release_year<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb24-12"><a></a>        f.write(<span class="ss">f"Age: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>age<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb24-13"><a></a>        f.write(<span class="ss">f"Sequels: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join([sequel.movie_name <span class="cf">for</span> sequel <span class="kw">in</span> <span class="va">self</span>.sequels])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb24-14"><a></a>        f.write(<span class="ss">f"Prequels: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join([prequel.movie_name <span class="cf">for</span> prequel <span class="kw">in</span> <span class="va">self</span>.prequels])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-save-movie-info" class="slide level2">
+<h2>Using Save Movie Info</h2>
+<p>Now you can call this function on your <code>a_movie</code> object:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb25-2"><a></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
+<span id="cb25-3"><a></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
+<span id="cb25-4"><a></a>a_movie.add_sequel(<span class="st">"The Matrix II"</span>, <span class="dv">2003</span>)</span>
+<span id="cb25-5"><a></a>a_movie.add_sequel(<span class="st">"The Matrix III"</span>, <span class="dv">2003</span>)</span>
+<span id="cb25-6"><a></a>a_movie.add_sequel(<span class="st">"The Matrix IV"</span>, <span class="dv">2021</span>)</span>
+<span id="cb25-7"><a></a>a_movie.add_prequel(<span class="st">"The Matrix 0"</span>, <span class="dv">1998</span>)</span>
+<span id="cb25-8"><a></a>a_movie.calculate_movie_age()</span>
+<span id="cb25-9"><a></a>a_movie.save_movie_info(<span class="st">"movie_info.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-read-movie-info" class="slide level2">
+<h2>Example: Read Movie Info</h2>
+<p>Here’s a function to read in a file and set the movie’s information:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a><span class="kw">def</span> read_movie_info(<span class="va">self</span>, file_name):</span>
+<span id="cb26-2"><a></a>    <span class="co">"""Reads in a file and sets the movie's information based on the file</span></span>
+<span id="cb26-3"><a></a></span>
+<span id="cb26-4"><a></a><span class="co">    Method argument:</span></span>
+<span id="cb26-5"><a></a><span class="co">    -----------------</span></span>
+<span id="cb26-6"><a></a><span class="co">    file_name(string) -- The name of the file to read the movie's information from</span></span>
+<span id="cb26-7"><a></a><span class="co">    """</span></span>
+<span id="cb26-8"><a></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb26-9"><a></a>        lines <span class="op">=</span> f.readlines()</span>
+<span id="cb26-10"><a></a>        <span class="va">self</span>.movie_name <span class="op">=</span> lines[<span class="dv">0</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip()</span>
+<span id="cb26-11"><a></a>        <span class="va">self</span>.directors <span class="op">=</span> lines[<span class="dv">1</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)</span>
+<span id="cb26-12"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(lines[<span class="dv">2</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip())</span>
+<span id="cb26-13"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="bu">int</span>(lines[<span class="dv">3</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip())</span>
+<span id="cb26-14"><a></a>        <span class="va">self</span>.sequels <span class="op">=</span> [Movie(sequel.strip()) <span class="cf">for</span> sequel <span class="kw">in</span> lines[<span class="dv">4</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)]</span>
+<span id="cb26-15"><a></a>        <span class="va">self</span>.prequels <span class="op">=</span> [Movie(prequel.strip()) <span class="cf">for</span> prequel <span class="kw">in</span> lines[<span class="dv">5</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-read-movie-info" class="slide level2">
+<h2>Using Read Movie Info</h2>
+<p>Now you can call this function on your <code>a_movie</code> object:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb27-2"><a></a>a_movie.read_movie_info(<span class="st">"movie_info.txt"</span>)</span>
+<span id="cb27-3"><a></a>a_movie.get_movie_info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>These examples show how to integrate file I/O with your class methods to persist and restore object data.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="virtual-environments-packages" class="title-slide slide level1 center">
+<h1>Virtual Environments &amp; Packages</h1>
+
+</section>
+<section id="what-is-a-virtual-environment" class="slide level2">
+<h2>What is a Virtual Environment?</h2>
+<p>We’ve learned to use libraries that come pre-installed with Python, but now we need to install additional libraries. Before we do, we need to create a <strong>virtual environment</strong>.</p>
+<p>A virtual environment is a self-contained directory that contains a Python installation plus additional packages, isolated from the global Python installation.</p>
+<aside class="notes">
+<p>Virtual environments solve the “dependency hell” problem—where different projects need different versions of the same library.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-virtual-environments-matter" class="slide level2">
+<h2>Why Virtual Environments Matter</h2>
+<div class="r-fit-text">
+<p>From the Python documentation:</p>
+<blockquote>
+<p>“Python applications will often use packages and modules that don’t come as part of the standard library. Applications will sometimes need a specific version of a library, because the application may require that a particular bug has been fixed or the application may be written using an obsolete version of the library’s interface.</p>
+</blockquote>
+<blockquote>
+<p>This means it may not be possible for one Python installation to meet the requirements of every application. If application A needs version 1.0 of a particular module but application B needs version 2.0, then the requirements are in conflict and installing either version 1.0 or 2.0 will leave one application unable to run.</p>
+</blockquote>
+<blockquote>
+<p>The solution for this problem is to create a virtual environment, a self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages.”</p>
+</blockquote>
+<p>You can read more here about <a href="https://docs.python.org/3/library/venv.html#venv-def" target="_blank">virtual environments</a>.</p>
+</div>
+</section>
+<section id="before-we-begin-check-pip" class="slide level2">
+<h2>Before We Begin: Check pip</h2>
+<p>Prior to installing our virtual environment, let’s make sure that you have the latest version of <code>pip</code>, which stands for “Python Installs Packages.”</p>
+
+<img data-src="../assets/images/install_pip.png" class="r-stretch quarto-figure-center"><p class="caption">install pip</p></section>
+<section id="before-we-begin-check-pip-1" class="slide level2">
+<h2>Before We Begin: Check pip</h2>
+<p>If you get any errors, you can check if you have pip installed by running the following command in your terminal:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a></a><span class="ex">pip3</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>pip</code> comes built-in to Python and is used to install external libraries. If you don’t have pip, visit <a href="https://pip.pypa.io/en/stable/installation/" target="_blank">https://pip.pypa.io/en/stable/installation/</a></p>
+<aside class="notes">
+<p>If you don’t have pip, visit https://pip.pypa.io/en/stable/installation/</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="venv" class="slide level2">
+<h2><code>venv</code></h2>
+<p>Now we’ll use the built-in Python virtual environment, called <code>venv</code>, which you can read more about here <a href="https://docs.python.org/3/library/venv.html" target="_blank">https://docs.python.org/3/library/venv.html</a>. One thing to note is that there are LOTS of different ways to setup your virtual environment (which lots of people have <em>very</em> strong feelings about). I like this answer from Stack Overflow for giving an overview of the differing options <a href="https://stackoverflow.com/a/65854168/7437781" target="_blank">https://stackoverflow.com/a/65854168/7437781</a>.</p>
+</section>
+<section id="creating-virtual-environments" class="slide level2">
+<h2>Creating Virtual Environments</h2>
+<p>Now that we have a sense of what a virtual environment is, let’s start creating one. We’ll start by creating a virtual environment in VS Code and then we’ll move to the terminal.</p>
+</section>
+<section id="creating-virtual-environments-in-vs-code" class="slide level2">
+<h2>Creating Virtual Environments in VS Code</h2>
+<div class="r-fit-text">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>⚡️ This information has been adapted from <a href="&quot;https://code.visualstudio.com/docs/python/environments&quot;" target="_blank">“https://code.visualstudio.com/docs/python/environments”</a>.</p>
+</div>
+</div>
+</div>
+<p>In VS Code, open the Command Palette:</p>
+<ul>
+<li><strong>Mac</strong>: <code>⇧⌘P</code></li>
+<li><strong>Windows</strong>: <code>Ctrl+Shift+P</code></li>
+</ul>
+<p>You can also access the Command Palette by clicking on the <code>View</code> menu and selecting <code>Command Palette</code>.</p>
+<p>Once it is open, you should type <code>Python: Create Environment</code> and selecting it in the menu. You’ll see two options: <code>Venv</code> or <code>Conda</code>. You can choose either, but I would recommend using <code>Venv</code> since it is built into Python and is the most common way to create a virtual environment.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://code.visualstudio.com/assets/docs/python/environments/create_environment_dropdown.png"></p>
+<figcaption>Create Environment Dropdown</figcaption>
+</figure>
+</div>
+</div>
+<aside class="notes">
+<p>Venv is built into Python and is the most common way to create virtual environments. Make sure you’re in a folder (workspace) before creating an environment.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="selecting-python-version" class="slide level2">
+<h2>Selecting Python Version</h2>
+<p>Once you select <code>Venv</code>, you’ll be prompted to select the Python interpreter you want to use. You can choose the one that comes with Python, or you can select a different one if you have multiple versions of Python installed on your computer. Please make sure to <strong>not select a Python 2 interpreter, as Python 2 is no longer supported</strong>.</p>
+
+<img data-src="https://code.visualstudio.com/assets/docs/python/environments/interpreters-list.png" class="r-stretch quarto-figure-center"><p class="caption">Create Environment Name</p></section>
+<section id="locating-your-virtual-environment" class="slide level2">
+<h2>Locating Your Virtual Environment</h2>
+<p>Once you’ve created your virtual environment, you should see it in whatever folder you’ve opened in VS Code. If you do not open a folder and try to create a virtual environment, you will get an error saying that you need a “workspace” to create a virtual environment. You can create a workspace by opening a folder in VS Code.</p>
+
+<img data-src="../assets/images/new_venv.png" class="r-stretch quarto-figure-center"><p class="caption">Created Environment</p></section>
+<section id="renaming-your-virtual-environment" class="slide level2">
+<h2>Renaming Your Virtual Environment</h2>
+<p>If you’ve successfully created your virtual environment, you should see a <code>.venv</code> folder in your project directory. This is where your virtual environment is stored. You’ll notice in the image above I renamed my virtual environment to <code>is310-env</code>. You can do this by right-clicking on the <code>.venv</code> folder and selecting <code>Rename Folder</code>. You may need to reopen your VS Code window to see the changes.</p>
+</section>
+<section id="activating-your-virtual-environment" class="slide level2">
+<h2>Activating Your Virtual Environment</h2>
+<div class="columns">
+<div class="column r-fit-text" style="width:60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/example_interpreters.png"></p>
+<figcaption>Virtual Environment Activated</figcaption>
+</figure>
+</div>
+</div><div class="column r-fit-text" style="width:40%;">
+<p>Once created, you should see a <code>.venv</code> folder in your project directory. Though remember that <code>.</code> folders and files are hidden so you might need to use the relevant command to show them.</p>
+<p>You’ll notice that VS Code organizes the virtual environments by the type of environment and also if they are globally installed.</p>
+</div></div>
+</section>
+<section id="activated-venv-in-vs-code" class="slide level2">
+<h2>Activated Venv in VS Code</h2>
+
+<img data-src="https://code.visualstudio.com/assets/docs/python/shared/environment-in-status-bar.png" class="r-stretch quarto-figure-center"><p class="caption">Virtual Environment Activated</p><p>Once you select the virtual environment you want to use, you should see that it is activated in the bottom left corner of your VS Code window.</p>
+</section>
+<section id="not-activated-select-interpreter" class="slide level2">
+<h2>Not Activated? Select Interpreter!</h2>
+<p>If you have not activated your virtual environment, you’ll notice that the status bar will say <code>Select Python Interpreter</code> and if you click it you’ll be able to select the virtual environment you want to use.</p>
+
+<img data-src="https://code.visualstudio.com/assets/docs/python/environments/no-interpreter-selected-statusbar.png" class="r-stretch quarto-figure-center"><p class="caption">Select Python Interpreter</p></section>
+<section id="final-check" class="slide level2">
+<h2>Final Check</h2>
+<p>Now when you go to open a new terminal in VS Code, you should see that your virtual environment is activated by the <code>(.venv)</code> in your terminal. You can also see that the name of your virtual environment is in the terminal prompt so in our case it would be <code>(is310-env)</code>.</p>
+
+<img data-src="../assets/images/activated_venv.png" class="r-stretch quarto-figure-center"><p class="caption">Activate Virtual Environment</p></section>
+<section id="creating-virtual-environments-in-terminal-optional" class="slide level2">
+<h2>Creating Virtual Environments in Terminal (Optional)</h2>
+<p>To be honest, VS Code has gotten very good at creating virtual environments and I would recommend using that method. However, if you are interested in creating a virtual environment in the terminal, you can follow the instructions below. I’m mostly including this because I still work this way, so you’ll see me doing this in class.</p>
+</section>
+<section id="virtualenvs" class="slide level2">
+<h2><code>.virtualenvs</code></h2>
+<p>To create a virtual environment in the terminal, we’ll start by opening our terminal and then navigating to the directory where we want to create our virtual environment. I would recommend making the virtual environment in your project directory, though another popular choice is to make a directory in your home directory to store all your virtual environments. You can do that with the commands below:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a></a><span class="bu">cd</span> ~  <span class="co"># This will take you to your home directory</span></span>
+<span id="cb29-2"><a></a><span class="fu">mkdir</span> .virtualenvs <span class="co"># This will create a directory called .virtualenvs</span></span>
+<span id="cb29-3"><a></a><span class="bu">cd</span> .virtualenvs <span class="co"># This will take you into the .virtualenvs directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="creating-virtual-environments-in-terminal" class="slide level2">
+<h2>Creating Virtual Environments in Terminal</h2>
+<p>Now that we are in the directory where we want to create our virtual environment (whether that’s <code>is310-coding-assignments</code> or <code>.virtualenvs</code>), we can create it by running the following command:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a></a><span class="ex">python3</span> <span class="at">-m</span> venv is310-env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>This doesn’t seem to do much, but if you look in your new <code>.virtualenvs</code> directory (or wherever you created your environment) you should see a new folder called <code>is310-new-env</code>. This is again a virtual environment. This command is telling Python to run the <code>venv</code> module and create a virtual environment called <code>is310-env</code>. You can name your virtual environment whatever you want, but I would recommend naming it something that is descriptive of the project you are working on. <strong>You should only create one virtual environment for this course.</strong> And generally, I would recommend creating a new virtual environment for each project you work on (so think personal projects, group projects, or other courses, etc.).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="activating-virtual-environments" class="slide level2">
+<h2>Activating Virtual Environments</h2>
+<p>Then activate it with:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a></a><span class="co"># Mac/Linux</span></span>
+<span id="cb31-2"><a></a><span class="bu">source</span> is310-env/bin/activate</span>
+<span id="cb31-3"><a></a></span>
+<span id="cb31-4"><a></a><span class="co"># Windows (Command Prompt)</span></span>
+<span id="cb31-5"><a></a><span class="ex">is310-env\Scripts\activate</span></span>
+<span id="cb31-6"><a></a></span>
+<span id="cb31-7"><a></a><span class="co"># Windows (PowerShell)</span></span>
+<span id="cb31-8"><a></a><span class="bu">.</span><span class="dt">\i</span>s310-env<span class="dt">\S</span>cripts<span class="dt">\A</span>ctivate.ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you are getting errors in PowerShell, you may need to change your execution policy. You can do this by running the following command:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a></a><span class="ex">Set-ExecutionPolicy</span> <span class="at">-ExecutionPolicy</span> RemoteSigned <span class="at">-Scope</span> Process</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Now you need to activate our virtual environments. Activating the virtual environment just tells your computer to run Python and installed libraries from the virtual environment rather than the global environment. This might seem like unnecessary work, but as we saw in that xkcd comic, a lot of software can create conflicts over time (often called “dependency hell”). This is a way to avoid that.</p>
+<p>To activate our virtual environment in the terminal, we need to use a command called called <code>source</code> and after that we need to specify the path to the <code>activate</code> file in our virtual environment. The path to the <code>activate</code> file is <code>[LOCATION - OPTIONAL]/[NAME OF VIRTUAL ENVIRONMENT]/bin/activate</code>.</p>
+<p>In this example, <code>is310-new-env</code> is the name of the virtual environment and we are giving it the command to run the <code>activate</code> file. This will again change the prompt in your terminal to show the name of your virtual environment. This is how you know that your virtual environment is activated. If you are curious, you can explore the <code>activate</code> file in your virtual environment to see what it is doing. You can find it in the <code>bin</code> directory of your virtual environment.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="deactivating-virtual-environments" class="slide level2">
+<h2>Deactivating Virtual Environments</h2>
+<p>To deactivate your virtual environment in the terminal:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a></a><span class="ex">deactivate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Your virtual environment will no longer be in the terminal prompt.</p>
+<p>This will deactivate your virtual environment and you’ll see that the name of your virtual environment is no longer in your terminal prompt. You can also deactivate your virtual environment in VS Code by selecting <code>New Terminal</code> under the <code>Terminal</code> menu.</p>
+</section>
+<section id="adding-to-.gitignore" class="slide level2">
+<h2>Adding to <code>.gitignore</code></h2>
+<p>Virtual environments are specific to your computer. Don’t commit them to git.</p>
+<p>Add this to your <code>.gitignore</code>:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a></a><span class="ex">is310-env/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or if you accidentally committed it:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a></a><span class="fu">git</span> rm <span class="at">-r</span> <span class="at">--cached</span> is310-env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Since we are using <code>git</code> to track our work, we don’t want to include our virtual environment in our repository. This is because the virtual environment is specific to your computer and the libraries you have installed. If someone else were to clone your repository, they wouldn’t have the same virtual environment as you. This is why we add the virtual environment to our <code>.gitignore</code> file. This file tells <code>git</code> to ignore certain files or directories when tracking changes. You can add the following line to your <code>.gitignore</code> file to ignore your virtual environment:</p>
+<p>Now when we run <code>git status</code>, we shouldn’t see our virtual environment in the list of files that have been changed. If you accidentally added your virtual environment to your repository, you can remove it by running the following command</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="installing-libraries-with-pip-in-venv" class="slide level2">
+<h2>Installing Libraries with <code>pip</code> in <code>venv</code></h2>
+<p>Now that we have our virtual environment created and activated in VS Code, we can start to try installing external Python libraries.</p>
+<p>Today, we will try installing the Python package <code>Rich</code> by running the following command:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a></a><span class="ex">pip3</span> install rich</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Remember</strong>: Always do this with your virtual environment activated!</p>
+<aside class="notes">
+<p>You’ll notice that I’m using <code>pip3</code> to install the package. That is because I have multiple versions of Python installed on my computer. Usually if you have multiple versions of Python (specifically Python 2 and 3 versions) then you might need to use <code>pip3</code> to install libraries. If you only have Python 3 installed on your computer, you can just use <code>pip</code>. You can check which version of Python you have installed by running the following command:</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="testing-the-installation" class="slide level2">
+<h2>Testing the Installation</h2>
+<p>To verify the installation worked:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb37-1"><a></a>python3</span>
+<span id="cb37-2"><a></a>&gt;&gt;&gt; import rich</span>
+<span id="cb37-3"><a></a>&gt;&gt;&gt; rich.__version__</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or check all installed libraries:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a></a><span class="ex">pip</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="site-packages" class="slide level2">
+<h2><code>site-packages</code></h2>
+<p>You can also look in your virtual environment directory and see if there is a <code>site-packages</code> directory. This is where all the libraries you install with <code>pip</code> are stored. You can see that the <code>Rich</code> library is installed in the <code>site-packages</code> directory.</p>
+
+<img data-src="../assets/images/rich_installed.png" class="r-stretch quarto-figure-center"><p class="caption">Rich Installed</p></section>
+<section id="the-rich-library" class="slide level2">
+<h2>The Rich Library</h2>
+<div class="columns">
+<div class="column r-fit-text" style="width:60%;">
+<p>Rich is Python Library built originally by <a href="https://www.willmcgugan.com/">Will McGugan</a> to add rich text and beautiful formatting in the terminal. We can see from the GitHub repository <a href="https://github.com/Textualize/rich" target="_blank">https://github.com/Textualize/rich</a> that it is a very popular library with almost 50,000 stars and used by almost 300,000 repositories on GitHub. We can see that there is currently 256 contributors and that the project started in 2019.</p>
+</div><div class="column r-fit-text" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/rich_history.png"></p>
+<figcaption>Rich History</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="rich-features" class="slide level2">
+<h2>Rich Features</h2>
+<div class="columns">
+<div class="column r-fit-text" style="width:60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://github.com/textualize/rich/raw/master/imgs/features.png"></p>
+<figcaption>Rich Features</figcaption>
+</figure>
+</div>
+</div><div class="column r-fit-text" style="width:40%;">
+<p>We can start to get a sense of what the library can do by looking at the features listed on the GitHub repository but we can also read the documentation for the library to get a better sense of what it can do <a href="https://rich.readthedocs.io/en/stable/introduction.html" target="_blank">https://rich.readthedocs.io/en/stable/introduction.html</a>.</p>
+</div></div>
+</section>
+<section id="rich-documentation" class="slide level2">
+<h2>Rich Documentation</h2>
+<div class="r-fit-text">
+<p>This documentation is <strong>very</strong> detailed, but we can start with the Quickstart guidelines <a href="https://rich.readthedocs.io/en/stable/introduction.html#quick-start" target="_blank">https://rich.readthedocs.io/en/stable/introduction.html#quick-start</a> to get a sense of how to use the library.</p>
+<p>From the guidelines we can see how to import the library into our Python script. In your <code>is310-coding-assignments</code> directory, create a new folder called <code>python-libraries</code> and create a new file called <code>rich_example.py</code>. In this file, add the following code:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a></a><span class="im">from</span> rich <span class="im">import</span> <span class="bu">print</span></span>
+<span id="cb39-2"><a></a></span>
+<span id="cb39-3"><a></a><span class="bu">print</span>(<span class="st">"Hello, [bold magenta]World[/bold magenta]!"</span>, <span class="st">":vampire:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="rich-outputs" class="slide level2">
+<h2>Rich Outputs</h2>
+<div class="r-fit-text">
+<p>Run it:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a></a><span class="ex">python3</span> rich_example.py <span class="co"># or python3 python-libraries/rich_example.py if you are in the is310-coding-assignments directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see the following output in your terminal:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb41-1"><a></a>Hello, World! 🧛</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/rich_example.png"></p>
+<figcaption>Rich Example</figcaption>
+</figure>
+</div>
+<p>Notice that the word <code>world</code> is in bold and magenta and that there is a vampire emoji at the end of the sentence. This is the power of the <code>Rich</code> library.</p>
+</div>
+</section>
+<section id="rich-tables" class="slide level2">
+<h2>Rich Tables</h2>
+<div class="columns">
+<div class="column r-fit-text" style="width:50%;">
+<p>Rich has powerful classes like <code>Console</code> and <code>Table</code> for formatting:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb42-2"><a></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
+<span id="cb42-3"><a></a></span>
+<span id="cb42-4"><a></a>console <span class="op">=</span> Console()</span>
+<span id="cb42-5"><a></a></span>
+<span id="cb42-6"><a></a>table <span class="op">=</span> Table(title<span class="op">=</span><span class="st">"Star Wars Movies"</span>)</span>
+<span id="cb42-7"><a></a>table.add_column(<span class="st">"Released"</span>, style<span class="op">=</span><span class="st">"cyan"</span>, no_wrap<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb42-8"><a></a>table.add_column(<span class="st">"Title"</span>, style<span class="op">=</span><span class="st">"magenta"</span>)</span>
+<span id="cb42-9"><a></a>table.add_column(<span class="st">"Box Office"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb42-10"><a></a>table.add_row(<span class="st">"Dec 20, 2019"</span>, <span class="st">"Star Wars: The Rise of Skywalker"</span>, <span class="st">"$952,110,690"</span>)</span>
+<span id="cb42-11"><a></a>table.add_row(<span class="st">"May 25, 2018"</span>, <span class="st">"Solo: A Star Wars Story"</span>, <span class="st">"$393,151,347"</span>)</span>
+<span id="cb42-12"><a></a>table.add_row(<span class="st">"Dec 15, 2017"</span>, <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>, <span class="st">"$1,332,539,889"</span>)</span>
+<span id="cb42-13"><a></a>table.add_row(<span class="st">"Dec 16, 2016"</span>, <span class="st">"Rogue One: A Star Wars Story"</span>, <span class="st">"$1,332,439,889"</span>)</span>
+<span id="cb42-14"><a></a></span>
+<span id="cb42-15"><a></a>console.<span class="bu">print</span>(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column r-fit-text" style="width:50%;">
+<p>And you should see the following output in your terminal:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/rich_table.png"></p>
+<figcaption>Rich Table</figcaption>
+</figure>
+</div>
+</div></div>
+<aside class="notes">
+<p>As you can likely tell, both <code>Console</code> and <code>Table</code> are classes built into the <code>Rich</code> library that allow us to format our text in different ways. We can see that we are able to add a title to our table, add columns, and add rows to our table. We can also see that we are able to format our text in different ways, such as changing the color of the text, justifying the text, and wrapping the text.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="rich-classes" class="slide level2">
+<h2>Rich Classes</h2>
+<div class="columns">
+<div class="column r-fit-text" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="https://rich.readthedocs.io/en/stable/reference/console.html#rich.console.Console" target="_blank"><img data-src="../assets/images/rich_console.png"></a></p>
+<figcaption>Rich Console Class Documentation</figcaption>
+</figure>
+</div>
+</div><div class="column r-fit-text" style="width:50%;">
+<p>You’ll notice this documentation is somewhat difficult to read, but it does show us the different methods and attributes that are available to us in the <code>Console</code> class. We can also click the small green <code>source</code> button to see the source code for the class <a href="https://rich.readthedocs.io/en/stable/_modules/rich/console.html#Console" target="_blank">https://rich.readthedocs.io/en/stable/_modules/rich/console.html#Console</a>.</p>
+</div></div>
+</section>
+<section id="rich-with-data-structures" class="slide level2">
+<h2>Rich with Data Structures</h2>
+<div class="columns">
+<div class="column r-fit-text" style="width:50%;">
+<p>You can use Rich to format data from lists and dictionaries:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb43-2"><a></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
+<span id="cb43-3"><a></a></span>
+<span id="cb43-4"><a></a><span class="co"># Create a Console instance to print formatted text</span></span>
+<span id="cb43-5"><a></a>console <span class="op">=</span> Console()</span>
+<span id="cb43-6"><a></a></span>
+<span id="cb43-7"><a></a><span class="co"># Initial movie data stored in a list of dictionaries</span></span>
+<span id="cb43-8"><a></a>movies <span class="op">=</span> [</span>
+<span id="cb43-9"><a></a>    {</span>
+<span id="cb43-10"><a></a>        <span class="st">"Released"</span>: <span class="st">"Dec 20, 2019"</span>,</span>
+<span id="cb43-11"><a></a>        <span class="st">"Title"</span>: <span class="st">"Star Wars: The Rise of Skywalker"</span>,</span>
+<span id="cb43-12"><a></a>        <span class="st">"Box Office"</span>: <span class="st">"$952,110,690"</span></span>
+<span id="cb43-13"><a></a>    },</span>
+<span id="cb43-14"><a></a>    {</span>
+<span id="cb43-15"><a></a>        <span class="st">"Released"</span>: <span class="st">"May 25, 2018"</span>,</span>
+<span id="cb43-16"><a></a>        <span class="st">"Title"</span>: <span class="st">"Solo: A Star Wars Story"</span>,</span>
+<span id="cb43-17"><a></a>        <span class="st">"Box Office"</span>: <span class="st">"$393,151,347"</span></span>
+<span id="cb43-18"><a></a>    },</span>
+<span id="cb43-19"><a></a>    {</span>
+<span id="cb43-20"><a></a>        <span class="st">"Released"</span>: <span class="st">"Dec 15, 2017"</span>,</span>
+<span id="cb43-21"><a></a>        <span class="st">"Title"</span>: <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>,</span>
+<span id="cb43-22"><a></a>        <span class="st">"Box Office"</span>: <span class="st">"$1,332,539,889"</span></span>
+<span id="cb43-23"><a></a>    },</span>
+<span id="cb43-24"><a></a>    {</span>
+<span id="cb43-25"><a></a>        <span class="st">"Released"</span>: <span class="st">"Dec 16, 2016"</span>,</span>
+<span id="cb43-26"><a></a>        <span class="st">"Title"</span>: <span class="st">"Rogue One: A Star Wars Story"</span>,</span>
+<span id="cb43-27"><a></a>        <span class="st">"Box Office"</span>: <span class="st">"$1,332,439,889"</span></span>
+<span id="cb43-28"><a></a>    }</span>
+<span id="cb43-29"><a></a>]</span>
+<span id="cb43-30"><a></a></span>
+<span id="cb43-31"><a></a><span class="co"># Loop through the list of movies</span></span>
+<span id="cb43-32"><a></a><span class="cf">for</span> movie <span class="kw">in</span> movies:</span>
+<span id="cb43-33"><a></a>    console.<span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">[bold cyan]Reviewing movie information:[/bold cyan]"</span>)</span>
+<span id="cb43-34"><a></a>    <span class="cf">for</span> field, value <span class="kw">in</span> movie.items():</span>
+<span id="cb43-35"><a></a>        console.<span class="bu">print</span>(<span class="ss">f"[magenta]</span><span class="sc">{</span>field<span class="sc">}</span><span class="ss">[/magenta]: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column r-fit-text" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/rich_movies.png"></p>
+<figcaption>Rich Movies</figcaption>
+</figure>
+</div>
+</div></div>
+<aside class="notes">
+<p>This shows how Rich integrates beautifully with Python data structures like lists and dictionaries.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="homework-command-line-data-curation" class="slide level2">
+<h2>Homework: Command Line Data Curation</h2>
+<p>Now it’s time to put everything together!</p>
+<p>Homework instructions available <a href="../materials/creating-curating-cad/04-virtual-environments.html#homework-command-line-data-curation">here</a></p>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

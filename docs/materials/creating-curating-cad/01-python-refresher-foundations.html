@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Python Refresher I: Python Foundations – IS310 - Culture As Data Fall 2026</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/images/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6c49c5477b92c77c9eb341f9299c235f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6bd77949012616049cccce2f6cb6e61f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    window.setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      window.setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    window.hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(darkModeDefault) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const darkModeDefault = false;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !window.hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+    };
+    // Switch to dark mode if need be
+    if (window.hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">IS310 - Culture As Data Fall 2026</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../schedule/index.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../assessments/index.html"> 
+<span class="menu-text">Assessments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../policies.html"> 
+<span class="menu-text">Policies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/introducing-defining-cad/01-CAD-tools.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#python-foundations" id="toc-python-foundations" class="nav-link active" data-scroll-target="#python-foundations">Python Foundations</a>
+  <ul class="collapse">
+  <li><a href="#variables-data-types" id="toc-variables-data-types" class="nav-link" data-scroll-target="#variables-data-types">Variables &amp; Data Types</a></li>
+  <li><a href="#operators" id="toc-operators" class="nav-link" data-scroll-target="#operators">Operators</a></li>
+  <li><a href="#data-structures" id="toc-data-structures" class="nav-link" data-scroll-target="#data-structures">Data Structures</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Python Refresher I: Python Foundations</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>So far in this course, we have either been using the command line or markup languages, but now it’s time to get back into some programming.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>⚡️ As a reminder, this course assumes you have either taken a programming course or have some experience with programming. If you don’t have any experience with programming, you should contact the instructor for additional assistance.</p>
+</div>
+</div>
+<section id="python-foundations" class="level2">
+<h2 class="anchored" data-anchor-id="python-foundations">Python Foundations</h2>
+<p>The easiest way to work with Python is through the command line. Let’s start by first checking our Python version. Open your terminal (whether in VS Code or your preferred terminal app) and type <code>python --version</code> or <code>python3 --version</code>. You should see something like the following:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/python_version.png" class="img-fluid figure-img"></p>
+<figcaption>Python Version</figcaption>
+</figure>
+</div>
+<p>If you don’t see these messages, then you might not have Python installed, so return to our <a href="../introducing-defining-cad/01-CAD-tools/#python">setup instructions</a> and reach out to the instructors for assistance.</p>
+<p>In this course, you should be using some version of Python 3. If you’re using Python 2, you should upgrade to Python 3. Python 2 is no longer supported and will not be maintained after 2020. If both commands output a version of Python 3, you can use either <code>python</code> or <code>python3</code>. Historically, <code>python</code> was used to call Python 2 and <code>python3</code> was used to call Python 3. However, as Python 2 is no longer supported, <code>python</code> should now call Python 3. You can read more at the <a href="https://docs.python.org/3/">Python 3 documentation</a> for more information.</p>
+<hr>
+<p>Once you have Python working, you can type <code>python3</code> (or <code>python</code> if it refers to a Python 3 version) and this will open the interactive Python interpreter where you can write your python code and have the computer execute it. This Python interpreter is a type of program that reads and executes Python code (i.e.&nbsp;either Python syntax or files that end with <code>.py</code>). The interactive Python interpreter is an excellent way to sandbox your ideas or check your syntax. You can exit using <code>exit()</code>.</p>
+<p>Type <code>"Hello world"</code> in the interpreter and press enter. Make sure to use single or double quotes around the this text (otherwise you’ll see a <code>SyntaxError</code>, something we’ll discuss later in this lesson).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/python_hw.png" class="img-fluid figure-img"></p>
+<figcaption>Hello World</figcaption>
+</figure>
+</div>
+<p>Congrats you’ve just typed your first bit of Python and had the computer execute it 🎉!</p>
+<p>Let’s breakdown what just happened.</p>
+<ol type="1">
+<li>You entered data into the interpreter.</li>
+<li>That data had a certain format, in this case a <em>string</em>, and the interpreter automatically showed that data again.</li>
+</ol>
+<p>We can also use the interpreter as a calculator. Try out these examples.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="op">+</span><span class="dv">1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">*</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll notice that unlike with <code>"Hello World"</code> the interpreter doesn’t just show our data back to us. Instead, it <em>prints</em> out the result of our calculations. This is because the interpreter is designed to show us the results of our calculations. In our first example, we weren’t doing any calculations, so the interpreter just showed us our data. In our second example, we were doing calculations, so the interpreter showed us the results of our calculations.</p>
+<p>Now, you can experiment with the interpreter, and you’ll notice that if you use the up arrow, you can access your previous commands. However, the interpreter can do more than just print out data and do calculations. It can also store data.</p>
+<section id="variables-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="variables-data-types">Variables &amp; Data Types</h3>
+<p>Rather than retyping our <code>"Hello World"</code>, we can save it into something called a <em>variable</em> that let’s us reuse it again and again.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>var <span class="op">=</span> <span class="st">"Hello World"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now try typing <code>var</code> again. What happens?</p>
+<p>You should see that the <code>var</code> variable now has <code>"Hello World"</code> stored inside. Python understands that we created a variable called <code>var</code> and that our variable contains a <em>string</em>. You can type any string and assign it into a variable.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>one <span class="op">=</span> <span class="st">"one"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>two <span class="op">=</span> <span class="st">"two"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>three <span class="op">=</span> <span class="st">"three"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Python knows that these variables contain strings because of the use of either single(’’) or double quotes(““).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.datamentor.io/sites/tutorial2program/files/assign-value-to-variable.png" class="img-fluid figure-img"></p>
+<figcaption>Assign Value to Variable</figcaption>
+</figure>
+</div>
+<p>The key thing to understand is that in Python we use the <code>=</code> symbol to <strong>assign</strong> values to variables. The <strong>variable</strong> is always on the left side of the <strong><code>=</code> equal sign</strong>, and the <strong>value</strong> you want to store in the variable is on the right side of the <code>=</code>.</p>
+<p><strong>Strings</strong> are just one of many <strong>data types</strong> accepted in Python.</p>
+<p>There’s also numbers, called <em>integers</em>. We can take our variables that we assigned before and assign them their actual numbers.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>one <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>two <span class="op">=</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once we do this though, you’ll notice that our strings that were stored in these variables will be <strong>erased!</strong> This is because in Python if you assign a new value to a variable, it will overwrite the old value of the variable.</p>
+<p>If you’re curious, this is due to the fact that Python is a <em>dynamically typed</em> language, which means that the data type of a variable can change. This is different from <em>statically typed</em> languages, like Java, where the data type of a variable cannot change. This is a key difference between Python and other programming languages, but don’t worry if this is confusing. You’ll get used to it as you work with Python more and eventually learn other programming languages, as well!</p>
+<p>What happens if you try and use a number for your variable rather than typing the word <code>one</code>?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/syntax_error.png" class="img-fluid figure-img"></p>
+<figcaption>Syntax Error</figcaption>
+</figure>
+</div>
+<p>You’ll get a <strong>syntax error</strong>, like this one above! That’s because Python has rules for how to name variables.</p>
+<p><u>Here are some rules for naming variables in Python:</u></p>
+<ul>
+<li>A variable name must start with a letter or the underscore character (so you could do both <code>_one</code> and <code>one</code>). Your variable name can also start with or contain a capital letter, but by convention, we don’t do this. So you’re better off doing <code>one</code> rather than <code>One</code>.</li>
+<li>A variable name cannot start with a number (so you can’t do <code>1one</code>)</li>
+<li>A variable name can only contain alpha-numeric characters and underscores (A-z, 0-9, and _ ). So no spaces or special punctuation characters, like <code>!</code>, <code>@</code>, <code>#</code>, <code>$</code>, <code>%</code>, etc.</li>
+<li>A variable also can’t have a space in the name, so you can’t do <code>one one</code>. Python uses spaces to separate different parts of the code, so if you use a space in a variable name, Python will think you’re trying to separate two different parts of your code.</li>
+<li>A variable can’t have a <strong>reserved word</strong> as a name. The creators and developers of Python have selected a series of words that have a special meaning and function when you are programming in Python. If you try to use these words, then your computer will get confused. For example, if you try to use <code>and</code> as a variable name, you’ll get a Syntax Error again . You can see a list of reserved words <a href="https://www.w3schools.com/python/python_ref_keywords.asp">here</a>, as well as in the figure below. Don’t worry about memorizing these, but it’s helpful to know that they exist.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.ytimg.com/vi/AxBOzm6v3bg/maxresdefault.jpg" class="img-fluid figure-img"></p>
+<figcaption>Python Keywords</figcaption>
+</figure>
+</div>
+<p>Finally, you should know that variable names are <strong>case-sensitive</strong>. So, <code>one</code> and <code>One</code> are two different variables.</p>
+<p><em>What makes a good variable name?</em></p>
+<p>As a general rule of thumb, I would recommend choosing names that are relatively short and descriptive. You’ll often see the use of <code>x</code> or <code>y</code> as variable names in Python, but I find these are too short to be helpful. Instead, I would recommend you try to balance describing what’s stored within the variable and keeping it shorter so that you don’t have too much to type. Also to reiterate, in Python we tend to use underscores for naming variables versus Javascript where you use camelCase, so <code>one_one</code> is better than <code>oneOne</code> in Python.</p>
+<p>For some more examples, see Melanie Walsh’s note on <a href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/02-Python/04-Variables.html#striving-for-good-variable-names">“Striving for Good Variable Names”</a>.</p>
+<p>So our previous example could work if we changed the variable name to:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>one_1 <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Python also has a special name for numbers with decimal points, called <em>floats</em>. We can assign a float to a variable just like we did with integers.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>one <span class="op">=</span> <span class="fl">1.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Integers are simple and easy to use. Floats are mostly easy, but sometimes really weird!</p>
+<p><em>Weird Numbers</em></p>
+<p>What does this return?</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you try this in the Python interpreter, you’ll see that you get <code>0.30000000000000004</code>. Weird right? This is because of the way that computers store numbers.</p>
+<p>All data in a computer is represented as binary (base 2) numbers, comprising only 1s and 0s. The text you’re reading now is represented by individual characters that, under the hood, are stored as binary numbers. The method of translating these information between different forms and contexts (such as between binary numbers and text or numbers) is called <strong>encoding</strong>.</p>
+<p>Integers are easy enough to represent in binary: 0 is 0, 1 is 1, 2 is 10, 3 is 11, 4 is 100, and so on.</p>
+<p>But floats are trickier and require a special system to represent. This background is primarily just to provide context, but it is helpful to know that it’s impossible to represent exactly 1/3 in finite decimal notation (0.3333…). It’s similarly impossible to represent some simple decimal numbers in a binary notation. Which is why you get the weird results above.</p>
+<p>For more information check out <a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">Float to Binary Converter</a> and <a href="https://en.wikipedia.org/wiki/IEEE_754-1985">IEEE 754 Standard</a>.</p>
+<p>Here is an overview of the most common data types in Python:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 39%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>str</code></td>
+<td><strong>String</strong>: a sequence of characters. Indicated with either double or single quotes.</td>
+<td>“Hello World”</td>
+</tr>
+<tr class="even">
+<td><code>int</code></td>
+<td><strong>Integer</strong>: a whole number</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><code>float</code></td>
+<td><strong>Float</strong>: a number with a decimal point</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td><code>bool</code></td>
+<td><strong>Boolean</strong>: a truth value</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>bool</code> data type is a special one in Python. It can only have two values: <code>True</code> or <code>False</code>. We can assign these values to a variable just like we did with strings, integers, and floats.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>var_true <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>var_false <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Both <code>True</code> and <code>False</code> are reserved words in Python, so you can’t use them as variable names.</p>
+</section>
+<section id="operators" class="level3">
+<h3 class="anchored" data-anchor-id="operators">Operators</h3>
+<p>Knowing the data type of a variable is important because it determines what you can do with that variable. For example, you can’t add a string to an integer, but you can add an integer to a float.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>one <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>two <span class="op">=</span> <span class="fl">2.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here’s a simple example of how you can use the Python interpreter to add these two variables together.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>one <span class="op">+</span> two</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see <code>3.0</code> as your answer. This is because Python automatically converts the integer <code>one</code> into a float so that it can add it to <code>two</code>.</p>
+<p>This type of joining is using an <strong>operator</strong> in Python. Operators are special symbols in Python that carry out arithmetic or logical computation. The value that the operator operates on is called the <strong>operand</strong>.</p>
+<p>For addition, we use the <code>+</code> operator symbol, this is called concatenation.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>one <span class="op">+</span> two</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For subtraction, we use the <code>-</code> operator symbol.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>one <span class="op">-</span> two</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For multiplication, we use the <code>*</code> operator symbol.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>one <span class="op">*</span> two</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For division, we use the <code>/</code> operator symbol.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>one <span class="op">/</span> two</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now say we created a variable called <code>three</code> that contained the string <code>"three"</code>. What would happen if we added variables <code>one</code> and <code>three</code> together?</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>one <span class="op">+</span> three</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see <code>TypeError: unsupported operand type(s) for +: 'int' and 'str'</code>. This is because Python can’t add an integer to a string. This is because Python can’t add an integer to a string.</p>
+<p>If we instead tried joining our <code>var</code> and <code>three</code> variables together, we would get a new string.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>var <span class="op">+</span> three</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This new string would be <code>"Hello Worldthree"</code>. This might seem like we are overwriting the value of <code>var</code>, but in fact, we are creating a new string. This is because Python strings are <strong>immutable</strong> which means they cannot be changed after they are created (Java strings also use this immutable style).</p>
+<p>While <code>"Hello Worldthree"</code> is not the most useful string, we could check if our two variables contain the same value.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>var <span class="op">==</span> three</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This would return <code>False</code> because the two variables contain different values. The <code>==</code> operator is used to compare the values of two variables. It’s important to remember that one <code>=</code> is used to assign a value to a variable, and <code>==</code> is used to compare the values of two variables.</p>
+<p>This type of comparison will return a boolean value, either <code>True</code> or <code>False</code>. We can also use the <code>!=</code> operator to check if two variables contain different values.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>var <span class="op">!=</span> three</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now this will return <code>True</code> because the two variables contain different values. <code>True</code> and <code>False</code> are reserved words in Python, so you can’t use them as variable names. You can also represent <code>True</code> as <code>1</code> and <code>False</code> as <code>0</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 40%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>+</code></td>
+<td><strong>Addition</strong>: adds two operands</td>
+<td><code>a + b</code></td>
+</tr>
+<tr class="even">
+<td><code>-</code></td>
+<td><strong>Subtraction</strong>: subtracts two operands</td>
+<td><code>a - b</code></td>
+</tr>
+<tr class="odd">
+<td><code>*</code></td>
+<td><strong>Multiplication</strong>: multiplies two operands</td>
+<td><code>a * b</code></td>
+</tr>
+<tr class="even">
+<td><code>/</code></td>
+<td><strong>Division</strong>: divides the first operand by the second</td>
+<td><code>a / b</code></td>
+</tr>
+<tr class="odd">
+<td><code>==</code></td>
+<td><strong>Equal</strong>: compares if the values of two operands are equal</td>
+<td><code>a == b</code></td>
+</tr>
+<tr class="even">
+<td><code>!=</code></td>
+<td><strong>Not equal</strong>: compares if the values of two operands are not equal</td>
+<td><code>a != b</code></td>
+</tr>
+</tbody>
+</table>
+<p>You can find more information about operators here <a href="https://www.w3schools.com/python/python_operators.asp">https://www.w3schools.com/python/python_operators.asp</a>.</p>
+<section id="quick-exercise" class="level4">
+<h4 class="anchored" data-anchor-id="quick-exercise">Quick Exercise</h4>
+<p>In your Python interpreter, complete the following prompts:</p>
+<ol type="1">
+<li>Create the following variables and assign them the correct information:</li>
+</ol>
+<ul>
+<li>Your favorite film</li>
+<li>Your favorite book</li>
+<li>The release year of your favorite film</li>
+<li>The release year of your favorite book</li>
+</ul>
+<ol start="2" type="1">
+<li>Try testing if your favorite film and book are equal.</li>
+<li>Try joining their names together.</li>
+<li>Try finding the difference between the release years of your favorite film and book.</li>
+</ol>
+</section>
+</section>
+<section id="data-structures" class="level3">
+<h3 class="anchored" data-anchor-id="data-structures">Data Structures</h3>
+<p>Hopefully you’re starting to see the power of Python. But what if you wanted to store more than one value? You could create a new variable for each value, but that would be a lot of typing.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>film <span class="op">=</span> <span class="st">"The Matrix"</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>film_year <span class="op">=</span> <span class="dv">1999</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>book <span class="op">=</span> <span class="st">"The Great Gatsby"</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>book_year <span class="op">=</span> <span class="dv">1925</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To help with this, Python has a way to store multiple variables in one variable with more complex data types. These are called <em>data structures</em>.</p>
+<p><strong>Data structures</strong> are a way of organizing and storing data so that it can be accessed and worked with efficiently. They define the relationship between the data, and the operations that can be performed on the data. This is a broad definition, and data structures can be used to store data in a variety of ways.</p>
+<hr>
+<p><strong>1. Lists</strong></p>
+<p>One of the most common data structures in Python is the <em>list</em>. A list is an ordered, comma-separated collection of any values. We can store any combination of values in our list.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>favorite_movies <span class="op">=</span> [<span class="st">"The Matrix"</span>, <span class="st">"Star Wars"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here we have created a new variable called <code>favorite_movies</code> and assigned it a <strong>list</strong> of <strong>strings</strong>. We indicate that this is a list through the use of square brackets <code>[]</code>. We separate each value in our list with a comma.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pynative.com/wp-content/uploads/2021/03/python-list.jpg" class="img-fluid figure-img"></p>
+<figcaption>Python List</figcaption>
+</figure>
+</div>
+<p>As this diagram shows, lists contain a series or sequence of values that are separated by commas. Lists can contain duplicates and different types of data. For example, we could store the release years of our favorite movies in our list.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>favorite_movies <span class="op">=</span> [<span class="st">"The Matrix"</span>, <span class="st">"Star Wars"</span>, <span class="dv">1999</span>, <span class="dv">1977</span>, <span class="st">"The Matrix"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Each list in Python is a <strong>sequence</strong>, and we can access the position of an item in that sequence through <strong>indexing</strong>.</p>
+<p>The syntax for indexing is to use the name of the list followed by the index of the value you want to access in square brackets. For example, to get the first value in our list, we would type <code>favorite_movies[0]</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>favorite_movies[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>How could we get the second value in our list? You’ll notice that to get the first movie in our list, we used the index <code>0</code>. This is because Python is a <strong>zero-indexed</strong> language, which means that the first value in a list has an index of <code>0</code>, the second value has an index of <code>1</code>, and so on. So, just see indexing as a way to count and access the position of an item in a list.</p>
+<p>Indexing is very powerful and can be used in many ways. We can use indexing to access the last item in a list, to access a range of items in a list, and to access items in a list that are nested inside of other lists.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>favorite_movies[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>favorite_movies[<span class="dv">1</span>:<span class="dv">3</span>]</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>favorite_movies <span class="op">=</span> [<span class="st">"The Matrix"</span>, <span class="st">"Star Wars"</span>, <span class="dv">1999</span>, <span class="dv">1977</span>, [<span class="st">"The Matrix II"</span>, <span class="st">"Star Wars IV"</span>]]</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>favorite_movies[<span class="dv">4</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So in the first example here we’re using a negative index to access the last item in our list. Indexing with a negative number starts from the end of the list. We could also do -2 to get the second to last item in our list.</p>
+<p>In the second example, we’re using a range of indexes to access the second and third items in our list. This type of range is called <strong>slicing</strong>. Index slicing is when we write the first index, a colon, and then the second index. The first index is the starting position of the slice, and the second index is the ending position of the slice. The slice will include the first index and exclude the second index. So in our example, we’re getting the second and third items in our list.</p>
+<p>Finally, we are expanding our list to contain another list. This is called a <strong>nested list</strong>. We can use indexing to access the nested list inside of our list. In our example, we’re using the index 4 to access the nested list, and then we’re using the index 0 to access the first item in the nested list.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 43%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>List Manipulation Method</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>favorite_movies[0]</code></td>
+<td><strong>Indexing</strong>: Using the square brackets and a single number to access an item in a list. <code>0</code> will access the first item in the list</td>
+<td>“The Matrix”</td>
+</tr>
+<tr class="even">
+<td><code>favorite_movies[-1]</code></td>
+<td><strong>Negative Indexing</strong>: Using the <code>-</code> symbol to index from the end of the list. <code>-1</code> accesses the last item in the list</td>
+<td>“The Matrix”</td>
+</tr>
+<tr class="odd">
+<td><code>favorite_movies[1:3]</code></td>
+<td><strong>Slicing</strong>: Using the colon to access a range of items in a list. <code>1:3</code> will access the second and third items in the list</td>
+<td>[“Star Wars”, 1999]</td>
+</tr>
+<tr class="even">
+<td><code>favorite_movies[:2]</code></td>
+<td><strong>Slicing without start index</strong>: Using the colon, but without a start index, to access the first two items in the list. If you leave a beginning index blank, Python will assume you want to start from the beginning of the list</td>
+<td>[“The Matrix”, “Star Wars”]</td>
+</tr>
+<tr class="odd">
+<td><code>favorite_movies[-2:]</code></td>
+<td><strong>Slicing with Negative Indexing</strong>: Using the colon and negative indexing to access the last two items in the list. If you leave the ending index blank, Python will assume you want to go to the end of the list</td>
+<td>[1977, [“The Matrix II”, “Star Wars IV”]]</td>
+</tr>
+<tr class="even">
+<td><code>favorite_movies[4][0]</code></td>
+<td><strong>Nested Indexing</strong>: Using indexing to access a nested list inside of a list. <code>4</code> accesses the nested list, and <code>0</code> accesses the first item in the nested list</td>
+<td>“The Matrix II”</td>
+</tr>
+<tr class="odd">
+<td><code>+</code></td>
+<td><strong>Concatenation</strong>: Using the <code>+</code> operator to combine two lists</td>
+<td><code>favorite_movies + least_favorite_movies</code></td>
+</tr>
+</tbody>
+</table>
+<p>What if we wanted to keep track of our least favorite movies as well? We could create a new list and store it in a variable.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>least_favorite_movies <span class="op">=</span> [<span class="st">"The Matrix III"</span>, <span class="st">"Star Wars I"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If we wanted to combine our favorite and least favorite movies, we could use a method called <strong>concatenation</strong>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>favorite_movies <span class="op">+</span> least_favorite_movies</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice to do concatenation we use the <code>+</code> operator. This would return a new list that contains all of our favorite and least favorite movies. We could than contain this new list in a variable called our <code>movie_collection</code>.</p>
+<hr>
+<p><strong>2. Dictionaries</strong></p>
+<p>So far we have been using lists to store our data, but what if we wanted to store more information about our movies? We could use a <em>dictionary</em>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.udacity.com/blog/wp-content/uploads/2020/12/Screen-Shot-2020-12-01-at-9.08.23-AM.png" class="img-fluid figure-img"></p>
+<figcaption>Python Dictionary</figcaption>
+</figure>
+</div>
+<p>As you can see in this diagram, dictionaries are like lists in that we assign them to variables. But rather than using square brackets <code>[]</code> to indicate that we are creating a list, we use curly brackets <code>{}</code> to indicate that we are creating a dictionary. We also use a colon <code>:</code> to separate the key and value in our dictionary. This is called a <strong>key/value pair</strong>.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies <span class="op">=</span> {</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The Matrix"</span>: <span class="dv">1999</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Star Wars"</span>: <span class="dv">1977</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, we have created a new variable called <code>updated_favorite_movies</code> and assigned it a dictionary. The keys of our dictionary are the names of our movies, and the values of our dictionary are the release years of our movies. We can access the <strong>values</strong> in our dictionary using the <strong>keys</strong> of our dictionary.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="st">"The Matrix"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This would return <code>1999</code>.</p>
+<p>Here we are using square brackets to access the value of the key <code>"The Matrix"</code>. This looks similar to indexing in lists, but instead of using a number to access the position of an item in a list, we are using the <strong>key</strong> to access the value of a key/value pair in a dictionary. If you don’t use the key of a dictionary, you’ll get a <code>KeyError</code>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="st">"The Matrix II"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This would return <code>KeyError: 'The Matrix II'</code>. This tells us that the key <code>"The Matrix II"</code> doesn’t exist in our dictionary.</p>
+<p>Now what if we didn’t want to have to remember the name of our movie to access it? Rather than using movie names as our keys, we could instead use a generic key, like <code>movie</code>, etc.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies <span class="op">=</span> {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie"</span>: <span class="st">"The Matrix"</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But what if we wanted to added a second movie?</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies <span class="op">=</span> {</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie"</span>: <span class="st">"The Matrix"</span>,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie"</span>: <span class="st">"Star Wars"</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now if we tried to access the value of the key <code>"movie"</code>, we would <strong>only</strong> get <code>Star Wars</code>. This is because our new value overwrote our old value. In a dictionary, <strong>keys must be unique!</strong></p>
+<p>This is a key difference between lists and dictionaries. In a list, you can have duplicate values, but in a dictionary, you can’t have duplicate keys.</p>
+<p>So to add a second movie to our dictionary, we would need to use a different key.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies <span class="op">=</span> {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie_1"</span>: <span class="st">"The Matrix"</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie_2"</span>: <span class="st">"Star Wars"</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can access the value of the key <code>"movie_1"</code> and <code>"movie_2"</code>.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="st">"movie_1"</span>]</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="st">"movie_2"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This would return <code>"The Matrix"</code> and <code>"Star Wars"</code> respectively.</p>
+<p>We could also start storing the release years of our movies in the dictionary through creating a nested dictionary.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies <span class="op">=</span> {</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie_1"</span>: {</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"The Matrix"</span>,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1999</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie_2"</span>: {</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Star Wars"</span>,</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now each of our movies is a dictionary that contains the name and release year of our movie. We can access the value for each movies using either <code>movie_1</code> or <code>movie_2</code>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="st">"movie_1"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This would return <code>{'name': 'The Matrix', 'release_year': 1999}</code>. We could also access just the name of the movie using the key <code>name</code>.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="st">"movie_1"</span>][<span class="st">"name"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What’s happening here is that we’re using the keys to find our value that’s nested inside a dictionary within a dictionary.</p>
+<p>We can use a similar method for updating our dictionary. We can add new key/value pairs to our dictionary, update the value of a key, and remove a key/value pair from our dictionary.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="st">"movie_1"</span>][<span class="st">"name"</span>] <span class="op">=</span> <span class="st">"The Matrix II"</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="st">"movie_1"</span>][<span class="st">"release_year"</span>] <span class="op">=</span> <span class="dv">2003</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now our dictionary would look like this:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies <span class="op">=</span> {</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie_1"</span>: {</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"The Matrix II"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">2003</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie_2"</span>: {</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Star Wars"</span>,</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can also add new key/value pairs to our dictionary.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="st">"movie_3"</span>] <span class="op">=</span> {</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"name"</span>: <span class="st">"The Matrix III"</span>,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"release_year"</span>: <span class="dv">2003</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice that in each of these examples we are using the square brackets to access the value of a key in our dictionary, and then the equal sign to assign a new value to that key.</p>
+<p>You can also get even more complex and store lists in dictionaries:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies <span class="op">=</span> {</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie_1"</span>: {</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"The Matrix I"</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1999</span>,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>]</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"movie_2"</span>: {</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Star Wars IV"</span>,</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span>,</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice that the list is stored as a value in our dictionary. We can access the value of the key <code>"sequels"</code> in our dictionary using the key <code>"movie_1"</code>.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="st">"movie_1"</span>][<span class="st">"sequels"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This combining of lists and dictionaries, also means that can put dictionaries inside of lists:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies <span class="op">=</span>[</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"The Matrix I"</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1999</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>]</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Star Wars IV"</span>,</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span>,</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice that we now don’t have keys for our top-most dictionaries. In lists, items don’t have keys, so each of your dictionaries is without an explicit key.</p>
+<p>Python defaults to indexing each dictionary with numbers, just like in our list of strings. So to get the first value, you would type:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>updated_favorite_movies[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 34%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dictionary Manipulation Method</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>updated_favorite_movies["movie_1"]</code></td>
+<td><strong>Indexing</strong>: Using the square brackets and a key to access a value in a dictionary. <code>"movie_1"</code> will access the value of the key <code>"movie_1"</code></td>
+<td>{‘name’: ‘The Matrix’, ‘release_year’: 1999}</td>
+</tr>
+<tr class="even">
+<td><code>updated_favorite_movies["movie_1"]["name"]</code></td>
+<td><strong>Nested Indexing</strong>: Using indexing to access a nested dictionary inside of a dictionary. <code>"movie_1"</code> accesses the nested dictionary, and <code>"name"</code> accesses the value of the key <code>"name"</code></td>
+<td>“The Matrix”</td>
+</tr>
+<tr class="odd">
+<td><code>updated_favorite_movies["movie_1"]["name"] = "The Matrix II"</code></td>
+<td><strong>Updating a Value</strong>: Using the square brackets and a key to access a value in a dictionary, and then the equal sign to assign a new value to that key</td>
+<td>“The Matrix II”</td>
+</tr>
+<tr class="even">
+<td><code>updated_favorite_movies["movie_3"] = {"name": "The Matrix III", "release_year": 2003}</code></td>
+<td><strong>Adding a Key/Value Pair</strong>: Using the square brackets and a key to add a new key/value pair to a dictionary</td>
+<td>“The Matrix III”</td>
+</tr>
+<tr class="odd">
+<td><code>updated_favorite_movies["movie_1"]["sequels"]</code></td>
+<td><strong>Accessing a List</strong>: Using indexing to access a list inside of a dictionary. <code>"movie_1"</code> accesses the nested dictionary, and <code>"sequels"</code> accesses the value of the key <code>"sequels"</code></td>
+<td>[“The Matrix II”, “The Matrix III”, “The Matrix IV”]</td>
+</tr>
+</tbody>
+</table>
+<section id="quick-exercise-1" class="level4">
+<h4 class="anchored" data-anchor-id="quick-exercise-1">Quick Exercise</h4>
+<p>In your Python interpreter, complete the following prompts:</p>
+<ol type="1">
+<li>Create a dictionary that contains the following information about your favorite book: title, author, and release year.</li>
+<li>Create a dictionary that contains the following information about your favorite film: title, director, and release year.</li>
+<li>Create a list that contains both of these dictionaries.</li>
+<li>Access the release year of your favorite book.</li>
+<li>Access the director of your favorite film.</li>
+</ol>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>IS310 Culture As Data - Fall 2026</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
