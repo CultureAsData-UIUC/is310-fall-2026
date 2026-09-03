@@ -1,2 +1,1252 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction to Markup and Styling Web Documents – IS310 - Culture As Data Fall 2026</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/images/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6c49c5477b92c77c9eb341f9299c235f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6bd77949012616049cccce2f6cb6e61f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    window.setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      window.setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    window.hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(darkModeDefault) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const darkModeDefault = false;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !window.hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+    };
+    // Switch to dark mode if need be
+    if (window.hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">IS310 - Culture As Data Fall 2026</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../schedule/index.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../assessments/index.html"> 
+<span class="menu-text">Assessments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../policies.html"> 
+<span class="menu-text">Policies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../materials/introducing-defining-cad/01-CAD-tools.html" aria-current="page"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/introducing-defining-cad/01-CAD-tools.html">Introducing &amp; Defining Culture as Data</a></li><li class="breadcrumb-item"><a href="../../materials/introducing-defining-cad/07-intro-html.html">Introduction to Markup &amp; Styling Web Documents</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introducing &amp; Defining Culture as Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/01-CAD-tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software &amp; Tools for Culture as Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/02-intro-cli-prompt-engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Command Line &amp; Prompt Engineering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/03-intro-versioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Versioning &amp; Git</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/04-command-line-cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Command Line Cheatsheet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/05-advanced-git-github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced Git and GitHub</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/06-intro-file-formats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to File Formats &amp; Text</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/07-intro-html.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Introduction to Markup &amp; Styling Web Documents</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introducing-markup-languages" id="toc-introducing-markup-languages" class="nav-link active" data-scroll-target="#introducing-markup-languages">Introducing Markup Languages</a></li>
+  <li><a href="#what-is-html" id="toc-what-is-html" class="nav-link" data-scroll-target="#what-is-html">What is HTML?</a>
+  <ul class="collapse">
+  <li><a href="#creating-an-html-file" id="toc-creating-an-html-file" class="nav-link" data-scroll-target="#creating-an-html-file">Creating an HTML File</a></li>
+  </ul></li>
+  <li><a href="#web-styling-and-interaction" id="toc-web-styling-and-interaction" class="nav-link" data-scroll-target="#web-styling-and-interaction">Web Styling and Interaction</a></li>
+  <li><a href="#homework-source-and-style" id="toc-homework-source-and-style" class="nav-link" data-scroll-target="#homework-source-and-style">Homework: Source and Style</a>
+  <ul class="collapse">
+  <li><a href="#assignment-1-inspecting-the-cultural-web" id="toc-assignment-1-inspecting-the-cultural-web" class="nav-link" data-scroll-target="#assignment-1-inspecting-the-cultural-web">Assignment 1: Inspecting the Cultural Web</a></li>
+  <li><a href="#assignment-2-styling-the-cultural-web" id="toc-assignment-2-styling-the-cultural-web" class="nav-link" data-scroll-target="#assignment-2-styling-the-cultural-web">Assignment 2: Styling the Cultural Web</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/introducing-defining-cad/01-CAD-tools.html">Introducing &amp; Defining Culture as Data</a></li><li class="breadcrumb-item"><a href="../../materials/introducing-defining-cad/07-intro-html.html">Introduction to Markup &amp; Styling Web Documents</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Introduction to Markup and Styling Web Documents</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Last week we learned about file formats, and specifically plain text and Markdown. You’ve now had a chance to try out writing some Markdown files and have seen how they can be used to create formatted text documents. This week we’re going to take a step further and introduce you to HTML, which is the language of the web.</p>
+<section id="introducing-markup-languages" class="level2">
+<h2 class="anchored" data-anchor-id="introducing-markup-languages">Introducing Markup Languages</h2>
+<p>While Markdown is very cool and useful, it technically is not a programming language, but a markup language.</p>
+<p><em>So what is a markup language?</em></p>
+<p>From <a href="https://en.wikipedia.org/wiki/Markup_language" target="_blank">handy Wikipedia</a>:</p>
+<blockquote class="blockquote">
+<p>“a markup language is a system for annotating a document in a way that is syntactically distinguishable from the text, meaning when the document is processed for display, the markup language is not shown, and is only used to format the text.”</p>
+</blockquote>
+<p>So in the case of Markdown, this annotating is our use of symbols like <code>#</code> to add formatting to our text. This is different from a programming language like Python or JavaScript, which is used to create programs that can be executed by a computer.</p>
+<p>Another example of a markup language that has a long history in digital humanities and cultural data work is TEI, which stands for Text Encoding Initiative. TEI is a markup language that is used to encode texts in a way that makes them machine-readable. You can read more about TEI in “What Is TEI?” Text Encoding Initiative, 2022. <a href="https://tei-c.org/what-is-tei/" target="_blank">https://tei-c.org/what-is-tei/</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://image.slidesharecdn.com/2015-08-15-datamanagementsrs-150817155314-lva1-app6891/95/research-data-management-in-the-humanities-and-social-sciences-15-638.jpg" class="img-fluid figure-img"></p>
+<figcaption>Markup Language</figcaption>
+</figure>
+</div>
+<p>Today we are used to having OCR and other tools that can help us digitize texts, and then programming languages like Python and R that let us manipulate text into data (a topic we’ll cover later in the semester). But in the early days of the web, this was not the case, which made it difficult for machines to know what was in a text. This is where TEI comes in, as it allows us to encode texts in a way that makes them useable to machines. For example, TEI often involves marking what a date is, or what a person’s name is, or what a place is. This allows us to search and analyze texts in ways that would be impossible without TEI.</p>
+<p>TEI and HTML both were created in the same historical moment, the early days of the web. HTML was created by Tim Berners-Lee in 1991, while TEI was created in 1987.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.dhi.ac.uk/blogs/old-bailey/wp-content/uploads/sites/35/2022/09/Robert-Marshall-7-Dec-1692-1-894x1024.jpg" class="img-fluid figure-img"></p>
+<figcaption>TEI</figcaption>
+</figure>
+</div>
+<p>We can see a more detailed example of what this looks like from <em>The Proceedings of the Old Bailey</em>, which is one of the older Digital Humanities projects that is still in operation. The project started in 1999 and has been digitizing the records of the Old Bailey, which is the central criminal court of England and Wales. The project uses TEI to encode the text of the records, which allows them to be searched and analyzed in a variety of ways. You can read more about the project here <a href="https://www.oldbaileyonline.org/" target="_blank">https://www.oldbaileyonline.org/</a>.</p>
+<p>What is so unique about the <em>Old Bailey</em>, as it is often called, is not just that it uses TEI and XML but also that all this markup was done by hand. Specifically, as the authors write in <a href="https://www.oldbaileyonline.org/about/a-narrative-history-of-the-project#design" target="_blank">the history of the project</a>:</p>
+<blockquote class="blockquote">
+<p>adopt a “double rekeying” strategy for the creation of the transcript – having the text transcribed twice and then automatically compared to identify errors. In 1998, and following extensive testing, it was clear that Optical Character Recognition (OCR) software was just not good enough to automatically produce meaningful transcriptions of eighteenth-century print, particularly when applied to images from microfilm. And in the preceding decades a world-wide network of “rekeying” agencies had developed, focused on the digitisation of business records. By 1998 these agencies were keen to develop a role in the emerging field of humanities digitisation. Within just a few years OCR would take over (at least for texts with consistent print quality which were photographed to a high standard), but for the Proceedings double entry rekeying was the obvious choice, and it ensured that the transcriptions we would be working with would be 99.9 percent accurate. XML markup would not have worked with the kind of error-ridden text produced by OCR methodologies, so applying complex markup was dependant on adopting rekeying. Not only did this facilitate accurate searching, but it meant that the text could be reused in subsequent digital projects.</p>
+</blockquote>
+<p>Such type of work is extremely laborious, but it does lead to very high-quality data. Understanding this longer history helps us now consider how and why we write HTML, but first we need to actually learn what HTML is.</p>
+</section>
+<section id="what-is-html" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-html">What is HTML?</h2>
+<p>While TEI is still in use today, by far the most popular of all markup languages is HTML, which stands for <strong>HyperText Markup Language</strong>. HTML is the language of the web and is used to create web pages. This might be surprising to learn but when you go to a website, it is just showing you a document (just like our <code>.txt</code> or <code>.md</code> files). The difference is that this document is written and marked-up in HTML and is rendered by your browser.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.giphy.com/media/bF2M6el0vi2qc/giphy.gif" class="img-fluid figure-img"></p>
+<figcaption>HTML</figcaption>
+</figure>
+</div>
+<p>According to the <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax#what_is_html" target="_blank">Mozilla website</a>:</p>
+<blockquote class="blockquote">
+<p>“HTML (Hypertext Markup Language) is not a programming language; it is a markup language used to tell your browser how to structure the web pages you visit. It can be as complicated or as simple as the web developer wishes it to be. HTML consists of a series of elements, which you use to enclose, wrap, or mark up different parts of the content to make it appear or act a certain way. The enclosing tags can make a bit of content into a hyperlink to link to another page on the web, italicize words, and so on.”</p>
+</blockquote>
+<p>So while in Google Docs, you can use the GUI to format your text or in Markdown we use <code>#</code> symbol, in HTML we use a series of <strong>tags</strong>. Tags have a name, a series of key/value pairs called <strong>attributes</strong>, and some textual content. Attributes are optional.</p>
+<p>Let’s try an example.</p>
+<section id="creating-an-html-file" class="level3">
+<h3 class="anchored" data-anchor-id="creating-an-html-file">Creating an HTML File</h3>
+<p>First, let’s create an HTML file. To do that we need to add <code>.html</code> to the end of the file name.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> first_page.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, I’m going to open the file in a text editor and add some text, just like we did with our Markdown files.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">My</span> first page!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I can then save this file and open it in a browser. To do this, I can either right click on the file and select <code>open with</code> and then select my browser, or simply go to my preferred browser and select <code>Open File</code>. We’ll talk more about web browsers in the next lesson, but some popular ones include Chrome, Firefox, Safari, and Edge.</p>
+<p>We should see our text in the browser, just like we did with our Markdown file. So everything is working so far!</p>
+<p>Now, in that same file, try altering the code to include some HTML tags.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>My first page!<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Save it and open the file in the browser again, what do you see? Notice anything different? Probably not!</p>
+<p>But we added those tags? So how can we see them…</p>
+<p>The trick is to inspect your webpage. To do that let’s right click on our page and select <code>inspect</code>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/inspect_pg.png" class="img-fluid figure-img"></p>
+<figcaption>Inspect Page</figcaption>
+</figure>
+</div>
+<p>What we’re using is called the Developer Tools Console (<a href="https://developers.google.com/web/tools/chrome-devtools/console/" target="_blank">you can find more info on Chrome’s version here</a> and instructions for <a href="https://developer.mozilla.org/en-US/docs/Tools/Page_Inspector/How_to/Open_the_Inspector" target="_blank">Firefox here</a>). What we’re seeing is called the <strong>source code</strong>.</p>
+<p>Now we can see that our tags do exist, but what exactly are they doing and why do they look like that?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax/grumpy-cat-small.png" class="img-fluid figure-img"></p>
+<figcaption>HTML Tags</figcaption>
+</figure>
+</div>
+<p>This diagram is from that same Mozilla docs, where they describe the anatomy of an “HTML element”.</p>
+<blockquote class="blockquote">
+<p>The anatomy of our element is:</p>
+<ul>
+<li>The opening tag: This consists of the name of the element (in this example, p for paragraph), wrapped in opening and closing angle brackets. This opening tag marks where the element begins or starts to take effect. In this example, it precedes the start of the paragraph text.</li>
+<li>The content: This is the content of the element. In this example, it is the paragraph text.</li>
+<li>The closing tag: This is the same as the opening tag, except that it includes a forward slash before the element name. This marks where the element ends. Failing to include a closing tag is a common beginner error that can produce peculiar results. The element is the opening tag, followed by content, followed by the closing tag.</li>
+</ul>
+</blockquote>
+<p>That’s a lot of information, so let’s break it down further using our example.</p>
+<p>In our HTML page, we created an HTML element using the HTML <code>&lt;p&gt;</code> tag (p means “paragraph”). This example has just one tag in it: a <code>&lt;p&gt;</code> tag. The source code for a tag has two parts, its opening tag (<code>&lt;p&gt;</code>) and its closing tag (<code>&lt;/p&gt;</code>). In between the opening and closing tag, you see the tag’s contents (in this case, the text says “My first page!”).</p>
+<p>Let’s take a look at some of the more common HTML tags that we can use to create HTML elements <a href="https://www.w3schools.com/tags/ref_byfunc.asp" target="_blank">https://www.w3schools.com/tags/ref_byfunc.asp</a>.</p>
+<p>How would we make it into an HTML heading?</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>My first page!<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Great now what if we wanted to add a link so that you could click on that heading and go to another page (say the iSchool home page <a href="https://ischool.illinois.edu/" class="uri">https://ischool.illinois.edu/</a>)?</p>
+<p>Well then we need to add an <code>attribute</code>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax/grumpy-cat-attribute-small.png" class="img-fluid figure-img"></p>
+<figcaption>HTML Attributes</figcaption>
+</figure>
+</div>
+<p>This diagram is also from the Mozilla docs and you can read more about how HTML elements can also have <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax#attributes" target="_blank">attributes here</a>. Some of the guidelines for using attributes are:</p>
+<blockquote class="blockquote">
+<p>Attributes contain extra information about the element that won’t appear in the content. In this example, the class attribute is an identifying name used to target the element with style information.</p>
+<p>An attribute should have:</p>
+<ul>
+<li>A space between it and the element name. (For an element with more than one attribute, the attributes should be separated by spaces too.)</li>
+<li>The attribute name, followed by an equal sign.</li>
+<li>An attribute value, wrapped with opening and closing quote marks.</li>
+</ul>
+</blockquote>
+<p>Let’s try using the <code>anchor</code> tag and <code>href</code> attribute to create an HTML element that links to <code>https://ischool.illinois.edu/</code></p>
+<p>You can find a list of HTML attributes here <a href="https://www.w3schools.com/tags/ref_attributes.asp" target="_blank">https://www.w3schools.com/tags/ref_attributes.asp</a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;&lt;</span><span class="kw">a</span><span class="ot"> target</span><span class="op">=</span><span class="st">"_blank"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://ischool.illinois.edu/"</span><span class="dt">&gt;</span>My first page!<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>How does this new tag change our html page?</p>
+<p>Here’s another example that we should add to our html page, using the HTML <code>&lt;div&gt;</code> tag:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"header"</span><span class="ot"> style</span><span class="op">=</span><span class="st">"background: blue;"</span><span class="dt">&gt;</span>About Me<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, the tag’s name is div. The tag has two attributes: class, with value <code>header</code>, and style, with value <code>background: blue;</code>. The contents of this tag is About Me.</p>
+<p>Tags can contain other tags, in a hierarchical relationship. For example, here’s some HTML to make a bulleted list:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Likes Coding and History<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Likes "What We Do in the Shadows" TV show<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Dislikes Mint Chocolate<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>&lt;ul&gt;</code> tag (ul stands for <strong>unordered list</strong>) in this example has three other <code>&lt;li&gt;</code> tags inside of it (li stands for <strong>list item</strong>). The <code>&lt;ul&gt;</code> tag is said to be the <strong>parent</strong> of the <code>&lt;li&gt;</code> tags, and the <code>&lt;li&gt;</code> tags are the <strong>children</strong> of the <code>&lt;ul&gt;</code> tag. All tags grouped under a particular parent tag are called <strong>siblings.</strong></p>
+<p>HTML is a very powerful language and there are many more tags that we can use to create HTML elements. You can find a list of all the HTML tags here <a href="https://www.w3schools.com/tags/ref_byfunc.asp" target="_blank">https://www.w3schools.com/tags/ref_byfunc.asp</a>. But HTML also has some limitations. Take a look at this helpful overview of <a href="https://github.com/aparrish/dmep-python-intro/blob/master/scraping-html.ipynb" target="_blank"><em>HTML’s shortcomings by Alison Parrish</em></a> (bold added for emphasis):</p>
+<blockquote class="blockquote">
+<p>HTML documents are intended to add <strong>markup</strong> to text to add information that allows browsers to display the text in different ways—e.g., HTML markup might tell the browser to make the font of the text a particular size, or to position it in a particular place on the screen.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Because the primary purpose of HTML is to change the appearance of text, HTML markup usually does not tell us anything useful about what the text means, or what kind of data it contains.</strong> When you look at a web page in the browser, it might appear to contain a list of newspaper articles, or a table with birth rates, or a series of names with associated biographies, or whatever. But that’s information that we get, as humans, from reading the page. There’s (usually) no easy way to extract this information with a computer program.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>HTML is also notoriously messy—web browsers are very forgiving of syntax errors and other irregularities in HTML (like mismatched or unclosed tags).</strong> For this reason, we need special libraries to parse HTML into data structures that our Python programs can use, libraries that can make a “good guess” about what the structure of an HTML document is, even when that structure is written incorrectly or inconsistently.</p>
+</blockquote>
+<p>Understanding these limitations is important as we start to work with HTML and other web technologies. For more detailed information, I recommend reading through this <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax#what_is_html" target="_blank">introduction from Mozilla on HTML</a>.</p>
+</section>
+</section>
+<section id="web-styling-and-interaction" class="level2">
+<h2 class="anchored" data-anchor-id="web-styling-and-interaction">Web Styling and Interaction</h2>
+<p>So far we’ve been either working with very simple HTML documents (like our example above). To find a middle ground, let’s return to our very first week and take a look at <a href="https://whatisdigitalhumanities.com/" target="_blank">whatisdigitalhumanities.com</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/whatisdigitalhumanities.png" class="img-fluid figure-img"></p>
+<figcaption>What is Digital Humanities</figcaption>
+</figure>
+</div>
+<p>If we open the inspector, we can see that the page is made up of a series of HTML elements.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/inspect_whatisdigitalhumanities.png" class="img-fluid figure-img"></p>
+<figcaption>What is Digital Humanities</figcaption>
+</figure>
+</div>
+<p>You’ll notice that on every website we inspect, the first line is <code>&lt;!DOCTYPE html&gt;</code>. This is called a <strong>document type declaration</strong> and it tells the browser what type of document it is. In this case, it’s an HTML document. Then we see the <code>&lt;html&gt;</code> tag, which is the root element of an HTML page. This element contains two other elements: <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code>. The <code>&lt;head&gt;</code> element contains metadata about the document, while the <code>&lt;body&gt;</code> element contains the actual content of the document. While there are some exceptions, most of the time the <code>&lt;head&gt;</code> element comes before the <code>&lt;body&gt;</code> element, and most websites use both.</p>
+<p>If click the small arrow in the corner, we can start selecting elements. I’m trying to select the black box that says “What is Digital Humanities?”.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/select_title.png" class="img-fluid figure-img"></p>
+<figcaption>What is Digital Humanities</figcaption>
+</figure>
+</div>
+<p>While selecting elements is exciting, it can also be powerful. For example, I could change the very text or color of this element through editing it in the inspector.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/edit_title.png" class="img-fluid figure-img"></p>
+<figcaption>What is Digital Humanities</figcaption>
+</figure>
+</div>
+<p>Now if I reload this page, I’ll lose that change, so this is not permanent. But it does give us a sense of how we can <em>style</em> our webpages.</p>
+<p>In this example, I altered two part of the HTML document:</p>
+<p>The span element with the class <code>title</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">"title"</span><span class="dt">&gt;</span>When Is Digital Humanities?<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And then the styles that are applied to that class:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.title</span> {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">Changa</span><span class="op">,</span> <span class="fu">var(</span><span class="va">--sans-font</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background</span><span class="ch">:</span> <span class="cn">#faf</span><span class="op">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#fff</span><span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This code is something called CSS, which stands for <strong>Cascading Style Sheets</strong>. CSS is a <code>style sheet</code> language that essentially tells the computer how to style and display a document, whether that’s an HTML or Markdown document. We have already used it when we added the <code>style</code> attribute to our <code>&lt;div&gt;</code> element. One way to think about it is that HTML is the structure of the document, while CSS is the style of the document (similar to styling fonts or positioning images in a Word Document for example).</p>
+<p>Much like HTML, CSS has a defined structure that is composed of a <strong>selector</strong> (in our case the <code>.title</code>) and a <strong>declaration block</strong> (the curly brackets), where you write your style rules. The selector specifies which HTML elements the rules apply to, and the declaration block contains one or more declarations separated by semicolons. Each declaration includes a CSS property name and a value, separated by a colon.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>selector {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    property<span class="ch">:</span> <span class="dv">value</span><span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    property<span class="ch">:</span> <span class="dv">value</span><span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    property<span class="ch">:</span> <span class="dv">value</span><span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So in our example, once again the selector is <code>.title</code> and the declaration block contains three declarations: <code>font-family</code>, <code>background</code>, and <code>color</code>. Each declaration has a property name and a value. For example, the <code>font-family</code> property specifies the font family to use (you could change it to something like <code>Garamond</code> or <code>Papyrus</code> if you wanted), and the <code>background</code> property specifies the background color to use (which is what we changed from black to pink). A great resource for learning more about CSS is the Mozilla docs <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/What_is_CSS" target="_blank">https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/What_is_CSS</a>.</p>
+<p>To get a better sense of what this code looks like, we can look directly at the <code>index.html</code> file directly in the GitHub repository <a href="https://github.com/hepplerj/whatisdigitalhumanities" target="_blank">https://github.com/hepplerj/whatisdigitalhumanities</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/whatisdigitalhumanities_index.png" class="img-fluid figure-img"></p>
+<figcaption>What is Digital Humanities</figcaption>
+</figure>
+</div>
+<p>Seeing the full document, we can find both the <code>span</code> element we edited, as well as see how it fits within the overall structure of the HTML document. There’s also a number of other elements that we haven’t discussed yet, but I want to highlight two of them: <code>&lt;style&gt;</code> and <code>&lt;script&gt;</code>.</p>
+<p>If we search for the <code>&lt;style&gt;</code> tags, we can see it is located between lines <code>42</code> and <code>58</code> that it contains the following code:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/whatisdigitalhumanities_style.png" class="img-fluid figure-img"></p>
+<figcaption>What is Digital Humanities</figcaption>
+</figure>
+</div>
+<p>Some of this code looks similar to what we saw in the inspector, but the rest is difficult to read. To help us, we can break down the various elements of this code (select the toggle below to read more):</p>
+<div id="css-deep-dive" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deep Dive Into CSS
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong><span class="citation" data-cites="font-face">@font-face</span></strong> This is a CSS at-rule used to define custom fonts to be used on the website. In your code, there are two custom fonts being defined: ‘Changa’ and ‘Nunito’. The <code>src</code> property specifies the path to the font file, and the <code>format('truetype')</code> indicates the type of font format being used.</p>
+<p><strong>:root</strong> The <code>:root</code> pseudo-class matches the root element of the document, which is the <code>html</code> element. Inside <code>:root</code>, CSS custom properties (also known as CSS variables) are being declared. These variables store values that can be reused throughout the document. For example, <code>--background</code> is set to <code>#fff</code> (white), and <code>--text</code> is set to <code>#111</code> (a very dark gray, almost black).</p>
+<p><strong>[data-theme=“dark”]</strong> This selector targets elements with a <code>data-theme</code> attribute that has the value “dark”. It’s a way to apply a different set of styles when the dark theme is active. The variables defined here override the ones set in <code>:root</code> when the dark theme is applied.</p>
+<p><strong>#darkModeToggle</strong> This targets an element with the ID <code>darkModeToggle</code>, which is likely a button or switch that allows users to toggle dark mode on and off. The styles here define its position and appearance.</p>
+<p><strong>body, h1, h2, h3, h4, h5, a, ul, etc.</strong> These are type selectors that apply styles to HTML elements directly. For instance, <code>body</code> styles apply to the entire body of the document, <code>a</code> styles apply to all anchor (link) elements, and <code>h1</code>, <code>h2</code>, <code>h3</code>, etc., apply to different levels of header elements. These styles define things like colors, fonts, margins, and padding.</p>
+<p><strong>::-webkit-details-marker, .body th, .limiter, .pad1, etc.</strong> These are a mix of pseudo-elements and class selectors. Pseudo-elements like <code>::-webkit-details-marker</code> apply styles to specific parts of an element (in this case, the default disclosure triangle in details elements in WebKit browsers). Class selectors like <code>.limiter</code> apply styles to any element with that class.</p>
+<p><strong><span class="citation" data-cites="media">@media</span></strong> These are media queries that apply styles only when certain conditions are met, such as the screen width being within a specified range. This is used for responsive design to ensure the website looks good on devices of all sizes.</p>
+<p><strong>.code, li code, .m, .s, .no, .k, etc.</strong> These class selectors apply styles to elements with the respective classes, often to style code snippets or certain text elements with specific colors to differentiate them, like syntax highlighting in a code editor.</p>
+<p><strong>button, button:hover</strong> These selectors define the styles for <code>button</code> elements. The <code>button:hover</code> selector applies styles when the user hovers over a button with their mouse, providing a visual cue that the button is interactive.</p>
+</div>
+</div>
+</div>
+<p><strong>Why write code like this?</strong></p>
+<p>Overall, CSS is used to enhance the user experience by providing a visually appealing and functional interface. It allows web developers to:</p>
+<ul>
+<li><p>Apply custom styles to their web pages, making them look unique.</p></li>
+<li><p>Define responsive designs that adapt to different screen sizes and devices.</p></li>
+<li><p>Implement theme toggling (like dark mode) to enhance accessibility and user preference.</p></li>
+<li><p>Ensure that the presentation of the content is consistent across different browsers and platforms.</p></li>
+</ul>
+<p>So here we can see that the <code>.title</code> code we altered is actually part of a larger set of code that is used to style the entire website. This example hopefully shows how powerful and complex web development can be.</p>
+<p>A great example of CSS in action is the <a href="http://www.csszengarden.com/" target="_blank">CSS Zen Garden</a>, which shows how the same HTML document can be styled in a variety of different ways. Another great example is this <a href="https://codepen.io/ste-vg/pen/GRooLza" target="_blank">CodePen</a> that shows how CSS can be used to create a 3D airplane (I found it via <a href="https://dev.to/keefdrive/top-5-most-hearted-animations-and-designs-on-codepen-whats-under-the-hood-5b0l" target="_blank">this blog post</a>).</p>
+<figure class="figure">
+<iframe height="300" style="width: 100%;" scrolling="no" title="Airplanes." src="https://codepen.io/ste-vg/embed/GRooLza?default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+See the Pen <a target="_blank" href="https://codepen.io/ste-vg/pen/GRooLza"> Airplanes.</a> by Steve Gardner (<a target="_blank" href="https://codepen.io/ste-vg"><span class="citation" data-cites="ste-vg">@ste-vg</span></a>) on <a target="_blank" href="https://codepen.io">CodePen</a>.
+</iframe>
+</figure>
+<p>CSS therefore can be used to style our webpages, but it can also be used to add interactivity to our webpages.</p>
+<p>The main other tag that we should pay attention to is the <code>script</code> element is the other way that interactivity happens on most websites. If we search for the <code>&lt;script&gt;</code> tags, we can see it is located between lines <code>80</code> and <code>109</code> that it contains the following code:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/whatisdigitalhumanities_script.png" class="img-fluid figure-img"></p>
+<figcaption>What is Digital Humanities</figcaption>
+</figure>
+</div>
+<p>This code is in a language called JavaScript. This code is using a JavaScript library called jQuery, which is a library that makes it easier to write JavaScript. Unlike HTML or CSS, JavaScript is a <code>programming language</code> (the distinction is not crucial to know but can be helpful when learning about different Digital Humanities methods). At this point, most of the web is powered by JavaScript, so it is incredible powerful and ubiquitous.</p>
+<p>If you want to learn more about what exactly this code is doing, toggle the following section. Full disclosure some of this language and concepts are fairly advanced, so feel free to use the AI tool of your choice or ask the Instructors for help:</p>
+<div id="js-deep-dive" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deep Dive Into JavaScript
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This script is written in JavaScript and uses the D3.js library, which is a powerful tool for creating dynamic and interactive data visualizations in web browsers. It also uses Lodash (indicated by <code>_</code>), which is a utility library that makes JavaScript easier by taking the hassle out of working with arrays, numbers, objects, strings, etc.</p>
+<p>Here’s what each part of the script is doing:</p>
+<p><strong>Loading Data</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>d3<span class="op">.</span><span class="fu">csv</span>(<span class="st">"dayofquotes_full.csv"</span><span class="op">,</span> (error<span class="op">,</span> quotes) <span class="kw">=&gt;</span> {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (error) <span class="cf">throw</span> error<span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This part of the script uses D3’s <code>csv</code> method to load data from a CSV (Comma-Separated Values) file named “dayofquotes_full.csv”. The callback function <code>(error, quotes) =&gt; {...}</code> is executed once the data is loaded. If there’s an error during the loading process, it throws the error, which will stop the execution and typically print an error message to the console.</p>
+<p><strong>Displaying a Random Quote</strong></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>randomQuote <span class="op">=</span> _<span class="op">.</span><span class="fu">sample</span>(quotes<span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Using Lodash’s <code>sample</code> function, the script selects one random item from the <code>quotes</code> array.</p>
+<p><strong>Appending Text to the DOM</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> svg <span class="op">=</span> d3<span class="op">.</span><span class="fu">select</span>(<span class="st">"#quote_text"</span>)<span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> texts <span class="op">=</span> svg<span class="op">.</span><span class="fu">selectAll</span>(<span class="st">"text"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">data</span>(randomQuote)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">enter</span>()<span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>texts<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">attr</span>(<span class="st">"class"</span><span class="op">,</span> <span class="st">"quote_text"</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">text</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">quote</span> )<span class="op">;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>texts<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">attr</span>(<span class="st">"class"</span><span class="op">,</span> <span class="st">"quote_source"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">text</span>(d <span class="kw">=&gt;</span> <span class="st">" "</span> <span class="op">+</span> d<span class="op">.</span><span class="at">name</span> )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This part of the script selects an SVG element with the ID <code>quote_text</code> and binds the <code>randomQuote</code> data to text elements within that SVG. It then enters the data-join, which is a way of joining data to DOM elements. For each quote, it appends two <code>text</code> elements to the SVG: one for the quote text and one for the quote source (the person who said the quote). It sets the class for each text element so that they can be styled with CSS.</p>
+<p><strong>Updating the Quote</strong></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>d3<span class="op">.</span><span class="fu">select</span>(<span class="st">"#update_quote"</span>)<span class="op">.</span><span class="fu">on</span>(<span class="st">"click"</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  randomQuote <span class="op">=</span> _<span class="op">.</span><span class="fu">sample</span>(quotes<span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  d3<span class="op">.</span><span class="fu">select</span>(<span class="st">".quote_text"</span>)<span class="op">.</span><span class="fu">text</span>(d <span class="kw">=&gt;</span> randomQuote[<span class="dv">0</span>]<span class="op">.</span><span class="at">quote</span>)<span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  d3<span class="op">.</span><span class="fu">select</span>(<span class="st">".quote_source"</span>)<span class="op">.</span><span class="fu">text</span>(d <span class="kw">=&gt;</span> <span class="st">" "</span> <span class="op">+</span> randomQuote[<span class="dv">0</span>]<span class="op">.</span><span class="at">name</span>)<span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This part sets up an event listener for a click event on an element with the ID <code>update_quote</code>. When the element is clicked, the script selects a new random quote and updates the text content of the elements with the classes <code>quote_text</code> and <code>quote_source</code> to display the new quote and its source.</p>
+<p><strong>Why Write Code Like This?</strong></p>
+<p>The purpose of this script is to:</p>
+<ul>
+<li>Dynamically load and display content from a data file (in this case, quotes).</li>
+<li>Provide interactivity to the website, allowing users to see a new random quote every time they click the “update_quote” button.</li>
+<li>Use D3.js library to bind data to the web page, which is a common pattern for creating data-driven documents. This is especially useful for visualizations, as it allows the data to directly drive the presentation.</li>
+<li>Enhance the user experience by providing fresh and interesting content each time the user interacts with the quote section.</li>
+</ul>
+<p>This script is a good example of how modern web technologies can be used to create interactive and dynamic web pages that engage users with content.</p>
+</div>
+</div>
+</div>
+<p>To put this more simply, imagine a webpage as a tree with many branches. Each branch and leaf could be a piece of text, a picture, or a button. This tree is what we call the <code>DOM</code>, which stands for <code>Document Object Model</code>. It’s a way of describing the structure and contents of a webpage in a way that programming languages like JavaScript can understand and manipulate.</p>
+<p>Now, let’s break down what the script does step by step:</p>
+<p><strong>Loading the Quotes</strong></p>
+<ul>
+<li>The script starts by asking for a list of quotes from a file named “dayofquotes_full.csv”. Think of this like opening a book to find a bunch of quotes.</li>
+</ul>
+<p><strong>Showing a Random Quote</strong></p>
+<ul>
+<li>Once it has the list of quotes, the script picks one at random. This is like closing your eyes and pointing to a random quote in the book.</li>
+</ul>
+<p><strong>Putting the Quote on the Page</strong></p>
+<ul>
+<li>Next, the script places this random quote onto the webpage. It finds the place where the quote should go (like putting a bookmark on a page) and writes the quote there.</li>
+</ul>
+<p><strong>Changing the Quote</strong></p>
+<ul>
+<li>The script also waits for you to ask for a new quote by clicking a button on the page. When you click the button, it picks another random quote from the list and changes the current quote to the new one. It’s like flipping to another page in the book and reading a different quote.</li>
+</ul>
+<p><strong>Why Do It This Way?</strong></p>
+<p>The reason for writing a script like this is to make the webpage interactive and interesting. Instead of seeing the same quote every time, you get a surprise each time you click the button. It’s a way to keep the website fresh and engaging for visitors.</p>
+<p>Now we can start to understand that the code in the <code>script</code> tag is what controls what happens on each page load, whereas the code in the <code>style</code> tag controls what the page looks like.</p>
+<p>These three technologies, <code>HTML</code>, <code>CSS</code>, and <code>JavaScript</code>, are the three pillars of the web. They are what make the web interactive and dynamic. They can also often make websites slow to load (for example, large JavaScript files can take a long time to load) and difficult to maintain (until recently, each line of code was written by humans).</p>
+<p>In the case of <code>whatisdigitalhumanities</code>, we can even see this effort by exploring the <code>insights</code> page on the GitHub repo, which shows the following graph of the number of commits over time.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/whatisdigitalhumanities_insights.png" class="img-fluid figure-img"></p>
+<figcaption>What is Digital Humanities</figcaption>
+</figure>
+</div>
+<p><em>Available at https://github.com/hepplerj/whatisdigitalhumanities/graphs/contributors</em></p>
+</section>
+<section id="homework-source-and-style" class="level2">
+<h2 class="anchored" data-anchor-id="homework-source-and-style">Homework: Source and Style</h2>
+<p>The assignments below are intended to help you start to explore both some of the web technologies and markup languages we’ve discussed, as well as try your hand at using them. Do your best to get through both assignments, and reach out for help from the Instructors if you get stuck.</p>
+<p>Once you’ve completed the assignments you should push up your materials to your GitHub <code>is310-coding-assignments</code> repository. These materials should be in a new folder <code>source-and-style</code> and share the link to your folder in the GitHub discussion thread <a href="https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/3" target="_blank">https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/3</a>.</p>
+<section id="assignment-1-inspecting-the-cultural-web" class="level3">
+<h3 class="anchored" data-anchor-id="assignment-1-inspecting-the-cultural-web">Assignment 1: Inspecting the Cultural Web</h3>
+<p>To build from our work with digitization, digital libraries, and cultural objects, the goal is to select one digital library, archive, collection, or cultural website relevant to your area of focus and inspect the website in the browser to try and assess how it has been built (you might even see if you can find the GitHub repository for it). In your investigation, you should try and answer the following questions:</p>
+<ul>
+<li>What web technologies (that is HTML, CSS, or JavaScript) were used to build the tool? Are there files that end in <code>.html</code>, <code>.css</code>, or <code>.js</code>? What about files you don’t recognize?</li>
+<li>Who built this website? How many people were involved? How can you tell?</li>
+</ul>
+<p>You can use screenshots to support your assessment, but you should also include a link to the website and the GitHub repository (if you can find it). You are also welcome to use AI tools to help you assess and investigate the web technologies. If you use AI, document the relevant prompts or conversation in an <code>ai-chat-log.md</code> file in your <code>source-and-style</code> folder. You should write your assessment in the <code>README.md</code> file in the <code>source-and-style</code> folder of your <code>is310-coding-assignments</code> repository, and remember to place any screenshots in an <code>images</code> folder (you will need to create a new one for this folder if you decide to include screenshots).</p>
+</section>
+<section id="assignment-2-styling-the-cultural-web" class="level3">
+<h3 class="anchored" data-anchor-id="assignment-2-styling-the-cultural-web">Assignment 2: Styling the Cultural Web</h3>
+<p>For this assignment, the goal is to try creating an HTML page from scratch that presents ONE digitized cultural object related to your project interests. You should create a file called <code>index.html</code> in the <code>source-and-style</code> folder of your <code>is310-coding-assignments</code> repository. You can use the terminal to create the file or your text editor, but the file should be created in the <code>source-and-style</code> folder.</p>
+<p>This HTML file should include the following elements:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">The standard structure of an HTML page (so the <code>&lt;!DOCTYPE html&gt;</code> declaration, <code>&lt;html&gt;</code> tag, <code>&lt;head&gt;</code> tag, and <code>&lt;body&gt;</code> tag)</label></li>
+<li><label><input type="checkbox">At least one heading (so <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, or <code>&lt;h6&gt;</code>)</label></li>
+<li><label><input type="checkbox">At least one div</label></li>
+<li><label><input type="checkbox">At least one paragraph (so <code>&lt;p&gt;</code>)</label></li>
+<li><label><input type="checkbox">At least one link (so <code>&lt;a&gt;</code>)</label></li>
+<li><label><input type="checkbox">At least one list (so <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code>)</label></li>
+<li><label><input type="checkbox">Try to include either some styling (so a <code>&lt;style&gt;</code> tag) or some interactivity (so a <code>&lt;script&gt;</code> tag).</label></li>
+</ul>
+<p>In terms of content, you should include the following about your digital object:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Title of the object</label></li>
+<li><label><input type="checkbox">Any relevant images</label></li>
+<li><label><input type="checkbox">Description of what it represents</label></li>
+<li><label><input type="checkbox">Links to the original collection and object</label></li>
+<li><label><input type="checkbox">Metadata you consider relevant for the object</label></li>
+</ul>
+<p>You’re welcome to add any other elements you want (like CSS for styling for instance!), but these are the minimum requirements. Once you’ve created your file you should open it in your browser and inspect it to make sure it looks the way you want it to. And then you should push it up to GitHub.</p>
+<p>As a reminder our standard git workflow is:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Completed Source and Style Assignment"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you have any questions or need help, please don’t hesitate to use the AI tool of your choice or reach out to the Instructors for help.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>IS310 Culture As Data - Fall 2026</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
