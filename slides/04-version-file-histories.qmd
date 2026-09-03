@@ -74,12 +74,16 @@ The file extension tells the computer what type of file it is and what program t
 
 ## Proprietary vs Open Formats
 
-**Proprietary formats** are owned by a company, like how Microsoft Word owns the format of `.doc` or `.docx`, which means a file with that extension can only be read in Word.
+Some file formats depend on particular software ecosystems.
+
+. . .
+
+For example, `.docx` files are designed for Microsoft Word and similar word processors.
 
 ![](https://www.collaboraonline.com/wp-content/uploads/2025/09/doc-vs-docx-vs-odf-002.png)
 
 ::: {.notes}
-For example, a `.docx` file is a Microsoft Word document, a `.jpg` file is an image, and a `.mp3` file is an audio file. Some file formats are proprietary, meaning they are owned by a company and can only be opened by certain programs. For example, `.docx` files can only be opened by Microsoft Word.
+For example, a `.docx` file is a Microsoft Word document, a `.jpg` file is an image, and a `.mp3` file is an audio file. Some file formats depend on particular software ecosystems, meaning they may work best in certain programs even if other tools can sometimes open them. The point is not that Word is the only possible way to open a `.docx`, but that the file is designed for a particular kind of software environment.
 :::
 
 ## What is this?
@@ -87,25 +91,24 @@ For example, a `.docx` file is a Microsoft Word document, a `.jpg` file is an im
 ![Strange characters?](https://www.fonelab.com/images/data-retriever/fonelab-data-retriever-how-to-corrupt-a-word-file-doc-text-only.jpg){height="400"}
 
 ::: {.notes}
-This gibberish is actually the code that makes up the file, but since the PDF Viewer doesn't know how to read the code it just shows you the code itself rather than the data stored in the files. This is what happens when you try to open a Word document in a text editor - it shows the underlying code rather than the formatted document.
+This gibberish is actually part of the structured information that makes up the file, but since the PDF viewer or text editor doesn't know how to interpret that structure, it shows you the underlying contents rather than the formatted document.
 :::
 
 ## Proprietary All the Way Down
 
 To be clear, `.doc` was invented in 1983 along with the first version of the *software* for Microsoft Word which ran on MS-DOS, whereas `.docx` was only introduced in 2007 as part of an XML-based update to the software.
 
-[![History of Word](https://upload.wikimedia.org/wikipedia/en/a/a2/Microsoft_Word_for_Unix_floppy_disk.jpg)](https://en.wikipedia.org/wiki/History_of_Microsoft_Word)
+[![History of Word](https://upload.wikimedia.org/wikipedia/en/a/a2/Microsoft_Word_for_Unix_floppy_disk.jpg)](https://en.wikipedia.org/wiki/History_of_Microsoft_Word){target="_blank"}
 
-# What Are Open Source File Formats?
+# What Are Open or Plain Text Formats?
 
-**Open source formats** can be opened by many programs and are not owned by one company.
+Open or plain text based formats are easier to inspect directly.
 
 - `.txt` files work with any text editor
-- `.csv` files work with any spreadsheet software
 - Main benefit? More sustainable and portable
 
 :::{.notes}
-Other file formats are open source, meaning they are not owned by a company and can be opened by many different programs. For example, `.txt` files are plain text files that can be opened by any text editor. When we used the `touch` command, we told the terminal to create a `.txt` file. This is because `.txt` files are the simplest file format and only contain text. 
+Other file formats are open or plain text based, meaning they can be opened by many different programs and are easier to inspect directly. For example, `.txt` files are plain text files that can be opened by any text editor. When we used the `touch` command, we told the terminal to create a `.txt` file. This is because `.txt` files are the simplest file format and only contain text.
 :::
 
 ## Plain Text vs Formatted Text
@@ -121,7 +124,7 @@ But Word contains **hidden formatting** that `.txt` does not.
 In programming, we want to be **explicit** - so plain text is preferable.
 
 ::: {.notes}
-As scholars working with computers, we need to be aware of the ways plain text and formatted text differ. While they might look similar, Word Documents contain a lot of hidden formatting that .txt files do not. Today, we have been talking a lot about *text*, from text commands to text files. But the core concept with both of these is the idea of plain text.
+As scholars working with computers, we need to be aware of the ways plain text and formatted text differ. While a Word document and a `.txt` file might look similar to us, the Word document contains a lot of hidden formatting that the `.txt` file does not. Today, we have been talking a lot about text, from text commands to text files. But the core concept with both of these is the idea of plain text.
 :::
 
 ## What is Plain Text? The Unicode Definition
@@ -186,7 +189,7 @@ The curl command is a command line tool for transferring data and downloading fi
 
 ## Windows Alternatives
 
-**Using WSL or Git Bash:**
+**Using WSL/Ubuntu:**
 
 ```sh
 wget https://www.gutenberg.org/files/1342/1342-0.txt > pride-and-prejudice.txt
@@ -196,12 +199,12 @@ wget https://www.gutenberg.org/files/1342/1342-0.txt > pride-and-prejudice.txt
 
 **Using PowerShell:**
 
-```sh
+```powershell
 wget https://www.gutenberg.org/files/1342/1342-0.txt -OutFile pride-and-prejudice.txt
 ```
 
 ::: {.notes}
-wget stands for "web get" and is a similar command line tool for retrieving and downloading files from the web. PowerShell requires slightly different syntax with the -OutFile flag.
+If students are using WSL/Ubuntu on Windows, `wget` works like a Unix command. If they are using PowerShell and not WSL, the command looks slightly different because PowerShell treats `wget` as an alias for its own web request command. PowerShell requires the `-OutFile` flag.
 :::
 
 # Working with Text Files
@@ -268,9 +271,9 @@ grep pride pride-and-prejudice.txt
 The grep command allows us to search for specific words or patterns in a file. It returns all lines containing the search term.
 :::
 
-## Counting Occurrences
+## Counting Matching Lines
 
-How many times does "pride" appear?
+How many lines include "pride"?
 
 ```sh
 grep -c pride pride-and-prejudice.txt
@@ -278,14 +281,14 @@ grep -c pride pride-and-prejudice.txt
 
 . . .
 
-Result: **43 times**
+Result: **43 lines**
 
 . . .
 
-**Your turn:** How many times does "prejudice" appear?
+**Your turn:** How many lines include "prejudice"?
 
 ::: {.notes}
-The -c flag with grep counts the number of matches instead of displaying them. This is useful for quick text analysis.
+The `-c` flag with grep counts the number of matching lines instead of displaying them. This is useful for quick text analysis, but it is not quite the same thing as counting every individual occurrence of a word, since a line could include the same word more than once.
 :::
 
 ## Command Summary
@@ -297,7 +300,7 @@ The -c flag with grep counts the number of matches instead of displaying them. T
 | `wc -w` | Count words |
 | `wc -l` | Count lines |
 | `grep` | Search for text |
-| `grep -c` | Count occurrences |
+| `grep -c` | Count matching lines |
 
 # Introducing Markdown
 
@@ -320,9 +323,9 @@ While .txt files are useful, in digital humanities we often use a file format ca
 ## Creating a Markdown File
 
 ```sh
-touch is310-computing-humanities.md
+touch is310-culture-as-data.md
 # OR (PowerShell)
-New-Item -ItemType File -Name is310-computing-humanities.md
+New-Item -ItemType File -Name is310-culture-as-data.md
 ```
 
 . . .
@@ -330,7 +333,7 @@ New-Item -ItemType File -Name is310-computing-humanities.md
 Open in VS Code and add:
 
 ```md
-Computing in the Humanities is defined as the application of computational methods and tools to the study of humanistic questions.
+Culture as Data asks how cultural materials, practices, and communities become structured, interpreted, and transformed through data.
 ```
 
 ::: {.notes}
@@ -342,15 +345,15 @@ We can create a Markdown file using the touch command and adding .md to the end 
 Put two asterisks on either side:
 
 ```md
-**Computing in the Humanities** is defined as ...
+**Culture as Data** asks how cultural materials become structured data.
 ```
 
 . . .
 
-Renders as: **Computing in the Humanities** is defined as ...
+Renders as: **Culture as Data** asks how cultural materials become structured data.
 
 ::: {.notes}
-Maybe we want to highlight the word "Computing in the Humanities" in bold. To do this we would put two asterisks on either side of the word.
+Maybe we want to highlight the phrase "Culture as Data" in bold. To do this we would put two asterisks on either side of the phrase.
 :::
 
 ## Adding Italics
@@ -358,15 +361,15 @@ Maybe we want to highlight the word "Computing in the Humanities" in bold. To do
 Put one asterisk on either side:
 
 ```md
-**Computing in the Humanities** is *defined* as ...
+**Culture as Data** asks how cultural materials become *structured data*.
 ```
 
 . . .
 
-Renders as: **Computing in the Humanities** is *defined* as ...
+Renders as: **Culture as Data** asks how cultural materials become *structured data*.
 
 ::: {.notes}
-We could also put defined into italics by putting one asterisk on either side of the word.
+We could also put `structured data` into italics by putting one asterisk on either side of the phrase.
 :::
 
 ## Adding Headings
@@ -374,7 +377,7 @@ We could also put defined into italics by putting one asterisk on either side of
 Put a hashtag in front:
 
 ```md
-# Welcome to Computing in the Humanities
+# Welcome to Culture as Data
 ```
 
 . . .
@@ -442,7 +445,7 @@ GitHub **renders Markdown automatically**
 - Integrates with version control
 
 ::: {.notes}
-Finally, Markdown plays nicely with Github, which renders it directly in your browser. This makes it easy to push up your files into your repositories.
+Finally, Markdown plays nicely with GitHub, which renders it directly in your browser. This makes it easy to push up your files into your repositories.
 :::
 
 ## Markdown: A Brief History
@@ -492,9 +495,9 @@ GitHub Flavored Markdown is a superset of Markdown, meaning it adds additional f
 
 CommonMark is another popular Markdown style and improvements to it are discussed in this repository [https://github.com/commonmark/commonmark-spec/issues](https://github.com/commonmark/commonmark-spec/issues){target="_blank"}.
 
-# First Exercise
+# Practice Exercise
 
-Currently, your `README.md` is your first assignment [Init IS310 Homework](../materials/introducing-defining-cad/03-intro-versioning.qmd#homework-init-is310){target="_blank"}. But what be some problems with this approach?
+Currently, your `README.md` is your first assignment [Init IS310 Homework](../materials/introducing-defining-cad/03-intro-versioning.qmd#homework-init-is310){target="_blank"}. What are some problems with this approach?
 
 . . .
 
@@ -502,11 +505,15 @@ Currently, your `README.md` is your first assignment [Init IS310 Homework](../ma
 
 ## `init_is310`
 
-However, that is not very sustainable for the course since all your assignments will be in that folder.  So, your first goal is to clean up your repository so that your first homework assignment has it's own folder `init_is310`, which contains your initial `README.md` and any images. 
+Your first goal is to clean up your repository so that your first homework assignment has its own folder: `init_is310`.
+
+. . .
+
+That folder should contain your initial `README.md` and any images.
 
 ## Improve Your README.md
 
-Then you will create a new `README.md` file in the root of your `is310-coding-assignments` that will be the main home page for your homework repository. 
+Then create a new `README.md` file in the root of your `is310-coding-assignments` repository.
 
 . . .
 
@@ -518,16 +525,15 @@ Try adding:
 
 . . .
 
-**Bonus:** Add a link to our course website!
+You can use AI tools and the [GitHub Markdown Cheatsheet](https://github.com/lifeparticle/Markdown-Cheatsheet){target="_blank"} to help you.
 
 ::: {.notes}
-Now that you have a basic understanding of Markdown, let's try improving the README.md file in your repository.
+Now that students have a basic understanding of Markdown, this exercise asks them to improve the README.md file in their repository. The lesson frames this as both a Markdown practice exercise and a sustainability issue: the root README should help someone understand the whole repository, not only hold the first assignment.
 :::
 
 ## Helpful Resources
 
-- [GitHub Markdown Cheatsheet](https://github.com/lifeparticle/Markdown-Cheatsheet){target="_blank"}
-- AI tools (GitHub Copilot, etc.)
+- AI tools, if useful
 - VS Code Markdown Preview
 
 . . .
@@ -571,9 +577,10 @@ Your maze should have:
 - [ ] At least 5 files (can be nested)
 - [ ] One hidden file or directory
 - [ ] Clues to help solve the maze
+- [ ] `ai-chat-log.md` if you use AI
 
 ::: {.notes}
-Your directories, files, and clues should relate to the cultural data topic you are interested in exploring this semester. You are welcome to use Project Gutenberg for your files, but you can also use other files if you prefer. You can also use the command line to create your files, or use a text editor.
+Your directories, files, and clues should relate to the cultural data topic you are interested in exploring this semester. You are welcome to use Project Gutenberg for your files, but you can also use other files if you prefer. You can also use the command line to create your files, or use a text editor. If you use AI to help create, troubleshoot, or solve the maze, include an `ai-chat-log.md` file.
 :::
 
 ## Documentation Required
@@ -592,6 +599,22 @@ Include a `README.md` in your maze folder:
 Be sure to not zip the README.md file, as we will need to read this file to solve the maze.
 :::
 
+## Hidden Files on Windows
+
+Dotfiles are hidden by default on Mac/Linux, but not always in PowerShell.
+
+. . .
+
+If your maze depends on hidden files, include:
+
+```powershell
+hide-dotfiles.ps1
+```
+
+::: {.notes}
+Different operating systems handle hidden files differently. If students want their hidden files and folders to behave as hidden on Windows, they should include a PowerShell script in the maze folder named hide-dotfiles.ps1 and tell PowerShell users to run it after unzipping the maze.
+:::
+
 ## Zipping Your Maze
 
 **Mac/Linux/WSL:**
@@ -604,7 +627,7 @@ zip -r path/to/your/zip/file path/to/your/directory
 
 **PowerShell:**
 
-```sh
+```powershell
 Compress-Archive -Path "path\to\your\directory" -DestinationPath "path\to\your\zip\file"
 ```
 
@@ -615,11 +638,11 @@ Once you have created your maze, you should zip the folder that contains your ma
 ## Submission
 
 1. Upload zipped maze to your `is310-coding-assignments` repo
-2. Post link in [GitHub Discussion](https://github.com/cultureasdata-uiuc/is310-spring-2026/discussions/2){target="_blank"}
+2. Post link in [GitHub Discussion](https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/2){target="_blank"}
 
 . . .
 
-**Need inspiration?** Try the [example maze](https://github.com/CultureAsData-UIUC/is310-spring-2026/blob/main/assets/files/cli_exercises/zipped_gutenberg_maze.zip){target="_blank"}
+**Need inspiration?** Try the [example maze](https://github.com/CultureAsData-UIUC/is310-fall-2026/blob/main/assets/files/cli_exercises/zipped_gutenberg_maze.zip){target="_blank"}
 
 ::: {.notes}
 If you need inspiration for your maze, take a look at the example maze which you can download and try solving.
@@ -655,7 +678,7 @@ unzip path/to/your/zip/file -d path/to/your/desired/directory
 
 **PowerShell:**
 
-```sh
+```powershell
 Expand-Archive -Path "path\to\your\zip\file" -DestinationPath "path\to\your\desired\directory"
 ```
 
@@ -674,7 +697,7 @@ The -d flag or -DestinationPath just tells the terminal where to unzip the file.
 | `pwd` | Check current location |
 
 ::: {.notes}
-Your goal is to use both the command line cheatsheet and your preferred AI chatbot to solve the maze. You should be able to solve the maze in ~30 minutes.
+Students can use the command line cheatsheet, the lesson, peers, or an AI chatbot if useful. If they use AI to help create, troubleshoot, or solve the maze, they should include an `ai-chat-log.md` file.
 :::
 
 ## When You Solve It

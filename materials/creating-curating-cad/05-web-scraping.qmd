@@ -4,9 +4,9 @@ toc: true
 ---
 
 ::: {.callout-note}
-⚡️ This lesson has been adapted from Melanie Walsh's chapter on Web Scraping in <i>Introduction to Cultural Analytics & Python</i> textbook <a href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/02-Web-Scraping-Part1.html">https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/02-Web-Scraping-Part1.html</a>. Many thanks to Melanie for sharing their materials!
+⚡️ This lesson has been adapted from Melanie Walsh's chapter on Web Scraping in <i>Introduction to Cultural Analytics & Python</i> textbook <a target="_blank" href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/02-Web-Scraping-Part1.html">https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/02-Web-Scraping-Part1.html</a>. Many thanks to Melanie for sharing their materials!
 
-Also the materials from our in-class scraping are available to download. Here is our <a href="../../assets/files/first_web_scraping.py" download>`first_web_scraper.py`</a>; our <a href="../../assets/files/hp_scraper.py" download>`hp_scraper.py`</a>; and the complete <a href="../../assets/files/tolkien_gateway_scraper.py" download>`tolkien_gateway_scraper.py`</a> that we build up over the second half of this lesson.
+Also the materials from our in-class scraping are available to download. Here is our <a target="_blank" href="../../assets/files/first_web_scraping.py" download>`first_web_scraper.py`</a>; our <a target="_blank" href="../../assets/files/hp_scraper.py" download>`hp_scraper.py`</a>; and the complete <a target="_blank" href="../../assets/files/tolkien_gateway_scraper.py" download>`tolkien_gateway_scraper.py`</a> that we build up over the second half of this lesson.
 :::
 
 ::: {.callout-important}
@@ -25,13 +25,13 @@ Now that we have learned how to work with Python modules and read and write file
 
 So far when it comes to working with the web, you have been creating your own HTML pages and hosting them via GitHub. But we can also use Python to interact with the web in a different way: by scraping data from web pages. The data we extract is exactly the same as what you have been writing, so elements like headers, paragraphs, and links, etc.
 
-Web scraping can be incredibly useful considering how much data is available on the web and how little of it is often put into tabular format. For example, you might want to scrape a web archive to get data for a research project, or you might want to scrape a social media site to get access to data that isn't available through their API. 
+Web scraping can be incredibly useful considering how much data is available on the web and how little of it is often put into tabular format. For example, you might want to scrape a web archive to get data for a research project, or you might want to scrape a social media site to get access to data that isn't available through their API.
 
 Web scraping is also what we use to preserve the web. Remember the Wayback Machine? That's a web archive that uses web scraping to save web pages. The way it works is that it uses a web crawler to find links to web pages and then it uses web scraping to save the content of those pages.
 
 ![A screenshot of SUCHO.](../../assets/images/sucho.png)
 
-This method has also been used by scholars to do community-driven data preservation. For example, when Russia invaded Ukraine, a group of scholars and librarians founded the *Saving Ukrainian Cultural Heritage Online* (SUCHO) group and used web scraping to preserve the content of Ukrainian websites [https://www.sucho.org/](https://www.sucho.org/). This was important because if servers are bombed, the content of those websites would be lost forever.
+This method has also been used by scholars to do community-driven data preservation. For example, when Russia invaded Ukraine, a group of scholars and librarians founded the *Saving Ukrainian Cultural Heritage Online* (SUCHO) group and used web scraping to preserve the content of Ukrainian websites [https://www.sucho.org/](https://www.sucho.org/){target="_blank"}. This was important because if servers are bombed, the content of those websites would be lost forever.
 
 ### Is Web Scraping Legal or Ethical?
 
@@ -42,7 +42,7 @@ In terms of ethics, web scraping can be a bit of a grey area. It's generally con
 
 ![A screenshot of the New York Times robots.txt file.](../../assets/images/robots.png)
 
-For example,the above image is of the robots.txt file for the New York Times website is [https://www.nytimes.com/robots.txt](https://www.nytimes.com/robots.txt). We can see that it lists a number of pages that are not allowed to be scraped (those are the ones with the `Disallow` directive). You might also come across `robots.txt` files that have a `Crawl-delay` directive, which tells web crawlers how long to wait between requests. The reason this is important is that if you try to web scrape a website that has a `robots.txt` file that prohibits scraping, you could be banned from the website. This is because the website might think you are a web crawler and not a human, and it might block your IP address.
+For example,the above image is of the robots.txt file for the New York Times website is [https://www.nytimes.com/robots.txt](https://www.nytimes.com/robots.txt){target="_blank"}. We can see that it lists a number of pages that are not allowed to be scraped (those are the ones with the `Disallow` directive). You might also come across `robots.txt` files that have a `Crawl-delay` directive, which tells web crawlers how long to wait between requests. The reason this is important is that if you try to web scrape a website that has a `robots.txt` file that prohibits scraping, you could be banned from the website. This is because the website might think you are a web crawler and not a human, and it might block your IP address.
 
 What to collect and how to collect it is a big part of the ethics of web scraping. Melanie Walsh has a great overview of some of these tradeoffs:
 
@@ -56,7 +56,7 @@ IRB refers to the Institutional Review Board, which is a committee that reviews 
 
 ![A screenshot from Walsh chapter.](../../assets/images/walsh_web_scraping.png)
 
-As you can see above, Walsh also has a great overview of different strategies and resources for this type of work, so highly recommend visiting the original chapter to explore these further in depth [https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/01-User-Ethics-Legal-Concerns.html](https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/01-User-Ethics-Legal-Concerns.html).
+As you can see above, Walsh also has a great overview of different strategies and resources for this type of work, so highly recommend visiting the original chapter to explore these further in depth [https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/01-User-Ethics-Legal-Concerns.html](https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/01-User-Ethics-Legal-Concerns.html){target="_blank"}.
 
 ## Web Scraping with Python
 
@@ -64,7 +64,7 @@ Now that we have a sense of web scraping generally, it's time to try it out in P
 
 ### Installing Required Packages
 
-The first step is to install our required packages into our virtual environment. If you have yet to set up a virtual environment, you can follow the instructions in the [previous lesson](../creating-curating-cad/04-virtual-environments).
+The first step is to install our required packages into our virtual environment. If you have yet to set up a virtual environment, you can follow the instructions in the [previous lesson](../creating-curating-cad/04-virtual-environments){target="_blank"}.
 
 If you have already created your virtual environment, then you can either activate it using Visual Studio Code or by using the terminal. If you are using the terminal, you can activate your virtual environment by running the following command:
 
@@ -82,10 +82,10 @@ We previously discussed Python libraries when we talked about classes and virtua
 **Library**
 
 - There's a lot of different definitions for this term, but most generally you can think of this as a collection of software that's directly used by other software. Most often, this will be a generalizable piece of logic that is useful to bundle separately so that other, unrelated pieces of software can use it. Because it's an informal term in Python and not a specific, technical one, it's more useful to think about libraries in terms of how code is organized. Used in this way, the concept of "software libraries" spans many different programing languages and development contexts: we have Python libraries, C++ libraries, Javascript libraries, operating system libraries, etc.
-- Let's consider libraries that we've used. The [Python Standard Library](https://docs.python.org/3/library/) is the most obvious example which encompasses many different purposes and packages (more on that later), but is unified in that it is included in all Python installations so that Python code that's written using the Standard Library will run on any compatible Python environment of the expected version. Parts of the Standard Library that we've used before include packages like [pathlib](https://docs.python.org/3/library/pathlib.html).
-- There are also third-party libraries that people build in Python, which can be found on The Python Package Index (PyPI) <https://pypi.org/>. These are usually less expansive than the Standard Library, but can be useful because they are written for specialized tasks. This week, we'll take a look at [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/), which is analogous in scope to packages like pathlib. In fact, third party libraries are often organized into a single package. A library like Beautiful Soup can best be thought of in terms of purpose: you want to accomplish the a particular, common task like scraping a website and Beautiful Soup helps accomplish it.
+- Let's consider libraries that we've used. The [Python Standard Library](https://docs.python.org/3/library/){target="_blank"} is the most obvious example which encompasses many different purposes and packages (more on that later), but is unified in that it is included in all Python installations so that Python code that's written using the Standard Library will run on any compatible Python environment of the expected version. Parts of the Standard Library that we've used before include packages like [pathlib](https://docs.python.org/3/library/pathlib.html){target="_blank"}.
+- There are also third-party libraries that people build in Python, which can be found on The Python Package Index (PyPI) <https://pypi.org/>. These are usually less expansive than the Standard Library, but can be useful because they are written for specialized tasks. This week, we'll take a look at [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/){target="_blank"}, which is analogous in scope to packages like pathlib. In fact, third party libraries are often organized into a single package. A library like Beautiful Soup can best be thought of in terms of purpose: you want to accomplish the a particular, common task like scraping a website and Beautiful Soup helps accomplish it.
 
-**Package** 
+**Package**
 
 - A package is a formal term in the Python context. It's a specific organization of code which all lives in a single directory. Libraries sometimes (often) consist of a single package (e.g. PathLib or BS4), so the term is sometimes (often) used interchangeably. Packages are the basic unit by which we install and use libraries. So when we type `pip install beautifulsoup4` into the terminal, we're installing the `beautifulsoup4` package.
 
@@ -93,7 +93,7 @@ This is very detailed, but just remember that while these terms are often used i
 
 Finally, you'll see that I often use `pip` or `pip3` when installing packages. This is because `pip` is the package installer for Python and `pip3` is the package installer for Python 3. If you're using Python 3, you can use either `pip` or `pip3`, but if you're using Python 2, you should use `pip2`. So generally, you'll want to use `pip` to install packages but to double check you're installing packages for the right version of Python, you can check the version of Python you're using by running `python --version` and then use the corresponding `pip` command.
 
----- 
+----
 
 Now we can starting using these packages in our Python code. First, we need to create a new folder in our `is310-coding-assignments` called `web-scraping` and then create a new file called `first_web_scraping.py`. Then we can add the following code to our file:
 
@@ -107,7 +107,7 @@ You'll likely see the following error if you try to run this code:
 
 That is because `beautifulsoup4` is not a package that we can import directly. Instead, we need to import the `BeautifulSoup` class from the `bs4` package. This difference is a bit confusing since the name of the package on PyPI (`beautifulsoup4`) doesn't match the actual Python code package (`bs4`).
 
-But this is a great example of why we always want to read the documentation, which is available here [https://www.crummy.com/software/BeautifulSoup/bs4/doc/](https://www.crummy.com/software/BeautifulSoup/bs4/doc/).
+But this is a great example of why we always want to read the documentation, which is available here [https://www.crummy.com/software/BeautifulSoup/bs4/doc/](https://www.crummy.com/software/BeautifulSoup/bs4/doc/){target="_blank"}.
 
 ![A screenshot of the BeautifulSoup documentation.](../../assets/images/beautifulsoup_documentation.png)
 
@@ -153,7 +153,7 @@ I usually just use the built-in `html.parser` parser, but you can use the `lxml`
 
 ### BeautifulSoup Basics
 
-In the `Quick Start` guide [https://beautiful-soup-4.readthedocs.io/en/latest/#quick-start](https://beautiful-soup-4.readthedocs.io/en/latest/#quick-start), we have an example of how to use the `BeautifulSoup` class to parse an HTML document. Let's try this example in our `first_web_scraping.py` file.
+In the `Quick Start` guide [https://beautiful-soup-4.readthedocs.io/en/latest/#quick-start](https://beautiful-soup-4.readthedocs.io/en/latest/#quick-start){target="_blank"}, we have an example of how to use the `BeautifulSoup` class to parse an HTML document. Let's try this example in our `first_web_scraping.py` file.
 
 ```python
 html_doc = """
@@ -162,9 +162,9 @@ html_doc = """
 <p class="title"><b>The Dormouse's story</b></p>
 
 <p class="story">Once upon a time there were three little sisters; and their names were
-<a href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,
-<a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
-<a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
+<a target="_blank" href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,
+<a target="_blank" href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
+<a target="_blank" href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
 and they lived at the bottom of a well.</p>
 
 <p class="story">...</p>
@@ -196,15 +196,15 @@ We've already started to use `BeautifulSoup` class, but let's take a closer look
 
 We usually define a `BeautifulSoup` object by passing in the HTML document and the parser we want to use. You'll notice that the variable containing the `BeautifulSoup` object is often called `soup`, but you can call it whatever you want.
 
-The core power of `BeautifulSoup` is that it let's you navigate the HTML Document like a tree, which you can read more about here [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#navigating-the-tree](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#navigating-the-tree).
+The core power of `BeautifulSoup` is that it let's you navigate the HTML Document like a tree, which you can read more about here [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#navigating-the-tree](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#navigating-the-tree){target="_blank"}.
 
 Remember in HTML we can have nested HTML elements, and so `BeautifulSoup` let's us use that structure to find elements. Otherwise, this would just be **unstructured text** which is difficult to work with.
 
-So far to navigate the tree we've been using the `find_all` method, which has the following documentation [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#find-all](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#find-all).
+So far to navigate the tree we've been using the `find_all` method, which has the following documentation [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#find-all](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#find-all){target="_blank"}.
 
 ![A screenshot of the find_all method documentation.](../../assets/images/bs4_find_all.png)
 
-In the documentation, it talks about how this method "looks through a tag’s descendants and retrieves all descendants that match your filters." This is a bit confusing, but what it means is that the `find_all` method searches through the HTML document and retrieves all the elements that match the filter you give it. 
+In the documentation, it talks about how this method "looks through a tag’s descendants and retrieves all descendants that match your filters." This is a bit confusing, but what it means is that the `find_all` method searches through the HTML document and retrieves all the elements that match the filter you give it.
 
 So to go back to our previous example:
 
@@ -285,7 +285,7 @@ You don't need to memorize every functionality in `BeautifulSoup`, but it's good
 
 ### Scraping Project Gutenberg
 
-So far we've been using some fairly basic HTML but we can start working with an actual HTML document. Today we'll be using *Project Gutenberg*'s Top 100 eBooks page [https://www.gutenberg.org/browse/scores/top](https://www.gutenberg.org/browse/scores/top). This page lists the top 100 eBooks on *Project Gutenberg* and we can use `BeautifulSoup` to scrape the titles.
+So far we've been using some fairly basic HTML but we can start working with an actual HTML document. Today we'll be using *Project Gutenberg*'s Top 100 eBooks page [https://www.gutenberg.org/browse/scores/top](https://www.gutenberg.org/browse/scores/top){target="_blank"}. This page lists the top 100 eBooks on *Project Gutenberg* and we can use `BeautifulSoup` to scrape the titles.
 
 First, we're going to save the page as an HTML file. You can do this by right clicking on the page and selecting "Save As" and then saving it as `top_100_ebooks.html` in the same directory as your `first_web_scraping.py` file.
 
@@ -304,7 +304,7 @@ You can see we now have the full html page in all it's weirdly organized HTML gl
 
 While it's great to be able to just see the HTML, usually we are scraping to structured HTML data and turn it into a structured data format like a CSV or JSON file. So let's try and get the titles of the top 100 eBooks.
 
-First, let's take a look at the structure of the HTML document. We can use the inspect feature in your browser to do this. 
+First, let's take a look at the structure of the HTML document. We can use the inspect feature in your browser to do this.
 
 ![](../../assets/images/inspect_top_100_ebooks_h2.png)
 
@@ -326,8 +326,8 @@ However, you'll notice if we are running this code that we will get **all** the 
 
 In your `first_web_scraping.py` file, try to modify the code so that it only prints the titles of the `Top 100 EBooks yesterday` section. To do this, you'll need to access the correct tag for `Top 100 EBooks yesterday` and then use `BeautifulSoup` to navigate to the correct `ol` tag. Finally, we want to print just the title of each book. To help you I would recommend taking a look at the following functions in the `BeautifulSoup` documentation:
 
-- `find_next()` [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#find-all-next-and-find-next](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#find-all-next-and-find-next)
-- `get_text()` [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#get-text](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#get-text)
+- `find_next()` [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#find-all-next-and-find-next](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#find-all-next-and-find-next){target="_blank"}
+- `get_text()` [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#get-text](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#get-text){target="_blank"}
 
 However, you are welcome to solve this problem in any way you want!
 
@@ -342,13 +342,13 @@ from bs4 import BeautifulSoup
 import requests
 ```
 
-Let's also take a look at the documentation for the `requests` library [https://requests.readthedocs.io/en/latest/](https://requests.readthedocs.io/en/latest/). 
+Let's also take a look at the documentation for the `requests` library [https://requests.readthedocs.io/en/latest/](https://requests.readthedocs.io/en/latest/){target="_blank"}.
 
 ![](../../assets/images/requests_documentation.png)
 
-You'll notice the tag line for the library is "HTTP for Humans" which is a great way to think about it. The `requests` library is a library that allows us to send HTTP requests to web pages as if we were a web browser. As you remember from our [lesson on the web](../introducing-defining-cad/08-intro-web), when you go to a URL in your browser, your browser sends an HTTP request to the server and the server sends back an HTTP response. The `requests` library allows us to do the same thing in Python.
+You'll notice the tag line for the library is "HTTP for Humans" which is a great way to think about it. The `requests` library is a library that allows us to send HTTP requests to web pages as if we were a web browser. As you remember from our [lesson on the web](../introducing-defining-cad/08-intro-web){target="_blank"}, when you go to a URL in your browser, your browser sends an HTTP request to the server and the server sends back an HTTP response. The `requests` library allows us to do the same thing in Python.
 
-If we go to the `Quickstart` page [https://requests.readthedocs.io/en/stable/user/quickstart/](https://requests.readthedocs.io/en/stable/user/quickstart/), we can see how we not only import the library but also how we can use it.
+If we go to the `Quickstart` page [https://requests.readthedocs.io/en/stable/user/quickstart/](https://requests.readthedocs.io/en/stable/user/quickstart/){target="_blank"}, we can see how we not only import the library but also how we can use it.
 
 For example, the core method in the `requests` library is the `get()` method, which is used to get a web page. The `get()` method returns a `Response` object, which has a `status_code` attribute that contains the status code of the request and a `headers` attribute that contains the headers of the request. Let's try it with our `Project Gutenberg` page.
 
@@ -365,7 +365,7 @@ Status code: 200
 Header: {'date': 'Wed, 06 Oct 2021 17:00:01 GMT', 'server': 'Apache', 'content-location': 'top.php', 'vary': 'negotiate,Accept-Encoding', 'tcn': 'choice', 'content-encoding': 'gzip', 'content-length': '11521', 'x-backend': 'gutenweb5', 'content-type': 'text/html; charset=UTF-8'}
 ```
 
-The `status_code` attribute contains the status code of the request and the `headers` attribute contains the headers of the request. The status code `200` means that the request was successful and the headers contain information about the request. If you don't get a `200` you can refresh your knowledge of the [other status codes in our lesson on the web](../introducing-defining-cad/08-intro-web#what-is-http) but it usually means that either:
+The `status_code` attribute contains the status code of the request and the `headers` attribute contains the headers of the request. The status code `200` means that the request was successful and the headers contain information about the request. If you don't get a `200` you can refresh your knowledge of the [other status codes in our lesson on the web](../introducing-defining-cad/08-intro-web#what-is-http){target="_blank"} but it usually means that either:
 
 - you don't have access to the web page (so a status code of `403` or `404`)
 - that there's an error on the server (so a status code of `500`)
@@ -520,16 +520,16 @@ def check_gutenberg_page_exists(url):
 		return False
 ```
 
-Now when we rerun our code, we should see that we are able to get the status code for each of the links! 
+Now when we rerun our code, we should see that we are able to get the status code for each of the links!
 
 Many web pages use relative links, so this is a common issue when scraping web pages and it's why it's important to always inspect and explore the HTML of the web page you are scraping.
 
 ### Advanced Web Scraping
 
-So far we have been scraping web pages that are relatively simple, but what if we wanted to scrape a more complex web page? For example, what if we wanted to scrape a fandom wiki page? These pages are often more complex because they have more complex HTML and CSS. Let's try scraping the *Lord of the Rings* wiki page [https://lotr.fandom.com/wiki/Main_Page](https://lotr.fandom.com/wiki/Main_Page).
+So far we have been scraping web pages that are relatively simple, but what if we wanted to scrape a more complex web page? For example, what if we wanted to scrape a fandom wiki page? These pages are often more complex because they have more complex HTML and CSS. Let's try scraping the *Lord of the Rings* wiki page [https://lotr.fandom.com/wiki/Main_Page](https://lotr.fandom.com/wiki/Main_Page){target="_blank"}.
 
 
-For those unfamiliar, fandom wikis are fan-created wikis that are often used to document popular culture. I haven't been able to find a list of all of these wikis, but there is a wikipedia page listing some of the most prominent ones [https://en.wikipedia.org/wiki/List_of_fan_wikis](https://en.wikipedia.org/wiki/List_of_fan_wikis). You'll notice that many of these wikis started in the mid-2000s and have grown in popularity since then. For example, there's actually a wikipedia page for the *Star Wars* wiki [https://en.wikipedia.org/wiki/Wookieepedia](https://en.wikipedia.org/wiki/Wookieepedia), which is called *Wookieepedia*.
+For those unfamiliar, fandom wikis are fan-created wikis that are often used to document popular culture. I haven't been able to find a list of all of these wikis, but there is a wikipedia page listing some of the most prominent ones [https://en.wikipedia.org/wiki/List_of_fan_wikis](https://en.wikipedia.org/wiki/List_of_fan_wikis){target="_blank"}. You'll notice that many of these wikis started in the mid-2000s and have grown in popularity since then. For example, there's actually a wikipedia page for the *Star Wars* wiki [https://en.wikipedia.org/wiki/Wookieepedia](https://en.wikipedia.org/wiki/Wookieepedia){target="_blank"}, which is called *Wookieepedia*.
 
 ![](../../assets/images/wikipedia_wookiepedia.png)
 
@@ -537,15 +537,15 @@ This page details some of the history and statistics of *Wookieepedia*, which st
 
 ![](../../assets/images/largest_fandoms.png)
 
-Before we start scraping this fandom wiki though, we need to check for the terms of service or user policies of the website. So far I've only been able to find the following page on the wiki [https://lotr.fandom.com/wiki/LOTR:Current_policies](https://lotr.fandom.com/wiki/LOTR:Current_policies) which details the current policies of the wiki and that most of the content is under a `CC-BY-SA` license. There is a terms of service for Fandom wikis [https://www.fandom.com/terms-of-use](https://www.fandom.com/terms-of-use) but that also doesn't have clear information about scraping. So the final place we can check is the `robots.txt` file.
+Before we start scraping this fandom wiki though, we need to check for the terms of service or user policies of the website. So far I've only been able to find the following page on the wiki [https://lotr.fandom.com/wiki/LOTR:Current_policies](https://lotr.fandom.com/wiki/LOTR:Current_policies){target="_blank"} which details the current policies of the wiki and that most of the content is under a `CC-BY-SA` license. There is a terms of service for Fandom wikis [https://www.fandom.com/terms-of-use](https://www.fandom.com/terms-of-use){target="_blank"} but that also doesn't have clear information about scraping. So the final place we can check is the `robots.txt` file.
 
-We can access this by going to the root of the website and adding `/robots.txt` to the end of the URL. For example, the `robots.txt` file for the *Lord of the Rings* wiki is [https://lotr.fandom.com/robots.txt](https://lotr.fandom.com/robots.txt). This file contains the rules for web crawlers and scrapers and tells them what they can and can't scrape. 
+We can access this by going to the root of the website and adding `/robots.txt` to the end of the URL. For example, the `robots.txt` file for the *Lord of the Rings* wiki is [https://lotr.fandom.com/robots.txt](https://lotr.fandom.com/robots.txt){target="_blank"}. This file contains the rules for web crawlers and scrapers and tells them what they can and can't scrape.
 
 ![](../../assets/images/lotr_robots_txt.png)
 
 I won't post the full file here since it's quite long, but we can work through the main relevant sections:
 
-1. The `User-agent` section tells us what web crawlers and scrapers are allowed to scrape the website. For example, the `User-agent: *` section tells us that all web crawlers and scrapers are allowed to scrape the website. This is the most common section and means that the website is open to scraping. 
+1. The `User-agent` section tells us what web crawlers and scrapers are allowed to scrape the website. For example, the `User-agent: *` section tells us that all web crawlers and scrapers are allowed to scrape the website. This is the most common section and means that the website is open to scraping.
 2. Within the `User-agent` section, we can see there is a `Disallow` section tells us what web crawlers and scrapers are not allowed to scrape the website. For example, the `Disallow: /wiki/Special:` section tells us that web crawlers and scrapers are not allowed to scrape the `Special:` pages on the website. You'll also notice that some bots are explicitly disallowed from scraping the website, like SemrushBot or GPTBot.
 3. Similarly, the `Allow` section tells us what web crawlers and scrapers are allowed to scrape the website. For example, the `Allow: /wiki/*` section tells us that web crawlers and scrapers are allowed to scrape the `wiki` pages on the website. We can also see the `Allow: /api.php?`, which allows crawlers to access certain API endpoints, which are often set up for structured data access, making them a good option for ethical scraping. This section is less common than the `Disallow` section but is used to allow web crawlers and scrapers to scrape certain pages on the website.
 4. The `Noindex` section tells us what web crawlers and scrapers are not allowed to index. For example, the `Noindex: /wiki/Special:` section tells us that web crawlers and scrapers are not allowed to index the `Special:` pages on the website. Although this doesn’t restrict access, it signals pages that the site prefers to keep less visible. Scraping these pages could go against the site’s intentions for privacy or low visibility.
@@ -586,7 +586,7 @@ Notice the genuinely interesting thing here. We just read the `robots.txt` file 
 ::: {.callout-warning}
 ## A Note on `cloudscraper` (and Why It No Longer Works)
 
-If you search for how to get around this, you will very quickly find the `cloudscraper` library [https://github.com/VeNoMouS/cloudscraper](https://github.com/VeNoMouS/cloudscraper), which for several years was the standard answer. It worked by imitating a browser closely enough to pass Cloudflare's challenge. Earlier versions of this very lesson taught it.
+If you search for how to get around this, you will very quickly find the `cloudscraper` library [https://github.com/VeNoMouS/cloudscraper](https://github.com/VeNoMouS/cloudscraper){target="_blank"}, which for several years was the standard answer. It worked by imitating a browser closely enough to pass Cloudflare's challenge. Earlier versions of this very lesson taught it.
 
 **It does not work anymore.** As of this writing, running it against a Fandom wiki returns exactly the same 403:
 
@@ -609,16 +609,16 @@ So when you hit a wall like this, you have three legitimate options, and "try ha
 2. **Choose a site that permits scraping** — plenty still do, as we're about to see.
 3. **Use the site's sanctioned API**, if it offers one. This is usually the best answer, because an API is the site explicitly telling you *how* it wants to be read programmatically.
 
-As it happens, Fandom does offer option 3, and we will take it up properly in [our next lesson on APIs](06-getting-data-apis.qmd). For the rest of *this* lesson, we're going to take option 2.
+As it happens, Fandom does offer option 3, and we will take it up properly in [our next lesson on APIs](06-getting-data-apis.qmd){target="_blank"}. For the rest of *this* lesson, we're going to take option 2.
 :::
 
 ### Finding a Wiki That Welcomes Us
 
-The good news is that not every fan wiki is behind Cloudflare. In fact, one of the more interesting developments in fandom over the last several years has been communities **leaving** Fandom.com — frustrated by its advertising, autoplaying video, and control over community-written content — and re-establishing their wikis on independent infrastructure. The Zelda Wiki left in 2022; the Minecraft Wiki left in 2023; many others moved to hosts like [wiki.gg](https://www.wiki.gg/wikis) or the nonprofit [Miraheze](https://miraheze.org/). This is itself a nice object lesson in who owns fan labor, and it is very much the kind of question this course is about.
+The good news is that not every fan wiki is behind Cloudflare. In fact, one of the more interesting developments in fandom over the last several years has been communities **leaving** Fandom.com — frustrated by its advertising, autoplaying video, and control over community-written content — and re-establishing their wikis on independent infrastructure. The Zelda Wiki left in 2022; the Minecraft Wiki left in 2023; many others moved to hosts like [wiki.gg](https://www.wiki.gg/wikis){target="_blank"} or the nonprofit [Miraheze](https://miraheze.org/){target="_blank"}. This is itself a nice object lesson in who owns fan labor, and it is very much the kind of question this course is about.
 
-For our *Lord of the Rings* example, there is a long-running independent alternative: **Tolkien Gateway** [https://tolkiengateway.net](https://tolkiengateway.net), a community-run Tolkien wiki that has been going since 2005.
+For our *Lord of the Rings* example, there is a long-running independent alternative: **Tolkien Gateway** [https://tolkiengateway.net](https://tolkiengateway.net){target="_blank"}, a community-run Tolkien wiki that has been going since 2005.
 
-Let's start where we always start — the `robots.txt` file [https://tolkiengateway.net/robots.txt](https://tolkiengateway.net/robots.txt):
+Let's start where we always start — the `robots.txt` file [https://tolkiengateway.net/robots.txt](https://tolkiengateway.net/robots.txt){target="_blank"}:
 
 ```
 #  _____     _ _    _               ____       _
@@ -663,7 +663,7 @@ Specifically: a wiki article about a character drawn from Tolkien's books will c
 
 #### Finding the Characters
 
-Tolkien Gateway organizes its pages with MediaWiki categories, and it has one for exactly what we want: [https://tolkiengateway.net/wiki/Category:The_Rings_of_Power_(TV_series)_characters](https://tolkiengateway.net/wiki/Category:The_Rings_of_Power_(TV_series)_characters).
+Tolkien Gateway organizes its pages with MediaWiki categories, and it has one for exactly what we want: [https://tolkiengateway.net/wiki/Category:The_Rings_of_Power_(TV_series)_characters](https://tolkiengateway.net/wiki/Category:The_Rings_of_Power_(TV_series){target="_blank"}_characters).
 
 If you open this page in your browser and use the inspector, you'll see that MediaWiki uses a consistent structure for category listings: the members live inside a `div` with the id `mw-pages`, grouped into `div` elements with the class `mw-category-group`, and each individual page is a link inside a list item.
 
@@ -712,7 +712,7 @@ For our comparison, it means we get the "invented" group for free, and we'll hav
 
 #### Scraping an Individual Character Page
 
-Now let's write a function to pull the details from a single character page. Let's look at [https://tolkiengateway.net/wiki/Galadriel](https://tolkiengateway.net/wiki/Galadriel) in the inspector.
+Now let's write a function to pull the details from a single character page. Let's look at [https://tolkiengateway.net/wiki/Galadriel](https://tolkiengateway.net/wiki/Galadriel){target="_blank"} in the inspector.
 
 Two things are useful to us. The references are in an ordered list with the class `references` at the bottom of the page, and the categories the page belongs to are in a `div` with the id `mw-normal-catlinks`.
 
@@ -879,16 +879,16 @@ We now have a full script that imports its libraries at the top, defines small f
 
 While `BeautifulSoup` and `requests` work well for most web scraping tasks, you may encounter websites that require more sophisticated tools. Two important libraries to be aware of are:
 
-**Selenium** ([https://selenium-python.readthedocs.io/](https://selenium-python.readthedocs.io/)) is a browser automation tool that controls a real web browser programmatically. Use Selenium when you need to scrape websites that render content dynamically with JavaScript, since BeautifulSoup only parses static HTML.
+**Selenium** ([https://selenium-python.readthedocs.io/](https://selenium-python.readthedocs.io/){target="_blank"}) is a browser automation tool that controls a real web browser programmatically. Use Selenium when you need to scrape websites that render content dynamically with JavaScript, since BeautifulSoup only parses static HTML.
 
-**Scrapy** ([https://scrapy.org/](https://scrapy.org/)) is a full-featured web scraping framework designed for large-scale, production-grade projects. It includes built-in support for managing requests, following links, storing data, and more. Use Scrapy when you're building a sophisticated scraping pipeline that needs to handle many pages efficiently.
+**Scrapy** ([https://scrapy.org/](https://scrapy.org/){target="_blank"}) is a full-featured web scraping framework designed for large-scale, production-grade projects. It includes built-in support for managing requests, following links, storing data, and more. Use Scrapy when you're building a sophisticated scraping pipeline that needs to handle many pages efficiently.
 
 **When to use each:**
 
 - **BeautifulSoup + requests**: Static websites, quick scripts, learning web scraping (what we've done here)
 - **Selenium**: Websites requiring JavaScript execution or complex user interactions
 - **Scrapy**: Large-scale scraping projects with complex requirements
-- **The site's API, if it has one**: almost always the best option, and the subject of [our next lesson](06-getting-data-apis.qmd)
+- **The site's API, if it has one**: almost always the best option, and the subject of [our next lesson](06-getting-data-apis.qmd){target="_blank"}
 
 Each approach has tradeoffs in complexity, speed, and resource use. For the tasks you'll encounter in this course, BeautifulSoup with error handling is typically the right choice.
 
@@ -920,15 +920,15 @@ These wikis were all reachable when this lesson was written, and any of them is 
 
 | Wiki | URL |
 |---|---|
-| Tolkien Gateway | [tolkiengateway.net](https://tolkiengateway.net) |
-| Bulbapedia (Pokémon) | [bulbapedia.bulbagarden.net](https://bulbapedia.bulbagarden.net) |
-| Terraria Wiki | [terraria.wiki.gg](https://terraria.wiki.gg) |
-| Minecraft Wiki | [minecraft.wiki](https://minecraft.wiki) |
-| Fallout Wiki | [fallout.wiki](https://fallout.wiki) |
-| Baldur's Gate 3 Wiki | [bg3.wiki](https://bg3.wiki) |
-| Old School RuneScape Wiki | [oldschool.runescape.wiki](https://oldschool.runescape.wiki) |
+| Tolkien Gateway | [tolkiengateway.net](https://tolkiengateway.net){target="_blank"} |
+| Bulbapedia (Pokémon) | [bulbapedia.bulbagarden.net](https://bulbapedia.bulbagarden.net){target="_blank"} |
+| Terraria Wiki | [terraria.wiki.gg](https://terraria.wiki.gg){target="_blank"} |
+| Minecraft Wiki | [minecraft.wiki](https://minecraft.wiki){target="_blank"} |
+| Fallout Wiki | [fallout.wiki](https://fallout.wiki){target="_blank"} |
+| Baldur's Gate 3 Wiki | [bg3.wiki](https://bg3.wiki){target="_blank"} |
+| Old School RuneScape Wiki | [oldschool.runescape.wiki](https://oldschool.runescape.wiki){target="_blank"} |
 
-You are also very welcome to find your own — [wiki.gg](https://www.wiki.gg/wikis) and [Miraheze](https://miraheze.org/) host hundreds of independent wikis, and non-wiki sites like [Standard Ebooks](https://standardebooks.org) and [Open Library](https://openlibrary.org) are also open to scraping. Just run Step 0 first. If a site you really care about turns out to be blocked, that is a legitimate finding — write it up in your `README.md` and choose another.
+You are also very welcome to find your own — [wiki.gg](https://www.wiki.gg/wikis){target="_blank"} and [Miraheze](https://miraheze.org/){target="_blank"} host hundreds of independent wikis, and non-wiki sites like [Standard Ebooks](https://standardebooks.org){target="_blank"} and [Open Library](https://openlibrary.org){target="_blank"} are also open to scraping. Just run Step 0 first. If a site you really care about turns out to be blocked, that is a legitimate finding — write it up in your `README.md` and choose another.
 
 ### Requirements
 
@@ -944,9 +944,9 @@ You are also very welcome to find your own — [wiki.gg](https://www.wiki.gg/wik
 
 That last item is the one I care most about, so please don't skip it.
 
-Once you have completed the assignment, you should **post a link to your folder** in our GitHub discussion [https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/7](https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/7).
+Once you have completed the assignment, you should **post a link to your folder** in our GitHub discussion [https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/7](https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/7){target="_blank"}.
 
 ---
 
-[^1]: Crocker, Camille Fischer and Andrew. “Victory! Ruling in hiQ v. Linkedin Protects Scraping of Public Data.” *Electronic Frontier Foundation*, September 10, 2019. [https://www.eff.org/deeplinks/2019/09/victory-ruling-hiq-v-linkedin-protects-scraping-public-data](https://www.eff.org/deeplinks/2019/09/victory-ruling-hiq-v-linkedin-protects-scraping-public-data).
-[^2]: Lomas, Natasha. “Social Media Giants Urged to Tackle Data-Scraping Privacy Risks.” *TechCrunch* (blog), August 24, 2023. [https://techcrunch.com/2023/08/24/data-scraping-privacy-risks-joint-statement/](https://techcrunch.com/2023/08/24/data-scraping-privacy-risks-joint-statement/).
+[^1]: Crocker, Camille Fischer and Andrew. “Victory! Ruling in hiQ v. Linkedin Protects Scraping of Public Data.” *Electronic Frontier Foundation*, September 10, 2019. [https://www.eff.org/deeplinks/2019/09/victory-ruling-hiq-v-linkedin-protects-scraping-public-data](https://www.eff.org/deeplinks/2019/09/victory-ruling-hiq-v-linkedin-protects-scraping-public-data){target="_blank"}.
+[^2]: Lomas, Natasha. “Social Media Giants Urged to Tackle Data-Scraping Privacy Risks.” *TechCrunch* (blog), August 24, 2023. [https://techcrunch.com/2023/08/24/data-scraping-privacy-risks-joint-statement/](https://techcrunch.com/2023/08/24/data-scraping-privacy-risks-joint-statement/){target="_blank"}.

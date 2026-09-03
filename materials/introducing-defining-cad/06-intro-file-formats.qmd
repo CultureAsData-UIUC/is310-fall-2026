@@ -1,7 +1,6 @@
 ---
 title: "Introduction to File Formats & Text"
 toc: true
-draft: true
 ---
 
 Now that we have seen how we can use the command line to create directories and files, and move them around. It seems like we're doing a lot of work to do something that we could do with a GUI, but the command line is actually much more powerful than a GUI. For example, we can use the command line to do things like search for text in a file, count the number of words in a file, and even delete a file.
@@ -14,21 +13,21 @@ What constitutes a document or a file might seem obvious, but is actually a robu
 
 ![The Many File Formats](https://dragondatarecovery.co.uk/wp-content/uploads/2021/10/The-Giant-List-of-Document-File-Types-and-Extensions.jpg)
 
-There are many different file formats and each one has its own purpose. For example, a `.docx` file is a Microsoft Word document, a `.jpg` file is an image, and a `.mp3` file is an audio file. Some file formats are proprietary, meaning they are owned by a company and can only be opened by certain programs. For example, `.docx` files can only be opened by Microsoft Word. So if you try to open up a word document in a PDF Viewer you might see what looks like a bunch of gibberish.
+There are many different file formats and each one has its own purpose. For example, a `.docx` file is a Microsoft Word document, a `.jpg` file is an image, and a `.mp3` file is an audio file. Some file formats depend on particular software ecosystems, meaning they may work best in certain programs even if other tools can sometimes open them. For example, `.docx` files are designed for Microsoft Word and similar word processors. So if you try to open a Word document in a PDF viewer or plain text editor, you might see what looks like a bunch of gibberish.
 
 ![Corrupted Word Doc](https://www.fonelab.com/images/data-retriever/fonelab-data-retriever-how-to-corrupt-a-word-file-doc-text-only.jpg)
 
-This gibberish is actually the code that makes up the file, but since the PDF Viewer doesn't know how to read the code it just shows you the code itself rather than the data stored in the files.
+This gibberish is actually part of the structured information that makes up the file, but since the PDF viewer or text editor doesn't know how to interpret that structure, it shows you the underlying contents rather than the formatted document.
 
-Other file formats are open source, meaning they are not owned by a company and can be opened by many different programs. For example, `.txt` files are plain text files that can be opened by any text editor. When we used the `touch` command, we told the terminal to create a `.txt` file. This is because `.txt` files are the simplest file format and only contain text. They do not contain any formatting like bold, italics, or images.
+Other file formats are open or plain text based, meaning they can be opened by many different programs and are easier to inspect directly. For example, `.txt` files are plain text files that can be opened by any text editor. When we used the `touch` command, we told the terminal to create a `.txt` file. This is because `.txt` files are the simplest file format and only contain text. They do not contain any formatting like bold, italics, or images.
 
 ### What is Plain Text?
 
 Today, we have been talking a lot about *text*, from text commands to text files. But the core concept with both of these is the idea of plain text.
 
-As scholars working with computers, we need to be aware of the ways plain text and formatted text differ. While a Word Document ant .txt file might look the same to us, the Word Document actually contains a lot of hidden formatting that the .txt file does not. In programming, we want to be explicit in our communications with computers and so plain text is preferable, but what is it exactly?
+As scholars working with computers, we need to be aware of the ways plain text and formatted text differ. While a Word document and a `.txt` file might look the same to us, the Word document actually contains a lot of hidden formatting that the `.txt` file does not. In programming, we want to be explicit in our communications with computers and so plain text is preferable, but what is it exactly?
 
-According to the [Unicode Standard](https://unicode.org/versions/Unicode13.0.0/),
+According to the [Unicode Standard](https://unicode.org/versions/Unicode13.0.0/){target="_blank"},
 
 > Plain text is a pure sequence of character codes; plain Unicode-encoded text is therefore a sequence of Unicode character codes.
 
@@ -48,7 +47,7 @@ curl https://www.gutenberg.org/files/1342/1342-0.txt > pride-and-prejudice.txt
 
 In this example, I'm using the command `curl` to download the file from the internet. The `>` symbol tells the terminal to create a new file, store this data in the file, and save the file as `pride-and-prejudice.txt`. We can see that this file is a `.txt` file, meaning it is a plain text file. `curl` stands for "client URL" and is a command line tool for transferring data and downloading files from the internet. We can also use it to upload files to the internet.
 
-If you are on a Windows computer, you can instead use the command `wget` to download the file from the internet. The syntax is the same, but the command is different.
+If you are using WSL/Ubuntu on a Windows computer, you can instead use the command `wget` to download the file from the internet.
 
 ```sh
 wget https://www.gutenberg.org/files/1342/1342-0.txt > pride-and-prejudice.txt
@@ -56,10 +55,10 @@ wget https://www.gutenberg.org/files/1342/1342-0.txt > pride-and-prejudice.txt
 
 `wget` stands for "web get" and is a similar command line tool for retrieving and downloading files from the web.
 
-If you are using PowerShell and not WSL (again WSL is recommended!), the command looks slightly different:
+If you are using PowerShell and not WSL, the command looks slightly different because PowerShell treats `wget` as an alias for its own web request command:
 
-```sh
-wget https://www.gutenberg.org/files/1342/1342-0.txt -OutFile pride-and-prejudice.txt 
+```powershell
+wget https://www.gutenberg.org/files/1342/1342-0.txt -OutFile pride-and-prejudice.txt
 ```
 
 ----
@@ -100,9 +99,9 @@ This should give us the following output:
 
 ![Pride and Prejudice](../../assets/images/grep_pride.png)
 
-How could we count the number of times the word "pride" appears in this file? We could use the command `wc -w` to count the number of words, but that would include the word "pride" in the title of the book. We could also use the command `wc -l` to count the number of lines, but that would include the line numbers. Instead, we can use the command `grep -c pride pride-and-prejudice.txt`.
+How could we count the number of lines where the word "pride" appears in this file? We could use the command `wc -w` to count the number of words, but that would count all words, not just "pride." Instead, we can use the command `grep -c pride pride-and-prejudice.txt`.
 
-We can see that the word "pride" appears 43 times in this file. How many times does the word "prejudice" appear? 
+We can see that "pride" appears on 43 lines in this file. This is not quite the same thing as counting every individual occurrence of the word, since a line could include the same word more than once. How many lines include the word "prejudice"?
 
 ## Introducing Markdown
 
@@ -152,19 +151,19 @@ This may seem like a lot of extra work, but the advantages of Markdown are numer
 
 1. It is much more sustainable than Word or Google Docs. This is because the text is saved as plain text and not in a format that is optimized for editing. This makes it future-proof so that you don't require a license or access to an application to see your files.
 2. It can also be rendered by any text editor. This is because Markdown is a plain text format and not a rich text format. This makes it platform agnostic.
-3. Finally, Markdown plays nicely with Github, which renders it directly in your browser. This makes it easy to push up your files into your repositories.
+3. Finally, Markdown plays nicely with GitHub, which renders it directly in your browser. This makes it easy to push up your files into your repositories.
 
-Markdown was created by John Gruber with help from Aaron Swartz in 2004. The goal was to create a file format that was easy to read and write, could be converted into web documents, and could be used by anyone. You can read more about the history of Markdown, in Bednarski, Dawid. “The History of Markdown: A Prelude to the No-Code Movement.” *Taskade Blog*, March 25, 2022. [https://www.taskade.com/blog/markdown-history/](https://www.taskade.com/blog/markdown-history/).
+Markdown was created by John Gruber with help from Aaron Swartz in 2004. The goal was to create a file format that was easy to read and write, could be converted into web documents, and could be used by anyone. You can read more about the history of Markdown, in Bednarski, Dawid. “The History of Markdown: A Prelude to the No-Code Movement.” *Taskade Blog*, March 25, 2022. [https://www.taskade.com/blog/markdown-history/](https://www.taskade.com/blog/markdown-history/){target="_blank"}.
 
-It's important to understand that Markdown has this history because many flavors of Markdown exist, and standardization of Markdown has been an ongoing project. For example, GitHub Flavored Markdown (GFM) is a flavor of Markdown that was created by GitHub in 2009. It is a superset of Markdown, meaning it adds additional features to Markdown. For example, GFM allows you to create tables in Markdown, which is not possible in regular Markdown. You can read more about GFM in “GitHub Flavored Markdown Spec.” GitHub, 2022. [https://github.github.com/gfm/](https://github.github.com/gfm/).
+It's important to understand that Markdown has this history because many flavors of Markdown exist, and standardization of Markdown has been an ongoing project. For example, GitHub Flavored Markdown (GFM) is a flavor of Markdown that was created by GitHub in 2009. It is a superset of Markdown, meaning it adds additional features to Markdown. For example, GFM allows you to create tables in Markdown, which is not possible in regular Markdown. You can read more about GFM in “GitHub Flavored Markdown Spec.” GitHub, 2022. [https://github.github.com/gfm/](https://github.github.com/gfm/){target="_blank"}.
 
-![Markdown Flavors](https://d11a6trkgmumsb.cloudfront.net/original/3X/c/b/cb7374a606a66c5b8e489afed76d93ed49dc7836.png)
+![Markdown Flavors](../../assets/images/flavors_markdown.png)
 
-This figure shows some examples of how Markdown is written depending on the platform and standards. You can also see some of the discussions that go on to help shape these standards through the various repositories on GitHub that host the standards. For example, CommonMark is another popular Markdown style and improvements to it are discussed in this repository [https://github.com/commonmark/commonmark-spec/issues](https://github.com/commonmark/commonmark-spec/issues).
+This figure shows some examples of how Markdown is written depending on the platform and standards. You can also see some of the discussions that go on to help shape these standards through the various repositories on GitHub that host the standards. For example, CommonMark is another popular Markdown style and improvements to it are discussed in this repository [https://github.com/commonmark/commonmark-spec/issues](https://github.com/commonmark/commonmark-spec/issues){target="_blank"}.
 
-### First Exercise
+### Practice Exercise
 
-Now that you have a basic understanding of Markdown, let's try improving the `README.md` file in our `is310-coding-assignments` repository. To do this, we are going to use the Markdown Preview extension in VS Code. First, currently your `README.md` is your first assignment [Init IS310 Homework](03-intro-versioning.qmd#homework-init-is310). However, that is not very sustainable for the course since all your assignments will be in that folder. So, your first goal is to clean up your repository so that your first homework assignment has it's own folder `init_is310`, which contains your initial `README.md` and any images. Then you will create a new `README.md` file in the root of your `is310-coding-assignments` that will be the main home page for your homework repository. 
+Now that you have a basic understanding of Markdown, let's try improving the `README.md` file in our `is310-coding-assignments` repository. To do this, we are going to use the Markdown Preview extension in VS Code. First, currently your `README.md` is your first assignment [Init IS310 Homework](03-intro-versioning.qmd#homework-init-is310){target="_blank"}. However, that is not very sustainable for the course since all your assignments will be in that folder. So, your first goal is to clean up your repository so that your first homework assignment has it's own folder `init_is310`, which contains your initial `README.md` and any images. Then you will create a new `README.md` file in the root of your `is310-coding-assignments` that will be the main home page for your homework repository.
 
 In the `README.md`, you should add the following elements:
 
@@ -172,10 +171,7 @@ In the `README.md`, you should add the following elements:
 - [ ] A subheading
 - [ ] A bulleted list
 
-*Bonus option*:
-- [ ] A **Link** to our course website
-
-You can use both AI tools and this [GitHub Markdown Cheatsheet](https://github.com/lifeparticle/Markdown-Cheatsheet) to help you. Once you've completed the exercise, push up your changes to GitHub.
+You can use both AI tools and this [GitHub Markdown Cheatsheet](https://github.com/lifeparticle/Markdown-Cheatsheet){target="_blank"} to help you. Once you've completed the exercise, push up your changes to GitHub.
 
 ## Homework: Lost & Found in the Cultural Command Line
 
@@ -200,22 +196,23 @@ Your maze should have the following components:
 - [ ] At least 5 files (these can be nested)
 - [ ] One hidden file or directory
 - [ ] Clues to help us solve the maze
+- [ ] An `ai-chat-log.md` file if you use AI to help create, troubleshoot, or solve the maze
 
-You are welcome to use Project Gutenberg [https://www.gutenberg.org/](https://www.gutenberg.org/) for your files, but you can also use other files if you prefer. You can also use the command line to create your files, but you can also use a text editor if you prefer.
+You are welcome to use Project Gutenberg [https://www.gutenberg.org/](https://www.gutenberg.org/){target="_blank"} for your files, but you can also use other files if you prefer. You can also use the command line to create your files, but you can also use a text editor if you prefer.
 
 You also need to include a `README.md` file in your maze folder that provides any relevant instructions for solving the maze. This could include a list of commands that we should use to solve the maze, or any other information that you think would be helpful. Be sure to include a header at the top of the file that lists the name of the maze and your name.
 
 Once you have created your maze, you should zip the folder that contains your maze. If you do not know how to zip a file, you can usually right click on the file and select "Compress" or "Zip". If you are using the command line, you can use the command `zip -r path/to/your/zip/file path/to/your/directory` to zip the file. Be sure to replace these dummy file paths with your actual desired ones (or ask AI for help!).
 
-Be sure to not zip the `README.md` file, as we will need to read this file to solve the maze. Once you have zipped your maze, you should upload it to your `is310-coding-assignments` repository and post a link in our GitHub discussion [https://github.com/cultureasdata-uiuc/is310-spring-2026/discussions/2](https://github.com/cultureasdata-uiuc/is310-spring-2026/discussions/2).
+Be sure to not zip the `README.md` file, as we will need to read this file to solve the maze. Once you have zipped your maze, you should upload it to your `is310-coding-assignments` repository and post a link in our GitHub discussion [https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/2](https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/2){target="_blank"}.
 
-If you need inspiration for your maze, take a look at this one I created, which you can download as a [zip file](../../assets/files/cli_exercises/zipped_gutenberg_maze.zip){:download} or via our [GitHub repository](https://github.com/CultureAsData-UIUC/is310-spring-2026/blob/main/assets/files/cli_exercises/zipped_gutenberg_maze.zip) (you can also try solving it if you like!).
+If you need inspiration for your maze, take a look at this one I created, which you can download as a [zip file](../../assets/files/cli_exercises/zipped_gutenberg_maze.zip){:download target="_blank"} or via our [GitHub repository](https://github.com/CultureAsData-UIUC/is310-fall-2026/blob/main/assets/files/cli_exercises/zipped_gutenberg_maze.zip){target="_blank"} (you can also try solving it if you like!).
 
 #### Hiding Files (Important Cross-Platform Note)
 
 Different operating systems handle “hidden” files differently. So far, we have seen what are called `dotfiles` which is a type of hidden file or directory. These are hidden by default on Mac/Linux but not on Windows if you are running PowerShell.
 
-If you want your hidden files and folders to behave as hidden on Windows, include a PowerShell script in your maze folder named: `hide-dotfiles.ps1`. 
+If you want your hidden files and folders to behave as hidden on Windows, include a PowerShell script in your maze folder named: `hide-dotfiles.ps1`.
 
 In the file, place the following code:
 
@@ -234,7 +231,7 @@ Then update your instructions to tell Windows' PowerShell users to first run thi
 ::: {.callout-tip}
 ## Struggling with Permissions?
 
-Thanks to Maya B, I've learned that PowerShell can be finicky with permissions so if you are still getting issues you might try running PowerShell as an administrator or running this command:
+PowerShell can be finicky with permissions so if you are still getting issues you might try running PowerShell as an administrator or running this command:
 
 ```powershell
 
@@ -244,9 +241,9 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass .\hide-dotfiles.ps1.
 
 ### Part 2: Solve Your Group Members' Mazes
 
-Once you have created and zipped your maze, pushed it up to GitHub, and posted a link in our discussion, it's time to solve your group members' mazes. **You are required to solve at least two mazes from students in your own group.** This is your chance to see how others in your group are approaching the same broad cultural data topic - pay attention to the choices they made in theming their mazes!
+Once you have created and zipped your maze, pushed it up to GitHub, and posted a link in our discussion, it's time to solve your group members' mazes. **You are required to solve at least two mazes from students in your own group.** This is your chance to see how others in your group are approaching the same broad cultural data topics!
 
-The first step is to select one of your group members' mazes from the discussion link and try **cloning their repository to your computer**. Remember if you have setup SSH keys, you can use the SSH link, otherwise you can use the HTTPS link.
+The first step is to select one of your group members' mazes from the discussion link and try **cloning their repository to your computer**. If you have never cloned a repository before, you can read about how to do it in the [Advanced Git and GitHub Lesson](../introducing-defining-cad/05-advanced-git-github.qmd#cloning-a-repository){target="_blank"}. Remember if you have setup SSH keys, you can use the SSH link, otherwise you can use the HTTPS link.
 
 ```sh
 git clone name-of-repo
@@ -278,11 +275,9 @@ Expand-Archive -Path "path\to\your\zip\file" -DestinationPath "path\to\your\desi
 
 Again the `-DestinationPath` flag is just telling the terminal where to unzip the file. So if you are already in the correct spot, you can just use `Expand-Archive -Path "path\to\your\zip\file"`.
 
-Be sure to replace these dummy file paths with your actual desired ones (or ask AI for help!). Your goal with this maze is to use both the command line cheatsheet and your preferred AI chatbot to solve the maze. You should be able to solve the maze in ~30 minutes, but if you are struggling, please reach out to the instructors via Slack for help.
+Be sure to replace these dummy file paths with your actual desired ones (or ask AI for help!). You should be able to solve the maze in ~30 minutes, but if you are struggling, please reach out to the instructors via Slack for help.
 
-You should use the `cd` command to navigate through the maze and the `ls` command to see what is in each directory, or `ls -la` if you think there might be hidden materials. You can also use the `cat` command to read the contents of files.
-
-Once you have solved the maze, you should reply to their post in the discussion, letting them know that you were successful and posting a screenshot of your solved maze in your terminal. If you have any issues with the maze, you're welcome to request help on their post, but please try to solve it on your own first.
+Once you have solved the maze, you should reply to your peer's post in the discussion, letting them know that you were successful and posting a screenshot of your solved maze in your terminal. If you have any issues with the maze, you're welcome to request help on their post, but please try to solve it on your own first.
 
 **Remember: you must solve at least two mazes from students in your own group.** Repeat the steps above for each maze you solve. Pay attention to how your group members framed their cultural data topic. You'll start to see different perspectives on the same broad area of interest. You are also welcome to solve additional mazes beyond the required two if you like.
 
@@ -290,9 +285,9 @@ Once you have solved the maze, you should reply to their post in the discussion,
 
 In addition to the resources, I linked at the beginning of this lesson, I would recommend the following:
 
-1. Ian Milligan and James Baker, "Introduction to the Bash Command Line," *The Programming Historian* 3 (2014), [https://programminghistorian.org/en/lessons/intro-to-bash](https://programminghistorian.org/en/lessons/intro-to-bash). This is an introduction to the Bash shell, which will serve well enough as an introduction to other shells like Zsh as well.
-2. [Bash Basics Part 1 of 8 Access and Navigation](https://youtu.be/eH8Z9zeywq0?t=885)
-3. [Beginner's Guide to the Bash Terminal](https://www.youtube.com/watch?v=oxuRxtrO2Ag)
-4. [The Most Important Thing You'll Learn in the Command Line](https://www.youtube.com/watch?v=q7-aEspwwEI)
-5. Go through the CodeAcademy [command line course](https://www.codecademy.com/learn/learn-the-command-line).
-6. [Shell Scripting Tutorial](https://www.youtube.com/watch?v=hwrnmQumtPw)
+1. Ian Milligan and James Baker, "Introduction to the Bash Command Line," *The Programming Historian* 3 (2014), [https://programminghistorian.org/en/lessons/intro-to-bash](https://programminghistorian.org/en/lessons/intro-to-bash){target="_blank"}. This is an introduction to the Bash shell, which will serve well enough as an introduction to other shells like Zsh as well.
+2. [Bash Basics Part 1 of 8 Access and Navigation](https://youtu.be/eH8Z9zeywq0?t=885){target="_blank"}
+3. [Beginner's Guide to the Bash Terminal](https://www.youtube.com/watch?v=oxuRxtrO2Ag){target="_blank"}
+4. [The Most Important Thing You'll Learn in the Command Line](https://www.youtube.com/watch?v=q7-aEspwwEI){target="_blank"}
+5. Go through the CodeAcademy [command line course](https://www.codecademy.com/learn/learn-the-command-line){target="_blank"}.
+6. [Shell Scripting Tutorial](https://www.youtube.com/watch?v=hwrnmQumtPw){target="_blank"}

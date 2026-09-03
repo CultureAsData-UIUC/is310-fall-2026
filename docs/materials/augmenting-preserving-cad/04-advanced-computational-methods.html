@@ -393,7 +393,7 @@ Notebook from Class Available To Download
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you want to review our in-class code, you can download the Jupyter notebook by clicking here <a href="../../assets/files/AdvancedComputationalMethods.ipynb" download="">AdvancedComputationalMethods.ipynb</a>.</p>
+<p>If you want to review our in-class code, you can download the Jupyter notebook by clicking here <a target="_blank" href="../../assets/files/AdvancedComputationalMethods.ipynb" download="">AdvancedComputationalMethods.ipynb</a>.</p>
 </div>
 </div>
 <section id="reviewing-entities-and-genre-extracting-signals-from-unstructured-text" class="level2">
@@ -520,27 +520,27 @@ Dataset Available on Canvas
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{<span class="st">'index'</span>: <span class="st">'entity_type'</span>, <span class="dv">0</span>: <span class="st">'total_count'</span>})</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>totals[<span class="st">'entity_type'</span>] <span class="op">=</span> totals[<span class="st">'entity_type'</span>].<span class="bu">str</span>.replace(<span class="st">'_count'</span>, <span class="st">''</span>).<span class="bu">str</span>.upper()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="7d0d050b" class="cell" data-execution_count="1">
+<div id="236522c1" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 
 <style>
-  #altair-viz-5ae9dd736e5a4f559d3d396315dd98f8.vega-embed {
+  #altair-viz-bbba4f9149224e1d8c788d78dacd0bd2.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-5ae9dd736e5a4f559d3d396315dd98f8.vega-embed details,
-  #altair-viz-5ae9dd736e5a4f559d3d396315dd98f8.vega-embed details summary {
+  #altair-viz-bbba4f9149224e1d8c788d78dacd0bd2.vega-embed details,
+  #altair-viz-bbba4f9149224e1d8c788d78dacd0bd2.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-5ae9dd736e5a4f559d3d396315dd98f8"></div>
+<div id="altair-viz-bbba4f9149224e1d8c788d78dacd0bd2"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-5ae9dd736e5a4f559d3d396315dd98f8") {
-      outputDiv = document.getElementById("altair-viz-5ae9dd736e5a4f559d3d396315dd98f8");
+    if (outputDiv.id !== "altair-viz-bbba4f9149224e1d8c788d78dacd0bd2") {
+      outputDiv = document.getElementById("altair-viz-bbba4f9149224e1d8c788d78dacd0bd2");
     }
 
     const paths = {
@@ -612,7 +612,7 @@ Dataset Available on Canvas
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: (x <span class="op">-</span> x.<span class="bu">min</span>()) <span class="op">/</span> (x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice here though that I am normalizing the counts within each entity type, not across the whole dataset. This is because <code>PERSON</code> counts are on a completely different scale than <code>EVENT</code> counts, and I want to be able to compare genres within each entity type without one dominating the visualization.</p>
-<div id="88e4eee1" class="cell" data-execution_count="2">
+<div id="c29af226" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_entity_means.csv'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>stacked_bar <span class="op">=</span> alt.Chart(genre_means).mark_bar().encode(</span>
@@ -634,23 +634,23 @@ Dataset Available on Canvas
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-1e34f67d2fbe41a6b979015fd8564593.vega-embed {
+  #altair-viz-049a24e52546400bbc90e30f07875b4e.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-1e34f67d2fbe41a6b979015fd8564593.vega-embed details,
-  #altair-viz-1e34f67d2fbe41a6b979015fd8564593.vega-embed details summary {
+  #altair-viz-049a24e52546400bbc90e30f07875b4e.vega-embed details,
+  #altair-viz-049a24e52546400bbc90e30f07875b4e.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-1e34f67d2fbe41a6b979015fd8564593"></div>
+<div id="altair-viz-049a24e52546400bbc90e30f07875b4e"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-1e34f67d2fbe41a6b979015fd8564593") {
-      outputDiv = document.getElementById("altair-viz-1e34f67d2fbe41a6b979015fd8564593");
+    if (outputDiv.id !== "altair-viz-049a24e52546400bbc90e30f07875b4e") {
+      outputDiv = document.getElementById("altair-viz-049a24e52546400bbc90e30f07875b4e");
     }
 
     const paths = {
@@ -703,7 +703,7 @@ Dataset Available on Canvas
 </div>
 </div>
 <p>This graph gives us a much better sense of how different genres use different kinds of entities. But it is still tricky to see the relationship. A heatmap would be a much better option.</p>
-<div id="747541f7" class="cell" data-execution_count="3">
+<div id="50bb751a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>heatmap <span class="op">=</span> alt.Chart(genre_means).mark_rect().encode(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'entity_type:N'</span>, title<span class="op">=</span><span class="st">'Entity Type'</span>),</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">'genre:N'</span>, title<span class="op">=</span><span class="st">'Genre'</span>, sort<span class="op">=</span><span class="st">'-x'</span>),</span>
@@ -726,23 +726,23 @@ Dataset Available on Canvas
 <div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-069bab7a9b0d4102a62ef1f9b240fa4d.vega-embed {
+  #altair-viz-73a8481efbf24a4989f346cf0594e74d.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-069bab7a9b0d4102a62ef1f9b240fa4d.vega-embed details,
-  #altair-viz-069bab7a9b0d4102a62ef1f9b240fa4d.vega-embed details summary {
+  #altair-viz-73a8481efbf24a4989f346cf0594e74d.vega-embed details,
+  #altair-viz-73a8481efbf24a4989f346cf0594e74d.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-069bab7a9b0d4102a62ef1f9b240fa4d"></div>
+<div id="altair-viz-73a8481efbf24a4989f346cf0594e74d"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-069bab7a9b0d4102a62ef1f9b240fa4d") {
-      outputDiv = document.getElementById("altair-viz-069bab7a9b0d4102a62ef1f9b240fa4d");
+    if (outputDiv.id !== "altair-viz-73a8481efbf24a4989f346cf0594e74d") {
+      outputDiv = document.getElementById("altair-viz-73a8481efbf24a4989f346cf0594e74d");
     }
 
     const paths = {
@@ -808,14 +808,14 @@ Dataset Available on Canvas
 </ul>
 <p><em>Popular Python libraries for these tasks include:</em></p>
 <ul>
-<li><strong>spaCy library</strong> <a href="https://spacy.io/">https://spacy.io/</a>: As we’ve seen, spaCy is a popular Python library for NLP that provides a wide range of tools for information extraction, including Named Entity Recognition (NER), Part of Speech Tagging, Dependency Parsing, and Coreference Resolution. spaCy is known for its powerful architecture and multiple models for different languages. Here’s an example of a dependency parse tree from spaCy:</li>
+<li><strong>spaCy library</strong> <a href="https://spacy.io/" target="_blank">https://spacy.io/</a>: As we’ve seen, spaCy is a popular Python library for NLP that provides a wide range of tools for information extraction, including Named Entity Recognition (NER), Part of Speech Tagging, Dependency Parsing, and Coreference Resolution. spaCy is known for its powerful architecture and multiple models for different languages. Here’s an example of a dependency parse tree from spaCy:</li>
 <li><figure class="figure">
-<a href="https://spacy.io/images/displacy-long2.svg"> <img src="https://spacy.io/images/displacy-long2.svg" class="figure-img"> </a>
+<a target="_blank" href="https://spacy.io/images/displacy-long2.svg"> <img src="https://spacy.io/images/displacy-long2.svg" class="figure-img"> </a>
 </figure></li>
-<li><strong>Stanford CoreNLP</strong> <a href="https://stanfordnlp.github.io/CoreNLP/">https://stanfordnlp.github.io/CoreNLP/</a>: Stanford CoreNLP is a suite of tools for NLP that provides a wide range of tools for information extraction, including Named Entity Recognition (NER), Part of Speech Tagging, Dependency Parsing, and Coreference Resolution. Stanford CoreNLP is an older library but is still widely used for these tasks.</li>
-<li><strong>Riveter NLP</strong> <a href="https://github.com/maartensap/riveter-nlp">https://github.com/maartensap/riveter-nlp</a> is a Python package that measures social dynamics between personas mentioned in a collection of texts. The package identifies and extracts the subjects, verbs, and direct objects in texts; it performs coreference resolution on the personas mentioned in the texts.</li>
-<li><strong>The Classical Language Toolkit</strong> <a href="https://github.com/cltk/cltk">https://github.com/cltk/cltk</a> is a Python library that provides NLP tools for classical languages. The library includes tools for tokenization, lemmatization, part-of-speech tagging, and named entity recognition for classical languages like Latin and Greek.</li>
-<li><strong>BookNLP</strong> <a href="https://github.com/dbamman/book-nlp">https://github.com/dbamman/book-nlp</a> is a Python library that provides NLP tools for analyzing novels. The library includes tools for tokenization, lemmatization, part-of-speech tagging, and named entity recognition for novels.</li>
+<li><strong>Stanford CoreNLP</strong> <a href="https://stanfordnlp.github.io/CoreNLP/" target="_blank">https://stanfordnlp.github.io/CoreNLP/</a>: Stanford CoreNLP is a suite of tools for NLP that provides a wide range of tools for information extraction, including Named Entity Recognition (NER), Part of Speech Tagging, Dependency Parsing, and Coreference Resolution. Stanford CoreNLP is an older library but is still widely used for these tasks.</li>
+<li><strong>Riveter NLP</strong> <a href="https://github.com/maartensap/riveter-nlp" target="_blank">https://github.com/maartensap/riveter-nlp</a> is a Python package that measures social dynamics between personas mentioned in a collection of texts. The package identifies and extracts the subjects, verbs, and direct objects in texts; it performs coreference resolution on the personas mentioned in the texts.</li>
+<li><strong>The Classical Language Toolkit</strong> <a href="https://github.com/cltk/cltk" target="_blank">https://github.com/cltk/cltk</a> is a Python library that provides NLP tools for classical languages. The library includes tools for tokenization, lemmatization, part-of-speech tagging, and named entity recognition for classical languages like Latin and Greek.</li>
+<li><strong>BookNLP</strong> <a href="https://github.com/dbamman/book-nlp" target="_blank">https://github.com/dbamman/book-nlp</a> is a Python library that provides NLP tools for analyzing novels. The library includes tools for tokenization, lemmatization, part-of-speech tagging, and named entity recognition for novels.</li>
 </ul>
 <p><em>Methods for image or video data:</em></p>
 <ul>
@@ -824,23 +824,23 @@ Dataset Available on Canvas
 <li><strong>Optical Character Recognition (OCR)</strong>: We have discussed this technique in-depth, but never as an information extraction technique, even though that is technically what it is doing, as we can see in this figure:</li>
 </ul>
 <figure class="figure">
-<a href="https://cdn.prod.website-files.com/65560eafdce64b3d914e8df3/66c658f2af995ea4228a8861_65560eafdce64b3d914e915a_sequence-modeling-2.webp"> <img src="https://cdn.prod.website-files.com/65560eafdce64b3d914e8df3/66c658f2af995ea4228a8861_65560eafdce64b3d914e915a_sequence-modeling-2.webp" class="image-popup figure-img"> </a>
+<a target="_blank" href="https://cdn.prod.website-files.com/65560eafdce64b3d914e8df3/66c658f2af995ea4228a8861_65560eafdce64b3d914e915a_sequence-modeling-2.webp"> <img src="https://cdn.prod.website-files.com/65560eafdce64b3d914e8df3/66c658f2af995ea4228a8861_65560eafdce64b3d914e915a_sequence-modeling-2.webp" class="image-popup figure-img"> </a>
 </figure>
 <ul>
 <li><strong>Edge Detection</strong>: This is a technique that identifies edges in an image or video. For example, it might identify the edges of a person, car, or tree in an image. This can be useful for understanding the content of an image or video, and for tasks like image classification and object detection.</li>
 <li><strong>Image Segmentation</strong>: This is a technique that identifies regions in an image or video. It is similar to object detection, but it identifies regions instead of objects. This can be useful for understanding the content of an image or video, and for tasks like image classification and object detection.</li>
 </ul>
 <figure class="figure">
-<a href="https://www.optisolbusiness.com/wp-content/uploads/2021/05/1_bkZq95raD6O6eTTE_9OTZA.png"> <img src="https://www.optisolbusiness.com/wp-content/uploads/2021/05/1_bkZq95raD6O6eTTE_9OTZA.png" class="image-popup figure-img"> </a>
+<a target="_blank" href="https://www.optisolbusiness.com/wp-content/uploads/2021/05/1_bkZq95raD6O6eTTE_9OTZA.png"> <img src="https://www.optisolbusiness.com/wp-content/uploads/2021/05/1_bkZq95raD6O6eTTE_9OTZA.png" class="image-popup figure-img"> </a>
 </figure>
 <p><em>Popular Python libraries for these tasks include:</em></p>
 <ul>
-<li><strong>OpenCV</strong> <a href="https://opencv.org/">https://opencv.org/</a>: OpenCV is a popular Python library for computer vision that provides a wide range of tools for image and video analysis, including object detection, facial recognition, and image segmentation. OpenCV is known for its speed and accuracy and is widely used in industry and academia.</li>
-<li><strong>TensorFlow</strong> <a href="https://www.tensorflow.org/">https://www.tensorflow.org/</a>: TensorFlow is a popular Python library for machine learning that provides a wide range of tools for image and video analysis, including object detection, facial recognition, and image segmentation. TensorFlow is known for its flexibility and is widely used in industry and academia.</li>
-<li><strong>PyTorch</strong> <a href="https://pytorch.org/">https://pytorch.org/</a>: PyTorch is a popular Python library for machine learning that provides a wide range of tools for image and video analysis, including object detection, facial recognition, and image segmentation. PyTorch is known for its flexibility and is widely used in industry and academia.</li>
-<li><strong>Dlib</strong> <a href="http://dlib.net/">http://dlib.net/</a>: Dlib is a popular Python library for computer vision that provides a wide range of tools for image and video analysis, including object detection, facial recognition, and image segmentation. Dlib is known for its speed and accuracy and is widely used in industry and academia.</li>
-<li><strong>Scikit-Image</strong> <a href="https://scikit-image.org/">https://scikit-image.org/</a>: Scikit-Image is a popular Python library for image processing that provides a wide range of tools for image and video analysis, including object detection, facial recognition, and image segmentation. Scikit-Image is known for its speed and accuracy and is widely used in industry and academia.</li>
-<li><strong>Distant Viewing Toolkit</strong> <a href="https://distantviewing.org/">https://distantviewing.org/</a>: The Distant Viewing Toolkit is a Python library that provides tools for analyzing images and videos. The library includes tools for object detection, facial recognition, and image segmentation, and is specifically designed for digital humanities research.</li>
+<li><strong>OpenCV</strong> <a href="https://opencv.org/" target="_blank">https://opencv.org/</a>: OpenCV is a popular Python library for computer vision that provides a wide range of tools for image and video analysis, including object detection, facial recognition, and image segmentation. OpenCV is known for its speed and accuracy and is widely used in industry and academia.</li>
+<li><strong>TensorFlow</strong> <a href="https://www.tensorflow.org/" target="_blank">https://www.tensorflow.org/</a>: TensorFlow is a popular Python library for machine learning that provides a wide range of tools for image and video analysis, including object detection, facial recognition, and image segmentation. TensorFlow is known for its flexibility and is widely used in industry and academia.</li>
+<li><strong>PyTorch</strong> <a href="https://pytorch.org/" target="_blank">https://pytorch.org/</a>: PyTorch is a popular Python library for machine learning that provides a wide range of tools for image and video analysis, including object detection, facial recognition, and image segmentation. PyTorch is known for its flexibility and is widely used in industry and academia.</li>
+<li><strong>Dlib</strong> <a href="http://dlib.net/" target="_blank">http://dlib.net/</a>: Dlib is a popular Python library for computer vision that provides a wide range of tools for image and video analysis, including object detection, facial recognition, and image segmentation. Dlib is known for its speed and accuracy and is widely used in industry and academia.</li>
+<li><strong>Scikit-Image</strong> <a href="https://scikit-image.org/" target="_blank">https://scikit-image.org/</a>: Scikit-Image is a popular Python library for image processing that provides a wide range of tools for image and video analysis, including object detection, facial recognition, and image segmentation. Scikit-Image is known for its speed and accuracy and is widely used in industry and academia.</li>
+<li><strong>Distant Viewing Toolkit</strong> <a href="https://distantviewing.org/" target="_blank">https://distantviewing.org/</a>: The Distant Viewing Toolkit is a Python library that provides tools for analyzing images and videos. The library includes tools for object detection, facial recognition, and image segmentation, and is specifically designed for digital humanities research.</li>
 </ul>
 <p>This overview is by no means comprehensive, but it should give you a sense of the range of information extraction techniques that are available for analyzing cultural data, and some of the popular Python libraries that you can use to implement them. In the next section, we’ll look at how we can use some of these techniques to extract signals from our novels and augment our dataset in new ways.</p>
 </section>
@@ -853,7 +853,7 @@ Dataset Available on Canvas
 <li><strong>Topic Modeling</strong> is a technique that identifies topics in a corpus of text data. Topic modeling works by identifying groups of words that frequently appear together in the corpus and assigning them to topics. Each topic is a group of words that are related to each other, and each document in the corpus is assigned a distribution over the topics. There are many different implementations of topic modeling, including <em>Latent Semantic Allocation</em> (LSA), <em>Latent Dirichlet Allocation</em> (LDA), and <em>Non-negative Matrix Factorization</em> (NMF).</li>
 </ul>
 <figure class="figure">
-<a href="https://yosinski.com/mlss12/media/slides/MLSS-2012-Blei-Probabilistic-Topic-Models_020.png"> <img src="https://yosinski.com/mlss12/media/slides/MLSS-2012-Blei-Probabilistic-Topic-Models_020.png" class="image-popup figure-img"> </a>
+<a target="_blank" href="https://yosinski.com/mlss12/media/slides/MLSS-2012-Blei-Probabilistic-Topic-Models_020.png"> <img src="https://yosinski.com/mlss12/media/slides/MLSS-2012-Blei-Probabilistic-Topic-Models_020.png" class="image-popup figure-img"> </a>
 </figure>
 <ul>
 <li><strong>Word Embeddings</strong> is a technique that represents words as vectors in a high-dimensional space. Word embeddings are useful for capturing the semantic relationships between words in a corpus of text data. There are many different implementations of word embeddings, including <em>Word2Vec</em>, <em>GloVe</em>, and <em>FastText</em>.</li>
@@ -862,11 +862,11 @@ Dataset Available on Canvas
 </ul>
 <p><em>Popular Python libraries for these tasks include:</em></p>
 <ul>
-<li><strong>Gensim</strong> <a href="https://radimrehurek.com/gensim/">https://radimrehurek.com/gensim/</a>: Gensim is a popular Python library for topic modeling and word embeddings. Gensim provides a wide range of tools for analyzing text data, including LDA, Word2Vec, and Doc2Vec.</li>
-<li><strong>FastText</strong> <a href="https://fasttext.cc/">https://fasttext.cc/</a>: FastText is a popular Python library for word embeddings. FastText provides a wide range of tools for analyzing text data, including word embeddings and text classification.</li>
-<li><strong>BERT</strong> <a href="https://huggingface.co/transformers/model_doc/bert.html">https://huggingface.co/transformers/model_doc/bert.html</a>: BERT is a popular Python library for contextual embeddings. BERT provides a wide range of tools for analyzing text data, including contextual embeddings and text classification.</li>
-<li><strong>Scikit-Learn</strong> <a href="https://scikit-learn.org/">https://scikit-learn.org/</a>: Scikit-Learn is a popular Python library for document similarity and ranking. Scikit-Learn provides a wide range of tools for analyzing text data, including cosine similarity, Jaccard similarity, and BM25.</li>
-<li><strong>Transformers</strong> <a href="https://huggingface.co/transformers/">https://huggingface.co/transformers/</a>: Transformers is a popular Python library for contextual embeddings. Transformers provides a wide range of tools for analyzing text data, including BERT, GPT-2, and XLNet.</li>
+<li><strong>Gensim</strong> <a href="https://radimrehurek.com/gensim/" target="_blank">https://radimrehurek.com/gensim/</a>: Gensim is a popular Python library for topic modeling and word embeddings. Gensim provides a wide range of tools for analyzing text data, including LDA, Word2Vec, and Doc2Vec.</li>
+<li><strong>FastText</strong> <a href="https://fasttext.cc/" target="_blank">https://fasttext.cc/</a>: FastText is a popular Python library for word embeddings. FastText provides a wide range of tools for analyzing text data, including word embeddings and text classification.</li>
+<li><strong>BERT</strong> <a href="https://huggingface.co/transformers/model_doc/bert.html" target="_blank">https://huggingface.co/transformers/model_doc/bert.html</a>: BERT is a popular Python library for contextual embeddings. BERT provides a wide range of tools for analyzing text data, including contextual embeddings and text classification.</li>
+<li><strong>Scikit-Learn</strong> <a href="https://scikit-learn.org/" target="_blank">https://scikit-learn.org/</a>: Scikit-Learn is a popular Python library for document similarity and ranking. Scikit-Learn provides a wide range of tools for analyzing text data, including cosine similarity, Jaccard similarity, and BM25.</li>
+<li><strong>Transformers</strong> <a href="https://huggingface.co/transformers/" target="_blank">https://huggingface.co/transformers/</a>: Transformers is a popular Python library for contextual embeddings. Transformers provides a wide range of tools for analyzing text data, including BERT, GPT-2, and XLNet.</li>
 </ul>
 <p><em>Methods for image or video data</em>:</p>
 <ul>
@@ -940,7 +940,7 @@ Dataset Available on Canvas
 <h2 class="anchored" data-anchor-id="tf-idf-building-genre-vocabulary-signals">TF-IDF: Building Genre Vocabulary Signals</h2>
 <p><code>Term Frequency - Inverse Document Frequency</code> (TF-IDF) was first proposed by Karen Spärck Jones in 1972 under the name “term specificity” and later formalized by Steve Robertson in 1976. It has become one of the most widely used techniques in information retrieval, and for good reason: it surfaces terms that are <em>distinctive to a specific document</em> relative to the rest of the corpus, rather than just the most frequent terms overall.</p>
 <figure class="figure">
-<a href="https://miro.medium.com/max/1200/1*qQgnyPLDIkUmeZKN2_ZWbQ.png"> <img src="https://miro.medium.com/max/1200/1*qQgnyPLDIkUmeZKN2_ZWbQ.png" class="image-popup figure-img"> </a>
+<a target="_blank" href="https://miro.medium.com/max/1200/1*qQgnyPLDIkUmeZKN2_ZWbQ.png"> <img src="https://miro.medium.com/max/1200/1*qQgnyPLDIkUmeZKN2_ZWbQ.png" class="image-popup figure-img"> </a>
 </figure>
 <p>The intuition is exactly what you’d expect from Zipf’s Law: words like “the” and “said” appear in every novel, so they tell us nothing about what makes any one novel distinctive. TF-IDF penalizes words that appear everywhere and rewards words that are concentrated in specific documents.</p>
 <p>The math works like this:</p>
@@ -960,7 +960,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For a thorough walkthrough of TF-IDF from a digital humanities perspective, see Matthew J. Lavin’s <a href="https://programminghistorian.org/en/lessons/analyzing-documents-with-tfidf"><em>Analyzing Documents with TF-IDF</em></a> in <em>Programming Historian</em> and Melanie Walsh’s <a href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/05-Text-Analysis/01-TF-IDF.html">textbook chapter</a>.</p>
+<p>For a thorough walkthrough of TF-IDF from a digital humanities perspective, see Matthew J. Lavin’s <a href="https://programminghistorian.org/en/lessons/analyzing-documents-with-tfidf" target="_blank"><em>Analyzing Documents with TF-IDF</em></a> in <em>Programming Historian</em> and Melanie Walsh’s <a href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/05-Text-Analysis/01-TF-IDF.html" target="_blank">textbook chapter</a>.</p>
 </div>
 </div>
 <section id="computing-tf-idf-with-scikit-learn" class="level3">
@@ -980,7 +980,7 @@ Note
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    max_features<span class="op">=</span><span class="dv">5000</span>,</span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    min_df<span class="op">=</span><span class="dv">2</span>,</span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    max_df<span class="op">=</span><span class="fl">0.75</span>,</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>tfidf_matrix <span class="op">=</span> vectorizer.fit_transform(tfidf_df[<span class="st">'cleaned_text'</span>])</span>
@@ -1058,7 +1058,7 @@ Note
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.DataFrame(fingerprint_rows)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Which gives us the following genre vocabulary fingerprints:</p>
-<div id="3c71cf93" class="cell" data-execution_count="4">
+<div id="5ef0e98f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint.csv'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>alt.Chart(fingerprint_df).mark_bar().encode(</span>
@@ -1071,23 +1071,23 @@ Note
 <div class="cell-output cell-output-display" data-execution_count="4">
 
 <style>
-  #altair-viz-35e8fb6f84684470abc7d0239ae6bf9e.vega-embed {
+  #altair-viz-c6d0558a5dc74c558fc7da3ed1bbbdb4.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-35e8fb6f84684470abc7d0239ae6bf9e.vega-embed details,
-  #altair-viz-35e8fb6f84684470abc7d0239ae6bf9e.vega-embed details summary {
+  #altair-viz-c6d0558a5dc74c558fc7da3ed1bbbdb4.vega-embed details,
+  #altair-viz-c6d0558a5dc74c558fc7da3ed1bbbdb4.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-35e8fb6f84684470abc7d0239ae6bf9e"></div>
+<div id="altair-viz-c6d0558a5dc74c558fc7da3ed1bbbdb4"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-35e8fb6f84684470abc7d0239ae6bf9e") {
-      outputDiv = document.getElementById("altair-viz-35e8fb6f84684470abc7d0239ae6bf9e");
+    if (outputDiv.id !== "altair-viz-c6d0558a5dc74c558fc7da3ed1bbbdb4") {
+      outputDiv = document.getElementById("altair-viz-c6d0558a5dc74c558fc7da3ed1bbbdb4");
     }
 
     const paths = {
@@ -1198,7 +1198,7 @@ Note
 <span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Matrix shape: </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then if we visualize the genre centroids again, we should see fewer character names and more genre-distinctive terms:</p>
-<div id="315b9787" class="cell" data-execution_count="5">
+<div id="23c3abcb" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint_without_entities.csv'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the updated genre centroids</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>alt.Chart(fingerprint_df).mark_bar().encode(</span>
@@ -1211,23 +1211,23 @@ Note
 <div class="cell-output cell-output-display" data-execution_count="5">
 
 <style>
-  #altair-viz-37575e45976a424087ba157da682ff66.vega-embed {
+  #altair-viz-fc07a3c64d7e4af7b2c018c642b9e021.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-37575e45976a424087ba157da682ff66.vega-embed details,
-  #altair-viz-37575e45976a424087ba157da682ff66.vega-embed details summary {
+  #altair-viz-fc07a3c64d7e4af7b2c018c642b9e021.vega-embed details,
+  #altair-viz-fc07a3c64d7e4af7b2c018c642b9e021.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-37575e45976a424087ba157da682ff66"></div>
+<div id="altair-viz-fc07a3c64d7e4af7b2c018c642b9e021"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-37575e45976a424087ba157da682ff66") {
-      outputDiv = document.getElementById("altair-viz-37575e45976a424087ba157da682ff66");
+    if (outputDiv.id !== "altair-viz-fc07a3c64d7e4af7b2c018c642b9e021") {
+      outputDiv = document.getElementById("altair-viz-fc07a3c64d7e4af7b2c018c642b9e021");
     }
 
     const paths = {
@@ -1347,7 +1347,7 @@ Note
 <li>Each <strong>topic</strong> is a distribution over words</li>
 </ul>
 <figure class="figure">
-<a href="https://yosinski.com/mlss12/media/slides/MLSS-2012-Blei-Probabilistic-Topic-Models_020.png"> <img src="https://yosinski.com/mlss12/media/slides/MLSS-2012-Blei-Probabilistic-Topic-Models_020.png" class="image-popup figure-img"> </a>
+<a target="_blank" href="https://yosinski.com/mlss12/media/slides/MLSS-2012-Blei-Probabilistic-Topic-Models_020.png"> <img src="https://yosinski.com/mlss12/media/slides/MLSS-2012-Blei-Probabilistic-Topic-Models_020.png" class="image-popup figure-img"> </a>
 </figure>
 <p>So rather than saying “this novel is about Crime,” LDA might say “this novel is 60% topic A (crime/investigation words), 25% topic B (Victorian society words), 15% topic C (family/domestic words).” The topics themselves are not pre-defined — LDA discovers them from word co-occurrence patterns in the corpus. This is what makes it an <em>unsupervised</em> method: you don’t tell it what topics to look for.</p>
 <p>Where TF-IDF asked <em>what vocabulary marks this genre</em>, LDA asks <em>what themes co-occur across the corpus and do they line up with genre?</em> The two signals are complementary: vocabulary fingerprints are precise and interpretable; topic distributions are softer but capture thematic patterns that cut across individual word choices.</p>
@@ -1362,7 +1362,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For a thorough introduction to topic modeling from a digital humanities perspective, see Ted Underwood’s <a href="https://tedunderwood.com/2012/04/07/topic-modeling-made-just-simple-enough/">“Topic Modeling Made Just Simple Enough”</a>. For a pointed critique of how the method is often misused, see Benjamin Schmidt’s <a href="http://journalofdigitalhumanities.org/2-1/words-alone-by-benjamin-schmidt/">“Words Alone: Dismantling Topic Models in the Humanities”</a>. The core interpretive question — do the topics LDA finds correspond to anything humanistically meaningful, or are they statistical artifacts? — is worth raising before running the code.</p>
+<p>For a thorough introduction to topic modeling from a digital humanities perspective, see Ted Underwood’s <a href="https://tedunderwood.com/2012/04/07/topic-modeling-made-just-simple-enough/" target="_blank">“Topic Modeling Made Just Simple Enough”</a>. For a pointed critique of how the method is often misused, see Benjamin Schmidt’s <a href="http://journalofdigitalhumanities.org/2-1/words-alone-by-benjamin-schmidt/" target="_blank">“Words Alone: Dismantling Topic Models in the Humanities”</a>. The core interpretive question — do the topics LDA finds correspond to anything humanistically meaningful, or are they statistical artifacts? — is worth raising before running the code.</p>
 </div>
 </div>
 <section id="preparing-the-data-for-lda" class="level3">
@@ -1457,7 +1457,7 @@ Note
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: (x <span class="op">-</span> x.<span class="bu">min</span>()) <span class="op">/</span> (x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will give us a dataframe where each row is a genre-topic pair with the mean topic weight for that genre, normalized to a 0–1 scale within each topic. Now we can visualize this as a heatmap:</p>
-<div id="776a85dc" class="cell" data-execution_count="6">
+<div id="dd537ca2" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>topic_genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_topic_genre_means.csv'</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>alt.Chart(topic_genre_means).mark_rect().encode(</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'topic:N'</span>, title<span class="op">=</span><span class="st">'LDA Topic'</span>),</span>
@@ -1479,23 +1479,23 @@ Note
 <div class="cell-output cell-output-display" data-execution_count="6">
 
 <style>
-  #altair-viz-4eb7b988008e45fbb9cd2098e997efb3.vega-embed {
+  #altair-viz-0e522e0359494d5596428b47ef648525.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-4eb7b988008e45fbb9cd2098e997efb3.vega-embed details,
-  #altair-viz-4eb7b988008e45fbb9cd2098e997efb3.vega-embed details summary {
+  #altair-viz-0e522e0359494d5596428b47ef648525.vega-embed details,
+  #altair-viz-0e522e0359494d5596428b47ef648525.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-4eb7b988008e45fbb9cd2098e997efb3"></div>
+<div id="altair-viz-0e522e0359494d5596428b47ef648525"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-4eb7b988008e45fbb9cd2098e997efb3") {
-      outputDiv = document.getElementById("altair-viz-4eb7b988008e45fbb9cd2098e997efb3");
+    if (outputDiv.id !== "altair-viz-0e522e0359494d5596428b47ef648525") {
+      outputDiv = document.getElementById("altair-viz-0e522e0359494d5596428b47ef648525");
     }
 
     const paths = {
@@ -1935,24 +1935,24 @@ On using LLMs for humanities research
 <p>The following resources go deeper on the methods covered in this lesson. They are not required but are highly recommended for your final projects.</p>
 <p><strong>TF-IDF and Document Similarity</strong></p>
 <ul>
-<li>Matthew J. Lavin, <a href="https://programminghistorian.org/en/lessons/analyzing-documents-with-tfidf">“Analyzing Documents with TF-IDF,”</a> <em>Programming Historian</em> 8 (2019)</li>
-<li>John R. Ladd, <a href="https://programminghistorian.org/en/lessons/common-similarity-measures">“Understanding and Using Common Similarity Measures for Text Analysis,”</a> <em>Programming Historian</em> 9 (2020)</li>
+<li>Matthew J. Lavin, <a href="https://programminghistorian.org/en/lessons/analyzing-documents-with-tfidf" target="_blank">“Analyzing Documents with TF-IDF,”</a> <em>Programming Historian</em> 8 (2019)</li>
+<li>John R. Ladd, <a href="https://programminghistorian.org/en/lessons/common-similarity-measures" target="_blank">“Understanding and Using Common Similarity Measures for Text Analysis,”</a> <em>Programming Historian</em> 9 (2020)</li>
 </ul>
 <p><strong>Topic Modeling</strong></p>
 <ul>
-<li>Ted Underwood, <a href="https://tedunderwood.com/2012/04/07/topic-modeling-made-just-simple-enough/">“Topic Modeling Made Just Simple Enough”</a> (2012)</li>
-<li>Benjamin Schmidt, <a href="http://journalofdigitalhumanities.org/2-1/words-alone-by-benjamin-schmidt/">“Words Alone: Dismantling Topic Models in the Humanities,”</a> <em>Journal of Digital Humanities</em> 2.1 (2012)</li>
+<li>Ted Underwood, <a href="https://tedunderwood.com/2012/04/07/topic-modeling-made-just-simple-enough/" target="_blank">“Topic Modeling Made Just Simple Enough”</a> (2012)</li>
+<li>Benjamin Schmidt, <a href="http://journalofdigitalhumanities.org/2-1/words-alone-by-benjamin-schmidt/" target="_blank">“Words Alone: Dismantling Topic Models in the Humanities,”</a> <em>Journal of Digital Humanities</em> 2.1 (2012)</li>
 </ul>
 <p><strong>LLMs for Humanities Research</strong></p>
 <ul>
-<li>Koeser, Rebecca Sutton, and Zoe LeBlanc. <a href="https://doi.org/10.22148/001c.116926">“Missing Data, Speculative Reading.”</a> <em>Journal of Cultural Analytics</em> 9, no. 2 (2024) — an example of careful, critical use of computational classification in DH</li>
-<li>Ollama documentation: <a href="https://ollama.com/">https://ollama.com/</a></li>
+<li>Koeser, Rebecca Sutton, and Zoe LeBlanc. <a href="https://doi.org/10.22148/001c.116926" target="_blank">“Missing Data, Speculative Reading.”</a> <em>Journal of Cultural Analytics</em> 9, no. 2 (2024) — an example of careful, critical use of computational classification in DH</li>
+<li>Ollama documentation: <a href="https://ollama.com/" target="_blank">https://ollama.com/</a></li>
 </ul>
 <p><strong>Broader Methods Surveys</strong></p>
 <ul>
-<li>Thomas Jurczyk, <a href="https://doi.org/10.46430/phen0094">“Clustering with Scikit-Learn in Python,”</a> <em>Programming Historian</em> 10 (2021)</li>
-<li>Matthew J. Lavin, <a href="https://doi.org/10.46430/phen0099">“Regression Analysis with Scikit-Learn,”</a> <em>Programming Historian</em> 11 (2022)</li>
-<li>Ted Underwood et al., <a href="https://doi.org/10.15195/v9.a8">“Cohort Succession Explains Most Change in Literary Culture,”</a> <em>Sociological Science</em> 9 (2022) — an example of combining multiple methods at scale</li>
+<li>Thomas Jurczyk, <a href="https://doi.org/10.46430/phen0094" target="_blank">“Clustering with Scikit-Learn in Python,”</a> <em>Programming Historian</em> 10 (2021)</li>
+<li>Matthew J. Lavin, <a href="https://doi.org/10.46430/phen0099" target="_blank">“Regression Analysis with Scikit-Learn,”</a> <em>Programming Historian</em> 11 (2022)</li>
+<li>Ted Underwood et al., <a href="https://doi.org/10.15195/v9.a8" target="_blank">“Cohort Succession Explains Most Change in Literary Culture,”</a> <em>Sociological Science</em> 9 (2022) — an example of combining multiple methods at scale</li>
 </ul>
 
 

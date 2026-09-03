@@ -75,7 +75,7 @@ We could store each of these in new variables but we also want to visualize this
 
 ---
 
-Rather than working with just the National Parks Data, we can also start to explore the remainder of the datasets from the *Responsible Datasets in Context Project*. For example, let's take a look at the "Top 500 Greatest Novels" dataset by Anna Preus and Aashna Sheth [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html).
+Rather than working with just the National Parks Data, we can also start to explore the remainder of the datasets from the *Responsible Datasets in Context Project*. For example, let's take a look at the "Top 500 Greatest Novels" dataset by Anna Preus and Aashna Sheth [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html){target="_blank"}.
 
 First, we need to create a new Jupyter notebook in our `pandas-eda` folder called `Top500NovelsEDA.ipynb` and then load in the data. As a reminder, how can we **read** data in Pandas?
 
@@ -120,37 +120,37 @@ There's many answers to this question, but say we use `novels_df.info()`. We wou
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 500 entries, 0 to 499
 Data columns (total 29 columns):
- #   Column                    Non-Null Count  Dtype  
----  ------                    --------------  -----  
- 0   top_500_rank              500 non-null    int64  
- 1   title                     500 non-null    object 
- 2   author                    500 non-null    object 
- 3   pub_year                  500 non-null    int64  
- 4   orig_lang                 500 non-null    object 
- 5   genre                     500 non-null    object 
- 6   author_birth              499 non-null    object 
- 7   author_death              496 non-null    object 
- 8   author_gender             499 non-null    object 
- 9   author_primary_lang       499 non-null    object 
-10  author_nationality        499 non-null    object 
-11  author_field_of_activity  329 non-null    object 
-12  author_occupation         458 non-null    object 
+ #   Column                    Non-Null Count  Dtype
+---  ------                    --------------  -----
+ 0   top_500_rank              500 non-null    int64
+ 1   title                     500 non-null    object
+ 2   author                    500 non-null    object
+ 3   pub_year                  500 non-null    int64
+ 4   orig_lang                 500 non-null    object
+ 5   genre                     500 non-null    object
+ 6   author_birth              499 non-null    object
+ 7   author_death              496 non-null    object
+ 8   author_gender             499 non-null    object
+ 9   author_primary_lang       499 non-null    object
+10  author_nationality        499 non-null    object
+11  author_field_of_activity  329 non-null    object
+12  author_occupation         458 non-null    object
 13  oclc_holdings             495 non-null    float64
 14  oclc_eholdings            495 non-null    float64
 15  oclc_total_editions       495 non-null    float64
 16  oclc_holdings_rank        495 non-null    float64
 17  oclc_editions_rank        495 non-null    float64
 18  gr_avg_rating             500 non-null    float64
-19  gr_num_ratings            500 non-null    object 
-20  gr_num_reviews            500 non-null    object 
-21  gr_avg_rating_rank        500 non-null    int64  
-22  gr_num_ratings_rank       500 non-null    int64  
+19  gr_num_ratings            500 non-null    object
+20  gr_num_reviews            500 non-null    object
+21  gr_avg_rating_rank        500 non-null    int64
+22  gr_num_ratings_rank       500 non-null    int64
 23  oclc_owi                  495 non-null    float64
-24  author_viaf               500 non-null    object 
-25  gr_url                    480 non-null    object 
-26  wiki_url                  500 non-null    object 
-27  pg_eng_url                500 non-null    object 
-28  pg_orig_url               64 non-null     object 
+24  author_viaf               500 non-null    object
+25  gr_url                    480 non-null    object
+26  wiki_url                  500 non-null    object
+27  pg_eng_url                500 non-null    object
+28  pg_orig_url               64 non-null     object
 dtypes: float64(7), int64(4), object(18)
 memory usage: 113.4+ KB
 ```
@@ -159,9 +159,9 @@ This overview is telling us that we have far more columns in this datasets, each
 
 ## Missing Data in Pandas
 
-In the last lesson, we covered how we could add null values to a DataFrame, but now we want to explore how we can work with them. Pandas has a lot of documentation for handling **missing data** that you can read here [https://pandas.pydata.org/docs/user_guide/missing_data.html](https://pandas.pydata.org/docs/user_guide/missing_data.html). For our purposes, we're mostly concerned with the `isna()` and `notna()` methods.
+In the last lesson, we covered how we could add null values to a DataFrame, but now we want to explore how we can work with them. Pandas has a lot of documentation for handling **missing data** that you can read here [https://pandas.pydata.org/docs/user_guide/missing_data.html](https://pandas.pydata.org/docs/user_guide/missing_data.html){target="_blank"}. For our purposes, we're mostly concerned with the `isna()` and `notna()` methods.
 
-While most of the columns have 500 non-null values, we can see that some of the columns have missing values. For example, `author_field_of_activity` has 329 non-null values, which means that there are 171 missing values. We can start to get a sense of what that column contains if we return to the dataset documentation, specifically the section "What's in the Data" [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data). From there we can learn the following about this column:
+While most of the columns have 500 non-null values, we can see that some of the columns have missing values. For example, `author_field_of_activity` has 329 non-null values, which means that there are 171 missing values. We can start to get a sense of what that column contains if we return to the dataset documentation, specifically the section "What's in the Data" [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data){target="_blank"}. From there we can learn the following about this column:
 
 > AUTHOR_FIELD_OF_ACTIVITY: Author's primary fields of activity, according to VIAF. VIAF includes data from multiple global partner institutions, but we only collect VIAF data associated with the Library of Congress (LOC).
 
@@ -220,11 +220,11 @@ Now that we are understanding how to work with missing data, we can also start t
 
 We've already seen one approach `pd.concat()` that allows us to concatenate DataFrames (aka add them together), but now we want to focus on the `merge()` method.
 
-First though we need another dataset to merge with our `novels_df`. We could take a look at sites like Kaggle to find more datasets, or more specific ones like the *Post45 Data Collective*, which "peer reviews and houses literary and cultural data from 1945 to the present" [https://data.post45.org/](https://data.post45.org/).
+First though we need another dataset to merge with our `novels_df`. We could take a look at sites like Kaggle to find more datasets, or more specific ones like the *Post45 Data Collective*, which "peer reviews and houses literary and cultural data from 1945 to the present" [https://data.post45.org/](https://data.post45.org/){target="_blank"}.
 
 ![Post45](../../assets/images/post45_data.png)
 
-While there's a number of relevant datasets in the *Post45 Data Collective*, we could use the one about *New York Times* Hardcover Fiction Bestsellers, 1931–2020, created by Jordan Pruett [https://data.post45.org/nyt-fiction-bestsellers-data/](https://data.post45.org/nyt-fiction-bestsellers-data/). According to the documentation, this dataset contains the following:
+While there's a number of relevant datasets in the *Post45 Data Collective*, we could use the one about *New York Times* Hardcover Fiction Bestsellers, 1931–2020, created by Jordan Pruett [https://data.post45.org/nyt-fiction-bestsellers-data/](https://data.post45.org/nyt-fiction-bestsellers-data/){target="_blank"}. According to the documentation, this dataset contains the following:
 
 > The New York Times Hardcover Fiction Bestsellers (1931–2020) contains three related datasets. The first dataset provides a tabular representation of the hardcover fiction bestseller list of The New York Times every week between 1931 and 2020. The second dataset provides title-level data for every unique title that appeared on the hardcover fiction bestseller list during this time period. The third dataset provides HathiTrust Digital Library identifiers for every unique title that appeared on the hardcover fiction bestseller list and that also has a corresponding volume in the HathiTrust Digital Library.
 
@@ -234,9 +234,9 @@ Getting this additional dataset will allow us to explore the relationship betwee
 
 ![NYT Data](../../assets/images/nyt_data.png)
 
-If we click on the `Explore/download data` for the first dataset, we see a new page that has the remote url for the dataset: [https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv](https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv). 
+If we click on the `Explore/download data` for the first dataset, we see a new page that has the remote url for the dataset: [https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv](https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv){target="_blank"}.
 
-Notice the `raw.githubusercontent.com` in the URL. This tells us that this is a raw file from a GitHub repository, which is a common way to share datasets, and we can even see the actual file here [https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers](https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers).
+Notice the `raw.githubusercontent.com` in the URL. This tells us that this is a raw file from a GitHub repository, which is a common way to share datasets, and we can even see the actual file here [https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers](https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers){target="_blank"}.
 
 We can copy that and load it into a new DataFrame.
 
@@ -252,12 +252,12 @@ Which gives us the following output:
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 60386 entries, 0 to 60385
 Data columns (total 6 columns):
- #   Column    Non-Null Count  Dtype 
----  ------    --------------  ----- 
- 0   year      60386 non-null  int64 
+ #   Column    Non-Null Count  Dtype
+---  ------    --------------  -----
+ 0   year      60386 non-null  int64
  1   week      60386 non-null  object
- 2   rank      60386 non-null  int64 
- 3   title_id  60386 non-null  int64 
+ 2   rank      60386 non-null  int64
+ 3   title_id  60386 non-null  int64
  4   title     60386 non-null  object
  5   author    60376 non-null  object
 dtypes: int64(3), object(3)
@@ -266,7 +266,7 @@ memory usage: 2.8+ MB
 
 We can see that this dataset has 60386 rows and 6 columns. The columns are `year`, `week`, `rank`, `title_id`, `title`, and `author`. We can also see that the `author` column has ten missing values, but that overall, this dataset has very few null values and is much larger than the `novels_df` DataFrame.
 
-Now we can start to merge the two DataFrames together. We've mentioned merging datasets a bit when we discussed joining data in class and SQL, but now we want to dig into details. Often times when we're working with datasets, we will have our data split into multiple `csv` files or have differently shaped datasets (i.e. some of them will have more rows or columns than other datasets). Pandas has built in functionality that let's us merge together DataFrames so that we can perform analysis on the combined dataset, which you can read about in the very extensive documentation here [https://pandas.pydata.org/docs/user_guide/merging.html](https://pandas.pydata.org/docs/user_guide/merging.html).
+Now we can start to merge the two DataFrames together. We've mentioned merging datasets a bit when we discussed joining data in class and SQL, but now we want to dig into details. Often times when we're working with datasets, we will have our data split into multiple `csv` files or have differently shaped datasets (i.e. some of them will have more rows or columns than other datasets). Pandas has built in functionality that let's us merge together DataFrames so that we can perform analysis on the combined dataset, which you can read about in the very extensive documentation here [https://pandas.pydata.org/docs/user_guide/merging.html](https://pandas.pydata.org/docs/user_guide/merging.html){target="_blank"}.
 
 While this documentation shows a number of ways to combined datasets (`concat` let's you combine datasets by stacking them on top of each other, `join` let's you combine datasets by joining them on a common index, and `merge` let's you combine datasets by joining them on a common column), we will focus on the `merge` method.
 
@@ -397,7 +397,7 @@ We can see that King has had many bestsellers and that there is overlap in the t
 
 ## String Methods in Pandas
 
-Part of what makes Pandas so powerful is that it has a number of built-in methods for working with `string` data, accessible through the `.str` accessor. An in-depth discussion of these methods is available in the Pandas documentation [https://pandas.pydata.org/docs/user_guide/text.html](https://pandas.pydata.org/docs/user_guide/text.html), but here is a summary of the most useful ones:
+Part of what makes Pandas so powerful is that it has a number of built-in methods for working with `string` data, accessible through the `.str` accessor. An in-depth discussion of these methods is available in the Pandas documentation [https://pandas.pydata.org/docs/user_guide/text.html](https://pandas.pydata.org/docs/user_guide/text.html){target="_blank"}, but here is a summary of the most useful ones:
 
 | Pandas String Method | Explanation |
 |---------------------|-------------|
@@ -466,7 +466,7 @@ combined_novels_nyt_df = pd.read_csv('combined_novels_viz.csv')
 
 ::: {.callout-note}
 ## About this dataset
-The full dataset including raw novel texts (152 MB) is available on Canvas. The version used on this page is a smaller viz-only CSV with pre-computed columns. See the [Additional Notes](#additional-notes) section for how both were created.
+The full dataset including raw novel texts (152 MB) is available on Canvas. The version used on this page is a smaller viz-only CSV with pre-computed columns. See the [Additional Notes](#additional-notes){target="_blank"} section for how both were created.
 :::
 
 Now let's look at the columns available to us:
@@ -550,7 +550,7 @@ Pandas string methods are great for simple pattern matching, but they treat text
 
 Since we are working with datasets with significant documentation, we have a fairly good sense of what is in these datasets. However, often you will be working with datasets that are less documented, and so it is important to understand how to explore them. This process is often called *Exploratory Data Analysis*.
 
-[![From Zoë Wilkinson Saldaña "Sentiment Analysis for Exploratory Data Analysis" https://programminghistorian.org/en/lessons/sentiment-analysis](../../assets/images/eda.png)](https://programminghistorian.org/en/lessons/sentiment-analysis){target="_blank"}
+[![From Zoë Wilkinson Saldaña "Sentiment Analysis for Exploratory Data Analysis" https://programminghistorian.org/en/lessons/sentiment-analysis](../../assets/images/eda.png){target="_blank"}](https://programminghistorian.org/en/lessons/sentiment-analysis){target="_blank"}
 
 You've likely heard this term before, but let's historically contextualize this idea. The term *Exploratory Data Analysis* (EDA) was popularized by John W. Tukey, one of the most famous statisticians and mathematicians of the 20th century. Tukey was one of the first to formally define the concept of data analysis in 1962 paper titled "The Future of Data Analysis."
 
@@ -560,13 +560,13 @@ In the paper, Tukey writes:
 
 > For a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. [...] All in all, I have come to feel that my central interest is in *data analysis*, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.
 
-Such a framing might seem straightforward today in the age of Data Science, but at the time it was a radical shift for how we thought about working with data. You'll notice in that image from the paper, which you can download [here](https://projecteuclid.org/download/pdf_1/euclid.aoms/1177704711) if you're curious, that Tukey was affiliated with Princeton University and Bell Telephone Laboratories when he published the paper. Both of these were key institutions in the development of modern computing and statistics. For example, if you've heard of Alan Turing or Claude Shannon, they were also affiliated with Bell Labs, and Tukey worked with both of them, especially during World War II.
+Such a framing might seem straightforward today in the age of Data Science, but at the time it was a radical shift for how we thought about working with data. You'll notice in that image from the paper, which you can download [here](https://projecteuclid.org/download/pdf_1/euclid.aoms/1177704711){target="_blank"} if you're curious, that Tukey was affiliated with Princeton University and Bell Telephone Laboratories when he published the paper. Both of these were key institutions in the development of modern computing and statistics. For example, if you've heard of Alan Turing or Claude Shannon, they were also affiliated with Bell Labs, and Tukey worked with both of them, especially during World War II.
 
 ![](https://memorial.bellsystem.com/images/history-%20bell_labs_large.png)
 
 This infographic gives a sense of some of the inventions and discoveries that happened at Bell Labs, which was one of the most important research and development organizations in the 20th century. In the case of Tukey, he's credited not just with exploratory data analysis but also coining both the terms `bit`, a portmanteau of binary digit, and `software` in 1958, and he was also crucial in popularizing the fourier transform for digital signal processing, which we learned about with the Syuzhet package.
 
-Tukey was a very eclectic scholar, and worked on everything from developing better sampling methods after reviewing the [Kinsey report](https://en.wikipedia.org/wiki/Kinsey_Reports), which was a landmark study of human sexuality released in two books in 1948 and 1953, to developing better methods for election polling. His central thoughts on EDA became the basis for his 1977 book *Exploratory Data Analysis*, where he argued that EDA could help suggest hypotheses that could be then tested statistically.
+Tukey was a very eclectic scholar, and worked on everything from developing better sampling methods after reviewing the [Kinsey report](https://en.wikipedia.org/wiki/Kinsey_Reports){target="_blank"}, which was a landmark study of human sexuality released in two books in 1948 and 1953, to developing better methods for election polling. His central thoughts on EDA became the basis for his 1977 book *Exploratory Data Analysis*, where he argued that EDA could help suggest hypotheses that could be then tested statistically.
 
 ![](https://devopedia.org/images/article/75/3879.1525341742.jpg)
 
@@ -582,7 +582,7 @@ With Pandas we can start to implement these with code:
 
 1. We want to explore the data, so we could use `head()`, `tail()`, or `sample()` methods to display a subset of the dataset. We could also use `.shape` or `.dtypes` to see shaped of the DataFrame and the data types of each column.
 
-2. Next we might use the `describe()` method to output a summary of our dataset. According to the documentation for this method, it provides "descriptive statistics include those that summarize the central tendency, dispersion and shape of a dataset's distribution, excluding NaN values." [(Read the docs here)](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html).
+2. Next we might use the `describe()` method to output a summary of our dataset. According to the documentation for this method, it provides "descriptive statistics include those that summarize the central tendency, dispersion and shape of a dataset's distribution, excluding NaN values." [(Read the docs here)](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html){target="_blank"}.
 
 3. After getting this bird's eye view of the distribution of the data, we could use `sort_values()` or `nsmallest()` / `nlargest()` to either organize the dataset or return the rows with maximum or minimum of values in a certain column.
 
@@ -616,7 +616,7 @@ combined_novels_nyt_df.isna().any()
 
 Now that we have a sense of the distribution of our data, we can start to visualize it to see if we can answer our questions.
 
-Like many of the methods above, `plot` is built into Pandas and is a wrapper around the `matplotlib` library [https://matplotlib.org/](https://matplotlib.org/), one of the most popular Python libraries for data visualization. This means that we can use the `plot()` method to create a variety of different plots. We can read more about the `plot()` method in the Pandas documentation here [https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html), where it lists the kinds of plots we can create:
+Like many of the methods above, `plot` is built into Pandas and is a wrapper around the `matplotlib` library [https://matplotlib.org/](https://matplotlib.org/){target="_blank"}, one of the most popular Python libraries for data visualization. This means that we can use the `plot()` method to create a variety of different plots. We can read more about the `plot()` method in the Pandas documentation here [https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html){target="_blank"}, where it lists the kinds of plots we can create:
 
 - 'line' : line plot (default)
 - 'bar' : vertical bar plot
@@ -630,7 +630,7 @@ Like many of the methods above, `plot` is built into Pandas and is a wrapper aro
 - 'scatter' : scatter plot (DataFrame only)
 - 'hexbin' : hexbin plot (DataFrame only)
 
-Pandas also has a robust User Guide on how to plot here [https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html).
+Pandas also has a robust User Guide on how to plot here [https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html){target="_blank"}.
 
 From these examples we can see that the `plot` syntax requires specifying the type of graph we want to create, and then what we want on the x and y axis. For example, if we wanted to create a scatter plot looking at the relationship between the `pub_year` and `top_500_rank` columns, we could do the following:
 
@@ -666,7 +666,7 @@ As we discussed in class, a lot of what motivates this "cleaning", whether that 
 
 ![](https://www.harrised.com/150/images/gigo.jpeg)
 
-GIGO stands for "Garbage In, Garbage Out" and the term has been used for decades in computing to refer to when data entry errors would produce faulty results. Rob Stenson has a great  post exploring the history of the term all the way back to Charles Babbage, one of the first inventors of the computer, [https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out](https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out).
+GIGO stands for "Garbage In, Garbage Out" and the term has been used for decades in computing to refer to when data entry errors would produce faulty results. Rob Stenson has a great  post exploring the history of the term all the way back to Charles Babbage, one of the first inventors of the computer, [https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out](https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out){target="_blank"}.
 
 GIGO is important because it essentially means that the quality of your data analysis is always dependent on the quality of your data.
 
@@ -696,11 +696,11 @@ Up to now we've been using Pandas built in `plot` methods to display our data. W
 
 ![python lib tools](https://optimise2.assets-servd.host/voracious-blesbok/production/Blog/PythonVisLandscape.jpg?w=1200&auto=compress%2Cformat&fit=crop&dm=1632326979&s=35cf543e04fd14bcc881ef8e70363860)
 
-As you can see in these graphics, in Python, there are a number of visualization libraries, including `Matplotlib`, `Seaborn`, and `Plotly` that have extensive communities and documentation. 
+As you can see in these graphics, in Python, there are a number of visualization libraries, including `Matplotlib`, `Seaborn`, and `Plotly` that have extensive communities and documentation.
 
 ![Altair](https://cdn.cssauthor.com/wp-content/uploads/2023/04/Altair.jpg?strip=all&lossy=1&ssl=1)
 
-Today we're going to focus on [Vega-Altair](https://altair-viz.github.io/index.html), which is a Python library built on top of Vega and Vega-Lite - two visualization libraries for JavaScript. Previously, this library was known as just `Altair` so for brevity in this lesson we will refer to it as such. The library was started in 2016 by Jake VanderPlas and has since grown to be one of the most popular libraries for data visualization in Python.
+Today we're going to focus on [Vega-Altair](https://altair-viz.github.io/index.html){target="_blank"}, which is a Python library built on top of Vega and Vega-Lite - two visualization libraries for JavaScript. Previously, this library was known as just `Altair` so for brevity in this lesson we will refer to it as such. The library was started in 2016 by Jake VanderPlas and has since grown to be one of the most popular libraries for data visualization in Python.
 
 *Let's install Altair*
 
@@ -718,16 +718,16 @@ Notice that this time when installing we have a slightly new syntax: `[all]`. Th
 import altair as alt
 ```
 
-Because we are using Altair in a Jupyter Notebook we also need to add a few settings (you read more about this here [https://altair-viz.github.io/user_guide/display_frontends.html#](https://altair-viz.github.io/user_guide/display_frontends.html#)).
+Because we are using Altair in a Jupyter Notebook we also need to add a few settings (you read more about this here [https://altair-viz.github.io/user_guide/display_frontends.html#](https://altair-viz.github.io/user_guide/display_frontends.html#){target="_blank"}).
 
-If you are running your Notebook in the browser, you can run the following after you import Altair (more info here [https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-jupyter-notebook](https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-jupyter-notebook)):
+If you are running your Notebook in the browser, you can run the following after you import Altair (more info here [https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-jupyter-notebook](https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-jupyter-notebook){target="_blank"}):
 
 ```python
 # Optional in Jupyter Notebook: requires an up-to-date vega nbextension.
 # alt.renderers.enable('notebook')
 ```
 
-If you are running it in VS Code, you can run the following (more info here [https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-vscode](https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-vscode)):
+If you are running it in VS Code, you can run the following (more info here [https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-vscode](https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-vscode){target="_blank"}):
 
 ```python
 # Optional in VS Code
@@ -754,7 +754,7 @@ You should now see the following graph:
 
 ![](../../assets/images/altair_chart.png)
 
-If you don't see the graph and you're running your Jupyter notebook in the browser, you might need to set the kernel of your notebook [https://stackoverflow.com/questions/47295871/is-there-a-way-to-use-pipenv-with-jupyter-notebook](https://stackoverflow.com/questions/47295871/is-there-a-way-to-use-pipenv-with-jupyter-notebook) or set the vega extension with following:
+If you don't see the graph and you're running your Jupyter notebook in the browser, you might need to set the kernel of your notebook [https://stackoverflow.com/questions/47295871/is-there-a-way-to-use-pipenv-with-jupyter-notebook](https://stackoverflow.com/questions/47295871/is-there-a-way-to-use-pipenv-with-jupyter-notebook){target="_blank"} or set the vega extension with following:
 
 ```sh
 jupyter nbextension install --sys-prefix --py vega
@@ -762,15 +762,15 @@ jupyter nbextension install --sys-prefix --py vega
 
 *So let's breakdown what we're doing here*
 
-First we are specifying a new [`Chart` class](https://altair-viz.github.io/user_guide/generated/toplevel/altair.Chart.html#altair.Chart). In Altair, there are a number of Chart types that we'll delve into later but it essentially is the basic class we'll be working with (more information here [https://altair-viz.github.io/user_guide/api.html#top-level-objects](https://altair-viz.github.io/user_guide/api.html#top-level-objects)).
+First we are specifying a new [`Chart` class](https://altair-viz.github.io/user_guide/generated/toplevel/altair.Chart.html#altair.Chart){target="_blank"}. In Altair, there are a number of Chart types that we'll delve into later but it essentially is the basic class we'll be working with (more information here [https://altair-viz.github.io/user_guide/api.html#top-level-objects](https://altair-viz.github.io/user_guide/api.html#top-level-objects){target="_blank"}).
 
 ![](../../assets/images/top_level_charts.png)
 
-We pass our data to the `Chart` and then specify the type of `mark` we are using (in our case we are using `mark_point()` to make points). In Altair, we can use all types of marks to represent our data [https://altair-viz.github.io/user_guide/marks/index.html](https://altair-viz.github.io/user_guide/marks/index.html).
+We pass our data to the `Chart` and then specify the type of `mark` we are using (in our case we are using `mark_point()` to make points). In Altair, we can use all types of marks to represent our data [https://altair-viz.github.io/user_guide/marks/index.html](https://altair-viz.github.io/user_guide/marks/index.html){target="_blank"}.
 
 ![](../../assets/images/mark_types.png)
 
-Finally we are calling encoding to specify what variable we want to represent on the `x` and `y` axis, as well as through the `color` encoding. Altair has many fields for encoding [https://altair-viz.github.io/user_guide/encodings/index.html](https://altair-viz.github.io/user_guide/encodings/index.html)
+Finally we are calling encoding to specify what variable we want to represent on the `x` and `y` axis, as well as through the `color` encoding. Altair has many fields for encoding [https://altair-viz.github.io/user_guide/encodings/index.html](https://altair-viz.github.io/user_guide/encodings/index.html){target="_blank"}
 
 ![](../../assets/images/encodings.png)
 
@@ -791,7 +791,7 @@ Which gives us the following output:
 
 We can see that some of the syntax is similar to the initial example. We are passing in our DataFrame to the `Chart` class, calling the `mark_bar` method, and then encoding the `x` and `y` axis. But some of this syntax is also new.
 
-For instance, we are specifying the `encodings` using the `N` for nominal and `Q` for quantitative. We are also using an `aggregate` function to calculate the `mean`. You can read more about aggregation here [https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions](https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions), but generally Altair has the following aggregations built-in:
+For instance, we are specifying the `encodings` using the `N` for nominal and `Q` for quantitative. We are also using an `aggregate` function to calculate the `mean`. You can read more about aggregation here [https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions](https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions){target="_blank"}, but generally Altair has the following aggregations built-in:
 
 | Aggregation Operation | Description | Syntax |
 |-----------------------|-------------|--------|
@@ -819,11 +819,11 @@ For instance, we are specifying the `encodings` using the `N` for nominal and `Q
 | `argmin`              | An input data object containing the minimum field value. Note: When used inside encoding, argmin must be specified as an object. | `argmin(column_name)` |
 | `argmax`              | An input data object containing the maximum field value. Note: When used inside encoding, argmax must be specified as an object. | `argmax(column_name)` |
 
-You can also see links to examples using these aggregations here [https://altair-viz.github.io/user_guide/encodings/index.html#binning-and-aggregation](https://altair-viz.github.io/user_guide/encodings/index.html#binning-and-aggregation).
+You can also see links to examples using these aggregations here [https://altair-viz.github.io/user_guide/encodings/index.html#binning-and-aggregation](https://altair-viz.github.io/user_guide/encodings/index.html#binning-and-aggregation){target="_blank"}.
 
-While it's great we can recreate this plot, what's the point exactly? After all we can do this in `plot` without having to use another library. 
+While it's great we can recreate this plot, what's the point exactly? After all we can do this in `plot` without having to use another library.
 
-The value of using a library like Altair is that it is built to implement the idea of a `Grammar of Graphics`. 
+The value of using a library like Altair is that it is built to implement the idea of a `Grammar of Graphics`.
 
 ![](../../assets/images/grammar-of-graphics.png)
 
@@ -965,9 +965,9 @@ alt.Chart(combined_novels_nyt_df).mark_bar().encode(
 )
 ```
 
-You'll notice our syntax is again a bit more complex. You can read about how Altair enables interactivity in the documentation here [https://altair-viz.github.io/user_guide/interactions/index.html](https://altair-viz.github.io/user_guide/interactions/index.html), but to summarize, we've now added the ability not just to have a tooltip but also to visually select our categories in the legend — try clicking a genre in the legend to highlight it.
+You'll notice our syntax is again a bit more complex. You can read about how Altair enables interactivity in the documentation here [https://altair-viz.github.io/user_guide/interactions/index.html](https://altair-viz.github.io/user_guide/interactions/index.html){target="_blank"}, but to summarize, we've now added the ability not just to have a tooltip but also to visually select our categories in the legend — try clicking a genre in the legend to highlight it.
 
-As we are starting to see Altair is a very powerful library. We will continue to explore its functionality in the coming weeks, but would highly encourage you to take a look at the example visualizations on the Altair website [https://altair-viz.github.io/gallery/index.html](https://altair-viz.github.io/gallery/index.html) and the documentation [https://altair-viz.github.io/index.html](https://altair-viz.github.io/index.html).
+As we are starting to see Altair is a very powerful library. We will continue to explore its functionality in the coming weeks, but would highly encourage you to take a look at the example visualizations on the Altair website [https://altair-viz.github.io/gallery/index.html](https://altair-viz.github.io/gallery/index.html){target="_blank"} and the documentation [https://altair-viz.github.io/index.html](https://altair-viz.github.io/index.html){target="_blank"}.
 
 ## Exploring and Visualizing Culture Homework
 
@@ -977,12 +977,12 @@ Begin by creating a new Jupyter Notebook within your `is310-coding-assignments` 
 
 You can organize your notebook in any way that makes sense to you, but you should have a rationale and **clearly** label sections using Markdown headers. You should also use `Altair` for all your EDA visualizations. There is no set number of graphs that you must create, but part of it is imagine that you are creating this notebook for someone new to these datasets, so you should consider what would be helpful to explain or include. You also need to consider what you will not analyze, since too much data analysis can be confusing and unhelpful. You should be sure to also include text interpreting your graphs and findings for your reader.
 
-Finally, there are no right or wrong answers for this assignment. Only your sense of what is likely of interest based on your EDA. You could focus on comparisons between the datasets or the intersection of the datasets, and you can explore a number of correlations and relationships, or just a few. So consider this notebook your first attempt at undertaking exploratory data analysis as John Tukey first proposed. 
+Finally, there are no right or wrong answers for this assignment. Only your sense of what is likely of interest based on your EDA. You could focus on comparisons between the datasets or the intersection of the datasets, and you can explore a number of correlations and relationships, or just a few. So consider this notebook your first attempt at undertaking exploratory data analysis as John Tukey first proposed.
 
-Once you have completed your assignment, push up your code to GitHub and post a link in this GitHub discussion [https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/9](https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/9). Remember to include either remote or local access to the datasets, to avoid pushing up your virtual environment, and to document your folder with a `README.md`. And finally, as always, you are welcome to use AI tools to help you complete this assignment, but again remember you need to understand what the code is doing and you need to be able to explain the overall goals and focus of the notebook.
+Once you have completed your assignment, push up your code to GitHub and post a link in this GitHub discussion [https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/9](https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/9){target="_blank"}. Remember to include either remote or local access to the datasets, to avoid pushing up your virtual environment, and to document your folder with a `README.md`. And finally, as always, you are welcome to use AI tools to help you complete this assignment, but again remember you need to understand what the code is doing and you need to be able to explain the overall goals and focus of the notebook.
 
 ::: {.callout-note}
-In the documentation for the Top Novels dataset, there is a section on `Discussion & Activities` [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities) and specifically a link to a `Google Colab` notebook exploring bias in the metadata of this dataset, available [here](https://colab.research.google.com/drive/1fxEae0BmUmipDQC2qvqGvG11fIAITZ_K?usp=sharing). For this assignment, you are welcome to build from both our in-class explorations and this existing Colab notebook. You can reuse code from both, but the overall goal is to start implementing your knowledge of EDA to consider potential future research directions with these datasets.
+In the documentation for the Top Novels dataset, there is a section on `Discussion & Activities` [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities){target="_blank"} and specifically a link to a `Google Colab` notebook exploring bias in the metadata of this dataset, available [here](https://colab.research.google.com/drive/1fxEae0BmUmipDQC2qvqGvG11fIAITZ_K?usp=sharing){target="_blank"}. For this assignment, you are welcome to build from both our in-class explorations and this existing Colab notebook. You can reuse code from both, but the overall goal is to start implementing your knowledge of EDA to consider potential future research directions with these datasets.
 :::
 
 ---
@@ -1025,7 +1025,7 @@ for index, row in combined_novels_nyt_df.iterrows():
 combined_novels_nyt_df.loc[:, 'eng_text'] = combined_novels_nyt_df['pg_eng_url'].apply(get_book_text)
 ```
 
-You can read more about the `apply()` method in the Pandas documentation here [https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html). As the graphic below shows, `apply()` is significantly faster than looping for large DataFrames:
+You can read more about the `apply()` method in the Pandas documentation here [https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html){target="_blank"}. As the graphic below shows, `apply()` is significantly faster than looping for large DataFrames:
 
 ![](https://www.ml4devs.com/images/illustrations/pandas-dataframe-apply-performace-comparision.webp)
 
@@ -1038,7 +1038,7 @@ tqdm.pandas(desc="Getting English Texts")
 combined_novels_nyt_df.loc[:, 'eng_text'] = combined_novels_nyt_df['pg_eng_url'].progress_apply(get_book_text)
 ```
 
-You can read more about `tqdm` here [https://tqdm.github.io/](https://tqdm.github.io/).
+You can read more about `tqdm` here [https://tqdm.github.io/](https://tqdm.github.io/){target="_blank"}.
 
 Finally, once we had all the texts, we saved the combined DataFrame to a CSV file so we wouldn't have to re-scrape every time:
 

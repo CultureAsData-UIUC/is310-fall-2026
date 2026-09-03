@@ -419,7 +419,7 @@ Note
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(parks_data_df.groupby([<span class="st">'state'</span>])[<span class="st">'park_name'</span>].nunique().reset_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We could store each of these in new variables but we also want to visualize this data to help us better understand it. That’s what we’ll be exploring further in this next lesson.</p>
 <hr>
-<p>Rather than working with just the National Parks Data, we can also start to explore the remainder of the datasets from the <em>Responsible Datasets in Context Project</em>. For example, let’s take a look at the “Top 500 Greatest Novels” dataset by Anna Preus and Aashna Sheth <a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html">https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html</a>.</p>
+<p>Rather than working with just the National Parks Data, we can also start to explore the remainder of the datasets from the <em>Responsible Datasets in Context Project</em>. For example, let’s take a look at the “Top 500 Greatest Novels” dataset by Anna Preus and Aashna Sheth <a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html" target="_blank">https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html</a>.</p>
 <p>First, we need to create a new Jupyter notebook in our <code>pandas-eda</code> folder called <code>Top500NovelsEDA.ipynb</code> and then load in the data. As a reminder, how can we <strong>read</strong> data in Pandas?</p>
 <p><img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExanV4dzd4NDFqZnVqcThvOXl4b2ppNGI0ZWJhbjIyNDNwODA5YWZxbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NFA61GS9qKZ68/giphy.gif" class="img-fluid"></p>
 <p>While this cat is adorable, we can also use the <code>pd.read_csv()</code> method to read in our data.</p>
@@ -440,44 +440,44 @@ Note
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>class <span class="st">'pandas.core.frame.DataFrame'</span><span class="op">&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">RangeIndex:</span> 500 entries, 0 to 499</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Data</span> columns <span class="er">(</span><span class="ex">total</span> 29 columns<span class="kw">)</span><span class="bu">:</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> <span class="co">#   Column                    Non-Null Count  Dtype  </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span>  <span class="at">------</span>                    <span class="at">--------------</span>  <span class="at">-----</span>  </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">0</span>   top_500_rank              500 non-null    int64  </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">1</span>   title                     500 non-null    object </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">2</span>   author                    500 non-null    object </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">3</span>   pub_year                  500 non-null    int64  </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a> <span class="ex">4</span>   orig_lang                 500 non-null    object </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a> <span class="ex">5</span>   genre                     500 non-null    object </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a> <span class="ex">6</span>   author_birth              499 non-null    object </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a> <span class="ex">7</span>   author_death              496 non-null    object </span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a> <span class="ex">8</span>   author_gender             499 non-null    object </span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a> <span class="ex">9</span>   author_primary_lang       499 non-null    object </span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="ex">10</span>  author_nationality        499 non-null    object </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="ex">11</span>  author_field_of_activity  329 non-null    object </span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="ex">12</span>  author_occupation         458 non-null    object </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> <span class="co">#   Column                    Non-Null Count  Dtype</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span>  <span class="at">------</span>                    <span class="at">--------------</span>  <span class="at">-----</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">0</span>   top_500_rank              500 non-null    int64</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">1</span>   title                     500 non-null    object</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">2</span>   author                    500 non-null    object</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">3</span>   pub_year                  500 non-null    int64</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a> <span class="ex">4</span>   orig_lang                 500 non-null    object</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a> <span class="ex">5</span>   genre                     500 non-null    object</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a> <span class="ex">6</span>   author_birth              499 non-null    object</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a> <span class="ex">7</span>   author_death              496 non-null    object</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a> <span class="ex">8</span>   author_gender             499 non-null    object</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a> <span class="ex">9</span>   author_primary_lang       499 non-null    object</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="ex">10</span>  author_nationality        499 non-null    object</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="ex">11</span>  author_field_of_activity  329 non-null    object</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="ex">12</span>  author_occupation         458 non-null    object</span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="ex">13</span>  oclc_holdings             495 non-null    float64</span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="ex">14</span>  oclc_eholdings            495 non-null    float64</span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="ex">15</span>  oclc_total_editions       495 non-null    float64</span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="ex">16</span>  oclc_holdings_rank        495 non-null    float64</span>
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="ex">17</span>  oclc_editions_rank        495 non-null    float64</span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="ex">18</span>  gr_avg_rating             500 non-null    float64</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="ex">19</span>  gr_num_ratings            500 non-null    object </span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="ex">20</span>  gr_num_reviews            500 non-null    object </span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="ex">21</span>  gr_avg_rating_rank        500 non-null    int64  </span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="ex">22</span>  gr_num_ratings_rank       500 non-null    int64  </span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="ex">19</span>  gr_num_ratings            500 non-null    object</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="ex">20</span>  gr_num_reviews            500 non-null    object</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="ex">21</span>  gr_avg_rating_rank        500 non-null    int64</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="ex">22</span>  gr_num_ratings_rank       500 non-null    int64</span>
 <span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="ex">23</span>  oclc_owi                  495 non-null    float64</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="ex">24</span>  author_viaf               500 non-null    object </span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="ex">25</span>  gr_url                    480 non-null    object </span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="ex">26</span>  wiki_url                  500 non-null    object </span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="ex">27</span>  pg_eng_url                500 non-null    object </span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="ex">28</span>  pg_orig_url               64 non-null     object </span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="ex">24</span>  author_viaf               500 non-null    object</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="ex">25</span>  gr_url                    480 non-null    object</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="ex">26</span>  wiki_url                  500 non-null    object</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="ex">27</span>  pg_eng_url                500 non-null    object</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="ex">28</span>  pg_orig_url               64 non-null     object</span>
 <span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="ex">dtypes:</span> float64<span class="er">(</span><span class="ex">7</span><span class="kw">)</span><span class="ex">,</span> int64<span class="er">(</span><span class="ex">4</span><span class="kw">)</span><span class="ex">,</span> object<span class="er">(</span><span class="ex">18</span><span class="kw">)</span></span>
 <span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="ex">memory</span> usage: 113.4+ KB</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This overview is telling us that we have far more columns in this datasets, each column’s name and data type, and specifically the number of <strong>non-null values</strong> in each column.</p>
 <section id="missing-data-in-pandas" class="level2">
 <h2 class="anchored" data-anchor-id="missing-data-in-pandas">Missing Data in Pandas</h2>
-<p>In the last lesson, we covered how we could add null values to a DataFrame, but now we want to explore how we can work with them. Pandas has a lot of documentation for handling <strong>missing data</strong> that you can read here <a href="https://pandas.pydata.org/docs/user_guide/missing_data.html">https://pandas.pydata.org/docs/user_guide/missing_data.html</a>. For our purposes, we’re mostly concerned with the <code>isna()</code> and <code>notna()</code> methods.</p>
-<p>While most of the columns have 500 non-null values, we can see that some of the columns have missing values. For example, <code>author_field_of_activity</code> has 329 non-null values, which means that there are 171 missing values. We can start to get a sense of what that column contains if we return to the dataset documentation, specifically the section “What’s in the Data” <a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data">https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data</a>. From there we can learn the following about this column:</p>
+<p>In the last lesson, we covered how we could add null values to a DataFrame, but now we want to explore how we can work with them. Pandas has a lot of documentation for handling <strong>missing data</strong> that you can read here <a href="https://pandas.pydata.org/docs/user_guide/missing_data.html" target="_blank">https://pandas.pydata.org/docs/user_guide/missing_data.html</a>. For our purposes, we’re mostly concerned with the <code>isna()</code> and <code>notna()</code> methods.</p>
+<p>While most of the columns have 500 non-null values, we can see that some of the columns have missing values. For example, <code>author_field_of_activity</code> has 329 non-null values, which means that there are 171 missing values. We can start to get a sense of what that column contains if we return to the dataset documentation, specifically the section “What’s in the Data” <a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data" target="_blank">https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data</a>. From there we can learn the following about this column:</p>
 <blockquote class="blockquote">
 <p>AUTHOR_FIELD_OF_ACTIVITY: Author’s primary fields of activity, according to VIAF. VIAF includes data from multiple global partner institutions, but we only collect VIAF data associated with the Library of Congress (LOC).</p>
 </blockquote>
@@ -558,14 +558,14 @@ Note
 <h2 class="anchored" data-anchor-id="merging-data-with-pandas">Merging Data With Pandas</h2>
 <p>Now that we are understanding how to work with missing data, we can also start to explore how to augment our dataset in various ways. One of the most common ways to do this is through <strong>merging</strong> datasets together.</p>
 <p>We’ve already seen one approach <code>pd.concat()</code> that allows us to concatenate DataFrames (aka add them together), but now we want to focus on the <code>merge()</code> method.</p>
-<p>First though we need another dataset to merge with our <code>novels_df</code>. We could take a look at sites like Kaggle to find more datasets, or more specific ones like the <em>Post45 Data Collective</em>, which “peer reviews and houses literary and cultural data from 1945 to the present” <a href="https://data.post45.org/">https://data.post45.org/</a>.</p>
+<p>First though we need another dataset to merge with our <code>novels_df</code>. We could take a look at sites like Kaggle to find more datasets, or more specific ones like the <em>Post45 Data Collective</em>, which “peer reviews and houses literary and cultural data from 1945 to the present” <a href="https://data.post45.org/" target="_blank">https://data.post45.org/</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../assets/images/post45_data.png" class="img-fluid figure-img"></p>
 <figcaption>Post45</figcaption>
 </figure>
 </div>
-<p>While there’s a number of relevant datasets in the <em>Post45 Data Collective</em>, we could use the one about <em>New York Times</em> Hardcover Fiction Bestsellers, 1931–2020, created by Jordan Pruett <a href="https://data.post45.org/nyt-fiction-bestsellers-data/">https://data.post45.org/nyt-fiction-bestsellers-data/</a>. According to the documentation, this dataset contains the following:</p>
+<p>While there’s a number of relevant datasets in the <em>Post45 Data Collective</em>, we could use the one about <em>New York Times</em> Hardcover Fiction Bestsellers, 1931–2020, created by Jordan Pruett <a href="https://data.post45.org/nyt-fiction-bestsellers-data/" target="_blank">https://data.post45.org/nyt-fiction-bestsellers-data/</a>. According to the documentation, this dataset contains the following:</p>
 <blockquote class="blockquote">
 <p>The New York Times Hardcover Fiction Bestsellers (1931–2020) contains three related datasets. The first dataset provides a tabular representation of the hardcover fiction bestseller list of The New York Times every week between 1931 and 2020. The second dataset provides title-level data for every unique title that appeared on the hardcover fiction bestseller list during this time period. The third dataset provides HathiTrust Digital Library identifiers for every unique title that appeared on the hardcover fiction bestseller list and that also has a corresponding volume in the HathiTrust Digital Library.</p>
 </blockquote>
@@ -579,8 +579,8 @@ Note
 <figcaption>NYT Data</figcaption>
 </figure>
 </div>
-<p>If we click on the <code>Explore/download data</code> for the first dataset, we see a new page that has the remote url for the dataset: <a href="https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv">https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv</a>.</p>
-<p>Notice the <code>raw.githubusercontent.com</code> in the URL. This tells us that this is a raw file from a GitHub repository, which is a common way to share datasets, and we can even see the actual file here <a href="https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers">https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers</a>.</p>
+<p>If we click on the <code>Explore/download data</code> for the first dataset, we see a new page that has the remote url for the dataset: <a href="https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv" target="_blank">https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv</a>.</p>
+<p>Notice the <code>raw.githubusercontent.com</code> in the URL. This tells us that this is a raw file from a GitHub repository, which is a common way to share datasets, and we can even see the actual file here <a href="https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers" target="_blank">https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers</a>.</p>
 <p>We can copy that and load it into a new DataFrame.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nyt_bestsellers_df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now that we have both datasets loaded, we can start to explore them. Let’s take a look at the columns in the <code>nyt_bestsellers_df.info()</code> DataFrame.</p>
@@ -588,18 +588,18 @@ Note
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>class <span class="st">'pandas.core.frame.DataFrame'</span><span class="op">&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">RangeIndex:</span> 60386 entries, 0 to 60385</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Data</span> columns <span class="er">(</span><span class="ex">total</span> 6 columns<span class="kw">)</span><span class="bu">:</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a> <span class="co">#   Column    Non-Null Count  Dtype </span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span>  <span class="at">------</span>    <span class="at">--------------</span>  <span class="at">-----</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">0</span>   year      60386 non-null  int64 </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a> <span class="co">#   Column    Non-Null Count  Dtype</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span>  <span class="at">------</span>    <span class="at">--------------</span>  <span class="at">-----</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">0</span>   year      60386 non-null  int64</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">1</span>   week      60386 non-null  object</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">2</span>   rank      60386 non-null  int64 </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">3</span>   title_id  60386 non-null  int64 </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">2</span>   rank      60386 non-null  int64</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">3</span>   title_id  60386 non-null  int64</span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a> <span class="ex">4</span>   title     60386 non-null  object</span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a> <span class="ex">5</span>   author    60376 non-null  object</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="ex">dtypes:</span> int64<span class="er">(</span><span class="ex">3</span><span class="kw">)</span><span class="ex">,</span> object<span class="er">(</span><span class="ex">3</span><span class="kw">)</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="ex">memory</span> usage: 2.8+ MB</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can see that this dataset has 60386 rows and 6 columns. The columns are <code>year</code>, <code>week</code>, <code>rank</code>, <code>title_id</code>, <code>title</code>, and <code>author</code>. We can also see that the <code>author</code> column has ten missing values, but that overall, this dataset has very few null values and is much larger than the <code>novels_df</code> DataFrame.</p>
-<p>Now we can start to merge the two DataFrames together. We’ve mentioned merging datasets a bit when we discussed joining data in class and SQL, but now we want to dig into details. Often times when we’re working with datasets, we will have our data split into multiple <code>csv</code> files or have differently shaped datasets (i.e.&nbsp;some of them will have more rows or columns than other datasets). Pandas has built in functionality that let’s us merge together DataFrames so that we can perform analysis on the combined dataset, which you can read about in the very extensive documentation here <a href="https://pandas.pydata.org/docs/user_guide/merging.html">https://pandas.pydata.org/docs/user_guide/merging.html</a>.</p>
+<p>Now we can start to merge the two DataFrames together. We’ve mentioned merging datasets a bit when we discussed joining data in class and SQL, but now we want to dig into details. Often times when we’re working with datasets, we will have our data split into multiple <code>csv</code> files or have differently shaped datasets (i.e.&nbsp;some of them will have more rows or columns than other datasets). Pandas has built in functionality that let’s us merge together DataFrames so that we can perform analysis on the combined dataset, which you can read about in the very extensive documentation here <a href="https://pandas.pydata.org/docs/user_guide/merging.html" target="_blank">https://pandas.pydata.org/docs/user_guide/merging.html</a>.</p>
 <p>While this documentation shows a number of ways to combined datasets (<code>concat</code> let’s you combine datasets by stacking them on top of each other, <code>join</code> let’s you combine datasets by joining them on a common index, and <code>merge</code> let’s you combine datasets by joining them on a common column), we will focus on the <code>merge</code> method.</p>
 <p><img src="../../assets/images/merge_syntax.png" class="img-fluid"></p>
 <p>If we take a look at the documentation, we see the syntax above, which shows us that in Pandas we use the <code>merge()</code> function to combine datasets. The <code>merge()</code> function takes in a number of parameters, but the most important ones are <code>left</code>, <code>right</code>, <code>how</code>, and <code>on</code>. The <code>left</code> and <code>right</code> parameters are the DataFrames we want to merge, the <code>how</code> parameter is the type of join we want to undertake, and the <code>on</code> parameter is the column we want to join the DataFrames on.</p>
@@ -668,7 +668,7 @@ Note
 </section>
 <section id="string-methods-in-pandas" class="level2">
 <h2 class="anchored" data-anchor-id="string-methods-in-pandas">String Methods in Pandas</h2>
-<p>Part of what makes Pandas so powerful is that it has a number of built-in methods for working with <code>string</code> data, accessible through the <code>.str</code> accessor. An in-depth discussion of these methods is available in the Pandas documentation <a href="https://pandas.pydata.org/docs/user_guide/text.html">https://pandas.pydata.org/docs/user_guide/text.html</a>, but here is a summary of the most useful ones:</p>
+<p>Part of what makes Pandas so powerful is that it has a number of built-in methods for working with <code>string</code> data, accessible through the <code>.str</code> accessor. An in-depth discussion of these methods is available in the Pandas documentation <a href="https://pandas.pydata.org/docs/user_guide/text.html" target="_blank">https://pandas.pydata.org/docs/user_guide/text.html</a>, but here is a summary of the most useful ones:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 61%">
@@ -771,7 +771,7 @@ About this dataset
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The full dataset including raw novel texts (152 MB) is available on Canvas. The version used on this page is a smaller viz-only CSV with pre-computed columns. See the <a href="#additional-notes">Additional Notes</a> section for how both were created.</p>
+<p>The full dataset including raw novel texts (152 MB) is available on Canvas. The version used on this page is a smaller viz-only CSV with pre-computed columns. See the <a href="#additional-notes" target="_blank">Additional Notes</a> section for how both were created.</p>
 </div>
 </div>
 <p>Now let’s look at the columns available to us:</p>
@@ -836,7 +836,7 @@ When string methods aren’t enough
 <p>Since we are working with datasets with significant documentation, we have a fairly good sense of what is in these datasets. However, often you will be working with datasets that are less documented, and so it is important to understand how to explore them. This process is often called <em>Exploratory Data Analysis</em>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://programminghistorian.org/en/lessons/sentiment-analysis" target="_blank"><img src="../../assets/images/eda.png" class="img-fluid figure-img"></a></p>
+<p><a href="https://programminghistorian.org/en/lessons/sentiment-analysis" target="_blank"><img src="../../assets/images/eda.png" class="img-fluid figure-img" target="_blank"></a></p>
 <figcaption>From Zoë Wilkinson Saldaña “Sentiment Analysis for Exploratory Data Analysis” https://programminghistorian.org/en/lessons/sentiment-analysis</figcaption>
 </figure>
 </div>
@@ -846,10 +846,10 @@ When string methods aren’t enough
 <blockquote class="blockquote">
 <p>For a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. […] All in all, I have come to feel that my central interest is in <em>data analysis</em>, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.</p>
 </blockquote>
-<p>Such a framing might seem straightforward today in the age of Data Science, but at the time it was a radical shift for how we thought about working with data. You’ll notice in that image from the paper, which you can download <a href="https://projecteuclid.org/download/pdf_1/euclid.aoms/1177704711">here</a> if you’re curious, that Tukey was affiliated with Princeton University and Bell Telephone Laboratories when he published the paper. Both of these were key institutions in the development of modern computing and statistics. For example, if you’ve heard of Alan Turing or Claude Shannon, they were also affiliated with Bell Labs, and Tukey worked with both of them, especially during World War II.</p>
+<p>Such a framing might seem straightforward today in the age of Data Science, but at the time it was a radical shift for how we thought about working with data. You’ll notice in that image from the paper, which you can download <a href="https://projecteuclid.org/download/pdf_1/euclid.aoms/1177704711" target="_blank">here</a> if you’re curious, that Tukey was affiliated with Princeton University and Bell Telephone Laboratories when he published the paper. Both of these were key institutions in the development of modern computing and statistics. For example, if you’ve heard of Alan Turing or Claude Shannon, they were also affiliated with Bell Labs, and Tukey worked with both of them, especially during World War II.</p>
 <p><img src="https://memorial.bellsystem.com/images/history-%20bell_labs_large.png" class="img-fluid"></p>
 <p>This infographic gives a sense of some of the inventions and discoveries that happened at Bell Labs, which was one of the most important research and development organizations in the 20th century. In the case of Tukey, he’s credited not just with exploratory data analysis but also coining both the terms <code>bit</code>, a portmanteau of binary digit, and <code>software</code> in 1958, and he was also crucial in popularizing the fourier transform for digital signal processing, which we learned about with the Syuzhet package.</p>
-<p>Tukey was a very eclectic scholar, and worked on everything from developing better sampling methods after reviewing the <a href="https://en.wikipedia.org/wiki/Kinsey_Reports">Kinsey report</a>, which was a landmark study of human sexuality released in two books in 1948 and 1953, to developing better methods for election polling. His central thoughts on EDA became the basis for his 1977 book <em>Exploratory Data Analysis</em>, where he argued that EDA could help suggest hypotheses that could be then tested statistically.</p>
+<p>Tukey was a very eclectic scholar, and worked on everything from developing better sampling methods after reviewing the <a href="https://en.wikipedia.org/wiki/Kinsey_Reports" target="_blank">Kinsey report</a>, which was a landmark study of human sexuality released in two books in 1948 and 1953, to developing better methods for election polling. His central thoughts on EDA became the basis for his 1977 book <em>Exploratory Data Analysis</em>, where he argued that EDA could help suggest hypotheses that could be then tested statistically.</p>
 <p><img src="https://devopedia.org/images/article/75/3879.1525341742.jpg" class="img-fluid"></p>
 <p>Such a shift might again seem obvious today, but at the time most statisticians focused on “confirmatory data analysis”, that is testing a hypothesis statistically rather than exploring the data first to see what might be possible. Tukey’s innovation helped set the groundwork for a lot of modern data science, where we tend to be closer to detectives trying to look for clues rather than approaching data with firm assumptions about what it represents.</p>
 <p>While there are not firm principles for EDA, Tukey argued that it should cover the following concepts:</p>
@@ -861,7 +861,7 @@ When string methods aren’t enough
 <p>With Pandas we can start to implement these with code:</p>
 <ol type="1">
 <li><p>We want to explore the data, so we could use <code>head()</code>, <code>tail()</code>, or <code>sample()</code> methods to display a subset of the dataset. We could also use <code>.shape</code> or <code>.dtypes</code> to see shaped of the DataFrame and the data types of each column.</p></li>
-<li><p>Next we might use the <code>describe()</code> method to output a summary of our dataset. According to the documentation for this method, it provides “descriptive statistics include those that summarize the central tendency, dispersion and shape of a dataset’s distribution, excluding NaN values.” <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html">(Read the docs here)</a>.</p></li>
+<li><p>Next we might use the <code>describe()</code> method to output a summary of our dataset. According to the documentation for this method, it provides “descriptive statistics include those that summarize the central tendency, dispersion and shape of a dataset’s distribution, excluding NaN values.” <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html" target="_blank">(Read the docs here)</a>.</p></li>
 <li><p>After getting this bird’s eye view of the distribution of the data, we could use <code>sort_values()</code> or <code>nsmallest()</code> / <code>nlargest()</code> to either organize the dataset or return the rows with maximum or minimum of values in a certain column.</p></li>
 <li><p>We can use the <code>isna()</code> to see what values might be missing in the dataset. Remember that <code>isna()</code> can be run on either individual columns or the entire DataFrame, and that you can chain it with other methods <code>any()</code> to check if there are <em>any</em> null values in the data.</p></li>
 <li><p>Finally we would use the <code>plot()</code> method to do some initial graphing of the trends in our data to fully help explore its distribution and potential correlations.</p></li>
@@ -875,7 +875,7 @@ When string methods aren’t enough
 <p>We could also use the <code>isna()</code> method to see what values might be missing in the dataset.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df.isna().<span class="bu">any</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now that we have a sense of the distribution of our data, we can start to visualize it to see if we can answer our questions.</p>
-<p>Like many of the methods above, <code>plot</code> is built into Pandas and is a wrapper around the <code>matplotlib</code> library <a href="https://matplotlib.org/">https://matplotlib.org/</a>, one of the most popular Python libraries for data visualization. This means that we can use the <code>plot()</code> method to create a variety of different plots. We can read more about the <code>plot()</code> method in the Pandas documentation here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html</a>, where it lists the kinds of plots we can create:</p>
+<p>Like many of the methods above, <code>plot</code> is built into Pandas and is a wrapper around the <code>matplotlib</code> library <a href="https://matplotlib.org/" target="_blank">https://matplotlib.org/</a>, one of the most popular Python libraries for data visualization. This means that we can use the <code>plot()</code> method to create a variety of different plots. We can read more about the <code>plot()</code> method in the Pandas documentation here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html" target="_blank">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html</a>, where it lists the kinds of plots we can create:</p>
 <ul>
 <li>‘line’ : line plot (default)</li>
 <li>‘bar’ : vertical bar plot</li>
@@ -889,7 +889,7 @@ When string methods aren’t enough
 <li>‘scatter’ : scatter plot (DataFrame only)</li>
 <li>‘hexbin’ : hexbin plot (DataFrame only)</li>
 </ul>
-<p>Pandas also has a robust User Guide on how to plot here <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html">https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html</a>.</p>
+<p>Pandas also has a robust User Guide on how to plot here <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html" target="_blank">https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html</a>.</p>
 <p>From these examples we can see that the <code>plot</code> syntax requires specifying the type of graph we want to create, and then what we want on the x and y axis. For example, if we wanted to create a scatter plot looking at the relationship between the <code>pub_year</code> and <code>top_500_rank</code> columns, we could do the following:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>, x<span class="op">=</span><span class="st">'pub_year'</span>, y<span class="op">=</span><span class="st">'top_500_rank'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We should see the following graph:</p>
@@ -905,7 +905,7 @@ When string methods aren’t enough
 <div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>subset_combined_novels_nyt_df <span class="op">=</span> combined_novels_nyt_df[combined_novels_nyt_df.genre.notna()]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As we discussed in class, a lot of what motivates this “cleaning”, whether that means normalizing distributions, removing null values, and even transforming some of the data to standardize it, is the concept of <strong>GIGO</strong>.</p>
 <p><img src="https://www.harrised.com/150/images/gigo.jpeg" class="img-fluid"></p>
-<p>GIGO stands for “Garbage In, Garbage Out” and the term has been used for decades in computing to refer to when data entry errors would produce faulty results. Rob Stenson has a great post exploring the history of the term all the way back to Charles Babbage, one of the first inventors of the computer, <a href="https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out">https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out</a>.</p>
+<p>GIGO stands for “Garbage In, Garbage Out” and the term has been used for decades in computing to refer to when data entry errors would produce faulty results. Rob Stenson has a great post exploring the history of the term all the way back to Charles Babbage, one of the first inventors of the computer, <a href="https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out" target="_blank">https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out</a>.</p>
 <p>GIGO is important because it essentially means that the quality of your data analysis is always dependent on the quality of your data.</p>
 <p>However, for as much as we want to prioritize quality, what are some of the downsides or tradeoffs of cleaning data? Some potential considerations include:</p>
 <ul>
@@ -938,18 +938,18 @@ When string methods aren’t enough
 <figcaption>Altair</figcaption>
 </figure>
 </div>
-<p>Today we’re going to focus on <a href="https://altair-viz.github.io/index.html">Vega-Altair</a>, which is a Python library built on top of Vega and Vega-Lite - two visualization libraries for JavaScript. Previously, this library was known as just <code>Altair</code> so for brevity in this lesson we will refer to it as such. The library was started in 2016 by Jake VanderPlas and has since grown to be one of the most popular libraries for data visualization in Python.</p>
+<p>Today we’re going to focus on <a href="https://altair-viz.github.io/index.html" target="_blank">Vega-Altair</a>, which is a Python library built on top of Vega and Vega-Lite - two visualization libraries for JavaScript. Previously, this library was known as just <code>Altair</code> so for brevity in this lesson we will refer to it as such. The library was started in 2016 by Jake VanderPlas and has since grown to be one of the most popular libraries for data visualization in Python.</p>
 <p><em>Let’s install Altair</em></p>
 <p>Remember to activate your virtual environment!</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="st">"altair[all]"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice that this time when installing we have a slightly new syntax: <code>[all]</code>. This syntax just means that we will be installing all of Altair’s dependencies <strong>and</strong> optional dependencies.</p>
 <p><em>Now let’s try it out in our Jupyter Notebook</em></p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Because we are using Altair in a Jupyter Notebook we also need to add a few settings (you read more about this here <a href="https://altair-viz.github.io/user_guide/display_frontends.html#">https://altair-viz.github.io/user_guide/display_frontends.html#</a>).</p>
-<p>If you are running your Notebook in the browser, you can run the following after you import Altair (more info here <a href="https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-jupyter-notebook">https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-jupyter-notebook</a>):</p>
+<p>Because we are using Altair in a Jupyter Notebook we also need to add a few settings (you read more about this here <a href="https://altair-viz.github.io/user_guide/display_frontends.html#" target="_blank">https://altair-viz.github.io/user_guide/display_frontends.html#</a>).</p>
+<p>If you are running your Notebook in the browser, you can run the following after you import Altair (more info here <a href="https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-jupyter-notebook" target="_blank">https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-jupyter-notebook</a>):</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional in Jupyter Notebook: requires an up-to-date vega nbextension.</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># alt.renderers.enable('notebook')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you are running it in VS Code, you can run the following (more info here <a href="https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-vscode">https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-vscode</a>):</p>
+<p>If you are running it in VS Code, you can run the following (more info here <a href="https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-vscode" target="_blank">https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-vscode</a>):</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional in VS Code</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># alt.renderers.enable('mimetype')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now we can try out Altair with one of the built-in datasets</p>
@@ -966,14 +966,14 @@ When string methods aren’t enough
 <span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You should now see the following graph:</p>
 <p><img src="../../assets/images/altair_chart.png" class="img-fluid"></p>
-<p>If you don’t see the graph and you’re running your Jupyter notebook in the browser, you might need to set the kernel of your notebook <a href="https://stackoverflow.com/questions/47295871/is-there-a-way-to-use-pipenv-with-jupyter-notebook">https://stackoverflow.com/questions/47295871/is-there-a-way-to-use-pipenv-with-jupyter-notebook</a> or set the vega extension with following:</p>
+<p>If you don’t see the graph and you’re running your Jupyter notebook in the browser, you might need to set the kernel of your notebook <a href="https://stackoverflow.com/questions/47295871/is-there-a-way-to-use-pipenv-with-jupyter-notebook" target="_blank">https://stackoverflow.com/questions/47295871/is-there-a-way-to-use-pipenv-with-jupyter-notebook</a> or set the vega extension with following:</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbextension install <span class="at">--sys-prefix</span> <span class="at">--py</span> vega</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><em>So let’s breakdown what we’re doing here</em></p>
-<p>First we are specifying a new <a href="https://altair-viz.github.io/user_guide/generated/toplevel/altair.Chart.html#altair.Chart"><code>Chart</code> class</a>. In Altair, there are a number of Chart types that we’ll delve into later but it essentially is the basic class we’ll be working with (more information here <a href="https://altair-viz.github.io/user_guide/api.html#top-level-objects">https://altair-viz.github.io/user_guide/api.html#top-level-objects</a>).</p>
+<p>First we are specifying a new <a href="https://altair-viz.github.io/user_guide/generated/toplevel/altair.Chart.html#altair.Chart" target="_blank"><code>Chart</code> class</a>. In Altair, there are a number of Chart types that we’ll delve into later but it essentially is the basic class we’ll be working with (more information here <a href="https://altair-viz.github.io/user_guide/api.html#top-level-objects" target="_blank">https://altair-viz.github.io/user_guide/api.html#top-level-objects</a>).</p>
 <p><img src="../../assets/images/top_level_charts.png" class="img-fluid"></p>
-<p>We pass our data to the <code>Chart</code> and then specify the type of <code>mark</code> we are using (in our case we are using <code>mark_point()</code> to make points). In Altair, we can use all types of marks to represent our data <a href="https://altair-viz.github.io/user_guide/marks/index.html">https://altair-viz.github.io/user_guide/marks/index.html</a>.</p>
+<p>We pass our data to the <code>Chart</code> and then specify the type of <code>mark</code> we are using (in our case we are using <code>mark_point()</code> to make points). In Altair, we can use all types of marks to represent our data <a href="https://altair-viz.github.io/user_guide/marks/index.html" target="_blank">https://altair-viz.github.io/user_guide/marks/index.html</a>.</p>
 <p><img src="../../assets/images/mark_types.png" class="img-fluid"></p>
-<p>Finally we are calling encoding to specify what variable we want to represent on the <code>x</code> and <code>y</code> axis, as well as through the <code>color</code> encoding. Altair has many fields for encoding <a href="https://altair-viz.github.io/user_guide/encodings/index.html">https://altair-viz.github.io/user_guide/encodings/index.html</a></p>
+<p>Finally we are calling encoding to specify what variable we want to represent on the <code>x</code> and <code>y</code> axis, as well as through the <code>color</code> encoding. Altair has many fields for encoding <a href="https://altair-viz.github.io/user_guide/encodings/index.html" target="_blank">https://altair-viz.github.io/user_guide/encodings/index.html</a></p>
 <p><img src="../../assets/images/encodings.png" class="img-fluid"></p>
 <p><img src="../../assets/images/encoding_data_types.png" class="img-fluid"></p>
 <p>Now that we understand a bit of Altair’s syntax, let’s try to recreated our <code>genre</code> by average <code>top_500_rank</code> plot that we made previously. To do this, we don’t have to do <code>groupby</code>, instead Altair can handle most of the logic for us:</p>
@@ -984,7 +984,7 @@ When string methods aren’t enough
 <p>Which gives us the following output:</p>
 <p><img src="../../assets/images/altair_genre_top500.png" class="img-fluid"></p>
 <p>We can see that some of the syntax is similar to the initial example. We are passing in our DataFrame to the <code>Chart</code> class, calling the <code>mark_bar</code> method, and then encoding the <code>x</code> and <code>y</code> axis. But some of this syntax is also new.</p>
-<p>For instance, we are specifying the <code>encodings</code> using the <code>N</code> for nominal and <code>Q</code> for quantitative. We are also using an <code>aggregate</code> function to calculate the <code>mean</code>. You can read more about aggregation here <a href="https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions">https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions</a>, but generally Altair has the following aggregations built-in:</p>
+<p>For instance, we are specifying the <code>encodings</code> using the <code>N</code> for nominal and <code>Q</code> for quantitative. We are also using an <code>aggregate</code> function to calculate the <code>mean</code>. You can read more about aggregation here <a href="https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions" target="_blank">https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions</a>, but generally Altair has the following aggregations built-in:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 52%">
@@ -1116,7 +1116,7 @@ When string methods aren’t enough
 </tr>
 </tbody>
 </table>
-<p>You can also see links to examples using these aggregations here <a href="https://altair-viz.github.io/user_guide/encodings/index.html#binning-and-aggregation">https://altair-viz.github.io/user_guide/encodings/index.html#binning-and-aggregation</a>.</p>
+<p>You can also see links to examples using these aggregations here <a href="https://altair-viz.github.io/user_guide/encodings/index.html#binning-and-aggregation" target="_blank">https://altair-viz.github.io/user_guide/encodings/index.html#binning-and-aggregation</a>.</p>
 <p>While it’s great we can recreate this plot, what’s the point exactly? After all we can do this in <code>plot</code> without having to use another library.</p>
 <p>The value of using a library like Altair is that it is built to implement the idea of a <code>Grammar of Graphics</code>.</p>
 <p><img src="../../assets/images/grammar-of-graphics.png" class="img-fluid"></p>
@@ -1194,23 +1194,23 @@ When string methods aren’t enough
 <div aria-describedby="fig-pronouns-by-genre-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
 <style>
-  #altair-viz-cbc47b9b985f415cb73a0662dcec2111.vega-embed {
+  #altair-viz-fcb1e0d225534b19bc8ab0b437cfc8ea.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-cbc47b9b985f415cb73a0662dcec2111.vega-embed details,
-  #altair-viz-cbc47b9b985f415cb73a0662dcec2111.vega-embed details summary {
+  #altair-viz-fcb1e0d225534b19bc8ab0b437cfc8ea.vega-embed details,
+  #altair-viz-fcb1e0d225534b19bc8ab0b437cfc8ea.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-cbc47b9b985f415cb73a0662dcec2111"></div>
+<div id="altair-viz-fcb1e0d225534b19bc8ab0b437cfc8ea"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-cbc47b9b985f415cb73a0662dcec2111") {
-      outputDiv = document.getElementById("altair-viz-cbc47b9b985f415cb73a0662dcec2111");
+    if (outputDiv.id !== "altair-viz-fcb1e0d225534b19bc8ab0b437cfc8ea") {
+      outputDiv = document.getElementById("altair-viz-fcb1e0d225534b19bc8ab0b437cfc8ea");
     }
 
     const paths = {
@@ -1301,23 +1301,23 @@ Figure&nbsp;1: Pronoun Counts by Genre
 <div aria-describedby="fig-genres-over-time-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
 <style>
-  #altair-viz-4e2eb43bd3034076bb0c5d84a2fa1dbc.vega-embed {
+  #altair-viz-08da35abdef140eab45f511c185768b8.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-4e2eb43bd3034076bb0c5d84a2fa1dbc.vega-embed details,
-  #altair-viz-4e2eb43bd3034076bb0c5d84a2fa1dbc.vega-embed details summary {
+  #altair-viz-08da35abdef140eab45f511c185768b8.vega-embed details,
+  #altair-viz-08da35abdef140eab45f511c185768b8.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-4e2eb43bd3034076bb0c5d84a2fa1dbc"></div>
+<div id="altair-viz-08da35abdef140eab45f511c185768b8"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-4e2eb43bd3034076bb0c5d84a2fa1dbc") {
-      outputDiv = document.getElementById("altair-viz-4e2eb43bd3034076bb0c5d84a2fa1dbc");
+    if (outputDiv.id !== "altair-viz-08da35abdef140eab45f511c185768b8") {
+      outputDiv = document.getElementById("altair-viz-08da35abdef140eab45f511c185768b8");
     }
 
     const paths = {
@@ -1374,8 +1374,8 @@ Figure&nbsp;2: Top 500 Novels by Genre Over Time
 </figure>
 </div>
 </div>
-<p>You’ll notice our syntax is again a bit more complex. You can read about how Altair enables interactivity in the documentation here <a href="https://altair-viz.github.io/user_guide/interactions/index.html">https://altair-viz.github.io/user_guide/interactions/index.html</a>, but to summarize, we’ve now added the ability not just to have a tooltip but also to visually select our categories in the legend — try clicking a genre in the legend to highlight it.</p>
-<p>As we are starting to see Altair is a very powerful library. We will continue to explore its functionality in the coming weeks, but would highly encourage you to take a look at the example visualizations on the Altair website <a href="https://altair-viz.github.io/gallery/index.html">https://altair-viz.github.io/gallery/index.html</a> and the documentation <a href="https://altair-viz.github.io/index.html">https://altair-viz.github.io/index.html</a>.</p>
+<p>You’ll notice our syntax is again a bit more complex. You can read about how Altair enables interactivity in the documentation here <a href="https://altair-viz.github.io/user_guide/interactions/index.html" target="_blank">https://altair-viz.github.io/user_guide/interactions/index.html</a>, but to summarize, we’ve now added the ability not just to have a tooltip but also to visually select our categories in the legend — try clicking a genre in the legend to highlight it.</p>
+<p>As we are starting to see Altair is a very powerful library. We will continue to explore its functionality in the coming weeks, but would highly encourage you to take a look at the example visualizations on the Altair website <a href="https://altair-viz.github.io/gallery/index.html" target="_blank">https://altair-viz.github.io/gallery/index.html</a> and the documentation <a href="https://altair-viz.github.io/index.html" target="_blank">https://altair-viz.github.io/index.html</a>.</p>
 </section>
 <section id="exploring-and-visualizing-culture-homework" class="level2">
 <h2 class="anchored" data-anchor-id="exploring-and-visualizing-culture-homework">Exploring and Visualizing Culture Homework</h2>
@@ -1383,7 +1383,7 @@ Figure&nbsp;2: Top 500 Novels by Genre Over Time
 <p>Begin by creating a new Jupyter Notebook within your <code>is310-coding-assignments</code> repository, specifically in the <code>pandas-eda</code> folder. As you start this analysis, think carefully about the title of your notebook. The title should reflect the main themes you identify through your EDA, and it should be written in CamelCase (e.g., <code>GenderTrendsInTopNovels</code> or <code>RatingBiasAcrossGenres</code>). Crafting a meaningful title is an opportunity to synthesize the focus of your work from the start.</p>
 <p>You can organize your notebook in any way that makes sense to you, but you should have a rationale and <strong>clearly</strong> label sections using Markdown headers. You should also use <code>Altair</code> for all your EDA visualizations. There is no set number of graphs that you must create, but part of it is imagine that you are creating this notebook for someone new to these datasets, so you should consider what would be helpful to explain or include. You also need to consider what you will not analyze, since too much data analysis can be confusing and unhelpful. You should be sure to also include text interpreting your graphs and findings for your reader.</p>
 <p>Finally, there are no right or wrong answers for this assignment. Only your sense of what is likely of interest based on your EDA. You could focus on comparisons between the datasets or the intersection of the datasets, and you can explore a number of correlations and relationships, or just a few. So consider this notebook your first attempt at undertaking exploratory data analysis as John Tukey first proposed.</p>
-<p>Once you have completed your assignment, push up your code to GitHub and post a link in this GitHub discussion <a href="https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/9">https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/9</a>. Remember to include either remote or local access to the datasets, to avoid pushing up your virtual environment, and to document your folder with a <code>README.md</code>. And finally, as always, you are welcome to use AI tools to help you complete this assignment, but again remember you need to understand what the code is doing and you need to be able to explain the overall goals and focus of the notebook.</p>
+<p>Once you have completed your assignment, push up your code to GitHub and post a link in this GitHub discussion <a href="https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/9" target="_blank">https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/9</a>. Remember to include either remote or local access to the datasets, to avoid pushing up your virtual environment, and to document your folder with a <code>README.md</code>. And finally, as always, you are welcome to use AI tools to help you complete this assignment, but again remember you need to understand what the code is doing and you need to be able to explain the overall goals and focus of the notebook.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1394,7 +1394,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the documentation for the Top Novels dataset, there is a section on <code>Discussion &amp; Activities</code> <a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities">https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities</a> and specifically a link to a <code>Google Colab</code> notebook exploring bias in the metadata of this dataset, available <a href="https://colab.research.google.com/drive/1fxEae0BmUmipDQC2qvqGvG11fIAITZ_K?usp=sharing">here</a>. For this assignment, you are welcome to build from both our in-class explorations and this existing Colab notebook. You can reuse code from both, but the overall goal is to start implementing your knowledge of EDA to consider potential future research directions with these datasets.</p>
+<p>In the documentation for the Top Novels dataset, there is a section on <code>Discussion &amp; Activities</code> <a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities" target="_blank">https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities</a> and specifically a link to a <code>Google Colab</code> notebook exploring bias in the metadata of this dataset, available <a href="https://colab.research.google.com/drive/1fxEae0BmUmipDQC2qvqGvG11fIAITZ_K?usp=sharing" target="_blank">here</a>. For this assignment, you are welcome to build from both our in-class explorations and this existing Colab notebook. You can reuse code from both, but the overall goal is to start implementing your knowledge of EDA to consider potential future research directions with these datasets.</p>
 </div>
 </div>
 <hr>
@@ -1437,14 +1437,14 @@ Note
 <span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Faster approach using apply()</span></span>
 <span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df.loc[:, <span class="st">'eng_text'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'pg_eng_url'</span>].<span class="bu">apply</span>(get_book_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You can read more about the <code>apply()</code> method in the Pandas documentation here <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html">https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html</a>. As the graphic below shows, <code>apply()</code> is significantly faster than looping for large DataFrames:</p>
+<p>You can read more about the <code>apply()</code> method in the Pandas documentation here <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html" target="_blank">https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html</a>. As the graphic below shows, <code>apply()</code> is significantly faster than looping for large DataFrames:</p>
 <p><img src="https://www.ml4devs.com/images/illustrations/pandas-dataframe-apply-performace-comparision.webp" class="img-fluid"></p>
 <p>We also used the <code>tqdm</code> library to display a progress bar during the scraping, since retrieving hundreds of full novel texts takes a few minutes:</p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>tqdm.pandas(desc<span class="op">=</span><span class="st">"Getting English Texts"</span>)</span>
 <span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df.loc[:, <span class="st">'eng_text'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'pg_eng_url'</span>].progress_apply(get_book_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You can read more about <code>tqdm</code> here <a href="https://tqdm.github.io/">https://tqdm.github.io/</a>.</p>
+<p>You can read more about <code>tqdm</code> here <a href="https://tqdm.github.io/" target="_blank">https://tqdm.github.io/</a>.</p>
 <p>Finally, once we had all the texts, we saved the combined DataFrame to a CSV file so we wouldn’t have to re-scrape every time:</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df.to_csv(<span class="st">"combined_novels_with_text.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 

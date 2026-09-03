@@ -329,10 +329,12 @@
 </section>
 <section id="proprietary-vs-open-formats" class="slide level2">
 <h2>Proprietary vs Open Formats</h2>
-<p><strong>Proprietary formats</strong> are owned by a company, like how Microsoft Word owns the format of <code>.doc</code> or <code>.docx</code>, which means a file with that extension can only be read in Word.</p>
-
-<img data-src="https://www.collaboraonline.com/wp-content/uploads/2025/09/doc-vs-docx-vs-odf-002.png" class="r-stretch"><aside class="notes">
-<p>For example, a <code>.docx</code> file is a Microsoft Word document, a <code>.jpg</code> file is an image, and a <code>.mp3</code> file is an audio file. Some file formats are proprietary, meaning they are owned by a company and can only be opened by certain programs. For example, <code>.docx</code> files can only be opened by Microsoft Word.</p>
+<p>Some file formats depend on particular software ecosystems.</p>
+<div class="fragment">
+<p>For example, <code>.docx</code> files are designed for Microsoft Word and similar word processors.</p>
+<p><img data-src="https://www.collaboraonline.com/wp-content/uploads/2025/09/doc-vs-docx-vs-odf-002.png"></p>
+<aside class="notes">
+<p>For example, a <code>.docx</code> file is a Microsoft Word document, a <code>.jpg</code> file is an image, and a <code>.mp3</code> file is an audio file. Some file formats depend on particular software ecosystems, meaning they may work best in certain programs even if other tools can sometimes open them. The point is not that Word is the only possible way to open a <code>.docx</code>, but that the file is designed for a particular kind of software environment.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -344,6 +346,7 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</div>
 </section>
 <section id="what-is-this" class="slide level2">
 <h2>What is this?</h2>
@@ -354,7 +357,7 @@
 </figure>
 </div>
 <aside class="notes">
-<p>This gibberish is actually the code that makes up the file, but since the PDF Viewer doesn’t know how to read the code it just shows you the code itself rather than the data stored in the files. This is what happens when you try to open a Word document in a text editor - it shows the underlying code rather than the formatted document.</p>
+<p>This gibberish is actually part of the structured information that makes up the file, but since the PDF viewer or text editor doesn’t know how to interpret that structure, it shows you the underlying contents rather than the formatted document.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -372,22 +375,21 @@
 <p>To be clear, <code>.doc</code> was invented in 1983 along with the first version of the <em>software</em> for Microsoft Word which ran on MS-DOS, whereas <code>.docx</code> was only introduced in 2007 as part of an XML-based update to the software.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><a href="https://en.wikipedia.org/wiki/History_of_Microsoft_Word"><img data-src="https://upload.wikimedia.org/wikipedia/en/a/a2/Microsoft_Word_for_Unix_floppy_disk.jpg"></a></p>
+<p><a href="https://en.wikipedia.org/wiki/History_of_Microsoft_Word" target="_blank"><img data-src="https://upload.wikimedia.org/wikipedia/en/a/a2/Microsoft_Word_for_Unix_floppy_disk.jpg"></a></p>
 <figcaption>History of Word</figcaption>
 </figure>
 </div>
 </section></section>
 <section>
-<section id="what-are-open-source-file-formats" class="title-slide slide level1 center">
-<h1>What Are Open Source File Formats?</h1>
-<p><strong>Open source formats</strong> can be opened by many programs and are not owned by one company.</p>
+<section id="what-are-open-or-plain-text-formats" class="title-slide slide level1 center">
+<h1>What Are Open or Plain Text Formats?</h1>
+<p>Open or plain text based formats are easier to inspect directly.</p>
 <ul>
 <li><code>.txt</code> files work with any text editor</li>
-<li><code>.csv</code> files work with any spreadsheet software</li>
 <li>Main benefit? More sustainable and portable</li>
 </ul>
 <aside class="notes">
-<p>Other file formats are open source, meaning they are not owned by a company and can be opened by many different programs. For example, <code>.txt</code> files are plain text files that can be opened by any text editor. When we used the <code>touch</code> command, we told the terminal to create a <code>.txt</code> file. This is because <code>.txt</code> files are the simplest file format and only contain text.</p>
+<p>Other file formats are open or plain text based, meaning they can be opened by many different programs and are easier to inspect directly. For example, <code>.txt</code> files are plain text files that can be opened by any text editor. When we used the <code>touch</code> command, we told the terminal to create a <code>.txt</code> file. This is because <code>.txt</code> files are the simplest file format and only contain text.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -409,7 +411,7 @@
 <div class="fragment">
 <p>In programming, we want to be <strong>explicit</strong> - so plain text is preferable.</p>
 <aside class="notes">
-<p>As scholars working with computers, we need to be aware of the ways plain text and formatted text differ. While they might look similar, Word Documents contain a lot of hidden formatting that .txt files do not. Today, we have been talking a lot about <em>text</em>, from text commands to text files. But the core concept with both of these is the idea of plain text.</p>
+<p>As scholars working with computers, we need to be aware of the ways plain text and formatted text differ. While a Word document and a <code>.txt</code> file might look similar to us, the Word document contains a lot of hidden formatting that the <code>.txt</code> file does not. Today, we have been talking a lot about text, from text commands to text files. But the core concept with both of these is the idea of plain text.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -529,13 +531,13 @@
 </section>
 <section id="windows-alternatives" class="slide level2">
 <h2>Windows Alternatives</h2>
-<p><strong>Using WSL or Git Bash:</strong></p>
+<p><strong>Using WSL/Ubuntu:</strong></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="fu">wget</span> https://www.gutenberg.org/files/1342/1342-0.txt <span class="op">&gt;</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p><strong>Using PowerShell:</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="fu">wget</span> https://www.gutenberg.org/files/1342/1342-0.txt <span class="at">-OutFile</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a></a><span class="fu">wget</span> https<span class="op">://</span>www<span class="op">.</span><span class="fu">gutenberg</span><span class="op">.</span><span class="fu">org</span><span class="op">/</span>files<span class="op">/</span><span class="dv">1342</span><span class="op">/</span><span class="dv">1342</span><span class="op">-</span><span class="dv">0.</span><span class="dt">txt</span> <span class="op">-</span>OutFile pride-and-prejudice<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
-<p>wget stands for “web get” and is a similar command line tool for retrieving and downloading files from the web. PowerShell requires slightly different syntax with the -OutFile flag.</p>
+<p>If students are using WSL/Ubuntu on Windows, <code>wget</code> works like a Unix command. If they are using PowerShell and not WSL, the command looks slightly different because PowerShell treats <code>wget</code> as an alias for its own web request command. PowerShell requires the <code>-OutFile</code> flag.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -650,17 +652,17 @@
       }</style></aside>
 </div>
 </section>
-<section id="counting-occurrences" class="slide level2">
-<h2>Counting Occurrences</h2>
-<p>How many times does “pride” appear?</p>
+<section id="counting-matching-lines" class="slide level2">
+<h2>Counting Matching Lines</h2>
+<p>How many lines include “pride”?</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="fu">grep</span> <span class="at">-c</span> pride pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
-<p>Result: <strong>43 times</strong></p>
+<p>Result: <strong>43 lines</strong></p>
 </div>
 <div class="fragment">
-<p><strong>Your turn:</strong> How many times does “prejudice” appear?</p>
+<p><strong>Your turn:</strong> How many lines include “prejudice”?</p>
 <aside class="notes">
-<p>The -c flag with grep counts the number of matches instead of displaying them. This is useful for quick text analysis.</p>
+<p>The <code>-c</code> flag with grep counts the number of matching lines instead of displaying them. This is useful for quick text analysis, but it is not quite the same thing as counting every individual occurrence of a word, since a line could include the same word more than once.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -706,7 +708,7 @@
 </tr>
 <tr class="even">
 <td><code>grep -c</code></td>
-<td>Count occurrences</td>
+<td>Count matching lines</td>
 </tr>
 </tbody>
 </table>
@@ -742,12 +744,12 @@
 </section>
 <section id="creating-a-markdown-file" class="slide level2">
 <h2>Creating a Markdown File</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">touch</span> is310-computing-humanities.md</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">touch</span> is310-culture-as-data.md</span>
 <span id="cb9-2"><a></a><span class="co"># OR (PowerShell)</span></span>
-<span id="cb9-3"><a></a><span class="ex">New-Item</span> <span class="at">-ItemType</span> File <span class="at">-Name</span> is310-computing-humanities.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a></a><span class="ex">New-Item</span> <span class="at">-ItemType</span> File <span class="at">-Name</span> is310-culture-as-data.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>Open in VS Code and add:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a></a>Computing in the Humanities is defined as the application of computational methods and tools to the study of humanistic questions.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a></a>Culture as Data asks how cultural materials, practices, and communities become structured, interpreted, and transformed through data.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>We can create a Markdown file using the touch command and adding .md to the end of the file name.</p>
 <style type="text/css">
@@ -766,11 +768,11 @@
 <section id="adding-bold-text" class="slide level2">
 <h2>Adding Bold Text</h2>
 <p>Put two asterisks on either side:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a></a>**Computing in the Humanities** is defined as ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a></a>**Culture as Data** asks how cultural materials become structured data.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
-<p>Renders as: <strong>Computing in the Humanities</strong> is defined as …</p>
+<p>Renders as: <strong>Culture as Data</strong> asks how cultural materials become structured data.</p>
 <aside class="notes">
-<p>Maybe we want to highlight the word “Computing in the Humanities” in bold. To do this we would put two asterisks on either side of the word.</p>
+<p>Maybe we want to highlight the phrase “Culture as Data” in bold. To do this we would put two asterisks on either side of the phrase.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -787,11 +789,11 @@
 <section id="adding-italics" class="slide level2">
 <h2>Adding Italics</h2>
 <p>Put one asterisk on either side:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a></a>**Computing in the Humanities** is *defined* as ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a></a>**Culture as Data** asks how cultural materials become *structured data*.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
-<p>Renders as: <strong>Computing in the Humanities</strong> is <em>defined</em> as …</p>
+<p>Renders as: <strong>Culture as Data</strong> asks how cultural materials become <em>structured data</em>.</p>
 <aside class="notes">
-<p>We could also put defined into italics by putting one asterisk on either side of the word.</p>
+<p>We could also put <code>structured data</code> into italics by putting one asterisk on either side of the phrase.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -808,7 +810,7 @@
 <section id="adding-headings" class="slide level2">
 <h2>Adding Headings</h2>
 <p>Put a hashtag in front:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a></a><span class="fu"># Welcome to Computing in the Humanities</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a></a><span class="fu"># Welcome to Culture as Data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>Different levels:</p>
 <ul>
@@ -909,7 +911,7 @@
 <li>Integrates with version control</li>
 </ul>
 <aside class="notes">
-<p>Finally, Markdown plays nicely with Github, which renders it directly in your browser. This makes it easy to push up your files into your repositories.</p>
+<p>Finally, Markdown plays nicely with GitHub, which renders it directly in your browser. This makes it easy to push up your files into your repositories.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1001,9 +1003,9 @@
 <p>CommonMark is another popular Markdown style and improvements to it are discussed in this repository <a href="https://github.com/commonmark/commonmark-spec/issues" target="_blank">https://github.com/commonmark/commonmark-spec/issues</a>.</p>
 </section></section>
 <section>
-<section id="first-exercise" class="title-slide slide level1 center">
-<h1>First Exercise</h1>
-<p>Currently, your <code>README.md</code> is your first assignment <a href="../materials/introducing-defining-cad/03-intro-versioning.html#homework-init-is310" target="_blank">Init IS310 Homework</a>. But what be some problems with this approach?</p>
+<section id="practice-exercise" class="title-slide slide level1 center">
+<h1>Practice Exercise</h1>
+<p>Currently, your <code>README.md</code> is your first assignment <a href="../materials/introducing-defining-cad/03-intro-versioning.html#homework-init-is310" target="_blank">Init IS310 Homework</a>. What are some problems with this approach?</p>
 <div class="fragment">
 <ul>
 <li><code>README.md</code> should indicate structure of repo, not be one assignment</li>
@@ -1012,11 +1014,14 @@
 </section>
 <section id="init_is310" class="slide level2">
 <h2><code>init_is310</code></h2>
-<p>However, that is not very sustainable for the course since all your assignments will be in that folder. So, your first goal is to clean up your repository so that your first homework assignment has it’s own folder <code>init_is310</code>, which contains your initial <code>README.md</code> and any images.</p>
+<p>Your first goal is to clean up your repository so that your first homework assignment has its own folder: <code>init_is310</code>.</p>
+<div class="fragment">
+<p>That folder should contain your initial <code>README.md</code> and any images.</p>
+</div>
 </section>
 <section id="improve-your-readme.md" class="slide level2">
 <h2>Improve Your README.md</h2>
-<p>Then you will create a new <code>README.md</code> file in the root of your <code>is310-coding-assignments</code> that will be the main home page for your homework repository.</p>
+<p>Then create a new <code>README.md</code> file in the root of your <code>is310-coding-assignments</code> repository.</p>
 <div class="fragment">
 <p>Try adding:</p>
 <ul class="task-list">
@@ -1026,9 +1031,9 @@
 </ul>
 </div>
 <div class="fragment">
-<p><strong>Bonus:</strong> Add a link to our course website!</p>
+<p>You can use AI tools and the <a href="https://github.com/lifeparticle/Markdown-Cheatsheet" target="_blank">GitHub Markdown Cheatsheet</a> to help you.</p>
 <aside class="notes">
-<p>Now that you have a basic understanding of Markdown, let’s try improving the README.md file in your repository.</p>
+<p>Now that students have a basic understanding of Markdown, this exercise asks them to improve the README.md file in their repository. The lesson frames this as both a Markdown practice exercise and a sustainability issue: the root README should help someone understand the whole repository, not only hold the first assignment.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1045,8 +1050,7 @@
 <section id="helpful-resources" class="slide level2">
 <h2>Helpful Resources</h2>
 <ul>
-<li><a href="https://github.com/lifeparticle/Markdown-Cheatsheet" target="_blank">GitHub Markdown Cheatsheet</a></li>
-<li>AI tools (GitHub Copilot, etc.)</li>
+<li>AI tools, if useful</li>
 <li>VS Code Markdown Preview</li>
 </ul>
 <div class="fragment">
@@ -1109,9 +1113,10 @@
 <li><label><input type="checkbox">At least 5 files (can be nested)</label></li>
 <li><label><input type="checkbox">One hidden file or directory</label></li>
 <li><label><input type="checkbox">Clues to help solve the maze</label></li>
+<li><label><input type="checkbox"><code>ai-chat-log.md</code> if you use AI</label></li>
 </ul>
 <aside class="notes">
-<p>Your directories, files, and clues should relate to the cultural data topic you are interested in exploring this semester. You are welcome to use Project Gutenberg for your files, but you can also use other files if you prefer. You can also use the command line to create your files, or use a text editor.</p>
+<p>Your directories, files, and clues should relate to the cultural data topic you are interested in exploring this semester. You are welcome to use Project Gutenberg for your files, but you can also use other files if you prefer. You can also use the command line to create your files, or use a text editor. If you use AI to help create, troubleshoot, or solve the maze, include an <code>ai-chat-log.md</code> file.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1149,13 +1154,34 @@
       }</style></aside>
 </div>
 </section>
+<section id="hidden-files-on-windows" class="slide level2">
+<h2>Hidden Files on Windows</h2>
+<p>Dotfiles are hidden by default on Mac/Linux, but not always in PowerShell.</p>
+<div class="fragment">
+<p>If your maze depends on hidden files, include:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb14-1"><a></a>hide-dotfiles<span class="op">.</span><span class="fu">ps1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Different operating systems handle hidden files differently. If students want their hidden files and folders to behave as hidden on Windows, they should include a PowerShell script in the maze folder named hide-dotfiles.ps1 and tell PowerShell users to run it after unzipping the maze.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
 <section id="zipping-your-maze" class="slide level2">
 <h2>Zipping Your Maze</h2>
 <p><strong>Mac/Linux/WSL:</strong></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="fu">zip</span> <span class="at">-r</span> path/to/your/zip/file path/to/your/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="fu">zip</span> <span class="at">-r</span> path/to/your/zip/file path/to/your/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p><strong>PowerShell:</strong></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="ex">Compress-Archive</span> <span class="at">-Path</span> <span class="st">"path\to\your\directory"</span> <span class="at">-DestinationPath</span> <span class="st">"path\to\your\zip\file"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb16-1"><a></a>Compress-Archive <span class="op">-</span>Path <span class="st">"path\to\your\directory"</span> <span class="op">-</span>DestinationPath <span class="st">"path\to\your\zip\file"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Once you have created your maze, you should zip the folder that contains your maze. Be sure to replace these dummy file paths with your actual desired ones.</p>
 <style type="text/css">
@@ -1175,10 +1201,10 @@
 <h2>Submission</h2>
 <ol type="1">
 <li>Upload zipped maze to your <code>is310-coding-assignments</code> repo</li>
-<li>Post link in <a href="https://github.com/cultureasdata-uiuc/is310-spring-2026/discussions/2" target="_blank">GitHub Discussion</a></li>
+<li>Post link in <a href="https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/2" target="_blank">GitHub Discussion</a></li>
 </ol>
 <div class="fragment">
-<p><strong>Need inspiration?</strong> Try the <a href="https://github.com/CultureAsData-UIUC/is310-spring-2026/blob/main/assets/files/cli_exercises/zipped_gutenberg_maze.zip" target="_blank">example maze</a></p>
+<p><strong>Need inspiration?</strong> Try the <a href="https://github.com/CultureAsData-UIUC/is310-fall-2026/blob/main/assets/files/cli_exercises/zipped_gutenberg_maze.zip" target="_blank">example maze</a></p>
 <aside class="notes">
 <p>If you need inspiration for your maze, take a look at the example maze which you can download and try solving.</p>
 <style type="text/css">
@@ -1224,10 +1250,10 @@
 <section id="unzipping" class="slide level2">
 <h2>Unzipping</h2>
 <p><strong>Mac/Linux/WSL:</strong></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a></a><span class="fu">unzip</span> path/to/your/zip/file <span class="at">-d</span> path/to/your/desired/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="fu">unzip</span> path/to/your/zip/file <span class="at">-d</span> path/to/your/desired/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p><strong>PowerShell:</strong></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="ex">Expand-Archive</span> <span class="at">-Path</span> <span class="st">"path\to\your\zip\file"</span> <span class="at">-DestinationPath</span> <span class="st">"path\to\your\desired\directory"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb18-1"><a></a>Expand-Archive <span class="op">-</span>Path <span class="st">"path\to\your\zip\file"</span> <span class="op">-</span>DestinationPath <span class="st">"path\to\your\desired\directory"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>The -d flag or -DestinationPath just tells the terminal where to unzip the file. If you’re already in the correct spot, you can just use unzip or Expand-Archive with just the path.</p>
 <style type="text/css">
@@ -1276,7 +1302,7 @@
 </tbody>
 </table>
 <aside class="notes">
-<p>Your goal is to use both the command line cheatsheet and your preferred AI chatbot to solve the maze. You should be able to solve the maze in ~30 minutes.</p>
+<p>Students can use the command line cheatsheet, the lesson, peers, or an AI chatbot if useful. If they use AI to help create, troubleshoot, or solve the maze, they should include an <code>ai-chat-log.md</code> file.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

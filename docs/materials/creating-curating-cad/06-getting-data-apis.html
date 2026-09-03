@@ -385,7 +385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="what-is-an-api" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-an-api">What is an API?</h2>
 <p>API stands for <strong>Application Programming Interface</strong>, but what does that mean exactly?</p>
-<p>While according to <a href="https://en.wikipedia.org/wiki/API">Wikipedia</a>,</p>
+<p>While according to <a href="https://en.wikipedia.org/wiki/API" target="_blank">Wikipedia</a>,</p>
 <blockquote class="blockquote">
 <p>An application programming interface is a connection between computers or between computer programs. It is a type of software interface, offering a service to other pieces of software. A document or standard that describes how to build or use such a connection or interface is called an API specification.</p>
 </blockquote>
@@ -399,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this figure, you’ll notice that we have a web browser that is using the “internet cloud” to make requests and get responses from an API that is connected to a web server and a database. This might seem complex, but we’ve seen a similar relationship when we talked about how the web works. We learned previously about how web browsers use HTTP to make requests and get responses from web servers, this is essentially the same concept. APIs are just a way to get data from a server, similar to how we get web pages from a server, but instead of storing the data in a webpage (aka an HTML document), the data is stored in a database. For example, when you use a weather app, or really any app on your phone, that app is using an API to get the weather data from a server.</p>
 <p>Databases might also sound intimidating, but they are just a way to store data, similar to <code>.csv</code> or <code>.json</code> files. The difference is that databases are designed to store large amounts of data and to allow that data to be accessed and manipulated quickly, usually using something called SQL (Structured Query Language), which is a programming language that allows you to interact with databases.</p>
 <p>Rather than going to a URL in your browser, an API lets us send a similar request to a server. To help us understand APIs, let’s explore a bit of their origins and development.</p>
-<p>While HTTP and HTML were became popular in the late 1980s and 1990s, APIs only became popular in the early 2000s. Kin Lane, <a href="https://apievangelist.com/">the API Evangelist</a>, has a blog post titled “The History of APIs” <a href="https://web.archive.org/web/20190722130022/https://history.apievangelist.com/">https://web.archive.org/web/20190722130022/https://history.apievangelist.com/</a>, which explores this history.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>While HTTP and HTML were became popular in the late 1980s and 1990s, APIs only became popular in the early 2000s. Kin Lane, <a href="https://apievangelist.com/" target="_blank">the API Evangelist</a>, has a blog post titled “The History of APIs” <a href="https://web.archive.org/web/20190722130022/https://history.apievangelist.com/" target="_blank">https://web.archive.org/web/20190722130022/https://history.apievangelist.com/</a>, which explores this history.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>According to Lane, one of the first APIs was developed by Salesforce in 2000, which allowed developers to access data from their databases and to build applications for customer relationship management. This initial API provided access to XML data, which is a type of markup language similar to HTML (remember TEI?). This was followed by eBay, which also developed an API in 2000.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -428,7 +428,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Tweetdeck Interface</figcaption>
 </figure>
 </div>
-<p>The growth in these platforms then led to the rise of third-party applications that used these APIs. For example, you might have heard of <a href="https://en.wikipedia.org/wiki/TweetDeck">TweetDeck</a>, which is/was an incredibly popular Twitter client that allowed users to manage multiple Twitter accounts and to schedule tweets and was bought by Twitter in 2011. Similarly, Google introduced the OpenSocial initiative in 2007 to try and standardize API interactions, but it largely failed, with most platforms retaining unique APIs. Facebook and Twitter in particular prioritized control over data access and usage through increasingly strict terms of service.</p>
+<p>The growth in these platforms then led to the rise of third-party applications that used these APIs. For example, you might have heard of <a href="https://en.wikipedia.org/wiki/TweetDeck" target="_blank">TweetDeck</a>, which is/was an incredibly popular Twitter client that allowed users to manage multiple Twitter accounts and to schedule tweets and was bought by Twitter in 2011. Similarly, Google introduced the OpenSocial initiative in 2007 to try and standardize API interactions, but it largely failed, with most platforms retaining unique APIs. Facebook and Twitter in particular prioritized control over data access and usage through increasingly strict terms of service.</p>
 <p>While TweetD TweetDeck was built using the Twitter API, which allowed developers to access data about tweets, users, and trends. This era of APIs was characterized by a proliferation of third-party applications and platforms, as well as a push for standardization. Google and others attempted to standardize API interactions with initiatives like OpenSocial, but most platforms retained unique APIs, with Facebook and Twitter prioritizing control over data access and usage through increasingly strict terms of service. Part of this focus on control was due to the rise of data privacy concerns, especially after events like the revelations of the <em>Facebook–Cambridge Analytica data scandal</em> in 2018. For those unfamiliar, this scandal was when it was revealed through a <em>New York Times</em> and <em>The Guardian</em> investigation that the political consulting firm Cambridge Analytica had harvested data from millions of Facebook users without their consent and used it to target political ads during the 2016 US presidential election. In the aftermath of this scandal, many of these platforms have restricted access to their APIs, leading computational social scientist, Deen Freenlon, to term this as the “post-API age.”<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>Understanding this history is helpful because it gives us a sense of the many users of APIs, as summarized in the table below:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -441,7 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="working-with-apis" class="level2">
 <h2 class="anchored" data-anchor-id="working-with-apis">Working with APIs</h2>
-<p>Now that we have a sense of what an API is and how they have developed, let’s start to work with them. We are going to be building from our web scraping lesson, using the <code>requests</code> library and once again working with <em>Lord of the Rings</em> data, but this time we are going to use <em>The One API</em> <a href="https://the-one-api.dev/">https://the-one-api.dev/</a>. For those unfamiliar, the one in the name is a reference to the <em>Lord of the Rings</em> series, where the One Ring is the most powerful of the Rings of Power and is the central plot device of the series.</p>
+<p>Now that we have a sense of what an API is and how they have developed, let’s start to work with them. We are going to be building from our web scraping lesson, using the <code>requests</code> library and once again working with <em>Lord of the Rings</em> data, but this time we are going to use <em>The One API</em> <a href="https://the-one-api.dev/" target="_blank">https://the-one-api.dev/</a>. For those unfamiliar, the one in the name is a reference to the <em>Lord of the Rings</em> series, where the One Ring is the most powerful of the Rings of Power and is the central plot device of the series.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://render.apptornado.com/render?url=https%3A%2F%2Fthe-one-api.dev%2F&amp;w=800&amp;h=600&amp;maxAgeSec=604800&amp;signed=I-008yKAhOXaFs_OeD0MtFIpt2LjcNVOukgUWceQgkY" class="img-fluid figure-img"></p>
@@ -449,7 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>According to the documentation, “<em>The One API</em> to rule them all is a non-commercial, open-source project” and provides access to data from the <em>Lord of the Rings</em> books and movies, including characters, quotes, and books.</p>
-<p>If we go to the about page <a href="https://the-one-api.dev/about">https://the-one-api.dev/about</a>, we can learn that the project was created in 2019 by Ulrike Exner and Mateusz Kikmunter, who are both developers. We can also visit the GitHub repository for the project <a href="https://github.com/gitfrosh/lotr-api/graphs/contributors">https://github.com/gitfrosh/lotr-api/graphs/contributors</a> to see the history of the project.</p>
+<p>If we go to the about page <a href="https://the-one-api.dev/about" target="_blank">https://the-one-api.dev/about</a>, we can learn that the project was created in 2019 by Ulrike Exner and Mateusz Kikmunter, who are both developers. We can also visit the GitHub repository for the project <a href="https://github.com/gitfrosh/lotr-api/graphs/contributors" target="_blank">https://github.com/gitfrosh/lotr-api/graphs/contributors</a> to see the history of the project.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../assets/images/lotr_api_github_history.png" class="img-fluid figure-img"></p>
@@ -473,18 +473,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You should see something like the following:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">'docs'</span><span class="fu">:</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">'docs'</span><span class="fu">:</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="ot">[</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf5805fb53e011a64671582'</span><span class="fu">,</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Fellowship</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">Ring'</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span><span class="ot">,</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58077b53e011a64671583'</span><span class="fu">,</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58077b53e011a64671583'</span><span class="fu">,</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Two</span> <span class="er">Towers'</span></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span><span class="ot">,</span></span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58080b53e011a64671584'</span><span class="fu">,</span> </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58080b53e011a64671584'</span><span class="fu">,</span></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Return</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">King'</span></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="ot">]</span><span class="fu">,</span></span>
@@ -507,7 +507,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>LOTR API Endpoints</figcaption>
 </figure>
 </div>
-<p>If we go to <em>The One API</em> documentation <a href="https://the-one-api.dev/documentation#4">https://the-one-api.dev/documentation#4</a>, we see the following table that outlines what <code>endpoints</code> exist.</p>
+<p>If we go to <em>The One API</em> documentation <a href="https://the-one-api.dev/documentation#4" target="_blank">https://the-one-api.dev/documentation#4</a>, we see the following table that outlines what <code>endpoints</code> exist.</p>
 <p>An endpoint might sound like a very technical term, but it is essentially just a specific URL that is used to access a specific piece of data from an API. For example, if we wanted to get data about a specific character, we would use the <code>/character</code> endpoint. If we wanted to get data about a specific quote, we would use the <code>/quote</code> endpoint.</p>
 <p>We can even try out that initial book endpoint in the browser which should give us the following:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -535,7 +535,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>LOTR Authentication</figcaption>
 </figure>
 </div>
-<p>If we return to <em>The One API</em> documentation <a href="https://the-one-api.dev/documentation#3">https://the-one-api.dev/documentation#3</a>, we can see that we need to sign up for an account to use the API at this link <a href="https://the-one-api.dev/sign-up">https://the-one-api.dev/sign-up</a>.</p>
+<p>If we return to <em>The One API</em> documentation <a href="https://the-one-api.dev/documentation#3" target="_blank">https://the-one-api.dev/documentation#3</a>, we can see that we need to sign up for an account to use the API at this link <a href="https://the-one-api.dev/sign-up" target="_blank">https://the-one-api.dev/sign-up</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../assets/images/lotr_account.png" class="img-fluid figure-img"></p>
@@ -570,7 +570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>the_one_api_key <span class="op">=</span> os.environ[<span class="st">'THE_ONE_API_KEY'</span>]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(the_one_api_key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>However, these will only be available in the terminal you created them in, so you would have to create them every time you open a new terminal. If you want to make them available in every terminal, you can add them to your <code>.bashrc</code> or <code>.zshrc</code> file on Macs/WSL or your <code>profile.ps1</code> file on Windows.</p>
-<p>This is a bit more work though, and one easier option is to use a Python library for storing API keys, called <code>apikey</code> <a href="https://github.com/ulf1/apikey">https://github.com/ulf1/apikey</a>.</p>
+<p>This is a bit more work though, and one easier option is to use a Python library for storing API keys, called <code>apikey</code> <a href="https://github.com/ulf1/apikey" target="_blank">https://github.com/ulf1/apikey</a>.</p>
 <p>In your terminal, type <code>pip install "apikey&gt;=0.2.4</code> to install the library. Then import it into your script and write:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> apikey</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -645,7 +645,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Query parameters are a way to pass data to an API to get specific data back. In this case, we are passing the query parameter <code>name=Galadriel</code> to <em>The One API</em> to get data about the character Galadriel. You’ll notice that the URL has a <code>?</code> at the end of it, followed by the query parameter <code>name=Galadriel</code>. Returning to the API’s documentation <a href="https://the-one-api.dev/documentation#5">https://the-one-api.dev/documentation#5</a>, we can see that we can use query parameters for sorting, filtering, and pagination data from <em>The One API</em>.</p>
+<p>Query parameters are a way to pass data to an API to get specific data back. In this case, we are passing the query parameter <code>name=Galadriel</code> to <em>The One API</em> to get data about the character Galadriel. You’ll notice that the URL has a <code>?</code> at the end of it, followed by the query parameter <code>name=Galadriel</code>. Returning to the API’s documentation <a href="https://the-one-api.dev/documentation#5" target="_blank">https://the-one-api.dev/documentation#5</a>, we can see that we can use query parameters for sorting, filtering, and pagination data from <em>The One API</em>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://cdn.prod.website-files.com/66508fc2f6b862d86193f29b/6674497e8a3e4519946a3b9f_bzNgNITcGMxVszuieKXJSF7Lswjw64bI7yuOvzQIyiedIzTqURKndIZkBL6OJXZcn3mQDMinzqM939F7ATVxr70XqyJVoG8EC9KOuwndGjpc_S0howFdJXKsXkrIwB2UF2ezFSFV.png" class="img-fluid figure-img"></p>
@@ -679,7 +679,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-wikimedia-api-finishing-what-we-started" class="level2">
 <h2 class="anchored" data-anchor-id="the-wikimedia-api-finishing-what-we-started">The Wikimedia API: Finishing What We Started</h2>
 <p>Let’s return to a problem we left unsolved.</p>
-<p>In <a href="../../materials/creating-curating-cad/05-web-scraping.html">our web scraping lesson</a>, we tried to scrape the <em>Lord of the Rings</em> Fandom wiki and got a <code>403 Forbidden</code>. The site was behind Cloudflare’s bot protection, <code>cloudscraper</code> couldn’t get through it, and we concluded that the right response was not to try harder but to look for a sanctioned way in. We then went and scraped Tolkien Gateway instead.</p>
+<p>In <a href="../../materials/creating-curating-cad/05-web-scraping.html" target="_blank">our web scraping lesson</a>, we tried to scrape the <em>Lord of the Rings</em> Fandom wiki and got a <code>403 Forbidden</code>. The site was behind Cloudflare’s bot protection, <code>cloudscraper</code> couldn’t get through it, and we concluded that the right response was not to try harder but to look for a sanctioned way in. We then went and scraped Tolkien Gateway instead.</p>
 <p>But we noted at the time that there was a third option. Fandom, like every wiki running MediaWiki software, offers an <strong>API</strong>. And that API is not behind the bot protection at all:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -700,12 +700,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>MediaWiki is the software that runs Wikipedia, and also Wiktionary, Wikisource, Wikidata, every Fandom wiki, and a large share of the independent wikis we looked at last week. They all share the same API, which means <strong>learning it once gives you programmatic access to an enormous amount of the world’s collaboratively-written reference material.</strong></p>
 <p>Every MediaWiki site exposes its API at a predictable location — <code>/w/api.php</code> on Wikimedia’s own sites, <code>/api.php</code> on most others:</p>
 <ul>
-<li>English Wikipedia: <a href="https://en.wikipedia.org/w/api.php">https://en.wikipedia.org/w/api.php</a></li>
-<li>Wikisource: <a href="https://en.wikisource.org/w/api.php">https://en.wikisource.org/w/api.php</a></li>
-<li>LOTR Fandom wiki: <a href="https://lotr.fandom.com/api.php">https://lotr.fandom.com/api.php</a></li>
+<li>English Wikipedia: <a href="https://en.wikipedia.org/w/api.php" target="_blank">https://en.wikipedia.org/w/api.php</a></li>
+<li>Wikisource: <a href="https://en.wikisource.org/w/api.php" target="_blank">https://en.wikisource.org/w/api.php</a></li>
+<li>LOTR Fandom wiki: <a href="https://lotr.fandom.com/api.php" target="_blank">https://lotr.fandom.com/api.php</a></li>
 </ul>
-<p>If you open any of those in a browser, you’ll get an interactive sandbox where you can build and test queries without writing any Python — which is a very good way to explore before you commit to code. The full reference lives at <a href="https://www.mediawiki.org/wiki/API:Main_page">https://www.mediawiki.org/wiki/API:Main_page</a>.</p>
-<p>Unlike <em>The One API</em>, <strong>Wikimedia requires no API key.</strong> But it does have one firm requirement, and it connects directly to the ethics we discussed last week: you must send a descriptive <code>User-Agent</code> header identifying who you are, per their policy <a href="https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy">https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy</a>. Requests with a generic or absent User-Agent may be refused.</p>
+<p>If you open any of those in a browser, you’ll get an interactive sandbox where you can build and test queries without writing any Python — which is a very good way to explore before you commit to code. The full reference lives at <a href="https://www.mediawiki.org/wiki/API:Main_page" target="_blank">https://www.mediawiki.org/wiki/API:Main_page</a>.</p>
+<p>Unlike <em>The One API</em>, <strong>Wikimedia requires no API key.</strong> But it does have one firm requirement, and it connects directly to the ethics we discussed last week: you must send a descriptive <code>User-Agent</code> header identifying who you are, per their policy <a href="https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy" target="_blank">https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy</a>. Requests with a generic or absent User-Agent may be refused.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>API_URL <span class="op">=</span> <span class="st">"https://en.wikipedia.org/w/api.php"</span></span>
@@ -858,7 +858,7 @@ Watch the Last Bucket
 <h2 class="anchored" data-anchor-id="python-api-wrappers">Python API Wrappers</h2>
 <p>So far we have been using the <code>requests</code> library to make our API calls, which is usually how you should work with APIs. However, occasionally, developers will create Python libraries to work with APIs, which can make working with APIs easier. These libraries are called API wrappers, and they are essentially Python libraries that provide a set of functions to work with an API.</p>
 <p>You can imagine if instead having to write a <code>requests.get</code> method every time you wanted to get a character and their number of quotes from <em>The One API</em>, we could instead write a Python Class that would make the request and store the data for us. This is what an API wrapper does, it abstracts the process of making requests to an API and allows you to work with the data more easily.</p>
-<p>Indeed, a developer named Nathanial Hapeman has created one for <em>The One API</em>, which you can see here <a href="https://pypi.org/project/nrh-lotr/0.0.3/">https://pypi.org/project/nrh-lotr/0.0.3/</a>. If you want to try out this library, all you have to do is type <code>pip install nrh-lotr==0.0.3</code> in your terminal.</p>
+<p>Indeed, a developer named Nathanial Hapeman has created one for <em>The One API</em>, which you can see here <a href="https://pypi.org/project/nrh-lotr/0.0.3/" target="_blank">https://pypi.org/project/nrh-lotr/0.0.3/</a>. If you want to try out this library, all you have to do is type <code>pip install nrh-lotr==0.0.3</code> in your terminal.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../assets/images/lotr_library_pypi.png" class="img-fluid figure-img"></p>
@@ -942,7 +942,7 @@ Fixing Pydantic Types For NRH-LOTR
 <p>Such limited functionality means that we couldn’t use this library to get data about characters or books, which is a major limitation. These types of limitations are common when working with API wrappers, as they are often created by developers who are not affiliated with the API itself and who may not have the time or resources to create a full-featured library. However, they can be a good way to get started with an API, especially if you are new to working with APIs.</p>
 <section id="europeana-api-pyeuropeana" class="level3">
 <h3 class="anchored" data-anchor-id="europeana-api-pyeuropeana">Europeana API &amp; pyeuropeana</h3>
-<p>Rather than use this library, we’re going to try one that has been designed for the <em>Europeana</em> digital library <a href="https://www.europeana.eu/en">https://www.europeana.eu/en</a>.</p>
+<p>Rather than use this library, we’re going to try one that has been designed for the <em>Europeana</em> digital library <a href="https://www.europeana.eu/en" target="_blank">https://www.europeana.eu/en</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -964,14 +964,14 @@ We’ll Work Through This One Together
 </figure>
 </div>
 <p>This library was first proposed in 2005 by six European heads of state who signed a letter asking the EU to support the development of a European Digital Library and it was initially released in 2008.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> It provides access to millions of digitized items from European museums, libraries, archives, and galleries, and is a great resource for researchers, students, and the general public. The library has undergone a transformation since its initial release, with the first few years focusing on encouraging heritage institutions to provide their digital material to the platform. The newer version, released in 2016, has more of a focus on encouraging reuse in different ways and curating the collection through exhibitions and collections.</p>
-<p>Given the scale and funding for Europeana, there are number of APIs that have been developed for accessing data from the collections. For examples, James Morley has created a Europeana Colour Explorer <a href="https://culturepics.org/colour/#/">https://culturepics.org/colour/#/</a> that uses the Europeana API to explore the colors of items in the collection.</p>
+<p>Given the scale and funding for Europeana, there are number of APIs that have been developed for accessing data from the collections. For examples, James Morley has created a Europeana Colour Explorer <a href="https://culturepics.org/colour/#/" target="_blank">https://culturepics.org/colour/#/</a> that uses the Europeana API to explore the colors of items in the collection.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://roued.com/wp-content/uploads/Screenshot-2021-03-05-at-17.41.07.png" class="img-fluid figure-img"></p>
 <figcaption>Europeana Colour Explorer</figcaption>
 </figure>
 </div>
-<p>If we click on one of the images, it takes us to the Europeana website where we can see more information about the item. For example, I selected this item <a href="https://www.europeana.eu/en/item/1190/INP_postcards_6415?utm_source=api&amp;utm_medium=api&amp;utm_campaign=bkV8GDrrp">https://www.europeana.eu/en/item/1190/INP_postcards_6415?utm_source=api&amp;utm_medium=api&amp;utm_campaign=bkV8GDrrp</a>, which is a postcard from 1852 created by a Romanian artist Gheorghe Tattarescu.</p>
+<p>If we click on one of the images, it takes us to the Europeana website where we can see more information about the item. For example, I selected this item <a href="https://www.europeana.eu/en/item/1190/INP_postcards_6415?utm_source=api&amp;utm_medium=api&amp;utm_campaign=bkV8GDrrp" target="_blank">https://www.europeana.eu/en/item/1190/INP_postcards_6415?utm_source=api&amp;utm_medium=api&amp;utm_campaign=bkV8GDrrp</a>, which is a postcard from 1852 created by a Romanian artist Gheorghe Tattarescu.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../assets/images/postcard.png" class="img-fluid figure-img"></p>
@@ -993,7 +993,7 @@ We’ll Work Through This One Together
 <figcaption>Europeana APIs</figcaption>
 </figure>
 </div>
-<p>To do this, we first need to get an API key from Europeana, which you can do by signing up for an account here <a href="https://pro.europeana.eu/pages/get-api">https://pro.europeana.eu/pages/get-api</a>.</p>
+<p>To do this, we first need to get an API key from Europeana, which you can do by signing up for an account here <a href="https://pro.europeana.eu/pages/get-api" target="_blank">https://pro.europeana.eu/pages/get-api</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../assets/images/europeana_library_api_key.png" class="img-fluid figure-img"></p>
@@ -1001,14 +1001,14 @@ We’ll Work Through This One Together
 </figure>
 </div>
 <p>You’ll notice that this API requires more information to get a key than <em>The One API</em>. Many APIs want you to explain what you plan to use them for and also to include a website where you will be using the API. For Europeana, I would recommend using your <code>@illinois.edu</code> email address, saying that the Application or Project Name is <code>IS310 Computing in the Humanities Course</code>, and that the website is either your <code>.github.io</code> website or our course website <code>https://cultureasdata-uiuc.github.io/is310-fall-2024/</code>. Once you have applied, you should see your api key in your inbox in a few minutes.</p>
-<p>While we could use <code>requests</code> to access these APIs, there’s also a Python library <code>pyeuropeana</code> that has been designed to work with the Europeana API. You can see the documentation for this library here <a href="https://rd-europeana-python-api.readthedocs.io/en/stable/index.html">https://rd-europeana-python-api.readthedocs.io/en/stable/index.html</a> and the GitHub repository here <a href="https://github.com/europeana/rd-europeana-python-api/tree/master">https://github.com/europeana/rd-europeana-python-api/tree/master</a>.</p>
+<p>While we could use <code>requests</code> to access these APIs, there’s also a Python library <code>pyeuropeana</code> that has been designed to work with the Europeana API. You can see the documentation for this library here <a href="https://rd-europeana-python-api.readthedocs.io/en/stable/index.html" target="_blank">https://rd-europeana-python-api.readthedocs.io/en/stable/index.html</a> and the GitHub repository here <a href="https://github.com/europeana/rd-europeana-python-api/tree/master" target="_blank">https://github.com/europeana/rd-europeana-python-api/tree/master</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../assets/images/pyeuropeana.png" class="img-fluid figure-img"></p>
 <figcaption>Europeana Library</figcaption>
 </figure>
 </div>
-<p>If we go to the <code>Quickstart</code> page in the documentation <a href="https://rd-europeana-python-api.readthedocs.io/en/stable/usage.html#">https://rd-europeana-python-api.readthedocs.io/en/stable/usage.html#</a>, we can see that we can install the library with the following command:</p>
+<p>If we go to the <code>Quickstart</code> page in the documentation <a href="https://rd-europeana-python-api.readthedocs.io/en/stable/usage.html#" target="_blank">https://rd-europeana-python-api.readthedocs.io/en/stable/usage.html#</a>, we can see that we can install the library with the following command:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyeuropeana</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then if we scroll down to <code>Authentication</code> we can start to see how we can use the library to authenticate with the Europeana API.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -1046,7 +1046,7 @@ Getting errors With <code>pyeuropeana</code>? Click for assistance
 <figcaption>Managing pyenv versions</figcaption>
 </figure>
 </div>
-<p><strong>What is pyenv?</strong> <code>pyenv</code> is a tool that lets you install and manage multiple versions of Python on your computer. Rather than having just one Python version installed globally, pyenv allows you to switch between different versions (like 3.9, 3.10, 3.11, etc.) for different projects. This is useful when different libraries require different Python versions. When you run <code>pyenv local 3.10.13</code>, you’re telling pyenv to use Python 3.10.13 specifically in that folder and its subfolders—without affecting the Python version elsewhere on your system. If you want to learn more about it, I would highly recommend this <em>Real Python</em> post <a href="https://realpython.com/intro-to-pyenv/">https://realpython.com/intro-to-pyenv/</a>.</p>
+<p><strong>What is pyenv?</strong> <code>pyenv</code> is a tool that lets you install and manage multiple versions of Python on your computer. Rather than having just one Python version installed globally, pyenv allows you to switch between different versions (like 3.9, 3.10, 3.11, etc.) for different projects. This is useful when different libraries require different Python versions. When you run <code>pyenv local 3.10.13</code>, you’re telling pyenv to use Python 3.10.13 specifically in that folder and its subfolders—without affecting the Python version elsewhere on your system. If you want to learn more about it, I would highly recommend this <em>Real Python</em> post <a href="https://realpython.com/intro-to-pyenv/" target="_blank">https://realpython.com/intro-to-pyenv/</a>.</p>
 <section id="for-maclinux-users" class="level4">
 <h4 class="anchored" data-anchor-id="for-maclinux-users">For Mac/Linux users:</h4>
 <p>First check if you have pyenv installed:</p>
@@ -1166,14 +1166,14 @@ Getting errors With <code>pyeuropeana</code>? Click for assistance
 <p>If we wanted to see an item directly in the browser, we could use the <code>guid</code> key from the raw response:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>response[<span class="st">'items'</span>][<span class="dv">0</span>][<span class="st">'guid'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will return a URL like <code>https://www.europeana.eu/item/2059218/data_sounds_IT_DDS0000009812000400?utm_source=api&amp;utm_medium=api&amp;utm_campaign=tondflanrino</code> that you can paste into your browser.</p>
-<p>We could also try out the <code>Entity API</code>, which allows us to get more information about a specific entity in the collection. According to the api’s documentation <a href="https://europeana.atlassian.net/wiki/spaces/EF/pages/2324561923/Entity+API+Documentation">https://europeana.atlassian.net/wiki/spaces/EF/pages/2324561923/Entity+API+Documentation</a>, the Europeana collection has these types of entities:</p>
+<p>We could also try out the <code>Entity API</code>, which allows us to get more information about a specific entity in the collection. According to the api’s documentation <a href="https://europeana.atlassian.net/wiki/spaces/EF/pages/2324561923/Entity+API+Documentation" target="_blank">https://europeana.atlassian.net/wiki/spaces/EF/pages/2324561923/Entity+API+Documentation</a>, the Europeana collection has these types of entities:</p>
 <ul>
 <li>a person (or “agent”), for instance Lili Boulanger or Claude Debussy;</li>
 <li>a topic (or “concept”) like Art Nouveau, migration or Musique Concrète</li>
 <li>a place, for instance Perpignan, Bratislava or Arnhem</li>
 <li>a time period, for instance the 21st century</li>
 </ul>
-<p>In the <code>pyeuropeana</code> documentation, there’s a section of tutorials, including one for using the Entity API <a href="https://rd-europeana-python-api.readthedocs.io/en/stable/tutorials_source/entity_api_tutorial.html">https://rd-europeana-python-api.readthedocs.io/en/stable/tutorials_source/entity_api_tutorial.html</a>.</p>
+<p>In the <code>pyeuropeana</code> documentation, there’s a section of tutorials, including one for using the Entity API <a href="https://rd-europeana-python-api.readthedocs.io/en/stable/tutorials_source/entity_api_tutorial.html" target="_blank">https://rd-europeana-python-api.readthedocs.io/en/stable/tutorials_source/entity_api_tutorial.html</a>.</p>
 <p>According to this tutorial, we can use the <code>entity.suggest</code> method to get suggestions for a specific entity. For example, if we wanted to get suggestions for the entity <code>Galadriel</code>, we could use the following code:</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyeuropeana.apis <span class="im">as</span> apis</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1214,10 +1214,10 @@ Getting errors With <code>pyeuropeana</code>? Click for assistance
 <h3 class="anchored" data-anchor-id="choosing-your-second-api">Choosing Your Second API</h3>
 <p>Pick something you’re actually curious about. If you need inspiration:</p>
 <ul>
-<li><a href="https://github.com/public-apis/public-apis">https://github.com/public-apis/public-apis</a></li>
-<li><a href="https://github.com/chanonroy/cool-apis">https://github.com/chanonroy/cool-apis</a></li>
-<li><a href="https://apilist.fun/">https://apilist.fun/</a></li>
-<li>Cultural heritage collections often have excellent APIs — the <a href="https://metmuseum.github.io/">Metropolitan Museum of Art</a>, the <a href="https://www.si.edu/openaccess">Smithsonian</a>, <a href="https://openlibrary.org/developers/api">Open Library</a>, the <a href="https://pro.dp.la/developers">Digital Public Library of America</a>, and of course <strong>Europeana</strong>, which we worked through in class</li>
+<li><a href="https://github.com/public-apis/public-apis" target="_blank">https://github.com/public-apis/public-apis</a></li>
+<li><a href="https://github.com/chanonroy/cool-apis" target="_blank">https://github.com/chanonroy/cool-apis</a></li>
+<li><a href="https://apilist.fun/" target="_blank">https://apilist.fun/</a></li>
+<li>Cultural heritage collections often have excellent APIs — the <a href="https://metmuseum.github.io/" target="_blank">Metropolitan Museum of Art</a>, the <a href="https://www.si.edu/openaccess" target="_blank">Smithsonian</a>, <a href="https://openlibrary.org/developers/api" target="_blank">Open Library</a>, the <a href="https://pro.dp.la/developers" target="_blank">Digital Public Library of America</a>, and of course <strong>Europeana</strong>, which we worked through in class</li>
 <li>Or something purely for fun — SWAPI (the Star Wars API), the Pokémon API, a museum of one specific thing</li>
 </ul>
 <p>You may use <code>requests</code> or a wrapper library, and your API may or may not require a key. <strong>If it requires a key, store it using one of the methods from this lesson — never paste it into a file you push to GitHub.</strong></p>
@@ -1244,20 +1244,20 @@ Getting errors With <code>pyeuropeana</code>? Click for assistance
 </ul>
 <p>That last question connects back to Acker and Kreisberg on API-driven archives and to Freelon’s “post-API age” — you are the fourth kind of user in their table, the researcher, using infrastructure built mostly for developers. <strong>Notice where that fit is uncomfortable.</strong></p>
 <p>Finally, push both your script and the data to your GitHub repository. <strong>Please remember to NOT include any private API keys, virtual environments, or other sensitive information!</strong></p>
-<p>Once you have completed the assignment, please post a link to your <code>api-getting-data</code> folder in this GitHub discussion <a href="https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/8">https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/8</a>, along with a brief note about which second API you chose and why.</p>
+<p>Once you have completed the assignment, please post a link to your <code>api-getting-data</code> folder in this GitHub discussion <a href="https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/8" target="_blank">https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/8</a>, along with a brief note about which second API you chose and why.</p>
 </section>
 </section>
 <section id="additional-resources" class="level2">
 <h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
 <ul>
-<li>Snodgrass, Eric, and Winnie Soon. “API Practices and Paradigms: Exploring the Protocological Parameters of APIs as Key Facilitators of Sociotechnical Forms of Exchange.” <em>First Monday</em>, February 1, 2019. <a href="https://doi.org/10.5210/fm.v24i2.9553">https://doi.org/10.5210/fm.v24i2.9553</a>.</li>
-<li>Kazemi, Darius. “The Land before Modern APIs – Increment: APIs.” <em>Increment</em>, August 2020. <a href="http://localhost:3000/apis/land-before-modern-apis/">http://localhost:3000/apis/land-before-modern-apis/</a>.</li>
+<li>Snodgrass, Eric, and Winnie Soon. “API Practices and Paradigms: Exploring the Protocological Parameters of APIs as Key Facilitators of Sociotechnical Forms of Exchange.” <em>First Monday</em>, February 1, 2019. <a href="https://doi.org/10.5210/fm.v24i2.9553" target="_blank">https://doi.org/10.5210/fm.v24i2.9553</a>.</li>
+<li>Kazemi, Darius. “The Land before Modern APIs – Increment: APIs.” <em>Increment</em>, August 2020. <a href="http://localhost:3000/apis/land-before-modern-apis/" target="_blank">http://localhost:3000/apis/land-before-modern-apis/</a>.</li>
 <li>Loukissas, Yanni Alexander. <em>All Data Are Local: Thinking Critically in a Data-Driven Society</em>. MIT Press, 2019.</li>
-<li>Go Sugimoto, “Introduction to Populating a Website with API Data,” <em>Programming Historian</em> 8 (2019), <a href="https://doi.org/10.46430/phen0086">https://doi.org/10.46430/phen0086</a>.</li>
-<li>Patrick Smyth, “Creating Web APIs with Python and Flask,” <em>Programming Historian</em> 7 (2018), <a href="https://doi.org/10.46430/phen0072">https://doi.org/10.46430/phen0072</a>.</li>
-<li>Jeri Wieringa, “Getting Data,” <em>DH Bridge</em>, <a href="http://curriculum.dhbridge.org/modules/module03.html">http://curriculum.dhbridge.org/modules/module03.html</a>.</li>
-<li>Lauren Klein and Dan Sinykin, “Intro to APIs,” <em>QTM340-Fall21</em>, <a href="https://github.com/laurenfklein/QTM340-Fall21/blob/main/notebooks/class7-accessing-apis.ipynb">https://github.com/laurenfklein/QTM340-Fall21/blob/main/notebooks/class7-accessing-apis.ipynb</a>.</li>
-<li>Melanie Walsh, “Intro to APIs,” <em>Intro to Cultural Analytics</em>, <a href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/05-What-Is-API.html">https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/05-What-Is-API.html</a>.</li>
+<li>Go Sugimoto, “Introduction to Populating a Website with API Data,” <em>Programming Historian</em> 8 (2019), <a href="https://doi.org/10.46430/phen0086" target="_blank">https://doi.org/10.46430/phen0086</a>.</li>
+<li>Patrick Smyth, “Creating Web APIs with Python and Flask,” <em>Programming Historian</em> 7 (2018), <a href="https://doi.org/10.46430/phen0072" target="_blank">https://doi.org/10.46430/phen0072</a>.</li>
+<li>Jeri Wieringa, “Getting Data,” <em>DH Bridge</em>, <a href="http://curriculum.dhbridge.org/modules/module03.html" target="_blank">http://curriculum.dhbridge.org/modules/module03.html</a>.</li>
+<li>Lauren Klein and Dan Sinykin, “Intro to APIs,” <em>QTM340-Fall21</em>, <a href="https://github.com/laurenfklein/QTM340-Fall21/blob/main/notebooks/class7-accessing-apis.ipynb" target="_blank">https://github.com/laurenfklein/QTM340-Fall21/blob/main/notebooks/class7-accessing-apis.ipynb</a>.</li>
+<li>Melanie Walsh, “Intro to APIs,” <em>Intro to Cultural Analytics</em>, <a href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/05-What-Is-API.html" target="_blank">https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/05-What-Is-API.html</a>.</li>
 </ul>
 
 
@@ -1267,11 +1267,11 @@ Getting errors With <code>pyeuropeana</code>? Click for assistance
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>Lane, Kin. “The History of APIs,” <em>API Evangelist</em>, <a href="https://history.apievangelist.com/">https://history.apievangelist.com/</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Jakob Jünger, “A Brief History of APIs,” in <em>Handbook of Computational Social Science</em>, Volume 2, by Uwe Engel, Anabel Quan-Haase, Sunny Xun Liu, and Lars Lyberg (Taylor &amp; Francis, 2021), <a href="https://doi.org/10.4324/9781003025245-3">https://doi.org/10.4324/9781003025245-3</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Freelon, Deen. “Computational Research in the Post-API Age.” <em>Political Communication</em> 35, no. 4 (October 2, 2018): 665–68. <a href="https://doi.org/10.1080/10584609.2018.1477506">https://doi.org/10.1080/10584609.2018.1477506</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Acker, Amelia, and Adam Kreisberg. “Social Media Data Archives in an API-Driven World.” <em>Archival Science</em> 20, no. 2 (June 1, 2020): 105–23. <a href="https://doi.org/10.1007/s10502-019-09325-9">https://doi.org/10.1007/s10502-019-09325-9</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>“Europeana,” <em>Wikipedia</em>, <a href="https://en.wikipedia.org/wiki/Europeana">https://en.wikipedia.org/wiki/Europeana</a> and Roued, Henriette. “Europeana API Explained.” <a href="https://roued.com/portfolio/europeanas-api-explained/">https://roued.com/portfolio/europeanas-api-explained/</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Lane, Kin. “The History of APIs,” <em>API Evangelist</em>, <a href="https://history.apievangelist.com/" target="_blank">https://history.apievangelist.com/</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Jakob Jünger, “A Brief History of APIs,” in <em>Handbook of Computational Social Science</em>, Volume 2, by Uwe Engel, Anabel Quan-Haase, Sunny Xun Liu, and Lars Lyberg (Taylor &amp; Francis, 2021), <a href="https://doi.org/10.4324/9781003025245-3" target="_blank">https://doi.org/10.4324/9781003025245-3</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Freelon, Deen. “Computational Research in the Post-API Age.” <em>Political Communication</em> 35, no. 4 (October 2, 2018): 665–68. <a href="https://doi.org/10.1080/10584609.2018.1477506" target="_blank">https://doi.org/10.1080/10584609.2018.1477506</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Acker, Amelia, and Adam Kreisberg. “Social Media Data Archives in an API-Driven World.” <em>Archival Science</em> 20, no. 2 (June 1, 2020): 105–23. <a href="https://doi.org/10.1007/s10502-019-09325-9" target="_blank">https://doi.org/10.1007/s10502-019-09325-9</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>“Europeana,” <em>Wikipedia</em>, <a href="https://en.wikipedia.org/wiki/Europeana" target="_blank">https://en.wikipedia.org/wiki/Europeana</a> and Roued, Henriette. “Europeana API Explained.” <a href="https://roued.com/portfolio/europeanas-api-explained/" target="_blank">https://roued.com/portfolio/europeanas-api-explained/</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
