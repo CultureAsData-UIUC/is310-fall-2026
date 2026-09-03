@@ -141,6 +141,26 @@ According to the [Unicode Standard](https://unicode.org/versions/Unicode13.0.0/)
 This is a bit technical, but the key concept is that plain text shows if it is formatted or not (we call this markup), and usually contains no formatting.
 :::
 
+## Who Decides What Counts as Text?
+
+[![](https://imgs.xkcd.com/comics/standards.png){height="360"}](https://xkcd.com/927/){target="_blank"}
+
+*Who has heard of the Unicode Consortium?*
+
+::: {.notes}
+Before getting too comfortable with the phrase "plain text," I want to pause on the infrastructure behind it. This XKCD comic is funny because standards are supposed to solve incompatibility, but they also have histories, politics, and sometimes competition. Character encoding is one of the examples named in the comic.
+
+Computers do not automatically "know" what a letter, punctuation mark, emoji, accent mark, or symbol is. Those characters have to be represented through shared standards. One of the most important organizations responsible for those standards is the Unicode Consortium.
+
+The Unicode Consortium is a nonprofit organization founded in 1991 to develop and maintain the Unicode Standard. Before Unicode, many computer systems used different character encodings, which meant that text could break when it moved across languages, operating systems, or software platforms. A file created on one machine might display incorrectly on another because the two systems did not agree on which numbers represented which characters.
+
+Unicode tries to solve this problem by assigning characters standardized code points. In simplified terms, Unicode gives each character a stable identifier so that computers can exchange text more consistently across systems. This is why we can write not only English letters, but also accented characters, non-Latin scripts, mathematical symbols, and emoji in many modern digital environments.
+
+For our purposes, Unicode matters because it shows that even "plain text" depends on infrastructure, institutions, and decisions about what should be represented. Text may seem simple, but representing text as data requires standards about which characters count, how they are encoded, and how software should interpret them.
+
+[Sources] XKCD 927, "Standards"; Unicode Consortium, "The Unicode Standard."
+:::
+
 ## Why Plain Text Matters
 
 Plain text is:
@@ -157,15 +177,48 @@ Edited in a **text editor** like VS Code
 Plain text can be moved between programs more fluidly and can respond to programmatic manipulations. It is often manipulated in something called a *text editor* (like VS Code), which is a program that allows you to edit plain text files.
 :::
 
-## Example: Project Gutenberg
+## Let's experiment with Plain Text & Project Gutenberg
 
 ![](../assets/images/pride_prejudice_gutenberg.png){height="400"}
 
 *[Pride and Prejudice by Jane Austen](https://www.gutenberg.org/ebooks/1342){target="_blank"}*
 
 ::: {.notes}
-Project Gutenberg is a website that hosts public domain books in plain text format. This is a great resource for working with text files.
+Project Gutenberg is a website that hosts public domain books in plain text format. This is a great resource for working with text files, but it is also useful because it makes visible how copyright status, volunteer labor, preservation, and plain text formats work together to shape what becomes computationally accessible.
 :::
+
+## Origins of Project Gutenberg
+
+[![](https://www.gutenberg.org/files/60600/60600-h/images/0015-large.jpg)](https://www.gutenberg.org/about/){target="_blank"}
+
+Founded by **Michael Hart** at UIUC in **1971**
+
+::: {.notes}
+Project Gutenberg is one of the oldest and most important digital text projects. It began in 1971 when Michael Hart, then connected to the University of Illinois, used access to a mainframe computer to type a digital version of the U.S. Declaration of Independence.
+
+His idea was that computers could be used to freely distribute texts to anyone with access to a networked machine. So when we download a plain text file from Project Gutenberg, we are not just using a convenient source of text. We are also entering a longer history of eBooks, digitization, volunteer labor, public access, and file formats.
+:::
+
+## Public Domain and Access
+
+Project Gutenberg focuses especially on **public domain** texts.
+
+That means many works can be legally:
+
+- copied
+- shared
+- remixed
+- redistributed
+
+*How did Project Gutenberg initially start creating digital texts? What is Public Domain Day?*
+
+::: {.notes}
+Public domain texts are works that are no longer under copyright or were never protected by copyright. That legal status matters for computational work because it makes some cultural materials much easier to download, preserve, reuse, and analyze.
+
+Public Domain Day happens every January 1, when new works enter the public domain in many countries. We will return to these questions later, but for now I want students to see that the availability of a text as data is not simply a technical question. It is also shaped by law, institutions, labor, and preservation choices.
+:::
+
+
 
 ## Downloading Files from the Command Line
 
@@ -211,22 +264,32 @@ If students are using WSL/Ubuntu on Windows, `wget` works like a Unix command. I
 
 ## Displaying File Contents
 
+**macOS / WSL / Linux**
+
 ```sh
 cat pride-and-prejudice.txt
 ```
 
 . . .
 
-`cat` = **concatenate**
+**PowerShell**
 
-- Displays the contents of a file
-- For long files, you'll only see the end without scrolling
+```powershell
+Get-Content pride-and-prejudice.txt
+```
+
+. . .
+
+`cat` usually works in PowerShell as an alias for `Get-Content`.
+
 
 ::: {.notes}
-The cat command stands for concatenate, and is a command line tool for displaying the contents of a file. For very long files like Pride and Prejudice, you'll likely only see the end of the text without scrolling for ages.
+The cat command stands for concatenate, and is a command line tool for displaying the contents of a file. In PowerShell, cat usually works because it is an alias for Get-Content, but I want students to know the explicit PowerShell command too. For very long files like Pride and Prejudice, they'll likely only see the end of the text without scrolling for ages.
 :::
 
 ## Counting Words
+
+**macOS / WSL / Linux**
 
 ```sh
 wc -w pride-and-prejudice.txt
@@ -234,15 +297,19 @@ wc -w pride-and-prejudice.txt
 
 . . .
 
-- `wc` = **word count**
-- `-w` flag = count words
-- Try it! How many words in Pride and Prejudice?
+**PowerShell**
+
+```powershell
+(Get-Content pride-and-prejudice.txt | Out-String).Split().Count
+```
 
 ::: {.notes}
-The wc command stands for word count. You'll often notice that commands have flags like this, which are additional instructions for the command.
+The wc command stands for word count. The -w flag tells the terminal to count words. This command does not usually work by default in normal PowerShell, so students using PowerShell need the Get-Content version. It is more verbose, but conceptually it does the same thing: read the file, treat it as a string, split it into words, and count the pieces.
 :::
 
 ## Counting Lines
+
+**macOS / WSL / Linux**
 
 ```sh
 wc -l pride-and-prejudice.txt
@@ -250,14 +317,23 @@ wc -l pride-and-prejudice.txt
 
 . . .
 
-- `-l` flag = count lines
-- Pride and Prejudice has **14,911** lines!
+**PowerShell**
+
+```powershell
+(Get-Content pride-and-prejudice.txt).Count
+```
+
+. . .
+
+Pride and Prejudice has **14,911** lines.
 
 ::: {.notes}
-The -l flag tells the terminal to count the number of lines instead of words. This is useful for understanding the size of a text file.
+The -l flag tells the terminal to count the number of lines instead of words. Since PowerShell does not usually include wc, students can use Get-Content and Count to count the lines in the file.
 :::
 
 ## Searching for Text
+
+**macOS / WSL / Linux**
 
 ```sh
 grep pride pride-and-prejudice.txt
@@ -265,18 +341,40 @@ grep pride pride-and-prejudice.txt
 
 . . .
 
+**PowerShell**
+
+```powershell
+Select-String "pride" pride-and-prejudice.txt
+```
+
+::: {.notes}
+The grep command allows us to search for specific words or patterns in a file. It returns all lines containing the search term. The grep command does not usually work by default in normal PowerShell, so students using PowerShell should use Select-String instead.
+:::
+
+## Search Output
+
 ![grep output](../assets/images/grep_pride.png){height="300"}
 
 ::: {.notes}
-The grep command allows us to search for specific words or patterns in a file. It returns all lines containing the search term.
+This screenshot shows what the matching lines look like when we search for "pride" in the Project Gutenberg text. The output is not a polished visualization. It is a rough but useful way of asking a text file a quick question from the command line.
 :::
 
 ## Counting Matching Lines
 
 How many lines include "pride"?
 
+**macOS / WSL / Linux**
+
 ```sh
 grep -c pride pride-and-prejudice.txt
+```
+
+. . .
+
+**PowerShell**
+
+```powershell
+(Select-String "pride" pride-and-prejudice.txt).Count
 ```
 
 . . .
@@ -288,7 +386,7 @@ Result: **43 lines**
 **Your turn:** How many lines include "prejudice"?
 
 ::: {.notes}
-The `-c` flag with grep counts the number of matching lines instead of displaying them. This is useful for quick text analysis, but it is not quite the same thing as counting every individual occurrence of a word, since a line could include the same word more than once.
+The `-c` flag with grep counts the number of matching lines instead of displaying them. In PowerShell, we can use Select-String and then count the matches. This is useful for quick text analysis, but it is not quite the same thing as counting every individual occurrence of a word, since a line could include the same word more than once.
 :::
 
 ## Command Summary
@@ -462,9 +560,45 @@ The goal was to create a file format that was easy to read and write, could be c
 It's important to understand that Markdown has this history because many flavors of Markdown exist, and standardization of Markdown has been an ongoing project.
 :::
 
+## Swartz, Creative Commons, Access
+
+Aaron Swartz was connected to several open web projects.
+
+. . .
+
+- Markdown
+- RSS
+- Reddit
+- Creative Commons
+- Open access activism
+
+::: {.notes}
+Aaron Swartz matters to this history not only because of Markdown, but because he was part of a broader movement around open access, open standards, and the public web. As a teenager, Swartz helped with the technical infrastructure for Creative Commons.
+
+Creative Commons was founded in 2001 to give creators legal tools for sharing their work more flexibly than the default model of "all rights reserved" copyright. Creative Commons licenses do not eliminate copyright. Instead, they let creators specify how others may copy, share, adapt, or cite their work.
+
+This gives us a useful bridge from public domain materials to openly licensed materials. Project Gutenberg mostly works with public domain texts. Creative Commons helps creators share work before copyright expires.
+:::
+
+## Public Domain vs Licensed Access
+
+| Model | What changes? |
+|---|---|
+| Project Gutenberg | Public domain texts, downloadable plain text |
+| Creative Commons | Creators keep copyright but allow some reuse |
+| JSTOR | Access shaped by vendors, libraries, and licenses |
+
+::: {.notes}
+This is where I want to introduce content vendors like JSTOR. JSTOR preserves and provides access to scholarly journals, books, and primary sources, but access is often mediated through institutional subscriptions and licensing agreements.
+
+Swartz's life and death are often discussed in relation to these questions of access. In 2011, he was arrested after downloading millions of academic articles from JSTOR through MIT's network. JSTOR later said it had reached a civil settlement with Swartz and did not want the matter to continue as a criminal case, but federal prosecutors pursued charges under computer crime law. Swartz died by suicide in January 2013 while the case was ongoing.
+
+This is one reason Project Gutenberg is such a useful contrast. Its public-domain plain text files are legally shareable in ways that subscription databases usually are not. That does not make Project Gutenberg neutral or complete, but it does show how copyright status, licensing, institutional access, and file formats shape what kinds of culture become easy to download, preserve, and analyze.
+:::
+
 ## Markdown Flavors
 
-![Different Markdown implementations](https://d11a6trkgmumsb.cloudfront.net/original/3X/c/b/cb7374a606a66c5b8e489afed76d93ed49dc7836.png){height="350"}
+![Different Markdown implementations](../assets/images/flavors_markdown.png){height="350"}
 
 ::: {.notes}
 This figure shows some examples of how Markdown is written depending on the platform and standards. Different platforms have added their own extensions to the basic Markdown syntax.

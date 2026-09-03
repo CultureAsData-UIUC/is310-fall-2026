@@ -27,13 +27,43 @@ Today, we have been talking a lot about *text*, from text commands to text files
 
 As scholars working with computers, we need to be aware of the ways plain text and formatted text differ. While a Word document and a `.txt` file might look the same to us, the Word document actually contains a lot of hidden formatting that the `.txt` file does not. In programming, we want to be explicit in our communications with computers and so plain text is preferable, but what is it exactly?
 
+### What is the Unicode Consortium?
+
+![](https://www.explainxkcd.com/w/images/6/63/the_history_of_unicode.png)
+
+To understand plain text, we also need to understand that computers do not automatically "know" what a letter, punctuation mark, emoji, or symbol is. Those characters have to be represented through shared standards. One of the most important organizations responsible for those standards is the [Unicode Consortium](https://home.unicode.org/){target="_blank"}.
+
+The Unicode Consortium is a nonprofit organization founded in 1991 to develop and maintain the [Unicode Standard](https://www.unicode.org/standard/standard.html){target="_blank"}. Before Unicode, many computer systems used different character encodings, which meant that text could break when it moved across languages, operating systems, or software platforms. A file created on one machine might display incorrectly on another because the two systems did not agree on which numbers represented which characters.
+
+Unicode tries to solve this problem by assigning characters standardized code points. In simplified terms, Unicode gives each character a stable identifier so that computers can exchange text more consistently across systems. This is why we can write not only English letters, but also accented characters, non-Latin scripts, mathematical symbols, and emoji in many modern digital environments.
+
+For our purposes, Unicode matters because it shows that even "plain text" depends on infrastructure, institutions, and decisions about what should be represented. Text may seem simple, but representing text as data requires standards about which characters count, how they are encoded, and how software should interpret them.
+
 According to the [Unicode Standard](https://unicode.org/versions/Unicode13.0.0/){target="_blank"},
 
 > Plain text is a pure sequence of character codes; plain Unicode-encoded text is therefore a sequence of Unicode character codes.
 
 This is a bit technical, but the key concept is that plain text shows if it is formatted or not (we call this markup), and usually contains no formatting. Plain text can be moved between programs more fluidly and can respond to programmatic manipulations. It is often manipulated in something called a *text editor* (like VS Code), which is a program that allows you to edit plain text files.
 
-We can see an example of a plain txt file, via Project Gutenberg - a website that hosts public domain books in plain text format.
+### A Short History of Project Gutenberg
+
+![](https://www.gutenberg.org/files/60600/60600-h/images/0015-large.jpg)
+
+We can see an example of a plain text file through [Project Gutenberg](https://www.gutenberg.org/){target="_blank"}, one of the oldest and most important digital text projects. Project Gutenberg began in 1971 when Michael Hart, then connected to the University of Illinois, used access to a mainframe computer to type a digital version of the U.S. Declaration of Independence. His idea was that computers could be used to freely distribute texts to anyone with access to a networked machine.
+
+Project Gutenberg is important for this class because it shows how digitization, plain text, copyright, preservation, and access are connected. The project focuses especially on public domain texts, meaning works that are no longer under copyright or were never protected by copyright and can therefore be legally copied, shared, remixed, and redistributed.
+
+We will discuss copyright more extensively in the coming weeks, but for now it is important to note that copyright is a legal framework that gives creators exclusive rights to their works for a limited time. After that time expires, the work enters the public domain and can be freely used by anyone.
+
+![](https://upload.wikimedia.org/wikipedia/commons/9/97/Logo_PDD_2027.svg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original)
+
+You may sometimes hear people talk about [Public Domain Day](https://web.law.duke.edu/cspd/publicdomainday/){target="_blank"}, which happens every January 1 when new works enter the public domain in many countries. 
+
+This also makes Project Gutenberg a useful example of both the power and limits of cultural data. It gives us many texts that are easy to download and manipulate computationally, but those texts arrive through particular histories of selection, copyright, labor, proofreading, and formatting. In other words, even a simple `.txt` file has a social and institutional history.
+
+You can read more about this history in Project Gutenberg's [background and history](https://www.gutenberg.org/about/background/){target="_blank"} materials and its [FAQ](https://www.gutenberg.org/help/faq){target="_blank"}.
+
+Let's start with a plain text version of *Pride and Prejudice*.
 
 ![Pride and Prejudice](../../assets/images/pride_prejudice_gutenberg.png)
 
@@ -61,6 +91,8 @@ If you are using PowerShell and not WSL, the command looks slightly different be
 wget https://www.gutenberg.org/files/1342/1342-0.txt -OutFile pride-and-prejudice.txt
 ```
 
+For the rest of this lesson, I will show the macOS/WSL commands first. If you are using PowerShell, look for the PowerShell examples underneath. The concepts are the same, but some command names and syntax differ. In particular, `cat` usually works in PowerShell as an alias for `Get-Content`, but `wc` and `grep` do not usually work by default in normal PowerShell.
+
 ----
 
 Now that we have downloaded this file, we can use the command line to display some of the text:
@@ -70,6 +102,12 @@ cat pride-and-prejudice.txt
 ```
 
 `cat` stands for concatenate, and is a command line tool for displaying the contents of a file. We can see that this file contains the text of *Pride and Prejudice* by Jane Austen (though you'll likely only see the end of the text since it is so long, without scrolling for ages).
+
+In PowerShell, `cat` usually works because it is an alias for `Get-Content`. To be explicit, you can use `Get-Content`, which reads the contents of a file:
+
+```powershell
+Get-Content pride-and-prejudice.txt
+```
 
 We can start to interact with this file in a number of ways.
 
@@ -81,10 +119,22 @@ wc -w pride-and-prejudice.txt
 
 `wc` stands for word count, and the `-w` flag tells the terminal to count the number of words in the file. You'll often notice that commands have flags like this, which are additional instructions for the command.
 
+The `wc` command does not usually work by default in PowerShell. Instead, the word count command is a bit longer:
+
+```powershell
+(Get-Content pride-and-prejudice.txt | Out-String).Split().Count
+```
+
 We can also use the command `wc` to count the number of lines in a file with the `-l` flag. Let's try it out!
 
 ```sh
 wc -l pride-and-prejudice.txt
+```
+
+Since PowerShell does not usually include `wc`, you can count lines like this:
+
+```powershell
+(Get-Content pride-and-prejudice.txt).Count
 ```
 
 We should see that there are `14911` lines in this file.
@@ -95,11 +145,27 @@ We can also search for a specific word in a file using the command `grep`. Let's
 grep pride pride-and-prejudice.txt
 ```
 
+The `grep` command does not usually work by default in PowerShell. The closest equivalent is `Select-String`:
+
+```powershell
+Select-String "pride" pride-and-prejudice.txt
+```
+
 This should give us the following output:
 
 ![Pride and Prejudice](../../assets/images/grep_pride.png)
 
 How could we count the number of lines where the word "pride" appears in this file? We could use the command `wc -w` to count the number of words, but that would count all words, not just "pride." Instead, we can use the command `grep -c pride pride-and-prejudice.txt`.
+
+```sh
+grep -c pride pride-and-prejudice.txt
+```
+
+In PowerShell, we can count the number of matching lines like this:
+
+```powershell
+(Select-String "pride" pride-and-prejudice.txt).Count
+```
 
 We can see that "pride" appears on 43 lines in this file. This is not quite the same thing as counting every individual occurrence of the word, since a line could include the same word more than once. How many lines include the word "prejudice"?
 
@@ -155,7 +221,19 @@ This may seem like a lot of extra work, but the advantages of Markdown are numer
 
 Markdown was created by John Gruber with help from Aaron Swartz in 2004. The goal was to create a file format that was easy to read and write, could be converted into web documents, and could be used by anyone. You can read more about the history of Markdown, in Bednarski, Dawid. “The History of Markdown: A Prelude to the No-Code Movement.” *Taskade Blog*, March 25, 2022. [https://www.taskade.com/blog/markdown-history/](https://www.taskade.com/blog/markdown-history/){target="_blank"}.
 
-It's important to understand that Markdown has this history because many flavors of Markdown exist, and standardization of Markdown has been an ongoing project. For example, GitHub Flavored Markdown (GFM) is a flavor of Markdown that was created by GitHub in 2009. It is a superset of Markdown, meaning it adds additional features to Markdown. For example, GFM allows you to create tables in Markdown, which is not possible in regular Markdown. You can read more about GFM in “GitHub Flavored Markdown Spec.” GitHub, 2022. [https://github.github.com/gfm/](https://github.github.com/gfm/){target="_blank"}.
+### Aaron Swartz, Creative Commons, and Access
+
+![](https://tlinnovations.cikeys.com//wp-content/uploads/2017/07/551326f8b13b7baa41000047.png)
+
+Aaron Swartz matters to this history not only because of Markdown, but because he was part of a broader movement around open access, open standards, and the public web. As a teenager, Swartz helped with the technical infrastructure for [Creative Commons](https://creativecommons.org/history/){target="_blank"}, an organization founded in 2001 to give creators legal tools for sharing their work more flexibly than the default model of "all rights reserved" copyright. Creative Commons licenses do not eliminate copyright. Instead, they let creators specify how others may copy, share, adapt, or cite their work.
+
+This matters because many kinds of cultural and scholarly materials are not in the public domain. They may be owned by publishers, platforms, archives, estates, universities, or other rights holders. In higher education, students and researchers often encounter this through content vendors like [JSTOR](https://www.jstor.org/){target="_blank"}, which preserve and provide access to scholarly journals, books, and primary sources, often through institutional subscriptions and licensing agreements.
+
+Swartz's life and death are often discussed in relation to these questions of access. In 2011, he was arrested after downloading millions of academic articles from JSTOR through MIT's network. JSTOR later said it had reached a civil settlement with Swartz and did not want the matter to continue as a criminal case, but federal prosecutors pursued charges under computer crime law. Swartz died by suicide in January 2013 while the case was ongoing.
+
+This is one reason Project Gutenberg is such a useful contrast. Project Gutenberg works primarily with public domain texts, so its plain text files are legally shareable in ways that subscription databases usually are not. That does not make Project Gutenberg neutral or complete, but it does show how copyright status, licensing, institutional access, and file formats shape what kinds of culture become easy to download, preserve, and analyze.
+
+It's also important to understand that Markdown has this history because many flavors of Markdown exist, and standardization of Markdown has been an ongoing project. For example, GitHub Flavored Markdown (GFM) is a flavor of Markdown that was created by GitHub in 2009. It is a superset of Markdown, meaning it adds additional features to Markdown. For example, GFM allows you to create tables in Markdown, which is not possible in regular Markdown. You can read more about GFM in “GitHub Flavored Markdown Spec.” GitHub, 2022. [https://github.github.com/gfm/](https://github.github.com/gfm/){target="_blank"}.
 
 ![Markdown Flavors](../../assets/images/flavors_markdown.png)
 

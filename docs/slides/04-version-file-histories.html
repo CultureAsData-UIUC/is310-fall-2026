@@ -448,6 +448,29 @@
       }</style></aside>
 </div>
 </section>
+<section id="who-decides-what-counts-as-text" class="slide level2">
+<h2>Who Decides What Counts as Text?</h2>
+<p><a href="https://xkcd.com/927/" target="_blank"><img data-src="https://imgs.xkcd.com/comics/standards.png" height="360"></a></p>
+<p><em>Who has heard of the Unicode Consortium?</em></p>
+<aside class="notes">
+<p>Before getting too comfortable with the phrase “plain text,” I want to pause on the infrastructure behind it. This XKCD comic is funny because standards are supposed to solve incompatibility, but they also have histories, politics, and sometimes competition. Character encoding is one of the examples named in the comic.</p>
+<p>Computers do not automatically “know” what a letter, punctuation mark, emoji, accent mark, or symbol is. Those characters have to be represented through shared standards. One of the most important organizations responsible for those standards is the Unicode Consortium.</p>
+<p>The Unicode Consortium is a nonprofit organization founded in 1991 to develop and maintain the Unicode Standard. Before Unicode, many computer systems used different character encodings, which meant that text could break when it moved across languages, operating systems, or software platforms. A file created on one machine might display incorrectly on another because the two systems did not agree on which numbers represented which characters.</p>
+<p>Unicode tries to solve this problem by assigning characters standardized code points. In simplified terms, Unicode gives each character a stable identifier so that computers can exchange text more consistently across systems. This is why we can write not only English letters, but also accented characters, non-Latin scripts, mathematical symbols, and emoji in many modern digital environments.</p>
+<p>For our purposes, Unicode matters because it shows that even “plain text” depends on infrastructure, institutions, and decisions about what should be represented. Text may seem simple, but representing text as data requires standards about which characters count, how they are encoded, and how software should interpret them.</p>
+<p>[Sources] XKCD 927, “Standards”; Unicode Consortium, “The Unicode Standard.”</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="why-plain-text-matters" class="slide level2">
 <h2>Why Plain Text Matters</h2>
 <p>Plain text is:</p>
@@ -473,12 +496,57 @@
       }</style></aside>
 </div>
 </section>
-<section id="example-project-gutenberg" class="slide level2">
-<h2>Example: Project Gutenberg</h2>
+<section id="lets-experiment-with-plain-text-project-gutenberg" class="slide level2">
+<h2>Let’s experiment with Plain Text &amp; Project Gutenberg</h2>
 <p><img data-src="../assets/images/pride_prejudice_gutenberg.png" height="400"></p>
 <p><em><a href="https://www.gutenberg.org/ebooks/1342" target="_blank">Pride and Prejudice by Jane Austen</a></em></p>
 <aside class="notes">
-<p>Project Gutenberg is a website that hosts public domain books in plain text format. This is a great resource for working with text files.</p>
+<p>Project Gutenberg is a website that hosts public domain books in plain text format. This is a great resource for working with text files, but it is also useful because it makes visible how copyright status, volunteer labor, preservation, and plain text formats work together to shape what becomes computationally accessible.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="origins-of-project-gutenberg" class="slide level2">
+<h2>Origins of Project Gutenberg</h2>
+<p><a href="https://www.gutenberg.org/about/" target="_blank"><img data-src="https://www.gutenberg.org/files/60600/60600-h/images/0015-large.jpg"></a></p>
+<p>Founded by <strong>Michael Hart</strong> at UIUC in <strong>1971</strong></p>
+<aside class="notes">
+<p>Project Gutenberg is one of the oldest and most important digital text projects. It began in 1971 when Michael Hart, then connected to the University of Illinois, used access to a mainframe computer to type a digital version of the U.S. Declaration of Independence.</p>
+<p>His idea was that computers could be used to freely distribute texts to anyone with access to a networked machine. So when we download a plain text file from Project Gutenberg, we are not just using a convenient source of text. We are also entering a longer history of eBooks, digitization, volunteer labor, public access, and file formats.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="public-domain-and-access" class="slide level2">
+<h2>Public Domain and Access</h2>
+<p>Project Gutenberg focuses especially on <strong>public domain</strong> texts.</p>
+<p>That means many works can be legally:</p>
+<ul>
+<li>copied</li>
+<li>shared</li>
+<li>remixed</li>
+<li>redistributed</li>
+</ul>
+<p><em>How did Project Gutenberg initially start creating digital texts? What is Public Domain Day?</em></p>
+<aside class="notes">
+<p>Public domain texts are works that are no longer under copyright or were never protected by copyright. That legal status matters for computational work because it makes some cultural materials much easier to download, preserve, reuse, and analyze.</p>
+<p>Public Domain Day happens every January 1, when new works enter the public domain in many countries. We will return to these questions later, but for now I want students to see that the availability of a text as data is not simply a technical question. It is also shaped by law, institutions, labor, and preservation choices.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -558,15 +626,16 @@
 </section>
 <section id="displaying-file-contents" class="slide level2">
 <h2>Displaying File Contents</h2>
+<p><strong>macOS / WSL / Linux</strong></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="fu">cat</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
-<p><code>cat</code> = <strong>concatenate</strong></p>
-<ul>
-<li>Displays the contents of a file</li>
-<li>For long files, you’ll only see the end without scrolling</li>
-</ul>
+<p><strong>PowerShell</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a></a><span class="fu">Get-Content</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><code>cat</code> usually works in PowerShell as an alias for <code>Get-Content</code>.</p>
 <aside class="notes">
-<p>The cat command stands for concatenate, and is a command line tool for displaying the contents of a file. For very long files like Pride and Prejudice, you’ll likely only see the end of the text without scrolling for ages.</p>
+<p>The cat command stands for concatenate, and is a command line tool for displaying the contents of a file. In PowerShell, cat usually works because it is an alias for Get-Content, but I want students to know the explicit PowerShell command too. For very long files like Pride and Prejudice, they’ll likely only see the end of the text without scrolling for ages.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -582,15 +651,13 @@
 </section>
 <section id="counting-words" class="slide level2">
 <h2>Counting Words</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="fu">wc</span> <span class="at">-w</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>macOS / WSL / Linux</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="fu">wc</span> <span class="at">-w</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
-<ul>
-<li><code>wc</code> = <strong>word count</strong></li>
-<li><code>-w</code> flag = count words</li>
-<li>Try it! How many words in Pride and Prejudice?</li>
-</ul>
+<p><strong>PowerShell</strong></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb7-1"><a></a><span class="op">(</span><span class="fu">Get-Content</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span> <span class="op">|</span> <span class="fu">Out-String</span><span class="op">).</span><span class="fu">Split</span><span class="op">().</span><span class="fu">Count</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
-<p>The wc command stands for word count. You’ll often notice that commands have flags like this, which are additional instructions for the command.</p>
+<p>The wc command stands for word count. The -w flag tells the terminal to count words. This command does not usually work by default in normal PowerShell, so students using PowerShell need the Get-Content version. It is more verbose, but conceptually it does the same thing: read the file, treat it as a string, split it into words, and count the pieces.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -606,14 +673,16 @@
 </section>
 <section id="counting-lines" class="slide level2">
 <h2>Counting Lines</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="fu">wc</span> <span class="at">-l</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>macOS / WSL / Linux</strong></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="fu">wc</span> <span class="at">-l</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
-<ul>
-<li><code>-l</code> flag = count lines</li>
-<li>Pride and Prejudice has <strong>14,911</strong> lines!</li>
-</ul>
+<p><strong>PowerShell</strong></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb9-1"><a></a><span class="op">(</span><span class="fu">Get-Content</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span><span class="op">).</span><span class="fu">Count</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Pride and Prejudice has <strong>14,911</strong> lines.</p>
 <aside class="notes">
-<p>The -l flag tells the terminal to count the number of lines instead of words. This is useful for understanding the size of a text file.</p>
+<p>The -l flag tells the terminal to count the number of lines instead of words. Since PowerShell does not usually include wc, students can use Get-Content and Count to count the lines in the file.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -629,16 +698,13 @@
 </section>
 <section id="searching-for-text" class="slide level2">
 <h2>Searching for Text</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="fu">grep</span> pride pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>macOS / WSL / Linux</strong></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="fu">grep</span> pride pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../assets/images/grep_pride.png" height="300"></p>
-<figcaption>grep output</figcaption>
-</figure>
-</div>
+<p><strong>PowerShell</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb11-1"><a></a><span class="fu">Select-String</span> <span class="st">"pride"</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
-<p>The grep command allows us to search for specific words or patterns in a file. It returns all lines containing the search term.</p>
+<p>The grep command allows us to search for specific words or patterns in a file. It returns all lines containing the search term. The grep command does not usually work by default in normal PowerShell, so students using PowerShell should use Select-String instead.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -652,17 +718,44 @@
       }</style></aside>
 </div>
 </section>
+<section id="search-output" class="slide level2">
+<h2>Search Output</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/images/grep_pride.png" height="300"></p>
+<figcaption>grep output</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>This screenshot shows what the matching lines look like when we search for “pride” in the Project Gutenberg text. The output is not a polished visualization. It is a rough but useful way of asking a text file a quick question from the command line.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="counting-matching-lines" class="slide level2">
 <h2>Counting Matching Lines</h2>
 <p>How many lines include “pride”?</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="fu">grep</span> <span class="at">-c</span> pride pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>macOS / WSL / Linux</strong></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="fu">grep</span> <span class="at">-c</span> pride pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p><strong>PowerShell</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb13-1"><a></a><span class="op">(</span><span class="fu">Select-String</span> <span class="st">"pride"</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span><span class="op">).</span><span class="fu">Count</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="fragment">
 <p>Result: <strong>43 lines</strong></p>
 </div>
 <div class="fragment">
 <p><strong>Your turn:</strong> How many lines include “prejudice”?</p>
 <aside class="notes">
-<p>The <code>-c</code> flag with grep counts the number of matching lines instead of displaying them. This is useful for quick text analysis, but it is not quite the same thing as counting every individual occurrence of a word, since a line could include the same word more than once.</p>
+<p>The <code>-c</code> flag with grep counts the number of matching lines instead of displaying them. In PowerShell, we can use Select-String and then count the matches. This is useful for quick text analysis, but it is not quite the same thing as counting every individual occurrence of a word, since a line could include the same word more than once.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -744,12 +837,12 @@
 </section>
 <section id="creating-a-markdown-file" class="slide level2">
 <h2>Creating a Markdown File</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">touch</span> is310-culture-as-data.md</span>
-<span id="cb9-2"><a></a><span class="co"># OR (PowerShell)</span></span>
-<span id="cb9-3"><a></a><span class="ex">New-Item</span> <span class="at">-ItemType</span> File <span class="at">-Name</span> is310-culture-as-data.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="fu">touch</span> is310-culture-as-data.md</span>
+<span id="cb14-2"><a></a><span class="co"># OR (PowerShell)</span></span>
+<span id="cb14-3"><a></a><span class="ex">New-Item</span> <span class="at">-ItemType</span> File <span class="at">-Name</span> is310-culture-as-data.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>Open in VS Code and add:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a></a>Culture as Data asks how cultural materials, practices, and communities become structured, interpreted, and transformed through data.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a></a>Culture as Data asks how cultural materials, practices, and communities become structured, interpreted, and transformed through data.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>We can create a Markdown file using the touch command and adding .md to the end of the file name.</p>
 <style type="text/css">
@@ -768,7 +861,7 @@
 <section id="adding-bold-text" class="slide level2">
 <h2>Adding Bold Text</h2>
 <p>Put two asterisks on either side:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a></a>**Culture as Data** asks how cultural materials become structured data.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a></a>**Culture as Data** asks how cultural materials become structured data.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>Renders as: <strong>Culture as Data</strong> asks how cultural materials become structured data.</p>
 <aside class="notes">
@@ -789,7 +882,7 @@
 <section id="adding-italics" class="slide level2">
 <h2>Adding Italics</h2>
 <p>Put one asterisk on either side:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a></a>**Culture as Data** asks how cultural materials become *structured data*.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a></a>**Culture as Data** asks how cultural materials become *structured data*.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>Renders as: <strong>Culture as Data</strong> asks how cultural materials become <em>structured data</em>.</p>
 <aside class="notes">
@@ -810,7 +903,7 @@
 <section id="adding-headings" class="slide level2">
 <h2>Adding Headings</h2>
 <p>Put a hashtag in front:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a></a><span class="fu"># Welcome to Culture as Data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a></a><span class="fu"># Welcome to Culture as Data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>Different levels:</p>
 <ul>
@@ -947,11 +1040,79 @@
           display:block!important;
       }</style></aside>
 </section>
+<section id="swartz-creative-commons-access" class="slide level2">
+<h2>Swartz, Creative Commons, Access</h2>
+<p>Aaron Swartz was connected to several open web projects.</p>
+<div class="fragment">
+<ul>
+<li>Markdown</li>
+<li>RSS</li>
+<li>Reddit</li>
+<li>Creative Commons</li>
+<li>Open access activism</li>
+</ul>
+<aside class="notes">
+<p>Aaron Swartz matters to this history not only because of Markdown, but because he was part of a broader movement around open access, open standards, and the public web. As a teenager, Swartz helped with the technical infrastructure for Creative Commons.</p>
+<p>Creative Commons was founded in 2001 to give creators legal tools for sharing their work more flexibly than the default model of “all rights reserved” copyright. Creative Commons licenses do not eliminate copyright. Instead, they let creators specify how others may copy, share, adapt, or cite their work.</p>
+<p>This gives us a useful bridge from public domain materials to openly licensed materials. Project Gutenberg mostly works with public domain texts. Creative Commons helps creators share work before copyright expires.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="public-domain-vs-licensed-access" class="slide level2">
+<h2>Public Domain vs Licensed Access</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>What changes?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Project Gutenberg</td>
+<td>Public domain texts, downloadable plain text</td>
+</tr>
+<tr class="even">
+<td>Creative Commons</td>
+<td>Creators keep copyright but allow some reuse</td>
+</tr>
+<tr class="odd">
+<td>JSTOR</td>
+<td>Access shaped by vendors, libraries, and licenses</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>This is where I want to introduce content vendors like JSTOR. JSTOR preserves and provides access to scholarly journals, books, and primary sources, but access is often mediated through institutional subscriptions and licensing agreements.</p>
+<p>Swartz’s life and death are often discussed in relation to these questions of access. In 2011, he was arrested after downloading millions of academic articles from JSTOR through MIT’s network. JSTOR later said it had reached a civil settlement with Swartz and did not want the matter to continue as a criminal case, but federal prosecutors pursued charges under computer crime law. Swartz died by suicide in January 2013 while the case was ongoing.</p>
+<p>This is one reason Project Gutenberg is such a useful contrast. Its public-domain plain text files are legally shareable in ways that subscription databases usually are not. That does not make Project Gutenberg neutral or complete, but it does show how copyright status, licensing, institutional access, and file formats shape what kinds of culture become easy to download, preserve, and analyze.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="markdown-flavors" class="slide level2">
 <h2>Markdown Flavors</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="https://d11a6trkgmumsb.cloudfront.net/original/3X/c/b/cb7374a606a66c5b8e489afed76d93ed49dc7836.png" height="350"></p>
+<p><img data-src="../assets/images/flavors_markdown.png" height="350"></p>
 <figcaption>Different Markdown implementations</figcaption>
 </figure>
 </div>
@@ -1159,7 +1320,7 @@
 <p>Dotfiles are hidden by default on Mac/Linux, but not always in PowerShell.</p>
 <div class="fragment">
 <p>If your maze depends on hidden files, include:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb14-1"><a></a>hide-dotfiles<span class="op">.</span><span class="fu">ps1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb19-1"><a></a>hide-dotfiles<span class="op">.</span><span class="fu">ps1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Different operating systems handle hidden files differently. If students want their hidden files and folders to behave as hidden on Windows, they should include a PowerShell script in the maze folder named hide-dotfiles.ps1 and tell PowerShell users to run it after unzipping the maze.</p>
 <style type="text/css">
@@ -1178,10 +1339,10 @@
 <section id="zipping-your-maze" class="slide level2">
 <h2>Zipping Your Maze</h2>
 <p><strong>Mac/Linux/WSL:</strong></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="fu">zip</span> <span class="at">-r</span> path/to/your/zip/file path/to/your/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a></a><span class="fu">zip</span> <span class="at">-r</span> path/to/your/zip/file path/to/your/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p><strong>PowerShell:</strong></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb16-1"><a></a>Compress-Archive <span class="op">-</span>Path <span class="st">"path\to\your\directory"</span> <span class="op">-</span>DestinationPath <span class="st">"path\to\your\zip\file"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb21-1"><a></a>Compress-Archive <span class="op">-</span>Path <span class="st">"path\to\your\directory"</span> <span class="op">-</span>DestinationPath <span class="st">"path\to\your\zip\file"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Once you have created your maze, you should zip the folder that contains your maze. Be sure to replace these dummy file paths with your actual desired ones.</p>
 <style type="text/css">
@@ -1250,10 +1411,10 @@
 <section id="unzipping" class="slide level2">
 <h2>Unzipping</h2>
 <p><strong>Mac/Linux/WSL:</strong></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="fu">unzip</span> path/to/your/zip/file <span class="at">-d</span> path/to/your/desired/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a></a><span class="fu">unzip</span> path/to/your/zip/file <span class="at">-d</span> path/to/your/desired/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p><strong>PowerShell:</strong></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb18-1"><a></a>Expand-Archive <span class="op">-</span>Path <span class="st">"path\to\your\zip\file"</span> <span class="op">-</span>DestinationPath <span class="st">"path\to\your\desired\directory"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb23-1"><a></a>Expand-Archive <span class="op">-</span>Path <span class="st">"path\to\your\zip\file"</span> <span class="op">-</span>DestinationPath <span class="st">"path\to\your\desired\directory"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>The -d flag or -DestinationPath just tells the terminal where to unzip the file. If you’re already in the correct spot, you can just use unzip or Expand-Archive with just the path.</p>
 <style type="text/css">
