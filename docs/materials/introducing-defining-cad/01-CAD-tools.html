@@ -890,43 +890,51 @@ REMINDER: You may use the AI tool of your choice OR NO TOOL AT ALL
 <section id="windows-installation-somewhat-optional" class="level4">
 <h4 class="anchored" data-anchor-id="windows-installation-somewhat-optional">Windows Installation (Somewhat Optional)</h4>
 <p>If you have a previous version of Python installed on your Windows machine, you are welcome to use that rather than following the instructions below. I would highly recommend the setup described below if you have long term plans to use Python, but if you are not sure, then you can use your previous version of Python. However, even though this installation choice is optional, <strong>you must be able to run Python.</strong> So please reach out to the instructor if you are having trouble.</p>
-<p>We’ll be following the instructions for using Python for web development on Windows <a href="https://docs.microsoft.com/en-us/windows/python/web-frameworks" target="_blank">https://docs.microsoft.com/en-us/windows/python/web-frameworks</a> and <a href="https://learn.microsoft.com/en-us/windows/python/beginners" target="_blank">https://learn.microsoft.com/en-us/windows/python/beginners</a>.</p>
+<p>We’ll be following Microsoft’s current instructions for <a href="https://learn.microsoft.com/en-us/windows/wsl/install" target="_blank">installing WSL</a>, <a href="https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode" target="_blank">using VS Code with WSL</a>, and <a href="https://learn.microsoft.com/en-us/windows/python/beginners" target="_blank">getting started with Python on Windows</a>.</p>
 <section id="installing-wsl" class="level5">
 <h5 class="anchored" data-anchor-id="installing-wsl">Installing WSL</h5>
-<p>The first step is to install the Windows Subsystem for Linux following these steps <a href="https://docs.microsoft.com/en-us/windows/python/web-frameworks#install-windows-subsystem-for-linux" target="_blank">https://docs.microsoft.com/en-us/windows/python/web-frameworks#install-windows-subsystem-for-linux</a>.</p>
+<p>The first step is to install the Windows Subsystem for Linux (WSL), which lets you run a Linux terminal on your Windows computer. For this course, this usually means installing Ubuntu through WSL and then using the Ubuntu terminal inside VS Code.</p>
+<p>These instructions assume you are using Windows 10 version 2004 or higher (Build 19041 or higher) or Windows 11. If you are using an older version of Windows, Microsoft’s <a href="https://learn.microsoft.com/en-us/windows/wsl/install-manual" target="_blank">manual WSL installation instructions</a> may be necessary.</p>
 <p>In either PowerShell or Command Prompt, run the following command as <strong>an administrator</strong>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wsl</span> <span class="at">--install</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You will then be prompted to restart your computer. Once restarted, you will need to open PowerShell or Command Prompt again as an administrator and run the following command:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wsl</span> <span class="at">--set-default-version</span> 2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>According to the instructions: &gt; This command will enable the required optional components, download the latest Linux kernel, set WSL 2 as your default, and install a Linux distribution for you (Ubuntu by default, see below to change this).</p>
-<blockquote class="blockquote">
-<p>The first time you launch a newly installed Linux distribution, a console window will open and you’ll be asked to wait for files to de-compress and be stored on your machine. All future launches should take less than a second.</p>
-</blockquote>
-<p>After this you’ll need to setup your WSL environment following these instructions <a href="https://docs.microsoft.com/en-us/windows/wsl/setup/environment" target="_blank">https://docs.microsoft.com/en-us/windows/wsl/setup/environment</a>.</p>
-<p>Specifically you’ll need to set up your Linux username and password <a href="https://docs.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-username-and-password" target="_blank">https://docs.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-username-and-password</a>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command should enable the required Windows features, install WSL, and install Ubuntu by default. You may then be prompted to restart your computer.</p>
+<p>If you already have WSL installed, this command may show the WSL help text instead of installing Ubuntu. If that happens, you can list available Linux distributions with:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>list <span class="op">--</span>online</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then install Ubuntu directly with:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install <span class="op">-</span>d Ubuntu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>New Linux distributions installed with <code>wsl --install</code> should use WSL 2 by default. To check what version you are running, open PowerShell and type:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>list <span class="op">--</span>verbose</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If your Ubuntu distribution is listed as version <code>1</code>, set WSL 2 as the default for future installs:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>set-default-version <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or convert Ubuntu itself to WSL 2:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>set-version Ubuntu <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The first time you launch Ubuntu, a console window will open and ask you to create a Linux username and password. This username and password are for your WSL/Ubuntu environment; they do not need to match your Windows account, Illinois account, or GitHub account.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://docs.microsoft.com/en-us/windows/wsl/media/ubuntuinstall.png" class="img-fluid figure-img"></p>
 <figcaption>WSL Setup</figcaption>
 </figure>
 </div>
-<p>Once setup, I would recommend first checking which version of WSL you are running and upgrading to WSL 2 if you are not already using it <a href="https://docs.microsoft.com/en-us/windows/wsl/install#check-which-version-of-wsl-you-are-running" target="_blank">https://docs.microsoft.com/en-us/windows/wsl/install#check-which-version-of-wsl-you-are-running</a>. And then I would recommend updating your packages for Ubuntu <a href="https://docs.microsoft.com/en-us/windows/wsl/setup/environment#update-and-upgrade-packages" target="_blank">https://docs.microsoft.com/en-us/windows/wsl/setup/environment#update-and-upgrade-packages</a>.</p>
+<p>Once Ubuntu is set up, update its packages. Open your Ubuntu/WSL terminal, not PowerShell, and run:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These are Linux commands, so they work in Ubuntu/WSL. They will not work in regular PowerShell.</p>
 <section id="customizing-windows-terminal-and-vs-code" class="level6">
 <h6 class="anchored" data-anchor-id="customizing-windows-terminal-and-vs-code">Customizing Windows Terminal and VS Code</h6>
-<p>Now that you have WSL installed, you can customize your Windows Terminal. I recommend using the <a href="https://docs.microsoft.com/en-us/windows/wsl/setup/environment#set-up-windows-terminal" target="_blank">https://docs.microsoft.com/en-us/windows/wsl/setup/environment#set-up-windows-terminal</a> guide to customize your terminal.</p>
-<p>You should also familiarize yourself with working with files in WSL <a href="https://docs.microsoft.com/en-us/windows/wsl/setup/environment#file-storage" target="_blank">https://docs.microsoft.com/en-us/windows/wsl/setup/environment#file-storage</a>.</p>
-<p>Now you can get VS Code working with WSL by following these installation instructions for working with the Remote WSL Extension <a href="https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode#install-vs-code-and-the-remote-wsl-extension" target="_blank">https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode#install-vs-code-and-the-remote-wsl-extension</a>.</p>
-<p>According to the docs: &gt; In order to install the Remote-WSL extension, you will need the 1.35 May release version or later of VS Code. We do not recommend using WSL in VS Code without the Remote-WSL extension as you will lose support for auto-complete, debugging, linting, etc. Fun fact: this WSL extension is installed in $HOME/.vscode/extensions (enter the command ls $HOME.vscode&nbsp;in PowerShell).</p>
-<p>Now you can open Windows Terminal or PowerShell and type:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>And that should start your VS Code Server</p>
+<p>Now that you have WSL installed, you can customize your Windows Terminal. I recommend using Microsoft’s <a href="https://learn.microsoft.com/en-us/windows/wsl/setup/environment" target="_blank">WSL setup and best practices</a> guide to customize your terminal and understand the basics of working between Windows and WSL.</p>
+<p>You should also familiarize yourself with <a href="https://learn.microsoft.com/en-us/windows/wsl/setup/environment#file-storage" target="_blank">working with files in WSL</a>. As a general rule, if you are using WSL for this course, keep your coding projects inside your Ubuntu home folder rather than scattering them across Windows folders.</p>
+<p>Now you can get VS Code working with WSL by following Microsoft’s instructions for <a href="https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode#install-vs-code-and-the-wsl-extension" target="_blank">using VS Code with WSL</a>. Install VS Code on Windows, install the WSL extension, and make sure VS Code has been added to your PATH.</p>
+<p>Microsoft recommends using the WSL extension because it lets VS Code run your code, Git, terminal, and extensions inside your Linux environment while still giving you the familiar VS Code interface on Windows.</p>
+<p>To open VS Code from WSL, open your Ubuntu terminal, navigate to your project folder, and type:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That should open VS Code connected to WSL. You should see a WSL indicator in the bottom-left corner of VS Code.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://docs.microsoft.com/en-us/windows/wsl/media/wsl-open-vs-code.gif" class="img-fluid figure-img"></p>
 <figcaption>VS Code Server</figcaption>
 </figure>
 </div>
-<p>OR you can open VS Code and follow these instructions: &gt; You can also access more VS Code Remote options by using the shortcut: CTRL+SHIFT+P in VS Code to bring up the command palette. If you then type Remote-WSL you will see a list of the VS Code Remote options available, allowing you to reopen the folder in a remote session, specify which distribution you want to open in, and more.</p>
+<p>OR you can open VS Code and follow these instructions: &gt; You can also access more VS Code WSL options by using the shortcut <code>CTRL+SHIFT+P</code> in VS Code to bring up the command palette. If you then type <code>WSL</code>, you will see options for opening or reopening a folder in WSL.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://docs.microsoft.com/en-us/windows/wsl/media/vscode-remote-command-palette.png" class="img-fluid figure-img"></p>
@@ -948,7 +956,7 @@ REMINDER: You may use the AI tool of your choice OR NO TOOL AT ALL
 <section id="terminals-and-oh-my-zsh-optional" class="level2">
 <h2 class="anchored" data-anchor-id="terminals-and-oh-my-zsh-optional">Terminals and Oh-My-Zsh (Optional)</h2>
 <p>Currently in VS Code, when you open a Terminal, you’ll see somewhat gnarly looking text like this:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">zoe@ZoeLeBlanc</span> MINGW64 ~/Documents/GitHub/is310-culture-as-data-2026 <span class="er">(</span><span class="ex">main</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">zoe@ZoeLeBlanc</span> MINGW64 ~/Documents/GitHub/is310-culture-as-data-2026 <span class="er">(</span><span class="ex">main</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This is because VS Code is using the default terminal, whether for Mac or Windows.</p>
 <p>We will discuss more in-depth what terminals are in our Command Line session, but for now, you should know that a terminal is a bit like an app for working with files, but instead of clicking on icons, you write commands. You can read more about terminals here <a href="https://en.wikipedia.org/wiki/Command-line_interface" target="_blank">https://en.wikipedia.org/wiki/Command-line_interface</a>.</p>
 <p>Installing a separate terminal is completely optional since VS Code has built-in functionality, but in case you would like to try it out, I recommend iTerm2 <a href="https://iterm2.com/" target="_blank">https://iterm2.com/</a> for Mac and Windows Terminal <a href="https://aka.ms/terminal" target="_blank">https://aka.ms/terminal</a> for Windows. You should be able to use both these links to download the appropriate version for your operating system, but <strong>please let the instructor know if you are having problems</strong>.</p>
@@ -956,16 +964,16 @@ REMINDER: You may use the AI tool of your choice OR NO TOOL AT ALL
 <section id="windows-installation" class="level3">
 <h3 class="anchored" data-anchor-id="windows-installation">Windows Installation</h3>
 <p><a href="https://en.wikipedia.org/wiki/Z_shell" target="_blank">Zsh is a unix shell</a> and should be already installed on your WSL system. If not though you can install with the following:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install zsh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install zsh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then you install oh-my-zsh with the following:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sh</span> <span class="at">-c</span> <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="va">)</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sh</span> <span class="at">-c</span> <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="va">)</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can find more in depth instructions here <a href="https://dev.to/contactsunny/installing-zsh-and-oh-my-zsh-on-windows-11-with-wsl2-1p5i" target="_blank">https://dev.to/contactsunny/installing-zsh-and-oh-my-zsh-on-windows-11-with-wsl2-1p5i</a></p>
 </section>
 <section id="mac-installation-1" class="level3">
 <h3 class="anchored" data-anchor-id="mac-installation-1">Mac Installation</h3>
 <p><a href="https://en.wikipedia.org/wiki/Z_shell" target="_blank">Zsh is a unix shell</a> and should be already installed on your Mac.</p>
 <p>Install oh-my-zsh with the following:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sh</span> <span class="at">-c</span> <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="va">)</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sh</span> <span class="at">-c</span> <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="va">)</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can find more in depth instructions here <a href="https://dev.to/hannahgooding/how-i-customise-my-terminal-with-oh-my-zsh-macos-427i" target="_blank">https://dev.to/hannahgooding/how-i-customise-my-terminal-with-oh-my-zsh-macos-427i</a></p>
 </section>
 <section id="powershell-alternative" class="level3">
@@ -993,7 +1001,7 @@ REMINDER: You may use the AI tool of your choice OR NO TOOL AT ALL
 <section id="mac-installation-2" class="level4">
 <h4 class="anchored" data-anchor-id="mac-installation-2">Mac Installation</h4>
 <p>Git should already be installed on your Mac, but you can check by opening up the VS Code terminal and typing:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you do not have git installed, this will prompt you to install it. You can also install it by following these instructions <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank">https://git-scm.com/book/en/v2/Getting-Started-Installing-Git</a>.</p>
 </section>
 <section id="windows-installation-1" class="level4">
@@ -1004,20 +1012,20 @@ REMINDER: You may use the AI tool of your choice OR NO TOOL AT ALL
 <p>Use this option if you installed Windows Subsystem for Linux and plan to work in the Ubuntu terminal.</p>
 <p>Open the VS Code terminal and make sure that WSL is selected as your terminal. You can do this by clicking on the <code>Terminal</code> menu option and then selecting <code>Select Default Profile</code>. You should see a list of options, and you should select <code>Ubuntu</code> or <code>Ubuntu-20.04</code> (or whatever version of Ubuntu you have installed).</p>
 <p>Now you first need to update the package list with the following command:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then you can install git with the following command:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can check that git is installed by typing:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="option-2-powershell" class="level5">
 <h5 class="anchored" data-anchor-id="option-2-powershell">Option 2: PowerShell</h5>
 <p>Use this option if you are working directly in Windows PowerShell rather than WSL/Ubuntu.</p>
 <p>First, check whether Git is already available by opening PowerShell and typing:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>git <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>git <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If PowerShell does not recognize <code>git</code>, install <strong>Git for Windows</strong> from <a href="https://git-scm.com/install/windows" target="_blank">https://git-scm.com/install/windows</a>. During installation, the default options are fine for this course. The important part is that Git should be available from PowerShell after installation.</p>
 <p>After installing, close and reopen PowerShell or VS Code. Then check again:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>git <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>git <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1037,13 +1045,15 @@ PowerShell vs.&nbsp;WSL
 <section id="git-configuration" class="level3">
 <h3 class="anchored" data-anchor-id="git-configuration">Git Configuration</h3>
 <p>Once you have git installed, you will need to configure it. You can do this by opening up the VS Code terminal and typing:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your.email@example.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your.email@example.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These Git configuration commands work the same in macOS/Linux/WSL and PowerShell.</p>
 <p><strong>Replace “Your Name” with your exact GitHub Username handle</strong>. So for example, in my case it would be <code>git config --global user.name "ZoeLeBlanc"</code>. Not “Zoe LeBlanc” or “Zoe LeBlanc (she/her)” or any other variation. It must be your exact GitHub username.</p>
 <p><strong>Replace “your.email@example.com” with the email address you used to sign up for GitHub</strong>. So in my case it would be <code>git config --global user.email "zleblanc@illinois.edu"</code>.</p>
 <p>Be sure to get both of these exactly right, as they are used to connect your GitHub account and git activity.</p>
 <p>You can also check your git configuration by typing:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command also works in PowerShell.</p>
 <p><strong>CONGRATS YOU’VE SETUP YOUR COMPUTER 🎉</strong></p>
 
 

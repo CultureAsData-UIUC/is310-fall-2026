@@ -385,61 +385,87 @@ While your version number might be different, you should see `Python 3` in the o
 
 If you have a previous version of Python installed on your Windows machine, you are welcome to use that rather than following the instructions below. I would highly recommend the setup described below if you have long term plans to use Python, but if you are not sure, then you can use your previous version of Python. However, even though this installation choice is optional, **you must be able to run Python.** So please reach out to the instructor if you are having trouble.
 
-We'll be following the instructions for using Python for web development on Windows [https://docs.microsoft.com/en-us/windows/python/web-frameworks](https://docs.microsoft.com/en-us/windows/python/web-frameworks){target="_blank"} and [https://learn.microsoft.com/en-us/windows/python/beginners](https://learn.microsoft.com/en-us/windows/python/beginners){target="_blank"}.
+We'll be following Microsoft's current instructions for [installing WSL](https://learn.microsoft.com/en-us/windows/wsl/install){target="_blank"}, [using VS Code with WSL](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode){target="_blank"}, and [getting started with Python on Windows](https://learn.microsoft.com/en-us/windows/python/beginners){target="_blank"}.
 
 ##### Installing WSL
 
-The first step is to install the Windows Subsystem for Linux following these steps [https://docs.microsoft.com/en-us/windows/python/web-frameworks#install-windows-subsystem-for-linux](https://docs.microsoft.com/en-us/windows/python/web-frameworks#install-windows-subsystem-for-linux){target="_blank"}.
+The first step is to install the Windows Subsystem for Linux (WSL), which lets you run a Linux terminal on your Windows computer. For this course, this usually means installing Ubuntu through WSL and then using the Ubuntu terminal inside VS Code.
+
+These instructions assume you are using Windows 10 version 2004 or higher (Build 19041 or higher) or Windows 11. If you are using an older version of Windows, Microsoft's [manual WSL installation instructions](https://learn.microsoft.com/en-us/windows/wsl/install-manual){target="_blank"} may be necessary.
 
 In either PowerShell or Command Prompt, run the following command as **an administrator**:
 
-```bash
+```powershell
 wsl --install
 ```
 
-You will then be prompted to restart your computer. Once restarted, you will need to open PowerShell or Command Prompt again as an administrator and run the following command:
+This command should enable the required Windows features, install WSL, and install Ubuntu by default. You may then be prompted to restart your computer.
 
-```bash
+If you already have WSL installed, this command may show the WSL help text instead of installing Ubuntu. If that happens, you can list available Linux distributions with:
+
+```powershell
+wsl --list --online
+```
+
+Then install Ubuntu directly with:
+
+```powershell
+wsl --install -d Ubuntu
+```
+
+New Linux distributions installed with `wsl --install` should use WSL 2 by default. To check what version you are running, open PowerShell and type:
+
+```powershell
+wsl --list --verbose
+```
+
+If your Ubuntu distribution is listed as version `1`, set WSL 2 as the default for future installs:
+
+```powershell
 wsl --set-default-version 2
 ```
 
-According to the instructions:
-> This command will enable the required optional components, download the latest Linux kernel, set WSL 2 as your default, and install a Linux distribution for you (Ubuntu by default, see below to change this).
+Or convert Ubuntu itself to WSL 2:
 
-> The first time you launch a newly installed Linux distribution, a console window will open and you'll be asked to wait for files to de-compress and be stored on your machine. All future launches should take less than a second.
+```powershell
+wsl --set-version Ubuntu 2
+```
 
-
-After this you'll need to setup your WSL environment following these instructions [https://docs.microsoft.com/en-us/windows/wsl/setup/environment](https://docs.microsoft.com/en-us/windows/wsl/setup/environment){target="_blank"}.
-
-Specifically you'll need to set up your Linux username and password [https://docs.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-username-and-password](https://docs.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-username-and-password){target="_blank"}.
+The first time you launch Ubuntu, a console window will open and ask you to create a Linux username and password. This username and password are for your WSL/Ubuntu environment; they do not need to match your Windows account, Illinois account, or GitHub account.
 
 ![WSL Setup](https://docs.microsoft.com/en-us/windows/wsl/media/ubuntuinstall.png)
 
-Once setup, I would recommend first checking which version of WSL you are running and upgrading to WSL 2 if you are not already using it [https://docs.microsoft.com/en-us/windows/wsl/install#check-which-version-of-wsl-you-are-running](https://docs.microsoft.com/en-us/windows/wsl/install#check-which-version-of-wsl-you-are-running){target="_blank"}. And then I would recommend updating your packages for Ubuntu [https://docs.microsoft.com/en-us/windows/wsl/setup/environment#update-and-upgrade-packages](https://docs.microsoft.com/en-us/windows/wsl/setup/environment#update-and-upgrade-packages){target="_blank"}.
+Once Ubuntu is set up, update its packages. Open your Ubuntu/WSL terminal, not PowerShell, and run:
+
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+These are Linux commands, so they work in Ubuntu/WSL. They will not work in regular PowerShell.
 
 ###### Customizing Windows Terminal and VS Code
 
-Now that you have WSL installed, you can customize your Windows Terminal. I recommend using the [https://docs.microsoft.com/en-us/windows/wsl/setup/environment#set-up-windows-terminal](https://docs.microsoft.com/en-us/windows/wsl/setup/environment#set-up-windows-terminal){target="_blank"} guide to customize your terminal.
+Now that you have WSL installed, you can customize your Windows Terminal. I recommend using Microsoft's [WSL setup and best practices](https://learn.microsoft.com/en-us/windows/wsl/setup/environment){target="_blank"} guide to customize your terminal and understand the basics of working between Windows and WSL.
 
-You should also familiarize yourself with working with files in WSL [https://docs.microsoft.com/en-us/windows/wsl/setup/environment#file-storage](https://docs.microsoft.com/en-us/windows/wsl/setup/environment#file-storage){target="_blank"}.
+You should also familiarize yourself with [working with files in WSL](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#file-storage){target="_blank"}. As a general rule, if you are using WSL for this course, keep your coding projects inside your Ubuntu home folder rather than scattering them across Windows folders.
 
-Now you can get VS Code working with WSL by following these installation instructions for working with the Remote WSL Extension [https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode#install-vs-code-and-the-remote-wsl-extension](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode#install-vs-code-and-the-remote-wsl-extension){target="_blank"}.
+Now you can get VS Code working with WSL by following Microsoft's instructions for [using VS Code with WSL](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode#install-vs-code-and-the-wsl-extension){target="_blank"}. Install VS Code on Windows, install the WSL extension, and make sure VS Code has been added to your PATH.
 
-According to the docs:
-> In order to install the Remote-WSL extension, you will need the 1.35 May release version or later of VS Code. We do not recommend using WSL in VS Code without the Remote-WSL extension as you will lose support for auto-complete, debugging, linting, etc. Fun fact: this WSL extension is installed in $HOME/.vscode/extensions (enter the command ls $HOME\.vscode\extensions\ in PowerShell).
+Microsoft recommends using the WSL extension because it lets VS Code run your code, Git, terminal, and extensions inside your Linux environment while still giving you the familiar VS Code interface on Windows.
 
-Now you can open Windows Terminal or PowerShell and type:
+To open VS Code from WSL, open your Ubuntu terminal, navigate to your project folder, and type:
 
-```bash
+```sh
 code .
 ```
 
-And that should start your VS Code Server
+That should open VS Code connected to WSL. You should see a WSL indicator in the bottom-left corner of VS Code.
 
 ![VS Code Server](https://docs.microsoft.com/en-us/windows/wsl/media/wsl-open-vs-code.gif)
 
 OR you can open VS Code and follow these instructions:
-> You can also access more VS Code Remote options by using the shortcut: CTRL+SHIFT+P in VS Code to bring up the command palette. If you then type Remote-WSL you will see a list of the VS Code Remote options available, allowing you to reopen the folder in a remote session, specify which distribution you want to open in, and more.
+> You can also access more VS Code WSL options by using the shortcut `CTRL+SHIFT+P` in VS Code to bring up the command palette. If you then type `WSL`, you will see options for opening or reopening a folder in WSL.
 
 ![VS Code Remote Options](https://docs.microsoft.com/en-us/windows/wsl/media/vscode-remote-command-palette.png)
 
@@ -578,10 +604,12 @@ The command `sudo apt install git` only works in WSL/Ubuntu. It will not work in
 
 Once you have git installed, you will need to configure it. You can do this by opening up the VS Code terminal and typing:
 
-```bash
+```sh
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 ```
+
+These Git configuration commands work the same in macOS/Linux/WSL and PowerShell.
 
 **Replace "Your Name" with your exact GitHub Username handle**. So for example, in my case it would be `git config --global user.name "ZoeLeBlanc"`. Not "Zoe LeBlanc" or "Zoe LeBlanc (she/her)" or any other variation. It must be your exact GitHub username.
 
@@ -591,9 +619,11 @@ Be sure to get both of these exactly right, as they are used to connect your Git
 
 You can also check your git configuration by typing:
 
-```bash
+```sh
 git config --list
 ```
+
+This command also works in PowerShell.
 
 **CONGRATS YOU'VE SETUP YOUR COMPUTER 🎉**
 

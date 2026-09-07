@@ -7,39 +7,40 @@ toc: true
 
 Though Command Line might sounds a bit intimidating, it is very useful and like we read about in the *Verge* article can be enormously useful for when you work with many files and folders. It is also a great way to get a sense of how your computer works and how to navigate it. Finally, it's incredibly useful for coding, as we'll see throughout this semester.
 
-If you are using the WSL (Windows Subsystem for Linux), a Mac, or a Linux, you can should use the MacOS cheatsheet. If you are using a Windows PowerShell, you should use the Windows cheatsheet. Remember, you can use all of these via VS Code's terminal, but you should always check to see which operating system you are using.
+If you are using WSL (Windows Subsystem for Linux), macOS, or Linux, you should use the macOS/Linux cheatsheet. If you are using Windows PowerShell, you should use the Windows PowerShell cheatsheet. Remember, you can use either kind of terminal inside VS Code, so always check which terminal profile you are using.
 
-## Command Line Cheatsheet for Windows
+## Command Line Cheatsheet for Windows PowerShell
 
 | Command | Description |
 | ------------- | ------------- |
-| `cd` | Print full working path |
-| `dir` or `gci`| List contents of a directory  |
-| `chdir [folder]` or `sl` | Change into a directory |
-| `sl ..` | Go one directory up |
+| `pwd` or `Get-Location` | Print full working path |
+| `.` | Current folder |
+| `dir`, `ls`, or `Get-ChildItem`| List contents of a directory |
+| `cd [folder]`, `chdir [folder]`, or `Set-Location [folder]` | Change into a directory |
+| `cd ..` | Go one directory up |
 | `cls` | Clear the view |
-| `open [file]` | Opens a file |
-| `open .` | Opens the directory |
-| `ni [file name]`| Creates a new file |
-| `del [file name]`| Remove a single file |
-| `ni -ItemType dir [directory name]` | Make a new directory |
-| `copy [file] [new file/new directory]` | Copy file to file or new directory |
-| `move [file] [new file/new directory]` | Move file into new file or directory |
+| `Invoke-Item [file]` or `ii [file]` | Opens a file |
+| `Invoke-Item .` or `ii .` | Opens the directory |
+| `New-Item -ItemType File -Name [file name]` or `ni [file name]`| Creates a new file |
+| `Remove-Item [file name]` or `del [file name]`| Remove a single file |
+| `mkdir [directory name]` or `New-Item -ItemType Directory -Name [directory name]` | Make a new directory |
+| `Copy-Item [file] [new file/new directory]` or `copy [file] [new file/new directory]` | Copy file to file or new directory |
+| `Move-Item [file] [new file/new directory]` or `move [file] [new file/new directory]` | Move file into new file or directory |
 | `rmdir [directory]` | Remove directory ( only operates on empty directories ) |
-| `rmdir /s [directory name]` | Force remove a directory and all its contents |
-| `help` | Prints all possible commands |
+| `Remove-Item -Recurse -Force [directory name]` | Force remove a directory and all its contents |
+| `Get-Help [command]` or `help [command]` | Prints help for a command |
 | `Get-ChildItem -Path [directory] -Recurse -Force -File` | List all files (including hidden ones) in a directory and subdirectories. All the flags are optional. You would use `-Path` if you wanted to specify a different directory than the one you're in. You would use `-Recurse` if you wanted to list all files in subdirectories. You would use `-Force` if you wanted to list hidden files. You would use `-File` if you wanted to list only files and not directories. |
 
 ### Advanced Commands
 
 | Command | Description |
 | ------------- | ------------- |
-| `sudo [command]` | Run command with the security privileges of the superuser (Super User DO) |
-| `cp *.js`| Use wildcards to get all files of a certain type when moving or copying|
-| `edit [file]` | Opens file in Terminal editor |
+| `Start-Process powershell -Verb runAs` | Open a new PowerShell window as administrator |
+| `Copy-Item *.js [directory]`| Use wildcards to get all files of a certain type when moving or copying|
+| `notepad [file]` | Opens file in Notepad |
 | `exit` | Exit |
 
-## Command Line Cheatsheet for MacOS
+## Command Line Cheatsheet for macOS/Linux/WSL
 
 | Command | Description |
 | ------------- | ------------- |

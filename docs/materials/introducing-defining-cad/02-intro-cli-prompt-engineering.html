@@ -502,6 +502,7 @@ Note
 <p>First, we need to open our terminal, which we can do through VS Code. To do this, click on the Terminal tab in the top menu bar and select New Terminal. This will open a new terminal window at the bottom of your screen.</p>
 <p>Then we need to figure out the correct syntax or wording to use the <code>mkdir</code> command. We can see from Melanie’s example that she types <code>mkdir</code> and then <code>Intro-CA-Notes</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> Intro-CA-Notes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command works in macOS/Linux/WSL and PowerShell.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../assets/images/demo_terminal.png" class="img-fluid figure-img"></p>
@@ -570,12 +571,13 @@ Try it: Terminal commands and Copilot prompts
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>So looking at the cheatsheet, two promising commands include <code>ls</code> and <code>pwd</code>. We can try those out, and also try out a prompt for GitHub Copilot or another chatbot.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">How</span> can I check if my directory was created in my terminal<span class="pp">?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Should</span> I use the command ls or pwd to check if my directory was created<span class="pp">?</span> And what is the difference between these two commands<span class="pp">?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">How</span> can I create a directory named is310-culture-as-data in my terminal<span class="pp">?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="text"><code>How can I check if my directory was created in my terminal?</code></pre>
+<pre class="text"><code>Should I use the command ls or pwd to check if my directory was created? And what is the difference between these two commands?</code></pre>
+<pre class="text"><code>How can I create a directory named is310-culture-as-data in my terminal?</code></pre>
 <p>With the help of the cheatsheet and GitHub Copilot, we should see that the command <code>ls</code> lists the contents of a directory, and <code>pwd</code> prints the full working path. So we can use these commands to check if our directory was created.</p>
 <p>And then we can use the command <code>mkdir</code> to create a directory named <code>is310-culture-as-data</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> is310-culture-as-data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command also works in PowerShell.</p>
 </div>
 </div>
 </div>
@@ -603,18 +605,32 @@ Try it: Terminal commands and Copilot prompts
 <p>A core distinction with how I used this final command is the fact that I used a tilde <code>~</code> symbol. This symbol is a <strong>relative file path</strong>, meaning it is relative to my current directory. So if I am in the <code>Documents</code> folder, <code>cd ~</code> will take me to my home directory. You can also use <code>cd ..</code> to go up one directory, and <code>cd ../..</code> to go up two directories, and so on.</p>
 <hr>
 <p>Beyond creating directories (which again is just a fancy term for file folders), we often use the command line to create files. To do this, we use the command <code>touch</code>. Let’s try it out!</p>
+<p><em>macOS/Linux/WSL</em></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> is310-culture-as-data.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>PowerShell</em></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">New-Item</span> <span class="op">-</span>ItemType File <span class="op">-</span>Name is310-culture-as-data<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now we should see both our folder and our file in the terminal. But ideally, we would have the file in the folder. So how do we do that?</p>
 <p>We can use the command <code>mv</code> to move the file into the folder. Let’s try it out!</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> is310-culture-as-data.txt is310-culture-as-data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>macOS/Linux/WSL</em></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> is310-culture-as-data.txt is310-culture-as-data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>PowerShell</em></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Move-Item</span> is310-culture-as-data<span class="op">.</span><span class="fu">txt</span> is310-culture-as-data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now we should just see our folder if we do <code>ls</code> in the terminal. But how do we check if our file is in the folder?</p>
 <p>We can again use the command <code>cd</code> to change into the folder, and then use <code>ls</code> to list the contents of the folder. Let’s try it out!</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> is310-culture-as-data</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Finally, let me try leaving my directory and deleting it. To do this, I can use the command <code>cd ..</code> to go up one directory, and then <code>rmdir</code> to remove the directory. Let’s try it out!</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rmdir</span> is310-culture-as-data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now if I do <code>ls</code> I should see that my folder is gone. Success!!</p>
+<p><em>macOS/Linux/WSL</em></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> is310-culture-as-data</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>PowerShell</em></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> is310-culture-as-data</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-ChildItem</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, let me try leaving my directory and deleting it. Since our folder now contains a file, we need to use a recursive remove command.</p>
+<p><em>macOS/Linux/WSL</em></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-r</span> is310-culture-as-data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>PowerShell</em></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="op">..</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Remove-Item</span> <span class="op">-</span>Recurse is310-culture-as-data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now if I do <code>ls</code> or <code>Get-ChildItem</code> I should see that my folder is gone. Success!!</p>
 </section>
 <section id="in-class-exercise" class="level3">
 <h3 class="anchored" data-anchor-id="in-class-exercise">In Class Exercise</h3>

@@ -175,13 +175,21 @@ While `.txt` files are useful, in digital humanities we often use a file format 
 
 Let's try creating a Markdown file in our folder. We can do this by using the `touch` command and adding `.md` to the end of the file name.
 
+*macOS/Linux/WSL*
+
 ```sh
 touch is310-culture-as-data.md
 ```
 
+*PowerShell*
+
+```powershell
+New-Item -ItemType File -Name is310-culture-as-data.md
+```
+
 Now we can open this file in VS Code and add some text to it.
 
-```sh
+```text
 Culture as Data asks how cultural materials, practices, and communities become structured, interpreted, and transformed through data.
 ```
 
@@ -282,6 +290,12 @@ You also need to include a `README.md` file in your maze folder that provides an
 
 Once you have created your maze, you should zip the folder that contains your maze. If you do not know how to zip a file, you can usually right click on the file and select "Compress" or "Zip". If you are using the command line, you can use the command `zip -r path/to/your/zip/file path/to/your/directory` to zip the file. Be sure to replace these dummy file paths with your actual desired ones (or ask AI for help!).
 
+On PowerShell, you can use `Compress-Archive`:
+
+```powershell
+Compress-Archive -Path "path\to\your\directory" -DestinationPath "path\to\your\zip\file.zip"
+```
+
 Be sure to not zip the `README.md` file, as we will need to read this file to solve the maze. Once you have zipped your maze, you should upload it to your `is310-coding-assignments` repository and post a link in our GitHub discussion [https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/2](https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/2){target="_blank"}.
 
 If you need inspiration for your maze, take a look at this one I created, which you can download as a [zip file](../../assets/files/cli_exercises/zipped_gutenberg_maze.zip){:download target="_blank"} or via our [GitHub repository](https://github.com/CultureAsData-UIUC/is310-fall-2026/blob/main/assets/files/cli_exercises/zipped_gutenberg_maze.zip){target="_blank"} (you can also try solving it if you like!).
@@ -312,8 +326,8 @@ Then update your instructions to tell Windows' PowerShell users to first run thi
 PowerShell can be finicky with permissions so if you are still getting issues you might try running PowerShell as an administrator or running this command:
 
 ```powershell
-
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass .\hide-dotfiles.ps1.
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\hide-dotfiles.ps1
 ```
 :::
 
@@ -331,8 +345,16 @@ Once you have cloned the repository, you should use the command line to enter th
 
 To enter the cloned repository, you can do this by using the `cd` command to navigate to the maze folder. You can read the `README.md` file to get any relevant instructions for solving the maze. To print out the contents of the file, you can use the `cat` command.
 
+*macOS/Linux/WSL*
+
 ```sh
 cat README.md
+```
+
+*PowerShell*
+
+```powershell
+Get-Content README.md
 ```
 
 Once you are in the maze folder and have read the instructions, you should unzip the maze.
@@ -347,7 +369,7 @@ The `-d` flag is just telling the terminal where to unzip the file. So if you ar
 
 If you are using PowerShell, you will need to use the following command:
 
-```sh
+```powershell
 Expand-Archive -Path "path\to\your\zip\file" -DestinationPath "path\to\your\desired\directory"
 ```
 

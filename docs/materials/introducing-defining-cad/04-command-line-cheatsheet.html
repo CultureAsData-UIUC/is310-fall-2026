@@ -366,11 +366,11 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#why-use-the-command-line" id="toc-why-use-the-command-line" class="nav-link active" data-scroll-target="#why-use-the-command-line">Why use the Command Line?</a></li>
-  <li><a href="#command-line-cheatsheet-for-windows" id="toc-command-line-cheatsheet-for-windows" class="nav-link" data-scroll-target="#command-line-cheatsheet-for-windows">Command Line Cheatsheet for Windows</a>
+  <li><a href="#command-line-cheatsheet-for-windows-powershell" id="toc-command-line-cheatsheet-for-windows-powershell" class="nav-link" data-scroll-target="#command-line-cheatsheet-for-windows-powershell">Command Line Cheatsheet for Windows PowerShell</a>
   <ul class="collapse">
   <li><a href="#advanced-commands" id="toc-advanced-commands" class="nav-link" data-scroll-target="#advanced-commands">Advanced Commands</a></li>
   </ul></li>
-  <li><a href="#command-line-cheatsheet-for-macos" id="toc-command-line-cheatsheet-for-macos" class="nav-link" data-scroll-target="#command-line-cheatsheet-for-macos">Command Line Cheatsheet for MacOS</a>
+  <li><a href="#command-line-cheatsheet-for-macoslinuxwsl" id="toc-command-line-cheatsheet-for-macoslinuxwsl" class="nav-link" data-scroll-target="#command-line-cheatsheet-for-macoslinuxwsl">Command Line Cheatsheet for macOS/Linux/WSL</a>
   <ul class="collapse">
   <li><a href="#advanced-commands-1" id="toc-advanced-commands-1" class="nav-link" data-scroll-target="#advanced-commands-1">Advanced Commands</a></li>
   </ul></li>
@@ -411,10 +411,10 @@ ul.task-list li input[type="checkbox"] {
 <section id="why-use-the-command-line" class="level2">
 <h2 class="anchored" data-anchor-id="why-use-the-command-line">Why use the Command Line?</h2>
 <p>Though Command Line might sounds a bit intimidating, it is very useful and like we read about in the <em>Verge</em> article can be enormously useful for when you work with many files and folders. It is also a great way to get a sense of how your computer works and how to navigate it. Finally, it’s incredibly useful for coding, as we’ll see throughout this semester.</p>
-<p>If you are using the WSL (Windows Subsystem for Linux), a Mac, or a Linux, you can should use the MacOS cheatsheet. If you are using a Windows PowerShell, you should use the Windows cheatsheet. Remember, you can use all of these via VS Code’s terminal, but you should always check to see which operating system you are using.</p>
+<p>If you are using WSL (Windows Subsystem for Linux), macOS, or Linux, you should use the macOS/Linux cheatsheet. If you are using Windows PowerShell, you should use the Windows PowerShell cheatsheet. Remember, you can use either kind of terminal inside VS Code, so always check which terminal profile you are using.</p>
 </section>
-<section id="command-line-cheatsheet-for-windows" class="level2">
-<h2 class="anchored" data-anchor-id="command-line-cheatsheet-for-windows">Command Line Cheatsheet for Windows</h2>
+<section id="command-line-cheatsheet-for-windows-powershell" class="level2">
+<h2 class="anchored" data-anchor-id="command-line-cheatsheet-for-windows-powershell">Command Line Cheatsheet for Windows PowerShell</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -428,66 +428,70 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>cd</code></td>
+<td><code>pwd</code> or <code>Get-Location</code></td>
 <td>Print full working path</td>
 </tr>
 <tr class="even">
-<td><code>dir</code> or <code>gci</code></td>
+<td><code>.</code></td>
+<td>Current folder</td>
+</tr>
+<tr class="odd">
+<td><code>dir</code>, <code>ls</code>, or <code>Get-ChildItem</code></td>
 <td>List contents of a directory</td>
 </tr>
-<tr class="odd">
-<td><code>chdir [folder]</code> or <code>sl</code></td>
+<tr class="even">
+<td><code>cd [folder]</code>, <code>chdir [folder]</code>, or <code>Set-Location [folder]</code></td>
 <td>Change into a directory</td>
 </tr>
-<tr class="even">
-<td><code>sl ..</code></td>
+<tr class="odd">
+<td><code>cd ..</code></td>
 <td>Go one directory up</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>cls</code></td>
 <td>Clear the view</td>
 </tr>
-<tr class="even">
-<td><code>open [file]</code></td>
+<tr class="odd">
+<td><code>Invoke-Item [file]</code> or <code>ii [file]</code></td>
 <td>Opens a file</td>
 </tr>
-<tr class="odd">
-<td><code>open .</code></td>
+<tr class="even">
+<td><code>Invoke-Item .</code> or <code>ii .</code></td>
 <td>Opens the directory</td>
 </tr>
-<tr class="even">
-<td><code>ni [file name]</code></td>
+<tr class="odd">
+<td><code>New-Item -ItemType File -Name [file name]</code> or <code>ni [file name]</code></td>
 <td>Creates a new file</td>
 </tr>
-<tr class="odd">
-<td><code>del [file name]</code></td>
+<tr class="even">
+<td><code>Remove-Item [file name]</code> or <code>del [file name]</code></td>
 <td>Remove a single file</td>
 </tr>
-<tr class="even">
-<td><code>ni -ItemType dir [directory name]</code></td>
+<tr class="odd">
+<td><code>mkdir [directory name]</code> or <code>New-Item -ItemType Directory -Name [directory name]</code></td>
 <td>Make a new directory</td>
 </tr>
-<tr class="odd">
-<td><code>copy [file] [new file/new directory]</code></td>
+<tr class="even">
+<td><code>Copy-Item [file] [new file/new directory]</code> or <code>copy [file] [new file/new directory]</code></td>
 <td>Copy file to file or new directory</td>
 </tr>
-<tr class="even">
-<td><code>move [file] [new file/new directory]</code></td>
+<tr class="odd">
+<td><code>Move-Item [file] [new file/new directory]</code> or <code>move [file] [new file/new directory]</code></td>
 <td>Move file into new file or directory</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>rmdir [directory]</code></td>
 <td>Remove directory ( only operates on empty directories )</td>
 </tr>
-<tr class="even">
-<td><code>rmdir /s [directory name]</code></td>
+<tr class="odd">
+<td><code>Remove-Item -Recurse -Force [directory name]</code></td>
 <td>Force remove a directory and all its contents</td>
 </tr>
-<tr class="odd">
-<td><code>help</code></td>
-<td>Prints all possible commands</td>
-</tr>
 <tr class="even">
+<td><code>Get-Help [command]</code> or <code>help [command]</code></td>
+<td>Prints help for a command</td>
+</tr>
+<tr class="odd">
 <td><code>Get-ChildItem -Path [directory] -Recurse -Force -File</code></td>
 <td>List all files (including hidden ones) in a directory and subdirectories. All the flags are optional. You would use <code>-Path</code> if you wanted to specify a different directory than the one you’re in. You would use <code>-Recurse</code> if you wanted to list all files in subdirectories. You would use <code>-Force</code> if you wanted to list hidden files. You would use <code>-File</code> if you wanted to list only files and not directories.</td>
 </tr>
@@ -508,16 +512,16 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>sudo [command]</code></td>
-<td>Run command with the security privileges of the superuser (Super User DO)</td>
+<td><code>Start-Process powershell -Verb runAs</code></td>
+<td>Open a new PowerShell window as administrator</td>
 </tr>
 <tr class="even">
-<td><code>cp *.js</code></td>
+<td><code>Copy-Item *.js [directory]</code></td>
 <td>Use wildcards to get all files of a certain type when moving or copying</td>
 </tr>
 <tr class="odd">
-<td><code>edit [file]</code></td>
-<td>Opens file in Terminal editor</td>
+<td><code>notepad [file]</code></td>
+<td>Opens file in Notepad</td>
 </tr>
 <tr class="even">
 <td><code>exit</code></td>
@@ -527,8 +531,8 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </section>
 </section>
-<section id="command-line-cheatsheet-for-macos" class="level2">
-<h2 class="anchored" data-anchor-id="command-line-cheatsheet-for-macos">Command Line Cheatsheet for MacOS</h2>
+<section id="command-line-cheatsheet-for-macoslinuxwsl" class="level2">
+<h2 class="anchored" data-anchor-id="command-line-cheatsheet-for-macoslinuxwsl">Command Line Cheatsheet for macOS/Linux/WSL</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">

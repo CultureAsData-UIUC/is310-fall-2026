@@ -61,13 +61,16 @@ Since we have already installed git, we can start using it in our projects. But 
 
 ```sh
 mkdir is310-first-repo
+cd is310-first-repo
 ```
 
-Now let's navigate into this folder using the `cd` command and then create a new file using the `touch` command (or if you're on PowerShell `New-Item -ItemType File -Path . -Name [file-name]`). Let's call this file `first_file.txt`.
+The `mkdir` and `cd` commands work in macOS/Linux/WSL and PowerShell.
+
+Now let's create a new file called `first_file.txt`. In the previous lesson, we used `touch` and `New-Item` to create empty files. Here, we can create the file and add text at the same time.
 
 Next, we can add some text to this file using the following commands. Let's add the following text to the file:
 
-*Unix/Linux*
+*macOS/Linux/WSL*
 
 ```sh
 echo "This is my first file" > first_file.txt
@@ -96,6 +99,18 @@ Initialized empty Git repository in /Users/YOU/is310-first-repo/.git/
 ```
 
 Now if we type `ls -a` or `Get-ChildItem -Force` we will see a new folder called `.git`. This is the folder that contains all of the information about our git repository. The `.git` folder is hidden by default, so we need to use the `-a` or `-Force` flag to see it. This means that if you try looking at your folder either in a file explorer or in the terminal with just `ls`, or even in the VS Code Explorer, you won't see the `.git` folder.
+
+*macOS/Linux/WSL*
+
+```sh
+ls -a
+```
+
+*PowerShell*
+
+```powershell
+Get-ChildItem -Force
+```
 
 With our git repository initialized, we can now start tracking changes to our file, but this is **not automatic**. Instead, we have to tell git which files to pay attention to and track, and also when to take a snapshot of our changes.
 
@@ -346,7 +361,7 @@ eval "$(ssh-agent -s)"
 
 For *PowerShell*, make sure you are running PowerShell as an administrator and then run the following command:
 
-```sh
+```powershell
 Start-Service ssh-agent
 ```
 
@@ -414,10 +429,16 @@ If you are running *macOS*, we can use the `pbcopy` command and then the name of
 pbcopy < ~/.ssh/id_ed25519.pub
 ```
 
-If you are running *WSL/PowerShell*, we can use the `clip` command and then the name of the file we want to copy.
+If you are running *WSL*, we can use `clip.exe`.
 
 ```sh
 cat ~/.ssh/id_ed25519.pub | clip.exe
+```
+
+If you are running *PowerShell*, we can use `Get-Content` and `Set-Clipboard`.
+
+```powershell
+Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub | Set-Clipboard
 ```
 
 And now we can add our SSH key to our GitHub account. To do this, we need to go to our GitHub account and click on the `Settings` tab. Then we need to click on the `SSH and GPG keys` tab. Finally, we need to click on the `New SSH key` button and then paste our SSH key into the `Key` box. We can also add a title for our SSH key. Let's call it `My SSH Key`.
@@ -566,7 +587,7 @@ Detail what AI tool, if any, do you plan to use this semester.
 ```
 
 ::: {.callout-important}
-Please also include a short `ai-chat-log.md` file that contains any prompts or conversation if you are using AI to help you complete this assignment. If you are not using AI, you do not need to include this file.
+Please also include a short `ai-chat-log.md` file. For this first assignment, you can use it to briefly note whether and how you used AI. Going forward, if you use an AI tool for a coding assignment, this file should include the relevant prompts you wrote and the responses you received. If you did not use AI, write a short note saying so.
 :::
 
 Once you have created everything locally, you will need to add, commit, and push your changes to your GitHub repository. You can use the following commands to do this:
@@ -576,6 +597,8 @@ git add .
 git commit -m "Init IS310 Homework"
 git push origin main
 ```
+
+These Git commands work the same in macOS/Linux/WSL and PowerShell.
 
 However, remember to connect your **local repository with your GitHub repository** (hint: `git remote add origin` if your GitHub repository is empty OR `git remote set-url origin` if you have files in your GitHub). If you get any errors, you can always ask for help in the Slack channel or reach out to the instructors directly.
 

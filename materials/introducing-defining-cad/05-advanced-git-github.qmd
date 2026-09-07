@@ -129,8 +129,16 @@ When we first created a repository on GitHub, it asked us if we wanted to add a 
 
 Rather than having GitHub create it, we can do it locally:
 
+*macOS/Linux/WSL*
+
 ```sh
 touch .gitignore
+```
+
+*PowerShell*
+
+```powershell
+New-Item -ItemType File -Name .gitignore
 ```
 
 Even though we didn't add a file extension, `.gitignore` is a plain text file. But this is a special type of file that lets you tell git to ignore certain files and folders in your **local** repository. While `.gitignore` is technically a hidden file (notice it starts with a period), it should show up in your VS Code file explorer or other IDEs.
@@ -169,8 +177,16 @@ Beyond files you don't want to share (whether that's work in progress or private
 
 Don't panic since this happens to everyone at some point! If you forget to add a file to the `.gitignore` file and you've already pushed it up to GitHub, you can still add it to the `.gitignore` file and then remove it from the repository. To do this, you can use the `git rm` command. For example, if you wanted to remove the `test.txt` file from the repository, you would type:
 
+*macOS/Linux/WSL*
+
 ```sh
-rm -rf test.txt
+rm test.txt
+```
+
+*PowerShell*
+
+```powershell
+Remove-Item test.txt
 ```
 
 Then you would remove it from the git log by typing:
@@ -181,13 +197,21 @@ git rm --cached test.txt
 
 Then you want to add it to the `.gitignore` file and save it. If you haven't created one yet, you can do so by typing:
 
+*macOS/Linux/WSL*
+
 ```sh
 touch .gitignore
 ```
 
+*PowerShell*
+
+```powershell
+New-Item -ItemType File -Name .gitignore
+```
+
 Then you would add the file to the `.gitignore` file by typing:
 
-```sh
+```text
 test.txt
 ```
 

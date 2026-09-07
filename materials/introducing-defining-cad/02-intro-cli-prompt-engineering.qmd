@@ -62,6 +62,8 @@ Then we need to figure out the correct syntax or wording to use the `mkdir` comm
 mkdir Intro-CA-Notes
 ```
 
+This command works in macOS/Linux/WSL and PowerShell.
+
 ![Demo example](../../assets/images/demo_terminal.png)
 
 If we press enter, it should seem like this works but how do we know for sure?
@@ -121,15 +123,15 @@ So returning to our original question, hopefully by now we have discovered some 
 
 So looking at the cheatsheet, two promising commands include `ls` and `pwd`. We can try those out, and also try out a prompt for GitHub Copilot or another chatbot.
 
-```sh
+```text
 How can I check if my directory was created in my terminal?
 ```
 
-```sh
+```text
 Should I use the command ls or pwd to check if my directory was created? And what is the difference between these two commands?
 ```
 
-```sh
+```text
 How can I create a directory named is310-culture-as-data in my terminal?
 ```
 
@@ -140,6 +142,8 @@ And then we can use the command `mkdir` to create a directory named `is310-cultu
 ```sh
 mkdir is310-culture-as-data
 ```
+
+This command also works in PowerShell.
 
 :::
 
@@ -170,35 +174,69 @@ A core distinction with how I used this final command is the fact that I used a 
 ----
 Beyond creating directories (which again is just a fancy term for file folders), we often use the command line to create files. To do this, we use the command `touch`. Let's try it out!
 
+*macOS/Linux/WSL*
+
 ```sh
 touch is310-culture-as-data.txt
+```
+
+*PowerShell*
+
+```powershell
+New-Item -ItemType File -Name is310-culture-as-data.txt
 ```
 
 Now we should see both our folder and our file in the terminal. But ideally, we would have the file in the folder. So how do we do that?
 
 We can use the command `mv` to move the file into the folder. Let's try it out!
 
+*macOS/Linux/WSL*
+
 ```sh
 mv is310-culture-as-data.txt is310-culture-as-data
+```
+
+*PowerShell*
+
+```powershell
+Move-Item is310-culture-as-data.txt is310-culture-as-data
 ```
 
 Now we should just see our folder if we do `ls` in the terminal. But how do we check if our file is in the folder?
 
 We can again use the command `cd` to change into the folder, and then use `ls` to list the contents of the folder. Let's try it out!
 
+*macOS/Linux/WSL*
+
 ```sh
 cd is310-culture-as-data
 ls
 ```
 
-Finally, let me try leaving my directory and deleting it. To do this, I can use the command `cd ..` to go up one directory, and then `rmdir` to remove the directory. Let's try it out!
+*PowerShell*
+
+```powershell
+cd is310-culture-as-data
+Get-ChildItem
+```
+
+Finally, let me try leaving my directory and deleting it. Since our folder now contains a file, we need to use a recursive remove command.
+
+*macOS/Linux/WSL*
 
 ```sh
 cd ..
-rmdir is310-culture-as-data
+rm -r is310-culture-as-data
 ```
 
-Now if I do `ls` I should see that my folder is gone. Success!!
+*PowerShell*
+
+```powershell
+cd ..
+Remove-Item -Recurse is310-culture-as-data
+```
+
+Now if I do `ls` or `Get-ChildItem` I should see that my folder is gone. Success!!
 
 ### In Class Exercise
 
