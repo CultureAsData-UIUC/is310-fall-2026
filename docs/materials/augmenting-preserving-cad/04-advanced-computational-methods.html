@@ -520,27 +520,27 @@ Dataset Available on Canvas
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{<span class="st">'index'</span>: <span class="st">'entity_type'</span>, <span class="dv">0</span>: <span class="st">'total_count'</span>})</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>totals[<span class="st">'entity_type'</span>] <span class="op">=</span> totals[<span class="st">'entity_type'</span>].<span class="bu">str</span>.replace(<span class="st">'_count'</span>, <span class="st">''</span>).<span class="bu">str</span>.upper()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="99b9d9bf" class="cell" data-execution_count="1">
+<div id="c798b599" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 
 <style>
-  #altair-viz-ce8bcac736734db9a469ad5bc5df0dc6.vega-embed {
+  #altair-viz-02f287d7ff5c49618abbad0c17ec8451.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-ce8bcac736734db9a469ad5bc5df0dc6.vega-embed details,
-  #altair-viz-ce8bcac736734db9a469ad5bc5df0dc6.vega-embed details summary {
+  #altair-viz-02f287d7ff5c49618abbad0c17ec8451.vega-embed details,
+  #altair-viz-02f287d7ff5c49618abbad0c17ec8451.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-ce8bcac736734db9a469ad5bc5df0dc6"></div>
+<div id="altair-viz-02f287d7ff5c49618abbad0c17ec8451"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-ce8bcac736734db9a469ad5bc5df0dc6") {
-      outputDiv = document.getElementById("altair-viz-ce8bcac736734db9a469ad5bc5df0dc6");
+    if (outputDiv.id !== "altair-viz-02f287d7ff5c49618abbad0c17ec8451") {
+      outputDiv = document.getElementById("altair-viz-02f287d7ff5c49618abbad0c17ec8451");
     }
 
     const paths = {
@@ -612,7 +612,7 @@ Dataset Available on Canvas
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: (x <span class="op">-</span> x.<span class="bu">min</span>()) <span class="op">/</span> (x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice here though that I am normalizing the counts within each entity type, not across the whole dataset. This is because <code>PERSON</code> counts are on a completely different scale than <code>EVENT</code> counts, and I want to be able to compare genres within each entity type without one dominating the visualization.</p>
-<div id="29d9f396" class="cell" data-execution_count="2">
+<div id="f21b0a10" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_entity_means.csv'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>stacked_bar <span class="op">=</span> alt.Chart(genre_means).mark_bar().encode(</span>
@@ -634,23 +634,23 @@ Dataset Available on Canvas
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-a9eac176c2e54650811eb2956bd9b023.vega-embed {
+  #altair-viz-903c08913b954420a989611fe2643fcd.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-a9eac176c2e54650811eb2956bd9b023.vega-embed details,
-  #altair-viz-a9eac176c2e54650811eb2956bd9b023.vega-embed details summary {
+  #altair-viz-903c08913b954420a989611fe2643fcd.vega-embed details,
+  #altair-viz-903c08913b954420a989611fe2643fcd.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-a9eac176c2e54650811eb2956bd9b023"></div>
+<div id="altair-viz-903c08913b954420a989611fe2643fcd"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-a9eac176c2e54650811eb2956bd9b023") {
-      outputDiv = document.getElementById("altair-viz-a9eac176c2e54650811eb2956bd9b023");
+    if (outputDiv.id !== "altair-viz-903c08913b954420a989611fe2643fcd") {
+      outputDiv = document.getElementById("altair-viz-903c08913b954420a989611fe2643fcd");
     }
 
     const paths = {
@@ -703,7 +703,7 @@ Dataset Available on Canvas
 </div>
 </div>
 <p>This graph gives us a much better sense of how different genres use different kinds of entities. But it is still tricky to see the relationship. A heatmap would be a much better option.</p>
-<div id="2b73aa0e" class="cell" data-execution_count="3">
+<div id="387ae777" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>heatmap <span class="op">=</span> alt.Chart(genre_means).mark_rect().encode(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'entity_type:N'</span>, title<span class="op">=</span><span class="st">'Entity Type'</span>),</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">'genre:N'</span>, title<span class="op">=</span><span class="st">'Genre'</span>, sort<span class="op">=</span><span class="st">'-x'</span>),</span>
@@ -726,23 +726,23 @@ Dataset Available on Canvas
 <div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-e91ec650dc364748aa6d0084750b1df7.vega-embed {
+  #altair-viz-430e81f2dd3846dcaeae8c4bb17ad618.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-e91ec650dc364748aa6d0084750b1df7.vega-embed details,
-  #altair-viz-e91ec650dc364748aa6d0084750b1df7.vega-embed details summary {
+  #altair-viz-430e81f2dd3846dcaeae8c4bb17ad618.vega-embed details,
+  #altair-viz-430e81f2dd3846dcaeae8c4bb17ad618.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-e91ec650dc364748aa6d0084750b1df7"></div>
+<div id="altair-viz-430e81f2dd3846dcaeae8c4bb17ad618"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-e91ec650dc364748aa6d0084750b1df7") {
-      outputDiv = document.getElementById("altair-viz-e91ec650dc364748aa6d0084750b1df7");
+    if (outputDiv.id !== "altair-viz-430e81f2dd3846dcaeae8c4bb17ad618") {
+      outputDiv = document.getElementById("altair-viz-430e81f2dd3846dcaeae8c4bb17ad618");
     }
 
     const paths = {
@@ -1058,7 +1058,7 @@ Note
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.DataFrame(fingerprint_rows)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Which gives us the following genre vocabulary fingerprints:</p>
-<div id="6ec23b03" class="cell" data-execution_count="4">
+<div id="74b28276" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint.csv'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>alt.Chart(fingerprint_df).mark_bar().encode(</span>
@@ -1071,23 +1071,23 @@ Note
 <div class="cell-output cell-output-display" data-execution_count="4">
 
 <style>
-  #altair-viz-efdb6e7b156a4f639459ef67386eca17.vega-embed {
+  #altair-viz-a5a8d4c1012a405fb728a5627f898e4c.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-efdb6e7b156a4f639459ef67386eca17.vega-embed details,
-  #altair-viz-efdb6e7b156a4f639459ef67386eca17.vega-embed details summary {
+  #altair-viz-a5a8d4c1012a405fb728a5627f898e4c.vega-embed details,
+  #altair-viz-a5a8d4c1012a405fb728a5627f898e4c.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-efdb6e7b156a4f639459ef67386eca17"></div>
+<div id="altair-viz-a5a8d4c1012a405fb728a5627f898e4c"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-efdb6e7b156a4f639459ef67386eca17") {
-      outputDiv = document.getElementById("altair-viz-efdb6e7b156a4f639459ef67386eca17");
+    if (outputDiv.id !== "altair-viz-a5a8d4c1012a405fb728a5627f898e4c") {
+      outputDiv = document.getElementById("altair-viz-a5a8d4c1012a405fb728a5627f898e4c");
     }
 
     const paths = {
@@ -1198,7 +1198,7 @@ Note
 <span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Matrix shape: </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then if we visualize the genre centroids again, we should see fewer character names and more genre-distinctive terms:</p>
-<div id="39b2e181" class="cell" data-execution_count="5">
+<div id="80fbe64d" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint_without_entities.csv'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the updated genre centroids</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>alt.Chart(fingerprint_df).mark_bar().encode(</span>
@@ -1211,23 +1211,23 @@ Note
 <div class="cell-output cell-output-display" data-execution_count="5">
 
 <style>
-  #altair-viz-129a982d58d54bf78a0495853e104be1.vega-embed {
+  #altair-viz-525ec46f903249f8a76b5bc8aeb675f2.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-129a982d58d54bf78a0495853e104be1.vega-embed details,
-  #altair-viz-129a982d58d54bf78a0495853e104be1.vega-embed details summary {
+  #altair-viz-525ec46f903249f8a76b5bc8aeb675f2.vega-embed details,
+  #altair-viz-525ec46f903249f8a76b5bc8aeb675f2.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-129a982d58d54bf78a0495853e104be1"></div>
+<div id="altair-viz-525ec46f903249f8a76b5bc8aeb675f2"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-129a982d58d54bf78a0495853e104be1") {
-      outputDiv = document.getElementById("altair-viz-129a982d58d54bf78a0495853e104be1");
+    if (outputDiv.id !== "altair-viz-525ec46f903249f8a76b5bc8aeb675f2") {
+      outputDiv = document.getElementById("altair-viz-525ec46f903249f8a76b5bc8aeb675f2");
     }
 
     const paths = {
@@ -1457,7 +1457,7 @@ Note
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: (x <span class="op">-</span> x.<span class="bu">min</span>()) <span class="op">/</span> (x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will give us a dataframe where each row is a genre-topic pair with the mean topic weight for that genre, normalized to a 0–1 scale within each topic. Now we can visualize this as a heatmap:</p>
-<div id="2969f89d" class="cell" data-execution_count="6">
+<div id="b4e0f66f" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>topic_genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_topic_genre_means.csv'</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>alt.Chart(topic_genre_means).mark_rect().encode(</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'topic:N'</span>, title<span class="op">=</span><span class="st">'LDA Topic'</span>),</span>
@@ -1479,23 +1479,23 @@ Note
 <div class="cell-output cell-output-display" data-execution_count="6">
 
 <style>
-  #altair-viz-673af7f1aebd433486632f8013865f5a.vega-embed {
+  #altair-viz-232488adced6429c8a76791e1b626619.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-673af7f1aebd433486632f8013865f5a.vega-embed details,
-  #altair-viz-673af7f1aebd433486632f8013865f5a.vega-embed details summary {
+  #altair-viz-232488adced6429c8a76791e1b626619.vega-embed details,
+  #altair-viz-232488adced6429c8a76791e1b626619.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-673af7f1aebd433486632f8013865f5a"></div>
+<div id="altair-viz-232488adced6429c8a76791e1b626619"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-673af7f1aebd433486632f8013865f5a") {
-      outputDiv = document.getElementById("altair-viz-673af7f1aebd433486632f8013865f5a");
+    if (outputDiv.id !== "altair-viz-232488adced6429c8a76791e1b626619") {
+      outputDiv = document.getElementById("altair-viz-232488adced6429c8a76791e1b626619");
     }
 
     const paths = {
