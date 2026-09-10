@@ -321,212 +321,155 @@ In our example, the selector `.title` targets any element with the class "title"
 This separation of content (HTML) from presentation (CSS) is crucial. It means you can completely change how a page looks by just changing the CSS, without touching the HTML. 
 :::
 
-## HTML in One Sentence
+## What is the `style` attribute vs. tag?
 
-**HTML structures content for the browser.**
+[![CSS in whatisDH.com](../../assets/images/whatisdigitalhumanities_style.png)](https://github.com/hepplerj/whatisdigitalhumanities){target="_blank"}
 
 . . .
 
-```html
-<p>My first page!</p>
+To learn more about this particular code, read the callout [Deep Dive Into CSS on the course website.](../materials/introducing-defining-cad/07-intro-html.qmd#css-deep-dive){target="_blank"}
+
+::: {.notes}
+To get a better sense of what this code looks like, we can look directly at the `index.html` file directly in the GitHub repository [https://github.com/hepplerj/whatisdigitalhumanities](https://github.com/hepplerj/whatisdigitalhumanities){target="_blank"}.
+
+Seeing the full document, we can find both the `span` element we edited, as well as see how it fits within the overall structure of the HTML document. There's also a number of other elements that we haven't discussed yet, but I want to highlight two of them: `<style>` and `<script>`.
+
+When you look at the actual HTML/CSS source code of a website like whatisdigitalhumanities, you see complex CSS that includes:
+- Custom fonts (@font-face)
+- CSS variables (:root)
+- Dark mode support ([data-theme="dark"])
+- Different selectors for different elements
+- Media queries for responsive design
+- Detailed styling rules for every aspect
+
+Overall, CSS is used to enhance the user experience by providing a visually appealing and functional interface. It allows web developers to:
+
+- Apply custom styles to their web pages, making them look unique.
+
+- Define responsive designs that adapt to different screen sizes and devices.
+
+- Implement theme toggling (like dark mode) to enhance accessibility and user preference.
+
+- Ensure that the presentation of the content is consistent across different browsers and platforms.
+
+So here we can see that the `.title` code we altered is actually part of a larger set of code that is used to style the entire website. This example hopefully shows how powerful and complex web development can be.
+:::
+
+## Learn More about CSS
+
+A great resource for learning more about CSS is the Mozilla docs [https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/What_is_CSS](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/What_is_CSS){target="_blank"}.
+
+## Example of Advanced CSS
+
+- [CSS Zen Garden](http://www.csszengarden.com/){target="_blank"}
+- [CodePen](https://codepen.io/ste-vg/pen/GRooLza){target="_blank"}
+
+<figure>
+<iframe height="300" style="width: 100%;" scrolling="no" title="Airplanes." src="https://codepen.io/ste-vg/embed/GRooLza?default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/ste-vg/pen/GRooLza">
+  Airplanes.</a> by Steve Gardner (<a href="https://codepen.io/ste-vg">@ste-vg</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+</figure>
+
+::: {.notes}
+A great example of CSS in action is the [CSS Zen Garden](http://www.csszengarden.com/), which shows how the same HTML document can be styled in a variety of different ways. Another great example is this [CodePen](https://codepen.io/ste-vg/pen/GRooLza) that shows how CSS can be used to create a 3D airplane (I found it via [this blog post](https://dev.to/keefdrive/top-5-most-hearted-animations-and-designs-on-codepen-whats-under-the-hood-5b0l)).
+:::
+
+## What is JavaScript?
+
+*What is the tag to include JavaScript in an HTML document?*
+
+. . . 
+
+![JavaScript code in whatisdigitalhumanities](../../assets/images/whatisdigitalhumanities_script.png)
+
+
+. . .
+
+Learn more in the callout on [the Deep Dive Into JavaScript on our course website.](../materials/introducing-defining-cad/07-intro-html.qmd#js-deep-dive){target="_blank"}
+
+
+::: {.notes}
+The main other tag that we should pay attention to is the `script` element is the other way that interactivity happens on most websites. If we search for the `<script>` tags, we can see it is located between lines `80` and `109` that it contains the following code:
+
+This code is in a language called JavaScript. This code is using a JavaScript library called jQuery, which is a library that makes it easier to write JavaScript. Unlike HTML or CSS, JavaScript is a `programming language` (the distinction is not crucial to know but can be helpful when learning about different Digital Humanities methods). At this point, most of the web is powered by JavaScript, so it is incredible powerful and ubiquitous.
+
+When you look at the actual JavaScript in whatisdigitalhumanities, you see it using D3.js (a powerful data visualization library) and Lodash (a utility library) to:
+1. Load quote data from a CSV file
+2. Select a random quote from that data
+3. Display it on the page using the DOM
+4. Listen for click events on the "update quote" button
+5. Change the quote when the user clicks
+
+If you want to learn more about what exactly this code is doing, toggle the following section. Full disclosure some of this language and concepts are fairly advanced, so feel free to use Co-Pilot or ask the Instructors for help.
+:::
+
+## Is JavaScript a Markup Language?
+
+*What is this code doing?*
+```javascript
+document.getElementById("button").addEventListener("click", () => {
+  // Do something when button is clicked
+});
 ```
 
-. . .
-
-- `<p>` opens the paragraph
-- `My first page!` is the content
-- `</p>` closes the paragraph
-
 ::: {.notes}
-This is the basic unit students need. I do not need to belabor it, but I should make sure they can identify opening tag, content, closing tag, and the full element.
+While HTML and CSS are declarative (you describe what things are and how they should look), JavaScript is imperative—it describes what should happen when things occur.
+
+JavaScript can listen for events (like clicks), modify the HTML and CSS dynamically, load new content without reloading the page, and create complex interactive experiences.
+
+In the whatisdigitalhumanities website, for example, there's JavaScript that loads a random quote from a CSV file and displays it on the page. When you click the "update quote" button, JavaScript listens for that click, picks a new random quote, and updates the page content—all without reloading.
 :::
 
-## Tags, Attributes, and Nesting
+## What is the DOM?
 
-```html
-<h1>
-  <a href="https://ischool.illinois.edu/" target="_blank">
-    iSchool
-  </a>
-</h1>
+. . .
+
+**Document Object Model**
+
+```
+html
+├── head
+│   └── title
+└── body
+    ├── h1
+    ├── p
+    └── ul
+        ├── li
+        └── li
 ```
 
-. . .
+::: {.notes}
+The DOM is how programming languages understand and manipulate the structure of a web page. It's a tree structure where each HTML element is a node. JavaScript can traverse this tree, find specific elements, modify them, add new ones, or remove them.
 
-- Tags define elements
-- Attributes add information
-- Nested elements create a document structure
+Think of a webpage as a tree with many branches. Each branch and leaf could be a piece of text, a picture, or a button. JavaScript can work with this tree to change what appears on the page.
+
+This is incredibly powerful. It means you can create dynamic, responsive pages that change based on user input or data from servers, all without reloading the page.
+:::
+
+## The Three Pillars of the Web
+
+| Technology | Purpose |
+|-----------|---------|
+| **HTML** | Structure - what things are |
+| **CSS** | Presentation - how things look |
+| **JavaScript** | Behavior - what things do |
 
 ::: {.notes}
-This is a compact review of three things that tend to cause confusion. I can ask: what is the tag? What are the attributes? Which element is inside another element?
+HTML alone creates a functional webpage, but it's not very beautiful or interactive. To create modern websites, we need three technologies working together.
 
-I should also point out `target="_blank"` because we have been using this in the course website. It tells the browser to open a link in a new tab or window.
+HTML provides the semantic structure and content. CSS controls how everything looks. JavaScript makes things interactive.
+
+The combination of HTML, CSS, and JavaScript is what makes the modern web possible. Yes, it can be complex, but this complexity is necessary to create the rich, interactive experiences we expect from websites today.
+
+For example, think about Gmail or Google Maps. These are incredibly interactive applications running in your browser. They're possible because of the combination of these three technologies.
+
+Also note that these technologies can make websites slow to load (large JavaScript files can take a long time) and difficult to maintain. This is an ongoing challenge for web developers.
+
+Looking at projects like whatisdigitalhumanities, you can even see the effort required by exploring the commit history on GitHub—showing many contributions over time as people continuously update, fix, and improve the site.
 :::
 
-## HTML Document Structure
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Page Title</title>
-  </head>
-  <body>
-    <h1>Visible Page Content</h1>
-  </body>
-</html>
-```
-
-. . .
-
-What belongs in the `head`? What belongs in the `body`?
-
-::: {.notes}
-The short version: the `head` stores metadata and instructions about the page. The `body` stores the content users see. This distinction matters later when they add CSS, page titles, links to external resources, or metadata about their project pages.
-:::
-
-# Cultural Data and the Web
-
-## HTML as Cultural Infrastructure
-
-Web pages can contain:
-
-- digitized objects
-- metadata
-- links to collections
-- tables, lists, and descriptions
-- scripts that load or transform data
-
-::: {.notes}
-This is where I want to connect HTML to the broader course. HTML is not just a skill for making a page. It is one of the main ways cultural materials circulate online. A cultural website can preserve, describe, exhibit, hide, restrict, or transform cultural data.
-:::
-
-## TEI and HTML
-
-::: {.r-fit-text}
-| Markup System | Main Use |
-|---|---|
-| TEI | Encoding texts for scholarly description, search, and reuse |
-| HTML | Structuring web pages for browser display and interaction |
-
-: Two markup traditions {tbl-colwidths="[25,75]" .striped .hover}
-:::
-
-. . .
-
-**Question:** When does markup describe appearance? When does it describe meaning?
-
-::: {.notes}
-The Old Bailey example in the lesson gives me a way to explain why markup can be labor-intensive and scholarly. TEI is more explicitly semantic and interpretive. HTML is often about structure and display, though semantic HTML can also tell us something about meaning.
-:::
-
-## HTML's Limits
-
-Alison Parrish's key warning:
-
-. . .
-
-HTML usually tells a browser how to display content.
-
-It often does not explain what the content means.
-
-::: {.notes}
-This matters for web scraping and cultural data. Humans can look at a page and understand that something is a price, title, poem, author, team, episode, caption, or review. A computer may only see a `div`, a `span`, or a messy tree of elements.
-
-This is why scraping is often more interpretive than it first appears. Someone has to decide which HTML structures map onto meaningful cultural data.
-:::
-
-# CSS and JavaScript
-
-## CSS Review
-
-**CSS styles HTML.**
-
-```css
-.title {
-  background: #faf;
-  color: #fff;
-  padding: 3px;
-}
-```
-
-. . .
-
-What does the selector target? What do the declarations change?
-
-::: {.notes}
-I can ask them to identify `.title` as the selector and the property/value pairs as declarations. The point is not mastery of CSS syntax yet. The point is that CSS changes presentation while HTML provides structure.
-:::
-
-## JavaScript Review
-
-**JavaScript adds behavior.**
-
-. . .
-
-On a web page, JavaScript can:
-
-- respond to clicks
-- change page content
-- load data files
-- create visualizations
-
-::: {.notes}
-The whatisdigitalhumanities example uses JavaScript to load a CSV and choose a random quote. That is a useful bridge to culture as data because the website does not only display a static document. It uses code to connect data to the page.
-:::
-
-## The Three Web Layers
-
-::: {.r-fit-text}
-| Layer | Question It Answers |
-|---|---|
-| HTML | What is on the page? |
-| CSS | What does it look like? |
-| JavaScript | What can it do? |
-
-: A basic model of web documents {tbl-colwidths="[28,72]" .striped .hover}
-:::
-
-::: {.notes}
-This is intentionally simplified, but it helps students not get overwhelmed. When they inspect a website, they can ask: am I looking at structure, style, or behavior?
-:::
-
-# Live Review
-
-## Inspecting the Cultural Web
-
-[whatisdigitalhumanities.com](https://whatisdigitalhumanities.com/){target="_blank"}
-
-. . .
-
-Open Developer Tools and look for:
-
-- an HTML element
-- a CSS rule
-- a script tag
-- a data file or external resource
-
-::: {.notes}
-This should be a live demo. I can open the site, inspect the title, change text or color temporarily, then reload to show that the change was local. Then I can move to the GitHub repository if there is time.
-:::
-
-## Reading Source Code
-
-[whatisdigitalhumanities GitHub repository](https://github.com/hepplerj/whatisdigitalhumanities){target="_blank"}
-
-. . .
-
-Questions:
-
-- Where is the HTML?
-- Where is the CSS?
-- Where is the JavaScript?
-- Where is the data?
-- How can we tell people worked on this over time?
-
-::: {.notes}
-This is where I can connect to GitHub commit history. Websites are not only documents. They are maintained projects, and their labor can sometimes be traced through repositories, commits, issues, and contributors.
-:::
 
 # Source and Style Homework
 
@@ -576,20 +519,14 @@ git push origin main
 These Git commands work in macOS, Linux, WSL, and PowerShell.
 
 ::: {.notes}
-I should ask if anyone wants to demo their current repository structure or has lingering Git questions from the Init IS310 homework. This is also a good time to remind them not to commit `.DS_Store` files.
+Remind them not to commit `.DS_Store` files.
 :::
 
-# Work Time
+# Group Work Time {.r-fit-text}
 
-## Start Before You Leave
+To dos in your breakout rooms:
 
-Before the end of class:
-
-- choose one cultural website to inspect
-- choose one digitized cultural object for your page
-- create your `source-and-style` folder
-- create either `README.md` or `index.html`
-
-::: {.notes}
-This keeps the last part of class practical. The ideal outcome is that every student leaves with a folder started and at least one concrete object or site selected.
-:::
+- [ ] Finalize and work on your [Collective and Individual Topic Selection](../assessments/03-semester-project.qmd#milestone-1-collective--individual-topic-selection){target="_blank"} due this upcoming Tuesday September 15 (though optional extension available until September 22).
+- [ ] Complete any mazes that have yet to be tested and help troubleshoot any issues with your group members' code.
+- [ ] Select your focus for the Source and Style Assignment and start working on your HTML page.
+- [ ] Start looking at the [Mass Digitization Group Lab](../assessments/06-collecting-digitizing-culture.qmd). You will have time to work on this in class next week, but you can start thinking about it now. Due in-class on September 29 (though if you finish early you can present September 22).
