@@ -7,8 +7,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <title>IS310 - Culture As Data Fall 2026 – Styling the Cultural Web</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -234,13 +240,14 @@
 <p>So a markup language is really about annotating content with metadata that describes how it should be formatted or displayed. In Markdown, we use <code>#</code> to say “this is a heading.” In HTML, we use tags like <code>&lt;h1&gt;</code> for the same purpose.</p>
 <p>This is fundamentally different from a programming language like Python or JavaScript, which is used to create programs that can be executed by a computer. Markup languages don’t perform logic—they just annotate or describe text.</p>
 <p>A markup language adds structure or meaning to text.</p>
-<p>. . .</p>
+<div class="fragment">
 <p>Examples from the lesson:</p>
 <ul>
 <li>Markdown uses symbols like <code>#</code> and <code>[]()</code></li>
 <li>HTML uses tags like <code>&lt;h1&gt;</code> and <code>&lt;p&gt;</code></li>
 <li>TEI uses markup to encode cultural and textual features</li>
 </ul>
+</div>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -315,7 +322,7 @@
 <h2>How can we create an HTML file?</h2>
 <p><em>Bonus if you can do it exclusively in the terminal!</em></p>
 <aside class="notes">
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="fu">touch</span> first_page.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="fu">touch</span> first_page.html</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -370,7 +377,7 @@
 </section>
 <section id="anatomy-of-an-html-tag" class="slide level2">
 <h2>Anatomy of an HTML Tag</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>My first page!<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a aria-label="1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>My first page!<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <ul>
 <li><strong>Opening tag</strong>: <code>&lt;p&gt;</code></li>
@@ -531,7 +538,7 @@
 <p><em>How could we change the color of the text?</em></p>
 <aside class="notes">
 <p>Here’s another example that we should add to our html page, using the HTML <code>&lt;div&gt;</code> tag:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"header"</span><span class="ot"> style</span><span class="op">=</span><span class="st">"background: blue;"</span><span class="dt">&gt;</span>About Me<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a aria-label="1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"header"</span><span class="ot"> style</span><span class="op">=</span><span class="st">"background: blue;"</span><span class="dt">&gt;</span>About Me<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In our example, the <code>href</code> attribute tells a link where to navigate to when clicked. The <code>class</code> attribute is another common one that helps you identify elements for styling with CSS.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -572,15 +579,15 @@
 <section id="what-is-doctype-html" class="slide level2">
 <h2>What is <code>&lt;!DOCTYPE html&gt;</code>?</h2>
 <div class="fragment">
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb4-1"><a></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
-<span id="cb4-2"><a></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
-<span id="cb4-3"><a></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb4-4"><a></a>    <span class="co">&lt;!-- Metadata about the page --&gt;</span></span>
-<span id="cb4-5"><a></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb4-6"><a></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb4-7"><a></a>    <span class="co">&lt;!-- The actual content --&gt;</span></span>
-<span id="cb4-8"><a></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb4-9"><a></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb4-1"><a aria-label="1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb4-2"><a aria-label="2"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb4-3"><a aria-label="3"></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb4-4"><a aria-label="4"></a>    <span class="co">&lt;!-- Metadata about the page --&gt;</span></span>
+<span id="cb4-5"><a aria-label="5"></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb4-6"><a aria-label="6"></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb4-7"><a aria-label="7"></a>    <span class="co">&lt;!-- The actual content --&gt;</span></span>
+<span id="cb4-8"><a aria-label="8"></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb4-9"><a aria-label="9"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>You’ll notice that on every website we inspect, the first line is <code>&lt;!DOCTYPE html&gt;</code>. This is called a <strong>document type declaration</strong> and it tells the browser what type of document it is. In this case, it’s an HTML document. Then we see the <code>&lt;html&gt;</code> tag, which is the root element of an HTML page. This element contains two other elements: <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code>. The <code>&lt;head&gt;</code> element contains metadata about the document, while the <code>&lt;body&gt;</code> element contains the actual content of the document. While there are some exceptions, most of the time the <code>&lt;head&gt;</code> element comes before the <code>&lt;body&gt;</code> element, and most websites use both.</p>
 <style type="text/css">
@@ -623,10 +630,10 @@
 <section id="what-is-css" class="slide level2">
 <h2>What is CSS?</h2>
 <div class="fragment">
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource css number-lines code-with-copy"><code class="sourceCode css"><span id="cb5-1"><a></a>selector {</span>
-<span id="cb5-2"><a></a>    property<span class="ch">:</span> <span class="dv">value</span><span class="op">;</span></span>
-<span id="cb5-3"><a></a>    property<span class="ch">:</span> <span class="dv">value</span><span class="op">;</span></span>
-<span id="cb5-4"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource css number-lines code-with-copy"><code class="sourceCode css"><span id="cb5-1"><a aria-label="1"></a>selector {</span>
+<span id="cb5-2"><a aria-label="2"></a>    property<span class="ch">:</span> <span class="dv">value</span><span class="op">;</span></span>
+<span id="cb5-3"><a aria-label="3"></a>    property<span class="ch">:</span> <span class="dv">value</span><span class="op">;</span></span>
+<span id="cb5-4"><a aria-label="4"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><strong>Selector</strong> (<code>.title</code>) - which elements to style</li>
 <li><strong>Properties and values</strong> - how to style them</li>
@@ -746,9 +753,9 @@ See the Pen <a href="https://codepen.io/ste-vg/pen/GRooLza"> Airplanes.</a> by S
 <section id="is-javascript-a-markup-language" class="slide level2">
 <h2>Is JavaScript a Markup Language?</h2>
 <p><em>What is this code doing?</em></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a></a><span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">"button"</span>)<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">"click"</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb6-2"><a></a>  <span class="co">// Do something when button is clicked</span></span>
-<span id="cb6-3"><a></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a aria-label="1"></a><span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">"button"</span>)<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">"click"</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb6-2"><a aria-label="2"></a>  <span class="co">// Do something when button is clicked</span></span>
+<span id="cb6-3"><a aria-label="3"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>While HTML and CSS are declarative (you describe what things are and how they should look), JavaScript is imperative—it describes what should happen when things occur.</p>
 <p>JavaScript can listen for events (like clicks), modify the HTML and CSS dynamically, load new content without reloading the page, and create complex interactive experiences.</p>
@@ -896,9 +903,9 @@ See the Pen <a href="https://codepen.io/ste-vg/pen/GRooLza"> Airplanes.</a> by S
 <section id="github-submission" class="slide level2">
 <h2>GitHub Submission</h2>
 <p>Push your work to your <code>is310-coding-assignments</code> repository.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="fu">git</span> add .</span>
-<span id="cb8-2"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Completed Source and Style Assignment"</span></span>
-<span id="cb8-3"><a></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a aria-label="1"></a><span class="fu">git</span> add .</span>
+<span id="cb8-2"><a aria-label="2"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Completed Source and Style Assignment"</span></span>
+<span id="cb8-3"><a aria-label="3"></a><span class="fu">git</span> push origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>These Git commands work in macOS, Linux, WSL, and PowerShell.</p>
 <aside class="notes">
@@ -1119,7 +1126,7 @@ See the Pen <a href="https://codepen.io/ste-vg/pen/GRooLza"> Airplanes.</a> by S
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1193,13 +1200,14 @@ See the Pen <a href="https://codepen.io/ste-vg/pen/GRooLza"> Airplanes.</a> by S
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

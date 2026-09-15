@@ -7,8 +7,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <title>IS310 - Culture As Data Fall 2026 – Histories of Culture and Computing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -29,7 +35,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -271,7 +277,7 @@ Burton is a prolific author and scholar (more than twenty books and three hundre
 <p>“Universal access to all knowledge is possible.”</p>
 <p>Brewster Kahle, 2007</p>
 </blockquote>
-<p>. . .</p>
+<div class="fragment">
 <p><strong>Discussion:</strong> What makes this vision exciting? What makes it dangerous?</p>
 <p>Kahle’s essay is intentionally bold. He wants archivists and librarians to treat universal access as technologically and financially possible. I want students to notice both the ambition and the assumptions. “All knowledge” sounds democratic, but it also raises problems of selection, rights, privacy, consent, labor, and governance.</p>
 <p>Student annotations to surface:</p>
@@ -279,6 +285,7 @@ Burton is a prolific author and scholar (more than twenty books and three hundre
 <li>One student liked Kahle’s argument that scanning everything may be cheaper than expert selection. Use this to ask whether “scan everything” avoids judgment or simply moves judgment elsewhere.</li>
 <li>Another student worried about “private tech companies controlling our access to human knowledge behind paywalls.” This is a useful bridge to Kahle’s public/private question later.</li>
 </ul>
+</div>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -737,7 +744,7 @@ Burton is a prolific author and scholar (more than twenty books and three hundre
 <li>~26 terabytes of text</li>
 <li>storage cost: ~$60,000 in 2007</li>
 </ul>
-<p>. . .</p>
+<div class="fragment">
 <blockquote>
 <p>“Why don’t we put it all on-line?” Kahle spends a lot of time arguing that the first problem — technical feasibility — is becoming tractable.</p>
 </blockquote>
@@ -754,6 +761,7 @@ Burton is a prolific author and scholar (more than twenty books and three hundre
 <p>His larger rhetorical move is:</p>
 <p>instead of beginning with scarcity and asking what tiny portion can we afford to preserve, what if declining storage and digitization costs let us start from abundance?</p>
 <p>This is where his vision becomes exciting — but also where the complications start.</p>
+</div>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -818,7 +826,7 @@ Burton is a prolific author and scholar (more than twenty books and three hundre
 <li>Remove it if someone objects</li>
 <li>Favor access by default</li>
 </ol>
-<p>. . .</p>
+<div class="fragment">
 <p><strong>When might this work?</strong></p>
 <p><strong>When might it fail badly?</strong></p>
 <p>This is where I want to shift from the practical challenges of digitization to the ethical ones.</p>
@@ -838,6 +846,7 @@ Burton is a prolific author and scholar (more than twenty books and three hundre
 <p>But in this case, the person represented by the image eventually asked the community to stop using it.</p>
 <p>So preservation and access are not automatically ethical goods.</p>
 <p>Sometimes persistence itself can become the problem.</p>
+</div>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1402,7 +1411,7 @@ Burton is a prolific author and scholar (more than twenty books and three hundre
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1476,13 +1485,14 @@ Burton is a prolific author and scholar (more than twenty books and three hundre
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

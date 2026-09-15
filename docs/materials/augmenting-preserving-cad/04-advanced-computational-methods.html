@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.27">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Exploring Computational Methods for Cultural Data: TF-IDF, Topic Modeling &amp; LLM Classification – IS310 - Culture As Data Fall 2026</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -58,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -72,14 +78,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6c49c5477b92c77c9eb341f9299c235f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-5a1953863e1f72ef3b996ef827f01ca7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-7dc88c0e4071ecedd75eb36a363dad2b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e21e3b6584d35e2b1e3e4021993be21a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-7dc88c0e4071ecedd75eb36a363dad2b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ea309201b5f3a2890628e45be38ef767.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-290420021d959d881d6c9e26ab8eb62c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-ea309201b5f3a2890628e45be38ef767.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -107,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -133,7 +139,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -166,7 +172,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -206,7 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -234,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -257,20 +263,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -283,7 +291,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo light-content">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">IS310 - Culture As Data Fall 2026</span>
@@ -389,7 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Notebook from Class Available To Download
+<span class="screen-reader-only">Note</span>Notebook from Class Available To Download
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -451,7 +460,7 @@ Notebook from Class Available To Download
 </tbody>
 </table>
 <p>Which would’ve required slightly expanding our existing code:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ENTITY_TYPES <span class="op">=</span> [<span class="st">'PERSON'</span>, <span class="st">'GPE'</span>, <span class="st">'LOC'</span>, <span class="st">'ORG'</span>, <span class="st">'DATE'</span>, <span class="st">'NORP'</span>, <span class="st">'EVENT'</span>]</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -474,14 +483,14 @@ Notebook from Class Available To Download
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> etype <span class="kw">in</span> ENTITY_TYPES:</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> etype.lower()</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    combined_novels_nyt_df[<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">_entities'</span>] <span class="op">=</span> entity_results.<span class="bu">apply</span>(<span class="kw">lambda</span> x: x[etype])</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    combined_novels_nyt_df[<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">_count'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">_entities'</span>].<span class="bu">apply</span>(<span class="bu">len</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    combined_novels_nyt_df[<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">_count'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">_entities'</span>].<span class="bu">apply</span>(<span class="bu">len</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Dataset Available on Canvas
+<span class="screen-reader-only">Note</span>Dataset Available on Canvas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -509,7 +518,7 @@ Dataset Available on Canvas
 </div>
 <p>Now that we have the entity counts, we could then visualize how many entities have been identified, using Altair.</p>
 <p>First we would generate a total count of mentions per entity type across the corpus:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ENTITY_TYPES <span class="op">=</span> [<span class="st">'PERSON'</span>, <span class="st">'GPE'</span>, <span class="st">'LOC'</span>, <span class="st">'ORG'</span>, <span class="st">'DATE'</span>, <span class="st">'NORP'</span>, <span class="st">'EVENT'</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ENTITY_TYPES <span class="op">=</span> [<span class="st">'PERSON'</span>, <span class="st">'GPE'</span>, <span class="st">'LOC'</span>, <span class="st">'ORG'</span>, <span class="st">'DATE'</span>, <span class="st">'NORP'</span>, <span class="st">'EVENT'</span>]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>count_cols <span class="op">=</span> [<span class="ss">f'</span><span class="sc">{</span>e<span class="sc">.</span>lower()<span class="sc">}</span><span class="ss">_count'</span> <span class="cf">for</span> e <span class="kw">in</span> ENTITY_TYPES]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Chart 1: total mentions per entity type across the full corpus ---</span></span>
@@ -519,28 +528,28 @@ Dataset Available on Canvas
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{<span class="st">'index'</span>: <span class="st">'entity_type'</span>, <span class="dv">0</span>: <span class="st">'total_count'</span>})</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>totals[<span class="st">'entity_type'</span>] <span class="op">=</span> totals[<span class="st">'entity_type'</span>].<span class="bu">str</span>.replace(<span class="st">'_count'</span>, <span class="st">''</span>).<span class="bu">str</span>.upper()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="64888876" class="cell" data-execution_count="1">
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>totals[<span class="st">'entity_type'</span>] <span class="op">=</span> totals[<span class="st">'entity_type'</span>].<span class="bu">str</span>.replace(<span class="st">'_count'</span>, <span class="st">''</span>).<span class="bu">str</span>.upper()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ba1b0b46" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 
 <style>
-  #altair-viz-c224ce40fcae42c791e4d3eedb8b6133.vega-embed {
+  #altair-viz-02f3690ec6684716b8707be98a9f59e1.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-c224ce40fcae42c791e4d3eedb8b6133.vega-embed details,
-  #altair-viz-c224ce40fcae42c791e4d3eedb8b6133.vega-embed details summary {
+  #altair-viz-02f3690ec6684716b8707be98a9f59e1.vega-embed details,
+  #altair-viz-02f3690ec6684716b8707be98a9f59e1.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-c224ce40fcae42c791e4d3eedb8b6133"></div>
+<div id="altair-viz-02f3690ec6684716b8707be98a9f59e1"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-c224ce40fcae42c791e4d3eedb8b6133") {
-      outputDiv = document.getElementById("altair-viz-c224ce40fcae42c791e4d3eedb8b6133");
+    if (outputDiv.id !== "altair-viz-02f3690ec6684716b8707be98a9f59e1") {
+      outputDiv = document.getElementById("altair-viz-02f3690ec6684716b8707be98a9f59e1");
     }
 
     const paths = {
@@ -598,7 +607,7 @@ Dataset Available on Canvas
 <p><strong>Remember the goal of using computation is not just to analyze, but to enhance our understanding of the data.</strong></p>
 <p>One angle we have yet to explore but is commonly used in research on literature is <code>genre</code>. Genre is a notoriously slippery category; it’s not a fixed property of a text but a contested, multidimensional construct that can be defined in terms of marketing categories, literary conventions, reader expectations, and more. So, one question we might want to explore with data is how genre relates to the entities that appear in a novel. Do science fiction novels have more <code>ORG</code> entities because they feature more institutions? Do historical novels have more <code>DATE</code> entities because they anchor themselves in specific time periods?</p>
 <p>We can start to do that with our same entity extraction dataset.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>genre_means <span class="op">=</span> (</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>genre_means <span class="op">=</span> (</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    combined_novels_nyt_df</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'genre'</span>)[count_cols]</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    .mean()</span>
@@ -610,10 +619,10 @@ Dataset Available on Canvas
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Min-max normalize within each entity type so columns are comparable</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>genre_means[<span class="st">'normalized'</span>] <span class="op">=</span> genre_means.groupby(<span class="st">'entity_type'</span>)[<span class="st">'mean_count'</span>].transform(</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: (x <span class="op">-</span> x.<span class="bu">min</span>()) <span class="op">/</span> (x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Notice here though that I am normalizing the counts within each entity type, not across the whole dataset. This is because <code>PERSON</code> counts are on a completely different scale than <code>EVENT</code> counts, and I want to be able to compare genres within each entity type without one dominating the visualization.</p>
-<div id="2b0d3b23" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_entity_means.csv'</span>)</span>
+<div id="156fc0ed" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_entity_means.csv'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>stacked_bar <span class="op">=</span> alt.Chart(genre_means).mark_bar().encode(</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">'entity_type:N'</span>, title<span class="op">=</span><span class="st">'Entity Type'</span>, axis<span class="op">=</span>alt.Axis(labelAngle<span class="op">=</span><span class="dv">0</span>)),</span>
@@ -630,27 +639,27 @@ Dataset Available on Canvas
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">350</span></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>stacked_bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>stacked_bar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-e9d2db1fa7c44a03a07407998b638ba7.vega-embed {
+  #altair-viz-9da0256eb4de4463bf35cc4581b60545.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-e9d2db1fa7c44a03a07407998b638ba7.vega-embed details,
-  #altair-viz-e9d2db1fa7c44a03a07407998b638ba7.vega-embed details summary {
+  #altair-viz-9da0256eb4de4463bf35cc4581b60545.vega-embed details,
+  #altair-viz-9da0256eb4de4463bf35cc4581b60545.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-e9d2db1fa7c44a03a07407998b638ba7"></div>
+<div id="altair-viz-9da0256eb4de4463bf35cc4581b60545"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-e9d2db1fa7c44a03a07407998b638ba7") {
-      outputDiv = document.getElementById("altair-viz-e9d2db1fa7c44a03a07407998b638ba7");
+    if (outputDiv.id !== "altair-viz-9da0256eb4de4463bf35cc4581b60545") {
+      outputDiv = document.getElementById("altair-viz-9da0256eb4de4463bf35cc4581b60545");
     }
 
     const paths = {
@@ -703,8 +712,8 @@ Dataset Available on Canvas
 </div>
 </div>
 <p>This graph gives us a much better sense of how different genres use different kinds of entities. But it is still tricky to see the relationship. A heatmap would be a much better option.</p>
-<div id="4aad079e" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>heatmap <span class="op">=</span> alt.Chart(genre_means).mark_rect().encode(</span>
+<div id="cd4f1674" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>heatmap <span class="op">=</span> alt.Chart(genre_means).mark_rect().encode(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'entity_type:N'</span>, title<span class="op">=</span><span class="st">'Entity Type'</span>),</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">'genre:N'</span>, title<span class="op">=</span><span class="st">'Genre'</span>, sort<span class="op">=</span><span class="st">'-x'</span>),</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>alt.Color(<span class="st">'normalized:Q'</span>,</span>
@@ -722,27 +731,27 @@ Dataset Available on Canvas
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">350</span></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>heatmap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>heatmap</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-402689a9b0b94e24af5c201a332fddf6.vega-embed {
+  #altair-viz-aa1848c13c50421480ee43d29037e584.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-402689a9b0b94e24af5c201a332fddf6.vega-embed details,
-  #altair-viz-402689a9b0b94e24af5c201a332fddf6.vega-embed details summary {
+  #altair-viz-aa1848c13c50421480ee43d29037e584.vega-embed details,
+  #altair-viz-aa1848c13c50421480ee43d29037e584.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-402689a9b0b94e24af5c201a332fddf6"></div>
+<div id="altair-viz-aa1848c13c50421480ee43d29037e584"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-402689a9b0b94e24af5c201a332fddf6") {
-      outputDiv = document.getElementById("altair-viz-402689a9b0b94e24af5c201a332fddf6");
+    if (outputDiv.id !== "altair-viz-aa1848c13c50421480ee43d29037e584") {
+      outputDiv = document.getElementById("altair-viz-aa1848c13c50421480ee43d29037e584");
     }
 
     const paths = {
@@ -894,8 +903,8 @@ Dataset Available on Canvas
 <h2 class="anchored" data-anchor-id="cleaning-project-gutenberg-texts">Cleaning Project Gutenberg Texts</h2>
 <p>Before we start, there’s an important preprocessing step we haven’t addressed yet: every Project Gutenberg file includes a standard header and footer–– licensing text, donation appeals, and metadata––that we want to remove before analysis. Otherwise this boilerplate will appear as the most “distinctive” content of every novel, swamping any meaningful signal.</p>
 <p>The <code>gutenbergpy</code> library <a href="https://pypi.org/project/gutenbergpy/" target="_blank">https://pypi.org/project/gutenbergpy/</a> handles this for us:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install gutenbergpy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install gutenbergpy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gutenbergpy.textget</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -920,14 +929,14 @@ Dataset Available on Canvas
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span></span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>tqdm.pandas(desc<span class="op">=</span><span class="st">"Cleaning books"</span>)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df[<span class="st">'cleaned_text'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'pg_eng_url'</span>].progress_apply(clean_gutenberg_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df[<span class="st">'cleaned_text'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'pg_eng_url'</span>].progress_apply(clean_gutenberg_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Dataset Available on Canvas
+<span class="screen-reader-only">Warning</span>Dataset Available on Canvas
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -944,9 +953,9 @@ Dataset Available on Canvas
 </figure>
 <p>The intuition is exactly what you’d expect from Zipf’s Law: words like “the” and “said” appear in every novel, so they tell us nothing about what makes any one novel distinctive. TF-IDF penalizes words that appear everywhere and rewards words that are concentrated in specific documents.</p>
 <p>The math works like this:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">term_frequency</span><span class="er">(</span><span class="ex">t,</span> d<span class="kw">)</span>       <span class="ex">=</span> count of term t in document d</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">term_frequency</span><span class="er">(</span><span class="ex">t,</span> d<span class="kw">)</span>       <span class="ex">=</span> count of term t in document d</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">inverse_document_frequency</span> = log<span class="er">(</span><span class="ex">total</span> documents / documents containing t<span class="kw">)</span> <span class="ex">+</span> 1</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tf_idf</span><span class="er">(</span><span class="ex">t,</span> d<span class="kw">)</span>               <span class="ex">=</span> term_frequency × inverse_document_frequency</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tf_idf</span><span class="er">(</span><span class="ex">t,</span> d<span class="kw">)</span>               <span class="ex">=</span> term_frequency × inverse_document_frequency</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="https://mallahyari.github.io/ml_tutorial/images/tfidf_ex3.png" class="img-fluid"></p>
 <p>Based on this chart, we can see that first we count the terms after tokenization within each document, and then we calculate the inverse document frequency for each term across the corpus. Finally, we multiply the term frequency by the inverse document frequency to get the TF-IDF score for each term in each document. So in the chart <code>blue</code> is distinctive of document 1, because it only appears in the first document, whereas <code>bright</code> though it appears in three documents is weighted much lower because it appears in multiple document, so it is not distinctive of any one document.</p>
 <p>To reiterate, a high TF-IDF score means a word appears frequently in <em>this</em> document but rarely across the corpus as a whole. For our example, we’ll use that signal in two ways: first to profile what vocabulary is <em>genre-distinctive</em>, and then to train a simple classifier that adds a predicted genre column to our dataset.</p>
@@ -966,8 +975,8 @@ Note
 <section id="computing-tf-idf-with-scikit-learn" class="level3">
 <h3 class="anchored" data-anchor-id="computing-tf-idf-with-scikit-learn">Computing TF-IDF with Scikit-Learn</h3>
 <p>We’ll use scikit-learn’s <code>TfidfVectorizer</code>, which handles tokenization, stop word removal, and the TF-IDF calculation in one step:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install scikit-learn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install scikit-learn</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop rows with missing cleaned text</span></span>
@@ -987,10 +996,10 @@ Note
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>feature_names <span class="op">=</span> vectorizer.get_feature_names_out()</span>
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Matrix shape: </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> terms"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>I want to highlight a few of the arguments we are passing to <code>TfidfVectorizer</code>: - <code>stop_words='english'</code> tells the vectorizer to remove common English stop words like “the”, “and”, “is”, etc., which are not informative for distinguishing between genres. If we do not remove stop words, they will dominate the TF-IDF scores and drown out more meaningful signals. - <code>max_features=5000</code> limits the number of terms to the top 5000 by TF-IDF score, which helps reduce noise and computational load. If we were to give it the full corpus to the Vectorizer, we would get a matrix shaped as <code>(188, 128952)</code>, which means we have 188 documents and 128,952 unique terms. This is a very high-dimensional space, and many of those terms will be rare or not distinctive, so limiting to the top 5000 helps us focus on the most meaningful signals, along with removing stop words. - <code>min_df=2</code> tells the vectorizer to ignore terms that appear in fewer than 2 documents, which helps filter out typos and OCR errors that might only appear in one novel. We could drop this parameter, because that would give us the most distinctive terms per novel, but since we are interested in genre-level signals, we want to focus on terms that appear in multiple novels, so we set <code>min_df=2</code> to filter out those one-off terms. - <code>max_df=0.75</code> tells the vectorizer to ignore terms that appear in more than 75% of documents, which helps filter out terms that are too common to be distinctive. If we don’t add this flag, words like <code>said</code> might appear as the most distinctive term for every novel, which is not helpful for our analysis. By setting <code>max_df=0.75</code>, we ensure that we are only looking at terms that are distinctive to specific genres, rather than terms that are common across all genres.</p>
 <p>We could start to explore the most distinctive terms for each novel, with a simple function that pulls the top N terms for a given document index:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_top_tfidf_terms(row_index, n<span class="op">=</span><span class="dv">10</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_top_tfidf_terms(row_index, n<span class="op">=</span><span class="dv">10</span>):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the top N TF-IDF terms for a given document row index."""</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    row <span class="op">=</span> tfidf_matrix[row_index]</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the indices of the top N scores</span></span>
@@ -1002,9 +1011,9 @@ Note
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> tfidf_df.index.get_loc(i)</span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>row[<span class="st">'title'</span>]<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>row[<span class="st">'pub_year'</span>]<span class="sc">}</span><span class="ss">):"</span>)</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> term, score <span class="kw">in</span> get_top_tfidf_terms(idx):</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>term<span class="sc">:20s}</span><span class="ss"> </span><span class="sc">{</span>score<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>term<span class="sc">:20s}</span><span class="ss"> </span><span class="sc">{</span>score<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Which should show us the following output:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Don</span> Quixote <span class="er">(</span><span class="ex">1605</span><span class="kw">)</span><span class="bu">:</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">sancho</span>               0.6738</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">quixote</span>              0.6042</span>
@@ -1027,10 +1036,10 @@ Note
 <span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="st">  dinah                0.057</span></span>
 <span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="st">  jury                 0.0459</span></span>
 <span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="st">  footman              0.0285</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="st">  _i_                  0.0268</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="st">  _i_                  0.0268</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And we can start to see that TFIDF is helpful for distinguishing documents (hence it’s popularity in databases and search engines), but it is not necessarily helpful for distinguishing genres, since many of the top terms are character names or other novel-specific details.</p>
 <p>We can start to see the issue more if we look at the terms most distinctive across genres.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Use all genres — only exclude rows with no genre label at all</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>genre_df <span class="op">=</span> tfidf_df.dropna(subset<span class="op">=</span>[<span class="st">'genre'</span>]).copy()</span>
@@ -1056,10 +1065,10 @@ Note
 <span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> term, score <span class="kw">in</span> top_centroid_terms(genre):</span>
 <span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        fingerprint_rows.append({<span class="st">'genre'</span>: genre, <span class="st">'term'</span>: term, <span class="st">'centroid_score'</span>: score})</span>
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.DataFrame(fingerprint_rows)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.DataFrame(fingerprint_rows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Which gives us the following genre vocabulary fingerprints:</p>
-<div id="6d650c39" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint.csv'</span>)</span>
+<div id="b0afe9ac" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint.csv'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>alt.Chart(fingerprint_df).mark_bar().encode(</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'centroid_score:Q'</span>, title<span class="op">=</span><span class="st">'Mean TF-IDF Score'</span>),</span>
@@ -1067,27 +1076,27 @@ Note
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'genre:N'</span>,</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    facet<span class="op">=</span>alt.Facet(<span class="st">'genre:N'</span>, columns<span class="op">=</span><span class="dv">2</span>),</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    tooltip<span class="op">=</span>[<span class="st">'genre'</span>, <span class="st">'term'</span>, <span class="st">'centroid_score'</span>]</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>).properties(width<span class="op">=</span><span class="dv">300</span>, height<span class="op">=</span><span class="dv">220</span>).resolve_scale(y<span class="op">=</span><span class="st">'independent'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>).properties(width<span class="op">=</span><span class="dv">300</span>, height<span class="op">=</span><span class="dv">220</span>).resolve_scale(y<span class="op">=</span><span class="st">'independent'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 
 <style>
-  #altair-viz-e65face95ab64a1ca5c5fecee528e510.vega-embed {
+  #altair-viz-dde3a227beea40eab606fdf205915b0e.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-e65face95ab64a1ca5c5fecee528e510.vega-embed details,
-  #altair-viz-e65face95ab64a1ca5c5fecee528e510.vega-embed details summary {
+  #altair-viz-dde3a227beea40eab606fdf205915b0e.vega-embed details,
+  #altair-viz-dde3a227beea40eab606fdf205915b0e.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-e65face95ab64a1ca5c5fecee528e510"></div>
+<div id="altair-viz-dde3a227beea40eab606fdf205915b0e"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-e65face95ab64a1ca5c5fecee528e510") {
-      outputDiv = document.getElementById("altair-viz-e65face95ab64a1ca5c5fecee528e510");
+    if (outputDiv.id !== "altair-viz-dde3a227beea40eab606fdf205915b0e") {
+      outputDiv = document.getElementById("altair-viz-dde3a227beea40eab606fdf205915b0e");
     }
 
     const paths = {
@@ -1141,7 +1150,7 @@ Note
 </div>
 <p>Notice that we are still getting A LOT of character names. That is somewhat expected, since character names are often distinctive to specific novels and genres. One option we could do is use our NER dataset to filter out terms that are likely to be character names.</p>
 <p>Here’s some updated code to do that:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ast</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1196,10 +1205,10 @@ Note
 <span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>feature_names <span class="op">=</span> vectorizer.get_feature_names_out()</span>
 <span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Matrix shape: </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> terms"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then if we visualize the genre centroids again, we should see fewer character names and more genre-distinctive terms:</p>
-<div id="2bdfa360" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint_without_entities.csv'</span>)</span>
+<div id="7d7da70b" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint_without_entities.csv'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the updated genre centroids</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>alt.Chart(fingerprint_df).mark_bar().encode(</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'centroid_score:Q'</span>, title<span class="op">=</span><span class="st">'Mean TF-IDF Score'</span>),</span>
@@ -1207,27 +1216,27 @@ Note
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'genre:N'</span>,</span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    facet<span class="op">=</span>alt.Facet(<span class="st">'genre:N'</span>, columns<span class="op">=</span><span class="dv">2</span>),</span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    tooltip<span class="op">=</span>[<span class="st">'genre'</span>, <span class="st">'term'</span>, <span class="st">'centroid_score'</span>]</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>).properties(width<span class="op">=</span><span class="dv">300</span>, height<span class="op">=</span><span class="dv">220</span>).resolve_scale(y<span class="op">=</span><span class="st">'independent'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>).properties(width<span class="op">=</span><span class="dv">300</span>, height<span class="op">=</span><span class="dv">220</span>).resolve_scale(y<span class="op">=</span><span class="st">'independent'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 
 <style>
-  #altair-viz-df3f1dce3e5d490cbd3bc29460d7d348.vega-embed {
+  #altair-viz-aebece14c5724ea4b836d53cfec3cb0d.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-df3f1dce3e5d490cbd3bc29460d7d348.vega-embed details,
-  #altair-viz-df3f1dce3e5d490cbd3bc29460d7d348.vega-embed details summary {
+  #altair-viz-aebece14c5724ea4b836d53cfec3cb0d.vega-embed details,
+  #altair-viz-aebece14c5724ea4b836d53cfec3cb0d.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-df3f1dce3e5d490cbd3bc29460d7d348"></div>
+<div id="altair-viz-aebece14c5724ea4b836d53cfec3cb0d"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-df3f1dce3e5d490cbd3bc29460d7d348") {
-      outputDiv = document.getElementById("altair-viz-df3f1dce3e5d490cbd3bc29460d7d348");
+    if (outputDiv.id !== "altair-viz-aebece14c5724ea4b836d53cfec3cb0d") {
+      outputDiv = document.getElementById("altair-viz-aebece14c5724ea4b836d53cfec3cb0d");
     }
 
     const paths = {
@@ -1284,7 +1293,7 @@ Note
 <section id="projecting-unlabeled-novels-onto-genre-centroids" class="level3">
 <h3 class="anchored" data-anchor-id="projecting-unlabeled-novels-onto-genre-centroids">Projecting Unlabeled Novels onto Genre Centroids</h3>
 <p>We built those centroids from novels that already have genre labels. But <code>tfidf_df</code> also contains novels where <code>genre</code> is <code>NaN</code> — those are exactly what we want to augment. We can measure each unlabeled novel’s cosine similarity to every genre centroid and surface the closest match as a vocabulary-based genre suggestion:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Use all genres — only exclude rows with no genre label at all</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>genre_df <span class="op">=</span> tfidf_df[tfidf_df.genre <span class="op">!=</span> <span class="st">'na'</span>].dropna(subset<span class="op">=</span>[<span class="st">'genre'</span>]).copy()</span>
@@ -1332,7 +1341,7 @@ Note
 <span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>    get_top_terms_unlabeled(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(tfidf_matrix_unlabeled.shape[<span class="dv">0</span>])</span>
 <span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>unlabeled_df[[<span class="st">'title'</span>, <span class="st">'genre'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'tfidf_genre_confidence'</span>, <span class="st">'tfidf_top_terms'</span>]].head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>unlabeled_df[[<span class="st">'title'</span>, <span class="st">'genre'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'tfidf_genre_confidence'</span>, <span class="st">'tfidf_top_terms'</span>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we should see that TFIDF is suggesting that books like <em>Wuthering Heights</em> that had no genre previously should be labeled as <code>romance</code>, and that <code>Moby Dick</code> should be labeled as <code>action</code>. These are not perfect suggestions, but they are a strong signal that we can use to augment our dataset and inform the next steps of our analysis.</p>
 <hr>
 </section>
@@ -1368,7 +1377,7 @@ Note
 <section id="preparing-the-data-for-lda" class="level3">
 <h3 class="anchored" data-anchor-id="preparing-the-data-for-lda">Preparing the Data for LDA</h3>
 <p>LDA works with raw term counts rather than TF-IDF weights. We’ll use <code>genre_df</code>, the same all-genres subset we built for the TF-IDF fingerprints (all rows with a non-null genre label) and the person-filtered text, so character names don’t dominate the topics any more than they dominated our vocabulary fingerprints (though you are welcome to experiment with the unfiltered text if you want to see how much of a difference it makes):</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> LatentDirichletAllocation</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>count_vectorizer <span class="op">=</span> CountVectorizer(</span>
@@ -1382,11 +1391,11 @@ Note
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>count_feature_names <span class="op">=</span> count_vectorizer.get_feature_names_out()</span>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Count matrix shape: </span><span class="sc">{</span>count_matrix<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>count_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>count_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>count_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>count_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> terms"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here we are using the same parameters as before to limit the vocabulary to the most distinctive terms, but instead of TF-IDF weights, we are getting raw counts of how many times each term appears in each document. This is the format that LDA expects as input.</p>
 <p>The next step is to <strong>fit</strong> the LDA model to this count matrix. This will discover the latent topics in the corpus and give us a new matrix where each document is represented as a distribution over those topics.</p>
 <p>The key hyperparameter here is <code>n_components</code>: the number of topics. There’s no objectively correct number; it’s an interpretive choice. As a starting point, setting it to roughly the number of distinct genres in the dataset gives us a model where we can meaningfully ask whether topics map onto genres. We can always increase it later for more granular structure:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>N_TOPICS <span class="op">=</span> <span class="bu">len</span>(all_genres)  <span class="co"># one topic per genre as a starting point</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>N_TOPICS <span class="op">=</span> <span class="bu">len</span>(all_genres)  <span class="co"># one topic per genre as a starting point</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>lda_model <span class="op">=</span> LatentDirichletAllocation(</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    n_components<span class="op">=</span>N_TOPICS,</span>
@@ -1399,18 +1408,18 @@ Note
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>lda_matrix <span class="op">=</span> lda_model.fit_transform(count_matrix)</span>
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"LDA output shape: </span><span class="sc">{</span>lda_matrix<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>lda_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>lda_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> topics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>lda_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>lda_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> topics"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should now see a new matrix where we have 175 documents and 12 topics.</p>
 <p>Each topic is a distribution over all vocabulary terms. The top words give us a sense of what the topic is “about”:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_top_words(model, feature_names, n_top_words<span class="op">=</span><span class="dv">12</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_top_words(model, feature_names, n_top_words<span class="op">=</span><span class="dv">12</span>):</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> topic_idx, topic <span class="kw">in</span> <span class="bu">enumerate</span>(model.components_):</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>        top_idx <span class="op">=</span> topic.argsort()[::<span class="op">-</span><span class="dv">1</span>][:n_top_words]</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        top_words <span class="op">=</span> [feature_names[i] <span class="cf">for</span> i <span class="kw">in</span> top_idx]</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Topic </span><span class="sc">{</span>topic_idx<span class="sc">:2d}</span><span class="ss">: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(top_words)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>print_top_words(lda_model, count_feature_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>print_top_words(lda_model, count_feature_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should see the following output, which shows the top 12 words for each of the 12 topics:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Topic</span>  0: jo, aramis, madame, athos, porthos, la, cardinal, monseigneur, bathsheba, king, paris, queen</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Topic</span>  0: jo, aramis, madame, athos, porthos, la, cardinal, monseigneur, bathsheba, king, paris, queen</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Topic</span>  1: mrs, couldn, doesn, wasn, em, dr, tea, hadn, baby, car, miss, marry</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Topic</span>  2: odette, percival, aunt, social, paris, ph, murmured, dr, le, colour, century, fran</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Topic</span>  3: bloom, joe, miss, dublin, martin, lenehan, zoe, bloody, citizen, ireland, king, dignam</span>
@@ -1421,10 +1430,10 @@ Note
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Topic</span>  8: sha, nat, moscow, army, rost, emperor, napoleon, officer, russian, nicholas, petersburg, regiment</span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Topic</span>  9: thou, thee, marius, chapter, th, rue, la, se, worship, thy, paris, priest</span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Topic</span> 10: uncle, captain, ye, chapter, wi, major, hath, lad, arthur, dinah, toots, cousin</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Topic</span> 11: mrs, dr, miss, papa, aunt, honour, uncle, marry, colonel, cousin, agnes, fang</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Topic</span> 11: mrs, dr, miss, papa, aunt, honour, uncle, marry, colonel, cousin, agnes, fang</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Many of these remain character titles or names, but we can start to see some thematic patterns emerging. Topic 0 is clearly about <em>The Three Musketeers</em> with its references to “jo”, “aramis”, “madame”, “athos”, and “porthos”. Topic 4 has a strong nautical theme with “island”, “captain”, “engineer”, “sailor”, and “vessel”. Topic 8 is about Russia with “moscow”, “emperor”, “napoleon”, and “petersburg”. These thematic clusters are what LDA is designed to discover. The next question is whether these topics cluster by genre, which we can visualize with a heatmap of mean topic weight per genre.</p>
 <p>To do that first we need to add the topic weights back to our original dataframe as new columns. Each topic weight represents how much that topic is present in the novel, so these become new features that we can use to analyze genre patterns.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>topic_cols <span class="op">=</span> [<span class="ss">f'topic_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_TOPICS)]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>topic_cols <span class="op">=</span> [<span class="ss">f'topic_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_TOPICS)]</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>topics_df <span class="op">=</span> pd.DataFrame(lda_matrix, columns<span class="op">=</span>topic_cols, index<span class="op">=</span>genre_df.index)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Join topic weights back to novel metadata</span></span>
@@ -1434,9 +1443,9 @@ Note
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>novels_topics_df[<span class="st">'dominant_topic'</span>] <span class="op">=</span> topics_df.idxmax(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Added </span><span class="sc">{</span>N_TOPICS<span class="sc">}</span><span class="ss"> topic columns + 'dominant_topic' to </span><span class="sc">{</span><span class="bu">len</span>(novels_topics_df)<span class="sc">}</span><span class="ss"> novels"</span>)</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>novels_topics_df[[<span class="st">'title'</span>, <span class="st">'genre'</span>, <span class="st">'dominant_topic'</span>] <span class="op">+</span> topic_cols[:<span class="dv">3</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>novels_topics_df[[<span class="st">'title'</span>, <span class="st">'genre'</span>, <span class="st">'dominant_topic'</span>] <span class="op">+</span> topic_cols[:<span class="dv">3</span>]].head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we can ask the central question: do the topics LDA discovered cluster by genre? We’ll use the same heatmap approach as the entity type analysis earlier in the lesson with mean topic weight per genre, normalized within each topic so that genres are comparable regardless of overall topic prevalence:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>topic_genre_df <span class="op">=</span> novels_topics_df.melt(</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span>[<span class="st">'genre'</span>],</span>
@@ -1455,10 +1464,10 @@ Note
 <span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize within each topic so genres are comparable</span></span>
 <span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>topic_genre_means[<span class="st">'normalized'</span>] <span class="op">=</span> topic_genre_means.groupby(<span class="st">'topic'</span>)[<span class="st">'weight'</span>].transform(</span>
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: (x <span class="op">-</span> x.<span class="bu">min</span>()) <span class="op">/</span> (x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This will give us a dataframe where each row is a genre-topic pair with the mean topic weight for that genre, normalized to a 0–1 scale within each topic. Now we can visualize this as a heatmap:</p>
-<div id="da66acf8" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>topic_genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_topic_genre_means.csv'</span>)</span>
+<div id="f332fe37" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>topic_genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_topic_genre_means.csv'</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>alt.Chart(topic_genre_means).mark_rect().encode(</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'topic:N'</span>, title<span class="op">=</span><span class="st">'LDA Topic'</span>),</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">'genre:N'</span>, title<span class="op">=</span><span class="st">'Genre'</span>),</span>
@@ -1475,27 +1484,27 @@ Note
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'Topic-Genre Alignment (normalized within topic)'</span>,</span>
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">500</span>,</span>
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">350</span></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 
 <style>
-  #altair-viz-e953d48203904f6d9c401356313062a3.vega-embed {
+  #altair-viz-3fed2a89e8e74b16a75f3185a26eb1d7.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-e953d48203904f6d9c401356313062a3.vega-embed details,
-  #altair-viz-e953d48203904f6d9c401356313062a3.vega-embed details summary {
+  #altair-viz-3fed2a89e8e74b16a75f3185a26eb1d7.vega-embed details,
+  #altair-viz-3fed2a89e8e74b16a75f3185a26eb1d7.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-e953d48203904f6d9c401356313062a3"></div>
+<div id="altair-viz-3fed2a89e8e74b16a75f3185a26eb1d7"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-e953d48203904f6d9c401356313062a3") {
-      outputDiv = document.getElementById("altair-viz-e953d48203904f6d9c401356313062a3");
+    if (outputDiv.id !== "altair-viz-3fed2a89e8e74b16a75f3185a26eb1d7") {
+      outputDiv = document.getElementById("altair-viz-3fed2a89e8e74b16a75f3185a26eb1d7");
     }
 
     const paths = {
@@ -1552,7 +1561,7 @@ Note
 <section id="projecting-unlabeled-novels-into-topic-space" class="level3">
 <h3 class="anchored" data-anchor-id="projecting-unlabeled-novels-into-topic-space">Projecting Unlabeled Novels into Topic Space</h3>
 <p>The <code>count_vectorizer</code> and <code>lda_model</code> were fitted on labeled novels. We can now project the unlabeled novels into that same topic space using <code>transform()</code> — no retraining needed. This gives each unlabeled novel a topic distribution learned from the labeled corpus:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform unlabeled novels through the already-fitted models</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform unlabeled novels through the already-fitted models</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>unlabeled_count_matrix <span class="op">=</span> count_vectorizer.transform(unlabeled_df[<span class="st">'cleaned_text_no_persons'</span>])</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>unlabeled_lda_matrix <span class="op">=</span> lda_model.transform(unlabeled_count_matrix)</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1570,7 +1579,7 @@ Note
 <span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    topic_top_words[<span class="ss">f'topic_</span><span class="sc">{</span>topic_idx<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> <span class="st">', '</span>.join(count_feature_names[i] <span class="cf">for</span> i <span class="kw">in</span> top_idx)</span>
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"unlabeled_df now has </span><span class="sc">{</span>unlabeled_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>unlabeled_df[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'dominant_topic'</span>]].head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>unlabeled_df[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'dominant_topic'</span>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>unlabeled_df</code> now carries three complementary signals for each novel with no genre label: the TF-IDF genre suggestion from vocabulary, the dominant LDA topic from thematic structure, and the raw top terms that drove both. In the next section, we’ll pass all of that context to an LLM and ask it to make a final genre call — using its reading comprehension to weigh the signals and make a decision.</p>
 <hr>
 </section>
@@ -1583,27 +1592,27 @@ Note
 <section id="setting-up-ollama" class="level3">
 <h3 class="anchored" data-anchor-id="setting-up-ollama">Setting Up Ollama</h3>
 <p>First, install Ollama from <a href="https://ollama.com/" target="_blank">https://ollama.com/</a>. Then pull a model. <code>llama3.2</code> is small enough to run comfortably on most laptops:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your terminal (not in Python):</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your terminal (not in Python):</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> serve</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In a separate terminal, pull the model:</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull llama3.2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull llama3.2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In your virtual environment, install the Python library for Ollama:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install ollama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install ollama</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Verify it’s working:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ollama</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ollama</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> ollama.chat(</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">'llama3.2'</span>,</span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[{<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="st">'Say hello in one sentence.'</span>}]</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response[<span class="st">'message'</span>][<span class="st">'content'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response[<span class="st">'message'</span>][<span class="st">'content'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Model Size and Performance
+<span class="screen-reader-only">Warning</span>Model Size and Performance
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1615,7 +1624,7 @@ Model Size and Performance
 <h3 class="anchored" data-anchor-id="classifying-without-prior-signals-the-baseline">Classifying Without Prior Signals: The Baseline</h3>
 <p>Before using our computational signals, it’s worth establishing a baseline: what does the LLM assign when it only sees the text? This lets us see concretely what the signals add.</p>
 <p>We’ll use the genre taxonomy from our own dataset rather than a hardcoded list, so the LLM’s labels will be directly comparable to the ones we have:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ollama</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ollama</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the genre list from our actual dataset</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>genre_list <span class="op">=</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(<span class="ss">f'- </span><span class="sc">{</span>g<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> g <span class="kw">in</span> <span class="bu">sorted</span>(all_genres))</span>
@@ -1652,10 +1661,10 @@ Model Size and Performance
 <span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Test on a small sample first</span></span>
 <span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> unlabeled_df.head(<span class="dv">5</span>).copy()</span>
 <span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>sample[<span class="st">'llm_genre_cold'</span>] <span class="op">=</span> sample.<span class="bu">apply</span>(classify_cold, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>sample[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'llm_genre_cold'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>sample[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'llm_genre_cold'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we might see that while <em>Wuthering Heights</em> is classified as a <code>romance</code>, <em>Moby Dick</em> is instead classified as an allegory.</p>
 <p>One update we could make to our code is to ask the LLM to return a <code>rationale</code> for its classification.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classify_cold(row):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classify_cold(row):</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Zero-shot genre classification — text only, no prior signals."""</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> <span class="bu">str</span>(row[<span class="st">'cleaned_text_no_persons'</span>])</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(text) <span class="kw">or</span> <span class="bu">len</span>(text) <span class="op">&lt;</span> <span class="dv">100</span>:</span>
@@ -1697,10 +1706,10 @@ Model Size and Performance
 <span id="cb30-40"><a href="#cb30-40" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> sample.<span class="bu">apply</span>(classify_cold, axis<span class="op">=</span><span class="dv">1</span>, result_type<span class="op">=</span><span class="st">'expand'</span>)</span>
 <span id="cb30-41"><a href="#cb30-41" aria-hidden="true" tabindex="-1"></a>sample[[<span class="st">'llm_genre_cold'</span>, <span class="st">'llm_genre_cold_rationale'</span>]] <span class="op">=</span> results</span>
 <span id="cb30-42"><a href="#cb30-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-43"><a href="#cb30-43" aria-hidden="true" tabindex="-1"></a>sample[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'llm_genre_cold'</span>, <span class="st">'llm_genre_cold_rationale'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-43"><a href="#cb30-43" aria-hidden="true" tabindex="-1"></a>sample[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'llm_genre_cold'</span>, <span class="st">'llm_genre_cold_rationale'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we might learn from the model what specific elements of the passage led it to classify the books.</p>
 <p>To help inform this classification, we can also pass the TF-IDF and LDA signals alongside the text. The prompt tells the model what each method found and asks it to weigh those signals against what it reads, confirming them if the passage agrees or overriding them if the text makes a stronger case for something else:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classify_with_signals(row):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classify_with_signals(row):</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Genre classification informed by TF-IDF vocabulary and LDA topic signals."""</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> <span class="bu">str</span>(row[<span class="st">'cleaned_text_no_persons'</span>])</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(text) <span class="kw">or</span> <span class="bu">len</span>(text) <span class="op">&lt;</span> <span class="dv">100</span>:</span>
@@ -1751,9 +1760,9 @@ Model Size and Performance
 <span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> sample.<span class="bu">apply</span>(classify_with_signals, axis<span class="op">=</span><span class="dv">1</span>, result_type<span class="op">=</span><span class="st">'expand'</span>)</span>
 <span id="cb31-50"><a href="#cb31-50" aria-hidden="true" tabindex="-1"></a>sample[[<span class="st">'llm_genre_signals'</span>, <span class="st">'llm_genre_signals_rationale'</span>]] <span class="op">=</span> results</span>
 <span id="cb31-51"><a href="#cb31-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a>sample[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'llm_genre_cold'</span>, <span class="st">'llm_genre_signals'</span>, <span class="st">'llm_genre_signals_rationale'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a>sample[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'llm_genre_cold'</span>, <span class="st">'llm_genre_signals'</span>, <span class="st">'llm_genre_signals_rationale'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we could compare these signal-informed classifications to the cold classifications and the TF-IDF suggestions. How often does the LLM confirm the vocabulary signal? How often does it override it based on what it reads? Do the overrides feel justified when you look at the passage and rationale?</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sample[<span class="st">'cold_agrees_tfidf'</span>] <span class="op">=</span> sample[<span class="st">'llm_genre_cold'</span>] <span class="op">==</span> sample[<span class="st">'tfidf_genre_suggestion'</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sample[<span class="st">'cold_agrees_tfidf'</span>] <span class="op">=</span> sample[<span class="st">'llm_genre_cold'</span>] <span class="op">==</span> sample[<span class="st">'tfidf_genre_suggestion'</span>]</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>sample[<span class="st">'signals_agrees_tfidf'</span>] <span class="op">=</span> sample[<span class="st">'llm_genre_signals'</span>] <span class="op">==</span> sample[<span class="st">'tfidf_genre_suggestion'</span>]</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sample[<span class="st">'methods_agree'</span>] <span class="op">=</span> sample[<span class="st">'llm_genre_cold'</span>] <span class="op">==</span> sample[<span class="st">'llm_genre_signals'</span>]</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1778,9 +1787,9 @@ Model Size and Performance
 <span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"    Rationale         : </span><span class="sc">{</span>row[<span class="st">'llm_genre_signals_rationale'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>()</span>
 <span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">All approaches agree on this sample."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">All approaches agree on this sample."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We might get the following output, showing how often the LLM agrees with the TF-IDF signal and where the disagreements lie:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Cold</span> LLM agrees with TF-IDF suggestion:            20%</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Cold</span> LLM agrees with TF-IDF suggestion:            20%</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Signal-informed</span> LLM agrees with TF-IDF suggestion: 60%</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Both</span> LLM approaches agree with each other:         60%</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1796,20 +1805,20 @@ Model Size and Performance
 <span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">TF-IDF</span> suggestion : romance</span>
 <span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Cold</span> LLM          : bildung</span>
 <span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Signal-informed</span>   : romance</span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Rationale</span>         : The passage<span class="st">'s focus on domestic scenes, emotional relationships (e.g., "Face to face with boy," "Curling herself up in big chair"), and gentle activities (e.g., eating apples, playing music) suggests a romantic tone consistent with the novel'</span>s classification as a romance.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Rationale</span>         : The passage<span class="st">'s focus on domestic scenes, emotional relationships (e.g., "Face to face with boy," "Curling herself up in big chair"), and gentle activities (e.g., eating apples, playing music) suggests a romantic tone consistent with the novel'</span>s classification as a romance.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>However, I say might because one of the issues with LLMs is that they can be inconsistent. Running the same prompt twice can give different answers. So for our purposes we might keep exploring the consistency of the results on this sample before we run the signal-informed classifier across the full set of unlabeled novels, which we could use the following code to do:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>tqdm.pandas(desc<span class="op">=</span><span class="st">"Classifying novels"</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>unlabeled_df[<span class="st">'llm_genre'</span>] <span class="op">=</span> unlabeled_df.progress_apply(classify_with_signals, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Classified: </span><span class="sc">{</span>unlabeled_df[<span class="st">'llm_genre'</span>]<span class="sc">.</span>notna()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(unlabeled_df)<span class="sc">}</span><span class="ss"> novels"</span>)</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>unlabeled_df[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'dominant_topic'</span>, <span class="st">'llm_genre'</span>]].head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>unlabeled_df[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'dominant_topic'</span>, <span class="st">'llm_genre'</span>]].head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="extracting-additional-features" class="level3">
 <h3 class="anchored" data-anchor-id="extracting-additional-features">Extracting Additional Features</h3>
 <p>Genre is just one thing we can ask the LLM to do. We can also prompt it to extract structured narrative features or entities to compare to the NER approach. These add more columns to our augmented dataset and give the genre label useful context:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_features(row):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_features(row):</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Extract structured narrative features from a passage."""</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> <span class="bu">str</span>(row[<span class="st">'cleaned_text_no_persons'</span>])</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(text) <span class="kw">or</span> <span class="bu">len</span>(text) <span class="op">&lt;</span> <span class="dv">100</span>:</span>
@@ -1850,9 +1859,9 @@ Model Size and Performance
 <span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a>features_expanded <span class="op">=</span> unlabeled_df[<span class="st">'raw_features'</span>].<span class="bu">apply</span>(parse_features).<span class="bu">apply</span>(pd.Series)</span>
 <span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a>unlabeled_df <span class="op">=</span> pd.concat([unlabeled_df, features_expanded], axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-42"><a href="#cb35-42" aria-hidden="true" tabindex="-1"></a>unlabeled_df[[<span class="st">'title'</span>, <span class="st">'llm_genre'</span>, <span class="st">'NARRATOR'</span>, <span class="st">'TIME_PERIOD'</span>, <span class="st">'TONE'</span>, <span class="st">'CONFIDENCE'</span>]].head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-42"><a href="#cb35-42" aria-hidden="true" tabindex="-1"></a>unlabeled_df[[<span class="st">'title'</span>, <span class="st">'llm_genre'</span>, <span class="st">'NARRATOR'</span>, <span class="st">'TIME_PERIOD'</span>, <span class="st">'TONE'</span>, <span class="st">'CONFIDENCE'</span>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>unlabeled_df</code> now carries everything we promised at the start of the lesson: novels that entered with no genre label, leaving with a full set of complementary signals.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>output_cols <span class="op">=</span> [</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>output_cols <span class="op">=</span> [</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>,</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'tfidf_genre_suggestion'</span>, <span class="st">'tfidf_genre_confidence'</span>, <span class="st">'tfidf_top_terms'</span>,</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'dominant_topic'</span>, <span class="st">'llm_genre'</span>,</span>
@@ -1862,14 +1871,14 @@ Model Size and Performance
 <span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>output_cols <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> output_cols <span class="cf">if</span> c <span class="kw">in</span> unlabeled_df.columns]</span>
 <span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>unlabeled_df[output_cols].to_csv(<span class="st">"combined_novels_genre_augmented.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Saved </span><span class="sc">{</span><span class="bu">len</span>(unlabeled_df)<span class="sc">}</span><span class="ss"> newly classified novels with </span><span class="sc">{</span><span class="bu">len</span>(output_cols)<span class="sc">}</span><span class="ss"> columns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Saved </span><span class="sc">{</span><span class="bu">len</span>(unlabeled_df)<span class="sc">}</span><span class="ss"> newly classified novels with </span><span class="sc">{</span><span class="bu">len</span>(output_cols)<span class="sc">}</span><span class="ss"> columns"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-On using LLMs for humanities research
+<span class="screen-reader-only">Tip</span>On using LLMs for humanities research
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1973,7 +1982,7 @@ On using LLMs for humanities research
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -2023,13 +2032,14 @@ On using LLMs for humanities research
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

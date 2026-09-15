@@ -7,8 +7,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <title>IS310 - Culture As Data Fall 2026 – (Re)Introduction to Notebooks</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -372,7 +378,7 @@
 <section id="getting-started-installation-1" class="slide level2">
 <h2>Getting Started: Installation</h2>
 <p><em>Before we install Jupyter, what should we do?</em></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">pip</span> install jupyter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="ex">pip</span> install jupyter</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -404,7 +410,7 @@
 <section id="getting-started-virtual-environment-setup" class="slide level2">
 <h2>Getting Started: Virtual Environment Setup</h2>
 <p><em>Next, we need to tell Jupyter about our virtual environment</em></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span><span class="op">=</span>is310-class-env <span class="co">#Or whatever you named your virtual environment</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span><span class="op">=</span>is310-class-env <span class="co">#Or whatever you named your virtual environment</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Since we are using a virtual environment, we also need to make it so that our Jupyter notebook can access our virtual environment (i.e.&nbsp;it knows where your Python libraries are).</p>
 <style type="text/css">
@@ -421,7 +427,7 @@
 </section>
 <section id="running-jupyter-notebooks-localhost" class="slide level2">
 <h2>Running Jupyter Notebooks &amp; Localhost</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="ex">jupyter</span> notebook</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a aria-label="1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>You should see the Jupyter interface open in your browser. What is the domain name?</em></p>
 <aside class="notes">
 <p>This command immediately opens the Jupyter interface in our browser, usually at the following address: <a href="http://localhost:8888/tree">http://localhost:8888/tree</a>. If it doesn’t open automatically, you can copy and paste this address into your browser.</p>
@@ -630,40 +636,40 @@
 <h2>Writing Code &amp; Markdown in Jupyter Notebooks</h2>
 <div class="r-fit-text">
 <p>Try pasting the following within the first cell of the Jupyter notebook. <em>What should we see in our Notebook?</em></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">def</span> check_movie_release(movie):</span>
-<span id="cb4-2"><a></a>    <span class="cf">if</span> movie[<span class="st">'release_year'</span>] <span class="op">&lt;</span> <span class="dv">2000</span>:</span>
-<span id="cb4-3"><a></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released before 2000"</span>)</span>
-<span id="cb4-4"><a></a>    <span class="cf">else</span>:</span>
-<span id="cb4-5"><a></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released after 2000"</span>)</span>
-<span id="cb4-6"><a></a>        <span class="cf">return</span> movie[<span class="st">'name'</span>]</span>
-<span id="cb4-7"><a></a></span>
-<span id="cb4-8"><a></a>recent_movies <span class="op">=</span> []</span>
-<span id="cb4-9"><a></a></span>
-<span id="cb4-10"><a></a>favorite_movies <span class="op">=</span>[</span>
-<span id="cb4-11"><a></a>    {</span>
-<span id="cb4-12"><a></a>        <span class="st">"name"</span>: <span class="st">"The Matrix IV"</span>,</span>
-<span id="cb4-13"><a></a>        <span class="st">"release_year"</span>: <span class="dv">2022</span>,</span>
-<span id="cb4-14"><a></a>        <span class="st">"sequels"</span>: [<span class="st">"The Matrix I"</span>, <span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>]</span>
-<span id="cb4-15"><a></a>    },</span>
-<span id="cb4-16"><a></a>    {</span>
-<span id="cb4-17"><a></a>        <span class="st">"name"</span>: <span class="st">"Star Wars IV"</span>,</span>
-<span id="cb4-18"><a></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span>,</span>
-<span id="cb4-19"><a></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
-<span id="cb4-20"><a></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
-<span id="cb4-21"><a></a>    },</span>
-<span id="cb4-22"><a></a>    {</span>
-<span id="cb4-23"><a></a>        <span class="st">"name"</span>: <span class="st">"The Lord of the Rings: The Fellowship of the Ring"</span>,</span>
-<span id="cb4-24"><a></a>        <span class="st">"release_year"</span>: <span class="dv">2001</span>,</span>
-<span id="cb4-25"><a></a>        <span class="st">"sequels"</span>: [<span class="st">"The Two Towers"</span>, <span class="st">"The Return of the King"</span>]</span>
-<span id="cb4-26"><a></a>    }</span>
-<span id="cb4-27"><a></a>]</span>
-<span id="cb4-28"><a></a></span>
-<span id="cb4-29"><a></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
-<span id="cb4-30"><a></a>    result <span class="op">=</span> check_movie_release(movie)</span>
-<span id="cb4-31"><a></a>    <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb4-32"><a></a>        recent_movies.append(result)</span>
-<span id="cb4-33"><a></a></span>
-<span id="cb4-34"><a></a><span class="bu">print</span>(recent_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a><span class="kw">def</span> check_movie_release(movie):</span>
+<span id="cb4-2"><a aria-label="2"></a>    <span class="cf">if</span> movie[<span class="st">'release_year'</span>] <span class="op">&lt;</span> <span class="dv">2000</span>:</span>
+<span id="cb4-3"><a aria-label="3"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released before 2000"</span>)</span>
+<span id="cb4-4"><a aria-label="4"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-5"><a aria-label="5"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released after 2000"</span>)</span>
+<span id="cb4-6"><a aria-label="6"></a>        <span class="cf">return</span> movie[<span class="st">'name'</span>]</span>
+<span id="cb4-7"><a aria-label="7"></a></span>
+<span id="cb4-8"><a aria-label="8"></a>recent_movies <span class="op">=</span> []</span>
+<span id="cb4-9"><a aria-label="9"></a></span>
+<span id="cb4-10"><a aria-label="10"></a>favorite_movies <span class="op">=</span>[</span>
+<span id="cb4-11"><a aria-label="11"></a>    {</span>
+<span id="cb4-12"><a aria-label="12"></a>        <span class="st">"name"</span>: <span class="st">"The Matrix IV"</span>,</span>
+<span id="cb4-13"><a aria-label="13"></a>        <span class="st">"release_year"</span>: <span class="dv">2022</span>,</span>
+<span id="cb4-14"><a aria-label="14"></a>        <span class="st">"sequels"</span>: [<span class="st">"The Matrix I"</span>, <span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>]</span>
+<span id="cb4-15"><a aria-label="15"></a>    },</span>
+<span id="cb4-16"><a aria-label="16"></a>    {</span>
+<span id="cb4-17"><a aria-label="17"></a>        <span class="st">"name"</span>: <span class="st">"Star Wars IV"</span>,</span>
+<span id="cb4-18"><a aria-label="18"></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span>,</span>
+<span id="cb4-19"><a aria-label="19"></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
+<span id="cb4-20"><a aria-label="20"></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
+<span id="cb4-21"><a aria-label="21"></a>    },</span>
+<span id="cb4-22"><a aria-label="22"></a>    {</span>
+<span id="cb4-23"><a aria-label="23"></a>        <span class="st">"name"</span>: <span class="st">"The Lord of the Rings: The Fellowship of the Ring"</span>,</span>
+<span id="cb4-24"><a aria-label="24"></a>        <span class="st">"release_year"</span>: <span class="dv">2001</span>,</span>
+<span id="cb4-25"><a aria-label="25"></a>        <span class="st">"sequels"</span>: [<span class="st">"The Two Towers"</span>, <span class="st">"The Return of the King"</span>]</span>
+<span id="cb4-26"><a aria-label="26"></a>    }</span>
+<span id="cb4-27"><a aria-label="27"></a>]</span>
+<span id="cb4-28"><a aria-label="28"></a></span>
+<span id="cb4-29"><a aria-label="29"></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
+<span id="cb4-30"><a aria-label="30"></a>    result <span class="op">=</span> check_movie_release(movie)</span>
+<span id="cb4-31"><a aria-label="31"></a>    <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb4-32"><a aria-label="32"></a>        recent_movies.append(result)</span>
+<span id="cb4-33"><a aria-label="33"></a></span>
+<span id="cb4-34"><a aria-label="34"></a><span class="bu">print</span>(recent_movies)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <aside class="notes">
 <p>Now in a Jupyter notebook, we can still use much of the same Python syntax as our scripts. For example, going back to our <a href="../materials/creating-curating-cad/02-python-refresher-advanced">Python Refresher II: Advanced Python</a>, we could reuse some of the same code in this notebook (though I did add a few tweaks).</p>
@@ -685,17 +691,17 @@
 <div class="r-fit-text">
 <p>Unlike with scripts, notebooks hold variables in memory, which means that our function now exists in the notebook and we can call in a new cell.</p>
 <p>To test this out, add a new cell below our function one by pressing the <code>+ Code</code> symbol when you hover. Then paste the following code and run it.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> updated_check_movie_release(movie, released_after_year, released_before_year<span class="op">=</span><span class="dv">2024</span>):</span>
-<span id="cb5-2"><a></a>    <span class="cf">if</span> released_after_year <span class="op">&lt;</span> movie[<span class="st">'release_year'</span>] <span class="kw">and</span> movie[<span class="st">'release_year'</span>] <span class="op">&lt;</span> released_before_year:</span>
-<span id="cb5-3"><a></a>        movie[<span class="st">'recent'</span>] <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb5-4"><a></a>    <span class="cf">else</span>:</span>
-<span id="cb5-5"><a></a>        movie[<span class="st">'recent'</span>] <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb5-6"><a></a>    <span class="cf">return</span> movie</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a aria-label="1"></a><span class="kw">def</span> updated_check_movie_release(movie, released_after_year, released_before_year<span class="op">=</span><span class="dv">2024</span>):</span>
+<span id="cb5-2"><a aria-label="2"></a>    <span class="cf">if</span> released_after_year <span class="op">&lt;</span> movie[<span class="st">'release_year'</span>] <span class="kw">and</span> movie[<span class="st">'release_year'</span>] <span class="op">&lt;</span> released_before_year:</span>
+<span id="cb5-3"><a aria-label="3"></a>        movie[<span class="st">'recent'</span>] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb5-4"><a aria-label="4"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-5"><a aria-label="5"></a>        movie[<span class="st">'recent'</span>] <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb5-6"><a aria-label="6"></a>    <span class="cf">return</span> movie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we can call this function in our for-loop by updating the original code:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
-<span id="cb6-2"><a></a>    updated_movie <span class="op">=</span> updated_check_movie_release(movie, <span class="dv">2020</span>)</span>
-<span id="cb6-3"><a></a>    <span class="cf">if</span> updated_movie[<span class="st">'recent'</span>]:</span>
-<span id="cb6-4"><a></a>        recent_movies.append(updated_movie[<span class="st">'name'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
+<span id="cb6-2"><a aria-label="2"></a>    updated_movie <span class="op">=</span> updated_check_movie_release(movie, <span class="dv">2020</span>)</span>
+<span id="cb6-3"><a aria-label="3"></a>    <span class="cf">if</span> updated_movie[<span class="st">'recent'</span>]:</span>
+<span id="cb6-4"><a aria-label="4"></a>        recent_movies.append(updated_movie[<span class="st">'name'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <aside class="notes">
 <p>Now we should see just the <code>The Matrix IV</code> in our list of recent movies. You’ll notice I didn’t have to move the new function above our for-loop. But what happens if I save and close, then reopen the notebook?</p>
@@ -804,18 +810,18 @@
 <section id="pandas-basics" class="slide level2">
 <h2>Pandas Basics</h2>
 <p>First we need to install <code>pandas</code>, which we can do by visiting the documentation and following the steps under the <code>Getting Started</code> and <code>Installation</code> <a href="https://pandas.pydata.org/docs/getting_started/install.html">https://pandas.pydata.org/docs/getting_started/install.html</a>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">pip</span> install pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a aria-label="1"></a><span class="ex">pip</span> install pandas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You’re welcome to use any installation method, but I highly recommend installing into a virtual environment, and using <code>pip</code> to install <a href="https://pandas.pydata.org/docs/getting_started/install.html#installing-from-pypi">https://pandas.pydata.org/docs/getting_started/install.html#installing-from-pypi</a>.</p>
 </section>
 <section id="using-pandas-in-jupyter-notebooks" class="slide level2">
 <h2>Using Pandas in Jupyter Notebooks</h2>
 <p>Now if we start to go through the tutorials in the <code>Getting Started</code> section, we can start to learn how to work with <code>pandas</code>. Specifically, this tutorial on reading and writing data with <code>pandas</code>: <a href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/02_read_write.html">https://pandas.pydata.org/docs/getting_started/intro_tutorials/02_read_write.html</a>.</p>
 <p>You’ll notice the first line of the tutorial is the following syntax:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>How can we check the version of Pandas?</em></p>
 <aside class="notes">
 <p>Remember the <code>as</code> keyword is used to give a library an alias, so that we don’t have to type <code>pandas</code> each time we want to use a feature of the library. We can check that this worked, by outputting the version of Pandas, with the following:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>pd.__version__</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a>pd.__version__</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -885,15 +891,15 @@
 </section>
 <section id="read-csv-with-pandas" class="slide level2">
 <h2>Read CSV with Pandas</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb10-2"><a></a></span>
-<span id="cb10-3"><a></a>parks_data_df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-2"><a aria-label="2"></a></span>
+<span id="cb10-3"><a aria-label="3"></a>parks_data_df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>How can we see the type of data we have in our <code>parks_data_df</code> variable?</em></p>
 <aside class="notes">
 <p>I named the variable holding the data <code>parks_data_df</code>, which is a common convention in data science to use the <code>_df</code> suffix to indicate that the variable is a DataFrame. I could’ve been a bit more expressive and named it <code>national_parks_visits_df</code>, but I wanted to keep it short for typing. You’re welcome to use any naming convention you prefer, but I would recommend being consistent and using the <code>_df</code> suffix for DataFrames.</p>
 <p>So now let’s explore <code>parks_data_df</code>.</p>
 <p>First, we can test what the variable contains by using <code>type(parks_data_df)</code>, which tells us that it is a <code>pandas.core.frame.DataFrame</code>. Notice how we aren’t using the <code>print()</code> method here, but rather just typing the variable name and running the cell. That’s because Jupyter notebooks will automatically print the output of the last line of a cell.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="bu">type</span>(parks_data_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a aria-label="1"></a><span class="bu">type</span>(parks_data_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -923,7 +929,7 @@
 <aside class="notes">
 <p>DataFrames are the primary data structures in pandas. They are two-dimensional, meaning they have both rows and columns, and can store different types of data. Each column is essentially a Series, which is a one-dimensional data structure.</p>
 <p>We can either visit the documentation for <code>DataFrame</code> directly here <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame">https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame</a> or we can also use the Python built-in <code>help()</code> function to learn more about the DataFrame class.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="bu">help</span>(pd.DataFrame)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a aria-label="1"></a><span class="bu">help</span>(pd.DataFrame)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>These details are very technical but we can start to get a sense that DataFrames are powerful data structures, containing both rows and columns, and that they can hold different types of data.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -948,9 +954,9 @@
 </section>
 <section id="exploring-dataframes-1" class="slide level2">
 <h2>Exploring DataFrames</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>parks_data_df.head()        <span class="co"># First few rows</span></span>
-<span id="cb13-2"><a></a>parks_data_df.shape         <span class="co"># Number of rows and columns</span></span>
-<span id="cb13-3"><a></a>parks_data_df.dtypes        <span class="co"># Data types of each column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a aria-label="1"></a>parks_data_df.head()        <span class="co"># First few rows</span></span>
+<span id="cb13-2"><a aria-label="2"></a>parks_data_df.shape         <span class="co"># Number of rows and columns</span></span>
+<span id="cb13-3"><a aria-label="3"></a>parks_data_df.dtypes        <span class="co"># Data types of each column</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>These methods help you explore your data. <code>head()</code> shows the first few rows, <code>shape</code> tells you the dimensions, <code>dtypes</code> shows data types, <code>info()</code> gives a comprehensive summary, and <code>describe()</code> provides statistical summaries of numeric columns.</p>
 <style type="text/css">
@@ -1047,9 +1053,9 @@
 <section id="exploring-dataframes-2" class="slide level2">
 <h2>Exploring DataFrames</h2>
 <p>We can get an overview of our data using two additional methods: <code>info()</code> and <code>describe()</code>. The <code>info()</code> method gives us a summary of the DataFrame, including the number of non-null values in each column, while the <code>describe()</code> method gives us summary statistics for the numeric columns.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>parks_data_df.info()</span>
-<span id="cb14-2"><a></a></span>
-<span id="cb14-3"><a></a>parks_data_df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a aria-label="1"></a>parks_data_df.info()</span>
+<span id="cb14-2"><a aria-label="2"></a></span>
+<span id="cb14-3"><a aria-label="3"></a>parks_data_df.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>We can see that the <code>info()</code> method gives us a lot of useful information about our DataFrame, including the number of entries, the number of columns, the names of the columns, the number of non-null values, and the data types of each column.</p>
 <p>We can also see that the <code>describe()</code> method gives us summary statistics for the numeric columns, including the count, mean, standard deviation, minimum, maximum, and the quartiles. Notably, we can see that the <code>Year</code> column is an integer, while the <code>RecreationVisits</code> column is a float. Because these are the only two numeric columns, they are the only ones included in the summary statistics.</p>
@@ -1165,26 +1171,26 @@
 <p>While the columns in the <code>parks_data_df</code> are capitalized, usually we try to keep column names lowercase and use underscores instead of spaces for ease of typing. <em>How could we rename them to be lowercased and have underscores instead of spaces?</em></p>
 <aside class="notes">
 <p>While the columns in the <code>parks_data_df</code> are capitalized, usually we try to keep column names lowercase and use underscores instead of spaces for ease of typing. So let’s try renaming all of the columns programmatically. First, we need to get all the column names using the <code>columns</code> attribute of the <code>DataFrame</code>, which can see is an attribute in the documentation <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.columns.html">https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.columns.html</a>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>parks_data_df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a aria-label="1"></a>parks_data_df.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then we can use a list comprehension to create a new list of column names that are all lowercase and have underscores instead of spaces.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>new_column_names <span class="op">=</span> [col.lower().replace(<span class="st">' '</span>, <span class="st">'_'</span>) <span class="cf">for</span> col <span class="kw">in</span> parks_data_df.columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a aria-label="1"></a>new_column_names <span class="op">=</span> [col.lower().replace(<span class="st">' '</span>, <span class="st">'_'</span>) <span class="cf">for</span> col <span class="kw">in</span> parks_data_df.columns]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Finally, we can assign this new list to the <code>columns</code> attribute of the DataFrame.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>parks_data_df.columns <span class="op">=</span> new_column_names</span>
-<span id="cb17-2"><a></a>parks_data_df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a aria-label="1"></a>parks_data_df.columns <span class="op">=</span> new_column_names</span>
+<span id="cb17-2"><a aria-label="2"></a>parks_data_df.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img data-src="../../assets/images/col_names.png"></p>
 <p>You’ll notice that column names like <code>RecreationVisits</code> are now <code>recreationvisits</code>, which is much easier to work with but still a bit hard to read. We could use the following code</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="im">import</span> re</span>
-<span id="cb18-2"><a></a></span>
-<span id="cb18-3"><a></a><span class="co"># We need to reload the data to reset the column names back to their original state</span></span>
-<span id="cb18-4"><a></a>parks_data_df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv'</span>) <span class="co"># or use the local path pd.read_csv('US-National-Parks_RecreationVisits_1979-2023.csv')</span></span>
-<span id="cb18-5"><a></a></span>
-<span id="cb18-6"><a></a><span class="co"># Function to split on uppercase letters and insert underscores</span></span>
-<span id="cb18-7"><a></a><span class="kw">def</span> split_on_uppercase(name):</span>
-<span id="cb18-8"><a></a>    <span class="cf">return</span> re.sub(<span class="vs">r'</span><span class="kw">(</span><span class="fu">?&lt;</span><span class="vs">!</span><span class="dv">^</span><span class="kw">)</span><span class="ex">(</span><span class="fu">?=</span><span class="pp">[A-Z]</span><span class="ex">)</span><span class="vs">'</span>, <span class="st">'_'</span>, name).lower()</span>
-<span id="cb18-9"><a></a></span>
-<span id="cb18-10"><a></a><span class="co"># Apply the function to each column name</span></span>
-<span id="cb18-11"><a></a>new_column_names <span class="op">=</span> [split_on_uppercase(col) <span class="cf">for</span> col <span class="kw">in</span> parks_data_df.columns]</span>
-<span id="cb18-12"><a></a>parks_data_df.columns <span class="op">=</span> new_column_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a aria-label="1"></a><span class="im">import</span> re</span>
+<span id="cb18-2"><a aria-label="2"></a></span>
+<span id="cb18-3"><a aria-label="3"></a><span class="co"># We need to reload the data to reset the column names back to their original state</span></span>
+<span id="cb18-4"><a aria-label="4"></a>parks_data_df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv'</span>) <span class="co"># or use the local path pd.read_csv('US-National-Parks_RecreationVisits_1979-2023.csv')</span></span>
+<span id="cb18-5"><a aria-label="5"></a></span>
+<span id="cb18-6"><a aria-label="6"></a><span class="co"># Function to split on uppercase letters and insert underscores</span></span>
+<span id="cb18-7"><a aria-label="7"></a><span class="kw">def</span> split_on_uppercase(name):</span>
+<span id="cb18-8"><a aria-label="8"></a>    <span class="cf">return</span> re.sub(<span class="vs">r'</span><span class="kw">(</span><span class="fu">?&lt;</span><span class="vs">!</span><span class="dv">^</span><span class="kw">)</span><span class="ex">(</span><span class="fu">?=</span><span class="pp">[A-Z]</span><span class="ex">)</span><span class="vs">'</span>, <span class="st">'_'</span>, name).lower()</span>
+<span id="cb18-9"><a aria-label="9"></a></span>
+<span id="cb18-10"><a aria-label="10"></a><span class="co"># Apply the function to each column name</span></span>
+<span id="cb18-11"><a aria-label="11"></a>new_column_names <span class="op">=</span> [split_on_uppercase(col) <span class="cf">for</span> col <span class="kw">in</span> parks_data_df.columns]</span>
+<span id="cb18-12"><a aria-label="12"></a>parks_data_df.columns <span class="op">=</span> new_column_names</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now if we check the column names again, we should see that they are all lowercase and have underscores instead of spaces. However, we will only see that if we reload the original dataset, otherwise it will not work. Why is that? <strong>Hint: Remember Jupyter Notebooks are not Python scripts!</strong></p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1202,7 +1208,7 @@
 <h2>Filtering Data</h2>
 <p>One of the things that makes Pandas so powerful is that it allows us to filter data easily. We can filter data using boolean indexing, which allows us to select rows based on conditions, just like <code>if</code> statements in Python.</p>
 <p>For example, if we want to filter the DataFrame to only include rows for visits to Illinois, we could select the <code>state</code> column and see how many rows have the value <code>IL</code>, we can do the following:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>parks_data_df[parks_data_df[<span class="st">'state'</span>] <span class="op">==</span> <span class="st">'IL'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a aria-label="1"></a>parks_data_df[parks_data_df[<span class="st">'state'</span>] <span class="op">==</span> <span class="st">'IL'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="filtering-data-1" class="slide level2">
 <h2>Filtering Data</h2>
@@ -1211,7 +1217,7 @@
 <img data-src="../assets/images/parks_map.png" class="quarto-figure quarto-figure-center r-stretch"><p><em>How else could we have discovered this using Pandas?</em></p>
 <aside class="notes">
 <p>While we could’ve checked this map prior to filtering, we can also check the unique values in the <code>state</code> column to see what values exist.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>parks_data_df[<span class="st">'state'</span>].unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a aria-label="1"></a>parks_data_df[<span class="st">'state'</span>].unique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>However, <code>unique()</code> only gives us the unique values in the column, but it doesn’t tell us how many times each value appears.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1228,16 +1234,16 @@
 <section id="value-counts-method" class="slide level2">
 <h2>Value Counts Method</h2>
 <p>We can use the <code>value_counts()</code> method to see how many times each value appears in the <code>state</code> column! We can read more about the method here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.value_counts.html#pandas-dataframe-value-counts" target="_blank">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.value_counts.html#pandas-dataframe-value-counts</a>.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>parks_data_df[<span class="st">'state'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a aria-label="1"></a>parks_data_df[<span class="st">'state'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Now what if we only wanted to include rows for a specific state?</em></p>
 </section>
 <section id="filtering-data-with-boolean-indexing" class="slide level2">
 <h2>Filtering Data with Boolean Indexing</h2>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a><span class="co"># Boolean indexing</span></span>
-<span id="cb22-2"><a></a>parks_data_df[parks_data_df[<span class="st">'state'</span>] <span class="op">==</span> <span class="st">'CA'</span>]</span>
-<span id="cb22-3"><a></a></span>
-<span id="cb22-4"><a></a><span class="co"># Multiple values</span></span>
-<span id="cb22-5"><a></a>parks_data_df[parks_data_df[<span class="st">'state'</span>].isin([<span class="st">'CA'</span>, <span class="st">'AK'</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a aria-label="1"></a><span class="co"># Boolean indexing</span></span>
+<span id="cb22-2"><a aria-label="2"></a>parks_data_df[parks_data_df[<span class="st">'state'</span>] <span class="op">==</span> <span class="st">'CA'</span>]</span>
+<span id="cb22-3"><a aria-label="3"></a></span>
+<span id="cb22-4"><a aria-label="4"></a><span class="co"># Multiple values</span></span>
+<span id="cb22-5"><a aria-label="5"></a>parks_data_df[parks_data_df[<span class="st">'state'</span>].isin([<span class="st">'CA'</span>, <span class="st">'AK'</span>])]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>What if we wanted to see how many rows there are for parks are in each state?</em></p>
 <aside class="notes">
 <p>We can filter data using boolean indexing, which allows us to select rows based on conditions just like <code>if</code> statements in Python. The <code>isin()</code> method checks if a value is in a list of values. <code>unique()</code> shows unique values in a column, and <code>value_counts()</code> shows how many times each value appears.</p>
@@ -1285,16 +1291,16 @@
 <section id="grouping-data-1" class="slide level2">
 <h2>Grouping Data</h2>
 <p>First, we select a or multiple columns we want to group our data by. For example, in our case we could group by <code>state</code> so that we could see how many parks exist in each state.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>parks_data_df.groupby(<span class="st">'state'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a aria-label="1"></a>parks_data_df.groupby(<span class="st">'state'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>While this code works, we’ll see that it only returns a <code>DataFrameGroupBy</code> object, which is not very useful on its own. To see the actual data, we could use the <code>get_group()</code> method to see the data for a specific state.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>parks_data_df.groupby(<span class="st">'state'</span>).get_group(<span class="st">'CA'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a aria-label="1"></a>parks_data_df.groupby(<span class="st">'state'</span>).get_group(<span class="st">'CA'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>How could we use groupby to count the number of parks in each state?</em></p>
 </section>
 <section id="grouping-data-2" class="slide level2">
 <h2>Grouping Data</h2>
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>parks_data_df.groupby(<span class="st">'state'</span>).size()</span>
-<span id="cb25-2"><a></a></span>
-<span id="cb25-3"><a></a>parks_data_df.groupby(<span class="st">'state'</span>)[<span class="st">'park_name'</span>].nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a aria-label="1"></a>parks_data_df.groupby(<span class="st">'state'</span>).size()</span>
+<span id="cb25-2"><a aria-label="2"></a></span>
+<span id="cb25-3"><a aria-label="3"></a>parks_data_df.groupby(<span class="st">'state'</span>)[<span class="st">'park_name'</span>].nunique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Now we see that we are getting a subset of our data! However, where <code>groupby()</code> really shines is when we want to perform a transformation on the grouped data. For example, if we want to count the number of parks in each state, we could do the following:</p>
 <p>This code uses the <code>size()</code> method to count the number of rows in each group (you can read more about it here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.size.html#pandas.core.groupby.DataFrameGroupBy.size">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.size.html#pandas.core.groupby.DataFrameGroupBy.size</a>). In this code, we’re getting all the rows in the DataFrame, grouping them by the <code>state</code> column, and then counting the number of rows in each group. However, if we wanted the number of unique parks, we could use the <code>nunique()</code> method instead (you can read more about it here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.nunique.html#pandas.core.groupby.DataFrameGroupBy.nunique">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.nunique.html#pandas.core.groupby.DataFrameGroupBy.nunique</a>).</p>
@@ -1314,7 +1320,7 @@
 <section id="reseting-index" class="slide level2">
 <h2>Reseting Index</h2>
 <p>Because we are getting a Series, we can also convert it back to a DataFrame using the <code>reset_index()</code> method, which will turn the Series back into a DataFrame.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>parks_data_df.groupby(<span class="st">'state'</span>)[<span class="st">'park_name'</span>].nunique().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a aria-label="1"></a>parks_data_df.groupby(<span class="st">'state'</span>)[<span class="st">'park_name'</span>].nunique().reset_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 <img data-src="https://pynative.com/wp-content/uploads/2021/02/dataframe.png" class="r-stretch"><aside class="notes">
 <p>You’ll often see <code>reset_index()</code> being used in Pandas. But what is the index? The index is a special column in Pandas that is used to identify rows. By default, Pandas assigns a unique index to each row, but we can also set our own index using the <code>set_index()</code> method. You can read more about <code>reset_index()</code> here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#pandas-dataframe-reset-index">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#pandas-dataframe-reset-index</a> and <code>set_index()</code> here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.set_index.html#pandas.DataFrame.set_index">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.set_index.html#pandas.DataFrame.set_index</a>.</p>
@@ -1398,7 +1404,7 @@
 </table>
 </div>
 <aside class="notes">
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a>parks_per_state_df <span class="op">=</span> parks_data_df.groupby(<span class="st">'state'</span>)[<span class="st">'park_name'</span>].nunique().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a aria-label="1"></a>parks_per_state_df <span class="op">=</span> parks_data_df.groupby(<span class="st">'state'</span>)[<span class="st">'park_name'</span>].nunique().reset_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>nunique()</code> is just one of many methods we could use with <code>groupby()</code>. We could also use <code>sum()</code>, <code>mean()</code>, <code>min()</code>, <code>max()</code>, and more. Here’s a short summary table of some of the built-in methods we can use with both Series, DataFrames, and GroupBy objects, and you can see more in the user guide here: <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/basics.html#descriptive-statistics">https://pandas.pydata.org/pandas-docs/stable/user_guide/basics.html#descriptive-statistics</a>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1417,7 +1423,7 @@
 <p><em>How could we rename the <code>park_name</code> column to <code>num_parks</code> to more accurately reflect its content?</em></p>
 <p>More info available here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html#pandas-dataframe-rename" target="_blank">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html#pandas-dataframe-rename</a>.</p>
 <aside class="notes">
-<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a></a>parks_per_state_df.rename(columns<span class="op">=</span>{<span class="st">'park_name'</span>: <span class="st">'num_parks'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a aria-label="1"></a>parks_per_state_df.rename(columns<span class="op">=</span>{<span class="st">'park_name'</span>: <span class="st">'num_parks'</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we have a new DataFrame that contains the number of parks in each state, but you’ll notice that the column names are identical to the original <code>parks_data_df</code>. That’s because <code>groupby()</code> does not automatically rename the columns. So we can rename the columns to something more descriptive using the <code>rename()</code> method (more info available here <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html#pandas-dataframe-rename">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html#pandas-dataframe-rename</a>). We can rename columns to something more descriptive. The <code>rename()</code> method takes a dictionary mapping old column names to new ones. The <code>inplace=True</code> argument modifies the DataFrame directly rather than returning a new one.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1436,9 +1442,9 @@
 
 <img data-src="../assets/images/rename_column.png" class="r-stretch"><aside class="notes">
 <p>As you can see in this figure, we can use the <code>rename()</code> method, which requires passing a dictionary to the <code>columns</code> parameter, where the keys are the old column names and the values are the new column names.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a>parks_per_state_df.rename(columns<span class="op">=</span>{<span class="st">'park_name'</span>: <span class="st">'num_parks'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a aria-label="1"></a>parks_per_state_df.rename(columns<span class="op">=</span>{<span class="st">'park_name'</span>: <span class="st">'num_parks'</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>However one issue with this code is that if we use <code>parks_per_state_df</code> in a new cell, it won’t show this new column name. To save our result we need to use the <code>inplace</code> argument in rename.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a>parks_per_state_df.rename(columns<span class="op">=</span>{<span class="st">'park_name'</span>: <span class="st">'num_parks'</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a aria-label="1"></a>parks_per_state_df.rename(columns<span class="op">=</span>{<span class="st">'park_name'</span>: <span class="st">'num_parks'</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1454,7 +1460,7 @@
 <section id="inplace-vs-not-in-place-1" class="slide level2">
 <h2>Inplace vs Not In Place</h2>
 <p>Many methods in Pandas have an <code>inplace</code> argument, which allows us to modify the DataFrame directly rather than returning a new DataFrame. For example, the <code>sort_values()</code> method also has an <code>inplace</code> argument.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a></a>parks_per_state_df.sort_values(by<span class="op">=</span><span class="st">'num_parks'</span>, ascending<span class="op">=</span><span class="va">False</span>, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a aria-label="1"></a>parks_per_state_df.sort_values(by<span class="op">=</span><span class="st">'num_parks'</span>, ascending<span class="op">=</span><span class="va">False</span>, inplace<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now when we run this cell, <code>parks_per_state_df</code> will have the new column, and be sorted by the number of parks in descending order.</p>
 </section>
 <section id="adding-new-data" class="slide level2">
@@ -1476,12 +1482,12 @@
 </section>
 <section id="adding-new-data-1" class="slide level2">
 <h2>Adding New Data</h2>
-<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a>new_state <span class="op">=</span> pd.DataFrame({<span class="st">'state'</span>: [<span class="st">'IL'</span>], <span class="st">'num_parks'</span>: [<span class="dv">0</span>]})</span>
-<span id="cb32-2"><a></a>parks_per_state_df <span class="op">=</span> pd.concat([parks_per_state_df, new_state], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a aria-label="1"></a>new_state <span class="op">=</span> pd.DataFrame({<span class="st">'state'</span>: [<span class="st">'IL'</span>], <span class="st">'num_parks'</span>: [<span class="dv">0</span>]})</span>
+<span id="cb32-2"><a aria-label="2"></a>parks_per_state_df <span class="op">=</span> pd.concat([parks_per_state_df, new_state], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Any alternatives?</em></p>
 <aside class="notes">
 <p>Let’s break this down. First, we create a new DataFrame called <code>new_state</code> that contains the new data we want to add. There are many ways we could create this DataFrame, but we used a dictionary where the keys are the column names and the values are lists of the data we want to add. Alternatively, we could also use a list of dictionaries, like the following:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a></a>new_state <span class="op">=</span> pd.DataFrame([{<span class="st">'state'</span>: <span class="st">'IL'</span>, <span class="st">'num_parks'</span>: <span class="dv">0</span>}])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a aria-label="1"></a>new_state <span class="op">=</span> pd.DataFrame([{<span class="st">'state'</span>: <span class="st">'IL'</span>, <span class="st">'num_parks'</span>: <span class="dv">0</span>}])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The core thing is that we are using the <code>DataFrame</code> class to create a new DataFrame, and passing in data that has the same column names as the original DataFrame. You’ll notice I’m assigning <code>num_parks</code> as <code>0</code>, since we know that there are no parks in Illinois. However, we could also have used <code>NaN</code> to indicate that we don’t have data for that state.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1497,10 +1503,10 @@
 </section>
 <section id="adding-new-data-2" class="slide level2">
 <h2>Adding New Data</h2>
-<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb34-2"><a></a></span>
-<span id="cb34-3"><a></a>new_state <span class="op">=</span> pd.DataFrame({<span class="st">'state'</span>: [<span class="st">'IL'</span>], <span class="st">'num_parks'</span>: [np.nan]})</span>
-<span id="cb34-4"><a></a>new_state <span class="op">=</span> pd.DataFrame([{<span class="st">'state'</span>: <span class="st">'IL'</span>, <span class="st">'num_parks'</span>: <span class="va">None</span>}])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb34-2"><a aria-label="2"></a></span>
+<span id="cb34-3"><a aria-label="3"></a>new_state <span class="op">=</span> pd.DataFrame({<span class="st">'state'</span>: [<span class="st">'IL'</span>], <span class="st">'num_parks'</span>: [np.nan]})</span>
+<span id="cb34-4"><a aria-label="4"></a>new_state <span class="op">=</span> pd.DataFrame([{<span class="st">'state'</span>: <span class="st">'IL'</span>, <span class="st">'num_parks'</span>: <span class="va">None</span>}])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p><code>NaN</code> stands for “Not a Number” and is Pandas’ way of indicating missing data. There’s two ways we could create a <code>NaN</code>. We could either use the Python keyword <code>None</code> or we could use the <code>numpy</code> library, which has a built-in <code>nan</code> value. The choice of when to use zero or <code>NaN</code> requires thinking about how we want to use this data. In our case, <code>0</code> makes more sense since we know that there are no national parks run by NPS in Illinois.</p>
 <style type="text/css">
@@ -1519,7 +1525,7 @@
 <h2>Combining DataFrames</h2>
 <p><em>How can we combine DataFrames?</em></p>
 <div class="fragment">
-<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a></a>combined_parks_per_state_df <span class="op">=</span> pd.concat([parks_per_state_df, new_state], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a aria-label="1"></a>combined_parks_per_state_df <span class="op">=</span> pd.concat([parks_per_state_df, new_state], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Finally, in this code, we are using a new method, the <code>pd.concat()</code> method. This method is one of many that exist for joining two DataFrames together. The <code>ignore_index=True</code> argument tells Pandas to reset the index of the new DataFrame. We’ll get more into merging and joining DataFrames in the next lesson, but for now, just understand that this method is letting us combine two DataFrames together.</p>
 <style type="text/css">
@@ -1749,7 +1755,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1823,13 +1829,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

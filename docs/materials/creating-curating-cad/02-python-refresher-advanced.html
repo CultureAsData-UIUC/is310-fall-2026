@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.27">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Python Refresher II: Advanced Python – IS310 - Culture As Data Fall 2026</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -72,14 +78,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6c49c5477b92c77c9eb341f9299c235f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-6bd77949012616049cccce2f6cb6e61f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-529c26969d27a2a2473a4b9f3bafd9fb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-8548d451cbde00b83e20f2b3ceda2474.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-529c26969d27a2a2473a4b9f3bafd9fb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -130,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -163,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -203,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -231,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -254,20 +260,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -280,7 +288,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo light-content">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">IS310 - Culture As Data Fall 2026</span>
@@ -374,11 +383,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="writing-and-running-scripts">Writing and Running Scripts</h3>
 <p>Open your <code>is310-coding-assignments</code> folder in VS Code, and create a new folder <code>python-scripting</code>. This is where we will store all our scripts for this lesson. Inside the <code>python-scripting</code> folder, create a new file called <code>first_script.py</code>. You can do this in the terminal by typing:</p>
 <p>For Mac:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> first_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> first_script.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For Windows PowerShell:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ni</span> first_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ni</span> first_script.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We’re going to copy our code from the interpreter into this file:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>favorite_movies <span class="op">=</span>[</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>favorite_movies <span class="op">=</span>[</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"The Matrix I"</span>,</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="dv">1999</span>,</span>
@@ -390,10 +399,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now save this file. You can do this by clicking <code>File</code> and then <code>Save</code> or by using the keyboard shortcut <code>Cmd + S</code> or <code>Ctrl + S</code>. Our next step is to run this script.</p>
 <p>In our terminal, we can run the script by typing (but make sure you aren’t in the Python interpreter):</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> first_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> first_script.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>What happens?</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -404,7 +413,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Because we aren’t in the interpreter any more, unless we tell the computer to output a value it won’t show us anything (unless there’s an error).</p>
 <p>One solution is the <strong>print</strong> method.</p>
 <p>In <code>first_script.py</code>, add the line to the bottom of the script:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This time you should see the list of movies printed out in the terminal when you run the script.</p>
 <p><em>So what’s the print statement?</em></p>
 </section>
@@ -416,8 +425,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><code>Len()</code> In <code>first_script.py</code>, after our existing code, add the following:</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>total_favorite_movies <span class="op">=</span> <span class="bu">len</span>(favorite movies)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"How many total favorite movies do we have?"</span>, total_favorite_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>total_favorite_movies <span class="op">=</span> <span class="bu">len</span>(favorite movies)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"How many total favorite movies do we have?"</span>, total_favorite_movies)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then try saving your file and running the code in the terminal. You should see first our favorite movies, and then the total number of favorite movies printed out. While this example might seem trivial since we can easily count the number of items in our list, imagine we had hundreds or thousands of items in our list. This is where the <strong>len</strong> method comes in handy.</p>
 <p>The <strong>len</strong> method can return the length of any list, dictionary, or string in Python.</p>
 <ol type="1">
@@ -425,16 +434,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>So far we’ve been writing all our variables, but sometimes you will be working with code that you didn’t write. When that happens you might want to know what type of variable you are working with, which is where the <strong>type</strong> method comes in.</p>
 <p>In <code>first_script.py</code>, add to the bottom of the script:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(favorite_movies), <span class="bu">type</span>(favorite_movies[<span class="dv">0</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(favorite_movies), <span class="bu">type</span>(favorite_movies[<span class="dv">0</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Once you save and run the script you should see that we have both a <code>list</code> and a <code>dictionary</code>. With print statements you can add multiple items as long as they are separated by commas, and you can use built-in methods inside the print statement, instead of assigning them to a variable first.</p>
 <ol start="2" type="1">
 <li><code>Input()</code></li>
 </ol>
 <p>Now we have been writing all our data in our script, but what if we wanted to get input from the user? This is where the <strong>input</strong> method comes in.</p>
 <p>In <code>first_script.py</code>, type the following at the bottom of the script:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Enter your favorite movie of the last year:'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Enter your favorite movie of the last year:'</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>recent_favorite_movie <span class="op">=</span> <span class="bu">input</span>()</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Your favorite movie is of the last year:'</span>, recent_favorite_movie)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Your favorite movie is of the last year:'</span>, recent_favorite_movie)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDVhZGNmdmUxd2xmazEwZGZ3cWlqenJxY2RkNWs2aWVlMXJwcG0ybCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WRQBXSCnEFJIuxktnw/giphy.gif" class="img-fluid figure-img"></p>
@@ -489,41 +498,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>Split()</code></li>
 </ol>
 <p>The <strong>split</strong> method lets us split up a string and turn it into a list. In <code>first_script.py</code>, add the following description of the movie <code>The Matrix</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>] <span class="op">=</span> <span class="st">"The Matrix is a 1999 science fiction action film written and directed by the Wachowskis. It is the first installment in The Matrix film series, starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving, and Joe Pantoliano. The Waschowskis created a plot set in a dystopian future where humanity is unknowingly trapped inside a simulated reality, the Matrix, created by intelligent machines to distract humans while using their bodies as an energy source. In the movie, the main character, Neo, is a computer programmer who learns this truth and is drawn into a rebellion against the machines, which involves other people who have been freed from the Matrix."</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>] <span class="op">=</span> <span class="st">"The Matrix is a 1999 science fiction action film written and directed by the Wachowskis. It is the first installment in The Matrix film series, starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving, and Joe Pantoliano. The Waschowskis created a plot set in a dystopian future where humanity is unknowingly trapped inside a simulated reality, the Matrix, created by intelligent machines to distract humans while using their bodies as an energy source. In the movie, the main character, Neo, is a computer programmer who learns this truth and is drawn into a rebellion against the machines, which involves other people who have been freed from the Matrix."</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When we save and rerun our code, we should now see this <code>long_description</code> printed out. As a reminder, to create <code>long_description</code> we are using indexing of our list and then adding a new key to the dictionary called <code>long_description</code>. We are then assigning a string to that key.</p>
 <p>But what if we wanted to get a list of all the words in the description? We can use the <strong>split</strong> method to do this.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>split_description <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].split(<span class="st">' '</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(split_description)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>split_description <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].split(<span class="st">' '</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(split_description)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <strong>split</strong> method takes a string and splits it up into a list of substrings. In this case, we are splitting the description of the movie <code>The Matrix</code> into a list of words. We are using the space character as the <strong>delimiter</strong>, which means that every time there is a space in the string, it will split the string into a new item in the list. You can use any character as a delimiter, and you can also use multiple characters as a delimiter.</p>
 <p>Now that we have this split list, we could use <code>len</code> to count the number of words in the description:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(split_description))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(split_description))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We could also decide that we want to create a shorter description key in our dictionary and use indexing range to get the first 10 words of the description:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>favorite_movies[<span class="dv">0</span>][<span class="st">'short_description'</span>] <span class="op">=</span> <span class="st">' '</span>.join(split_description[:<span class="dv">10</span>])</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'short_description'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>favorite_movies[<span class="dv">0</span>][<span class="st">'short_description'</span>] <span class="op">=</span> <span class="st">' '</span>.join(split_description[:<span class="dv">10</span>])</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'short_description'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
 <li><code>Join()</code></li>
 </ol>
 <p>You’ll notice that we use a new method in the example above called <strong>join</strong>. This method lets us take a list and join all the values together.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">' '</span>.join(split_description))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">' '</span>.join(split_description))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Like <code>split()</code>, join requires a delimiter, which in this case is a space. This means that every item in the list will be joined together with a space in between. You can use any character as a delimiter, and often you’ll see people use a comma to join lists together into a string.</p>
 <ol start="3" type="1">
 <li><code>Replace()</code></li>
 </ol>
 <p>Now currently our description names the directors as <code>the Wachowskis</code>. But what if we wanted to change that to <code>Lana and Lilly Wachowski</code>? We can use the <strong>replace</strong> method to do this.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>edited_description <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].replace(<span class="st">'the Wachowskis'</span>, <span class="st">'Lana and Lilly Wachowski'</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(edited_description)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>edited_description <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].replace(<span class="st">'the Wachowskis'</span>, <span class="st">'Lana and Lilly Wachowski'</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(edited_description)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <strong>replace</strong> method lets us find a string and replace it with another string. You can also specify how many times you want to replace a string. For example, if you only wanted to replace the first instance of <code>the Wachowskis</code> you could use the following:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>edited_description <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].replace(<span class="st">'the Wachowskis'</span>, <span class="st">'Lana and Lilly Wachowski'</span>, <span class="dv">1</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(edited_description)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>edited_description <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].replace(<span class="st">'the Wachowskis'</span>, <span class="st">'Lana and Lilly Wachowski'</span>, <span class="dv">1</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(edited_description)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="4" type="1">
 <li><code>Lower()</code>, <code>Upper()</code>, <code>Title()</code>, <code>Strip()</code></li>
 </ol>
 <p>Some additional methods that can be helpful include <strong>lower</strong>, <strong>upper</strong>, <strong>title</strong>, and <strong>strip</strong>. These methods let you change the case of a string, remove white space from the beginning and end of a string, and capitalize the first letter of each word in a string.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].lower())</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].lower())</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].upper())</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].title())</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].strip())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>][<span class="st">'long_description'</span>].strip())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -589,7 +598,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="control-flow" class="level3">
 <h3 class="anchored" data-anchor-id="control-flow">Control Flow</h3>
 <p>So far we have been writing code that runs from top to bottom, but what if we moved our latest print statement to the top of our script? What would happen?</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>favorite_movies <span class="op">=</span>[</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"The Matrix I"</span>,</span>
@@ -602,7 +611,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://media.giphy.com/media/qQI16x8tgp7nW/giphy.gif" class="img-fluid figure-img"></p>
@@ -618,27 +627,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>There’s a much faster way to traverse data structures and types in Python, called <code>Looping</code>. With various types of loops in Python, you can travel through a sequence (i.e.&nbsp;a list, dictionary, string, etc…) to be able to manipulate items within the sequence.</p>
 <p><strong>For Loops</strong> are one of the most common ways in python to loop over a sequence. But what does looping mean exactly?</p>
 <p>Let’s take our list of favorite movies and print out the name of each movie.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie[<span class="st">'name'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie[<span class="st">'name'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="https://www.learnbyexample.org/wp-content/uploads/python/Python-for-Loop-Syntax.png" class="img-fluid"></p>
 <p>This diagram helps us understand this new syntax. We start with the <code>for</code> keyword (which is another reserved word in Python), followed by a variable name (in this case <code>movie</code>) and the <code>in</code> keyword (reserved word again), followed by the sequence we want to loop over (in this case <code>favorite_movies</code>). We then end the line with a colon, and indent the code we want to run for each item in the sequence.</p>
 <p><strong>Indenting</strong> is very important in Python. It tells Python that the indented code is part of the loop. If we don’t indent, Python will throw an error. To indent in Python, we use either two or four spaces (or tabs). You can use any number of spaces or tabs, but they have to be consistent. This use of white space is called <strong>indentation</strong> and is a core part of Python’s syntax.</p>
 <p>Within the loop, we can use the variable <code>movie</code> to access each item in the sequence. This is called <strong>iteration</strong>. In this code, we are using the print statement to print out the name of each movie.</p>
 <p>While we named our variable <code>movie</code>, we could have named it anything. For example, we could have named it <code>film</code> or <code>item</code>. The name of the variable is up to you, but ideally it should be descriptive of the items in the sequence.</p>
 <p>Now what would happen if we tried to print movie outside of the loop?</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie[<span class="st">'name'</span>])</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(movie)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(movie)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We would either get an error or the last movie in the list. This is because the variable <code>movie</code> only exists within the local scope of the loop. This is called <strong>local scope</strong>. This is also why we can use the same variable name in different loops and not have to worry about them conflicting with each other. We’ll go into detail about this more later in this lesson.</p>
 <p>We can also use <code>For Loops</code> on dictionaries. The syntax is slightly different because dictionaries are not one long sequence, but rather a sequence of key/value pairs. Let’s try and loop through all the keys in our favorite movies.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>individual_movie <span class="op">=</span> favorite_movies[<span class="dv">0</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>individual_movie <span class="op">=</span> favorite_movies[<span class="dv">0</span>]</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key, value <span class="kw">in</span> individual_movie.items():</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(key, value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(key, value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You’ll notice that we are using the <code>items</code> method to get the key/value pairs of the dictionary. This is a built-in method for dictionaries. We are then using the <code>for</code> keyword, followed by two variables (in this case <code>key</code> and <code>value</code>), and the <code>in</code> keyword, followed by the sequence we want to loop over (in this case <code>individual_movie.items()</code>). We then end the line with a colon, and indent the code we want to run for each item in the sequence. We can then use the <code>key</code> and <code>value</code> variables to access each item in the sequence. Instead of key and value, we could’ve used any name we wanted, like <code>metadata</code> and <code>data</code>.</p>
 <p>Finally we can even loop through a string. Let’s try and print out each letter in the first name of our favorite movie.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>first_movie_name <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'name'</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>first_movie_name <span class="op">=</span> favorite_movies[<span class="dv">0</span>][<span class="st">'name'</span>]</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> letter <span class="kw">in</span> first_movie_name:</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(letter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(letter)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Looping is fairly complex, but the core thing to remember is the reserved words <code>for</code> and <code>in</code>, and the colon at the end of the line. We then indent the code we want to run for each item in the sequence.</p>
 <p>For more about looping in Python, check out the <a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements" target="_blank">Python documentation</a> and the <a href="https://www.w3schools.com/python/python_for_loops.asp" target="_blank">W3Schools tutorial</a>.</p>
 <table class="caption-top table">
@@ -682,36 +691,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To create a function, we use the reserved word <code>def</code> and then create a unique name for our function, followed by parentheses and colon. Similar to variables, function names can contain letters, numbers, and underscores, but they cannot start with a number. We usually write function names in lowercase and use underscores to separate words.</p>
 <p>Then we can pass <em>arguments</em> (also called parameters) in the parentheses, that we can that use <em>inside</em> of the functions. Those arguments will be <em>variables</em> and we can do any transformation you would normally do to a value. Finally we can <em>return</em> the result of our manipulation.</p>
 <p>For example let’s create a function that takes a movie and prints out the name of the movie.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name(movie):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name(movie):</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie[<span class="st">'name'</span>])</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>print_movie_name(favorite_movies[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>print_movie_name(favorite_movies[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This function takes a movie as an argument and then prints out the name of the movie. We can then call this function and pass in a movie as an argument. This is called <strong>calling</strong> the function.</p>
 <p>Now we could do a more complex function that takes a movie and a year and returns a string with the name of the movie and the year.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name_and_year(movie):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name_and_year(movie):</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    movie_data <span class="op">=</span> movie[<span class="st">'name'</span>] <span class="op">+</span> <span class="st">' was released in '</span> <span class="op">+</span> <span class="bu">str</span>(movie[<span class="st">'release_year'</span>])</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie_data)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>print_movie_name_and_year(favorite_movies[<span class="dv">0</span>], favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>print_movie_name_and_year(favorite_movies[<span class="dv">0</span>], favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You’ll notice in this example that we are using the <code>+</code> operator to concatenate the strings together. We are also using the <code>str</code> method to convert the integer to a string. This is because you can’t concatenate a string and an integer together. This type of transformation is called <strong>type casting</strong>, which is when we change the type of a variable. Finally we are assigning the result of our manipulation to a new variable called <code>movie_data</code> and printing that out.</p>
 <p>What would happen if you try to access the variable <code>movie_data</code> outside of the function?</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name_and_year(movie):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name_and_year(movie):</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    movie_data <span class="op">=</span> movie[<span class="st">'name'</span>] <span class="op">+</span> <span class="st">' was released in '</span> <span class="op">+</span> <span class="bu">str</span>(movie[<span class="st">'release_year'</span>])</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(movie_data)</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>print_movie_name_and_year(favorite_movies[<span class="dv">0</span>])</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(movie_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">NameError:</span> name <span class="st">'movie_data'</span> is not defined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(movie_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">NameError:</span> name <span class="st">'movie_data'</span> is not defined</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Similar to our looping example, the variable <code>movie_data</code> only exists within the local scope of the function. In functions, everything indented within the function is part of the local scope. This is also why we can use the same variable name in different functions and not have to worry about them conflicting with each other.</p>
 <p><img src="https://pbs.twimg.com/media/GnGjXKtbgAQbvoI.png" class="img-fluid"></p>
 <p>In this diagram, we can start to see how where we define our variables impacts whether it is <code>global</code> or <code>local</code> scope. This is a core concept in Python and is called <strong>variable scope</strong>. So our favorite movies list is in the global scope, but the variable <code>movie</code> and <code>movie_data</code> are in the local scope of the function. Knowing the scope of your variables is essential because if you try to access something globally but it only exists locally, you’ll get an error. Alternatively, if you want to only change a variable locally but it exists globally, you’ll also end up overwriting the global variable. This is all very complex, but I promise with practice and time it will start to make sense.</p>
 <p>The final part of a function is the <strong>return statement</strong>. This is used to pass data back from the function, which can then be assigned to a new variable that’s accessible in the rest of the script, also known as the <strong>global scope</strong>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name_and_year(movie):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_movie_name_and_year(movie):</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    movie_data <span class="op">=</span> movie[<span class="st">'name'</span>] <span class="op">+</span> <span class="st">' was released in '</span> <span class="op">+</span> <span class="bu">str</span>(movie[<span class="st">'release_year'</span>])</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> movie_data</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>new_movie_data <span class="op">=</span> print_movie_name_and_year(favorite_movies[<span class="dv">0</span>])</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(new_movie_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(new_movie_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we can see that we are assigning the result of our manipulation to a new variable called <code>new_movie_data</code>. This variable is accessible in the rest of the script, also known as the <strong>global scope</strong>.</p>
 <p>For more about functions in Python, check out the <a href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions" target="_blank">Python documentation</a> and the <a href="https://www.w3schools.com/python/python_functions.asp" target="_blank">W3Schools tutorial</a>.</p>
 <table class="caption-top table">
@@ -745,42 +754,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="conditional-statements">Conditional Statements</h4>
 <p>So far we have been manipulating all our code the same way, but what if we wanted to have a different manipulation for different types of movies? Or for movies versus books? This is where <strong>conditional statements</strong> come in.</p>
 <p>Earlier we learned about <em>booleans</em> (<code>True or False</code>). So we could test if our two movies are the same.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>] <span class="op">==</span> favorite_movies[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(favorite_movies[<span class="dv">0</span>] <span class="op">==</span> favorite_movies[<span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should output <code>False</code>, but we can also use this type of condition to perform different actions with our code.</p>
 <p><img src="../../assets/images/python_conditionals.jpg" class="img-fluid"></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>] <span class="op">==</span> favorite_movies[<span class="dv">1</span>]:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>] <span class="op">==</span> favorite_movies[<span class="dv">1</span>]:</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The same'</span>)</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Different'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Different'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In this example, we are doing the same comparison as before, but now we are using the <code>if</code> keyword, followed by the condition we want to test, followed by a colon. We then indent the code we want to run if the condition is <code>True</code>. We can also use the <code>else</code> keyword to run code if the condition is <code>False</code>. This is called an <strong>if/else statement</strong>. Both <code>if</code> and <code>else</code> are reserved words in Python. And with these keywords, we can create complex logic in our code.</p>
 <p>We can also use the <code>elif</code> keyword to add more complexity to our code. Each of the conditional blocks (the three <code>print()</code> statements) are only run if the associated conditional statement is <code>True</code> (in the boolean logic sense). We can have multiple <code>elif</code> blocks if we want. We can also omit <code>elif</code> and <code>else</code> blocks altogether.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>] <span class="op">==</span> favorite_movies[<span class="dv">1</span>]:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>] <span class="op">==</span> favorite_movies[<span class="dv">1</span>]:</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The same'</span>)</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> favorite_movies[<span class="dv">0</span>] <span class="op">!=</span> favorite_movies[<span class="dv">1</span>]:</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Different'</span>)</span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'No idea'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'No idea'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In this example, if our initial condition is True, we print out <code>The same</code>. If it’s False, we then test the next condition with the <code>elif</code> (which stands for else if). If that’s True, we print out <code>Different</code>. Finally, if that is also False, we print out <code>No idea</code>.</p>
 <p>In conditional statements, we can use any of the previous operators we’ve learned about, including <code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, and <code>&lt;=</code>. We can also test more complicated comparisons using various comparison operators:</p>
 <p><img src="https://introcs.cs.princeton.edu/python/appendix_cheatsheet/images/ComparisonOperators.png" class="img-fluid"></p>
 <p>For strings, we can use use <code>==</code> for comparison and some special operators like <code>in</code> to see if one string exists inside of another.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'Matrix'</span> <span class="kw">in</span> favorite_movies[<span class="dv">0</span>][<span class="st">'name'</span>]:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'Matrix'</span> <span class="kw">in</span> favorite_movies[<span class="dv">0</span>][<span class="st">'name'</span>]:</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Matrix'</span>)</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'No Matrix'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'No Matrix'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can also use <code>==</code> to test numbers:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">==</span> <span class="dv">1999</span>:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">==</span> <span class="dv">1999</span>:</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The Matrix'</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Not The Matrix'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Not The Matrix'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For numbers, we can also use <code>&gt;</code>, <code>&gt;=</code>, <code>==</code>, <code>&lt;</code>, and <code>&lt;=</code> to make numeric comparisons.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">&gt;</span> favorite_movies[<span class="dv">1</span>][<span class="st">'release_year'</span>]:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">&gt;</span> favorite_movies[<span class="dv">1</span>][<span class="st">'release_year'</span>]:</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The Matrix'</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Star Wars'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Star Wars'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="https://media.geeksforgeeks.org/wp-content/uploads/bool.png" class="img-fluid"></p>
 <p>We can also do more than one condition, we can use <code>and</code>, <code>or</code>, and <code>not</code>:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">&gt;</span> <span class="dv">1999</span> <span class="kw">and</span> <span class="st">'Matrix'</span> <span class="kw">in</span> favorite_movies[<span class="dv">0</span>][<span class="st">'name'</span>]:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">&gt;</span> <span class="dv">1999</span> <span class="kw">and</span> <span class="st">'Matrix'</span> <span class="kw">in</span> favorite_movies[<span class="dv">0</span>][<span class="st">'name'</span>]:</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The Matrix'</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Star Wars'</span>)</span>
@@ -788,12 +797,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> favorite_movies[<span class="dv">0</span>][<span class="st">'release_year'</span>] <span class="op">&gt;</span> <span class="dv">1999</span>:</span>
 <span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The Matrix'</span>)</span>
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Star Wars'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Star Wars'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Finally we can also check if a variable exists or not using <code>is</code> and <code>is not</code>:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'sequels'</span>] <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> favorite_movies[<span class="dv">0</span>][<span class="st">'sequels'</span>] <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Sequels'</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'No Sequels'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'No Sequels'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You’ll notice we’re using a new keyword <code>None</code>. This is a special Python object that represents the absence of a value. It’s similar to <code>null</code> in other programming languages. We can use <code>is</code> and <code>is not</code> to check if a variable is <code>None</code> or not.</p>
 <p>For more about conditional statements in Python, check out the <a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements" target="_blank">Python documentation</a> and the <a href="https://www.w3schools.com/python/python_conditions.asp" target="_blank">W3Schools tutorial</a>.</p>
 <table class="caption-top table">
@@ -878,9 +887,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>Once you have completed this script, save it and run it in the terminal. You should see a list of all the movies that were released after 2000. If you prefer, you can use books or another cultural object instead of movies.</p>
 <p>After confirming that the script works, you should push it up to your GitHub repository. You can do this by using the following commands in the terminal:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Completed homework for Python Foundations"</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main <span class="co"># or master if you haven't changed the default branch name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main <span class="co"># or master if you haven't changed the default branch name</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should then put a link to our GitHub discussion <a href="https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/5" target="_blank">https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/5</a>.</p>
 
 
@@ -902,7 +911,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -952,13 +961,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

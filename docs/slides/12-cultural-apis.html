@@ -7,8 +7,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <title>IS310 - Culture As Data Fall 2026 – GETting Cultural Data From APIs</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -365,9 +371,9 @@
 <section id="making-an-api-request" class="slide level2">
 <h2>Making an API Request</h2>
 <p>In your <code>is310-coding-assingments</code>, create a new folder called <code>api-getting-data</code> and then create a new script called <code>first_api_script.py</code>. In this script, import the <code>requests</code> library and then create a variable called <code>url</code> that is the base url for the LOTR API.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> requests</span>
-<span id="cb1-2"><a></a></span>
-<span id="cb1-3"><a></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/book'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a><span class="im">import</span> requests</span>
+<span id="cb1-2"><a aria-label="2"></a></span>
+<span id="cb1-3"><a aria-label="3"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/book'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>How could we use requests with this url? How could we check that the request work?</em></p>
 <aside class="notes">
 <p><strong>If you get an error, running this code telling you that requests is not installed. Please remember to activate your Python virtual environment!</strong></p>
@@ -387,38 +393,38 @@
 </section>
 <section id="making-an-api-request-1" class="slide level2">
 <h2>Making an API Request</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>response <span class="op">=</span> requests.get(url)</span>
-<span id="cb2-2"><a></a><span class="bu">print</span>(response.status_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-label="1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb2-2"><a aria-label="2"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Hopefully we are all seeing <code>200</code> responses, but if you are seeing a <code>404</code> or <code>403</code> response, you might need to authenticate with the API. We will discuss this more in the next section, but for now, let’s try to print out the response.</p>
 </section>
 <section id="getting-json" class="slide level2">
 <h2>Getting JSON</h2>
 <div class="r-fit-text">
 <p>In our web scraping lesson, we used the <code>.text</code> method to print out the response, but for APIs, we often use the <code>.json()</code> method. Let’s try that out.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="bu">print</span>(response.json())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a aria-label="1"></a><span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should see something like the following:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a></a><span class="fu">{</span></span>
-<span id="cb4-2"><a></a>    <span class="er">'docs'</span><span class="fu">:</span> </span>
-<span id="cb4-3"><a></a>        <span class="ot">[</span></span>
-<span id="cb4-4"><a></a>            <span class="fu">{</span></span>
-<span id="cb4-5"><a></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf5805fb53e011a64671582'</span><span class="fu">,</span></span>
-<span id="cb4-6"><a></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Fellowship</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">Ring'</span></span>
-<span id="cb4-7"><a></a>            <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb4-8"><a></a>            <span class="fu">{</span></span>
-<span id="cb4-9"><a></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58077b53e011a64671583'</span><span class="fu">,</span> </span>
-<span id="cb4-10"><a></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Two</span> <span class="er">Towers'</span></span>
-<span id="cb4-11"><a></a>            <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb4-12"><a></a>            <span class="fu">{</span></span>
-<span id="cb4-13"><a></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58080b53e011a64671584'</span><span class="fu">,</span> </span>
-<span id="cb4-14"><a></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Return</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">King'</span></span>
-<span id="cb4-15"><a></a>            <span class="fu">}</span></span>
-<span id="cb4-16"><a></a>        <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb4-17"><a></a>    <span class="er">'total'</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
-<span id="cb4-18"><a></a>    <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
-<span id="cb4-19"><a></a>    <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
-<span id="cb4-20"><a></a>    <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb4-21"><a></a>    <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span></span>
-<span id="cb4-22"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a aria-label="1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a aria-label="2"></a>    <span class="er">'docs'</span><span class="fu">:</span> </span>
+<span id="cb4-3"><a aria-label="3"></a>        <span class="ot">[</span></span>
+<span id="cb4-4"><a aria-label="4"></a>            <span class="fu">{</span></span>
+<span id="cb4-5"><a aria-label="5"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf5805fb53e011a64671582'</span><span class="fu">,</span></span>
+<span id="cb4-6"><a aria-label="6"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Fellowship</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">Ring'</span></span>
+<span id="cb4-7"><a aria-label="7"></a>            <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb4-8"><a aria-label="8"></a>            <span class="fu">{</span></span>
+<span id="cb4-9"><a aria-label="9"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58077b53e011a64671583'</span><span class="fu">,</span> </span>
+<span id="cb4-10"><a aria-label="10"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Two</span> <span class="er">Towers'</span></span>
+<span id="cb4-11"><a aria-label="11"></a>            <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb4-12"><a aria-label="12"></a>            <span class="fu">{</span></span>
+<span id="cb4-13"><a aria-label="13"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58080b53e011a64671584'</span><span class="fu">,</span> </span>
+<span id="cb4-14"><a aria-label="14"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Return</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">King'</span></span>
+<span id="cb4-15"><a aria-label="15"></a>            <span class="fu">}</span></span>
+<span id="cb4-16"><a aria-label="16"></a>        <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb4-17"><a aria-label="17"></a>    <span class="er">'total'</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb4-18"><a aria-label="18"></a>    <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
+<span id="cb4-19"><a aria-label="19"></a>    <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb4-20"><a aria-label="20"></a>    <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb4-21"><a aria-label="21"></a>    <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span></span>
+<span id="cb4-22"><a aria-label="22"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="javascript-oject-notation" class="slide level2">
@@ -442,28 +448,28 @@
 <h2>Breaking Down JSON</h2>
 <div class="r-fit-text">
 <p>Based on this data, we can see that <em>The One API</em> has returned data about the three books in the <em>Lord of the Rings</em> series. Each book has an <code>_id</code> and a <code>name</code>. The books themselves are returned in a list for the key <code>docs</code>, and then there are some other keys that provide information about the data that was returned, including <code>total</code>, <code>limit</code>, <code>offset</code>, <code>page</code>, and <code>pages</code>. <code>Total</code> tells us how many items were returned, <code>limit</code> tells us how many items <em>could be</em> returned per page, <code>offset</code> tells us where in the data we are (similar to indexing), <code>page</code> tells us what page we are on, and <code>pages</code> tells us how many pages of data there are.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a></a><span class="fu">{</span></span>
-<span id="cb5-2"><a></a>    <span class="er">'docs'</span><span class="fu">:</span> </span>
-<span id="cb5-3"><a></a>        <span class="ot">[</span></span>
-<span id="cb5-4"><a></a>            <span class="fu">{</span></span>
-<span id="cb5-5"><a></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf5805fb53e011a64671582'</span><span class="fu">,</span></span>
-<span id="cb5-6"><a></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Fellowship</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">Ring'</span></span>
-<span id="cb5-7"><a></a>            <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb5-8"><a></a>            <span class="fu">{</span></span>
-<span id="cb5-9"><a></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58077b53e011a64671583'</span><span class="fu">,</span> </span>
-<span id="cb5-10"><a></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Two</span> <span class="er">Towers'</span></span>
-<span id="cb5-11"><a></a>            <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb5-12"><a></a>            <span class="fu">{</span></span>
-<span id="cb5-13"><a></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58080b53e011a64671584'</span><span class="fu">,</span> </span>
-<span id="cb5-14"><a></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Return</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">King'</span></span>
-<span id="cb5-15"><a></a>            <span class="fu">}</span></span>
-<span id="cb5-16"><a></a>        <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb5-17"><a></a>    <span class="er">'total'</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
-<span id="cb5-18"><a></a>    <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
-<span id="cb5-19"><a></a>    <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
-<span id="cb5-20"><a></a>    <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb5-21"><a></a>    <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span></span>
-<span id="cb5-22"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a aria-label="1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a aria-label="2"></a>    <span class="er">'docs'</span><span class="fu">:</span> </span>
+<span id="cb5-3"><a aria-label="3"></a>        <span class="ot">[</span></span>
+<span id="cb5-4"><a aria-label="4"></a>            <span class="fu">{</span></span>
+<span id="cb5-5"><a aria-label="5"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf5805fb53e011a64671582'</span><span class="fu">,</span></span>
+<span id="cb5-6"><a aria-label="6"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Fellowship</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">Ring'</span></span>
+<span id="cb5-7"><a aria-label="7"></a>            <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb5-8"><a aria-label="8"></a>            <span class="fu">{</span></span>
+<span id="cb5-9"><a aria-label="9"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58077b53e011a64671583'</span><span class="fu">,</span> </span>
+<span id="cb5-10"><a aria-label="10"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Two</span> <span class="er">Towers'</span></span>
+<span id="cb5-11"><a aria-label="11"></a>            <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb5-12"><a aria-label="12"></a>            <span class="fu">{</span></span>
+<span id="cb5-13"><a aria-label="13"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58080b53e011a64671584'</span><span class="fu">,</span> </span>
+<span id="cb5-14"><a aria-label="14"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Return</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">King'</span></span>
+<span id="cb5-15"><a aria-label="15"></a>            <span class="fu">}</span></span>
+<span id="cb5-16"><a aria-label="16"></a>        <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb5-17"><a aria-label="17"></a>    <span class="er">'total'</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb5-18"><a aria-label="18"></a>    <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
+<span id="cb5-19"><a aria-label="19"></a>    <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb5-20"><a aria-label="20"></a>    <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb5-21"><a aria-label="21"></a>    <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span></span>
+<span id="cb5-22"><a aria-label="22"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <aside class="notes">
 <p>While this is a pretty minimal amount of data, it does give us a sense of how APIs work. Just as if we were going to a web browser, we can make requests to an API and get data back. This data will be structured in some way and we can use that structure to understand the data and to work with it. It is important to note that there is no one way that APIs are structured, and each API will have its own structure and its own way of working. This is why it’s important to read the documentation for an API before you start working with it.</p>
@@ -541,9 +547,9 @@
 </section>
 <section id="using-endpoints-2" class="slide level2">
 <h2>Using Endpoints?</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
-<span id="cb6-2"><a></a>response <span class="op">=</span> requests.get(url)</span>
-<span id="cb6-3"><a></a><span class="bu">print</span>(response.status_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
+<span id="cb6-2"><a aria-label="2"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb6-3"><a aria-label="3"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should return a <code>401</code> status code, which means that we are not <strong>authorized</strong> to access this data. This is because the LOTR API requires us to authenticate before we can access data about characters or quotes. This is a common feature of APIs, as it allows the API to track who is accessing their data and to limit access to certain users.</p>
 </section>
 <section id="authentication" class="slide level2">
@@ -596,11 +602,11 @@
 </section>
 <section id="api-keys" class="slide level2">
 <h2>API Keys</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>api_key <span class="op">=</span> <span class="st">"API KEY HERE"</span></span>
-<span id="cb7-2"><a></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
-<span id="cb7-3"><a></a>authorization_headers <span class="op">=</span> {</span>
-<span id="cb7-4"><a></a>    <span class="st">'Authorization: Bearer '</span> <span class="op">+</span> api_key</span>
-<span id="cb7-5"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a>api_key <span class="op">=</span> <span class="st">"API KEY HERE"</span></span>
+<span id="cb7-2"><a aria-label="2"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
+<span id="cb7-3"><a aria-label="3"></a>authorization_headers <span class="op">=</span> {</span>
+<span id="cb7-4"><a aria-label="4"></a>    <span class="st">'Authorization: Bearer '</span> <span class="op">+</span> api_key</span>
+<span id="cb7-5"><a aria-label="5"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>You should copy the key into your <code>first_api_script.py</code> and then try to get data about characters or quotes.</p>
 <p>You’ll notice that we are using a new variable called <code>authorization_headers</code> that is a dictionary with a key of <code>'Authorization'</code> and a value of <code>'Bearer ' + api_key</code>. This is how we pass our key to <em>The One API</em> so that it knows who we are and that we are allowed to use their API.</p>
@@ -619,8 +625,8 @@
 <section id="api-keys-1" class="slide level2">
 <h2>API Keys</h2>
 <p>Now let’s update our <code>requests.get</code> method to include these headers.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb8-2"><a></a><span class="bu">print</span>(response.status_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb8-2"><a aria-label="2"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Now we should see a <code>200</code> status code, which means that we are authorized to access this data. Before we explore this new data, we need to first understand how to store our API keys securely.</p>
 <p>Currently, we just have our api key in a string in a variable, which is easy to use but it’s not the most secure. For example, if you pushed this up to GitHub, then everyone would be able to see and use your API key. You’ll notice that <em>The One API</em> says that you should limit your requests “to 100 requests every 10 minutes”. However, if you shared your key, someone could easily use it and you would be locked out of the API. Even worse, if they did something illegal with your key, you could be held responsible. So rule of thumb is don’t share your API key!</p>
@@ -640,9 +646,9 @@
 <h2>Storing API Keys: Environment Variables</h2>
 <p>To create an environment variable, you open your terminal and type the following, replacing <code>api_key</code> with your API key.</p>
 <p>For Macs/WSL:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="bu">export</span> <span class="va">THE_ONE_API_KEY</span><span class="op">=</span><span class="st">"YOUR_API_KEY_HERE"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a aria-label="1"></a><span class="bu">export</span> <span class="va">THE_ONE_API_KEY</span><span class="op">=</span><span class="st">"YOUR_API_KEY_HERE"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For Windows/PowerShell:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="ex">setx</span> THE_ONE_API_KEY <span class="st">"YOUR_API_KEY_HERE"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a aria-label="1"></a><span class="ex">setx</span> THE_ONE_API_KEY <span class="st">"YOUR_API_KEY_HERE"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>There are a number of ways to more securely store your API keys.</p>
 <p>One option is just copying our API keys to a text file and save them there (especially because they are rarely something you can memorize), but there’s also more programmatic ways to do this.</p>
@@ -662,9 +668,9 @@
 <section id="storing-api-keys-environment-variables-1" class="slide level2">
 <h2>Storing API Keys: Environment Variables</h2>
 <p>Now you can access these environment variables in your Python script by using the <code>os</code> library.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="im">import</span> os</span>
-<span id="cb11-2"><a></a>the_one_api_key <span class="op">=</span> os.environ[<span class="st">'THE_ONE_API_KEY'</span>]</span>
-<span id="cb11-3"><a></a><span class="bu">print</span>(the_one_api_key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a aria-label="1"></a><span class="im">import</span> os</span>
+<span id="cb11-2"><a aria-label="2"></a>the_one_api_key <span class="op">=</span> os.environ[<span class="st">'THE_ONE_API_KEY'</span>]</span>
+<span id="cb11-3"><a aria-label="3"></a><span class="bu">print</span>(the_one_api_key)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>However, these will only be available in the terminal you created them in, so you would have to create them every time you open a new terminal. If you want to make them available in every terminal, you can add them to your <code>.bashrc</code> or <code>.zshrc</code> file on Macs/WSL or your <code>profile.ps1</code> file on Windows.</p>
 <style type="text/css">
@@ -683,11 +689,11 @@
 <h2><code>apikey</code> Library</h2>
 <p>This is a bit more work though, and one easier option is to use a Python library for storing API keys, called <code>apikey</code> <a href="https://github.com/ulf1/apikey">https://github.com/ulf1/apikey</a>.</p>
 <p>In your terminal, type <code>pip install "apikey&gt;=0.2.4"</code> to install the library. Then import it into your script and write:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="im">import</span> apikey</span>
-<span id="cb12-2"><a></a></span>
-<span id="cb12-3"><a></a>apikey.save(<span class="st">"THE_ONE_API_KEY"</span>, <span class="st">"YOUR_API_KEY_HERE"</span>)</span>
-<span id="cb12-4"><a></a></span>
-<span id="cb12-5"><a></a>the_one_api_key <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a aria-label="1"></a><span class="im">import</span> apikey</span>
+<span id="cb12-2"><a aria-label="2"></a></span>
+<span id="cb12-3"><a aria-label="3"></a>apikey.save(<span class="st">"THE_ONE_API_KEY"</span>, <span class="st">"YOUR_API_KEY_HERE"</span>)</span>
+<span id="cb12-4"><a aria-label="4"></a></span>
+<span id="cb12-5"><a aria-label="5"></a>the_one_api_key <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>While you can use any of these options, I would recommend using the <code>apikey</code> library, as it’s the most secure and the easiest to use. If you continue with programming, you will likely end up using the <code>.zshrc</code> or <code>.bashrc</code> method, but for now, the <code>apikey</code> library is the best option.</p>
 <style type="text/css">
@@ -705,50 +711,50 @@
 <section id="making-api-requests" class="slide level2">
 <h2>Making API Requests</h2>
 <p>Now that we have our api key stored securely, let’s try to get data about characters from <em>The One API</em>. We can do this by updating our <code>url</code> variable to include the <code>/character</code> endpoint.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>the_one_api_key <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span>
-<span id="cb13-2"><a></a>authorization_headers <span class="op">=</span> {</span>
-<span id="cb13-3"><a></a>    <span class="st">'Authorization'</span>: <span class="st">'Bearer '</span> <span class="op">+</span> the_one_api_key</span>
-<span id="cb13-4"><a></a>}</span>
-<span id="cb13-5"><a></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
-<span id="cb13-6"><a></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb13-7"><a></a><span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
-<span id="cb13-8"><a></a>    <span class="bu">print</span>(response.json())</span>
-<span id="cb13-9"><a></a><span class="cf">else</span>:</span>
-<span id="cb13-10"><a></a>    <span class="bu">print</span>(response.status_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a aria-label="1"></a>the_one_api_key <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span>
+<span id="cb13-2"><a aria-label="2"></a>authorization_headers <span class="op">=</span> {</span>
+<span id="cb13-3"><a aria-label="3"></a>    <span class="st">'Authorization'</span>: <span class="st">'Bearer '</span> <span class="op">+</span> the_one_api_key</span>
+<span id="cb13-4"><a aria-label="4"></a>}</span>
+<span id="cb13-5"><a aria-label="5"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
+<span id="cb13-6"><a aria-label="6"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb13-7"><a aria-label="7"></a><span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb13-8"><a aria-label="8"></a>    <span class="bu">print</span>(response.json())</span>
+<span id="cb13-9"><a aria-label="9"></a><span class="cf">else</span>:</span>
+<span id="cb13-10"><a aria-label="10"></a>    <span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="more-data" class="slide level2">
 <h2>More Data</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb14-1"><a></a><span class="fu">{</span><span class="er">'docs'</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbbe'</span><span class="fu">,</span></span>
-<span id="cb14-2"><a></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adanel'</span><span class="fu">,</span></span>
-<span id="cb14-3"><a></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adanel'</span><span class="fu">,</span></span>
-<span id="cb14-4"><a></a>   <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Human'</span><span class="fu">,</span></span>
-<span id="cb14-5"><a></a>   <span class="er">'birth'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb14-6"><a></a>   <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Female'</span><span class="fu">,</span></span>
-<span id="cb14-7"><a></a>   <span class="er">'death'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb14-8"><a></a>   <span class="er">'hair'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb14-9"><a></a>   <span class="er">'height'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb14-10"><a></a>   <span class="er">'realm'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb14-11"><a></a>   <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">'Belemir'</span><span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb14-12"><a></a>  <span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbbf'</span><span class="fu">,</span></span>
-<span id="cb14-13"><a></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adrahil</span> <span class="er">I'</span><span class="fu">,</span></span>
-<span id="cb14-14"><a></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adrahil_I'</span><span class="fu">,</span></span>
-<span id="cb14-15"><a></a>   <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Human'</span><span class="fu">,</span></span>
-<span id="cb14-16"><a></a>   <span class="er">'birth'</span><span class="fu">:</span> <span class="er">'Before</span> <span class="fu">,</span><span class="er">TA</span> <span class="er">1944'</span><span class="fu">,</span></span>
-<span id="cb14-17"><a></a>   <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Male'</span><span class="fu">,</span></span>
-<span id="cb14-18"><a></a>   <span class="er">'death'</span><span class="fu">:</span> <span class="er">'Late</span> <span class="fu">,</span><span class="er">Third</span> <span class="er">Age'</span><span class="fu">,</span></span>
-<span id="cb14-19"><a></a>   <span class="er">'hair'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb14-20"><a></a>   <span class="er">'height'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb14-21"><a></a>   <span class="er">'realm'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb14-22"><a></a>   <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb14-23"><a></a>  <span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbc0'</span><span class="fu">,</span></span>
-<span id="cb14-24"><a></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adrahil</span> <span class="er">II'</span><span class="fu">,</span></span>
-<span id="cb14-25"><a></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adrahil_II'</span><span class="fu">,</span></span>
-<span id="cb14-26"><a></a><span class="er">...</span></span>
-<span id="cb14-27"><a></a> <span class="er">'total'</span><span class="fu">:</span> <span class="dv">933</span><span class="fu">,</span></span>
-<span id="cb14-28"><a></a> <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
-<span id="cb14-29"><a></a> <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
-<span id="cb14-30"><a></a> <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb14-31"><a></a> <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb14-1"><a aria-label="1"></a><span class="fu">{</span><span class="er">'docs'</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbbe'</span><span class="fu">,</span></span>
+<span id="cb14-2"><a aria-label="2"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adanel'</span><span class="fu">,</span></span>
+<span id="cb14-3"><a aria-label="3"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adanel'</span><span class="fu">,</span></span>
+<span id="cb14-4"><a aria-label="4"></a>   <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Human'</span><span class="fu">,</span></span>
+<span id="cb14-5"><a aria-label="5"></a>   <span class="er">'birth'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb14-6"><a aria-label="6"></a>   <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Female'</span><span class="fu">,</span></span>
+<span id="cb14-7"><a aria-label="7"></a>   <span class="er">'death'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb14-8"><a aria-label="8"></a>   <span class="er">'hair'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb14-9"><a aria-label="9"></a>   <span class="er">'height'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb14-10"><a aria-label="10"></a>   <span class="er">'realm'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb14-11"><a aria-label="11"></a>   <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">'Belemir'</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb14-12"><a aria-label="12"></a>  <span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbbf'</span><span class="fu">,</span></span>
+<span id="cb14-13"><a aria-label="13"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adrahil</span> <span class="er">I'</span><span class="fu">,</span></span>
+<span id="cb14-14"><a aria-label="14"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adrahil_I'</span><span class="fu">,</span></span>
+<span id="cb14-15"><a aria-label="15"></a>   <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Human'</span><span class="fu">,</span></span>
+<span id="cb14-16"><a aria-label="16"></a>   <span class="er">'birth'</span><span class="fu">:</span> <span class="er">'Before</span> <span class="fu">,</span><span class="er">TA</span> <span class="er">1944',</span></span>
+<span id="cb14-17"><a aria-label="17"></a>   <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Male'</span><span class="fu">,</span></span>
+<span id="cb14-18"><a aria-label="18"></a>   <span class="er">'death'</span><span class="fu">:</span> <span class="er">'Late</span> <span class="fu">,</span><span class="er">Third</span> <span class="er">Age',</span></span>
+<span id="cb14-19"><a aria-label="19"></a>   <span class="er">'hair'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb14-20"><a aria-label="20"></a>   <span class="er">'height'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb14-21"><a aria-label="21"></a>   <span class="er">'realm'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb14-22"><a aria-label="22"></a>   <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb14-23"><a aria-label="23"></a>  <span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbc0'</span><span class="fu">,</span></span>
+<span id="cb14-24"><a aria-label="24"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adrahil</span> <span class="er">II'</span><span class="fu">,</span></span>
+<span id="cb14-25"><a aria-label="25"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adrahil_II'</span><span class="fu">,</span></span>
+<span id="cb14-26"><a aria-label="26"></a><span class="er">...</span></span>
+<span id="cb14-27"><a aria-label="27"></a> <span class="er">'total'</span><span class="fu">:</span> <span class="dv">933</span><span class="fu">,</span></span>
+<span id="cb14-28"><a aria-label="28"></a> <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
+<span id="cb14-29"><a aria-label="29"></a> <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb14-30"><a aria-label="30"></a> <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb14-31"><a aria-label="31"></a> <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>This should show a much larger amount of data, including information about all the characters from the <em>Lord of the Rings</em> series in this database. You’ll notice that the data is structured in a similar way to the data about books, with a list of characters and some other information about the data that was returned.</p>
 <style type="text/css">
@@ -766,18 +772,18 @@
 <section id="processing-json-with-python" class="slide level2">
 <h2>Processing JSON With Python</h2>
 <p>Since the api response is in json format, we can work with it similar to working with a dictionary. For example, we can see all the keys in the response by using the <code>.keys()</code> method.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>response.json().keys()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a aria-label="1"></a>response.json().keys()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should show the following:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>dict_keys([<span class="st">'docs'</span>, <span class="st">'total'</span>, <span class="st">'limit'</span>, <span class="st">'offset'</span>, <span class="st">'page'</span>, <span class="st">'pages'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a aria-label="1"></a>dict_keys([<span class="st">'docs'</span>, <span class="st">'total'</span>, <span class="st">'limit'</span>, <span class="st">'offset'</span>, <span class="st">'page'</span>, <span class="st">'pages'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>How would we see total number of characters?</em></p>
 </section>
 <section id="processing-json-with-python-1" class="slide level2">
 <h2>Processing JSON With Python</h2>
 <p>We can access the <code>total</code> key to see how many characters are in the database.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>response.json()[<span class="st">'total'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a aria-label="1"></a>response.json()[<span class="st">'total'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should return <code>933</code>, which means that there are 933 characters in the database. We can also loop through the <code>docs</code> key to see each character.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="cf">for</span> character <span class="kw">in</span> response.json()[<span class="st">'docs'</span>]:</span>
-<span id="cb18-2"><a></a>    <span class="bu">print</span>(character)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a aria-label="1"></a><span class="cf">for</span> character <span class="kw">in</span> response.json()[<span class="st">'docs'</span>]:</span>
+<span id="cb18-2"><a aria-label="2"></a>    <span class="bu">print</span>(character)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>This should show a list of dictionaries, each of which contains information about a character from the <em>Lord of the Rings</em> series. You’ll notice that each character has an <code>_id</code>, a <code>name</code>, a <code>wikiUrl</code>, a <code>race</code>, a <code>birth</code>, a <code>gender</code>, a <code>death</code>, a <code>hair</code>, a <code>height</code>, a <code>realm</code>, and a <code>spouse</code>.</p>
 <style type="text/css">
@@ -795,18 +801,18 @@
 <section id="processing-json-with-python-2" class="slide level2">
 <h2>Processing JSON With Python</h2>
 <p>So if we only wanted to see the data about a certain character, like Galadriel, we could loop through the characters and print out the data for Galadriel.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a><span class="cf">for</span> character <span class="kw">in</span> response.json()[<span class="st">'docs'</span>]:</span>
-<span id="cb19-2"><a></a>    <span class="cf">if</span> character[<span class="st">'name'</span>] <span class="op">==</span> <span class="st">'Galadriel'</span>:</span>
-<span id="cb19-3"><a></a>        <span class="bu">print</span>(character)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a aria-label="1"></a><span class="cf">for</span> character <span class="kw">in</span> response.json()[<span class="st">'docs'</span>]:</span>
+<span id="cb19-2"><a aria-label="2"></a>    <span class="cf">if</span> character[<span class="st">'name'</span>] <span class="op">==</span> <span class="st">'Galadriel'</span>:</span>
+<span id="cb19-3"><a aria-label="3"></a>        <span class="bu">print</span>(character)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Which would return the following data:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb20-1"><a></a><span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfd06'</span><span class="fu">,</span> <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Galadriel'</span><span class="fu">,</span> <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Galadriel'</span><span class="fu">,</span> <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Elf'</span><span class="fu">,</span> <span class="er">'birth'</span><span class="fu">:</span> <span class="er">'YT</span> <span class="dv">1362</span><span class="er">'</span><span class="fu">,</span> <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Female'</span><span class="fu">,</span> <span class="er">'death'</span><span class="fu">:</span> <span class="er">'Still</span> <span class="er">alive:</span> <span class="er">Departed</span> <span class="er">over</span> <span class="er">the</span> <span class="er">sea</span> <span class="er">on</span> <span class="fu">,</span><span class="er">September</span> <span class="er">29</span> <span class="fu">,</span><span class="er">3021'</span><span class="fu">,</span> <span class="er">'hair'</span><span class="fu">:</span> <span class="er">'Golden'</span><span class="fu">,</span> <span class="er">'height'</span><span class="fu">:</span> <span class="er">'Tall'</span><span class="fu">,</span> <span class="er">'realm'</span><span class="fu">:</span> <span class="er">'Eregion</span><span class="fu">,</span><span class="er">Lothlórien</span><span class="fu">,</span><span class="er">Caras</span> <span class="er">Galadhon'</span><span class="fu">,</span> <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">'Celeborn'</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb20-1"><a aria-label="1"></a><span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfd06'</span><span class="fu">,</span> <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Galadriel'</span><span class="fu">,</span> <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Galadriel'</span><span class="fu">,</span> <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Elf'</span><span class="fu">,</span> <span class="er">'birth'</span><span class="fu">:</span> <span class="er">'YT</span> <span class="dv">1362</span><span class="er">'</span><span class="fu">,</span> <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Female'</span><span class="fu">,</span> <span class="er">'death'</span><span class="fu">:</span> <span class="er">'Still</span> <span class="er">alive:</span> <span class="er">Departed</span> <span class="er">over</span> <span class="er">the</span> <span class="er">sea</span> <span class="er">on</span> <span class="fu">,</span><span class="er">September</span> <span class="er">29</span> <span class="er">,3021',</span> <span class="er">'hair'</span><span class="fu">:</span> <span class="er">'Golden'</span><span class="fu">,</span> <span class="er">'height'</span><span class="fu">:</span> <span class="er">'Tall'</span><span class="fu">,</span> <span class="er">'realm'</span><span class="fu">:</span> <span class="er">'Eregion</span><span class="fu">,</span><span class="er">Lothlórien,Caras</span> <span class="er">Galadhon',</span> <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">'Celeborn'</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="query-parameters" class="slide level2">
 <h2>Query Parameters</h2>
 <p>While we can do this using Python, we could also change our URL to only get data about Galadriel. We can do this by adding a query parameter to our URL.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
-<span id="cb21-2"><a></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb21-3"><a></a><span class="bu">print</span>(response.json())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a aria-label="1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
+<span id="cb21-2"><a aria-label="2"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb21-3"><a aria-label="3"></a><span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 <img data-src="https://cdn.prod.website-files.com/66508fc2f6b862d86193f29b/6674497e8a3e4519946a3b9f_bzNgNITcGMxVszuieKXJSF7Lswjw64bI7yuOvzQIyiedIzTqURKndIZkBL6OJXZcn3mQDMinzqM939F7ATVxr70XqyJVoG8EC9KOuwndGjpc_S0howFdJXKsXkrIwB2UF2ezFSFV.png" class="r-stretch"><aside class="notes">
 <p>Query parameters are a way to pass data to an API to get specific data back. In this case, we are passing the query parameter <code>name=Galadriel</code> to <em>The One API</em> to get data about the character Galadriel. You’ll notice that the URL has a <code>?</code> at the end of it, followed by the query parameter <code>name=Galadriel</code>.</p>
@@ -825,9 +831,9 @@
 <section id="query-parameters-1" class="slide level2">
 <h2>Query Parameters</h2>
 <p>Returning to the API’s documentation <a href="https://the-one-api.dev/documentation#5">https://the-one-api.dev/documentation#5</a>, we can see that we can use query parameters for sorting, filtering, and pagination data from <em>The One API</em>.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name!=Galadriel&amp;race=Elf'</span></span>
-<span id="cb22-2"><a></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb22-3"><a></a><span class="bu">print</span>(<span class="ss">f"Total number of elves besides Galadriel: </span><span class="sc">{</span>response<span class="sc">.</span>json()[<span class="st">'total'</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a aria-label="1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name!=Galadriel&amp;race=Elf'</span></span>
+<span id="cb22-2"><a aria-label="2"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb22-3"><a aria-label="3"></a><span class="bu">print</span>(<span class="ss">f"Total number of elves besides Galadriel: </span><span class="sc">{</span>response<span class="sc">.</span>json()[<span class="st">'total'</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>You can also add multiple query parameters by separating them with an <code>&amp;</code>. For example, if we wanted to get all other elves besides Galadriel, we could use the does not match query parameter <code>name!=Galadriel</code> and chain that with the race query parameter <code>race=Elf</code>.</p>
 <style type="text/css">
@@ -845,26 +851,26 @@
 <section id="query-parameters-2" class="slide level2">
 <h2>Query Parameters</h2>
 <p>Finally, we can also use the <code>id</code> in each data returned from the API to get more specific data. For example, if we wanted to get data about all the movie quotes of Galadriel, we could first get the id of Galadriel and then use that id to get data about her quotes.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
-<span id="cb23-2"><a></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb23-3"><a></a>galadriel_id <span class="op">=</span> response.json()[<span class="st">'docs'</span>][<span class="dv">0</span>][<span class="st">'_id'</span>]</span>
-<span id="cb23-4"><a></a>quote_url <span class="op">=</span> <span class="ss">f'https://the-one-api.dev/v2/character/</span><span class="sc">{</span>galadriel_id<span class="sc">}</span><span class="ss">/quote'</span></span>
-<span id="cb23-5"><a></a>response <span class="op">=</span> requests.get(quote_url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb23-6"><a></a><span class="bu">print</span>(response.json())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a aria-label="1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
+<span id="cb23-2"><a aria-label="2"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb23-3"><a aria-label="3"></a>galadriel_id <span class="op">=</span> response.json()[<span class="st">'docs'</span>][<span class="dv">0</span>][<span class="st">'_id'</span>]</span>
+<span id="cb23-4"><a aria-label="4"></a>quote_url <span class="op">=</span> <span class="ss">f'https://the-one-api.dev/v2/character/</span><span class="sc">{</span>galadriel_id<span class="sc">}</span><span class="ss">/quote'</span></span>
+<span id="cb23-5"><a aria-label="5"></a>response <span class="op">=</span> requests.get(quote_url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb23-6"><a aria-label="6"></a><span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="time-rate-limiting" class="slide level2">
 <h2><code>time</code> &amp; Rate Limiting</h2>
 <div class="columns">
 <div class="column r-fit-text" style="width:60%;">
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a><span class="im">import</span> time</span>
-<span id="cb24-2"><a></a></span>
-<span id="cb24-3"><a></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
-<span id="cb24-4"><a></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb24-5"><a></a>galadriel_id <span class="op">=</span> response.json()[<span class="st">'docs'</span>][<span class="dv">0</span>][<span class="st">'_id'</span>]</span>
-<span id="cb24-6"><a></a>quote_url <span class="op">=</span> <span class="ss">f'https://the-one-api.dev/v2/character/</span><span class="sc">{</span>galadriel_id<span class="sc">}</span><span class="ss">/quote'</span></span>
-<span id="cb24-7"><a></a>response <span class="op">=</span> requests.get(quote_url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb24-8"><a></a><span class="bu">print</span>(response.json())</span>
-<span id="cb24-9"><a></a>time.sleep(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a aria-label="1"></a><span class="im">import</span> time</span>
+<span id="cb24-2"><a aria-label="2"></a></span>
+<span id="cb24-3"><a aria-label="3"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
+<span id="cb24-4"><a aria-label="4"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb24-5"><a aria-label="5"></a>galadriel_id <span class="op">=</span> response.json()[<span class="st">'docs'</span>][<span class="dv">0</span>][<span class="st">'_id'</span>]</span>
+<span id="cb24-6"><a aria-label="6"></a>quote_url <span class="op">=</span> <span class="ss">f'https://the-one-api.dev/v2/character/</span><span class="sc">{</span>galadriel_id<span class="sc">}</span><span class="ss">/quote'</span></span>
+<span id="cb24-7"><a aria-label="7"></a>response <span class="op">=</span> requests.get(quote_url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb24-8"><a aria-label="8"></a><span class="bu">print</span>(response.json())</span>
+<span id="cb24-9"><a aria-label="9"></a>time.sleep(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column r-fit-text" style="width:40%;">
 <p><img data-src="https://media.geeksforgeeks.org/wp-content/uploads/20240725172750/What-is-Rate-Limiting.png"></p>
 </div></div>
@@ -940,17 +946,17 @@
 <section id="the-fix" class="slide level2">
 <h2>The Fix</h2>
 <p>The library developer assumed Rotten Tomatoes scores would be integers, but the actual API returns percentage scores with decimal values. The solution was simple: change the type annotation from <code>int</code> to <code>float</code> to allow decimal numbers:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a><span class="kw">class</span> Movie(pydantic.BaseModel):</span>
-<span id="cb25-2"><a></a>    <span class="co">"""A LotR movie title."""</span></span>
-<span id="cb25-3"><a></a></span>
-<span id="cb25-4"><a></a>    <span class="bu">id</span>: <span class="bu">str</span> <span class="op">=</span> pydantic.Field(<span class="va">None</span>, alias<span class="op">=</span><span class="st">"_id"</span>)</span>
-<span id="cb25-5"><a></a>    name: <span class="bu">str</span></span>
-<span id="cb25-6"><a></a>    runtimeInMinutes: <span class="bu">int</span></span>
-<span id="cb25-7"><a></a>    budgetInMillions: <span class="bu">int</span></span>
-<span id="cb25-8"><a></a>    boxOfficeRevenueInMillions: <span class="bu">float</span> <span class="co"># Changed from int to float</span></span>
-<span id="cb25-9"><a></a>    academyAwardNominations: <span class="bu">int</span></span>
-<span id="cb25-10"><a></a>    academyAwardWins: <span class="bu">int</span></span>
-<span id="cb25-11"><a></a>    rottenTomatoesScore: <span class="bu">float</span>  <span class="co"># Changed from int to float</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a aria-label="1"></a><span class="kw">class</span> Movie(pydantic.BaseModel):</span>
+<span id="cb25-2"><a aria-label="2"></a>    <span class="co">"""A LotR movie title."""</span></span>
+<span id="cb25-3"><a aria-label="3"></a></span>
+<span id="cb25-4"><a aria-label="4"></a>    <span class="bu">id</span>: <span class="bu">str</span> <span class="op">=</span> pydantic.Field(<span class="va">None</span>, alias<span class="op">=</span><span class="st">"_id"</span>)</span>
+<span id="cb25-5"><a aria-label="5"></a>    name: <span class="bu">str</span></span>
+<span id="cb25-6"><a aria-label="6"></a>    runtimeInMinutes: <span class="bu">int</span></span>
+<span id="cb25-7"><a aria-label="7"></a>    budgetInMillions: <span class="bu">int</span></span>
+<span id="cb25-8"><a aria-label="8"></a>    boxOfficeRevenueInMillions: <span class="bu">float</span> <span class="co"># Changed from int to float</span></span>
+<span id="cb25-9"><a aria-label="9"></a>    academyAwardNominations: <span class="bu">int</span></span>
+<span id="cb25-10"><a aria-label="10"></a>    academyAwardWins: <span class="bu">int</span></span>
+<span id="cb25-11"><a aria-label="11"></a>    rottenTomatoesScore: <span class="bu">float</span>  <span class="co"># Changed from int to float</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>This is a great example of why <strong>API wrappers are imperfect</strong>. The person who wrote <code>nrh-lotr</code> made assumptions about the data that didn’t match reality. This teaches us to:</p>
 <ul>
@@ -973,25 +979,25 @@
 </section>
 <section id="using-nrh-lotr" class="slide level2">
 <h2>Using NRH-LOTR</h2>
-<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a><span class="co"># First grab an api key from: https://the-one-api.dev/documentation#3</span></span>
-<span id="cb26-2"><a></a><span class="co"># Then put it in an env var like: `export API_KEY=SOME_API_KEY`</span></span>
-<span id="cb26-3"><a></a><span class="co"># Or insert it directly into the LOTR class as depicted below</span></span>
-<span id="cb26-4"><a></a><span class="im">from</span> lotr <span class="im">import</span> LOTR, Movie, Quote</span>
-<span id="cb26-5"><a></a></span>
-<span id="cb26-6"><a></a><span class="co"># Movie basics.</span></span>
-<span id="cb26-7"><a></a>lotr <span class="op">=</span> LOTR(<span class="st">"YOUR_API_KEY"</span>)</span>
-<span id="cb26-8"><a></a><span class="co"># lotr = LOTR() # if using env var</span></span>
-<span id="cb26-9"><a></a>movies <span class="op">=</span> lotr.movies(limit<span class="op">=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a aria-label="1"></a><span class="co"># First grab an api key from: https://the-one-api.dev/documentation#3</span></span>
+<span id="cb26-2"><a aria-label="2"></a><span class="co"># Then put it in an env var like: `export API_KEY=SOME_API_KEY`</span></span>
+<span id="cb26-3"><a aria-label="3"></a><span class="co"># Or insert it directly into the LOTR class as depicted below</span></span>
+<span id="cb26-4"><a aria-label="4"></a><span class="im">from</span> lotr <span class="im">import</span> LOTR, Movie, Quote</span>
+<span id="cb26-5"><a aria-label="5"></a></span>
+<span id="cb26-6"><a aria-label="6"></a><span class="co"># Movie basics.</span></span>
+<span id="cb26-7"><a aria-label="7"></a>lotr <span class="op">=</span> LOTR(<span class="st">"YOUR_API_KEY"</span>)</span>
+<span id="cb26-8"><a aria-label="8"></a><span class="co"># lotr = LOTR() # if using env var</span></span>
+<span id="cb26-9"><a aria-label="9"></a>movies <span class="op">=</span> lotr.movies(limit<span class="op">=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-nrh-lotr-1" class="slide level2">
 <h2>Using NRH-LOTR</h2>
 <div class="r-fit-text">
 <p>However, if you scroll down further in the documentation, you’ll notice that this library only makes requests for the following endpoints:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a></a><span class="ex">/movie</span></span>
-<span id="cb27-2"><a></a><span class="ex">/movie/{id}</span></span>
-<span id="cb27-3"><a></a><span class="ex">/movie/{id}/{quote}</span></span>
-<span id="cb27-4"><a></a><span class="ex">/quote</span></span>
-<span id="cb27-5"><a></a><span class="ex">/quote/{id}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a aria-label="1"></a><span class="ex">/movie</span></span>
+<span id="cb27-2"><a aria-label="2"></a><span class="ex">/movie/{id}</span></span>
+<span id="cb27-3"><a aria-label="3"></a><span class="ex">/movie/{id}/{quote}</span></span>
+<span id="cb27-4"><a aria-label="4"></a><span class="ex">/quote</span></span>
+<span id="cb27-5"><a aria-label="5"></a><span class="ex">/quote/{id}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Such limited functionality means that we couldn’t use this library to get data about characters or books, which is a major limitation. These types of limitations are common when working with API wrappers, as they are often created by developers who are not affiliated with the API itself and who may not have the time or resources to create a full-featured library.</p>
 </div>
 </section>
@@ -1120,7 +1126,7 @@
 <section id="quickstart" class="slide level2">
 <h2>Quickstart</h2>
 <p>If we go to the <code>Quickstart</code> page in the documentation <a href="https://rd-europeana-python-api.readthedocs.io/en/stable/usage.html#" target="_blank">https://rd-europeana-python-api.readthedocs.io/en/stable/usage.html#</a>, we can see that we can install the library with the following command:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a></a><span class="ex">pip</span> install pyeuropeana</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a aria-label="1"></a><span class="ex">pip</span> install pyeuropeana</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="authentication-with-pyeuropeana" class="slide level2">
 <h2>Authentication with <code>pyeuropeana</code></h2>
@@ -1142,38 +1148,38 @@
 </section>
 <section id="authentication-with-pyeuropeana-1" class="slide level2">
 <h2>Authentication with <code>pyeuropeana</code></h2>
-<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a><span class="im">import</span> apikey</span>
-<span id="cb29-2"><a></a><span class="im">import</span> os</span>
-<span id="cb29-3"><a></a></span>
-<span id="cb29-4"><a></a>apikey.save(<span class="st">"EUROPEANA_API_KEY"</span>, <span class="st">"YOUR_API_KEY_HERE"</span>)</span>
-<span id="cb29-5"><a></a>europeana_api_key <span class="op">=</span> apikey.load(<span class="st">"EUROPEANA_API_KEY"</span>)</span>
-<span id="cb29-6"><a></a>os.environ[<span class="st">'EUROPEANA_API_KEY'</span>] <span class="op">=</span> europeana_api_key</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a aria-label="1"></a><span class="im">import</span> apikey</span>
+<span id="cb29-2"><a aria-label="2"></a><span class="im">import</span> os</span>
+<span id="cb29-3"><a aria-label="3"></a></span>
+<span id="cb29-4"><a aria-label="4"></a>apikey.save(<span class="st">"EUROPEANA_API_KEY"</span>, <span class="st">"YOUR_API_KEY_HERE"</span>)</span>
+<span id="cb29-5"><a aria-label="5"></a>europeana_api_key <span class="op">=</span> apikey.load(<span class="st">"EUROPEANA_API_KEY"</span>)</span>
+<span id="cb29-6"><a aria-label="6"></a>os.environ[<span class="st">'EUROPEANA_API_KEY'</span>] <span class="op">=</span> europeana_api_key</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Getting errors? <a href="../materials/creating-curating-cad/06-getting-data-apis.html#errors-pyeuropeana" target="_blank">Check out these steps on the lesson page</a></p>
 </section>
 <section id="pyeuropeana-functionality" class="slide level2">
 <h2><code>pyeuropeana</code> Functionality</h2>
 <p>This is the example from the documentation:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a><span class="im">import</span> pyeuropeana.apis <span class="im">as</span> apis</span>
-<span id="cb30-2"><a></a><span class="im">import</span> pyeuropeana.utils <span class="im">as</span> utils</span>
-<span id="cb30-3"><a></a></span>
-<span id="cb30-4"><a></a><span class="co"># use this function to search our collections</span></span>
-<span id="cb30-5"><a></a>result <span class="op">=</span> apis.search(</span>
-<span id="cb30-6"><a></a>   query <span class="op">=</span> <span class="st">'*'</span>,</span>
-<span id="cb30-7"><a></a>   qf <span class="op">=</span> <span class="st">'(skos_concept:"http://data.europeana.eu/concept/base/48" AND TYPE:IMAGE)'</span>,</span>
-<span id="cb30-8"><a></a>   reusability <span class="op">=</span> <span class="st">'open AND permission'</span>,</span>
-<span id="cb30-9"><a></a>   media <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb30-10"><a></a>   thumbnail <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb30-11"><a></a>   landingpage <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb30-12"><a></a>   colourpalette <span class="op">=</span> <span class="st">'#0000FF'</span>,</span>
-<span id="cb30-13"><a></a>   theme <span class="op">=</span> <span class="st">'photography'</span>,</span>
-<span id="cb30-14"><a></a>   sort <span class="op">=</span> <span class="st">'europeana_id'</span>,</span>
-<span id="cb30-15"><a></a>   profile <span class="op">=</span> <span class="st">'rich'</span>,</span>
-<span id="cb30-16"><a></a>   rows <span class="op">=</span> <span class="dv">1000</span>,</span>
-<span id="cb30-17"><a></a>   ) <span class="co"># this gives you full response metadata along with cultural heritage object metadata</span></span>
-<span id="cb30-18"><a></a></span>
-<span id="cb30-19"><a></a>   <span class="co"># use this utility function to transform a subset of the cultural heritage object metadata</span></span>
-<span id="cb30-20"><a></a>   <span class="co"># into a readable Pandas DataFrame</span></span>
-<span id="cb30-21"><a></a>dataframe <span class="op">=</span> utils.search2df(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a aria-label="1"></a><span class="im">import</span> pyeuropeana.apis <span class="im">as</span> apis</span>
+<span id="cb30-2"><a aria-label="2"></a><span class="im">import</span> pyeuropeana.utils <span class="im">as</span> utils</span>
+<span id="cb30-3"><a aria-label="3"></a></span>
+<span id="cb30-4"><a aria-label="4"></a><span class="co"># use this function to search our collections</span></span>
+<span id="cb30-5"><a aria-label="5"></a>result <span class="op">=</span> apis.search(</span>
+<span id="cb30-6"><a aria-label="6"></a>   query <span class="op">=</span> <span class="st">'*'</span>,</span>
+<span id="cb30-7"><a aria-label="7"></a>   qf <span class="op">=</span> <span class="st">'(skos_concept:"http://data.europeana.eu/concept/base/48" AND TYPE:IMAGE)'</span>,</span>
+<span id="cb30-8"><a aria-label="8"></a>   reusability <span class="op">=</span> <span class="st">'open AND permission'</span>,</span>
+<span id="cb30-9"><a aria-label="9"></a>   media <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb30-10"><a aria-label="10"></a>   thumbnail <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb30-11"><a aria-label="11"></a>   landingpage <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb30-12"><a aria-label="12"></a>   colourpalette <span class="op">=</span> <span class="st">'#0000FF'</span>,</span>
+<span id="cb30-13"><a aria-label="13"></a>   theme <span class="op">=</span> <span class="st">'photography'</span>,</span>
+<span id="cb30-14"><a aria-label="14"></a>   sort <span class="op">=</span> <span class="st">'europeana_id'</span>,</span>
+<span id="cb30-15"><a aria-label="15"></a>   profile <span class="op">=</span> <span class="st">'rich'</span>,</span>
+<span id="cb30-16"><a aria-label="16"></a>   rows <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb30-17"><a aria-label="17"></a>   ) <span class="co"># this gives you full response metadata along with cultural heritage object metadata</span></span>
+<span id="cb30-18"><a aria-label="18"></a></span>
+<span id="cb30-19"><a aria-label="19"></a>   <span class="co"># use this utility function to transform a subset of the cultural heritage object metadata</span></span>
+<span id="cb30-20"><a aria-label="20"></a>   <span class="co"># into a readable Pandas DataFrame</span></span>
+<span id="cb30-21"><a aria-label="21"></a>dataframe <span class="op">=</span> utils.search2df(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Now we can start exploring how to access data from the Europeana API using the <code>pyeuropeana</code> library. In particular, we are going to try out the <code>search</code> method, which allows us to search the Europeana collection for items that match a specific query.</p>
 <p>And we can see that there’s a number of attributes we can use to filter our search, including <code>query</code>, <code>qf</code>, <code>reusability</code>, <code>media</code>, <code>thumbnail</code>, <code>landingpage</code>, <code>colourpalette</code>, <code>theme</code>, <code>sort</code>, <code>profile</code>, and <code>rows</code>. We can also see that we can use the <code>utils.search2df</code> method to transform the data into a Pandas DataFrame.</p>
@@ -1194,43 +1200,43 @@
 <div class="columns r-fit-text">
 <div class="column">
 <p>Let’s try a simpler example first though:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a></a><span class="im">import</span> pyeuropeana.apis <span class="im">as</span> apis</span>
-<span id="cb31-2"><a></a></span>
-<span id="cb31-3"><a></a>response <span class="op">=</span> apis.search(query<span class="op">=</span><span class="st">"Galadriel"</span>)</span>
-<span id="cb31-4"><a></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a aria-label="1"></a><span class="im">import</span> pyeuropeana.apis <span class="im">as</span> apis</span>
+<span id="cb31-2"><a aria-label="2"></a></span>
+<span id="cb31-3"><a aria-label="3"></a>response <span class="op">=</span> apis.search(query<span class="op">=</span><span class="st">"Galadriel"</span>)</span>
+<span id="cb31-4"><a aria-label="4"></a><span class="bu">print</span>(response)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <p>Which should show the following output:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a>{<span class="st">'apikey'</span>: <span class="st">'tondflanrino'</span>,</span>
-<span id="cb32-2"><a></a> <span class="st">'success'</span>: <span class="va">True</span>,</span>
-<span id="cb32-3"><a></a> <span class="st">'requestNumber'</span>: <span class="dv">999</span>,</span>
-<span id="cb32-4"><a></a> <span class="st">'itemsCount'</span>: <span class="dv">0</span>,</span>
-<span id="cb32-5"><a></a> <span class="st">'totalResults'</span>: <span class="dv">3</span>,</span>
-<span id="cb32-6"><a></a> <span class="st">'items'</span>: [{<span class="st">'completeness'</span>: <span class="dv">0</span>,</span>
-<span id="cb32-7"><a></a>   <span class="st">'country'</span>: [<span class="st">'Italy'</span>],</span>
-<span id="cb32-8"><a></a>   <span class="st">'dataProvider'</span>: [<span class="st">'Internet Culturale'</span>],</span>
-<span id="cb32-9"><a></a>   <span class="st">'dcCreator'</span>: [<span class="st">'http://data.europeana.eu/agent/159584'</span>,</span>
-<span id="cb32-10"><a></a>    <span class="st">'Karunesh'</span>,</span>
-<span id="cb32-11"><a></a>    <span class="st">'Karunesh'</span>],</span>
-<span id="cb32-12"><a></a>   <span class="st">'dcCreatorLangAware'</span>: {<span class="st">'def'</span>: [<span class="st">'http://data.europeana.eu/agent/159584'</span>,</span>
-<span id="cb32-13"><a></a>     <span class="st">'Karunesh'</span>],</span>
-<span id="cb32-14"><a></a>    <span class="st">'en'</span>: [<span class="st">'Karunesh'</span>]},</span>
-<span id="cb32-15"><a></a>   <span class="st">'dcTitleLangAware'</span>: {<span class="st">'def'</span>: [<span class="st">'Galadriel'</span>],</span>
-<span id="cb32-16"><a></a>    <span class="st">'en'</span>: [<span class="st">'Galadriel'</span>],</span>
-<span id="cb32-17"><a></a>    <span class="st">'it'</span>: [<span class="st">'Galadriel'</span>]},</span>
-<span id="cb32-18"><a></a>   <span class="st">'edmConcept'</span>: [<span class="st">'http://data.europeana.eu/concept/soundgenres/Music'</span>],</span>
-<span id="cb32-19"><a></a>   <span class="st">'edmConceptLabel'</span>: [{<span class="st">'def'</span>: <span class="st">'Musik'</span>},</span>
-<span id="cb32-20"><a></a>    {<span class="st">'def'</span>: <span class="st">'Music'</span>},</span>
-<span id="cb32-21"><a></a>    {<span class="st">'def'</span>: <span class="st">'Musica'</span>},</span>
-<span id="cb32-22"><a></a>    {<span class="st">'def'</span>: <span class="st">'Muzyka'</span>},</span>
-<span id="cb32-23"><a></a>    {<span class="st">'def'</span>: <span class="st">'Musique'</span>},</span>
-<span id="cb32-24"><a></a>    {<span class="st">'def'</span>: <span class="st">'Música'</span>}],</span>
-<span id="cb32-25"><a></a>   <span class="st">'edmConceptPrefLabelLangAware'</span>: {<span class="st">'de'</span>: [<span class="st">'Musik'</span>],</span>
-<span id="cb32-26"><a></a>...</span>
-<span id="cb32-27"><a></a>  <span class="st">'profile'</span>: <span class="va">None</span>,</span>
-<span id="cb32-28"><a></a>  <span class="st">'rows'</span>: <span class="dv">12</span>,</span>
-<span id="cb32-29"><a></a>  <span class="st">'cursor'</span>: <span class="st">'*'</span>,</span>
-<span id="cb32-30"><a></a>  <span class="st">'callback'</span>: <span class="va">None</span>,</span>
-<span id="cb32-31"><a></a>  <span class="st">'facet'</span>: <span class="va">None</span>}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a aria-label="1"></a>{<span class="st">'apikey'</span>: <span class="st">'tondflanrino'</span>,</span>
+<span id="cb32-2"><a aria-label="2"></a> <span class="st">'success'</span>: <span class="va">True</span>,</span>
+<span id="cb32-3"><a aria-label="3"></a> <span class="st">'requestNumber'</span>: <span class="dv">999</span>,</span>
+<span id="cb32-4"><a aria-label="4"></a> <span class="st">'itemsCount'</span>: <span class="dv">0</span>,</span>
+<span id="cb32-5"><a aria-label="5"></a> <span class="st">'totalResults'</span>: <span class="dv">3</span>,</span>
+<span id="cb32-6"><a aria-label="6"></a> <span class="st">'items'</span>: [{<span class="st">'completeness'</span>: <span class="dv">0</span>,</span>
+<span id="cb32-7"><a aria-label="7"></a>   <span class="st">'country'</span>: [<span class="st">'Italy'</span>],</span>
+<span id="cb32-8"><a aria-label="8"></a>   <span class="st">'dataProvider'</span>: [<span class="st">'Internet Culturale'</span>],</span>
+<span id="cb32-9"><a aria-label="9"></a>   <span class="st">'dcCreator'</span>: [<span class="st">'http://data.europeana.eu/agent/159584'</span>,</span>
+<span id="cb32-10"><a aria-label="10"></a>    <span class="st">'Karunesh'</span>,</span>
+<span id="cb32-11"><a aria-label="11"></a>    <span class="st">'Karunesh'</span>],</span>
+<span id="cb32-12"><a aria-label="12"></a>   <span class="st">'dcCreatorLangAware'</span>: {<span class="st">'def'</span>: [<span class="st">'http://data.europeana.eu/agent/159584'</span>,</span>
+<span id="cb32-13"><a aria-label="13"></a>     <span class="st">'Karunesh'</span>],</span>
+<span id="cb32-14"><a aria-label="14"></a>    <span class="st">'en'</span>: [<span class="st">'Karunesh'</span>]},</span>
+<span id="cb32-15"><a aria-label="15"></a>   <span class="st">'dcTitleLangAware'</span>: {<span class="st">'def'</span>: [<span class="st">'Galadriel'</span>],</span>
+<span id="cb32-16"><a aria-label="16"></a>    <span class="st">'en'</span>: [<span class="st">'Galadriel'</span>],</span>
+<span id="cb32-17"><a aria-label="17"></a>    <span class="st">'it'</span>: [<span class="st">'Galadriel'</span>]},</span>
+<span id="cb32-18"><a aria-label="18"></a>   <span class="st">'edmConcept'</span>: [<span class="st">'http://data.europeana.eu/concept/soundgenres/Music'</span>],</span>
+<span id="cb32-19"><a aria-label="19"></a>   <span class="st">'edmConceptLabel'</span>: [{<span class="st">'def'</span>: <span class="st">'Musik'</span>},</span>
+<span id="cb32-20"><a aria-label="20"></a>    {<span class="st">'def'</span>: <span class="st">'Music'</span>},</span>
+<span id="cb32-21"><a aria-label="21"></a>    {<span class="st">'def'</span>: <span class="st">'Musica'</span>},</span>
+<span id="cb32-22"><a aria-label="22"></a>    {<span class="st">'def'</span>: <span class="st">'Muzyka'</span>},</span>
+<span id="cb32-23"><a aria-label="23"></a>    {<span class="st">'def'</span>: <span class="st">'Musique'</span>},</span>
+<span id="cb32-24"><a aria-label="24"></a>    {<span class="st">'def'</span>: <span class="st">'Música'</span>}],</span>
+<span id="cb32-25"><a aria-label="25"></a>   <span class="st">'edmConceptPrefLabelLangAware'</span>: {<span class="st">'de'</span>: [<span class="st">'Musik'</span>],</span>
+<span id="cb32-26"><a aria-label="26"></a>...</span>
+<span id="cb32-27"><a aria-label="27"></a>  <span class="st">'profile'</span>: <span class="va">None</span>,</span>
+<span id="cb32-28"><a aria-label="28"></a>  <span class="st">'rows'</span>: <span class="dv">12</span>,</span>
+<span id="cb32-29"><a aria-label="29"></a>  <span class="st">'cursor'</span>: <span class="st">'*'</span>,</span>
+<span id="cb32-30"><a aria-label="30"></a>  <span class="st">'callback'</span>: <span class="va">None</span>,</span>
+<span id="cb32-31"><a aria-label="31"></a>  <span class="st">'facet'</span>: <span class="va">None</span>}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <aside class="notes">
 <p>We can also print out the <code>response.keys()</code> to see all the keys in the response. You’ll notice this api has a <code>totalResults</code> key, which tells us how many items match our query, and an <code>items</code> key, which contains a list of dictionaries, each of which contains information about an item in the collection.</p>
@@ -1251,7 +1257,7 @@
 <h2><code>pyeuropeana</code> Search API</h2>
 <div class="r-fit-text">
 <p>We can also see in the <code>Search API</code> documentation what keys we should expect for our initial search request <a href="https://europeana.atlassian.net/wiki/spaces/EF/pages/2385739812/Search+API+Documentation#Response" target="_blank">https://europeana.atlassian.net/wiki/spaces/EF/pages/2385739812/Search+API+Documentation#Response</a>, as well as what data should return for each item <a href="https://europeana.atlassian.net/wiki/spaces/EF/pages/2385739812/Search+API+Documentation#Metadata-Sets" target="_blank">https://europeana.atlassian.net/wiki/spaces/EF/pages/2385739812/Search+API+Documentation#Metadata-Sets</a>. For example, if we wanted to see the item in the browser we would just need to use the <code>guid</code> key.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a></a>response[<span class="st">'items'</span>][<span class="dv">0</span>][<span class="st">'guid'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a aria-label="1"></a>response[<span class="st">'items'</span>][<span class="dv">0</span>][<span class="st">'guid'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="pyeuropeana-entity-api" class="slide level2">
@@ -1270,11 +1276,11 @@
 <section id="pyeuropeana-entity-api-1" class="slide level2">
 <h2><code>pyeuropeana</code> Entity API</h2>
 <p>According to this tutorial, we can use the <code>entity.suggest</code> method to get suggestions for a specific entity. For example, if we wanted to get suggestions for the entity <code>Galadriel</code>, we could use the following code:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a>response <span class="op">=</span> apis.entity.suggest(</span>
-<span id="cb34-2"><a></a>    text <span class="op">=</span> <span class="st">'Galadriel'</span>,</span>
-<span id="cb34-3"><a></a>   TYPE <span class="op">=</span> <span class="st">'agent'</span>,</span>
-<span id="cb34-4"><a></a>)</span>
-<span id="cb34-5"><a></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a aria-label="1"></a>response <span class="op">=</span> apis.entity.suggest(</span>
+<span id="cb34-2"><a aria-label="2"></a>    text <span class="op">=</span> <span class="st">'Galadriel'</span>,</span>
+<span id="cb34-3"><a aria-label="3"></a>   TYPE <span class="op">=</span> <span class="st">'agent'</span>,</span>
+<span id="cb34-4"><a aria-label="4"></a>)</span>
+<span id="cb34-5"><a aria-label="5"></a><span class="bu">print</span>(response)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Did it work?</em></p>
 </section>
 <section id="pyeuropeana-entity-api-2" class="slide level2">
@@ -1282,61 +1288,61 @@
 <div class="columns r-fit-text">
 <div class="column">
 <p>Likely see there’s no results for this query. We could try a different entity, like <code>Tolkien</code>, and see if we get any results.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a></a>response apis.entity.suggest(</span>
-<span id="cb35-2"><a></a>   text <span class="op">=</span> <span class="st">'Tolkien'</span>,</span>
-<span id="cb35-3"><a></a>   TYPE <span class="op">=</span> <span class="st">'agent'</span>,</span>
-<span id="cb35-4"><a></a>)</span>
-<span id="cb35-5"><a></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a aria-label="1"></a>response apis.entity.suggest(</span>
+<span id="cb35-2"><a aria-label="2"></a>   text <span class="op">=</span> <span class="st">'Tolkien'</span>,</span>
+<span id="cb35-3"><a aria-label="3"></a>   TYPE <span class="op">=</span> <span class="st">'agent'</span>,</span>
+<span id="cb35-4"><a aria-label="4"></a>)</span>
+<span id="cb35-5"><a aria-label="5"></a><span class="bu">print</span>(response)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <p>This should give the following output:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a><span class="co">',</span></span>
-<span id="cb36-2"><a></a><span class="er"> 'ugc': [False],</span></span>
-<span id="cb36-3"><a></a><span class="er"> 'year': ['1989']}</span></span>
-<span id="cb36-4"><a></a><span class="er">{'@context': ['https://www.w3.org/ns/ldp.jsonld',</span></span>
-<span id="cb36-5"><a></a><span class="er">  'http://www.europeana.eu/schemas/context/entity.jsonld'],</span></span>
-<span id="cb36-6"><a></a><span class="er"> 'type': 'ResultPage',</span></span>
-<span id="cb36-7"><a></a><span class="er"> 'total': 3,</span></span>
-<span id="cb36-8"><a></a><span class="er"> 'items': [{'id': 'http://data.europeana.eu/agent/60065',</span></span>
-<span id="cb36-9"><a></a><span class="er">   'type': 'Agent',</span></span>
-<span id="cb36-10"><a></a><span class="er">   'isShownBy': {'id': 'http://pbc.gda.pl/Content/20559/03.mp3',</span></span>
-<span id="cb36-11"><a></a><span class="er">    'type': 'WebResource',</span></span>
-<span id="cb36-12"><a></a>    <span class="co">'source'</span>: <span class="st">'http://data.europeana.eu/item/0940417/_nnbqsf5'</span>,</span>
-<span id="cb36-13"><a></a>    <span class="co">'thumbnail'</span>: <span class="st">'https://api.europeana.eu/api/v2/thumbnail-by-url.json?uri=http%3A</span><span class="sc">%2F%2F</span><span class="st">pbc.gda.pl</span><span class="sc">%2F</span><span class="st">Content</span><span class="sc">%2F</span><span class="st">20559</span><span class="sc">%2F</span><span class="st">03.mp3&amp;type=SOUND'</span>},</span>
-<span id="cb36-14"><a></a>   <span class="co">'prefLabel'</span>: {<span class="st">'en'</span>: <span class="st">'J. R. R. Tolkien'</span>},</span>
-<span id="cb36-15"><a></a>   <span class="co">'altLabel'</span>: {<span class="st">'en'</span>: [<span class="st">'J-R-R Tolkien'</span>,</span>
-<span id="cb36-16"><a></a>     <span class="st">'Tolkien'</span>,</span>
-<span id="cb36-17"><a></a>     <span class="st">'John Ronald Reuel Tolkien'</span>,</span>
-<span id="cb36-18"><a></a>     <span class="st">'John Tolkien'</span>,</span>
-<span id="cb36-19"><a></a>     <span class="st">'J.R.R Tolkien'</span>,</span>
-<span id="cb36-20"><a></a>     <span class="st">'J.R.R. Tolkien'</span>,</span>
-<span id="cb36-21"><a></a>     <span class="st">'John R. R. Tolkien'</span>]},</span>
-<span id="cb36-22"><a></a>   <span class="co">'dateOfBirth'</span>: <span class="st">'1892-01-03'</span>,</span>
-<span id="cb36-23"><a></a>   <span class="co">'dateOfDeath'</span>: <span class="st">'1973-09-02'</span>},</span>
-<span id="cb36-24"><a></a>  {<span class="st">'id'</span>: <span class="st">'http://data.europeana.eu/agent/60339'</span>,</span>
-<span id="cb36-25"><a></a>   <span class="st">'type'</span>: <span class="st">'Agent'</span>,</span>
-<span id="cb36-26"><a></a>   <span class="st">'prefLabel'</span>: {<span class="st">'en'</span>: <span class="st">'Christopher Tolkien'</span>},</span>
-<span id="cb36-27"><a></a>   <span class="st">'altLabel'</span>: {<span class="st">'en'</span>: [<span class="st">'Christopher John Reuel Tolkien'</span>,</span>
-<span id="cb36-28"><a></a>     <span class="st">'Christopher Reuel Tolkien'</span>,</span>
-<span id="cb36-29"><a></a>...</span>
-<span id="cb36-30"><a></a>   <span class="st">'dateOfDeath'</span>: <span class="st">'2020-01-16'</span>},</span>
-<span id="cb36-31"><a></a>  {<span class="st">'id'</span>: <span class="st">'http://data.europeana.eu/agent/79852'</span>,</span>
-<span id="cb36-32"><a></a>   <span class="st">'type'</span>: <span class="st">'Agent'</span>,</span>
-<span id="cb36-33"><a></a>   <span class="st">'prefLabel'</span>: {<span class="st">'en'</span>: <span class="st">'Tim Tolkien'</span>},</span>
-<span id="cb36-34"><a></a>   <span class="st">'dateOfBirth'</span>: <span class="st">'1962-09-01'</span>}]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a aria-label="1"></a><span class="co">',</span></span>
+<span id="cb36-2"><a aria-label="2"></a><span class="er"> 'ugc': [False],</span></span>
+<span id="cb36-3"><a aria-label="3"></a><span class="er"> 'year': ['1989']}</span></span>
+<span id="cb36-4"><a aria-label="4"></a><span class="er">{'@context': ['https://www.w3.org/ns/ldp.jsonld',</span></span>
+<span id="cb36-5"><a aria-label="5"></a><span class="er">  'http://www.europeana.eu/schemas/context/entity.jsonld'],</span></span>
+<span id="cb36-6"><a aria-label="6"></a><span class="er"> 'type': 'ResultPage',</span></span>
+<span id="cb36-7"><a aria-label="7"></a><span class="er"> 'total': 3,</span></span>
+<span id="cb36-8"><a aria-label="8"></a><span class="er"> 'items': [{'id': 'http://data.europeana.eu/agent/60065',</span></span>
+<span id="cb36-9"><a aria-label="9"></a><span class="er">   'type': 'Agent',</span></span>
+<span id="cb36-10"><a aria-label="10"></a><span class="er">   'isShownBy': {'id': 'http://pbc.gda.pl/Content/20559/03.mp3',</span></span>
+<span id="cb36-11"><a aria-label="11"></a><span class="er">    'type': 'WebResource',</span></span>
+<span id="cb36-12"><a aria-label="12"></a>    <span class="co">'source'</span>: <span class="st">'http://data.europeana.eu/item/0940417/_nnbqsf5'</span>,</span>
+<span id="cb36-13"><a aria-label="13"></a>    <span class="co">'thumbnail'</span>: <span class="st">'https://api.europeana.eu/api/v2/thumbnail-by-url.json?uri=http%3A</span><span class="sc">%2F%2F</span><span class="st">pbc.gda.pl</span><span class="sc">%2F</span><span class="st">Content</span><span class="sc">%2F</span><span class="st">20559</span><span class="sc">%2F</span><span class="st">03.mp3&amp;type=SOUND'</span>},</span>
+<span id="cb36-14"><a aria-label="14"></a>   <span class="co">'prefLabel'</span>: {<span class="st">'en'</span>: <span class="st">'J. R. R. Tolkien'</span>},</span>
+<span id="cb36-15"><a aria-label="15"></a>   <span class="co">'altLabel'</span>: {<span class="st">'en'</span>: [<span class="st">'J-R-R Tolkien'</span>,</span>
+<span id="cb36-16"><a aria-label="16"></a>     <span class="st">'Tolkien'</span>,</span>
+<span id="cb36-17"><a aria-label="17"></a>     <span class="st">'John Ronald Reuel Tolkien'</span>,</span>
+<span id="cb36-18"><a aria-label="18"></a>     <span class="st">'John Tolkien'</span>,</span>
+<span id="cb36-19"><a aria-label="19"></a>     <span class="st">'J.R.R Tolkien'</span>,</span>
+<span id="cb36-20"><a aria-label="20"></a>     <span class="st">'J.R.R. Tolkien'</span>,</span>
+<span id="cb36-21"><a aria-label="21"></a>     <span class="st">'John R. R. Tolkien'</span>]},</span>
+<span id="cb36-22"><a aria-label="22"></a>   <span class="co">'dateOfBirth'</span>: <span class="st">'1892-01-03'</span>,</span>
+<span id="cb36-23"><a aria-label="23"></a>   <span class="co">'dateOfDeath'</span>: <span class="st">'1973-09-02'</span>},</span>
+<span id="cb36-24"><a aria-label="24"></a>  {<span class="st">'id'</span>: <span class="st">'http://data.europeana.eu/agent/60339'</span>,</span>
+<span id="cb36-25"><a aria-label="25"></a>   <span class="st">'type'</span>: <span class="st">'Agent'</span>,</span>
+<span id="cb36-26"><a aria-label="26"></a>   <span class="st">'prefLabel'</span>: {<span class="st">'en'</span>: <span class="st">'Christopher Tolkien'</span>},</span>
+<span id="cb36-27"><a aria-label="27"></a>   <span class="st">'altLabel'</span>: {<span class="st">'en'</span>: [<span class="st">'Christopher John Reuel Tolkien'</span>,</span>
+<span id="cb36-28"><a aria-label="28"></a>     <span class="st">'Christopher Reuel Tolkien'</span>,</span>
+<span id="cb36-29"><a aria-label="29"></a>...</span>
+<span id="cb36-30"><a aria-label="30"></a>   <span class="st">'dateOfDeath'</span>: <span class="st">'2020-01-16'</span>},</span>
+<span id="cb36-31"><a aria-label="31"></a>  {<span class="st">'id'</span>: <span class="st">'http://data.europeana.eu/agent/79852'</span>,</span>
+<span id="cb36-32"><a aria-label="32"></a>   <span class="st">'type'</span>: <span class="st">'Agent'</span>,</span>
+<span id="cb36-33"><a aria-label="33"></a>   <span class="st">'prefLabel'</span>: {<span class="st">'en'</span>: <span class="st">'Tim Tolkien'</span>},</span>
+<span id="cb36-34"><a aria-label="34"></a>   <span class="st">'dateOfBirth'</span>: <span class="st">'1962-09-01'</span>}]}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 </section>
 <section id="pyeuropeana-entity-api-3" class="slide level2">
 <h2><code>pyeuropeana</code> Entity API</h2>
 <p>We could also look for concepts or places, like <code>Literature</code> or <code>London</code>, to see what results we get. However, to do that we need to change the <code>TYPE</code> parameter to <code>concept</code> or <code>place</code>.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a></a>response_concept <span class="op">=</span> apis.entity.suggest(</span>
-<span id="cb37-2"><a></a>    text <span class="op">=</span> <span class="st">'Literature'</span>,</span>
-<span id="cb37-3"><a></a>   TYPE <span class="op">=</span> <span class="st">'concept'</span>,</span>
-<span id="cb37-4"><a></a>)</span>
-<span id="cb37-5"><a></a></span>
-<span id="cb37-6"><a></a>response_place <span class="op">=</span> apis.entity.suggest(</span>
-<span id="cb37-7"><a></a>    text <span class="op">=</span> <span class="st">'London'</span>,</span>
-<span id="cb37-8"><a></a>   TYPE <span class="op">=</span> <span class="st">'place'</span>,</span>
-<span id="cb37-9"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a aria-label="1"></a>response_concept <span class="op">=</span> apis.entity.suggest(</span>
+<span id="cb37-2"><a aria-label="2"></a>    text <span class="op">=</span> <span class="st">'Literature'</span>,</span>
+<span id="cb37-3"><a aria-label="3"></a>   TYPE <span class="op">=</span> <span class="st">'concept'</span>,</span>
+<span id="cb37-4"><a aria-label="4"></a>)</span>
+<span id="cb37-5"><a aria-label="5"></a></span>
+<span id="cb37-6"><a aria-label="6"></a>response_place <span class="op">=</span> apis.entity.suggest(</span>
+<span id="cb37-7"><a aria-label="7"></a>    text <span class="op">=</span> <span class="st">'London'</span>,</span>
+<span id="cb37-8"><a aria-label="8"></a>   TYPE <span class="op">=</span> <span class="st">'place'</span>,</span>
+<span id="cb37-9"><a aria-label="9"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Now we can start to see how we can use the <code>pyeuropeana</code> library to access data from the Europeana collection and also the value of using both APIs and wrappers. Specifically, in this instance we didn’t need to spend a lot of time researching the API endpoints and how to make requests to the API, as the library abstracted this process for us. However, we did need to spend time understanding how to use the library and how to work with the data it returned. This is a common tradeoff when working with APIs and wrappers, and it’s important to consider the benefits and drawbacks of each approach when working with APIs.</p>
 <style type="text/css">
@@ -1548,7 +1554,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1622,13 +1628,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

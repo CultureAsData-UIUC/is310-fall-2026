@@ -7,8 +7,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <title>IS310 - Culture As Data Fall 2026 – From Python Refresher To Complex Structures</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -435,35 +441,35 @@
 <h2>Advanced Data Structures</h2>
 <div class="r-fit-text">
 <p>We’ve learned a lot about storing data in different structures. But what if we want to combine <strong>data and functions</strong> into one cohesive unit? What if we wanted to build upon this initial list to add more metadata and information about each movie, and also maybe even reuse this code in multiple scripts? Then we might want to consider rewriting the code into a <strong>class</strong>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="kw">def</span> check_movie_release(movie):</span>
-<span id="cb1-2"><a></a>    <span class="cf">if</span> movie[<span class="st">'release_year'</span>] <span class="op">&lt;</span> <span class="dv">2000</span>:</span>
-<span id="cb1-3"><a></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released before 2000"</span>)</span>
-<span id="cb1-4"><a></a>    <span class="cf">else</span>:</span>
-<span id="cb1-5"><a></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released after 2000"</span>)</span>
-<span id="cb1-6"><a></a>        <span class="cf">return</span> movie[<span class="st">'name'</span>]</span>
-<span id="cb1-7"><a></a></span>
-<span id="cb1-8"><a></a>recent_movies <span class="op">=</span> []</span>
-<span id="cb1-9"><a></a></span>
-<span id="cb1-10"><a></a>favorite_movies <span class="op">=</span>[</span>
-<span id="cb1-11"><a></a>    {</span>
-<span id="cb1-12"><a></a>        <span class="st">"name"</span>: <span class="st">"The Matrix I"</span>,</span>
-<span id="cb1-13"><a></a>        <span class="st">"release_year"</span>: <span class="dv">1999</span>,</span>
-<span id="cb1-14"><a></a>        <span class="st">"sequels"</span>: [<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>]</span>
-<span id="cb1-15"><a></a>    },</span>
-<span id="cb1-16"><a></a>    {</span>
-<span id="cb1-17"><a></a>        <span class="st">"name"</span>: <span class="st">"Star Wars IV"</span>,</span>
-<span id="cb1-18"><a></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span>,</span>
-<span id="cb1-19"><a></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
-<span id="cb1-20"><a></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
-<span id="cb1-21"><a></a>    }</span>
-<span id="cb1-22"><a></a>]</span>
-<span id="cb1-23"><a></a></span>
-<span id="cb1-24"><a></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
-<span id="cb1-25"><a></a>    result <span class="op">=</span> check_movie_release(movie)</span>
-<span id="cb1-26"><a></a>    <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb1-27"><a></a>        recent_movies.append(result)</span>
-<span id="cb1-28"><a></a></span>
-<span id="cb1-29"><a></a><span class="bu">print</span>(recent_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a><span class="kw">def</span> check_movie_release(movie):</span>
+<span id="cb1-2"><a aria-label="2"></a>    <span class="cf">if</span> movie[<span class="st">'release_year'</span>] <span class="op">&lt;</span> <span class="dv">2000</span>:</span>
+<span id="cb1-3"><a aria-label="3"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released before 2000"</span>)</span>
+<span id="cb1-4"><a aria-label="4"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-5"><a aria-label="5"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>movie[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> was released after 2000"</span>)</span>
+<span id="cb1-6"><a aria-label="6"></a>        <span class="cf">return</span> movie[<span class="st">'name'</span>]</span>
+<span id="cb1-7"><a aria-label="7"></a></span>
+<span id="cb1-8"><a aria-label="8"></a>recent_movies <span class="op">=</span> []</span>
+<span id="cb1-9"><a aria-label="9"></a></span>
+<span id="cb1-10"><a aria-label="10"></a>favorite_movies <span class="op">=</span>[</span>
+<span id="cb1-11"><a aria-label="11"></a>    {</span>
+<span id="cb1-12"><a aria-label="12"></a>        <span class="st">"name"</span>: <span class="st">"The Matrix I"</span>,</span>
+<span id="cb1-13"><a aria-label="13"></a>        <span class="st">"release_year"</span>: <span class="dv">1999</span>,</span>
+<span id="cb1-14"><a aria-label="14"></a>        <span class="st">"sequels"</span>: [<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>]</span>
+<span id="cb1-15"><a aria-label="15"></a>    },</span>
+<span id="cb1-16"><a aria-label="16"></a>    {</span>
+<span id="cb1-17"><a aria-label="17"></a>        <span class="st">"name"</span>: <span class="st">"Star Wars IV"</span>,</span>
+<span id="cb1-18"><a aria-label="18"></a>        <span class="st">"release_year"</span>: <span class="dv">1977</span>,</span>
+<span id="cb1-19"><a aria-label="19"></a>        <span class="st">"sequels"</span>: [<span class="st">"Star Wars V"</span>, <span class="st">"Star Wars VI"</span>, <span class="st">"Star Wars VII"</span>, <span class="st">"Star Wars VIII"</span>, <span class="st">"Star Wars IX"</span>],</span>
+<span id="cb1-20"><a aria-label="20"></a>        <span class="st">"prequels"</span>: [<span class="st">"Star Wars I"</span>, <span class="st">"Star Wars II"</span>, <span class="st">"Star Wars III"</span>]</span>
+<span id="cb1-21"><a aria-label="21"></a>    }</span>
+<span id="cb1-22"><a aria-label="22"></a>]</span>
+<span id="cb1-23"><a aria-label="23"></a></span>
+<span id="cb1-24"><a aria-label="24"></a><span class="cf">for</span> movie <span class="kw">in</span> favorite_movies:</span>
+<span id="cb1-25"><a aria-label="25"></a>    result <span class="op">=</span> check_movie_release(movie)</span>
+<span id="cb1-26"><a aria-label="26"></a>    <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb1-27"><a aria-label="27"></a>        recent_movies.append(result)</span>
+<span id="cb1-28"><a aria-label="28"></a></span>
+<span id="cb1-29"><a aria-label="29"></a><span class="bu">print</span>(recent_movies)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <aside class="notes">
 <p>Dictionaries are great for describing complex data, but when we want to add behavior (functions) to our data, classes become more powerful.</p>
@@ -485,12 +491,12 @@
 <p>While dictionaries are great for describing complex data within a single object, a class is really useful to encapsulate both data and functions in a single cohesive unit.</p>
 <p>A class is a particular type of <strong>object</strong>. We can create (“instantiate”) an object of a class and store it as a variable. A variable therefore contains (technically, contains a reference to) an <em>instance</em> of a class.</p>
 <p>We’ve already used a lot of built-in classes. Strings, lists, dictionaries are all classes. We can have Python tell us what kind of class it is using the built-in function <code>type()</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="op">&gt;&gt;&gt;</span> a <span class="ex">=</span> <span class="pp">[</span><span class="ss">1,2,3</span><span class="pp">]</span></span>
-<span id="cb2-2"><a></a><span class="op">&gt;&gt;&gt;</span> type<span class="kw">(</span><span class="ex">a</span><span class="kw">)</span></span>
-<span id="cb2-3"><a></a><span class="op">&lt;</span>class <span class="st">'list'</span><span class="op">&gt;</span></span>
-<span id="cb2-4"><a></a><span class="op">&gt;&gt;&gt;</span> b <span class="ex">=</span> <span class="st">"123"</span></span>
-<span id="cb2-5"><a></a><span class="op">&gt;&gt;&gt;</span> type<span class="kw">(</span><span class="ex">b</span><span class="kw">)</span></span>
-<span id="cb2-6"><a></a><span class="op">&lt;</span>class <span class="st">'str'</span><span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="op">&gt;&gt;&gt;</span> a <span class="ex">=</span> <span class="pp">[</span><span class="ss">1,2,3</span><span class="pp">]</span></span>
+<span id="cb2-2"><a aria-label="2"></a><span class="op">&gt;&gt;&gt;</span> type<span class="kw">(</span><span class="ex">a</span><span class="kw">)</span></span>
+<span id="cb2-3"><a aria-label="3"></a><span class="op">&lt;</span>class <span class="st">'list'</span><span class="op">&gt;</span></span>
+<span id="cb2-4"><a aria-label="4"></a><span class="op">&gt;&gt;&gt;</span> b <span class="ex">=</span> <span class="st">"123"</span></span>
+<span id="cb2-5"><a aria-label="5"></a><span class="op">&gt;&gt;&gt;</span> type<span class="kw">(</span><span class="ex">b</span><span class="kw">)</span></span>
+<span id="cb2-6"><a aria-label="6"></a><span class="op">&lt;</span>class <span class="st">'str'</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <aside class="notes">
 <p>You can check what class something is by using the type() function. Every object in Python is an instance of a class.</p>
@@ -508,12 +514,12 @@
 </section>
 <section id="the-simplest-class" class="slide level2">
 <h2>The Simplest Class</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="co"># Define a class</span></span>
-<span id="cb3-2"><a></a><span class="kw">class</span> Blank:</span>
-<span id="cb3-3"><a></a>    <span class="cf">pass</span>  <span class="co"># Pass means "Move along, please. Nothing to see here."</span></span>
-<span id="cb3-4"><a></a></span>
-<span id="cb3-5"><a></a><span class="co"># Create an instance of the class and invoke it</span></span>
-<span id="cb3-6"><a></a>Blank()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Define a class</span></span>
+<span id="cb3-2"><a aria-label="2"></a><span class="kw">class</span> Blank:</span>
+<span id="cb3-3"><a aria-label="3"></a>    <span class="cf">pass</span>  <span class="co"># Pass means "Move along, please. Nothing to see here."</span></span>
+<span id="cb3-4"><a aria-label="4"></a></span>
+<span id="cb3-5"><a aria-label="5"></a><span class="co"># Create an instance of the class and invoke it</span></span>
+<span id="cb3-6"><a aria-label="6"></a>Blank()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This class does nothing when instantiated, but it shows the basic syntax.</p>
 <aside class="notes">
 <p>To first define a class, we need to use the keyword <code>class</code> followed by the name of the class (which can be anything!) and then a semi colon. All the logic of the class is indented (just like with functions, loops, and conditionals) and then we call the class similar to a function, using its name and parentheses to pass arguments to the class.</p>
@@ -532,12 +538,12 @@
 </section>
 <section id="a-simple-movie-class" class="slide level2">
 <h2>A Simple Movie Class</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">class</span> Movie:</span>
-<span id="cb4-2"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
-<span id="cb4-3"><a></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
-<span id="cb4-4"><a></a></span>
-<span id="cb4-5"><a></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix"</span>)</span>
-<span id="cb4-6"><a></a>a_movie.movie_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a><span class="kw">class</span> Movie:</span>
+<span id="cb4-2"><a aria-label="2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
+<span id="cb4-3"><a aria-label="3"></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
+<span id="cb4-4"><a aria-label="4"></a></span>
+<span id="cb4-5"><a aria-label="5"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix"</span>)</span>
+<span id="cb4-6"><a aria-label="6"></a>a_movie.movie_name</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>__init__</code> method runs when you create an instance. <code>self</code> represents the instance itself. Self references the class <strong>instance</strong> that is created when you call a class, which is why <code>self</code> is the first argument to <strong><em>any</em></strong> function defined in a class. You can read more about <a href="https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces">class scope here</a>.{target=“_blank”}</p>
 <aside class="notes">
 <p><code>self</code> is the first argument to any method in a class. It refers to the specific instance you’ve created. When you set <code>self.movie_name = name</code>, you’re creating an attribute on that instance.</p>
@@ -557,11 +563,11 @@
 <h2>Adding Methods</h2>
 <p>Methods are functions <strong>inside</strong> a class. They operate on the instance’s data.</p>
 <div class="fragment">
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
-<span id="cb5-2"><a></a>    <span class="co">"""Adds directors to the movie"""</span></span>
-<span id="cb5-3"><a></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(directors, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
-<span id="cb5-4"><a></a>        directors <span class="op">=</span> [directors]</span>
-<span id="cb5-5"><a></a>    <span class="va">self</span>.directors.extend(directors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a aria-label="1"></a><span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
+<span id="cb5-2"><a aria-label="2"></a>    <span class="co">"""Adds directors to the movie"""</span></span>
+<span id="cb5-3"><a aria-label="3"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(directors, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
+<span id="cb5-4"><a aria-label="4"></a>        directors <span class="op">=</span> [directors]</span>
+<span id="cb5-5"><a aria-label="5"></a>    <span class="va">self</span>.directors.extend(directors)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Methods always take <code>self</code> as the first argument. This allows them to access and modify the instance’s attributes. Notice the docstring—this documents what the method does.</p>
 <style type="text/css">
@@ -579,13 +585,13 @@
 </section>
 <section id="a-more-complex-class" class="slide level2">
 <h2>A More Complex Class</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="kw">class</span> Movie:</span>
-<span id="cb6-2"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
-<span id="cb6-3"><a></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
-<span id="cb6-4"><a></a>        <span class="va">self</span>.directors <span class="op">=</span> []</span>
-<span id="cb6-5"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb6-6"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb6-7"><a></a>        <span class="va">self</span>.sequels <span class="op">=</span> []</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a><span class="kw">class</span> Movie:</span>
+<span id="cb6-2"><a aria-label="2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
+<span id="cb6-3"><a aria-label="3"></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
+<span id="cb6-4"><a aria-label="4"></a>        <span class="va">self</span>.directors <span class="op">=</span> []</span>
+<span id="cb6-5"><a aria-label="5"></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb6-6"><a aria-label="6"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-7"><a aria-label="7"></a>        <span class="va">self</span>.sequels <span class="op">=</span> []</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Initialize attributes as empty or None to structure your data.</p>
 <aside class="notes">
 <p>By initializing attributes in <code>__init__</code>, you define the shape of your class. This makes it clear what data the class will hold.</p>
@@ -622,84 +628,84 @@
 <section id="adding-more-functionality" class="slide level2">
 <h2>Adding More Functionality</h2>
 <p>So what’s going in this code block?</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="kw">class</span> Movie:</span>
-<span id="cb7-2"><a></a>    <span class="co">"""Contains methods for data about a movie</span></span>
-<span id="cb7-3"><a></a></span>
-<span id="cb7-4"><a></a><span class="co">    Methods:</span></span>
-<span id="cb7-5"><a></a><span class="co">    --------</span></span>
-<span id="cb7-6"><a></a><span class="co">    add_directors</span></span>
-<span id="cb7-7"><a></a><span class="co">    add_release_year</span></span>
-<span id="cb7-8"><a></a><span class="co">    calculate_age</span></span>
-<span id="cb7-9"><a></a><span class="co">    """</span></span>
-<span id="cb7-10"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
-<span id="cb7-11"><a></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
-<span id="cb7-12"><a></a>        <span class="va">self</span>.directors <span class="op">=</span> []</span>
-<span id="cb7-13"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb7-14"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb7-15"><a></a>        <span class="va">self</span>.sequels <span class="op">=</span> []</span>
-<span id="cb7-16"><a></a>        <span class="va">self</span>.prequels <span class="op">=</span> []</span>
-<span id="cb7-17"><a></a></span>
-<span id="cb7-18"><a></a></span>
-<span id="cb7-19"><a></a>    <span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
-<span id="cb7-20"><a></a>        <span class="co">"""Adds a list of directors of the movie</span></span>
-<span id="cb7-21"><a></a></span>
-<span id="cb7-22"><a></a><span class="co">        Method argument:</span></span>
-<span id="cb7-23"><a></a><span class="co">        -----------------</span></span>
-<span id="cb7-24"><a></a><span class="co">        directors(list) -- A list of people who director the movie</span></span>
-<span id="cb7-25"><a></a><span class="co">        """</span></span>
-<span id="cb7-26"><a></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(directors, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
-<span id="cb7-27"><a></a>            directors <span class="op">=</span> [directors]</span>
-<span id="cb7-28"><a></a></span>
-<span id="cb7-29"><a></a>        <span class="va">self</span>.directors.extend(directors)</span>
-<span id="cb7-30"><a></a></span>
-<span id="cb7-31"><a></a></span>
-<span id="cb7-32"><a></a>    <span class="kw">def</span> add_release_year(<span class="va">self</span>, year):</span>
-<span id="cb7-33"><a></a>        <span class="co">"""Adds the release year of the movie</span></span>
-<span id="cb7-34"><a></a></span>
-<span id="cb7-35"><a></a><span class="co">        Method argument:</span></span>
-<span id="cb7-36"><a></a><span class="co">        -----------------</span></span>
-<span id="cb7-37"><a></a><span class="co">        year(integer or string) -- A year the movie was released</span></span>
-<span id="cb7-38"><a></a><span class="co">        """</span></span>
-<span id="cb7-39"><a></a></span>
-<span id="cb7-40"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(year)</span>
-<span id="cb7-41"><a></a></span>
-<span id="cb7-42"><a></a>    <span class="kw">def</span> add_sequels(<span class="va">self</span>, sequels):</span>
-<span id="cb7-43"><a></a>        <span class="co">"""Adds a list of sequels to the movie</span></span>
-<span id="cb7-44"><a></a></span>
-<span id="cb7-45"><a></a><span class="co">        Method argument:</span></span>
-<span id="cb7-46"><a></a><span class="co">        -----------------</span></span>
-<span id="cb7-47"><a></a><span class="co">        sequels(list) -- A list of sequels to the movie</span></span>
-<span id="cb7-48"><a></a><span class="co">        """</span></span>
-<span id="cb7-49"><a></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(sequels, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
-<span id="cb7-50"><a></a>            sequels <span class="op">=</span> [sequels]</span>
-<span id="cb7-51"><a></a></span>
-<span id="cb7-52"><a></a>        <span class="va">self</span>.sequels.extend(sequels)</span>
-<span id="cb7-53"><a></a></span>
-<span id="cb7-54"><a></a>    <span class="kw">def</span> add_prequels(<span class="va">self</span>, prequels):</span>
-<span id="cb7-55"><a></a>        <span class="co">"""Adds a list of prequels to the movie</span></span>
-<span id="cb7-56"><a></a></span>
-<span id="cb7-57"><a></a><span class="co">        Method argument:</span></span>
-<span id="cb7-58"><a></a><span class="co">        -----------------</span></span>
-<span id="cb7-59"><a></a><span class="co">        prequels(list) -- A list of prequels to the movie</span></span>
-<span id="cb7-60"><a></a><span class="co">        """</span></span>
-<span id="cb7-61"><a></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(prequels, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
-<span id="cb7-62"><a></a>            prequels <span class="op">=</span> [prequels]</span>
-<span id="cb7-63"><a></a></span>
-<span id="cb7-64"><a></a>        <span class="va">self</span>.prequels.extend(prequels)</span>
-<span id="cb7-65"><a></a></span>
-<span id="cb7-66"><a></a></span>
-<span id="cb7-67"><a></a>    <span class="kw">def</span> calculate_movie_age(<span class="va">self</span>):</span>
-<span id="cb7-68"><a></a>        <span class="co">"""Calculates the age of the movie</span></span>
-<span id="cb7-69"><a></a><span class="co">        """</span></span>
-<span id="cb7-70"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">2024</span> <span class="op">-</span> <span class="va">self</span>.release_year</span>
-<span id="cb7-71"><a></a></span>
-<span id="cb7-72"><a></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
-<span id="cb7-73"><a></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
-<span id="cb7-74"><a></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
-<span id="cb7-75"><a></a>a_movie.add_sequels([<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>])</span>
-<span id="cb7-76"><a></a>a_movie.calculate_movie_age()</span>
-<span id="cb7-77"><a></a><span class="bu">print</span>(a_movie.age)</span>
-<span id="cb7-78"><a></a><span class="bu">print</span>(a_movie.add_directors.__doc__) <span class="co"># To view the docstring for the method</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a><span class="kw">class</span> Movie:</span>
+<span id="cb7-2"><a aria-label="2"></a>    <span class="co">"""Contains methods for data about a movie</span></span>
+<span id="cb7-3"><a aria-label="3"></a></span>
+<span id="cb7-4"><a aria-label="4"></a><span class="co">    Methods:</span></span>
+<span id="cb7-5"><a aria-label="5"></a><span class="co">    --------</span></span>
+<span id="cb7-6"><a aria-label="6"></a><span class="co">    add_directors</span></span>
+<span id="cb7-7"><a aria-label="7"></a><span class="co">    add_release_year</span></span>
+<span id="cb7-8"><a aria-label="8"></a><span class="co">    calculate_age</span></span>
+<span id="cb7-9"><a aria-label="9"></a><span class="co">    """</span></span>
+<span id="cb7-10"><a aria-label="10"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
+<span id="cb7-11"><a aria-label="11"></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
+<span id="cb7-12"><a aria-label="12"></a>        <span class="va">self</span>.directors <span class="op">=</span> []</span>
+<span id="cb7-13"><a aria-label="13"></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb7-14"><a aria-label="14"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-15"><a aria-label="15"></a>        <span class="va">self</span>.sequels <span class="op">=</span> []</span>
+<span id="cb7-16"><a aria-label="16"></a>        <span class="va">self</span>.prequels <span class="op">=</span> []</span>
+<span id="cb7-17"><a aria-label="17"></a></span>
+<span id="cb7-18"><a aria-label="18"></a></span>
+<span id="cb7-19"><a aria-label="19"></a>    <span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
+<span id="cb7-20"><a aria-label="20"></a>        <span class="co">"""Adds a list of directors of the movie</span></span>
+<span id="cb7-21"><a aria-label="21"></a></span>
+<span id="cb7-22"><a aria-label="22"></a><span class="co">        Method argument:</span></span>
+<span id="cb7-23"><a aria-label="23"></a><span class="co">        -----------------</span></span>
+<span id="cb7-24"><a aria-label="24"></a><span class="co">        directors(list) -- A list of people who director the movie</span></span>
+<span id="cb7-25"><a aria-label="25"></a><span class="co">        """</span></span>
+<span id="cb7-26"><a aria-label="26"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(directors, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
+<span id="cb7-27"><a aria-label="27"></a>            directors <span class="op">=</span> [directors]</span>
+<span id="cb7-28"><a aria-label="28"></a></span>
+<span id="cb7-29"><a aria-label="29"></a>        <span class="va">self</span>.directors.extend(directors)</span>
+<span id="cb7-30"><a aria-label="30"></a></span>
+<span id="cb7-31"><a aria-label="31"></a></span>
+<span id="cb7-32"><a aria-label="32"></a>    <span class="kw">def</span> add_release_year(<span class="va">self</span>, year):</span>
+<span id="cb7-33"><a aria-label="33"></a>        <span class="co">"""Adds the release year of the movie</span></span>
+<span id="cb7-34"><a aria-label="34"></a></span>
+<span id="cb7-35"><a aria-label="35"></a><span class="co">        Method argument:</span></span>
+<span id="cb7-36"><a aria-label="36"></a><span class="co">        -----------------</span></span>
+<span id="cb7-37"><a aria-label="37"></a><span class="co">        year(integer or string) -- A year the movie was released</span></span>
+<span id="cb7-38"><a aria-label="38"></a><span class="co">        """</span></span>
+<span id="cb7-39"><a aria-label="39"></a></span>
+<span id="cb7-40"><a aria-label="40"></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(year)</span>
+<span id="cb7-41"><a aria-label="41"></a></span>
+<span id="cb7-42"><a aria-label="42"></a>    <span class="kw">def</span> add_sequels(<span class="va">self</span>, sequels):</span>
+<span id="cb7-43"><a aria-label="43"></a>        <span class="co">"""Adds a list of sequels to the movie</span></span>
+<span id="cb7-44"><a aria-label="44"></a></span>
+<span id="cb7-45"><a aria-label="45"></a><span class="co">        Method argument:</span></span>
+<span id="cb7-46"><a aria-label="46"></a><span class="co">        -----------------</span></span>
+<span id="cb7-47"><a aria-label="47"></a><span class="co">        sequels(list) -- A list of sequels to the movie</span></span>
+<span id="cb7-48"><a aria-label="48"></a><span class="co">        """</span></span>
+<span id="cb7-49"><a aria-label="49"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(sequels, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
+<span id="cb7-50"><a aria-label="50"></a>            sequels <span class="op">=</span> [sequels]</span>
+<span id="cb7-51"><a aria-label="51"></a></span>
+<span id="cb7-52"><a aria-label="52"></a>        <span class="va">self</span>.sequels.extend(sequels)</span>
+<span id="cb7-53"><a aria-label="53"></a></span>
+<span id="cb7-54"><a aria-label="54"></a>    <span class="kw">def</span> add_prequels(<span class="va">self</span>, prequels):</span>
+<span id="cb7-55"><a aria-label="55"></a>        <span class="co">"""Adds a list of prequels to the movie</span></span>
+<span id="cb7-56"><a aria-label="56"></a></span>
+<span id="cb7-57"><a aria-label="57"></a><span class="co">        Method argument:</span></span>
+<span id="cb7-58"><a aria-label="58"></a><span class="co">        -----------------</span></span>
+<span id="cb7-59"><a aria-label="59"></a><span class="co">        prequels(list) -- A list of prequels to the movie</span></span>
+<span id="cb7-60"><a aria-label="60"></a><span class="co">        """</span></span>
+<span id="cb7-61"><a aria-label="61"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(prequels, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
+<span id="cb7-62"><a aria-label="62"></a>            prequels <span class="op">=</span> [prequels]</span>
+<span id="cb7-63"><a aria-label="63"></a></span>
+<span id="cb7-64"><a aria-label="64"></a>        <span class="va">self</span>.prequels.extend(prequels)</span>
+<span id="cb7-65"><a aria-label="65"></a></span>
+<span id="cb7-66"><a aria-label="66"></a></span>
+<span id="cb7-67"><a aria-label="67"></a>    <span class="kw">def</span> calculate_movie_age(<span class="va">self</span>):</span>
+<span id="cb7-68"><a aria-label="68"></a>        <span class="co">"""Calculates the age of the movie</span></span>
+<span id="cb7-69"><a aria-label="69"></a><span class="co">        """</span></span>
+<span id="cb7-70"><a aria-label="70"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">2024</span> <span class="op">-</span> <span class="va">self</span>.release_year</span>
+<span id="cb7-71"><a aria-label="71"></a></span>
+<span id="cb7-72"><a aria-label="72"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb7-73"><a aria-label="73"></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
+<span id="cb7-74"><a aria-label="74"></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
+<span id="cb7-75"><a aria-label="75"></a>a_movie.add_sequels([<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>])</span>
+<span id="cb7-76"><a aria-label="76"></a>a_movie.calculate_movie_age()</span>
+<span id="cb7-77"><a aria-label="77"></a><span class="bu">print</span>(a_movie.age)</span>
+<span id="cb7-78"><a aria-label="78"></a><span class="bu">print</span>(a_movie.add_directors.__doc__) <span class="co"># To view the docstring for the method</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>First we’re taking our <code>Movie</code> class and expanding it so that it can contain more information about each movie. We still only initially create the class with one argument - the movie’s name. But we’ve also added additional attributes to the <code>__init__</code> function. First, we have <code>directors</code>, which holds a list; then release year, which is an integer; age, which is also an integer; sequels, which is a list; and prequels, which is also a list.</p>
 <p>Do you notice that the syntax here looks like a dictionary? That’s because we can use a similar pattern to dictionaries for creating our attributes.</p>
@@ -720,11 +726,11 @@
 <section id="adding-more-methods" class="slide level2">
 <h2>Adding More Methods</h2>
 <p>What if we wanted to add a method for printing out an entire movie’s information? What is this code doing and how can we call this method?</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="kw">def</span> get_movie_info(<span class="va">self</span>):</span>
-<span id="cb8-2"><a></a>    <span class="co">"""Prints out the movie's information</span></span>
-<span id="cb8-3"><a></a><span class="co">    """</span></span>
-<span id="cb8-4"><a></a>    <span class="cf">for</span> key, value <span class="kw">in</span> <span class="va">self</span>.__dict__.items():</span>
-<span id="cb8-5"><a></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a><span class="kw">def</span> get_movie_info(<span class="va">self</span>):</span>
+<span id="cb8-2"><a aria-label="2"></a>    <span class="co">"""Prints out the movie's information</span></span>
+<span id="cb8-3"><a aria-label="3"></a><span class="co">    """</span></span>
+<span id="cb8-4"><a aria-label="4"></a>    <span class="cf">for</span> key, value <span class="kw">in</span> <span class="va">self</span>.__dict__.items():</span>
+<span id="cb8-5"><a aria-label="5"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>What if we wanted to add a method for printing out an entire movie’s information? We could try looping through the class object and print out each attribute. Or we could use the built-in <code>__dict__</code> functionality that prints out the values for a class. We can then call this method on our <code>a_movie</code> object. This is a very simple example of a class, but it’s a good start. We can use classes to store complex data structures and then use methods to manipulate that data. We can also use classes to create reusable code that can be used in multiple scripts.</p>
 <style type="text/css">
@@ -742,102 +748,102 @@
 <section id="adding-more-classes" class="slide level2">
 <h2>Adding More Classes</h2>
 <p>What if we wanted to store prequels and sequels as instances of our <code>Movie</code> Class? What is this code doing exactly?</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="kw">class</span> Movie:</span>
-<span id="cb9-2"><a></a>    <span class="co">"""Contains methods for data about a movie</span></span>
-<span id="cb9-3"><a></a></span>
-<span id="cb9-4"><a></a><span class="co">    Methods:</span></span>
-<span id="cb9-5"><a></a><span class="co">    --------</span></span>
-<span id="cb9-6"><a></a><span class="co">    add_directors</span></span>
-<span id="cb9-7"><a></a><span class="co">    add_release_year</span></span>
-<span id="cb9-8"><a></a><span class="co">    calculate_age</span></span>
-<span id="cb9-9"><a></a><span class="co">    """</span></span>
-<span id="cb9-10"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, release_year<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb9-11"><a></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
-<span id="cb9-12"><a></a>        <span class="va">self</span>.directors <span class="op">=</span> []</span>
-<span id="cb9-13"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> release_year</span>
-<span id="cb9-14"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb9-15"><a></a>        <span class="va">self</span>.sequels <span class="op">=</span> []</span>
-<span id="cb9-16"><a></a>        <span class="va">self</span>.prequels <span class="op">=</span> []</span>
-<span id="cb9-17"><a></a></span>
-<span id="cb9-18"><a></a>    <span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
-<span id="cb9-19"><a></a>        <span class="co">"""Adds a list of directors of the movie</span></span>
-<span id="cb9-20"><a></a></span>
-<span id="cb9-21"><a></a><span class="co">        Method argument:</span></span>
-<span id="cb9-22"><a></a><span class="co">        -----------------</span></span>
-<span id="cb9-23"><a></a><span class="co">        directors(list) -- A list of people who director the movie</span></span>
-<span id="cb9-24"><a></a><span class="co">        """</span></span>
-<span id="cb9-25"><a></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(directors, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
-<span id="cb9-26"><a></a>            directors <span class="op">=</span> [directors]</span>
-<span id="cb9-27"><a></a></span>
-<span id="cb9-28"><a></a>        <span class="va">self</span>.directors.extend(directors)</span>
-<span id="cb9-29"><a></a></span>
-<span id="cb9-30"><a></a>    <span class="kw">def</span> add_release_year(<span class="va">self</span>, year):</span>
-<span id="cb9-31"><a></a>        <span class="co">"""Adds the release year of the movie</span></span>
-<span id="cb9-32"><a></a></span>
-<span id="cb9-33"><a></a><span class="co">        Method argument:</span></span>
-<span id="cb9-34"><a></a><span class="co">        -----------------</span></span>
-<span id="cb9-35"><a></a><span class="co">        year(integer or string) -- A year the movie was released</span></span>
-<span id="cb9-36"><a></a><span class="co">        """</span></span>
-<span id="cb9-37"><a></a></span>
-<span id="cb9-38"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(year)</span>
-<span id="cb9-39"><a></a></span>
-<span id="cb9-40"><a></a>    <span class="kw">def</span> calculate_movie_age(<span class="va">self</span>):</span>
-<span id="cb9-41"><a></a>        <span class="co">"""Calculates the age of the movie</span></span>
-<span id="cb9-42"><a></a><span class="co">        """</span></span>
-<span id="cb9-43"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">2024</span> <span class="op">-</span> <span class="va">self</span>.release_year</span>
-<span id="cb9-44"><a></a></span>
-<span id="cb9-45"><a></a>    <span class="kw">def</span> add_sequel(<span class="va">self</span>, sequel, release_year):</span>
-<span id="cb9-46"><a></a>        <span class="co">"""Adds a sequel to the movie</span></span>
-<span id="cb9-47"><a></a></span>
-<span id="cb9-48"><a></a><span class="co">        Method argument:</span></span>
-<span id="cb9-49"><a></a><span class="co">        -----------------</span></span>
-<span id="cb9-50"><a></a><span class="co">        sequel(string) -- The name of the sequel</span></span>
-<span id="cb9-51"><a></a><span class="co">        release_year(integer) -- The release year of the sequel</span></span>
-<span id="cb9-52"><a></a><span class="co">        """</span></span>
-<span id="cb9-53"><a></a>        sequel_movie <span class="op">=</span> Movie(sequel, release_year)</span>
-<span id="cb9-54"><a></a>        <span class="va">self</span>.sequels.append(sequel_movie)</span>
-<span id="cb9-55"><a></a></span>
-<span id="cb9-56"><a></a>    <span class="kw">def</span> add_prequel(<span class="va">self</span>, prequel, release_year):</span>
-<span id="cb9-57"><a></a>        <span class="co">"""Adds a prequel to the movie</span></span>
-<span id="cb9-58"><a></a></span>
-<span id="cb9-59"><a></a><span class="co">        Method argument:</span></span>
-<span id="cb9-60"><a></a><span class="co">        -----------------</span></span>
-<span id="cb9-61"><a></a><span class="co">        prequel(string) -- The name of the prequel</span></span>
-<span id="cb9-62"><a></a><span class="co">        release_year(integer) -- The release year of the prequel</span></span>
-<span id="cb9-63"><a></a><span class="co">        """</span></span>
-<span id="cb9-64"><a></a>        prequel_movie <span class="op">=</span> Movie(prequel, release_year)</span>
-<span id="cb9-65"><a></a>        <span class="va">self</span>.prequels.append(prequel_movie)</span>
-<span id="cb9-66"><a></a></span>
-<span id="cb9-67"><a></a>    <span class="kw">def</span> get_movie_info(<span class="va">self</span>):</span>
-<span id="cb9-68"><a></a>        <span class="co">"""Prints out the movie's information</span></span>
-<span id="cb9-69"><a></a><span class="co">        """</span></span>
-<span id="cb9-70"><a></a>        <span class="cf">for</span> key, value <span class="kw">in</span> <span class="va">self</span>.__dict__.items():</span>
-<span id="cb9-71"><a></a>            <span class="cf">if</span> key <span class="kw">in</span> [<span class="st">'sequels'</span>, <span class="st">'prequels'</span>]:</span>
-<span id="cb9-72"><a></a>                <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>[movie.movie_name <span class="cf">for</span> movie <span class="kw">in</span> value]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-73"><a></a>            <span class="cf">else</span>:</span>
-<span id="cb9-74"><a></a>                <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-75"><a></a></span>
-<span id="cb9-76"><a></a>    <span class="kw">def</span> get_release_year(movie):</span>
-<span id="cb9-77"><a></a>    <span class="co">"""Returns the release year of the movie"""</span></span>
-<span id="cb9-78"><a></a>    <span class="cf">return</span> movie.release_year</span>
-<span id="cb9-79"><a></a></span>
-<span id="cb9-80"><a></a>    <span class="kw">def</span> calculate_movie_order(<span class="va">self</span>):</span>
-<span id="cb9-81"><a></a>        <span class="co">"""Calculates the order of movies based on release year</span></span>
-<span id="cb9-82"><a></a><span class="co">        """</span></span>
-<span id="cb9-83"><a></a>        all_movies <span class="op">=</span> [<span class="va">self</span>] <span class="op">+</span> <span class="va">self</span>.sequels <span class="op">+</span> <span class="va">self</span>.prequels</span>
-<span id="cb9-84"><a></a>        all_movies.sort(key<span class="op">=</span>get_release_year)</span>
-<span id="cb9-85"><a></a>        <span class="cf">return</span> [movie.movie_name <span class="cf">for</span> movie <span class="kw">in</span> all_movies]</span>
-<span id="cb9-86"><a></a></span>
-<span id="cb9-87"><a></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
-<span id="cb9-88"><a></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
-<span id="cb9-89"><a></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
-<span id="cb9-90"><a></a>a_movie.calculate_movie_age()</span>
-<span id="cb9-91"><a></a>a_movie.add_sequel(<span class="st">"The Matrix II"</span>, <span class="dv">2003</span>)</span>
-<span id="cb9-92"><a></a>a_movie.add_sequel(<span class="st">"The Matrix III"</span>, <span class="dv">2003</span>)</span>
-<span id="cb9-93"><a></a>a_movie.add_sequel(<span class="st">"The Matrix IV"</span>, <span class="dv">2021</span>)</span>
-<span id="cb9-94"><a></a>a_movie.add_prequel(<span class="st">"The Matrix 0"</span>, <span class="dv">1998</span>)</span>
-<span id="cb9-95"><a></a>a_movie.get_movie_info()</span>
-<span id="cb9-96"><a></a><span class="bu">print</span>(a_movie.calculate_movie_order())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a><span class="kw">class</span> Movie:</span>
+<span id="cb9-2"><a aria-label="2"></a>    <span class="co">"""Contains methods for data about a movie</span></span>
+<span id="cb9-3"><a aria-label="3"></a></span>
+<span id="cb9-4"><a aria-label="4"></a><span class="co">    Methods:</span></span>
+<span id="cb9-5"><a aria-label="5"></a><span class="co">    --------</span></span>
+<span id="cb9-6"><a aria-label="6"></a><span class="co">    add_directors</span></span>
+<span id="cb9-7"><a aria-label="7"></a><span class="co">    add_release_year</span></span>
+<span id="cb9-8"><a aria-label="8"></a><span class="co">    calculate_age</span></span>
+<span id="cb9-9"><a aria-label="9"></a><span class="co">    """</span></span>
+<span id="cb9-10"><a aria-label="10"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, release_year<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb9-11"><a aria-label="11"></a>        <span class="va">self</span>.movie_name <span class="op">=</span> name</span>
+<span id="cb9-12"><a aria-label="12"></a>        <span class="va">self</span>.directors <span class="op">=</span> []</span>
+<span id="cb9-13"><a aria-label="13"></a>        <span class="va">self</span>.release_year <span class="op">=</span> release_year</span>
+<span id="cb9-14"><a aria-label="14"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-15"><a aria-label="15"></a>        <span class="va">self</span>.sequels <span class="op">=</span> []</span>
+<span id="cb9-16"><a aria-label="16"></a>        <span class="va">self</span>.prequels <span class="op">=</span> []</span>
+<span id="cb9-17"><a aria-label="17"></a></span>
+<span id="cb9-18"><a aria-label="18"></a>    <span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
+<span id="cb9-19"><a aria-label="19"></a>        <span class="co">"""Adds a list of directors of the movie</span></span>
+<span id="cb9-20"><a aria-label="20"></a></span>
+<span id="cb9-21"><a aria-label="21"></a><span class="co">        Method argument:</span></span>
+<span id="cb9-22"><a aria-label="22"></a><span class="co">        -----------------</span></span>
+<span id="cb9-23"><a aria-label="23"></a><span class="co">        directors(list) -- A list of people who director the movie</span></span>
+<span id="cb9-24"><a aria-label="24"></a><span class="co">        """</span></span>
+<span id="cb9-25"><a aria-label="25"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(directors, <span class="bu">list</span>) <span class="kw">is</span> <span class="va">False</span>:</span>
+<span id="cb9-26"><a aria-label="26"></a>            directors <span class="op">=</span> [directors]</span>
+<span id="cb9-27"><a aria-label="27"></a></span>
+<span id="cb9-28"><a aria-label="28"></a>        <span class="va">self</span>.directors.extend(directors)</span>
+<span id="cb9-29"><a aria-label="29"></a></span>
+<span id="cb9-30"><a aria-label="30"></a>    <span class="kw">def</span> add_release_year(<span class="va">self</span>, year):</span>
+<span id="cb9-31"><a aria-label="31"></a>        <span class="co">"""Adds the release year of the movie</span></span>
+<span id="cb9-32"><a aria-label="32"></a></span>
+<span id="cb9-33"><a aria-label="33"></a><span class="co">        Method argument:</span></span>
+<span id="cb9-34"><a aria-label="34"></a><span class="co">        -----------------</span></span>
+<span id="cb9-35"><a aria-label="35"></a><span class="co">        year(integer or string) -- A year the movie was released</span></span>
+<span id="cb9-36"><a aria-label="36"></a><span class="co">        """</span></span>
+<span id="cb9-37"><a aria-label="37"></a></span>
+<span id="cb9-38"><a aria-label="38"></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(year)</span>
+<span id="cb9-39"><a aria-label="39"></a></span>
+<span id="cb9-40"><a aria-label="40"></a>    <span class="kw">def</span> calculate_movie_age(<span class="va">self</span>):</span>
+<span id="cb9-41"><a aria-label="41"></a>        <span class="co">"""Calculates the age of the movie</span></span>
+<span id="cb9-42"><a aria-label="42"></a><span class="co">        """</span></span>
+<span id="cb9-43"><a aria-label="43"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">2024</span> <span class="op">-</span> <span class="va">self</span>.release_year</span>
+<span id="cb9-44"><a aria-label="44"></a></span>
+<span id="cb9-45"><a aria-label="45"></a>    <span class="kw">def</span> add_sequel(<span class="va">self</span>, sequel, release_year):</span>
+<span id="cb9-46"><a aria-label="46"></a>        <span class="co">"""Adds a sequel to the movie</span></span>
+<span id="cb9-47"><a aria-label="47"></a></span>
+<span id="cb9-48"><a aria-label="48"></a><span class="co">        Method argument:</span></span>
+<span id="cb9-49"><a aria-label="49"></a><span class="co">        -----------------</span></span>
+<span id="cb9-50"><a aria-label="50"></a><span class="co">        sequel(string) -- The name of the sequel</span></span>
+<span id="cb9-51"><a aria-label="51"></a><span class="co">        release_year(integer) -- The release year of the sequel</span></span>
+<span id="cb9-52"><a aria-label="52"></a><span class="co">        """</span></span>
+<span id="cb9-53"><a aria-label="53"></a>        sequel_movie <span class="op">=</span> Movie(sequel, release_year)</span>
+<span id="cb9-54"><a aria-label="54"></a>        <span class="va">self</span>.sequels.append(sequel_movie)</span>
+<span id="cb9-55"><a aria-label="55"></a></span>
+<span id="cb9-56"><a aria-label="56"></a>    <span class="kw">def</span> add_prequel(<span class="va">self</span>, prequel, release_year):</span>
+<span id="cb9-57"><a aria-label="57"></a>        <span class="co">"""Adds a prequel to the movie</span></span>
+<span id="cb9-58"><a aria-label="58"></a></span>
+<span id="cb9-59"><a aria-label="59"></a><span class="co">        Method argument:</span></span>
+<span id="cb9-60"><a aria-label="60"></a><span class="co">        -----------------</span></span>
+<span id="cb9-61"><a aria-label="61"></a><span class="co">        prequel(string) -- The name of the prequel</span></span>
+<span id="cb9-62"><a aria-label="62"></a><span class="co">        release_year(integer) -- The release year of the prequel</span></span>
+<span id="cb9-63"><a aria-label="63"></a><span class="co">        """</span></span>
+<span id="cb9-64"><a aria-label="64"></a>        prequel_movie <span class="op">=</span> Movie(prequel, release_year)</span>
+<span id="cb9-65"><a aria-label="65"></a>        <span class="va">self</span>.prequels.append(prequel_movie)</span>
+<span id="cb9-66"><a aria-label="66"></a></span>
+<span id="cb9-67"><a aria-label="67"></a>    <span class="kw">def</span> get_movie_info(<span class="va">self</span>):</span>
+<span id="cb9-68"><a aria-label="68"></a>        <span class="co">"""Prints out the movie's information</span></span>
+<span id="cb9-69"><a aria-label="69"></a><span class="co">        """</span></span>
+<span id="cb9-70"><a aria-label="70"></a>        <span class="cf">for</span> key, value <span class="kw">in</span> <span class="va">self</span>.__dict__.items():</span>
+<span id="cb9-71"><a aria-label="71"></a>            <span class="cf">if</span> key <span class="kw">in</span> [<span class="st">'sequels'</span>, <span class="st">'prequels'</span>]:</span>
+<span id="cb9-72"><a aria-label="72"></a>                <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>[movie.movie_name <span class="cf">for</span> movie <span class="kw">in</span> value]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-73"><a aria-label="73"></a>            <span class="cf">else</span>:</span>
+<span id="cb9-74"><a aria-label="74"></a>                <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-75"><a aria-label="75"></a></span>
+<span id="cb9-76"><a aria-label="76"></a>    <span class="kw">def</span> get_release_year(movie):</span>
+<span id="cb9-77"><a aria-label="77"></a>    <span class="co">"""Returns the release year of the movie"""</span></span>
+<span id="cb9-78"><a aria-label="78"></a>    <span class="cf">return</span> movie.release_year</span>
+<span id="cb9-79"><a aria-label="79"></a></span>
+<span id="cb9-80"><a aria-label="80"></a>    <span class="kw">def</span> calculate_movie_order(<span class="va">self</span>):</span>
+<span id="cb9-81"><a aria-label="81"></a>        <span class="co">"""Calculates the order of movies based on release year</span></span>
+<span id="cb9-82"><a aria-label="82"></a><span class="co">        """</span></span>
+<span id="cb9-83"><a aria-label="83"></a>        all_movies <span class="op">=</span> [<span class="va">self</span>] <span class="op">+</span> <span class="va">self</span>.sequels <span class="op">+</span> <span class="va">self</span>.prequels</span>
+<span id="cb9-84"><a aria-label="84"></a>        all_movies.sort(key<span class="op">=</span>get_release_year)</span>
+<span id="cb9-85"><a aria-label="85"></a>        <span class="cf">return</span> [movie.movie_name <span class="cf">for</span> movie <span class="kw">in</span> all_movies]</span>
+<span id="cb9-86"><a aria-label="86"></a></span>
+<span id="cb9-87"><a aria-label="87"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb9-88"><a aria-label="88"></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
+<span id="cb9-89"><a aria-label="89"></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
+<span id="cb9-90"><a aria-label="90"></a>a_movie.calculate_movie_age()</span>
+<span id="cb9-91"><a aria-label="91"></a>a_movie.add_sequel(<span class="st">"The Matrix II"</span>, <span class="dv">2003</span>)</span>
+<span id="cb9-92"><a aria-label="92"></a>a_movie.add_sequel(<span class="st">"The Matrix III"</span>, <span class="dv">2003</span>)</span>
+<span id="cb9-93"><a aria-label="93"></a>a_movie.add_sequel(<span class="st">"The Matrix IV"</span>, <span class="dv">2021</span>)</span>
+<span id="cb9-94"><a aria-label="94"></a>a_movie.add_prequel(<span class="st">"The Matrix 0"</span>, <span class="dv">1998</span>)</span>
+<span id="cb9-95"><a aria-label="95"></a>a_movie.get_movie_info()</span>
+<span id="cb9-96"><a aria-label="96"></a><span class="bu">print</span>(a_movie.calculate_movie_order())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>This is a more complex version of our <code>Movie</code> class. We’ve added two new methods, <code>add_sequel</code> and <code>add_prequel</code>, which take the name of the sequel or prequel and the release year of the sequel or prequel. We then create a new instance of the <code>Movie</code> class and append it to the <code>sequels</code> or <code>prequels</code> list. We also added a new method, <code>calculate_movie_order</code>, which sorts all the movies based on their release year and then returns a list of the movie names in order. To do this we use the built-in <code>sort</code> method, which sorts a list in place, and the <code>key</code> argument, which takes a function that returns a value that the list should be sorted by. In this case, we use the <code>get_release_year</code> method to get each release year, and then sort the list of movies by their release year.</p>
 <p>This type of programming is called <strong>object-oriented programming</strong> and it’s a very powerful way to organize your code. It’s also a very common way to organize code in Python, and you’ll see it often, even if you don’t write it yourself.</p>
@@ -867,7 +873,7 @@
 </section>
 <section id="inline-comments" class="slide level2">
 <h2>Inline Comments</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>movie <span class="op">=</span> <span class="bu">dict</span>()  <span class="co"># Could also write {}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a>movie <span class="op">=</span> <span class="bu">dict</span>()  <span class="co"># Could also write {}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Use <code>#</code> to comment a single line.</p>
 <aside class="notes">
 <p>Inline comments are useful for explaining <strong>why</strong> you did something, not necessarily what the code does (the code itself should be clear about that).</p>
@@ -885,16 +891,16 @@
 </section>
 <section id="block-comments-docstrings" class="slide level2">
 <h2>Block Comments (Docstrings)</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
-<span id="cb11-2"><a></a>    <span class="co">"""Adds directors to the movie</span></span>
-<span id="cb11-3"><a></a></span>
-<span id="cb11-4"><a></a><span class="co">    Arguments:</span></span>
-<span id="cb11-5"><a></a><span class="co">    directors (list) -- List of director names</span></span>
-<span id="cb11-6"><a></a><span class="co">    """</span></span>
-<span id="cb11-7"><a></a>    <span class="co"># implementation here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a aria-label="1"></a><span class="kw">def</span> add_directors(<span class="va">self</span>, directors):</span>
+<span id="cb11-2"><a aria-label="2"></a>    <span class="co">"""Adds directors to the movie</span></span>
+<span id="cb11-3"><a aria-label="3"></a></span>
+<span id="cb11-4"><a aria-label="4"></a><span class="co">    Arguments:</span></span>
+<span id="cb11-5"><a aria-label="5"></a><span class="co">    directors (list) -- List of director names</span></span>
+<span id="cb11-6"><a aria-label="6"></a><span class="co">    """</span></span>
+<span id="cb11-7"><a aria-label="7"></a>    <span class="co"># implementation here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>Docstrings are triple-quoted strings at the start of functions/classes.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="bu">print</span>(a_movie.add_directors.__doc__) <span class="co"># To view the docstring for the method</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a aria-label="1"></a><span class="bu">print</span>(a_movie.add_directors.__doc__) <span class="co"># To view the docstring for the method</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>You’ll notice that earlier we were able to print out the block comment for the <code>add_directors</code> method. This is because the block comment is actually a special type of comment called a <strong>docstring</strong> that is used to document a function or a class. The docstring is the first thing that appears in a function or class and is enclosed in triple quotes. It’s a good idea to add a docstring to every function and class you write, as it helps other people understand your code and also helps you remember what your code does.</p>
 <style type="text/css">
@@ -983,12 +989,12 @@
 <section id="importing-libraries" class="slide level2">
 <h2>Importing Libraries</h2>
 <p>Let’s try importing in <code>Pathlib</code> into our script.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="im">import</span> pathlib</span>
-<span id="cb13-2"><a></a></span>
-<span id="cb13-3"><a></a>pathlib.Path()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a aria-label="1"></a><span class="im">import</span> pathlib</span>
+<span id="cb13-2"><a aria-label="2"></a></span>
+<span id="cb13-3"><a aria-label="3"></a>pathlib.Path()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>Or import a specific class:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a aria-label="1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>We can easily bring classes into other code using the <code>import</code> keyword (another reserved word!), which does some magic to allow us to use classes defined in other files. This is how we can use parts of the Python Standard Library that aren’t directly built into the base language. It’s also how we use modules written by other programmers from the larger Python community. We can even use <code>import</code> to import our own classes.</p>
 <p>The syntax for importing is <code>import</code> followed by the name of the module. In this case, we’re importing the <code>pathlib</code> module. Once we’ve imported the module, we can use the classes and functions defined in the module. There’s two ways to do this. We can either use the <code>.</code> operator to access the class or function:</p>
@@ -1008,7 +1014,7 @@
 </section>
 <section id="aliasing-imports" class="slide level2">
 <h2>Aliasing Imports</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="im">import</span> pathlib <span class="im">as</span> pl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a aria-label="1"></a><span class="im">import</span> pathlib <span class="im">as</span> pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>Now you can use <code>pl.Path()</code> instead of <code>pathlib.Path()</code>.</p>
 <aside class="notes">
@@ -1029,13 +1035,13 @@
 <section id="using-pathlib" class="slide level2">
 <h2>Using pathlib</h2>
 <p>So now that we’ve explored ways to import <code>pathlib</code>, let’s try using this module. We’ll start by using <code>pathlib</code> to print out the current working directory.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb16-2"><a></a></span>
-<span id="cb16-3"><a></a>current_directory <span class="op">=</span> Path.cwd()</span>
-<span id="cb16-4"><a></a><span class="bu">print</span>(current_directory)</span>
-<span id="cb16-5"><a></a></span>
-<span id="cb16-6"><a></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'data.csv'</span>)</span>
-<span id="cb16-7"><a></a><span class="bu">print</span>(<span class="bu">file</span>.read_text())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a aria-label="1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb16-2"><a aria-label="2"></a></span>
+<span id="cb16-3"><a aria-label="3"></a>current_directory <span class="op">=</span> Path.cwd()</span>
+<span id="cb16-4"><a aria-label="4"></a><span class="bu">print</span>(current_directory)</span>
+<span id="cb16-5"><a aria-label="5"></a></span>
+<span id="cb16-6"><a aria-label="6"></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'data.csv'</span>)</span>
+<span id="cb16-7"><a aria-label="7"></a><span class="bu">print</span>(<span class="bu">file</span>.read_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Path objects have methods like <code>.cwd()</code> to get the current working directory and <code>.read_text()</code> to read file contents as a string.</p>
 <style type="text/css">
@@ -1061,10 +1067,10 @@
 </section>
 <section id="reading-files" class="slide level2">
 <h2>Reading Files</h2>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb17-2"><a></a></span>
-<span id="cb17-3"><a></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
-<span id="cb17-4"><a></a><span class="bu">print</span>(<span class="bu">file</span>, <span class="bu">type</span>(<span class="bu">file</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a aria-label="1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb17-2"><a aria-label="2"></a></span>
+<span id="cb17-3"><a aria-label="3"></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
+<span id="cb17-4"><a aria-label="4"></a><span class="bu">print</span>(<span class="bu">file</span>, <span class="bu">type</span>(<span class="bu">file</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now if this code worked, it should show you the exact file path of your spreadsheet and then the type of the object, either <code>&lt;class 'pathlib.PosixPath'&gt;</code> or <code>&lt;class 'pathlib.WindowsPath'&gt;</code>. Not to get too complicated but this is because the <code>Path</code> class is a subclass of the <code>PosixPath</code> class (not really going to get into subclassing but think of it as building classes on top of one another - like Lego or Jenga).</p>
 <aside class="notes">
 <p>Now depending on where you file is located, you might need to change the path (often files are in your Downloads folder, in which case you might write <code>Users/user_name/Downloads/US-National-Parks_RecreationVisits_1979-2023.csv</code>). Remember computers need the <strong>exact path</strong>, so if you’re not sure where your file is located, you can use the <code>cwd</code> method to print out the current working directory and then add the file name to the end of the path.</p>
@@ -1083,12 +1089,12 @@
 <section id="reading-files-1" class="slide level2">
 <h2>Reading Files</h2>
 <p>We can also look at the methods built-in to the <code>Path</code> class. One in particular is useful for us <code>read_text</code> which reads in the contents of a file and returns it as a string. Read more about it here <a href="https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_text">https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_text</a> and test it out in your script.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb18-2"><a></a></span>
-<span id="cb18-3"><a></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
-<span id="cb18-4"><a></a><span class="bu">print</span>(<span class="bu">file</span>, <span class="bu">type</span>(<span class="bu">file</span>))</span>
-<span id="cb18-5"><a></a></span>
-<span id="cb18-6"><a></a><span class="bu">print</span>(<span class="bu">file</span>.read_text())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a aria-label="1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb18-2"><a aria-label="2"></a></span>
+<span id="cb18-3"><a aria-label="3"></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
+<span id="cb18-4"><a aria-label="4"></a><span class="bu">print</span>(<span class="bu">file</span>, <span class="bu">type</span>(<span class="bu">file</span>))</span>
+<span id="cb18-5"><a aria-label="5"></a></span>
+<span id="cb18-6"><a aria-label="6"></a><span class="bu">print</span>(<span class="bu">file</span>.read_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>What does this do?</p>
 <aside class="notes">
 <p>Now when you save you script and rerun your code in the terminal, you should now see the entirety of our csv file in your terminal. If you try saving that to a variable and checking the type you should see that it’s a string.</p>
@@ -1131,10 +1137,10 @@
 <section id="file-input---basic-approach" class="slide level2">
 <h2>File Input - Basic Approach</h2>
 <p>To open a file for reading (input), we just do:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span>,<span class="st">"r"</span>)</span>
-<span id="cb19-2"><a></a>text <span class="op">=</span> input_file.read()</span>
-<span id="cb19-3"><a></a><span class="bu">print</span>(text)</span>
-<span id="cb19-4"><a></a>input_file.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a aria-label="1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span>,<span class="st">"r"</span>)</span>
+<span id="cb19-2"><a aria-label="2"></a>text <span class="op">=</span> input_file.read()</span>
+<span id="cb19-3"><a aria-label="3"></a><span class="bu">print</span>(text)</span>
+<span id="cb19-4"><a aria-label="4"></a>input_file.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here, we use the <code>open</code> function to open a file in mode “r” (read). <code>open</code> returns a <a href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files">File Object</a> that provides methods for reading and writing.</p>
 <aside class="notes">
 <p>In this case, the <code>read</code> method reads in data from the <code>input_file</code> file object and stores it as a string in <code>text</code>. We can also pass a Path object to the <code>open</code> function.</p>
@@ -1153,11 +1159,11 @@
 <section id="using-path-objects-with-open" class="slide level2">
 <h2>Using Path Objects with <code>open</code></h2>
 <p>We could even just pass in our Path object to the <code>open</code> function:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
-<span id="cb20-2"><a></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="bu">file</span>,<span class="st">"r"</span>)</span>
-<span id="cb20-3"><a></a>text <span class="op">=</span> input_file.read()</span>
-<span id="cb20-4"><a></a><span class="bu">print</span>(text)</span>
-<span id="cb20-5"><a></a>input_file.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a aria-label="1"></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
+<span id="cb20-2"><a aria-label="2"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="bu">file</span>,<span class="st">"r"</span>)</span>
+<span id="cb20-3"><a aria-label="3"></a>text <span class="op">=</span> input_file.read()</span>
+<span id="cb20-4"><a aria-label="4"></a><span class="bu">print</span>(text)</span>
+<span id="cb20-5"><a aria-label="5"></a>input_file.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>At the end, we can close the file to save some memory, but Python will eventually close it automatically if we don’t.</p>
 <aside class="notes">
 <p>This isn’t a huge concern unless you’re opening thousands of files or the files you’re opening are very, very large.</p>
@@ -1176,8 +1182,8 @@
 <section id="the-with-statement" class="slide level2">
 <h2>The <code>with</code> Statement</h2>
 <p>Often, you’ll see file handling used with the <code>with</code> keyword:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span>,<span class="st">"r"</span>) <span class="im">as</span> input_file:</span>
-<span id="cb21-2"><a></a>    <span class="bu">print</span>(input_file.read())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a aria-label="1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span>,<span class="st">"r"</span>) <span class="im">as</span> input_file:</span>
+<span id="cb21-2"><a aria-label="2"></a>    <span class="bu">print</span>(input_file.read())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is functionally the same as our last example. The only difference is that the file is automatically closed at the end of the block.</p>
 <aside class="notes">
 <p>The <code>with</code> statement is a context manager that ensures the file is closed automatically. This is the preferred way to handle files in Python.</p>
@@ -1243,9 +1249,9 @@
 <section id="writing-to-a-file-example" class="slide level2">
 <h2>Writing to a File Example</h2>
 <p>To understand file output, let’s try working with a file that doesn’t exist:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">"new_text.txt"</span>,<span class="st">"w"</span>)</span>
-<span id="cb22-2"><a></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">100</span>):</span>
-<span id="cb22-3"><a></a>    f.write(<span class="bu">str</span>(i<span class="op">**</span><span class="dv">2</span>)<span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a aria-label="1"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">"new_text.txt"</span>,<span class="st">"w"</span>)</span>
+<span id="cb22-2"><a aria-label="2"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">100</span>):</span>
+<span id="cb22-3"><a aria-label="3"></a>    f.write(<span class="bu">str</span>(i<span class="op">**</span><span class="dv">2</span>)<span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Once you run it, you should see a new file in your directory called <code>new_text.txt</code>, containing a list of numbers.</p>
 <aside class="notes">
 <p>We created those numbers using the built-in <code>range</code> function and the <code>write</code> method.</p>
@@ -1265,8 +1271,8 @@
 <h2>Type Conversion with <code>write()</code></h2>
 <p>Here’s something tricky: <code>i</code> and <code>i**2</code> are integers, but the file object expects a string. If we try <code>f.write(i**2)</code>, we’ll get: <code>TypeError: write() argument must be str, not int</code></p>
 <p>To get around this, we can convert from int to string using <code>str()</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a><span class="co">"4"</span><span class="op">+</span><span class="bu">str</span>(<span class="dv">4</span>)  <span class="co"># produces "44"</span></span>
-<span id="cb23-2"><a></a><span class="bu">int</span>(<span class="st">"4"</span>)<span class="op">+</span><span class="dv">4</span>  <span class="co"># returns 8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a aria-label="1"></a><span class="co">"4"</span><span class="op">+</span><span class="bu">str</span>(<span class="dv">4</span>)  <span class="co"># produces "44"</span></span>
+<span id="cb23-2"><a aria-label="2"></a><span class="bu">int</span>(<span class="st">"4"</span>)<span class="op">+</span><span class="dv">4</span>  <span class="co"># returns 8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The newline character <code>"\n"</code> inserts a line break. Without it, all the numbers would be on the same line.</p>
 </section>
 <section id="practice-file-io-with-classes" class="slide level2">
@@ -1292,59 +1298,59 @@
 <section id="example-save-movie-info" class="slide level2">
 <h2>Example: Save Movie Info</h2>
 <p>Here’s a function to save the movie’s information to a file:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a><span class="kw">def</span> save_movie_info(<span class="va">self</span>, file_name):</span>
-<span id="cb24-2"><a></a>    <span class="co">"""Saves the movie's information to a file</span></span>
-<span id="cb24-3"><a></a></span>
-<span id="cb24-4"><a></a><span class="co">    Method argument:</span></span>
-<span id="cb24-5"><a></a><span class="co">    -----------------</span></span>
-<span id="cb24-6"><a></a><span class="co">    file_name(string) -- The name of the file to save the movie's information to</span></span>
-<span id="cb24-7"><a></a><span class="co">    """</span></span>
-<span id="cb24-8"><a></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
-<span id="cb24-9"><a></a>        f.write(<span class="ss">f"Movie Name: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>movie_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb24-10"><a></a>        f.write(<span class="ss">f"Directors: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(<span class="va">self</span>.directors)<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb24-11"><a></a>        f.write(<span class="ss">f"Release Year: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>release_year<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb24-12"><a></a>        f.write(<span class="ss">f"Age: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>age<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb24-13"><a></a>        f.write(<span class="ss">f"Sequels: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join([sequel.movie_name <span class="cf">for</span> sequel <span class="kw">in</span> <span class="va">self</span>.sequels])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb24-14"><a></a>        f.write(<span class="ss">f"Prequels: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join([prequel.movie_name <span class="cf">for</span> prequel <span class="kw">in</span> <span class="va">self</span>.prequels])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a aria-label="1"></a><span class="kw">def</span> save_movie_info(<span class="va">self</span>, file_name):</span>
+<span id="cb24-2"><a aria-label="2"></a>    <span class="co">"""Saves the movie's information to a file</span></span>
+<span id="cb24-3"><a aria-label="3"></a></span>
+<span id="cb24-4"><a aria-label="4"></a><span class="co">    Method argument:</span></span>
+<span id="cb24-5"><a aria-label="5"></a><span class="co">    -----------------</span></span>
+<span id="cb24-6"><a aria-label="6"></a><span class="co">    file_name(string) -- The name of the file to save the movie's information to</span></span>
+<span id="cb24-7"><a aria-label="7"></a><span class="co">    """</span></span>
+<span id="cb24-8"><a aria-label="8"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb24-9"><a aria-label="9"></a>        f.write(<span class="ss">f"Movie Name: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>movie_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb24-10"><a aria-label="10"></a>        f.write(<span class="ss">f"Directors: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(<span class="va">self</span>.directors)<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb24-11"><a aria-label="11"></a>        f.write(<span class="ss">f"Release Year: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>release_year<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb24-12"><a aria-label="12"></a>        f.write(<span class="ss">f"Age: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>age<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb24-13"><a aria-label="13"></a>        f.write(<span class="ss">f"Sequels: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join([sequel.movie_name <span class="cf">for</span> sequel <span class="kw">in</span> <span class="va">self</span>.sequels])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb24-14"><a aria-label="14"></a>        f.write(<span class="ss">f"Prequels: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join([prequel.movie_name <span class="cf">for</span> prequel <span class="kw">in</span> <span class="va">self</span>.prequels])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-save-movie-info" class="slide level2">
 <h2>Using Save Movie Info</h2>
 <p>Now you can call this function on your <code>a_movie</code> object:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
-<span id="cb25-2"><a></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
-<span id="cb25-3"><a></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
-<span id="cb25-4"><a></a>a_movie.add_sequel(<span class="st">"The Matrix II"</span>, <span class="dv">2003</span>)</span>
-<span id="cb25-5"><a></a>a_movie.add_sequel(<span class="st">"The Matrix III"</span>, <span class="dv">2003</span>)</span>
-<span id="cb25-6"><a></a>a_movie.add_sequel(<span class="st">"The Matrix IV"</span>, <span class="dv">2021</span>)</span>
-<span id="cb25-7"><a></a>a_movie.add_prequel(<span class="st">"The Matrix 0"</span>, <span class="dv">1998</span>)</span>
-<span id="cb25-8"><a></a>a_movie.calculate_movie_age()</span>
-<span id="cb25-9"><a></a>a_movie.save_movie_info(<span class="st">"movie_info.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a aria-label="1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb25-2"><a aria-label="2"></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
+<span id="cb25-3"><a aria-label="3"></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
+<span id="cb25-4"><a aria-label="4"></a>a_movie.add_sequel(<span class="st">"The Matrix II"</span>, <span class="dv">2003</span>)</span>
+<span id="cb25-5"><a aria-label="5"></a>a_movie.add_sequel(<span class="st">"The Matrix III"</span>, <span class="dv">2003</span>)</span>
+<span id="cb25-6"><a aria-label="6"></a>a_movie.add_sequel(<span class="st">"The Matrix IV"</span>, <span class="dv">2021</span>)</span>
+<span id="cb25-7"><a aria-label="7"></a>a_movie.add_prequel(<span class="st">"The Matrix 0"</span>, <span class="dv">1998</span>)</span>
+<span id="cb25-8"><a aria-label="8"></a>a_movie.calculate_movie_age()</span>
+<span id="cb25-9"><a aria-label="9"></a>a_movie.save_movie_info(<span class="st">"movie_info.txt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="example-read-movie-info" class="slide level2">
 <h2>Example: Read Movie Info</h2>
 <p>Here’s a function to read in a file and set the movie’s information:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a><span class="kw">def</span> read_movie_info(<span class="va">self</span>, file_name):</span>
-<span id="cb26-2"><a></a>    <span class="co">"""Reads in a file and sets the movie's information based on the file</span></span>
-<span id="cb26-3"><a></a></span>
-<span id="cb26-4"><a></a><span class="co">    Method argument:</span></span>
-<span id="cb26-5"><a></a><span class="co">    -----------------</span></span>
-<span id="cb26-6"><a></a><span class="co">    file_name(string) -- The name of the file to read the movie's information from</span></span>
-<span id="cb26-7"><a></a><span class="co">    """</span></span>
-<span id="cb26-8"><a></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb26-9"><a></a>        lines <span class="op">=</span> f.readlines()</span>
-<span id="cb26-10"><a></a>        <span class="va">self</span>.movie_name <span class="op">=</span> lines[<span class="dv">0</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip()</span>
-<span id="cb26-11"><a></a>        <span class="va">self</span>.directors <span class="op">=</span> lines[<span class="dv">1</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)</span>
-<span id="cb26-12"><a></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(lines[<span class="dv">2</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip())</span>
-<span id="cb26-13"><a></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="bu">int</span>(lines[<span class="dv">3</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip())</span>
-<span id="cb26-14"><a></a>        <span class="va">self</span>.sequels <span class="op">=</span> [Movie(sequel.strip()) <span class="cf">for</span> sequel <span class="kw">in</span> lines[<span class="dv">4</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)]</span>
-<span id="cb26-15"><a></a>        <span class="va">self</span>.prequels <span class="op">=</span> [Movie(prequel.strip()) <span class="cf">for</span> prequel <span class="kw">in</span> lines[<span class="dv">5</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a aria-label="1"></a><span class="kw">def</span> read_movie_info(<span class="va">self</span>, file_name):</span>
+<span id="cb26-2"><a aria-label="2"></a>    <span class="co">"""Reads in a file and sets the movie's information based on the file</span></span>
+<span id="cb26-3"><a aria-label="3"></a></span>
+<span id="cb26-4"><a aria-label="4"></a><span class="co">    Method argument:</span></span>
+<span id="cb26-5"><a aria-label="5"></a><span class="co">    -----------------</span></span>
+<span id="cb26-6"><a aria-label="6"></a><span class="co">    file_name(string) -- The name of the file to read the movie's information from</span></span>
+<span id="cb26-7"><a aria-label="7"></a><span class="co">    """</span></span>
+<span id="cb26-8"><a aria-label="8"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb26-9"><a aria-label="9"></a>        lines <span class="op">=</span> f.readlines()</span>
+<span id="cb26-10"><a aria-label="10"></a>        <span class="va">self</span>.movie_name <span class="op">=</span> lines[<span class="dv">0</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip()</span>
+<span id="cb26-11"><a aria-label="11"></a>        <span class="va">self</span>.directors <span class="op">=</span> lines[<span class="dv">1</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)</span>
+<span id="cb26-12"><a aria-label="12"></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(lines[<span class="dv">2</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip())</span>
+<span id="cb26-13"><a aria-label="13"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="bu">int</span>(lines[<span class="dv">3</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip())</span>
+<span id="cb26-14"><a aria-label="14"></a>        <span class="va">self</span>.sequels <span class="op">=</span> [Movie(sequel.strip()) <span class="cf">for</span> sequel <span class="kw">in</span> lines[<span class="dv">4</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)]</span>
+<span id="cb26-15"><a aria-label="15"></a>        <span class="va">self</span>.prequels <span class="op">=</span> [Movie(prequel.strip()) <span class="cf">for</span> prequel <span class="kw">in</span> lines[<span class="dv">5</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-read-movie-info" class="slide level2">
 <h2>Using Read Movie Info</h2>
 <p>Now you can call this function on your <code>a_movie</code> object:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
-<span id="cb27-2"><a></a>a_movie.read_movie_info(<span class="st">"movie_info.txt"</span>)</span>
-<span id="cb27-3"><a></a>a_movie.get_movie_info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a aria-label="1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb27-2"><a aria-label="2"></a>a_movie.read_movie_info(<span class="st">"movie_info.txt"</span>)</span>
+<span id="cb27-3"><a aria-label="3"></a>a_movie.get_movie_info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>These examples show how to integrate file I/O with your class methods to persist and restore object data.</p>
 <style type="text/css">
@@ -1406,7 +1412,7 @@
 <section id="before-we-begin-check-pip-1" class="slide level2">
 <h2>Before We Begin: Check pip</h2>
 <p>If you get any errors, you can check if you have pip installed by running the following command in your terminal:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a></a><span class="ex">pip3</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a aria-label="1"></a><span class="ex">pip3</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>pip</code> comes built-in to Python and is used to install external libraries. If you don’t have pip, visit <a href="https://pip.pypa.io/en/stable/installation/" target="_blank">https://pip.pypa.io/en/stable/installation/</a></p>
 <aside class="notes">
 <p>If you don’t have pip, visit https://pip.pypa.io/en/stable/installation/</p>
@@ -1525,14 +1531,14 @@
 <section id="virtualenvs" class="slide level2">
 <h2><code>.virtualenvs</code></h2>
 <p>To create a virtual environment in the terminal, we’ll start by opening our terminal and then navigating to the directory where we want to create our virtual environment. I would recommend making the virtual environment in your project directory, though another popular choice is to make a directory in your home directory to store all your virtual environments. You can do that with the commands below:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a></a><span class="bu">cd</span> ~  <span class="co"># This will take you to your home directory</span></span>
-<span id="cb29-2"><a></a><span class="fu">mkdir</span> .virtualenvs <span class="co"># This will create a directory called .virtualenvs</span></span>
-<span id="cb29-3"><a></a><span class="bu">cd</span> .virtualenvs <span class="co"># This will take you into the .virtualenvs directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a aria-label="1"></a><span class="bu">cd</span> ~  <span class="co"># This will take you to your home directory</span></span>
+<span id="cb29-2"><a aria-label="2"></a><span class="fu">mkdir</span> .virtualenvs <span class="co"># This will create a directory called .virtualenvs</span></span>
+<span id="cb29-3"><a aria-label="3"></a><span class="bu">cd</span> .virtualenvs <span class="co"># This will take you into the .virtualenvs directory</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="creating-virtual-environments-in-terminal" class="slide level2">
 <h2>Creating Virtual Environments in Terminal</h2>
 <p>Now that we are in the directory where we want to create our virtual environment (whether that’s <code>is310-coding-assignments</code> or <code>.virtualenvs</code>), we can create it by running the following command:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a></a><span class="ex">python3</span> <span class="at">-m</span> venv is310-env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a aria-label="1"></a><span class="ex">python3</span> <span class="at">-m</span> venv is310-env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>This doesn’t seem to do much, but if you look in your new <code>.virtualenvs</code> directory (or wherever you created your environment) you should see a new folder called <code>is310-new-env</code>. This is again a virtual environment. This command is telling Python to run the <code>venv</code> module and create a virtual environment called <code>is310-env</code>. You can name your virtual environment whatever you want, but I would recommend naming it something that is descriptive of the project you are working on. <strong>You should only create one virtual environment for this course.</strong> And generally, I would recommend creating a new virtual environment for each project you work on (so think personal projects, group projects, or other courses, etc.).</p>
 <style type="text/css">
@@ -1550,16 +1556,16 @@
 <section id="activating-virtual-environments" class="slide level2">
 <h2>Activating Virtual Environments</h2>
 <p>Then activate it with:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a></a><span class="co"># Mac/Linux</span></span>
-<span id="cb31-2"><a></a><span class="bu">source</span> is310-env/bin/activate</span>
-<span id="cb31-3"><a></a></span>
-<span id="cb31-4"><a></a><span class="co"># Windows (Command Prompt)</span></span>
-<span id="cb31-5"><a></a><span class="ex">is310-env\Scripts\activate</span></span>
-<span id="cb31-6"><a></a></span>
-<span id="cb31-7"><a></a><span class="co"># Windows (PowerShell)</span></span>
-<span id="cb31-8"><a></a><span class="bu">.</span><span class="dt">\i</span>s310-env<span class="dt">\S</span>cripts<span class="dt">\A</span>ctivate.ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a aria-label="1"></a><span class="co"># Mac/Linux</span></span>
+<span id="cb31-2"><a aria-label="2"></a><span class="bu">source</span> is310-env/bin/activate</span>
+<span id="cb31-3"><a aria-label="3"></a></span>
+<span id="cb31-4"><a aria-label="4"></a><span class="co"># Windows (Command Prompt)</span></span>
+<span id="cb31-5"><a aria-label="5"></a><span class="ex">is310-env\Scripts\activate</span></span>
+<span id="cb31-6"><a aria-label="6"></a></span>
+<span id="cb31-7"><a aria-label="7"></a><span class="co"># Windows (PowerShell)</span></span>
+<span id="cb31-8"><a aria-label="8"></a><span class="bu">.</span><span class="dt">\i</span>s310-env<span class="dt">\S</span>cripts<span class="dt">\A</span>ctivate.ps1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you are getting errors in PowerShell, you may need to change your execution policy. You can do this by running the following command:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a></a><span class="ex">Set-ExecutionPolicy</span> <span class="at">-ExecutionPolicy</span> RemoteSigned <span class="at">-Scope</span> Process</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a aria-label="1"></a><span class="ex">Set-ExecutionPolicy</span> <span class="at">-ExecutionPolicy</span> RemoteSigned <span class="at">-Scope</span> Process</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Now you need to activate our virtual environments. Activating the virtual environment just tells your computer to run Python and installed libraries from the virtual environment rather than the global environment. This might seem like unnecessary work, but as we saw in that xkcd comic, a lot of software can create conflicts over time (often called “dependency hell”). This is a way to avoid that.</p>
 <p>To activate our virtual environment in the terminal, we need to use a command called called <code>source</code> and after that we need to specify the path to the <code>activate</code> file in our virtual environment. The path to the <code>activate</code> file is <code>[LOCATION - OPTIONAL]/[NAME OF VIRTUAL ENVIRONMENT]/bin/activate</code>.</p>
@@ -1579,7 +1585,7 @@
 <section id="deactivating-virtual-environments" class="slide level2">
 <h2>Deactivating Virtual Environments</h2>
 <p>To deactivate your virtual environment in the terminal:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a></a><span class="ex">deactivate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a aria-label="1"></a><span class="ex">deactivate</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Your virtual environment will no longer be in the terminal prompt.</p>
 <p>This will deactivate your virtual environment and you’ll see that the name of your virtual environment is no longer in your terminal prompt. You can also deactivate your virtual environment in VS Code by selecting <code>New Terminal</code> under the <code>Terminal</code> menu.</p>
 </section>
@@ -1587,9 +1593,9 @@
 <h2>Adding to <code>.gitignore</code></h2>
 <p>Virtual environments are specific to your computer. Don’t commit them to git.</p>
 <p>Add this to your <code>.gitignore</code>:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a></a><span class="ex">is310-env/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a aria-label="1"></a><span class="ex">is310-env/</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or if you accidentally committed it:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a></a><span class="fu">git</span> rm <span class="at">-r</span> <span class="at">--cached</span> is310-env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a aria-label="1"></a><span class="fu">git</span> rm <span class="at">-r</span> <span class="at">--cached</span> is310-env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Since we are using <code>git</code> to track our work, we don’t want to include our virtual environment in our repository. This is because the virtual environment is specific to your computer and the libraries you have installed. If someone else were to clone your repository, they wouldn’t have the same virtual environment as you. This is why we add the virtual environment to our <code>.gitignore</code> file. This file tells <code>git</code> to ignore certain files or directories when tracking changes. You can add the following line to your <code>.gitignore</code> file to ignore your virtual environment:</p>
 <p>Now when we run <code>git status</code>, we shouldn’t see our virtual environment in the list of files that have been changed. If you accidentally added your virtual environment to your repository, you can remove it by running the following command</p>
@@ -1609,7 +1615,7 @@
 <h2>Installing Libraries with <code>pip</code> in <code>venv</code></h2>
 <p>Now that we have our virtual environment created and activated in VS Code, we can start to try installing external Python libraries.</p>
 <p>Today, we will try installing the Python package <code>Rich</code> by running the following command:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a></a><span class="ex">pip3</span> install rich</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a aria-label="1"></a><span class="ex">pip3</span> install rich</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Remember</strong>: Always do this with your virtual environment activated!</p>
 <aside class="notes">
 <p>You’ll notice that I’m using <code>pip3</code> to install the package. That is because I have multiple versions of Python installed on my computer. Usually if you have multiple versions of Python (specifically Python 2 and 3 versions) then you might need to use <code>pip3</code> to install libraries. If you only have Python 3 installed on your computer, you can just use <code>pip</code>. You can check which version of Python you have installed by running the following command:</p>
@@ -1628,11 +1634,11 @@
 <section id="testing-the-installation" class="slide level2">
 <h2>Testing the Installation</h2>
 <p>To verify the installation worked:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb37-1"><a></a>python3</span>
-<span id="cb37-2"><a></a>&gt;&gt;&gt; import rich</span>
-<span id="cb37-3"><a></a>&gt;&gt;&gt; rich.__version__</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb37-1"><a aria-label="1"></a>python3</span>
+<span id="cb37-2"><a aria-label="2"></a>&gt;&gt;&gt; import rich</span>
+<span id="cb37-3"><a aria-label="3"></a>&gt;&gt;&gt; rich.__version__</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or check all installed libraries:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a></a><span class="ex">pip</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a aria-label="1"></a><span class="ex">pip</span> list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="site-packages" class="slide level2">
 <h2><code>site-packages</code></h2>
@@ -1672,18 +1678,18 @@
 <div class="r-fit-text">
 <p>This documentation is <strong>very</strong> detailed, but we can start with the Quickstart guidelines <a href="https://rich.readthedocs.io/en/stable/introduction.html#quick-start" target="_blank">https://rich.readthedocs.io/en/stable/introduction.html#quick-start</a> to get a sense of how to use the library.</p>
 <p>From the guidelines we can see how to import the library into our Python script. In your <code>is310-coding-assignments</code> directory, create a new folder called <code>python-libraries</code> and create a new file called <code>rich_example.py</code>. In this file, add the following code:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a></a><span class="im">from</span> rich <span class="im">import</span> <span class="bu">print</span></span>
-<span id="cb39-2"><a></a></span>
-<span id="cb39-3"><a></a><span class="bu">print</span>(<span class="st">"Hello, [bold magenta]World[/bold magenta]!"</span>, <span class="st">":vampire:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a aria-label="1"></a><span class="im">from</span> rich <span class="im">import</span> <span class="bu">print</span></span>
+<span id="cb39-2"><a aria-label="2"></a></span>
+<span id="cb39-3"><a aria-label="3"></a><span class="bu">print</span>(<span class="st">"Hello, [bold magenta]World[/bold magenta]!"</span>, <span class="st">":vampire:"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="rich-outputs" class="slide level2">
 <h2>Rich Outputs</h2>
 <div class="r-fit-text">
 <p>Run it:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a></a><span class="ex">python3</span> rich_example.py <span class="co"># or python3 python-libraries/rich_example.py if you are in the is310-coding-assignments directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a aria-label="1"></a><span class="ex">python3</span> rich_example.py <span class="co"># or python3 python-libraries/rich_example.py if you are in the is310-coding-assignments directory</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should see the following output in your terminal:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb41-1"><a></a>Hello, World! 🧛</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb41-1"><a aria-label="1"></a>Hello, World! 🧛</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="../assets/images/rich_example.png"></p>
@@ -1698,21 +1704,21 @@
 <div class="columns">
 <div class="column r-fit-text" style="width:50%;">
 <p>Rich has powerful classes like <code>Console</code> and <code>Table</code> for formatting:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
-<span id="cb42-2"><a></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
-<span id="cb42-3"><a></a></span>
-<span id="cb42-4"><a></a>console <span class="op">=</span> Console()</span>
-<span id="cb42-5"><a></a></span>
-<span id="cb42-6"><a></a>table <span class="op">=</span> Table(title<span class="op">=</span><span class="st">"Star Wars Movies"</span>)</span>
-<span id="cb42-7"><a></a>table.add_column(<span class="st">"Released"</span>, style<span class="op">=</span><span class="st">"cyan"</span>, no_wrap<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb42-8"><a></a>table.add_column(<span class="st">"Title"</span>, style<span class="op">=</span><span class="st">"magenta"</span>)</span>
-<span id="cb42-9"><a></a>table.add_column(<span class="st">"Box Office"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
-<span id="cb42-10"><a></a>table.add_row(<span class="st">"Dec 20, 2019"</span>, <span class="st">"Star Wars: The Rise of Skywalker"</span>, <span class="st">"$952,110,690"</span>)</span>
-<span id="cb42-11"><a></a>table.add_row(<span class="st">"May 25, 2018"</span>, <span class="st">"Solo: A Star Wars Story"</span>, <span class="st">"$393,151,347"</span>)</span>
-<span id="cb42-12"><a></a>table.add_row(<span class="st">"Dec 15, 2017"</span>, <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>, <span class="st">"$1,332,539,889"</span>)</span>
-<span id="cb42-13"><a></a>table.add_row(<span class="st">"Dec 16, 2016"</span>, <span class="st">"Rogue One: A Star Wars Story"</span>, <span class="st">"$1,332,439,889"</span>)</span>
-<span id="cb42-14"><a></a></span>
-<span id="cb42-15"><a></a>console.<span class="bu">print</span>(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a aria-label="1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb42-2"><a aria-label="2"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
+<span id="cb42-3"><a aria-label="3"></a></span>
+<span id="cb42-4"><a aria-label="4"></a>console <span class="op">=</span> Console()</span>
+<span id="cb42-5"><a aria-label="5"></a></span>
+<span id="cb42-6"><a aria-label="6"></a>table <span class="op">=</span> Table(title<span class="op">=</span><span class="st">"Star Wars Movies"</span>)</span>
+<span id="cb42-7"><a aria-label="7"></a>table.add_column(<span class="st">"Released"</span>, style<span class="op">=</span><span class="st">"cyan"</span>, no_wrap<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb42-8"><a aria-label="8"></a>table.add_column(<span class="st">"Title"</span>, style<span class="op">=</span><span class="st">"magenta"</span>)</span>
+<span id="cb42-9"><a aria-label="9"></a>table.add_column(<span class="st">"Box Office"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb42-10"><a aria-label="10"></a>table.add_row(<span class="st">"Dec 20, 2019"</span>, <span class="st">"Star Wars: The Rise of Skywalker"</span>, <span class="st">"$952,110,690"</span>)</span>
+<span id="cb42-11"><a aria-label="11"></a>table.add_row(<span class="st">"May 25, 2018"</span>, <span class="st">"Solo: A Star Wars Story"</span>, <span class="st">"$393,151,347"</span>)</span>
+<span id="cb42-12"><a aria-label="12"></a>table.add_row(<span class="st">"Dec 15, 2017"</span>, <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>, <span class="st">"$1,332,539,889"</span>)</span>
+<span id="cb42-13"><a aria-label="13"></a>table.add_row(<span class="st">"Dec 16, 2016"</span>, <span class="st">"Rogue One: A Star Wars Story"</span>, <span class="st">"$1,332,439,889"</span>)</span>
+<span id="cb42-14"><a aria-label="14"></a></span>
+<span id="cb42-15"><a aria-label="15"></a>console.<span class="bu">print</span>(table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column r-fit-text" style="width:50%;">
 <p>And you should see the following output in your terminal:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -1755,41 +1761,41 @@
 <div class="columns">
 <div class="column r-fit-text" style="width:50%;">
 <p>You can use Rich to format data from lists and dictionaries:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
-<span id="cb43-2"><a></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
-<span id="cb43-3"><a></a></span>
-<span id="cb43-4"><a></a><span class="co"># Create a Console instance to print formatted text</span></span>
-<span id="cb43-5"><a></a>console <span class="op">=</span> Console()</span>
-<span id="cb43-6"><a></a></span>
-<span id="cb43-7"><a></a><span class="co"># Initial movie data stored in a list of dictionaries</span></span>
-<span id="cb43-8"><a></a>movies <span class="op">=</span> [</span>
-<span id="cb43-9"><a></a>    {</span>
-<span id="cb43-10"><a></a>        <span class="st">"Released"</span>: <span class="st">"Dec 20, 2019"</span>,</span>
-<span id="cb43-11"><a></a>        <span class="st">"Title"</span>: <span class="st">"Star Wars: The Rise of Skywalker"</span>,</span>
-<span id="cb43-12"><a></a>        <span class="st">"Box Office"</span>: <span class="st">"$952,110,690"</span></span>
-<span id="cb43-13"><a></a>    },</span>
-<span id="cb43-14"><a></a>    {</span>
-<span id="cb43-15"><a></a>        <span class="st">"Released"</span>: <span class="st">"May 25, 2018"</span>,</span>
-<span id="cb43-16"><a></a>        <span class="st">"Title"</span>: <span class="st">"Solo: A Star Wars Story"</span>,</span>
-<span id="cb43-17"><a></a>        <span class="st">"Box Office"</span>: <span class="st">"$393,151,347"</span></span>
-<span id="cb43-18"><a></a>    },</span>
-<span id="cb43-19"><a></a>    {</span>
-<span id="cb43-20"><a></a>        <span class="st">"Released"</span>: <span class="st">"Dec 15, 2017"</span>,</span>
-<span id="cb43-21"><a></a>        <span class="st">"Title"</span>: <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>,</span>
-<span id="cb43-22"><a></a>        <span class="st">"Box Office"</span>: <span class="st">"$1,332,539,889"</span></span>
-<span id="cb43-23"><a></a>    },</span>
-<span id="cb43-24"><a></a>    {</span>
-<span id="cb43-25"><a></a>        <span class="st">"Released"</span>: <span class="st">"Dec 16, 2016"</span>,</span>
-<span id="cb43-26"><a></a>        <span class="st">"Title"</span>: <span class="st">"Rogue One: A Star Wars Story"</span>,</span>
-<span id="cb43-27"><a></a>        <span class="st">"Box Office"</span>: <span class="st">"$1,332,439,889"</span></span>
-<span id="cb43-28"><a></a>    }</span>
-<span id="cb43-29"><a></a>]</span>
-<span id="cb43-30"><a></a></span>
-<span id="cb43-31"><a></a><span class="co"># Loop through the list of movies</span></span>
-<span id="cb43-32"><a></a><span class="cf">for</span> movie <span class="kw">in</span> movies:</span>
-<span id="cb43-33"><a></a>    console.<span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">[bold cyan]Reviewing movie information:[/bold cyan]"</span>)</span>
-<span id="cb43-34"><a></a>    <span class="cf">for</span> field, value <span class="kw">in</span> movie.items():</span>
-<span id="cb43-35"><a></a>        console.<span class="bu">print</span>(<span class="ss">f"[magenta]</span><span class="sc">{</span>field<span class="sc">}</span><span class="ss">[/magenta]: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a aria-label="1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb43-2"><a aria-label="2"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
+<span id="cb43-3"><a aria-label="3"></a></span>
+<span id="cb43-4"><a aria-label="4"></a><span class="co"># Create a Console instance to print formatted text</span></span>
+<span id="cb43-5"><a aria-label="5"></a>console <span class="op">=</span> Console()</span>
+<span id="cb43-6"><a aria-label="6"></a></span>
+<span id="cb43-7"><a aria-label="7"></a><span class="co"># Initial movie data stored in a list of dictionaries</span></span>
+<span id="cb43-8"><a aria-label="8"></a>movies <span class="op">=</span> [</span>
+<span id="cb43-9"><a aria-label="9"></a>    {</span>
+<span id="cb43-10"><a aria-label="10"></a>        <span class="st">"Released"</span>: <span class="st">"Dec 20, 2019"</span>,</span>
+<span id="cb43-11"><a aria-label="11"></a>        <span class="st">"Title"</span>: <span class="st">"Star Wars: The Rise of Skywalker"</span>,</span>
+<span id="cb43-12"><a aria-label="12"></a>        <span class="st">"Box Office"</span>: <span class="st">"$952,110,690"</span></span>
+<span id="cb43-13"><a aria-label="13"></a>    },</span>
+<span id="cb43-14"><a aria-label="14"></a>    {</span>
+<span id="cb43-15"><a aria-label="15"></a>        <span class="st">"Released"</span>: <span class="st">"May 25, 2018"</span>,</span>
+<span id="cb43-16"><a aria-label="16"></a>        <span class="st">"Title"</span>: <span class="st">"Solo: A Star Wars Story"</span>,</span>
+<span id="cb43-17"><a aria-label="17"></a>        <span class="st">"Box Office"</span>: <span class="st">"$393,151,347"</span></span>
+<span id="cb43-18"><a aria-label="18"></a>    },</span>
+<span id="cb43-19"><a aria-label="19"></a>    {</span>
+<span id="cb43-20"><a aria-label="20"></a>        <span class="st">"Released"</span>: <span class="st">"Dec 15, 2017"</span>,</span>
+<span id="cb43-21"><a aria-label="21"></a>        <span class="st">"Title"</span>: <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>,</span>
+<span id="cb43-22"><a aria-label="22"></a>        <span class="st">"Box Office"</span>: <span class="st">"$1,332,539,889"</span></span>
+<span id="cb43-23"><a aria-label="23"></a>    },</span>
+<span id="cb43-24"><a aria-label="24"></a>    {</span>
+<span id="cb43-25"><a aria-label="25"></a>        <span class="st">"Released"</span>: <span class="st">"Dec 16, 2016"</span>,</span>
+<span id="cb43-26"><a aria-label="26"></a>        <span class="st">"Title"</span>: <span class="st">"Rogue One: A Star Wars Story"</span>,</span>
+<span id="cb43-27"><a aria-label="27"></a>        <span class="st">"Box Office"</span>: <span class="st">"$1,332,439,889"</span></span>
+<span id="cb43-28"><a aria-label="28"></a>    }</span>
+<span id="cb43-29"><a aria-label="29"></a>]</span>
+<span id="cb43-30"><a aria-label="30"></a></span>
+<span id="cb43-31"><a aria-label="31"></a><span class="co"># Loop through the list of movies</span></span>
+<span id="cb43-32"><a aria-label="32"></a><span class="cf">for</span> movie <span class="kw">in</span> movies:</span>
+<span id="cb43-33"><a aria-label="33"></a>    console.<span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">[bold cyan]Reviewing movie information:[/bold cyan]"</span>)</span>
+<span id="cb43-34"><a aria-label="34"></a>    <span class="cf">for</span> field, value <span class="kw">in</span> movie.items():</span>
+<span id="cb43-35"><a aria-label="35"></a>        console.<span class="bu">print</span>(<span class="ss">f"[magenta]</span><span class="sc">{</span>field<span class="sc">}</span><span class="ss">[/magenta]: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column r-fit-text" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2010,7 +2016,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -2084,13 +2090,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

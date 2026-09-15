@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.27">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Introduction to File Formats &amp; Text – IS310 - Culture As Data Fall 2026</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -72,14 +78,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6c49c5477b92c77c9eb341f9299c235f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-6bd77949012616049cccce2f6cb6e61f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-529c26969d27a2a2473a4b9f3bafd9fb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-8548d451cbde00b83e20f2b3ceda2474.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-529c26969d27a2a2473a4b9f3bafd9fb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -130,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -163,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -203,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -231,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -254,20 +260,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -280,7 +288,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo light-content">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">IS310 - Culture As Data Fall 2026</span>
@@ -506,35 +515,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><em>Pride and Prejudice by Jane Austen https://www.gutenberg.org/ebooks/1342</em></p>
 <p>I can download this file directly from my terminal using the command line:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://www.gutenberg.org/files/1342/1342-0.txt <span class="op">&gt;</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://www.gutenberg.org/files/1342/1342-0.txt <span class="op">&gt;</span> pride-and-prejudice.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In this example, I’m using the command <code>curl</code> to download the file from the internet. The <code>&gt;</code> symbol tells the terminal to create a new file, store this data in the file, and save the file as <code>pride-and-prejudice.txt</code>. We can see that this file is a <code>.txt</code> file, meaning it is a plain text file. <code>curl</code> stands for “client URL” and is a command line tool for transferring data and downloading files from the internet. We can also use it to upload files to the internet.</p>
 <p>If you are using WSL/Ubuntu on a Windows computer, you can instead use the command <code>wget</code> to download the file from the internet.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://www.gutenberg.org/files/1342/1342-0.txt <span class="op">&gt;</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://www.gutenberg.org/files/1342/1342-0.txt <span class="op">&gt;</span> pride-and-prejudice.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>wget</code> stands for “web get” and is a similar command line tool for retrieving and downloading files from the web.</p>
 <p>If you are using PowerShell and not WSL, the command looks slightly different because PowerShell treats <code>wget</code> as an alias for its own web request command:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https<span class="op">://</span>www<span class="op">.</span><span class="fu">gutenberg</span><span class="op">.</span><span class="fu">org</span><span class="op">/</span>files<span class="op">/</span><span class="dv">1342</span><span class="op">/</span><span class="dv">1342</span><span class="op">-</span><span class="dv">0.</span><span class="dt">txt</span> <span class="op">-</span>OutFile pride-and-prejudice<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https<span class="op">://</span>www<span class="op">.</span><span class="fu">gutenberg</span><span class="op">.</span><span class="fu">org</span><span class="op">/</span>files<span class="op">/</span><span class="dv">1342</span><span class="op">/</span><span class="dv">1342</span><span class="op">-</span><span class="dv">0.</span><span class="dt">txt</span> <span class="op">-</span>OutFile pride-and-prejudice<span class="op">.</span><span class="fu">txt</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For the rest of this lesson, I will show the macOS/WSL commands first. If you are using PowerShell, look for the PowerShell examples underneath. The concepts are the same, but some command names and syntax differ. In particular, <code>cat</code> usually works in PowerShell as an alias for <code>Get-Content</code>, but <code>wc</code> and <code>grep</code> do not usually work by default in normal PowerShell.</p>
 <hr>
 <p>Now that we have downloaded this file, we can use the command line to display some of the text:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> pride-and-prejudice.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>cat</code> stands for concatenate, and is a command line tool for displaying the contents of a file. We can see that this file contains the text of <em>Pride and Prejudice</em> by Jane Austen (though you’ll likely only see the end of the text since it is so long, without scrolling for ages).</p>
 <p>In PowerShell, <code>cat</code> usually works because it is an alias for <code>Get-Content</code>. To be explicit, you can use <code>Get-Content</code>, which reads the contents of a file:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Content</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Content</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can start to interact with this file in a number of ways.</p>
 <p>First, let’s count how many words are in this file. To do this, we can use the command <code>wc -w</code>. Let’s try it out!</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-w</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-w</span> pride-and-prejudice.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>wc</code> stands for word count, and the <code>-w</code> flag tells the terminal to count the number of words in the file. You’ll often notice that commands have flags like this, which are additional instructions for the command.</p>
 <p>The <code>wc</code> command does not usually work by default in PowerShell. Instead, the word count command is a bit longer:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Get-Content</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span> <span class="op">|</span> <span class="fu">Out-String</span><span class="op">).</span><span class="fu">Split</span><span class="op">().</span><span class="fu">Count</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Get-Content</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span> <span class="op">|</span> <span class="fu">Out-String</span><span class="op">).</span><span class="fu">Split</span><span class="op">().</span><span class="fu">Count</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can also use the command <code>wc</code> to count the number of lines in a file with the <code>-l</code> flag. Let’s try it out!</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> pride-and-prejudice.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Since PowerShell does not usually include <code>wc</code>, you can count lines like this:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Get-Content</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span><span class="op">).</span><span class="fu">Count</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Get-Content</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span><span class="op">).</span><span class="fu">Count</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We should see that there are <code>14911</code> lines in this file.</p>
 <p>We can also search for a specific word in a file using the command <code>grep</code>. Let’s try to find out how often the word “pride” appears in this file. To do this, we can use the command <code>grep pride pride-and-prejudice.txt</code>. Let’s try it out!</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> pride pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> pride pride-and-prejudice.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>grep</code> command does not usually work by default in PowerShell. The closest equivalent is <code>Select-String</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Select-String</span> <span class="st">"pride"</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Select-String</span> <span class="st">"pride"</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should give us the following output:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -543,9 +552,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>How could we count the number of lines where the word “pride” appears in this file? We could use the command <code>wc -w</code> to count the number of words, but that would count all words, not just “pride.” Instead, we can use the command <code>grep -c pride pride-and-prejudice.txt</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> pride pride-and-prejudice.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> pride pride-and-prejudice.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In PowerShell, we can count the number of matching lines like this:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Select-String</span> <span class="st">"pride"</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span><span class="op">).</span><span class="fu">Count</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Select-String</span> <span class="st">"pride"</span> pride-and-prejudice<span class="op">.</span><span class="fu">txt</span><span class="op">).</span><span class="fu">Count</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can see that “pride” appears on 43 lines in this file. This is not quite the same thing as counting every individual occurrence of the word, since a line could include the same word more than once. How many lines include the word “prejudice”?</p>
 </section>
 </section>
@@ -554,18 +563,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>While <code>.txt</code> files are useful, in digital humanities we often use a file format called Markdown. Like txt, Markdown is a plain text file format that uses symbols to add formatting to the text, and has the file extension <code>.md</code>. You have already seen an example of this with the <code>README.md</code> files on GitHub.</p>
 <p>Let’s try creating a Markdown file in our folder. We can do this by using the <code>touch</code> command and adding <code>.md</code> to the end of the file name.</p>
 <p><em>macOS/Linux/WSL</em></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> is310-culture-as-data.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> is310-culture-as-data.md</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>PowerShell</em></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">New-Item</span> <span class="op">-</span>ItemType File <span class="op">-</span>Name is310-culture-as-data<span class="op">.</span><span class="fu">md</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">New-Item</span> <span class="op">-</span>ItemType File <span class="op">-</span>Name is310-culture-as-data<span class="op">.</span><span class="fu">md</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we can open this file in VS Code and add some text to it.</p>
 <pre class="text"><code>Culture as Data asks how cultural materials, practices, and communities become structured, interpreted, and transformed through data.</code></pre>
 <p>Now if we wanted too, we could add some formatting to this text using Markdown.</p>
 <p>Maybe we want to highlight the phrase “Culture as Data” in bold. To do this we would put two asterisks on either side of the phrase.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>**Culture as Data** asks how cultural materials become structured data.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>**Culture as Data** asks how cultural materials become structured data.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We could also put <code>structured data</code> into italics by putting one asterisk on either side of the phrase.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>**Culture as Data** asks how cultural materials become *structured data*.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>**Culture as Data** asks how cultural materials become *structured data*.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Finally, we could add a heading to this text by putting a hashtag in front of the heading.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Welcome to Culture as Data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Welcome to Culture as Data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can see what this looks like in VS Code by using the Markdown Preview extension. To do this, click on the icon in the top right corner of VS Code that looks like a magnifying glass. This will open a preview of the Markdown file in a new tab.</p>
 <p>You should see something like this, where our Markdown file is on the left and the preview is on the right:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -641,7 +650,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You also need to include a <code>README.md</code> file in your maze folder that provides any relevant instructions for solving the maze. This could include a list of commands that we should use to solve the maze, or any other information that you think would be helpful. Be sure to include a header at the top of the file that lists the name of the maze and your name.</p>
 <p>Once you have created your maze, you should zip the folder that contains your maze. If you do not know how to zip a file, you can usually right click on the file and select “Compress” or “Zip”. If you are using the command line, you can use the command <code>zip -r path/to/your/zip/file path/to/your/directory</code> to zip the file. Be sure to replace these dummy file paths with your actual desired ones (or ask AI for help!).</p>
 <p>On PowerShell, you can use <code>Compress-Archive</code>:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Compress-Archive <span class="op">-</span>Path <span class="st">"path\to\your\directory"</span> <span class="op">-</span>DestinationPath <span class="st">"path\to\your\zip\file.zip"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Compress-Archive <span class="op">-</span>Path <span class="st">"path\to\your\directory"</span> <span class="op">-</span>DestinationPath <span class="st">"path\to\your\zip\file.zip"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Be sure to not zip the <code>README.md</code> file, as we will need to read this file to solve the maze. Once you have zipped your maze, you should upload it to your <code>is310-coding-assignments</code> repository and post a link in our GitHub discussion <a href="https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/2" target="_blank">https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/2</a>.</p>
 <p>If you need inspiration for your maze, take a look at this one I created, which you can download as a <a href="../../assets/files/cli_exercises/zipped_gutenberg_maze.zip">zip file</a>{:download target=“_blank”} or via our <a href="https://github.com/CultureAsData-UIUC/is310-fall-2026/blob/main/assets/files/cli_exercises/zipped_gutenberg_maze.zip" target="_blank">GitHub repository</a> (you can also try solving it if you like!).</p>
 <section id="hiding-files-important-cross-platform-note" class="level4">
@@ -649,13 +658,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Different operating systems handle “hidden” files differently. So far, we have seen what are called <code>dotfiles</code> which is a type of hidden file or directory. These are hidden by default on Mac/Linux but not on Windows if you are running PowerShell.</p>
 <p>If you want your hidden files and folders to behave as hidden on Windows, include a PowerShell script in your maze folder named: <code>hide-dotfiles.ps1</code>.</p>
 <p>In the file, place the following code:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hide all dotfiles and dotfolders recursively from the current directory</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hide all dotfiles and dotfolders recursively from the current directory</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-ChildItem</span> <span class="op">-</span>Recurse <span class="op">-</span>Force <span class="op">|</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Where-Object</span> <span class="op">{</span> <span class="va">$_</span><span class="op">.</span><span class="fu">Name</span><span class="op">.</span><span class="fu">StartsWith</span><span class="op">(</span><span class="st">'.'</span><span class="op">)</span> <span class="op">}</span> <span class="op">|</span></span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ForEach-Object</span> <span class="op">{</span></span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    attrib <span class="op">+</span><span class="fu">h</span> <span class="va">$_</span><span class="op">.</span><span class="fu">FullName</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then update your instructions to tell Windows’ PowerShell users to first run this command <code>.\hide-dotfiles.ps1</code> from the maze once they have unzipped your folder. Please reach out to the instructors if you have any questions or issues with this script!</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -663,13 +672,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Struggling with Permissions?
+<span class="screen-reader-only">Tip</span>Struggling with Permissions?
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>PowerShell can be finicky with permissions so if you are still getting issues you might try running PowerShell as an administrator or running this command:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-ExecutionPolicy</span> <span class="op">-</span>Scope <span class="cf">Process</span> <span class="op">-</span>ExecutionPolicy Bypass</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\hide-dotfiles<span class="op">.</span><span class="fu">ps1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-ExecutionPolicy</span> <span class="op">-</span>Scope <span class="cf">Process</span> <span class="op">-</span>ExecutionPolicy Bypass</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\hide-dotfiles<span class="op">.</span><span class="fu">ps1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -678,19 +687,19 @@ Struggling with Permissions?
 <h3 class="anchored" data-anchor-id="part-2-solve-your-group-members-mazes">Part 2: Solve Your Group Members’ Mazes</h3>
 <p>Once you have created and zipped your maze, pushed it up to GitHub, and posted a link in our discussion, it’s time to solve your group members’ mazes. <strong>You are required to solve at least two mazes from students in your own group.</strong> This is your chance to see how others in your group are approaching the same broad cultural data topics!</p>
 <p>The first step is to select one of your group members’ mazes from the discussion link and try <strong>cloning their repository to your computer</strong>. If you have never cloned a repository before, you can read about how to do it in the <a href="../../materials/introducing-defining-cad/05-advanced-git-github.html#cloning-a-repository" target="_blank">Advanced Git and GitHub Lesson</a>. Remember if you have setup SSH keys, you can use the SSH link, otherwise you can use the HTTPS link.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone name-of-repo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone name-of-repo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Once you have cloned the repository, you should use the command line to enter the maze folder. If you are having issues with cloning, you can also download the zip file and unzip it on your computer. But I would recommend trying to clone the repository first, since it is a very useful skill to have and one you will often need as a coder.</p>
 <p>To enter the cloned repository, you can do this by using the <code>cd</code> command to navigate to the maze folder. You can read the <code>README.md</code> file to get any relevant instructions for solving the maze. To print out the contents of the file, you can use the <code>cat</code> command.</p>
 <p><em>macOS/Linux/WSL</em></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> README.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> README.md</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>PowerShell</em></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Content</span> README<span class="op">.</span><span class="fu">md</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Content</span> README<span class="op">.</span><span class="fu">md</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Once you are in the maze folder and have read the instructions, you should unzip the maze.</p>
 <p>For Unix/Linux (so Macs, Linux, and the Window Subsystems for Linux), you can use the following command:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> path/to/your/zip/file <span class="at">-d</span> path/to/your/desired/directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> path/to/your/zip/file <span class="at">-d</span> path/to/your/desired/directory</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>-d</code> flag is just telling the terminal where to unzip the file. So if you are already in the correct spot, you can just use <code>unzip path/to/your/zip/file</code>.</p>
 <p>If you are using PowerShell, you will need to use the following command:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Expand-Archive <span class="op">-</span>Path <span class="st">"path\to\your\zip\file"</span> <span class="op">-</span>DestinationPath <span class="st">"path\to\your\desired\directory"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Expand-Archive <span class="op">-</span>Path <span class="st">"path\to\your\zip\file"</span> <span class="op">-</span>DestinationPath <span class="st">"path\to\your\desired\directory"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Again the <code>-DestinationPath</code> flag is just telling the terminal where to unzip the file. So if you are already in the correct spot, you can just use <code>Expand-Archive -Path "path\to\your\zip\file"</code>.</p>
 <p>Be sure to replace these dummy file paths with your actual desired ones (or ask AI for help!). You should be able to solve the maze in ~30 minutes, but if you are struggling, please reach out to the instructors via Slack for help.</p>
 <p>Once you have solved the maze, you should reply to your peer’s post in the discussion, letting them know that you were successful and posting a screenshot of your solved maze in your terminal. If you have any issues with the maze, you’re welcome to request help on their post, but please try to solve it on your own first.</p>
@@ -727,7 +736,7 @@ Struggling with Permissions?
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -777,13 +786,14 @@ Struggling with Permissions?
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

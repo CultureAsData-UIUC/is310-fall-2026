@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.27">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Web Scraping with Python – IS310 - Culture As Data Fall 2026</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -72,14 +78,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-6c49c5477b92c77c9eb341f9299c235f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-6bd77949012616049cccce2f6cb6e61f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-fc539113232677d296c547e50173fa21.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-529c26969d27a2a2473a4b9f3bafd9fb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-8548d451cbde00b83e20f2b3ceda2474.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-529c26969d27a2a2473a4b9f3bafd9fb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -130,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -163,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -203,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -231,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -254,20 +260,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -280,7 +288,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo light-content">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">IS310 - Culture As Data Fall 2026</span>
@@ -396,7 +405,7 @@ Note
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-A Note on This Lesson (Updated 2026)
+<span class="screen-reader-only">Important</span>A Note on This Lesson (Updated 2026)
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -461,8 +470,8 @@ A Note on This Lesson (Updated 2026)
 <h3 class="anchored" data-anchor-id="installing-required-packages">Installing Required Packages</h3>
 <p>The first step is to install our required packages into our virtual environment. If you have yet to set up a virtual environment, you can follow the instructions in the <a href="../creating-curating-cad/04-virtual-environments" target="_blank">previous lesson</a>.</p>
 <p>If you have already created your virtual environment, then you can either activate it using Visual Studio Code or by using the terminal. If you are using the terminal, you can activate your virtual environment by running the following command:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> venv/bin/activate</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install requests beautifulsoup4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> venv/bin/activate</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install requests beautifulsoup4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Notice here we are installing two packages: <code>requests</code> and <code>beautifulsoup4</code> in a single line. <strong>You can install as many packages as you want in a single <code>pip install</code> command, just separate them with a space.</strong></p>
 <hr>
 <p>We previously discussed Python libraries when we talked about classes and virtual environments, but let’s dig in a bit deeper.</p>
@@ -480,7 +489,7 @@ A Note on This Lesson (Updated 2026)
 <p>Finally, you’ll see that I often use <code>pip</code> or <code>pip3</code> when installing packages. This is because <code>pip</code> is the package installer for Python and <code>pip3</code> is the package installer for Python 3. If you’re using Python 3, you can use either <code>pip</code> or <code>pip3</code>, but if you’re using Python 2, you should use <code>pip2</code>. So generally, you’ll want to use <code>pip</code> to install packages but to double check you’re installing packages for the right version of Python, you can check the version of Python you’re using by running <code>python --version</code> and then use the corresponding <code>pip</code> command.</p>
 <hr>
 <p>Now we can starting using these packages in our Python code. First, we need to create a new folder in our <code>is310-coding-assignments</code> called <code>web-scraping</code> and then create a new file called <code>first_web_scraping.py</code>. Then we can add the following code to our file:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> beautifulsoup4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> beautifulsoup4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You’ll likely see the following error if you try to run this code:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -497,17 +506,17 @@ A Note on This Lesson (Updated 2026)
 </figure>
 </div>
 <p>If we click on the <code>Quick Start</code> link, we can see that the documentation tells us to import the <code>BeautifulSoup</code> class from the <code>bs4</code> package. So we can update our code to look like this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Remember that the <code>from</code> keyword is used to import a specific module (aka Class or function in Python) from a package. Alternatively we could also import the entire package and then use the <code>BeautifulSoup</code> class like this:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> bs4</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> bs4.BeautifulSoup(html_doc, <span class="st">'html.parser'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> bs4</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> bs4.BeautifulSoup(html_doc, <span class="st">'html.parser'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Finally we could technically use the asterisk symbol, which often means “all” or “any”, to import all the modules (aka Classes and functions) in the package:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> <span class="op">*</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_doc, <span class="st">'html.parser'</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># imports * imports all modules in a package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># imports * imports all modules in a package</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>However, this is generally not recommended because it can make it difficult to understand where a particular module is coming from.</p>
 <p>You may also need to install a parser for <code>BeautifulSoup</code>. The <code>html.parser</code> parser is included with Python, but you can also use the <code>lxml</code> parser, which is faster and more lenient. You can install the <code>lxml</code> parser by running the following command:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install lxml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install lxml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>There’s actually a number of possible parsers you can use with <code>BeautifulSoup</code>. Here’s a quick overview of the different parsers you can use with <code>BeautifulSoup</code> from the library’s documentation:</p>
 <table class="caption-top table">
 <colgroup>
@@ -556,7 +565,7 @@ A Note on This Lesson (Updated 2026)
 <section id="beautifulsoup-basics" class="level3">
 <h3 class="anchored" data-anchor-id="beautifulsoup-basics">BeautifulSoup Basics</h3>
 <p>In the <code>Quick Start</code> guide <a href="https://beautiful-soup-4.readthedocs.io/en/latest/#quick-start" target="_blank">https://beautiful-soup-4.readthedocs.io/en/latest/#quick-start</a>, we have an example of how to use the <code>BeautifulSoup</code> class to parse an HTML document. Let’s try this example in our <code>first_web_scraping.py</code> file.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>html_doc <span class="op">=</span> <span class="st">"""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>html_doc <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;body&gt;</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;p class="title"&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;</span></span>
@@ -572,13 +581,13 @@ A Note on This Lesson (Updated 2026)
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_doc, <span class="st">'html.parser'</span>)</span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(soup.prettify())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(soup.prettify())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can see that <code>html_doc</code> is a variable that holds a multiline string that contains HTML. We are then using the <code>BeautifulSoup</code> class to parse the HTML document and the <code>prettify()</code> method to print the HTML document in a more readable format.</p>
 <p>The power of <code>BeautifulSoup</code> is that it let’s us use the structure of the HTML document to extract the data we want. For example, we can use the built-in <code>find_all()</code> method to get all the links in the document and then use the <code>get_text()</code> method to get the text of each link.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>links <span class="op">=</span> soup.find_all(<span class="st">'a'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>links <span class="op">=</span> soup.find_all(<span class="st">'a'</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> link <span class="kw">in</span> links:</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(link.get(<span class="st">'href'</span>))</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(link.get_text())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(link.get_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>From this we can see that we are getting all the links in the document and then printing the <code>href</code> attribute of each link and the text of each link. This is a very simple example, but it shows how we can use the structure of the HTML document to extract the data we want.</p>
 <p>In <code>BeautifulSoup</code>, we have four kinds of objects that we can work with: <code>Tag</code>, <code>NavigableString</code>, <code>BeautifulSoup</code>, and <code>Comment</code>. The <code>Tag</code> object is the most important object and represents an HTML or XML tag. The <code>NavigableString</code> object represents the text within a tag. The <code>BeautifulSoup</code> object represents the whole of the document. The <code>Comment</code> object represents an HTML or XML comment. We’ll just focus on the <code>Tag</code> and <code>BeautifulSoup</code> objects for now.</p>
 <p><strong>BeautifulSoup Class</strong></p>
@@ -595,42 +604,42 @@ A Note on This Lesson (Updated 2026)
 </div>
 <p>In the documentation, it talks about how this method “looks through a tag’s descendants and retrieves all descendants that match your filters.” This is a bit confusing, but what it means is that the <code>find_all</code> method searches through the HTML document and retrieves all the elements that match the filter you give it.</p>
 <p>So to go back to our previous example:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>links <span class="op">=</span> soup.find_all(<span class="st">'a'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>links <span class="op">=</span> soup.find_all(<span class="st">'a'</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> link <span class="kw">in</span> links:</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(link.get(<span class="st">'href'</span>))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(link.get_text())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(link.get_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here we are passing in the <code>a</code> tag name to the <code>find_all</code> method. We could also pass in other filters like a class name:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>links <span class="op">=</span> soup.find_all(<span class="st">'a'</span>, class_<span class="op">=</span><span class="st">'sister'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>links <span class="op">=</span> soup.find_all(<span class="st">'a'</span>, class_<span class="op">=</span><span class="st">'sister'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now this code should pretty identically because we only have links with the class name <code>sister</code>. However, you can imagine how this could be useful if you only wanted to get links with a specific class name.</p>
 <p>You can also pass in other filters like <code>id</code>, <code>href</code>, etc. For example, if you wanted to get the link with the <code>id</code> attribute <code>link1</code>, you could do this:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>link <span class="op">=</span> soup.find_all(<span class="st">'a'</span>, <span class="bu">id</span><span class="op">=</span><span class="st">'link1'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>link <span class="op">=</span> soup.find_all(<span class="st">'a'</span>, <span class="bu">id</span><span class="op">=</span><span class="st">'link1'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The filter can be a tag name, a tag attribute, a tag attribute value, a tag class, a tag id, etc. The <code>find_all</code> method returns a list of tags that match the filter.</p>
 <p><strong>Tag Class</strong></p>
 <p>So far we have been just searching the HTML tree to find elements, but it is helpful to understand that in <code>BeautifulSoup</code> each element is represented by a <code>Tag</code> object. The <code>Tag</code> object is the most important object in <code>BeautifulSoup</code> and represents an HTML or XML tag.</p>
 <p>For example, in our existing code we could use the <code>find_all()</code> method to get all the <code>p</code> tags in the document and then use the <code>get_text()</code> method to get the text of each <code>p</code> tag.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">'p'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">'p'</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> paragraph <span class="kw">in</span> paragraphs:</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph.get_text())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph.get_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Tags are equivalent to the elements in HTML, so any time you want to see if tag exists in the HTML document, you can use either the <code>find_all()</code> method to search for it or simply <code>soup.p</code> to get the first <code>p</code> tag in the document.</p>
 <p>We can also use the <code>.name</code> attribute to get the name of the tag and the <code>.attrs</code> attribute to get the attributes of the tag.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">'p'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">'p'</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> paragraph <span class="kw">in</span> paragraphs:</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph.name)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph.attrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph.attrs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we should see the name of the tag and the attributes of the tag printed for each <code>p</code> tag in the document.</p>
 <p>Attributes are equivalent to the attributes in HTML, so any time you want to see if an attribute exists in the HTML document, you can use either the <code>.get()</code> method to get the value of the attribute or simply square brackets to get the value of the attribute.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">'p'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">'p'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> paragraph <span class="kw">in</span> paragraphs:</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph.get(<span class="st">'class'</span>))</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph[<span class="st">'class'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph[<span class="st">'class'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now that we are understanding how <code>BeautifulSoup</code> represents HTML, we can start to further navigate the HTML tree. In addition to searching for elements, we can also navigate the tree by moving up, down, and sideways. We can use the <code>parent</code>, <code>children</code>, <code>descendants</code>, <code>next_sibling</code>, and <code>previous_sibling</code> attributes to navigate the tree. So for example in our basic HTML doc variable we have paragraphs that are siblings, so we can use the <code>next_sibling</code> attribute to get the next sibling of a tag.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">'p'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">'p'</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> paragraph <span class="kw">in</span> paragraphs:</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph.next_sibling)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph.next_sibling)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We could also use the <code>parent</code> attribute to get the parent of a tag.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">'p'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.find_all(<span class="st">'p'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> paragraph <span class="kw">in</span> paragraphs:</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph.parent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(paragraph.parent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You don’t need to memorize every functionality in <code>BeautifulSoup</code>, but it’s good to know that it’s there and to know how to look up the documentation. The documentation has lots of examples, so it’s a great resource to use when you’re working with <code>BeautifulSoup</code>.</p>
 </section>
 <section id="scraping-project-gutenberg" class="level3">
@@ -639,10 +648,10 @@ A Note on This Lesson (Updated 2026)
 <p>First, we’re going to save the page as an HTML file. You can do this by right clicking on the page and selecting “Save As” and then saving it as <code>top_100_ebooks.html</code> in the same directory as your <code>first_web_scraping.py</code> file.</p>
 <p><img src="../../assets/images/save_top_100_ebooks.png" class="img-fluid"></p>
 <p>Now we can try scraping the page!</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(<span class="bu">open</span>(<span class="st">"top_100_ebooks.html"</span>), features<span class="op">=</span><span class="st">"html.parser"</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(soup.prettify())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(soup.prettify())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can see we now have the full html page in all it’s weirdly organized HTML glory!</p>
 <p>While it’s great to be able to just see the HTML, usually we are scraping to structured HTML data and turn it into a structured data format like a CSV or JSON file. So let’s try and get the titles of the top 100 eBooks.</p>
 <p>First, let’s take a look at the structure of the HTML document. We can use the inspect feature in your browser to do this.</p>
@@ -650,9 +659,9 @@ A Note on This Lesson (Updated 2026)
 <p>If we click the small arrow icon in our inspector, we can start to select relevant HTML elements. We can see that the <code>Top 100 EBooks yesterday</code> is an <code>h2</code> tag. After our readings about bestsellers and top of TikTok, we can imagine that scraping this list of books might be useful to researchers interested in what people are reading on <em>Project Gutenberg</em>.</p>
 <p><img src="../../assets/images/inspect_top_100_ebooks_p.png" class="img-fluid"></p>
 <p>If we select the titles, we can see that they are nested in an <code>ol</code> tag and then each title is in a <code>li</code> tag. So we can use the <code>find_all()</code> method to get all the <code>li</code> tags in the document and then use the <code>get_text()</code> method to get the text of each <code>li</code> tag.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>titles <span class="op">=</span> soup.find_all(<span class="st">'li'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>titles <span class="op">=</span> soup.find_all(<span class="st">'li'</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> title <span class="kw">in</span> titles:</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(title.get_text())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(title.get_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>However, you’ll notice if we are running this code that we will get <strong>all</strong> the links on the page, not just the titles. This is because the <code>find_all()</code> method is searching the whole document and not just the <code>ol</code> tag. So we need to be more specific in our search.</p>
 <section id="quick-in-class-exercise" class="level4">
 <h4 class="anchored" data-anchor-id="quick-in-class-exercise">Quick In-Class Exercise</h4>
@@ -668,19 +677,19 @@ A Note on This Lesson (Updated 2026)
 <h3 class="anchored" data-anchor-id="requesting-and-scraping-web-pages">Requesting and Scraping Web Pages</h3>
 <p>We are now officially scraping a web page 🥳!! But what if we wanted to scrape more than one? Saving each manually would get tiring really quickly!</p>
 <p>Let’s try taking our updated code but rather than working with the saved version of the web page, let’s try to get the web page programmatically. To do this, we need to use the <code>requests</code> library to get the web page. We already installed requests initially so now we need to import it into our <code>first_web_scraping.py</code> file.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Let’s also take a look at the documentation for the <code>requests</code> library <a href="https://requests.readthedocs.io/en/latest/" target="_blank">https://requests.readthedocs.io/en/latest/</a>.</p>
 <p><img src="../../assets/images/requests_documentation.png" class="img-fluid"></p>
 <p>You’ll notice the tag line for the library is “HTTP for Humans” which is a great way to think about it. The <code>requests</code> library is a library that allows us to send HTTP requests to web pages as if we were a web browser. As you remember from our <a href="../introducing-defining-cad/08-intro-web" target="_blank">lesson on the web</a>, when you go to a URL in your browser, your browser sends an HTTP request to the server and the server sends back an HTTP response. The <code>requests</code> library allows us to do the same thing in Python.</p>
 <p>If we go to the <code>Quickstart</code> page <a href="https://requests.readthedocs.io/en/stable/user/quickstart/" target="_blank">https://requests.readthedocs.io/en/stable/user/quickstart/</a>, we can see how we not only import the library but also how we can use it.</p>
 <p>For example, the core method in the <code>requests</code> library is the <code>get()</code> method, which is used to get a web page. The <code>get()</code> method returns a <code>Response</code> object, which has a <code>status_code</code> attribute that contains the status code of the request and a <code>headers</code> attribute that contains the headers of the request. Let’s try it with our <code>Project Gutenberg</code> page.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://www.gutenberg.org/browse/scores/top"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://www.gutenberg.org/browse/scores/top"</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Status code:"</span>, response.status_code)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Headers:"</span>,response.headers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Headers:"</span>,response.headers)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We should see the following output:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Status</span> code: 200</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Header:</span> {<span class="st">'date'</span>: <span class="st">'Wed, 06 Oct 2021 17:00:01 GMT'</span>, <span class="st">'server'</span>: <span class="st">'Apache'</span>, <span class="st">'content-location'</span>: <span class="st">'top.php'</span>, <span class="st">'vary'</span>: <span class="st">'negotiate,Accept-Encoding'</span>, <span class="st">'tcn'</span>: <span class="st">'choice'</span>, <span class="st">'content-encoding'</span>: <span class="st">'gzip'</span>, <span class="st">'content-length'</span>: <span class="st">'11521'</span>, <span class="st">'x-backend'</span>: <span class="st">'gutenweb5'</span>, <span class="st">'content-type'</span>: <span class="st">'text/html; charset=UTF-8'</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Status</span> code: 200</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Header:</span> {<span class="st">'date'</span>: <span class="st">'Wed, 06 Oct 2021 17:00:01 GMT'</span>, <span class="st">'server'</span>: <span class="st">'Apache'</span>, <span class="st">'content-location'</span>: <span class="st">'top.php'</span>, <span class="st">'vary'</span>: <span class="st">'negotiate,Accept-Encoding'</span>, <span class="st">'tcn'</span>: <span class="st">'choice'</span>, <span class="st">'content-encoding'</span>: <span class="st">'gzip'</span>, <span class="st">'content-length'</span>: <span class="st">'11521'</span>, <span class="st">'x-backend'</span>: <span class="st">'gutenweb5'</span>, <span class="st">'content-type'</span>: <span class="st">'text/html; charset=UTF-8'</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>status_code</code> attribute contains the status code of the request and the <code>headers</code> attribute contains the headers of the request. The status code <code>200</code> means that the request was successful and the headers contain information about the request. If you don’t get a <code>200</code> you can refresh your knowledge of the <a href="../introducing-defining-cad/08-intro-web#what-is-http" target="_blank">other status codes in our lesson on the web</a> but it usually means that either:</p>
 <ul>
 <li>you don’t have access to the web page (so a status code of <code>403</code> or <code>404</code>)</li>
@@ -689,11 +698,11 @@ A Note on This Lesson (Updated 2026)
 <li>Or there’s an error with your internet connection.</li>
 </ul>
 <p>Now that we have the <code>Response</code> object, we can use the <code>text</code> attribute to get the HTML of the page. Let’s try it out.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">"html.parser"</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(soup.prettify())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">"html.parser"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(soup.prettify())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We should see the HTML of the same page we downloaded printed out. This is great because it means we can now scrape any web page we want, not just the ones we have saved locally.</p>
 <p>So returning to our previous our code, we can now use the <code>requests</code> library to get the web page and the <code>text</code> attribute of the <code>Response</code> object to get the HTML of the page.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://www.gutenberg.org/browse/scores/top"</span>)</span>
@@ -701,10 +710,10 @@ A Note on This Lesson (Updated 2026)
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>top_100_ebooks <span class="op">=</span> soup.find(<span class="bu">id</span><span class="op">=</span><span class="st">"books-last1"</span>)</span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>list_of_books <span class="op">=</span> top_100_ebooks.find_next(<span class="st">'ol'</span>).find_all(<span class="st">'li'</span>)</span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> list_of_books:</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(book.get_text())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(book.get_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now that our code is working, we can start to consider what data we would actually want and how to structure it.</p>
 <p>So far, we are only getting the <code>Top 100 EBooks Yesterday</code> but there’s a number of top lists that we could scrape, including authors. So we could expand our code to get all top lists from this page and then store it in some sort of data structure, like a list of dictionaries.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://www.gutenberg.org/browse/scores/top"</span>)</span>
@@ -716,9 +725,9 @@ A Note on This Lesson (Updated 2026)
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    top_list_name <span class="op">=</span> top_list.get_text()</span>
 <span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    top_list_items <span class="op">=</span> top_list.find_next(<span class="st">'ol'</span>).find_all(<span class="st">'li'</span>)</span>
 <span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> item <span class="kw">in</span> top_list_items:</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>        data.append({<span class="st">"list"</span>: top_list_name, <span class="st">"title"</span>: item.get_text()})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>        data.append({<span class="st">"list"</span>: top_list_name, <span class="st">"title"</span>: item.get_text()})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now since we are getting both books and authors, let’s create two separate lists of dictionaries, one for books and one for authors.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://www.gutenberg.org/browse/scores/top"</span>)</span>
@@ -735,9 +744,9 @@ A Note on This Lesson (Updated 2026)
 <span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">"EBooks"</span> <span class="kw">in</span> top_list_name:</span>
 <span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>            books.append({<span class="st">"list"</span>: top_list_name, <span class="st">"title"</span>: item.get_text()})</span>
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>            authors.append({<span class="st">"list"</span>: top_list_name, <span class="st">"author"</span>: item.get_text()})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>            authors.append({<span class="st">"list"</span>: top_list_name, <span class="st">"author"</span>: item.get_text()})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Finally, so far we are just saving the names of items but we could also save the links to the items. We could do this by getting the <code>href</code> attribute of the <code>a</code> tag.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://www.gutenberg.org/browse/scores/top"</span>)</span>
@@ -754,9 +763,9 @@ A Note on This Lesson (Updated 2026)
 <span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">"EBooks"</span> <span class="kw">in</span> top_list_name:</span>
 <span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>            books.append({<span class="st">"top_list"</span>: top_list_name, <span class="st">"book_title"</span>: item.get_text(), <span class="st">"book_link"</span>: item.find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)})</span>
 <span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>            authors.append({<span class="st">"top_list"</span>: top_list_name, <span class="st">"author_name"</span>: item.get_text(), <span class="st">"author_link"</span>: item.find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>            authors.append({<span class="st">"top_list"</span>: top_list_name, <span class="st">"author_name"</span>: item.get_text(), <span class="st">"author_link"</span>: item.find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we just need to save the data to a file. We could either create text files, but in this case it might be easier to create a csv file. To do that we would need to use the <code>csv</code> library, which is part of the Python Standard Library. We would also need to use the <code>open()</code> method to open a file and the <code>write()</code> method to write to the file. We would also need to use the <code>writerow()</code> method to write a row to the file.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'top_100_ebooks.csv'</span>, <span class="st">'w'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    writer <span class="op">=</span> csv.writer(<span class="bu">file</span>)</span>
@@ -770,31 +779,31 @@ A Note on This Lesson (Updated 2026)
 <span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Write the headers</span></span>
 <span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    writer.writerow([<span class="st">'top_list'</span>, <span class="st">'author_name'</span>, <span class="st">'author_link'</span>])</span>
 <span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> author <span class="kw">in</span> authors:</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>        writer.writerow([author[<span class="st">'top_list'</span>], author[<span class="st">'author_name'</span>], author[<span class="st">'author_link'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>        writer.writerow([author[<span class="st">'top_list'</span>], author[<span class="st">'author_name'</span>], author[<span class="st">'author_link'</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You’ll notice that I am using the <code>with</code> statement to open the file. This is a context manager that automatically closes the file when the block of code is done. This is a good practice because it ensures that the file is closed properly and that there are no issues with the file. Furthermore, I’m making the column headers the first row of the csv file and using lowercase and underscores in the names. This is a good practice because it makes it easier to read the file later on and to work with the data.</p>
 <p>Now that we have links to other pages, we could also start using requests to get those pages and scrape them. Let’s create a function to check if the web page exists and if we would be able to scrape it based on the status code.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_page_exists(url):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_page_exists(url):</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">True</span></span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we can use this function to check if we can scrape the links to the books and authors.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    book[<span class="st">'webpage_exists'</span>] <span class="op">=</span> check_page_exists(book[<span class="st">'book_link'</span>])</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> author <span class="kw">in</span> authors:</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    author[<span class="st">'webpage_exists'</span>] <span class="op">=</span> check_page_exists(author[<span class="st">'author_link'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    author[<span class="st">'webpage_exists'</span>] <span class="op">=</span> check_page_exists(author[<span class="st">'author_link'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You’ll likely notice that we get a lot of errors when we run this code. Why is that?</p>
 <p>Take a look at our links. You’ll notice that the top book, <em>Frankenstein; Or, The Modern Prometheus</em> has a link of <code>/ebooks/84</code>. This is a relative link, which means that it’s a link that is relative to the current page. This is different from an absolute link, which is a link that is absolute to the root of the website. So we need to convert the relative links to absolute links.</p>
 <p>We can simply click on the link in the web page to see what the full URL is. In this case, the full URL is <code>https://www.gutenberg.org/ebooks/84</code>. So we can use this information to convert the relative links to absolute links.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_gutenberg_page_exists(url):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_gutenberg_page_exists(url):</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    gutenberg_url <span class="op">=</span> <span class="st">"https://www.gutenberg.org"</span> <span class="op">+</span> url</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(gutenberg_url)</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">True</span></span>
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now when we rerun our code, we should see that we are able to get the status code for each of the links!</p>
 <p>Many web pages use relative links, so this is a common issue when scraping web pages and it’s why it’s important to always inspect and explore the HTML of the web page you are scraping.</p>
 </section>
@@ -819,16 +828,16 @@ A Note on This Lesson (Updated 2026)
 <p>One additional item you might see is a <code>Crawl-delay</code> section tells us how long web crawlers and scrapers should wait between requests. For example, if a <code>robots.txt</code> says <code>Crawl-delay: 5</code> that tells us that web crawlers and scrapers should wait 5 seconds between requests. However, in our case the <code>robots.txt</code> file for the <em>Lord of the Rings</em> wiki doesn’t have this section.</p>
 <p>Looking through this <code>robots.txt</code> tells us that we can scrape many of the pages on the <em>Lord of the Rings</em> wiki, but we should be careful to avoid the <code>Special:</code> pages and to respect the <code>Noindex</code> sections. This is a good practice to follow when scraping websites and it’s always a good idea to check the <code>robots.txt</code> file before scraping a website.</p>
 <p>So let’s try scraping the <em>Lord of the Rings</em> wiki page. We can start by getting the web page using the <code>requests</code> library and then using the <code>BeautifulSoup</code> library to parse the HTML.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://lotr.fandom.com/wiki/Main_Page"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://lotr.fandom.com/wiki/Main_Page"</span>)</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">"html.parser"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">"html.parser"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="bot-protection-and-the-limits-of-scraping" class="level3">
 <h3 class="anchored" data-anchor-id="bot-protection-and-the-limits-of-scraping">Bot Protection and the Limits of Scraping</h3>
 <p>Here is where our lesson runs into the actual state of the web in 2026. If you run the code above, you will not get a <code>200</code>. You will get this:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">403</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">403</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And if you print the first few hundred characters of <code>response.text</code>, you’ll see something like:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">"en-US"</span><span class="dt">&gt;&lt;</span><span class="kw">head</span><span class="dt">&gt;&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Just a moment...<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">"en-US"</span><span class="dt">&gt;&lt;</span><span class="kw">head</span><span class="dt">&gt;&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Just a moment...<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>The answer: Bot Protection.</strong></p>
 <p>Many modern websites sit behind automated bot detection services like <strong>Cloudflare</strong>, which protect against unwanted scraping, denial-of-service attacks, and — increasingly — mass harvesting by AI training crawlers. Cloudflare inspects incoming requests and blocks the ones that look automated. When you visit the site in your browser, your browser presents a whole bundle of evidence that it is a browser: a <code>User-Agent</code> string, a particular ordering of headers, TLS fingerprints, the ability to execute JavaScript and store cookies. When you call <code>requests.get()</code>, you present almost none of that, and you announce yourself as <code>python-requests/2.x.x</code> besides. The <code>Just a moment...</code> page is Cloudflare’s JavaScript challenge, which <code>requests</code> cannot solve because <code>requests</code> does not run JavaScript.</p>
 <p>Notice the genuinely interesting thing here. We just read the <code>robots.txt</code> file together, and it <em>told us we could scrape</em> <code>/wiki/*</code>. But the site’s edge network blocks us anyway. <strong>The stated policy and the enforced policy do not match.</strong> <code>robots.txt</code> is a request written for well-behaved crawlers; Cloudflare is an enforcement mechanism that does not consult it. This gap between what a site says and what a site does is worth sitting with — it is exactly the sort of thing that makes web data hard to reason about ethically, and it is a fairly recent development driven by the enormous volume of AI scraping since 2023.</p>
@@ -838,18 +847,18 @@ A Note on This Lesson (Updated 2026)
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-A Note on <code>cloudscraper</code> (and Why It No Longer Works)
+<span class="screen-reader-only">Warning</span>A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>If you search for how to get around this, you will very quickly find the <code>cloudscraper</code> library <a href="https://github.com/VeNoMouS/cloudscraper" target="_blank">https://github.com/VeNoMouS/cloudscraper</a>, which for several years was the standard answer. It worked by imitating a browser closely enough to pass Cloudflare’s challenge. Earlier versions of this very lesson taught it.</p>
 <p><strong>It does not work anymore.</strong> As of this writing, running it against a Fandom wiki returns exactly the same 403:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cloudscraper</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cloudscraper</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>scraper <span class="op">=</span> cloudscraper.create_scraper()</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> scraper.get(<span class="st">"https://lotr.fandom.com/wiki/Main_Page"</span>)</span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)   <span class="co"># 403</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text[:<span class="dv">60</span>])     <span class="co"># &lt;!DOCTYPE html&gt;&lt;html lang="en-US"&gt;&lt;head&gt;&lt;title&gt;Just a moment</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text[:<span class="dv">60</span>])     <span class="co"># &lt;!DOCTYPE html&gt;&lt;html lang="en-US"&gt;&lt;head&gt;&lt;title&gt;Just a moment</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>I am leaving this here rather than quietly deleting it, because the failure is the lesson. Bot detection is an <strong>arms race</strong>: the site improves its detection, the workaround library improves its imitation, the site improves again. <code>cloudscraper</code> lost. Whatever library replaces it will also eventually lose, because one side is a volunteer open-source project and the other is a company with a large security budget.</p>
 <p>This matters for you as a researcher in two ways. <strong>Practically</strong>, any research pipeline built on evasion is a pipeline that will break, usually silently and usually right when you need it. <strong>Ethically</strong>, once a site has put up an active block, you can no longer tell yourself that scraping it is unobjectionable — you have been told no in the clearest terms a server has available. Writing code specifically to defeat that block is a meaningfully different act from writing code to read a page that was handed to you freely.</p>
 <p>So when you hit a wall like this, you have three legitimate options, and “try harder to look like a browser” is not among them:</p>
@@ -881,14 +890,14 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <p>Compare the tone of this to the Fandom file. This one is addressed to a person. It assumes you might be a human being who wants to help, and its one substantive request is simply: <em>don’t go too fast</em>. The rest of the file blocks specific badly-behaved commercial crawlers by name (<code>MJ12bot</code>, <code>HTTrack</code>, <code>WebZIP</code>) — but there is no blanket ban on the sort of small, slow, scholarly scraping we want to do.</p>
 <p>This is about as clear an invitation as you will find, and it comes with an obligation attached. <strong>We are going to add a <code>time.sleep()</code> between our requests, and this time it is not decorative</strong> — the site has explicitly asked us to be slow, and if we aren’t, we get blocked and we deserve it.</p>
 <p>We should also identify ourselves honestly. Rather than pretending to be a browser, we’ll send a <code>User-Agent</code> that says who we are and how to reach us:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>HEADERS <span class="op">=</span> {<span class="st">"User-Agent"</span>: <span class="st">"is310-course-scraper/1.0 (student project; netid@illinois.edu)"</span>}</span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://tolkiengateway.net/wiki/Main_Page"</span>, headers<span class="op">=</span>HEADERS)</span>
 <span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">"html.parser"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">"html.parser"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should give us a <code>200</code>. Notice the difference in what we just did: we did not disguise ourselves to slip past a filter, we introduced ourselves to a site that was willing to be read. A site administrator looking at their logs can see exactly who we are and email us if we become a problem. That is what good-faith scraping looks like.</p>
 <p>Now since this wiki is huge, we need to narrow our focus to a particular goal or question. Tolkien Gateway has tens of thousands of pages, so we need an actual research question rather than a vague intention to “get the data.”</p>
 <p>Here is one. There’s been a recent adaptation of <em>The Lord of the Rings</em> by Amazon called <em>The Rings of Power</em>, and one of the persistent arguments about that show — in fan communities, in reviews, in a great deal of very heated internet discourse — is about <strong>fidelity to the source material</strong>. Some characters in the show come straight out of Tolkien’s published writing. Others were invented for television. That is an argument we can actually put numbers on.</p>
@@ -900,7 +909,7 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <p>If you open this page in your browser and use the inspector, you’ll see that MediaWiki uses a consistent structure for category listings: the members live inside a <code>div</code> with the id <code>mw-pages</code>, grouped into <code>div</code> elements with the class <code>mw-category-group</code>, and each individual page is a link inside a list item.</p>
 <p>This is a good moment to notice something. The Fandom wiki used classes like <code>category-page__member-link</code>, which are specific to Fandom’s own theme. Tolkien Gateway uses <code>mw-pages</code> and <code>mw-category-group</code>, which are <strong>standard MediaWiki markup</strong>. Because so many wikis run on MediaWiki, learning this one structure means you can scrape thousands of different wikis with nearly identical code. Recognizing which parts of a page’s HTML are generic and which are site-specific is a large part of getting good at scraping.</p>
 <p>We can use a CSS selector to pull out those links. We’ve been using <code>find_all()</code> so far, but <code>BeautifulSoup</code> also gives us <code>select()</code>, which takes a CSS selector like the ones you wrote in your stylesheets — and for nested structures like this one it is much more concise:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>BASE <span class="op">=</span> <span class="st">"https://tolkiengateway.net"</span></span>
@@ -913,10 +922,10 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Found </span><span class="sc">{</span><span class="bu">len</span>(characters)<span class="sc">}</span><span class="ss"> characters"</span>)</span>
 <span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> characters:</span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(character.get_text())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(character.get_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The selector <code>#mw-pages .mw-category-group li a</code> reads as: “find the element with id <code>mw-pages</code>, then inside it find elements with class <code>mw-category-group</code>, then inside those find <code>li</code> elements, then inside those find <code>a</code> elements.” Remember from CSS that <code>#</code> means id and <code>.</code> means class.</p>
 <p>This should print 51 characters:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Found</span> 51 characters</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Found</span> 51 characters</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Abigail</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Adar</span> <span class="er">(</span><span class="ex">The</span> Rings of Power<span class="kw">)</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Arondir</span></span>
@@ -924,7 +933,7 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Berek</span></span>
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Brandyfoot</span> Family</span>
 <span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Bronwyn</span></span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now, look carefully at that list, because it is telling us something we didn’t ask for. There’s no Galadriel here. No Elrond, no Sauron. This category contains <em>only</em> the characters <strong>invented for the show</strong> — the ones that exist nowhere else, and therefore need a Rings of Power page on a Tolkien wiki. Characters from the books already have pages, filed under their own categories.</p>
 <p>That is a genuinely useful accident, and it is worth pausing on. <strong>The category system is itself an argument.</strong> Someone in this community made an editorial decision about what counts as a Rings of Power character versus a Tolkien character, and our data inherits that decision whether we notice it or not. This happens constantly in humanities data work: the categories you scrape were made by people, for their own purposes, and they encode a point of view. Part of your job as a researcher is to notice this rather than treat the categories as neutral facts.</p>
 <p>For our comparison, it means we get the “invented” group for free, and we’ll have to assemble the “from the books” group ourselves.</p>
@@ -933,7 +942,7 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <h4 class="anchored" data-anchor-id="scraping-an-individual-character-page">Scraping an Individual Character Page</h4>
 <p>Now let’s write a function to pull the details from a single character page. Let’s look at <a href="https://tolkiengateway.net/wiki/Galadriel" target="_blank">https://tolkiengateway.net/wiki/Galadriel</a> in the inspector.</p>
 <p>Two things are useful to us. The references are in an ordered list with the class <code>references</code> at the bottom of the page, and the categories the page belongs to are in a <code>div</code> with the id <code>mw-normal-catlinks</code>.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_soup(url):</span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">10</span>)</span>
@@ -955,14 +964,14 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category_count"</span>: <span class="bu">len</span>(categories)</span>
 <span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_character_details(<span class="st">"/wiki/Galadriel"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_character_details(<span class="st">"/wiki/Galadriel"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Notice a few things about this function. It returns a dictionary rather than printing, so the calling code decides what to do with the data. It handles failure by returning an empty result instead of crashing, so one bad page doesn’t kill an hour-long scrape. And the <code>time.sleep(1)</code> lives inside <code>get_soup()</code>, which means <strong>every</strong> request we make is automatically polite — we cannot forget to slow down, because the slowdown is built into the only function that talks to the network.</p>
 <p>Running this on Galadriel gives us <code>'reference_count': 85</code>. Eighty-five citations, on one character.</p>
 </section>
 <section id="comparing-the-two-groups" class="level4">
 <h4 class="anchored" data-anchor-id="comparing-the-two-groups">Comparing the Two Groups</h4>
 <p>Now we can put the comparison together. We need the invented characters (from the category) and the book characters (which we’ll list ourselves, drawn from the show’s principal cast):</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fetch_category_characters(category, source):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fetch_category_characters(category, source):</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> get_soup(<span class="ss">f"</span><span class="sc">{</span>BASE<span class="sc">}</span><span class="ss">/wiki/</span><span class="sc">{</span>category<span class="sc">.</span>replace(<span class="st">' '</span>, <span class="st">'_'</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> soup <span class="kw">is</span> <span class="va">None</span>:</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
@@ -990,10 +999,10 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Isildur"</span>, <span class="st">"Elendil"</span>, <span class="st">"Tar-Míriel"</span>, <span class="st">"Durin IV"</span>, <span class="st">"Círdan"</span>, <span class="st">"Ar-Pharazôn"</span>]</span>
 <span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>invented_characters <span class="op">=</span> fetch_category_characters(<span class="st">"Category:The Rings of Power (TV series) characters"</span>, <span class="st">"Created for the show"</span>)</span>
-<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>canon_characters <span class="op">=</span> fetch_named_characters(CANON_CHARACTERS, <span class="st">"From Tolkien's writings"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>canon_characters <span class="op">=</span> fetch_named_characters(CANON_CHARACTERS, <span class="st">"From Tolkien's writings"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>This will take a few minutes to run</strong>, because we are making 62 requests with a one-second pause between each. That is the correct behavior. If it finished instantly, we would be hammering a volunteer-run wiki.</p>
 <p>Now let’s sort everything by reference count and display it with the <code>Rich</code> library from our last assignment:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
@@ -1011,9 +1020,9 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    table.add_row(character[<span class="st">"character"</span>], <span class="bu">str</span>(character[<span class="st">"reference_count"</span>]),</span>
 <span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>                  <span class="bu">str</span>(character[<span class="st">"category_count"</span>]), character[<span class="st">"source"</span>])</span>
 <span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Which gives us:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>         <span class="ex">Textual</span> Evidence Behind Rings of Power Characters</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>         <span class="ex">Textual</span> Evidence Behind Rings of Power Characters</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="ex">┏━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┓</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="ex">┃</span> Character   ┃ References ┃ Categories ┃ Source                  ┃</span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="ex">┡━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━┩</span></span>
@@ -1029,13 +1038,13 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="st">│ Tar-Míriel  │ 10         │ 5          │ From Tolkien'</span>s writings │</span>
 <span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span> Durin IV    │ 4          │ 8          │ From Tolkien<span class="st">'s writings │</span></span>
 <span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a><span class="st">│ Disa        │ 4          │ 2          │ Created for the show    │</span></span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a><span class="st">└─────────────┴────────────┴────────────┴─────────────────────────┘</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a><span class="st">└─────────────┴────────────┴────────────┴─────────────────────────┘</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And if we compute the averages:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> group, label <span class="kw">in</span> [(canon_characters, <span class="st">"From Tolkien"</span>), (invented_characters, <span class="st">"Created for show"</span>)]:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> group, label <span class="kw">in</span> [(canon_characters, <span class="st">"From Tolkien"</span>), (invented_characters, <span class="st">"Created for show"</span>)]:</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    average <span class="op">=</span> <span class="bu">sum</span>(character[<span class="st">"reference_count"</span>] <span class="cf">for</span> character <span class="kw">in</span> group) <span class="op">/</span> <span class="bu">len</span>(group)</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>label<span class="sc">:18}</span><span class="ss"> n=</span><span class="sc">{</span><span class="bu">len</span>(group)<span class="sc">:3}</span><span class="ss">  average references=</span><span class="sc">{</span>average<span class="sc">:.1f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">From</span> Tolkien       n= 11  average references=34.0</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Created</span> for show   n= 51  average references=1.3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>label<span class="sc">:18}</span><span class="ss"> n=</span><span class="sc">{</span><span class="bu">len</span>(group)<span class="sc">:3}</span><span class="ss">  average references=</span><span class="sc">{</span>average<span class="sc">:.1f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">From</span> Tolkien       n= 11  average references=34.0</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Created</span> for show   n= 51  average references=1.3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is a real result, and it’s worth thinking about what it does and does not tell you. Every single character from Tolkien’s writing outranks every single invented character. The gap is not subtle — it’s roughly twenty-six to one. The show draws its named leads from a small pool of heavily-documented figures and then invents a much larger supporting cast around them, which is a defensible way to adapt a body of work that is mostly genealogy and chronicle rather than scene and dialogue.</p>
 <p>But notice what we have <strong>actually</strong> measured. We have not measured how much Tolkien wrote about Galadriel. We have measured <strong>how many citations Tolkien Gateway’s editors added to a wiki page about Galadriel.</strong> Those are different things. A popular character attracts more editors, and more editors add more citations. Our number is entangled with fan attention in ways we cannot separate from this data alone. Durin IV scores a 4 despite being drawn from the appendices, because his page is short — not because Tolkien was silent about the line of Durin.</p>
 <p>This is the single most important habit to carry out of this lesson: <strong>be precise about what your scraped numbers are counting.</strong> It is rarely the thing you actually want to know. It is usually a proxy, and the distance between the proxy and the concept is where research arguments live.</p>
@@ -1043,7 +1052,7 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <section id="saving-our-data" class="level4">
 <h4 class="anchored" data-anchor-id="saving-our-data">Saving Our Data</h4>
 <p>Finally, let’s save this to a CSV so we can use it later:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"rings_of_power_characters.csv"</span>, <span class="st">"w"</span>, newline<span class="op">=</span><span class="st">""</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    writer <span class="op">=</span> csv.writer(<span class="bu">file</span>)</span>
@@ -1057,7 +1066,7 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>            character[<span class="st">"category_count"</span>]</span>
 <span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>        ])</span>
 <span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Wrote </span><span class="sc">{</span><span class="bu">len</span>(all_characters)<span class="sc">}</span><span class="ss"> rows"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Wrote </span><span class="sc">{</span><span class="bu">len</span>(all_characters)<span class="sc">}</span><span class="ss"> rows"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Note the <code>newline=""</code> argument in <code>open()</code>. This is a small detail that the <code>csv</code> documentation recommends on all platforms — without it, you can end up with blank rows between every line of your file on Windows.</p>
 <p>We now have a full script that imports its libraries at the top, defines small functions that each do one job, respects the site’s stated wishes about crawl speed, identifies itself honestly, handles errors without crashing, and produces both a readable table and a reusable data file. That is a realistic shape for a research scraper.</p>
 </section>
@@ -1085,13 +1094,13 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
 <section id="step-0-verify-the-site-will-actually-talk-to-you" class="level3">
 <h3 class="anchored" data-anchor-id="step-0-verify-the-site-will-actually-talk-to-you">Step 0: Verify the Site Will Actually Talk to You</h3>
 <p><strong>Do this before you plan anything else.</strong> Bot protection is now common enough that you should confirm a site is reachable before you invest time in it:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>HEADERS <span class="op">=</span> {<span class="st">"User-Agent"</span>: <span class="st">"is310-course-scraper/1.0 (student project; YOUR_NETID@illinois.edu)"</span>}</span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"YOUR_URL_HERE"</span>, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text[:<span class="dv">300</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text[:<span class="dv">300</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You want a <code>200</code>, and you want the preview to look like the actual page. If you see <code>403</code>, or the text contains <code>Just a moment...</code> or <code>Enable JavaScript and cookies</code>, that site is blocking you — <strong>pick a different one rather than trying to get around it.</strong></p>
 <p>These wikis were all reachable when this lesson was written, and any of them is a fine choice:</p>
 <table class="caption-top table">
@@ -1179,7 +1188,7 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1229,13 +1238,14 @@ A Note on <code>cloudscraper</code> (and Why It No Longer Works)
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
