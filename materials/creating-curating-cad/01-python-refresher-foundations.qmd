@@ -11,25 +11,37 @@ So far in this course, we have either been using the command line or markup lang
 
 ## Python Foundations
 
-The easiest way to work with Python is through the command line. Let's start by first checking our Python version. Open your terminal (whether in VS Code or your preferred terminal app) and type `python --version` or `python3 --version`. You should see something like the following:
+The easiest way to work with Python is through the command line. Let's start by first checking our Python version. Open your terminal (whether in VS Code or your preferred terminal app) and type:
+
+```sh
+python --version
+```
+
+You should see something like the following:
 
 ![Python Version](../../assets/images/python_version.png)
 
 If you don't see these messages, then you might not have Python installed, so return to our [setup instructions](../introducing-defining-cad/01-CAD-tools/#python){target="_blank"} and reach out to the instructors for assistance.
 
-In this course, you should be using some version of Python 3. If you're using Python 2, you should upgrade to Python 3. Python 2 is no longer supported and will not be maintained after 2020. If both commands output a version of Python 3, you can use either `python` or `python3`. Historically, `python` was used to call Python 2 and `python3` was used to call Python 3. However, as Python 2 is no longer supported, `python` should now call Python 3. You can read more at the [Python 3 documentation](https://docs.python.org/3/){target="_blank"} for more information.
+In this course, you should be using some version of Python 3. If you're using Python 2, you should upgrade to Python 3. Python 2 is no longer supported. Historically, `python` was used to call Python 2 and `python3` was used to call Python 3. However, because Python 2 is no longer supported, `python` now usually calls Python 3 on current systems. You can read more at the [Python 3 documentation](https://docs.python.org/3/){target="_blank"} for more information.
 
 ----
 
-Once you have Python working, you can type `python3` (or `python` if it refers to a Python 3 version) and this will open the interactive Python interpreter where you can write your python code and have the computer execute it. This Python interpreter is a type of program that reads and executes Python code (i.e. either Python syntax or files that end with `.py`). The interactive Python interpreter is an excellent way to sandbox your ideas or check your syntax. You can exit using `exit()`.
+Once you have Python working, you can type:
 
-Type `"Hello world"` in the interpreter and press enter. Make sure to use single or double quotes around the this text (otherwise you'll see a `SyntaxError`, something we'll discuss later in this lesson).
+```sh
+python
+```
+
+This will open the interactive Python interpreter where you can write your python code and have the computer execute it. This Python interpreter is a type of program that reads and executes Python code (i.e. either Python syntax or files that end with `.py`). The interactive Python interpreter is an excellent way to sandbox your ideas or check your syntax. You can exit using `exit()`.
+
+Type `"Hello world"` in the interpreter and press enter. Make sure to use single or double quotes around this text (otherwise you'll see a `SyntaxError`, something we'll discuss later in this lesson).
 
 ![Hello World](../../assets/images/python_hw.png)
 
 Congrats you've just typed your first bit of Python and had the computer execute it 🎉!
 
-Let's breakdown what just happened.
+Let's break down what just happened.
 
 1. You entered data into the interpreter.
 2. That data had a certain format, in this case a *string*, and the interpreter automatically showed that data again.
@@ -41,7 +53,7 @@ We can also use the interpreter as a calculator. Try out these examples.
 2*3
 ```
 
-You'll notice that unlike with `"Hello World"` the interpreter doesn't just show our data back to us. Instead, it *prints* out the result of our calculations. This is because the interpreter is designed to show us the results of our calculations. In our first example, we weren't doing any calculations, so the interpreter just showed us our data. In our second example, we were doing calculations, so the interpreter showed us the results of our calculations.
+You'll notice that unlike with `"Hello World"` the interpreter doesn't just show our data back to us. Instead, it displays the result of our calculations. This is because the interpreter is designed to show us the value of each expression we enter. In our first example, we entered a string expression. In our second example, we entered mathematical expressions, so the interpreter showed us the results of those calculations.
 
 Now, you can experiment with the interpreter, and you'll notice that if you use the up arrow, you can access your previous commands. However, the interpreter can do more than just print out data and do calculations. It can also store data.
 
@@ -177,9 +189,9 @@ one + two
 
 You should see `3.0` as your answer. This is because Python automatically converts the integer `one` into a float so that it can add it to `two`.
 
-This type of joining is using an **operator** in Python. Operators are special symbols in Python that carry out arithmetic or logical computation. The value that the operator operates on is called the **operand**.
+This type of calculation uses an **operator** in Python. Operators are special symbols in Python that carry out arithmetic, comparison, or logical computation. The value that the operator operates on is called the **operand**.
 
-For addition, we use the `+` operator symbol, this is called concatenation.
+For addition, we use the `+` operator symbol.
 
 ```python
 one + two
@@ -209,7 +221,7 @@ Now say we created a variable called `three` that contained the string `"three"`
 one + three
 ```
 
-You should see `TypeError: unsupported operand type(s) for +: 'int' and 'str'`. This is because Python can't add an integer to a string. This is because Python can't add an integer to a string.
+You should see `TypeError: unsupported operand type(s) for +: 'int' and 'str'`. This is because Python can't add an integer to a string.
 
 If we instead tried joining our `var` and `three` variables together, we would get a new string.
 
@@ -343,7 +355,7 @@ If we wanted to combine our favorite and least favorite movies, we could use a m
 favorite_movies + least_favorite_movies
 ```
 
-Notice to do concatenation we use the `+` operator. This would return a new list that contains all of our favorite and least favorite movies. We could than contain this new list in a variable called our `movie_collection`.
+Notice to do concatenation we use the `+` operator. This would return a new list that contains all of our favorite and least favorite movies. We could then store this new list in a variable called our `movie_collection`.
 
 ----
 
@@ -433,7 +445,7 @@ updated_favorite_movies = {
 }
 ```
 
-Now each of our movies is a dictionary that contains the name and release year of our movie. We can access the value for each movies using either `movie_1` or `movie_2`.
+Now each of our movies is a dictionary that contains the name and release year of our movie. We can access the value for each movie using either `movie_1` or `movie_2`.
 
 ```python
 updated_favorite_movies["movie_1"]
@@ -504,7 +516,7 @@ Notice that the list is stored as a value in our dictionary. We can access the v
 updated_favorite_movies["movie_1"]["sequels"]
 ```
 
-This combining of lists and dictionaries, also means that can put dictionaries inside of lists:
+This combining of lists and dictionaries also means that we can put dictionaries inside of lists:
 
 ```python
 updated_favorite_movies =[
@@ -524,7 +536,7 @@ updated_favorite_movies =[
 
 Notice that we now don't have keys for our top-most dictionaries. In lists, items don't have keys, so each of your dictionaries is without an explicit key.
 
-Python defaults to indexing each dictionary with numbers, just like in our list of strings. So to get the first value, you would type:
+Because these dictionaries are inside a list, Python indexes each list item with numbers, just like in our list of strings. So to get the first value, you would type:
 
 ```python
 updated_favorite_movies[0]
