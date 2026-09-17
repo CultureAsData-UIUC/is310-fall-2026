@@ -11,16 +11,6 @@ format:
 # Quick Review Time!
 
 ## How Can I Start Writing Python Quickly?
-::: {.notes}
-Once you have Python working, you can type `python3` (or `python` if it refers to a Python 3 version) and this will open the interactive Python interpreter where you can write your python code and have the computer execute it. This Python interpreter is a type of program that reads and executes Python code (i.e. either Python syntax or files that end with `.py`). The interactive Python interpreter is an excellent way to sandbox your ideas or check your syntax. You can exit using `exit()`.
-
-Type `"Hello world"` in the interpreter and press enter. Make sure to use single or double quotes around the this text (otherwise you'll see a `SyntaxError`, something we'll discuss later in this lesson).
-The Python interpreter is great for testing code and learning, but it's not practical for real work. Once you quit the interpreter, you lose all your code. That's where scripts come in—they let us write code that persists, can be run again and again, and can be shared with others.
-
-You'll notice that unlike with `"Hello World"` the interpreter doesn't just show our data back to us. Instead, it *prints* out the result of our calculations. This is because the interpreter is designed to show us the results of our calculations. In our first example, we weren't doing any calculations, so the interpreter just showed us our data. In our second example, we were doing calculations, so the interpreter showed us the results of our calculations.
-
-Now, you can experiment with the interpreter, and you'll notice that if you use the up arrow, you can access your previous commands. However, the interpreter can do more than just print out data and do calculations. It can also store data.
-:::
 
 . . .
 
@@ -42,30 +32,6 @@ What happens when you quit?
 
 ## What Are Variables?
 
-::: {.notes}
-Rather than retyping our `"Hello World"`, we can save it into something called a *variable* that let's us reuse it again and again.
-The key thing to understand is that in Python we use the = symbol to assign values to variables. The variable is always on the left side of the = equal sign, and the value you want to store in the variable is on the right side of the =.
-
-Once we do this though, you’ll notice that our strings that were stored in these variables will be erased! This is because in Python if you assign a new value to a variable, it will overwrite the old value of the variable.
-
-If you’re curious, this is due to the fact that Python is a dynamically typed language, which means that the data type of a variable can change. This is different from statically typed languages, like Java, where the data type of a variable cannot change. This is a key difference between Python and other programming languages, but don’t worry if this is confusing. You’ll get used to it as you work with Python more and eventually learn other programming languages, as well!
-
-<u>Here are some rules for naming variables in Python:</u>
-
-- A variable name must start with a letter or the underscore character (so you could do both `_one` and `one`). Your variable name can also start with or contain a capital letter, but by convention, we don't do this. So you're better off doing `one` rather than `One`.
-- A variable name cannot start with a number (so you can't do `1one`)
-- A variable name can only contain alpha-numeric characters and underscores (A-z, 0-9, and _ ). So no spaces or special punctuation characters, like `!`, `@`, `#`, `$`, `%`, etc.
-- A variable also can't have a space in the name, so you can't do `one one`. Python uses spaces to separate different parts of the code, so if you use a space in a variable name, Python will think you're trying to separate two different parts of your code.
-- A variable can't have a **reserved word** as a name. The creators and developers of Python have selected a series of words that have a special meaning and function when you are programming in Python. If you try to use these words, then your computer will get confused. For example, if you try to use `and` as a variable name, you'll get a Syntax Error again . You can see a list of reserved words [here](https://www.w3schools.com/python/python_ref_keywords.asp), as well as in the figure below. Don't worry about memorizing these, but it's helpful to know that they exist.
-
-![Python Keywords](https://i.ytimg.com/vi/AxBOzm6v3bg/maxresdefault.jpg)
-
-Finally, you should know that variable names are **case-sensitive**. So, `one` and `One` are two different variables.
-
-*What makes a good variable name?*
-
-As a general rule of thumb, I would recommend choosing names that are relatively short and descriptive. You'll often see the use of `x` or `y` as variable names in Python, but I find these are too short to be helpful. Instead, I would recommend you try to balance describing what's stored within the variable and keeping it shorter so that you don't have too much to type. Also to reiterate, in Python we tend to use underscores for naming variables versus Javascript where you use camelCase, so `one_one` is better than `oneOne` in Python.
-:::
 
 . . .
 
@@ -239,9 +205,6 @@ What if you have more than two possibilities?
 
 When would you use `elif` instead of multiple `if` statements?
 
-::: {.notes}
-elif (else if) lets you test multiple conditions in sequence. If the first if is False, it checks the elif. You can have many elifs. This is cleaner and more efficient than multiple separate if statements.
-:::
 
 # Check In? 
 
@@ -289,9 +252,6 @@ print(recent_movies)
 ```
 :::
 
-::: {.notes}
-Dictionaries are great for describing complex data, but when we want to add behavior (functions) to our data, classes become more powerful.
-:::
 
 ## What is a Class?
 
@@ -312,9 +272,6 @@ We've already used a lot of built-in classes. Strings, lists, dictionaries are a
 ```
 :::
 
-::: {.notes}
-You can check what class something is by using the type() function. Every object in Python is an instance of a class.
-:::
 
 ## The Simplest Class
 
@@ -329,11 +286,6 @@ Blank()
 
 This class does nothing when instantiated, but it shows the basic syntax.
 
-::: {.notes}
-To first define a class, we need to use the keyword `class` followed by the name of the class (which can be anything!) and then a semi colon. All the logic of the class is indented (just like with functions, loops, and conditionals) and then we call the class similar to a function, using its name and parentheses to pass arguments to the class.
-
-In this case, since the class has no actual logic in it, just the keyword `pass`, which is a reserved keyword in Python and that tells Python to do nothing. So when we call the class, nothing actually happens. For any class, when you invoke it, it executes the `__init__` method, which is another built in method from Python (this one is called a **constructor** method). Thus, since our example above didn't define any logic for the built-in `__init__` method, nothing happened.
-:::
 
 ## A Simple Movie Class
 
@@ -348,9 +300,6 @@ a_movie.movie_name
 
 The `__init__` method runs when you create an instance. `self` represents the instance itself. Self references the class **instance** that is created when you call a class, which is why `self` is the first argument to ***any*** function defined in a class. You can read more about [class scope here](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces).{target="_blank"}
 
-::: {.notes}
-`self` is the first argument to any method in a class. It refers to the specific instance you've created. When you set `self.movie_name = name`, you're creating an attribute on that instance.
-:::
 
 ## Adding Methods
 
@@ -366,9 +315,6 @@ def add_directors(self, directors):
     self.directors.extend(directors)
 ```
 
-::: {.notes}
-Methods always take `self` as the first argument. This allows them to access and modify the instance's attributes. Notice the docstring—this documents what the method does.
-:::
 
 ## A More Complex Class
 
@@ -384,9 +330,6 @@ class Movie:
 
 Initialize attributes as empty or None to structure your data.
 
-::: {.notes}
-By initializing attributes in `__init__`, you define the shape of your class. This makes it clear what data the class will hold.
-:::
 
 ## Class Attributes vs Methods
 
@@ -394,9 +337,6 @@ By initializing attributes in `__init__`, you define the shape of your class. Th
 
 **Methods**: Functions that operate on that data (like `add_directors()`)
 
-::: {.notes}
-This separation of data and behavior is the core of object-oriented programming. It makes code more organized and reusable.
-:::
 
 ## Adding More Functionality
 
@@ -483,15 +423,6 @@ print(a_movie.age)
 print(a_movie.add_directors.__doc__) # To view the docstring for the method
 ```
 
-::: {.notes}
-First we're taking our `Movie` class and expanding it so that it can contain more information about each movie. We still only initially create the class with one argument - the movie's name. But we've also added additional attributes to the `__init__` function. First, we have `directors`, which holds a list; then release year, which is an integer; age, which is also an integer; sequels, which is a list; and prequels, which is also a list.
-
-Do you notice that the syntax here looks like a dictionary? That's because we can use a similar pattern to dictionaries for creating our attributes.
-
-While this function is somewhat similar to our `Movie` class, we've also added a number of functions, which we call **methods** to the class.
-
-The first method `add_directors` takes two arguments, `self` and `directors`. Just like in the `__init__` method, `self` represents the class instance and directors is a list of directors. In the `__init__` method, we define the directors attribute on `self` as an empty list. Then in our `add_directors` method we extend this initial empty list, adding the new directors to the list.
-:::
 
 ## Adding More Methods
 
@@ -505,11 +436,6 @@ def get_movie_info(self):
         print(f"{key}: {value}")
 
 ```
-::: {.notes}
-What if we wanted to add a method for printing out an entire movie's information? We could try looping through the class object and print out each attribute. Or we could use the built-in `__dict__` functionality that prints out the values for a class.
-We can then call this method on our `a_movie` object.
-This is a very simple example of a class, but it's a good start. We can use classes to store complex data structures and then use methods to manipulate that data. We can also use classes to create reusable code that can be used in multiple scripts.
-:::
 
 ## Adding More Classes
 
@@ -613,11 +539,6 @@ a_movie.add_prequel("The Matrix 0", 1998)
 a_movie.get_movie_info()
 print(a_movie.calculate_movie_order())
 ```
-::: {.notes}
-This is a more complex version of our `Movie` class. We've added two new methods, `add_sequel` and `add_prequel`, which take the name of the sequel or prequel and the release year of the sequel or prequel. We then create a new instance of the `Movie` class and append it to the `sequels` or `prequels` list. We also added a new method, `calculate_movie_order`, which sorts all the movies based on their release year and then returns a list of the movie names in order. To do this we use the built-in `sort` method, which sorts a list in place, and the `key` argument, which takes a function that returns a value that the list should be sorted by. In this case, we use the `get_release_year` method to get each release year, and then sort the list of movies by their release year.
-
-This type of programming is called **object-oriented programming** and it's a very powerful way to organize your code. It's also a very common way to organize code in Python, and you'll see it often, even if you don't write it yourself.
-:::
 
 ## Quick Exercise for Practice (Optional But Recommended)
 
@@ -636,9 +557,6 @@ movie = dict()  # Could also write {}
 
 Use `#` to comment a single line.
 
-::: {.notes}
-Inline comments are useful for explaining **why** you did something, not necessarily what the code does (the code itself should be clear about that).
-:::
 
 ## Block Comments (Docstrings)
 
@@ -660,9 +578,6 @@ Docstrings are triple-quoted strings at the start of functions/classes.
 print(a_movie.add_directors.__doc__) # To view the docstring for the method
 ```
 
-::: {.notes}
-You'll notice that earlier we were able to print out the block comment for the `add_directors` method. This is because the block comment is actually a special type of comment called a **docstring** that is used to document a function or a class. The docstring is the first thing that appears in a function or class and is enclosed in triple quotes. It's a good idea to add a docstring to every function and class you write, as it helps other people understand your code and also helps you remember what your code does.
-:::
 
 ## Documentation
 
@@ -680,9 +595,6 @@ Learning to read documentation is a critical skill, so would highly recommend ta
 ::::
 
 
-::: {.notes}
-Good documentation helps others (and future you) understand the code. It's an investment that pays off when you revisit code months later.
-:::
 
 # Python Libraries & Imports
 
@@ -696,9 +608,6 @@ Let's dig into the Python documentation to understand more!
 
 The Python Standard Library contains modules built into Python.
 
-::: {.notes}
-pathlib is a great example. Instead of working with file paths as strings, you can use Path objects that are smarter and cross-platform.
-:::
 
 ## PathLib
 
@@ -734,13 +643,6 @@ Or import a specific class:
 from pathlib import Path
 ```
 
-::: {.notes}
-We can easily bring classes into other code using the `import` keyword (another reserved word!), which does some magic to allow us to use classes defined in other files. This is how we can use parts of the Python Standard Library that aren't directly built into the base language. It's also how we use modules written by other programmers from the larger Python community. We can even use `import` to import our own classes.
-
-The syntax for importing is `import` followed by the name of the module. In this case, we're importing the `pathlib` module. Once we've imported the module, we can use the classes and functions defined in the module. There's two ways to do this. We can either use the `.` operator to access the class or function:
-
-Or we can use the `from` keyword (reserved word) to import a specific class or function from the module. Both options work exactly the same when we use them in our code, but the second option is a little more concise and is often used when we only need to use one class or function.
-:::
 
 ## Aliasing Imports
 
@@ -752,9 +654,6 @@ import pathlib as pl
 
 Now you can use `pl.Path()` instead of `pathlib.Path()`.
 
-::: {.notes}
-With import statements, you can also alias the module or class you're importing. This is often used to make the code more readable or to avoid conflicts with other classes or functions that have the same name.
-:::
 
 ## Using pathlib
 
@@ -770,9 +669,6 @@ file = Path('data.csv')
 print(file.read_text())
 ```
 
-::: {.notes}
-Path objects have methods like `.cwd()` to get the current working directory and `.read_text()` to read file contents as a string.
-:::
 
 ## File Input and Output
 
@@ -795,9 +691,6 @@ print(file, type(file))
 
 Now if this code worked, it should show you the exact file path of your spreadsheet and then the type of the object, either `<class 'pathlib.PosixPath'>` or `<class 'pathlib.WindowsPath'>`. Not to get too complicated but this is because the `Path` class is a subclass of the `PosixPath` class (not really going to get into subclassing but think of it as building classes on top of one another - like Lego or Jenga).
 
-::: {.notes}
-Now depending on where you file is located, you might need to change the path (often files are in your Downloads folder, in which case you might write `Users/user_name/Downloads/US-National-Parks_RecreationVisits_1979-2023.csv`). Remember computers need the **exact path**, so if you're not sure where your file is located, you can use the `cwd` method to print out the current working directory and then add the file name to the end of the path.
-:::
 
 ## Reading Files
 
@@ -814,11 +707,6 @@ print(file.read_text())
 
 What does this do?
 
-::: {.notes}
-Now when you save you script and rerun your code in the terminal, you should now see the entirety of our csv file in your terminal. If you try saving that to a variable and checking the type you should see that it's a string.
-
-So now we can simply manipulate that string so that we don't have to hand enter the data.
-:::
 
 # Beyond Pathlib: Using the `open` Function
 
@@ -828,9 +716,6 @@ So far we've been using Pathlib to work with files, but there are number of libr
 
 For example we could use the [`open` built-in function in Python](https://docs.python.org/3/library/functions.html#open).
 
-::: {.notes}
-The `open` function is a built-in function that lets you read and write files. It's very flexible and is commonly used in Python code.
-:::
 
 ## File Input - Basic Approach
 
@@ -845,9 +730,6 @@ input_file.close()
 
 Here, we use the `open` function to open a file in mode "r" (read). `open` returns a [File Object](https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files) that provides methods for reading and writing.
 
-::: {.notes}
-In this case, the `read` method reads in data from the `input_file` file object and stores it as a string in `text`. We can also pass a Path object to the `open` function.
-:::
 
 ## Using Path Objects with `open`
 
@@ -863,9 +745,6 @@ input_file.close()
 
 At the end, we can close the file to save some memory, but Python will eventually close it automatically if we don't.
 
-::: {.notes}
-This isn't a huge concern unless you're opening thousands of files or the files you're opening are very, very large.
-:::
 
 ## The `with` Statement
 
@@ -878,9 +757,6 @@ with open("US-National-Parks_RecreationVisits_1979-2023.csv","r") as input_file:
 
 This is functionally the same as our last example. The only difference is that the file is automatically closed at the end of the block.
 
-::: {.notes}
-The `with` statement is a context manager that ensures the file is closed automatically. This is the preferred way to handle files in Python.
-:::
 
 ## File Output
 
@@ -907,9 +783,6 @@ for i in range(0,100):
 
 Once you run it, you should see a new file in your directory called `new_text.txt`, containing a list of numbers.
 
-::: {.notes}
-We created those numbers using the built-in `range` function and the `write` method.
-:::
 
 ## Type Conversion with `write()`
 
@@ -929,9 +802,6 @@ The newline character `"\n"` inserts a line break. Without it, all the numbers w
 1. Try adding a function to your `Movie` class that saves the movie's information to a file.
 2. Try adding a function to your `Movie` class that reads in a file and sets the movie's information.
 
-::: {.notes}
-These exercises will help you understand how to integrate file I/O into your class methods.
-:::
 
 ## Example: Save Movie Info
 
@@ -1002,9 +872,6 @@ a_movie.read_movie_info("movie_info.txt")
 a_movie.get_movie_info()
 ```
 
-::: {.notes}
-These examples show how to integrate file I/O with your class methods to persist and restore object data.
-:::
 
 # Virtual Environments & Packages
 
@@ -1014,9 +881,6 @@ We've learned to use libraries that come pre-installed with Python, but now we n
 
 A virtual environment is a self-contained directory that contains a Python installation plus additional packages, isolated from the global Python installation.
 
-::: {.notes}
-Virtual environments solve the "dependency hell" problem—where different projects need different versions of the same library.
-:::
 
 ## Why Virtual Environments Matter
 
@@ -1047,9 +911,6 @@ pip3 --version
 
 `pip` comes built-in to Python and is used to install external libraries. If you don't have pip, visit [https://pip.pypa.io/en/stable/installation/](https://pip.pypa.io/en/stable/installation/){target="_blank"}
 
-::: {.notes}
-If you don't have pip, visit https://pip.pypa.io/en/stable/installation/
-:::
 
 ## `venv`
 
@@ -1076,9 +937,6 @@ You can also access the Command Palette by clicking on the `View` menu and selec
 Once it is open, you should type `Python: Create Environment` and selecting it in the menu. You'll see two options: `Venv` or `Conda`. You can choose either, but I would recommend using `Venv` since it is built into Python and is the most common way to create a virtual environment.
 
 ![Create Environment Dropdown](https://code.visualstudio.com/assets/docs/python/environments/create_environment_dropdown.png)
-:::
-::: {.notes}
-Venv is built into Python and is the most common way to create virtual environments. Make sure you're in a folder (workspace) before creating an environment.
 :::
 
 ## Selecting Python Version
@@ -1152,9 +1010,6 @@ Now that we are in the directory where we want to create our virtual environment
 python3 -m venv is310-env
 ```
 
-::: {.notes}
-This doesn't seem to do much, but if you look in your new `.virtualenvs` directory (or wherever you created your environment) you should see a new folder called `is310-new-env`. This is again a virtual environment. This command is telling Python to run the `venv` module and create a virtual environment called `is310-env`. You can name your virtual environment whatever you want, but I would recommend naming it something that is descriptive of the project you are working on. **You should only create one virtual environment for this course.** And generally, I would recommend creating a new virtual environment for each project you work on (so think personal projects, group projects, or other courses, etc.).
-::: 
 
 ## Activating Virtual Environments
 
@@ -1176,13 +1031,6 @@ If you are getting errors in PowerShell, you may need to change your execution p
 ```sh
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 ```
-::: {.notes}
-Now you need to activate our virtual environments. Activating the virtual environment just tells your computer to run Python and installed libraries from the virtual environment rather than the global environment. This might seem like unnecessary work, but as we saw in that xkcd comic, a lot of software can create conflicts over time (often called "dependency hell"). This is a way to avoid that.
-
-To activate our virtual environment in the terminal, we need to use a command called called `source` and after that we need to specify the path to the `activate` file in our virtual environment. The path to the `activate` file is `[LOCATION - OPTIONAL]/[NAME OF VIRTUAL ENVIRONMENT]/bin/activate`.
-
-In this example, `is310-new-env` is the name of the virtual environment and we are giving it the command to run the `activate` file. This will again change the prompt in your terminal to show the name of your virtual environment. This is how you know that your virtual environment is activated. If you are curious, you can explore the `activate` file in your virtual environment to see what it is doing. You can find it in the `bin` directory of your virtual environment.
-:::
 ## Deactivating Virtual Environments
 
 To deactivate your virtual environment in the terminal:
@@ -1211,11 +1059,6 @@ Or if you accidentally committed it:
 git rm -r --cached is310-env
 ```
 
-::: {.notes}
-Since we are using `git` to track our work, we don't want to include our virtual environment in our repository. This is because the virtual environment is specific to your computer and the libraries you have installed. If someone else were to clone your repository, they wouldn't have the same virtual environment as you. This is why we add the virtual environment to our `.gitignore` file. This file tells `git` to ignore certain files or directories when tracking changes. You can add the following line to your `.gitignore` file to ignore your virtual environment:
-
-Now when we run `git status`, we shouldn't see our virtual environment in the list of files that have been changed. If you accidentally added your virtual environment to your repository, you can remove it by running the following command
-:::
 
 ## Installing Libraries with `pip` in `venv`
 
@@ -1229,9 +1072,6 @@ pip3 install rich
 
 **Remember**: Always do this with your virtual environment activated!
 
-::: {.notes}
-You'll notice that I'm using `pip3` to install the package. That is because I have multiple versions of Python installed on my computer. Usually if you have multiple versions of Python (specifically Python 2 and 3 versions) then you might need to use `pip3` to install libraries. If you only have Python 3 installed on your computer, you can just use `pip`. You can check which version of Python you have installed by running the following command:
-::: 
 
 ## Testing the Installation
 
@@ -1343,9 +1183,6 @@ And you should see the following output in your terminal:
 :::
 ::::
 
-::: {.notes}
-As you can likely tell, both `Console` and `Table` are classes built into the `Rich` library that allow us to format our text in different ways. We can see that we are able to add a title to our table, add columns, and add rows to our table. We can also see that we are able to format our text in different ways, such as changing the color of the text, justifying the text, and wrapping the text.
-:::
 
 ## Rich Classes
 
@@ -1407,9 +1244,6 @@ for movie in movies:
 ![Rich Movies](../assets/images/rich_movies.png)
 :::
 ::::
-::: {.notes}
-This shows how Rich integrates beautifully with Python data structures like lists and dictionaries.
-:::
 
 ## Homework: Command Line Data Curation
 

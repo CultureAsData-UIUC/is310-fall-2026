@@ -23,9 +23,6 @@ So far when it comes to working with the web, you have been creating your own HT
 :::
 ::::
 
-::: {.notes}
-Web scraping can be incredibly useful considering how much data is available on the web and how little of it is often put into tabular format. For example, you might want to scrape a web archive to get data for a research project, or you might want to scrape a social media site to get access to data that isn't available through their API. 
-:::
 
 ## Web Scraping for Preservation
 
@@ -33,9 +30,6 @@ Web scraping is also what we use to preserve the web. Remember the Wayback Machi
 
 [![](../assets/images/sucho.png)](https://www.sucho.org/){target="_blank"}
 
-::: {.notes}
-This method has also been used by scholars to do community-driven data preservation. For example, when Russia invaded Ukraine, a group of scholars and librarians founded the *Saving Ukrainian Cultural Heritage Online* (SUCHO) group and used web scraping to preserve the content of Ukrainian websites [https://www.sucho.org/](https://www.sucho.org/). This was important because if servers are bombed, the content of those websites would be lost forever.
-:::
 
 ## Is Web Scraping Legal or Ethical?
 
@@ -54,11 +48,6 @@ In terms of ethics, web scraping can be a bit of a grey area. It's generally con
 :::
 ::::
 
-::: {.notes}
-Technically, most publicly available internet data is considered legal to collect, even if it's not explicitly licensed. In 2019, "the Ninth Circuit Court of Appeals ruled that automated scraping of publicly accessible data likely does not violate the Computer Fraud and Abuse Act (CFAA)."[^1] However, there are some important caveats to this. For example, this ruling only applies to US based websites and the laws in other countries might be different. One of the more recent and important European developments was the passing of the General Data Protection Regulation (GDPR) in 2018, which has implications for web scraping. In particular, the GDPR bans the scraping of emails and personal names from websites. More recently, a consortium of regulators from multiple countries released a joint statement warning social media companies that they must protect user data from scraping.[^2]
-
-For example,the above image is of the robots.txt file for the New York Times website is [https://www.nytimes.com/robots.txt](https://www.nytimes.com/robots.txt). We can see that it lists a number of pages that are not allowed to be scraped (those are the ones with the `Disallow` directive). You might also come across `robots.txt` files that have a `Crawl-delay` directive, which tells web crawlers how long to wait between requests. The reason this is important is that if you try to web scrape a website that has a `robots.txt` file that prohibits scraping, you could be banned from the website. This is because the website might think you are a web crawler and not a human, and it might block your IP address.
-:::
 
 ## Guidelines for Web Scraping
 
@@ -72,9 +61,6 @@ What to collect and how to collect it is a big part of the ethics of web scrapin
 > In my own research, I have started seeking explicit permission from internet users when I want to quote them in a published article. In this book, I only share internet data that meets a certain threshold of publicness, such as tweets from verified Twitter accounts or Reddit posts with a certain number of upvotes. This is an approach that I have developed based on some of the models and readings included below.
 :::
 
-::: {.notes}
-IRB refers to the Institutional Review Board, which is a committee that reviews and approves research involving human subjects at universities, and most of the time, web scraping or accessing digital data is considered not to be human subjects research. However, even if we don't need IRB approval, it's still important to think about the ethics of web scraping and to consider the potential consequences of our actions. I personally think Walsh's approach is a good one: to think about the specifics of your research project and to develop both a legal *and* an ethical framework that responds to those specifics. And also to think about the consent of the people whose data you are collecting. There's no one size fits all answer, but we should always think about not only if we can collect data, but also if we should and how we should.
-:::
 
 ## Guidelines for Web Scraping
 
@@ -105,9 +91,6 @@ pip install requests beautifulsoup4
 Notice here we are installing two packages: `requests` and `beautifulsoup4` in a single line. **You can install as many packages as you want in a single `pip install` command, just separate them with a space.**
 :::
 
-::: {.notes}
-We previously discussed Python libraries when we talked about classes and virtual environments, but let's dig in a bit deeper.
-:::
 
 ## Python Libraries
 
@@ -144,9 +127,6 @@ You'll likely see the following error if you try to run this code:
 
 ![A screenshot of the error when trying to import beautifulsoup4.](../assets/images/beautifulsoup_error.png)
 
-::: {.notes}
-That is because `beautifulsoup4` is not a package that we can import directly. Instead, we need to import the `BeautifulSoup` class from the `bs4` package. This difference is a bit confusing since the name of the package on PyPI (`beautifulsoup4`) doesn't match the actual Python code package (`bs4`).
-:::
 
 ## BeautifulSoup Documentation
 
@@ -173,16 +153,6 @@ soup = bs4.BeautifulSoup(html_doc, 'html.parser')
 *Any other ways we could import this library?*
 :::
 
-::: {.notes}
-Finally we could technically use the asterisk symbol, which often means "all" or "any", to import all the modules (aka Classes and functions) in the package:
-
-```python
-from bs4 import *
-soup = BeautifulSoup(html_doc, 'html.parser')
-# imports * imports all modules in a package
-```
-However, this is generally not recommended because it can make it difficult to understand where a particular module is coming from.
-:::
 
 ## Installing Parsers
 
@@ -233,9 +203,6 @@ print(soup.prettify())
 ```
 :::
 
-::: {.notes}
-We can see that `html_doc` is a variable that holds a multiline string that contains HTML. We are then using the `BeautifulSoup` class to parse the HTML document and the `prettify()` method to print the HTML document in a more readable format.
-:::
 
 ## BeautifulSoup Classes
 
@@ -247,10 +214,6 @@ We usually define a `BeautifulSoup` object by passing in the HTML document and t
 The core power of `BeautifulSoup` is that it let's you navigate the HTML Document like a tree, which you can read more about here [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#navigating-the-tree](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#navigating-the-tree){target="_blank"}.
 :::
 
-::: {.notes}
-
-Remember in HTML we can have nested HTML elements, and so `BeautifulSoup` let's us use that structure to find elements. Otherwise, this would just be **unstructured text** which is difficult to work with.
-:::
 
 ## Build-In Methods
 
@@ -265,9 +228,6 @@ for link in links:
 	print(link.get_text())
 ```
 
-::: {.notes}
-From this we can see that we are getting all the links in the document and then printing the `href` attribute of each link and the text of each link. This is a very simple example, but it shows how we can use the structure of the HTML document to extract the data we want.
-:::
 
 ## Scraping Project Gutenberg
 
@@ -282,9 +242,6 @@ First, we're going to save the page as an HTML file. You can do this by right cl
 :::
 ::::
 
-::: {.notes}
-We can access this at [https://www.gutenberg.org/browse/scores/top](https://www.gutenberg.org/browse/scores/top). After saving the file, we can open it with BeautifulSoup.
-:::
 
 ## Parsing Project Gutenberg
 
@@ -314,9 +271,6 @@ First, let's take a look at the structure of the HTML document. We can use the *
 :::
 ::::
 
-::: {.notes}
-This is important because it tells us how the data is structured in the HTML. By understanding the structure, we can write code that extracts the specific data we want.
-:::
 
 ## Finding the Book Titles
 
@@ -329,9 +283,6 @@ If we select the titles, we can see that they are nested in an `ol` tag and then
 :::
 ::::
 
-::: {.notes}
-One important thing to note is that if we just use `soup.find_all('li')`, we will get **all** the list items on the page, not just the titles of the Top 100 eBooks. This is because the `find_all()` method searches the whole document. So we need to be more specific in our search.
-:::
 
 ## Requesting and Scraping Web Pages
 
@@ -339,9 +290,6 @@ We are now officially scraping a web page 🥳!! But what if we wanted to scrape
 
 Let's try taking our updated code but rather than working with the saved version of the web page, let's try to get the web page programmatically. To do this, we need to use the `requests` library.
 
-::: {.notes}
-We already installed requests initially so now we need to import it into our code.
-:::
 
 ## The Requests Library
 
@@ -370,14 +318,6 @@ print("Headers:", response.headers)
 A status code of `200` means the request was successful!
 :::
 
-::: {.notes}
-Other common status codes include:
-- 404: Page not found
-- 403: Forbidden
-- 500: Server error
-
-If you get an error, it usually means either you don't have access to the web page, there's an error on the server, or there's an issue with your internet connection.
-:::
 
 ## Extracting HTML from Response
 
@@ -460,9 +400,6 @@ for top_list in top_lists:
 Now we're capturing both the title and the link!
 :::
 
-::: {.notes}
-By extracting multiple data points, we can create richer datasets that contain more information about what we're scraping. This is useful for later analysis and research.
-:::
 
 ## Saving to CSV
 
@@ -501,9 +438,6 @@ def check_page_exists(url):
 :::
 ::::
 
-::: {.notes}
-Many web pages use relative links, so this is a common issue when scraping websites. It's important to always inspect and explore the HTML of the web page you're scraping to understand the structure of the links.
-:::
 
 ## Advanced Web Scraping
 
@@ -531,17 +465,6 @@ For example: `https://lotr.fandom.com/robots.txt`
 :::
 ::::
 
-::: {.notes}
-The robots.txt file contains several important directives:
-
-1. **User-agent**: Which web crawlers the rules apply to (e.g., `User-agent: *` means all crawlers)
-2. **Disallow**: Pages that crawlers cannot scrape
-3. **Allow**: Specific pages that are allowed despite a broader Disallow rule
-4. **Crawl-delay**: How long to wait between requests
-5. **Sitemap**: The location of the website's sitemap
-
-For the LOTR wiki, we can see that we can scrape most wiki pages, but we should avoid Special pages and respect the Noindex directives.
-:::
 
 ## Understanding robots.txt Directives
 
@@ -660,9 +583,6 @@ for language in languages:
 Regex patterns help us find elements matching a pattern, like anything starting with `lang-`!
 :::
 
-::: {.notes}
-Regular expressions are a powerful way to search for patterns in text. The pattern `r'lang-'` means "starts with lang-". We can use more complex patterns for more advanced searches.
-:::
 
 ## Creating Scraping Functions
 
@@ -784,9 +704,6 @@ There are other Python libraries for web scraping:
 Each library has pros and cons depending on your use case. BeautifulSoup is great for getting started, but these other tools are useful for more complex scenarios.
 :::
 
-::: {.notes}
-The key difference is that Selenium actually opens a web browser and can execute JavaScript, while BeautifulSoup just parses HTML. This means Selenium is slower but can handle dynamic content, while BeautifulSoup is fast but only works with static HTML.
-:::
 
 ## Key Takeaways
 
@@ -843,9 +760,6 @@ Examples of fandom wikis:
 :::
 ::::
 
-::: {.notes}
-Remind students that they should be ethical in their scraping - they should check robots.txt, respect rate limits, and only scrape publicly available data. They should also think about what data they're collecting and why it's valuable for research.
-:::
 
 ## Submit Your Work
 
