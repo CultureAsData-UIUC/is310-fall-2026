@@ -7,7 +7,7 @@ toc: true
 ⚡️ If you already have experience with virtual environments and have a preferred setup, feel free to keep using what you have already though do reach out if you start having any errors or strange messages in your terminal.
 :::
 
-## What is virtual environment?
+## What Is a Virtual Environment?
 
 We have started exploring Python libraries that come pre-installed with Python when you set it up on your computer, but that still need to be imported so that we can use it (remember `Pathlib`!). Now we're going to start installing additional libraries that don't come pre-installed with Python. However, before we install these libraries, we need to create a virtual environment. A virtual environment is necessary to keep the libraries we install contained to each project.
 
@@ -21,19 +21,16 @@ The Python documentation explains that:
 
 You can read more here about [virtual environments](https://docs.python.org/3/library/venv.html#venv-def){target="_blank"}.
 
-Prior to installing our virtual environment, let's make sure that you have the latest version of `pip`, which stands for "Python Installs Packages." Pip comes built-in to Python, but run this code to ensure you have the right version.
-
-![install pip](../../assets/images/install_pip.png)
-
-If you get any errors, you can check if you have pip installed by running the following command in your terminal:
+`pip` is Python's package installer. A virtual environment created with `venv` normally includes it automatically. After activating the environment, you can check and update `pip` with:
 
 ```sh
-pip3 --version
+python -m pip --version
+python -m pip install --upgrade pip
 ```
 
 You can also follow the steps here to check if you have pip installed [https://stackoverflow.com/questions/40868345/checking-whether-the-pip-is-installed](https://stackoverflow.com/questions/40868345/checking-whether-the-pip-is-installed){target="_blank"}.
 
-If you don't have pip installed, you can install it by following the instructions here [https://pip.pypa.io/en/stable/installation/](https://pip.pypa.io/en/stable/installation/){target="_blank"}.
+If Python reports that `pip` is unavailable, follow the official [pip installation instructions](https://pip.pypa.io/en/stable/installation/){target="_blank"} or ask an instructor for help.
 
 Now we'll use the built-in Python virtual environment, called `venv`, which you can read more about here [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html){target="_blank"}. One thing to note is that there are LOTS of different ways to setup your virtual environment (which lots of people have *very* strong feelings about). I like this answer from Stack Overflow for giving an overview of the differing options [https://stackoverflow.com/a/65854168/7437781](https://stackoverflow.com/a/65854168/7437781){target="_blank"}.
 
@@ -47,9 +44,9 @@ Now that we have a sense of what a virtual environment is, let's start creating 
 ⚡️ This information has been adapted from <a target="_blank" href="https://code.visualstudio.com/docs/python/environments">https://code.visualstudio.com/docs/python/environments</a>. I've also updated the lesson to focus on VS Code, though still recommend taking a look at the terminal version as well.
 :::
 
-In VS Code, you can create a virtual environment by opening any VS Code Window and then opening the Command Palette. To access the Command Pilot on a Mac you type `⇧⌘P` and on Windows you type `Ctrl+Shift+P`. You can also access the Command Palette by clicking on the `View` menu and selecting `Command Palette`.
+In VS Code, first open your project folder and then open the Command Palette. On macOS, type `⇧⌘P`; on Windows, type `Ctrl+Shift+P`. You can also select `View` > `Command Palette`.
 
-Once it is open, you should type `Python: Create Environment` and selecting it in the menu. You'll see two options: `Venv` or `Conda`. You can choose either, but I would recommend using `Venv` since it is built into Python and is the most common way to create a virtual environment.
+Once it is open, type `Python: Create Environment` and select it from the menu. Choose `Venv`, which uses Python's built-in virtual-environment tool.
 
 ![Create Environment Dropdown](https://code.visualstudio.com/assets/docs/python/environments/create_environment_dropdown.png)
 
@@ -57,17 +54,17 @@ Once you select `Venv`, you'll be prompted to select the Python interpreter you 
 
 ![Create Environment Name](https://code.visualstudio.com/assets/docs/python/environments/interpreters-list.png)
 
-Once you've created your virtual environment, you should see it in whatever folder you've opened in VS Code. If you do not open a folder and try to create a virtual environment, you will get an error saying that you need a "workspace" to create a virtual environment. You can create a workspace by opening a folder in VS Code.
+Once you've created your virtual environment, you should see a `.venv` folder inside the project folder you opened in VS Code. If you try to create an environment without first opening a folder, VS Code will ask you to open a workspace.
 
 ![Created Environment](../../assets/images/new_venv.png)
 
-If you've successfully created your virtual environment, you should see a `.venv` folder in your project directory. This is where your virtual environment is stored. You'll notice in the image above I renamed my virtual environment to `is310-env`. You can do this by right-clicking on the `.venv` folder and selecting `Rename Folder`. You may need to reopen your VS Code window to see the changes.
+If you've successfully created your virtual environment, you should see a `.venv` folder in your project directory. Do **not** rename or move this folder after creating it. Virtual environments contain paths to their original location; if you want a different name or location, delete the environment and recreate it there.
 
-Once you do that you should see the following in your VS Code window, once you re-open your folder and also re-open the Command Palette to select the Python interpreter:
+VS Code should select the new environment automatically. If it does not, reopen the Command Palette, choose `Python: Select Interpreter`, and select the interpreter inside `.venv`:
 
 ![Virtual Environment Activated](../../assets/images/example_interpreters.png)
 
-You'll notice that VS Code organizes the virtual environments by the type of environment and also if they are globally installed. Once you select the virtual environment you want to use, you should see that it is activated in the bottom left corner of your VS Code window.
+VS Code organizes interpreters by environment type and location. Once you select `.venv`, its interpreter should appear in the VS Code status bar.
 
 ![Virtual Environment Activated](https://code.visualstudio.com/assets/docs/python/shared/environment-in-status-bar.png)
 
@@ -75,7 +72,7 @@ If you have not activated your virtual environment, you'll notice that the statu
 
 ![Select Python Interpreter](https://code.visualstudio.com/assets/docs/python/environments/no-interpreter-selected-statusbar.png)
 
-Now when you go to open a new terminal in VS Code, you should see that your virtual environment is activated by the `(.venv)` in your terminal. You can also see that the name of your virtual environment is in the terminal prompt so in our case it would be `(is310-env)`.
+Now open a **new** terminal in VS Code. You should see `(.venv)` at the beginning of the terminal prompt, indicating that the environment is active.
 
 ![Activate Virtual Environment](../../assets/images/activated_venv.png)
 
@@ -83,49 +80,49 @@ Now when you go to open a new terminal in VS Code, you should see that your virt
 
 To be honest, VS Code has gotten very good at creating virtual environments and I would recommend using that method. However, if you are interested in creating a virtual environment in the terminal, you can follow the instructions below. I'm mostly including this because I still work this way, so you'll see me doing this in class.
 
-To create a virtual environment in the terminal, we'll start by opening our terminal and then navigating to the directory where we want to create our virtual environment. I would recommend making the virtual environment in your project directory, though another popular choice is to make a directory in your home directory to store all your virtual environments. You can do that with the commands below:
+To create a virtual environment in the terminal, first navigate to your `is310-coding-assignments` project directory. We will create a project-local environment named `.venv`, matching the VS Code convention.
+
+On macOS or Linux:
 
 ```sh
-cd ~  # This will take you to your home directory
-mkdir .virtualenvs # This will create a directory called .virtualenvs
-cd .virtualenvs # This will take you into the .virtualenvs directory
+python3 -m venv .venv
 ```
 
-Now that we are in the directory where we want to create our virtual environment (whether that's `is310-coding-assignments` or `.virtualenvs`), we can create it by running the following command:
+On Windows PowerShell:
 
-```sh
-python3 -m venv is310-new-env
+```powershell
+python -m venv .venv
 ```
 
-This doesn't seem to do much, but if you look in your new `.virtualenvs` directory (or wherever you created your environment) you should see a new folder called `is310-new-env`. This is again a virtual environment. This command is telling Python to run the `venv` module and create a virtual environment called `is310-env`. You can name your virtual environment whatever you want, but I would recommend naming it something that is descriptive of the project you are working on. **You should only create one virtual environment for this course.** And generally, I would recommend creating a new virtual environment for each project you work on (so think personal projects, group projects, or other courses, etc.).
+If Windows does not recognize `python`, try `py -m venv .venv`. These commands tell Python to run the `venv` module and create an environment in a folder named `.venv`. **You should only create one virtual environment for this course repository.** For unrelated projects or courses, create separate environments so their package requirements do not conflict.
 
-Now you need to activate our virtual environments. Activating the virtual environment just tells your computer to run Python and installed libraries from the virtual environment rather than the global environment. This might seem like unnecessary work, but as we saw in that xkcd comic, a lot of software can create conflicts over time (often called "dependency hell"). This is a way to avoid that.
+Now you need to activate the virtual environment. Activation adjusts your terminal's path so that `python` and installed packages come from `.venv` rather than your system-wide Python. This helps prevent dependency conflicts between projects.
 
-To activate our virtual environment in the terminal, we need to use a command called called `source` and after that we need to specify the path to the `activate` file in our virtual environment. The path to the `activate` file is `[LOCATION - OPTIONAL]/[NAME OF VIRTUAL ENVIRONMENT]/bin/activate`. If you aren't in the same directory as your virtual environment, you'll have to specify the exact location of the virtual environment. If you are in the same directory as your virtual environment (so likely `.virtualenvs`), you can just run the following command if you're on a Linux/Unix/MacOS system:
+On macOS or Linux, run this from the project directory:
 
 ```sh
-source is310-new-env/bin/activate
+source .venv/bin/activate
 ```
 
-Or if you are using a Windows system, you can run the following command for Command Prompt:
+On Windows Command Prompt:
 
-```sh
-is310-new-env\Scripts\activate
+```bat
+.venv\Scripts\activate.bat
 ```
 
-Or for PowerShell:
+On Windows PowerShell:
 
-```sh
-.\is310-new-env\Scripts\Activate.ps1
+```powershell
+.\.venv\Scripts\Activate.ps1
 ```
 
-If you are getting errors in PowerShell, you may need to change your execution policy. You can do this by running the following command:
+If PowerShell says that script execution is disabled, you can allow locally created scripts for the **current PowerShell session only** and then retry activation:
 
-```sh
+```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 ```
 
-In this example, `is310-new-env` is the name of the virtual environment and we are giving it the command to run the `activate` file. This will again change the prompt in your terminal to show the name of your virtual environment. This is how you know that your virtual environment is activated. If you are curious, you can explore the `activate` file in your virtual environment to see what it is doing. You can find it in the `bin` directory of your virtual environment.
+Only change an execution policy when you understand and trust the script you are running. The `Process` scope ends when you close that PowerShell window. After activation, your prompt should begin with `(.venv)`.
 
 ### Deactivating Virtual Environments from the Terminal
 
@@ -135,23 +132,23 @@ While usually you'll want to keep your virtual environment activated while you'r
 deactivate
 ```
 
-This will deactivate your virtual environment and you'll see that the name of your virtual environment is no longer in your terminal prompt. You can also deactivate your virtual environment in VS Code by selecting `New Terminal` under the `Terminal` menu.
+This works in macOS/Linux shells, Command Prompt, and PowerShell. The environment name will disappear from your prompt. In VS Code, you can also close the active terminal and open a new one after selecting a different interpreter.
 
 ## Adding Virtual Environments to `.gitignore`
 
 Since we are using `git` to track our work, we don't want to include our virtual environment in our repository. This is because the virtual environment is specific to your computer and the libraries you have installed. If someone else were to clone your repository, they wouldn't have the same virtual environment as you. This is why we add the virtual environment to our `.gitignore` file. This file tells `git` to ignore certain files or directories when tracking changes. You can add the following line to your `.gitignore` file to ignore your virtual environment:
 
-```sh
-is310-env/
+```text
+.venv/
 ```
 
 Now when we run `git status`, we shouldn't see our virtual environment in the list of files that have been changed. If you accidentally added your virtual environment to your repository, you can remove it by running the following command:
 
 ```sh
-git rm -r --cached is310-env
+git rm -r --cached .venv
 ```
 
-Or if you have further issues, you can request assistance from the instructors.
+Only run `git rm` if `.venv` was already committed or staged. This removes it from Git's index without deleting your local environment. Then commit the updated `.gitignore`. If you have further issues, request assistance from the instructors.
 
 ## Installing Libraries in Virtual Environments
 
@@ -160,14 +157,14 @@ Now that we have our virtual environment created and activated in VS Code, we ca
 Today, we will try installing the Python package `Rich` by running the following command:
 
 ```sh
-pip3 install rich
+python -m pip install rich
 ```
 
-This command tells `pip` to install the `Rich` library. **Remember you should only run this command once your virtual environment is activated!**
+This command asks the active Python interpreter to run `pip` and install the `Rich` library. **Only run it after your virtual environment is activated.** Using `python -m pip` helps ensure that the package is installed for the same Python interpreter you are using.
 
 Unlike `Pathlib`, `rich` isn't built into Python, which is why we need to install it. `pip` is a package manager for Python that allows you to install and manage Python packages. You can read more about it here [https://pip.pypa.io/en/stable/](https://pip.pypa.io/en/stable/){target="_blank"}.
 
-You'll notice that I'm using `pip3` to install the package. That is because I have multiple versions of Python installed on my computer. Usually if you have multiple versions of Python (specifically Python 2 and 3 versions) then you might need to use `pip3` to install libraries. If you only have Python 3 installed on your computer, you can just use `pip`. You can check which version of Python you have installed by running the following command:
+Check which version of Python is active by running:
 
 ```sh
 python --version
@@ -175,17 +172,16 @@ python --version
 
 However, you'll want to make sure that you're running this **with your virtual environment activated**.
 
-Similarly, you can test if the installation worked by starting your python interpreter with the `python` command and running the following code:
-
-```shell
-import rich
-rich.__version__
-```
-
-If you have multiple versions of python, you might need to do `python3` instead of `python`. If you get an error, you can try running the following command to see if the library is installed:
+You can confirm that Rich was installed into the active environment with:
 
 ```sh
-pip list
+python -m pip show rich
+```
+
+You can also list all installed packages:
+
+```sh
+python -m pip list
 ```
 
 Which will show you all the libraries that are installed in your virtual environment. You should see `Rich` in the list of installed libraries.
@@ -194,15 +190,39 @@ You can also look in your virtual environment directory and see if there is a `s
 
 ![Rich Installed](../../assets/images/rich_installed.png)
 
-Either of these options should show whether you have install `Rich` and the version you have installed. **Going forward, you should try and install all Python libraries in your virtual environment.**
+Either command should show whether you have installed `Rich` and which version is present. You can also check a package's version from Python:
+
+```python
+from importlib.metadata import version
+
+print(version("rich"))
+```
+
+**Going forward, install Python libraries inside your virtual environment.**
+
+## Recording Package Requirements
+
+Virtual environments should not be committed to Git or copied between computers. Instead, record the packages needed to recreate the environment in a `requirements.txt` file:
+
+```sh
+python -m pip freeze > requirements.txt
+```
+
+The `>` operator writes the list of installed packages and their versions into `requirements.txt`. Commit this small text file to Git. Someone who clones your repository can create and activate their own virtual environment and then install the same package versions with:
+
+```sh
+python -m pip install -r requirements.txt
+```
+
+Run `python -m pip freeze > requirements.txt` again whenever you intentionally add or update packages. Review the file before committing it so that it contains only dependencies relevant to your project.
 
 ### Rich Python Library
 
-Rich is Python Library built originally by [Will McGugan](https://www.willmcgugan.com/){target="_blank"} to add rich text and beautiful formatting in the terminal. We can see from the GitHub repository [https://github.com/Textualize/rich](https://github.com/Textualize/rich){target="_blank"} that it is a very popular library with almost 50,000 stars and used by almost 300,000 repositories on GitHub.
+Rich is a Python library created by [Will McGugan](https://www.willmcgugan.com/){target="_blank"} to add formatted text, tables, progress indicators, and other visual elements to terminal applications. Its source code and development history are available in the [Rich GitHub repository](https://github.com/Textualize/rich){target="_blank"}.
 
 ![Rich History](../../assets/images/rich_history.png)
 
-We can see that there is currently 256 contributors and that the project started in 2019.
+The repository's history shows that the project began in 2019 and continues to be maintained by a large open-source community.
 
 ![Rich Features](https://github.com/textualize/rich/raw/master/imgs/features.png)
 
@@ -221,8 +241,10 @@ print("Hello, [bold magenta]World[/bold magenta]!", ":vampire:")
 Now you can run the script by running the following command in your terminal:
 
 ```sh
-python3 rich_example.py # or python3 python-libraries/rich_example.py if you are in the is310-coding-assignments directory
+python rich_example.py
 ```
+
+If your terminal is in the `is310-coding-assignments` directory rather than `python-libraries`, run `python python-libraries/rich_example.py` instead.
 
 You should see the following output in your terminal:
 
@@ -257,8 +279,10 @@ console.print(table)
 Now you can run the script by running the following command in your terminal:
 
 ```sh
-python3 rich_example.py # or python3 python-libraries/rich_example.py if you are in the is310-coding-assignments directory
+python rich_example.py
 ```
+
+If your terminal is in the repository's root directory, run `python python-libraries/rich_example.py` instead.
 
 And you should see the following output in your terminal:
 
@@ -326,9 +350,9 @@ Now that we have completed:
 
 it is time to start putting this all together.
 
-## Part 1: Building a CLI Application
+## Part 1: Build a CLI Application
 
-For your homework, you will be creating a Python script that will allow you to manually enter data in the terminal and then saves that data to your preferred file format (whether that's `.txt`, `.csv`, `.json`, etc.).
+Everyone will create a Python script that allows someone to enter data in the terminal and then saves that data in a structured file format such as `.csv` or `.json`.
 
 In your `python-libraries` folder, you should create a new file called `cli_data_entry.py`. In this file, you should create a Python script that does the following:
 
@@ -336,7 +360,7 @@ In your `python-libraries` folder, you should create a new file called `cli_data
 2. The script should then show the user some pre-created example data using `Rich`. This data could be related to our movie example, such as the title of a movie, the release date, and the box office earnings. Or you can also ask the user to enter data that is related to your own interests or hobbies. Or really anything you want! You can use the `Table` class to do this, or you can use the `console.print` function to format the text in a different way.
 3. Now the goal is to get the user to add some **additional data**
 
-To do this, you will need to use the `input` function to ask the user to enter the data for each field. We say in the last lesson that `input()` is a built-in Python method. However, rich also has an `input` method, which you can see in this documentation [https://rich.readthedocs.io/en/stable/console.html#input](https://rich.readthedocs.io/en/stable/console.html#input){target="_blank"}. You can use either, but the idea is to have your user enter some data relevant to the topic.
+To do this, you will need to use the built-in `input()` function to ask the user to enter data for each field. Rich also provides `Console.input()`, documented [here](https://rich.readthedocs.io/en/stable/console.html#rich.console.Console.input){target="_blank"}. You can use either option, but the goal is to let a user enter data relevant to your topic.
 
 Here's an example of what this *could* look like:
 
@@ -375,11 +399,58 @@ However, you'll notice that this script doesn't allow for multiple entries or wr
 While you can create your CLI app to collect data on any topic, I would highly recommend developing one that might be useful for your final project or at least somewhat related to your group's cultural topic. To be clear, this is simply a suggestion, but it might help you consider how best to design your CLI App if you have a clear dataset or topic in mind.
 :::
 
-## Part 2: Data Entry in the Wild
+## Part 2: Choose Your Development Pathway
 
-Once your script is working, it is time to post it to GitHub to our next discussion thread [https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/6](https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/6){target="_blank"}. I would highly encourage you to include a `README.md` file that explains how to use your script and what it does. You can also include any additional information you think is relevant.
+The assignment has two pathways based on how you develop your code.
 
-Next, test a classmate’s script by entering new data (you should add **at least two data points**) and share the file that you generated back with them by replying to their post. Provide any feedback if the script doesn’t work or if there are improvements to be made. But please remember to be constructive and respectful in your feedback!
+### Pathway 1: CLI Without AI
 
-If you have any questions or need help, please don't hesitate to ask in the discussion thread or reach out to the instructors via Slack. Also remember you are able to use GitHub Co-Pilot to help you with your coding assignments.
+If you complete the assignment without using AI to generate, substantially revise, or troubleshoot your code, submit the working CLI application described above.
 
+### Pathway 2: AI-Assisted CLI and HTML
+
+If you use AI to generate, substantially revise, or troubleshoot your code, you must create the same data-curation workflow in **two forms**:
+
+1. The working Python CLI application described above.
+2. A working HTML interface that collects equivalent cultural data.
+
+Your HTML version may use HTML, CSS, and JavaScript in a single page or in separate files. It should:
+
+- Include clearly labeled fields for the same kinds of data collected by your CLI.
+- Allow someone to enter and review at least two records.
+- Use basic validation to prevent required fields from being left empty.
+- Display the resulting records or allow the user to download them in a structured format.
+
+The HTML version does **not** need a server, database, user accounts, or elaborate visual design. The goal is to compare two interfaces for curating the same cultural data, not to build a complete web application.
+
+In your `README.md`, briefly compare the two approaches:
+
+- What does each interface make easier or harder?
+- Did the interfaces lead you to make different choices about fields, instructions, or validation?
+- What did the AI contribute, and what did you change, reject, or troubleshoot?
+- Which interface better fits your cultural material and intended user, and why?
+
+::: {.callout-note}
+## What Kind of AI Use Triggers Pathway 2?
+
+Complete Pathway 2 if AI helped generate, substantially revise, or troubleshoot code for this assignment. Using AI only to clarify a course concept or explain documentation does not require the HTML extension, though you should still document relevant use. If you are unsure which pathway applies, ask an instructor.
+:::
+
+## Part 3: Submission and Peer Testing
+
+Once your script is working, push the assignment folder to your GitHub repository and post its link in the appropriate thread in our [Fall 2026 GitHub Discussions](https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions){target="_blank"}. Include:
+
+- Your `cli_data_entry.py` script.
+- A `README.md` explaining what the script collects, how to install its requirements, and how to run it.
+- The `requirements.txt` file used to recreate your environment.
+- A sample data file produced by your script.
+- An `ai-chat-log.md` containing the relevant prompts and responses if you used an AI chatbot. If you did not use AI, include a brief note stating that.
+- If you completed Pathway 2, your HTML, CSS, and JavaScript files and your comparison of the two interfaces in the `README.md`.
+
+Next, test **one interface** created by a classmate. You may choose either their CLI or HTML version; you do not need to test both. Enter at least two records and reply to their post with:
+
+- Which interface you tested.
+- The data file or output you generated.
+- Brief, constructive feedback about what worked and what could be clearer or easier to use.
+
+If you have questions or need help, ask during class or contact the instructors through the course communication channels. You may use the AI tool of your choice, but you remain responsible for understanding, testing, and documenting any AI-assisted code according to our [AI policy](../../policies.qmd#ai-policy){target="_blank"} and [GitHub Style Guide](../../assessments/05-github-style-guide.qmd#ai-chat-log-notes){target="_blank"}.

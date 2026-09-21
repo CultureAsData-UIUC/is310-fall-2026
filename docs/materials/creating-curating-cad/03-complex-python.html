@@ -347,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#commenting-and-documentation" id="toc-commenting-and-documentation" class="nav-link" data-scroll-target="#commenting-and-documentation">Commenting and Documentation</a>
   <ul class="collapse">
   <li><a href="#inline-commenting" id="toc-inline-commenting" class="nav-link" data-scroll-target="#inline-commenting">Inline Commenting</a></li>
-  <li><a href="#block-commenting" id="toc-block-commenting" class="nav-link" data-scroll-target="#block-commenting">Block Commenting</a></li>
+  <li><a href="#block-comments-and-docstrings" id="toc-block-comments-and-docstrings" class="nav-link" data-scroll-target="#block-comments-and-docstrings">Block Comments and Docstrings</a></li>
   <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
   </ul></li>
   <li><a href="#python-libraries" id="toc-python-libraries" class="nav-link" data-scroll-target="#python-libraries">Python Libraries</a>
@@ -420,7 +420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        recent_movies.append(result)</span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(recent_movies)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This code snippet contains a <strong>function</strong> called <code>check_movie_release</code> that returns a movie name if it was released before a certain year.</p>
+<p>This code snippet contains a <strong>function</strong> called <code>check_movie_release</code> that returns a movie name if it was released after a certain year.</p>
 <p>We also have a <strong>list</strong> of <strong>dictionaries</strong> called <code>favorite_movies</code> that contains information about the release year and sequels of two movies.</p>
 <p>Right now this code works well if we just have our existing <code>favorite_movies</code>, but what if we wanted to build upon this initial list to add more metadata and information about each movie, and also maybe even reuse this code in multiple scripts? Then we might want to consider rewriting the code into a <strong>class</strong>.</p>
 <p>While dictionaries are great for describing complex data within a single object, a class is really useful to encapsulate both data and functions in a single cohesive unit.</p>
@@ -441,7 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an instance of the class and invoke it</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Blank()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>To first define a class, we need to use the keyword <code>class</code> followed by the name of the class (which can be anything!) and then a semi colon. All the logic of the class is indented (just like with functions, loops, and conditionals) and then we call the class similar to a function, using its name and parentheses to pass arguments to the class.</p>
+<p>To first define a class, we need to use the keyword <code>class</code> followed by the name of the class and then a colon. Class names conventionally use <code>CapitalizedWords</code>. All the logic of the class is indented (just like with functions, loops, and conditionals), and then we call the class similarly to a function, using its name and parentheses to pass arguments to the class.</p>
 <p>In this case, since the class has no actual logic in it, just the keyword <code>pass</code>, which is a reserved keyword in Python and that tells Python to do nothing. So when we call the class, nothing actually happens. For any class, when you invoke it, it executes the <code>__init__</code> method, which is another built in method from Python (this one is called a <strong>constructor</strong> method). Thus, since our example above didn’t define any logic for the built-in <code>__init__</code> method, nothing happened.</p>
 <section id="simple-class" class="level3">
 <h3 class="anchored" data-anchor-id="simple-class">Simple Class</h3>
@@ -453,7 +453,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix"</span>)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>a_movie.movie_name</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>So similar to our initial <code>favorite_movies</code> variable, we are creating a way to store data about movies. However, in this example we’ve created a class that has an initial method (which is really just a function!) that takes the argument we pass and assigns it to something called <code>self</code>.</p>
-<p>Self references the class <strong>instance</strong> that is created when you call a class, which is why <code>self</code> is the first argument to <strong><em>any</em></strong> function defined in a class. You can read more about <a href="https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces" target="_blank">class scope here</a>.</p>
+<p><code>self</code> references the class <strong>instance</strong> that is created when you call a class. By convention, it is the first parameter of an <strong>instance method</strong>. Python also supports class methods and static methods, which work differently, but we will focus on instance methods here. You can read more about <a href="https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces" target="_blank">class scope here</a>.</p>
 </section>
 <section id="advanced-class" class="level3">
 <h3 class="anchored" data-anchor-id="advanced-class">Advanced Class</h3>
@@ -527,31 +527,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate_movie_age(<span class="va">self</span>):</span>
 <span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculates the age of the movie</span></span>
 <span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">2024</span> <span class="op">-</span> <span class="va">self</span>.release_year</span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequels([<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>])</span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>a_movie.calculate_movie_age()</span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a_movie.age)</span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a_movie.add_directors.__doc__) <span class="co"># To view the docstring for the method</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>        <span class="im">from</span> datetime <span class="im">import</span> date</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> date.today().year <span class="op">-</span> <span class="va">self</span>.release_year</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequels([<span class="st">"The Matrix II"</span>, <span class="st">"The Matrix III"</span>, <span class="st">"The Matrix IV"</span>])</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>a_movie.calculate_movie_age()</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a_movie.age)</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a_movie.add_directors.__doc__) <span class="co"># To view the docstring for the method</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>So what’s going in this code block?</p>
 <p>First we’re taking our <code>Movie</code> class and expanding it so that it can contain more information about each movie. We still only initially create the class with one argument - the movie’s name. But we’ve also added additional attributes to the <code>__init__</code> function. First, we have <code>directors</code>, which holds a list; then release year, which is an integer; age, which is also an integer; sequels, which is a list; and prequels, which is also a list.</p>
-<p>Do you notice that the syntax here looks like a dictionary? That’s because we can use a similar pattern to dictionaries for creating our attributes.</p>
+<p>This class serves a purpose similar to a dictionary because both can group related values. The syntax differs, however: dictionaries access values with keys, while class instances access attributes with dot notation.</p>
 <p>To make it even more clear this is what the <code>__init__</code> method would look like as a function that return a dictionary:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> store_a_movie(name):</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    movie <span class="op">=</span> <span class="bu">dict</span>() <span class="co">#Could also write {}</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    movie.movie_name <span class="op">=</span> name</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    movie.directors <span class="op">=</span> []</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    movie.release_year <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    movie.age <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    movie.sequels <span class="op">=</span> []</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    movie.prequels <span class="op">=</span> []</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    movie <span class="op">=</span> {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"movie_name"</span>: name,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"directors"</span>: [],</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="va">None</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"age"</span>: <span class="dv">0</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sequels"</span>: [],</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prequels"</span>: []</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> movie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>While this function is somewhat similar to our <code>Movie</code> class, we’ve also added a number of functions, which we call <strong>methods</strong> to the class.</p>
 <p>The first method <code>add_directors</code> takes two arguments, <code>self</code> and <code>directors</code>. Just like in the <code>__init__</code> method, <code>self</code> represents the class instance and directors is a list of directors. In the <code>__init__</code> method, we define the directors attribute on <code>self</code> as an empty list. Then in our <code>add_directors</code> method we extend this initial empty list, adding the new directors to the list.</p>
-<p>What if we wanted to add a method for printing out an entire movie’s information? We could try looping through the class object and print out each attribute. Or we could use the built-in <code>__dict__</code> functionality that prints out the values for a class.</p>
+<p>What if we wanted to add a method for printing out an entire movie’s information? We could try looping through the class object and print out each attribute. Or we could use the built-in <code>__dict__</code> attribute, which stores an instance’s attributes in a dictionary. Add this method inside the <code>Movie</code> class at the same indentation level as the other methods:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_movie_info(<span class="va">self</span>):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Prints out the movie's information</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
@@ -604,61 +607,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate_movie_age(<span class="va">self</span>):</span>
 <span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculates the age of the movie</span></span>
 <span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">2024</span> <span class="op">-</span> <span class="va">self</span>.release_year</span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> add_sequel(<span class="va">self</span>, sequel, release_year):</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Adds a sequel to the movie</span></span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="co">        Method argument:</span></span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------------</span></span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="co">        sequel(string) -- The name of the sequel</span></span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="co">        release_year(integer) -- The release year of the sequel</span></span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>        sequel_movie <span class="op">=</span> Movie(sequel, release_year)</span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sequels.append(sequel_movie)</span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> add_prequel(<span class="va">self</span>, prequel, release_year):</span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Adds a prequel to the movie</span></span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="co">        Method argument:</span></span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------------</span></span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="co">        prequel(string) -- The name of the prequel</span></span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="co">        release_year(integer) -- The release year of the prequel</span></span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>        prequel_movie <span class="op">=</span> Movie(prequel, release_year)</span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.prequels.append(prequel_movie)</span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_movie_info(<span class="va">self</span>):</span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Prints out the movie's information</span></span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key, value <span class="kw">in</span> <span class="va">self</span>.__dict__.items():</span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> key <span class="kw">in</span> [<span class="st">'sequels'</span>, <span class="st">'prequels'</span>]:</span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>[movie.movie_name <span class="cf">for</span> movie <span class="kw">in</span> value]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_release_year(movie):</span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Returns the release year of the movie"""</span></span>
-<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> movie.release_year</span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate_movie_order(<span class="va">self</span>):</span>
-<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculates the order of movies based on release year</span></span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>        all_movies <span class="op">=</span> [<span class="va">self</span>] <span class="op">+</span> <span class="va">self</span>.sequels <span class="op">+</span> <span class="va">self</span>.prequels</span>
-<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>        all_movies.sort(key<span class="op">=</span>get_release_year)</span>
-<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [movie.movie_name <span class="cf">for</span> movie <span class="kw">in</span> all_movies]</span>
-<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
-<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
-<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
-<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>a_movie.calculate_movie_age()</span>
-<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix II"</span>, <span class="dv">2003</span>)</span>
-<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix III"</span>, <span class="dv">2003</span>)</span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix IV"</span>, <span class="dv">2021</span>)</span>
-<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>a_movie.add_prequel(<span class="st">"The Matrix 0"</span>, <span class="dv">1998</span>)</span>
-<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>a_movie.get_movie_info()</span>
-<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a_movie.calculate_movie_order())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This is a more complex version of our <code>Movie</code> class. We’ve added two new methods, <code>add_sequel</code> and <code>add_prequel</code>, which take the name of the sequel or prequel and the release year of the sequel or prequel. We then create a new instance of the <code>Movie</code> class and append it to the <code>sequels</code> or <code>prequels</code> list. We also added a new method, <code>calculate_movie_order</code>, which sorts all the movies based on their release year and then returns a list of the movie names in order. To do this we use the built-in <code>sort</code> method, which sorts a list in place, and the <code>key</code> argument, which takes a function that returns a value that the list should be sorted by. In this case, we use the <code>get_release_year</code> method to get each release year, and then sort the list of movies by their release year.</p>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        <span class="im">from</span> datetime <span class="im">import</span> date</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> date.today().year <span class="op">-</span> <span class="va">self</span>.release_year</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> add_sequel(<span class="va">self</span>, sequel, release_year):</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Adds a sequel to the movie</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="co">        Method argument:</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------------</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="co">        sequel(string) -- The name of the sequel</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="co">        release_year(integer) -- The release year of the sequel</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>        sequel_movie <span class="op">=</span> Movie(sequel, release_year)</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sequels.append(sequel_movie)</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> add_prequel(<span class="va">self</span>, prequel, release_year):</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Adds a prequel to the movie</span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="co">        Method argument:</span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------------</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="co">        prequel(string) -- The name of the prequel</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="co">        release_year(integer) -- The release year of the prequel</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>        prequel_movie <span class="op">=</span> Movie(prequel, release_year)</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.prequels.append(prequel_movie)</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_movie_info(<span class="va">self</span>):</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Prints out the movie's information</span></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key, value <span class="kw">in</span> <span class="va">self</span>.__dict__.items():</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> key <span class="kw">in</span> [<span class="st">'sequels'</span>, <span class="st">'prequels'</span>]:</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>[movie.movie_name <span class="cf">for</span> movie <span class="kw">in</span> value]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate_movie_order(<span class="va">self</span>):</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculates the order of movies based on release year</span></span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>        all_movies <span class="op">=</span> [<span class="va">self</span>] <span class="op">+</span> <span class="va">self</span>.sequels <span class="op">+</span> <span class="va">self</span>.prequels</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>        all_movies.sort(key<span class="op">=</span><span class="kw">lambda</span> movie: movie.release_year)</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [movie.movie_name <span class="cf">for</span> movie <span class="kw">in</span> all_movies]</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>a_movie.calculate_movie_age()</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix II"</span>, <span class="dv">2003</span>)</span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix III"</span>, <span class="dv">2003</span>)</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix IV"</span>, <span class="dv">2021</span>)</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>a_movie.add_prequel(<span class="st">"The Matrix 0"</span>, <span class="dv">1998</span>)</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>a_movie.get_movie_info()</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a_movie.calculate_movie_order())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is a more complex version of our <code>Movie</code> class. We’ve added two new methods, <code>add_sequel</code> and <code>add_prequel</code>, which take the name and release year of another movie. We then create a new instance of the <code>Movie</code> class and append it to the <code>sequels</code> or <code>prequels</code> list. We also added <code>calculate_movie_order</code>, which sorts all the movies by release year and returns their names in order. The built-in <code>sort</code> method sorts the list in place. Its <code>key</code> argument accepts a function; here, a short <code>lambda</code> function tells Python to use each movie’s <code>release_year</code> as the sorting value.</p>
 <p>This type of programming is called <strong>object-oriented programming</strong> and it’s a very powerful way to organize your code. It’s also a very common way to organize code in Python, and you’ll see it often, even if you don’t write it yourself.</p>
 <section id="quick-exercise-for-practice-optional-but-recommended" class="level4">
 <h4 class="anchored" data-anchor-id="quick-exercise-for-practice-optional-but-recommended">Quick Exercise for Practice (Optional But Recommended)</h4>
@@ -686,9 +686,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>movie <span class="op">=</span> <span class="bu">dict</span>() <span class="co">#Could also write {}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You’ll notice that the comment is after the code and is preceded by a <code>#</code> symbol. This tells Python that the rest of the line is a comment and should not be executed.</p>
 </section>
-<section id="block-commenting" class="level3">
-<h3 class="anchored" data-anchor-id="block-commenting">Block Commenting</h3>
-<p>Block comments are comments that span multiple lines. They are usually used to explain a block of code, like a function or a class.</p>
+<section id="block-comments-and-docstrings" class="level3">
+<h3 class="anchored" data-anchor-id="block-comments-and-docstrings">Block Comments and Docstrings</h3>
+<p>For longer explanations, Python programmers usually place several <code>#</code> comments on consecutive lines. Functions and classes can also contain <strong>docstrings</strong>, which document how that code should be used.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> store_a_movie(name):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Stores a movie in a dictionary</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -696,16 +696,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">    -----------------</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">    name(string) -- The name of the movie</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    movie <span class="op">=</span> <span class="bu">dict</span>() <span class="co">#Could also write {}</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    movie.movie_name <span class="op">=</span> name</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    movie.directors <span class="op">=</span> []</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    movie.release_year <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    movie.age <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    movie.sequels <span class="op">=</span> []</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    movie.prequels <span class="op">=</span> []</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>In this example, we have a block comment that explains what the <code>store_a_movie</code> function does. The comment is enclosed in triple quotes, which tells Python that the comment spans multiple lines. This is a common way to write block comments in Python.</p>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    movie <span class="op">=</span> {</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"movie_name"</span>: name,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"directors"</span>: [],</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"release_year"</span>: <span class="va">None</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> movie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In this example, the triple-quoted string is the first statement inside the function, so Python treats it as the function’s <strong>docstring</strong>. Triple-quoted strings are not general-purpose comments: when they appear elsewhere, they are simply multiline string values.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a_movie.add_directors.__doc__) <span class="co"># To view the docstring for the method</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You’ll notice that earlier we were able to print out the block comment for the <code>add_directors</code> method. This is because the block comment is actually a special type of comment called a <strong>docstring</strong> that is used to document a function or a class. The docstring is the first thing that appears in a function or class and is enclosed in triple quotes. It’s a good idea to add a docstring to every function and class you write, as it helps other people understand your code and also helps you remember what your code does.</p>
+<p>Earlier, we were able to print the <code>add_directors</code> documentation because it is a <strong>docstring</strong>. A docstring is the first statement in a function, method, class, or module and is conventionally enclosed in triple quotes. Adding concise docstrings to reusable functions and classes helps other people understand the code and helps you remember how to use it later.</p>
 </section>
 <section id="documentation" class="level3">
 <h3 class="anchored" data-anchor-id="documentation">Documentation</h3>
@@ -744,7 +743,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Pathlib Methods</figcaption>
 </figure>
 </div>
-<p>First take a look at the <a href="https://github.com/python/cpython/blob/3.8/Lib/pathlib.py" target="_blank">source code!</a> Notice how it’s organized, and try and find the documentation for the <code>class Path</code> (<em>hint</em> use control F).</p>
+<p>First take a look at the current <a href="https://github.com/python/cpython/blob/main/Lib/pathlib/__init__.py" target="_blank"><code>pathlib</code> source code</a>. Notice how it’s organized, and try to find the definition of <code>class Path</code> (<em>hint</em>: use Control+F or Command+F).</p>
 <p>Let’s take a look at the methods in the <code>class Path</code> <a href="https://docs.python.org/3/library/pathlib.html#methods" target="_blank">https://docs.python.org/3/library/pathlib.html#methods</a>. How would we would print out the current working directory using <code>pathlib</code>?</p>
 <p>Let’s try importing in <code>Pathlib</code> into our script.</p>
 <section id="imports-are-important" class="level3">
@@ -755,7 +754,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pathlib.Path()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or we can use the <code>from</code> keyword (reserved word) to import a specific class or function from the module:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Both options work exactly the same when we use them in our code, but the second option is a little more concise and is often used when we only need to use one class or function.</p>
+<p>Both options give us access to the same <code>Path</code> class, but they create different names in our script. With <code>import pathlib</code>, we write <code>pathlib.Path()</code>. With <code>from pathlib import Path</code>, we write the more concise <code>Path()</code>.</p>
 <p>With import statements, you can also alias the module or class you’re importing. This is often used to make the code more readable or to avoid conflicts with other classes or functions that have the same name.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pathlib <span class="im">as</span> pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now if we want to use the <code>Path</code> class, we can just use <code>pl.Path()</code> instead of <code>pathlib.Path()</code>.</p>
@@ -776,36 +775,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">file</span>, <span class="bu">type</span>(<span class="bu">file</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now depending on where you file is located, you might need to change the path (often files are in your Downloads folder, in which case you might write <code>Users/user_name/Downloads/US-National-Parks_RecreationVisits_1979-2023.csv</code>). Remember computers need the <strong>exact path</strong>, so if you’re not sure where your file is located, you can use the <code>cwd</code> method to print out the current working directory and then add the file name to the end of the path.</p>
+<p>Depending on where your file is located, you might need to change the path. <code>pathlib</code> lets us construct paths that work across macOS, Linux, and Windows. For example, if the file is in your Downloads folder, use:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> Path.home() <span class="op">/</span> <span class="st">"Downloads"</span> <span class="op">/</span> <span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Computers need the <strong>exact path</strong>, so if you’re unsure where Python is looking, use <code>Path.cwd()</code> to print the current working directory.</p>
 <p>Now if this code worked, it should show you the exact file path of your spreadsheet and then the type of the object, either <code>&lt;class 'pathlib.PosixPath'&gt;</code> or <code>&lt;class 'pathlib.WindowsPath'&gt;</code>. Not to get too complicated but this is because the <code>Path</code> class is a subclass of the <code>PosixPath</code> class (not really going to get into subclassing but think of it as building classes on top of one another - like Lego or Jenga).</p>
 <p>We can also look at the methods built-in to the <code>Path</code> class. One in particular is useful for us <code>read_text</code> which reads in the contents of a file and returns it as a string. Read more about it here <a href="https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_text" target="_blank">https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_text</a> and test it out in your script.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">file</span>, <span class="bu">type</span>(<span class="bu">file</span>))</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">file</span>.read_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">file</span>, <span class="bu">type</span>(<span class="bu">file</span>))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">file</span>.read_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now when you save you script and rerun your code in the terminal, you should now see the entirety of our csv file in your terminal. If you try saving that to a variable and checking the type you should see that it’s a string.</p>
 <p>So now we can simply manipulate that string so that we don’t have to hand enter the data.</p>
 <hr>
 <p>So far we’ve been using Pathlib to work with files, but there are number of libraries and even some methods built into Python for reading in and writing files.</p>
 <p>For example we could use the <a href="https://docs.python.org/3/library/functions.html#open" target="_blank"><code>open</code> built-in function in Python</a>.</p>
 <p>To open a file for reading (input), we just do:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span>,<span class="st">"r"</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> input_file.read()</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(text)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>input_file.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span>, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> input_file.read()</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(text)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>input_file.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here, we use the <code>open</code> function to open a file in mode “r” (read). <code>open</code> returns a <a href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files" target="_blank">File Object</a> that provides methods for reading and writing. In this case, the <code>read</code> method reads in data from the <code>input_file</code> file object and stores it as a string in <code>text</code>. We could even just pass in our Path object to the <code>open</code> function.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="bu">file</span>,<span class="st">"r"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> input_file.read()</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(text)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>input_file.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>At the end, we can close the file to save some memory, but even if we don’t do it explicitly, Python will eventually catch on to the fact that it isn’t being used anymore and do it for us. This isn’t a huge concern unless you’re opening thousands of files or the files you’re opening are very, very large.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="bu">file</span>, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> input_file.read()</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(text)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>input_file.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>At the end, we close the file so that system resources are released and any pending changes are written. Forgetting to close a file can produce unreliable behavior, so Python’s <code>with</code> syntax is usually the safer choice.</p>
 <p>Often, you’ll see file handling used with the <code>with</code> keyword (reserved word again!):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span>,<span class="st">"r"</span>) <span class="im">as</span> input_file:</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(input_file.read())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This is functionally the same as our last example. The only difference is that the file is automatically closed at the end of the block. You can use whichever convention you like, but keep both in mind because they’re both pretty common in the wild.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span>, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> input_file:</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(input_file.read())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is functionally similar to our last example, but the file is automatically closed at the end of the block, even if an error occurs. You will see both conventions, but prefer <code>with</code> for your own code.</p>
 <section id="file-output" class="level3">
 <h3 class="anchored" data-anchor-id="file-output">File Output</h3>
 <p>File output is very similar. We just use mode <code>w</code>, which overwrites the file specified. We can also use <code>x</code> (which only works for new files) or <code>a</code> (which appends data at the end of the file). Read the <a href="https://docs.python.org/3/library/functions.html#open" target="_blank"><code>open</code> docs</a> for all the details and also take a look at this table.</p>
@@ -851,13 +852,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>To understand file output, let’s try working with a file that doesn’t exist. Try pasting this code in your script.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">"new_text.txt"</span>,<span class="st">"w"</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">100</span>):</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    f.write(<span class="bu">str</span>(i<span class="op">**</span><span class="dv">2</span>)<span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"new_text.txt"</span>, <span class="st">"w"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> output_file:</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">100</span>):</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>        output_file.write(<span class="bu">str</span>(i<span class="op">**</span><span class="dv">2</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Once you run it, you should see a new file in your directory called <code>new_text.txt</code>, which should be a text file, containing a list of numbers. We created those numbers using the built-in <code>range</code> function and the <code>write</code> method.</p>
 <p>Here, there’s something just a little tricky. <code>i</code> and <code>i**2</code> are integers, but the file object in this case expects a string. If we try to use <code>f.write(i**2)</code> instead, we’ll get an error: <code>TypeError: write() argument must be str, not int</code>.</p>
 <p>To get around this, we can convert from int to string using the built-in <code>str</code> class constructor <code>str()</code> to create a new string that’s the <em>string representation</em> of the integer we pass in. So even though the integer 4 and the string “4” look the same, they’re different objects and different ways to represent data.</p>
-<p>For the same reason that we can’t do <code>f.write(4)</code>, we also can’t do <code>"4"+4</code> (or, for that matter, <code>4+"4"</code>). We have to explicitly tell python whether we want it to treat each value as an integer or a string. <code>"4"+str(4)</code> produces “44” while <code>int("4")+4</code> returns 8.</p>
+<p>For the same reason that we can’t do <code>output_file.write(4)</code>, we also can’t do <code>"4" + 4</code> (or, for that matter, <code>4 + "4"</code>). We have to explicitly tell Python whether we want it to treat each value as an integer or a string. <code>"4" + str(4)</code> produces <code>"44"</code>, while <code>int("4") + 4</code> returns <code>8</code>.</p>
 <p>The second new thing here is the newline character “”, which is technically called a LF or Line Feed. This inserts a line break between characters in a string. If you don’t include it, all the numbers will be on the same line.</p>
 </section>
 <section id="quick-exercise-for-practice-optional-but-recommended-1" class="level3">
@@ -866,9 +867,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Try writing adding a function to your <code>Movie</code> class that saves the movie’s information to a file. Then try writing the information to a file using the <code>open</code> function.</li>
 <li>Try adding a function to your <code>Movie</code> class that reads in a file and sets the movie’s information based on the file. Then try reading in the information from a file using the <code>open</code> function.</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Prefer Structured Data for Real Projects
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The text format in this exercise is useful for practicing file input and output, but splitting lines on punctuation can break when values contain unexpected characters or fields are missing. For a real dataset, prefer a structured format such as JSON and use Python’s built-in <a href="https://docs.python.org/3/library/json.html" target="_blank"><code>json</code> module</a> to read and write it.</p>
+</div>
+</div>
 <p>If you’re getting stuck here’s a possible solution, if you click on the toggle below it will show you the solution.</p>
 <div id="python-class-solution" class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -877,53 +891,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Here’s a function to save the movie’s information to a file:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_movie_info(<span class="va">self</span>, file_name):</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Saves the movie's information to a file</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Method argument:</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">    -----------------</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">    file_name(string) -- The name of the file to save the movie's information to</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Movie Name: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>movie_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Directors: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(<span class="va">self</span>.directors)<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Release Year: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>release_year<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Age: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>age<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Sequels: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join([sequel.movie_name <span class="cf">for</span> sequel <span class="kw">in</span> <span class="va">self</span>.sequels])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Prequels: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join([prequel.movie_name <span class="cf">for</span> prequel <span class="kw">in</span> <span class="va">self</span>.prequels])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_movie_info(<span class="va">self</span>, file_name):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Saves the movie's information to a file</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Method argument:</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">    -----------------</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">    file_name(string) -- The name of the file to save the movie's information to</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"w"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Movie Name: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>movie_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Directors: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(<span class="va">self</span>.directors)<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Release Year: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>release_year<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Age: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>age<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Sequels: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join([sequel.movie_name <span class="cf">for</span> sequel <span class="kw">in</span> <span class="va">self</span>.sequels])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f"Prequels: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join([prequel.movie_name <span class="cf">for</span> prequel <span class="kw">in</span> <span class="va">self</span>.prequels])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now you can call this function on your <code>a_movie</code> object and pass in the name of the file you want to save the information to.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix II"</span>, <span class="dv">2003</span>)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix III"</span>, <span class="dv">2003</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix IV"</span>, <span class="dv">2021</span>)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>a_movie.add_prequel(<span class="st">"The Matrix 0"</span>, <span class="dv">1998</span>)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>a_movie.calculate_movie_age()</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>a_movie.save_movie_info(<span class="st">"movie_info.txt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>a_movie.add_directors([<span class="st">"Lana Wachowski"</span>, <span class="st">"Lilly Wachowski"</span>])</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>a_movie.add_release_year(<span class="dv">1999</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix II"</span>, <span class="dv">2003</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix III"</span>, <span class="dv">2003</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>a_movie.add_sequel(<span class="st">"The Matrix IV"</span>, <span class="dv">2021</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>a_movie.add_prequel(<span class="st">"The Matrix 0"</span>, <span class="dv">1998</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>a_movie.calculate_movie_age()</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>a_movie.save_movie_info(<span class="st">"movie_info.txt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here’s a function to read in a file and set the movie’s information based on the file:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_movie_info(<span class="va">self</span>, file_name):</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Reads in a file and sets the movie's information based on the file</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Method argument:</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">    -----------------</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">    file_name(string) -- The name of the file to read the movie's information from</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.movie_name <span class="op">=</span> lines[<span class="dv">0</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip()</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.directors <span class="op">=</span> lines[<span class="dv">1</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(lines[<span class="dv">2</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip())</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="bu">int</span>(lines[<span class="dv">3</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip())</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sequels <span class="op">=</span> [Movie(sequel.strip()) <span class="cf">for</span> sequel <span class="kw">in</span> lines[<span class="dv">4</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)]</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.prequels <span class="op">=</span> [Movie(prequel.strip()) <span class="cf">for</span> prequel <span class="kw">in</span> lines[<span class="dv">5</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_movie_info(<span class="va">self</span>, file_name):</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Reads in a file and sets the movie's information based on the file</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Method argument:</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">    -----------------</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">    file_name(string) -- The name of the file to read the movie's information from</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.movie_name <span class="op">=</span> lines[<span class="dv">0</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip()</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.directors <span class="op">=</span> lines[<span class="dv">1</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.release_year <span class="op">=</span> <span class="bu">int</span>(lines[<span class="dv">2</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip())</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="bu">int</span>(lines[<span class="dv">3</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip())</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sequels <span class="op">=</span> [Movie(sequel.strip()) <span class="cf">for</span> sequel <span class="kw">in</span> lines[<span class="dv">4</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)]</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.prequels <span class="op">=</span> [Movie(prequel.strip()) <span class="cf">for</span> prequel <span class="kw">in</span> lines[<span class="dv">5</span>].split(<span class="st">": "</span>)[<span class="dv">1</span>].strip().split(<span class="st">", "</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now you can call this function on your <code>a_movie</code> object and pass in the name of the file you want to read the information from.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>a_movie.read_movie_info(<span class="st">"movie_info.txt"</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>a_movie.get_movie_info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>a_movie <span class="op">=</span> Movie(<span class="st">"The Matrix I"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>a_movie.read_movie_info(<span class="st">"movie_info.txt"</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>a_movie.get_movie_info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>

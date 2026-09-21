@@ -45,7 +45,7 @@ for movie in favorite_movies:
 print(recent_movies)
 ```
 
-This code snippet contains a **function** called `check_movie_release` that returns a movie name if it was released before a certain year.
+This code snippet contains a **function** called `check_movie_release` that returns a movie name if it was released after a certain year.
 
 We also have a **list** of **dictionaries** called `favorite_movies` that contains information about the release year and sequels of two movies.
 
@@ -81,7 +81,7 @@ class Blank:
 Blank()
 ```
 
-To first define a class, we need to use the keyword `class` followed by the name of the class (which can be anything!) and then a semi colon. All the logic of the class is indented (just like with functions, loops, and conditionals) and then we call the class similar to a function, using its name and parentheses to pass arguments to the class.
+To first define a class, we need to use the keyword `class` followed by the name of the class and then a colon. Class names conventionally use `CapitalizedWords`. All the logic of the class is indented (just like with functions, loops, and conditionals), and then we call the class similarly to a function, using its name and parentheses to pass arguments to the class.
 
 In this case, since the class has no actual logic in it, just the keyword `pass`, which is a reserved keyword in Python and that tells Python to do nothing. So when we call the class, nothing actually happens. For any class, when you invoke it, it executes the `__init__` method, which is another built in method from Python (this one is called a **constructor** method). Thus, since our example above didn't define any logic for the built-in `__init__` method, nothing happened.
 
@@ -100,7 +100,7 @@ a_movie.movie_name
 
 So similar to our initial `favorite_movies` variable, we are creating a way to store data about movies. However, in this example we've created a class that has an initial method (which is really just a function!) that takes the argument we pass and assigns it to something called `self`.
 
-Self references the class **instance** that is created when you call a class, which is why `self` is the first argument to ***any*** function defined in a class. You can read more about [class scope here](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces){target="_blank"}.
+`self` references the class **instance** that is created when you call a class. By convention, it is the first parameter of an **instance method**. Python also supports class methods and static methods, which work differently, but we will focus on instance methods here. You can read more about [class scope here](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces){target="_blank"}.
 
 ### Advanced Class
 
@@ -176,7 +176,8 @@ class Movie:
     def calculate_movie_age(self):
         """Calculates the age of the movie
         """
-        self.age = 2024 - self.release_year
+        from datetime import date
+        self.age = date.today().year - self.release_year
 
 a_movie = Movie("The Matrix I")
 a_movie.add_directors(["Lana Wachowski", "Lilly Wachowski"])
@@ -191,27 +192,29 @@ So what's going in this code block?
 
 First we're taking our `Movie` class and expanding it so that it can contain more information about each movie. We still only initially create the class with one argument - the movie's name. But we've also added additional attributes to the `__init__` function. First, we have `directors`, which holds a list; then release year, which is an integer; age, which is also an integer; sequels, which is a list; and prequels, which is also a list.
 
-Do you notice that the syntax here looks like a dictionary? That's because we can use a similar pattern to dictionaries for creating our attributes.
+This class serves a purpose similar to a dictionary because both can group related values. The syntax differs, however: dictionaries access values with keys, while class instances access attributes with dot notation.
 
 To make it even more clear this is what the `__init__` method would look like as a function that return a dictionary:
 
 ```python
 
 def store_a_movie(name):
-    movie = dict() #Could also write {}
-    movie.movie_name = name
-    movie.directors = []
-    movie.release_year = None
-    movie.age = 0
-    movie.sequels = []
-    movie.prequels = []
+    movie = {
+        "movie_name": name,
+        "directors": [],
+        "release_year": None,
+        "age": 0,
+        "sequels": [],
+        "prequels": []
+    }
+    return movie
 ```
 
 While this function is somewhat similar to our `Movie` class, we've also added a number of functions, which we call **methods** to the class.
 
 The first method `add_directors` takes two arguments, `self` and `directors`. Just like in the `__init__` method, `self` represents the class instance and directors is a list of directors. In the `__init__` method, we define the directors attribute on `self` as an empty list. Then in our `add_directors` method we extend this initial empty list, adding the new directors to the list.
 
-What if we wanted to add a method for printing out an entire movie's information? We could try looping through the class object and print out each attribute. Or we could use the built-in `__dict__` functionality that prints out the values for a class.
+What if we wanted to add a method for printing out an entire movie's information? We could try looping through the class object and print out each attribute. Or we could use the built-in `__dict__` attribute, which stores an instance's attributes in a dictionary. Add this method inside the `Movie` class at the same indentation level as the other methods:
 
 ```python
 def get_movie_info(self):
@@ -277,7 +280,8 @@ class Movie:
     def calculate_movie_age(self):
         """Calculates the age of the movie
         """
-        self.age = 2024 - self.release_year
+        from datetime import date
+        self.age = date.today().year - self.release_year
 
     def add_sequel(self, sequel, release_year):
         """Adds a sequel to the movie
@@ -310,15 +314,11 @@ class Movie:
             else:
                 print(f"{key}: {value}")
 
-    def get_release_year(movie):
-    """Returns the release year of the movie"""
-    return movie.release_year
-
     def calculate_movie_order(self):
         """Calculates the order of movies based on release year
         """
         all_movies = [self] + self.sequels + self.prequels
-        all_movies.sort(key=get_release_year)
+        all_movies.sort(key=lambda movie: movie.release_year)
         return [movie.movie_name for movie in all_movies]
 
 a_movie = Movie("The Matrix I")
@@ -333,7 +333,7 @@ a_movie.get_movie_info()
 print(a_movie.calculate_movie_order())
 ```
 
-This is a more complex version of our `Movie` class. We've added two new methods, `add_sequel` and `add_prequel`, which take the name of the sequel or prequel and the release year of the sequel or prequel. We then create a new instance of the `Movie` class and append it to the `sequels` or `prequels` list. We also added a new method, `calculate_movie_order`, which sorts all the movies based on their release year and then returns a list of the movie names in order. To do this we use the built-in `sort` method, which sorts a list in place, and the `key` argument, which takes a function that returns a value that the list should be sorted by. In this case, we use the `get_release_year` method to get each release year, and then sort the list of movies by their release year.
+This is a more complex version of our `Movie` class. We've added two new methods, `add_sequel` and `add_prequel`, which take the name and release year of another movie. We then create a new instance of the `Movie` class and append it to the `sequels` or `prequels` list. We also added `calculate_movie_order`, which sorts all the movies by release year and returns their names in order. The built-in `sort` method sorts the list in place. Its `key` argument accepts a function; here, a short `lambda` function tells Python to use each movie's `release_year` as the sorting value.
 
 This type of programming is called **object-oriented programming** and it's a very powerful way to organize your code. It's also a very common way to organize code in Python, and you'll see it often, even if you don't write it yourself.
 
@@ -362,9 +362,9 @@ movie = dict() #Could also write {}
 
 You'll notice that the comment is after the code and is preceded by a `#` symbol. This tells Python that the rest of the line is a comment and should not be executed.
 
-### Block Commenting
+### Block Comments and Docstrings
 
-Block comments are comments that span multiple lines. They are usually used to explain a block of code, like a function or a class.
+For longer explanations, Python programmers usually place several `#` comments on consecutive lines. Functions and classes can also contain **docstrings**, which document how that code should be used.
 
 ```python
 def store_a_movie(name):
@@ -374,22 +374,21 @@ def store_a_movie(name):
     -----------------
     name(string) -- The name of the movie
     """
-    movie = dict() #Could also write {}
-    movie.movie_name = name
-    movie.directors = []
-    movie.release_year = None
-    movie.age = 0
-    movie.sequels = []
-    movie.prequels = []
+    movie = {
+        "movie_name": name,
+        "directors": [],
+        "release_year": None
+    }
+    return movie
 ```
 
-In this example, we have a block comment that explains what the `store_a_movie` function does. The comment is enclosed in triple quotes, which tells Python that the comment spans multiple lines. This is a common way to write block comments in Python.
+In this example, the triple-quoted string is the first statement inside the function, so Python treats it as the function's **docstring**. Triple-quoted strings are not general-purpose comments: when they appear elsewhere, they are simply multiline string values.
 
 ```python
 print(a_movie.add_directors.__doc__) # To view the docstring for the method
 ```
 
-You'll notice that earlier we were able to print out the block comment for the `add_directors` method. This is because the block comment is actually a special type of comment called a **docstring** that is used to document a function or a class. The docstring is the first thing that appears in a function or class and is enclosed in triple quotes. It's a good idea to add a docstring to every function and class you write, as it helps other people understand your code and also helps you remember what your code does.
+Earlier, we were able to print the `add_directors` documentation because it is a **docstring**. A docstring is the first statement in a function, method, class, or module and is conventionally enclosed in triple quotes. Adding concise docstrings to reusable functions and classes helps other people understand the code and helps you remember how to use it later.
 
 ### Documentation
 
@@ -417,7 +416,7 @@ Now click on the link to the `pathlib` module.
 
 ![Pathlib Methods](../../assets/images/pathlib_source_link.png)
 
-First take a look at the [source code!](https://github.com/python/cpython/blob/3.8/Lib/pathlib.py){target="_blank"} Notice how it's organized, and try and find the documentation for the `class Path` (*hint* use control F).
+First take a look at the current [`pathlib` source code](https://github.com/python/cpython/blob/main/Lib/pathlib/__init__.py){target="_blank"}. Notice how it's organized, and try to find the definition of `class Path` (*hint*: use Control+F or Command+F).
 
 Let's take a look at the methods in the `class Path` [https://docs.python.org/3/library/pathlib.html#methods](https://docs.python.org/3/library/pathlib.html#methods){target="_blank"}. How would we would print out the current working directory using `pathlib`?
 
@@ -443,7 +442,7 @@ Or we can use the `from` keyword (reserved word) to import a specific class or f
 from pathlib import Path
 ```
 
-Both options work exactly the same when we use them in our code, but the second option is a little more concise and is often used when we only need to use one class or function.
+Both options give us access to the same `Path` class, but they create different names in our script. With `import pathlib`, we write `pathlib.Path()`. With `from pathlib import Path`, we write the more concise `Path()`.
 
 With import statements, you can also alias the module or class you're importing. This is often used to make the code more readable or to avoid conflicts with other classes or functions that have the same name.
 
@@ -479,7 +478,13 @@ file = Path('US-National-Parks_RecreationVisits_1979-2023.csv')
 print(file, type(file))
 ```
 
-Now depending on where you file is located, you might need to change the path (often files are in your Downloads folder, in which case you might write `Users/user_name/Downloads/US-National-Parks_RecreationVisits_1979-2023.csv`). Remember computers need the **exact path**, so if you're not sure where your file is located, you can use the `cwd` method to print out the current working directory and then add the file name to the end of the path.
+Depending on where your file is located, you might need to change the path. `pathlib` lets us construct paths that work across macOS, Linux, and Windows. For example, if the file is in your Downloads folder, use:
+
+```python
+file = Path.home() / "Downloads" / "US-National-Parks_RecreationVisits_1979-2023.csv"
+```
+
+Computers need the **exact path**, so if you're unsure where Python is looking, use `Path.cwd()` to print the current working directory.
 
 Now if this code worked, it should show you the exact file path of your spreadsheet and then the type of the object, either `<class 'pathlib.PosixPath'>` or `<class 'pathlib.WindowsPath'>`. Not to get too complicated but this is because the `Path` class is a subclass of the `PosixPath` class (not really going to get into subclassing but think of it as building classes on top of one another - like Lego or Jenga).
 
@@ -507,7 +512,7 @@ For example we could use the [`open` built-in function in Python](https://docs.p
 To open a file for reading (input), we just do:
 
 ```python
-input_file = open("US-National-Parks_RecreationVisits_1979-2023.csv","r")
+input_file = open("US-National-Parks_RecreationVisits_1979-2023.csv", "r", encoding="utf-8")
 text = input_file.read()
 print(text)
 input_file.close()
@@ -517,22 +522,22 @@ Here, we use the `open` function to open a file in mode "r" (read). `open` retur
 
 ```python
 file = Path('US-National-Parks_RecreationVisits_1979-2023.csv')
-input_file = open(file,"r")
+input_file = open(file, "r", encoding="utf-8")
 text = input_file.read()
 print(text)
 input_file.close()
 ```
 
-At the end, we can close the file to save some memory, but even if we don't do it explicitly, Python will eventually catch on to the fact that it isn't being used anymore and do it for us. This isn't a huge concern unless you're opening thousands of files or the files you're opening are very, very large.
+At the end, we close the file so that system resources are released and any pending changes are written. Forgetting to close a file can produce unreliable behavior, so Python's `with` syntax is usually the safer choice.
 
 Often, you'll see file handling used with the `with` keyword (reserved word again!):
 
 ```python
-with open("US-National-Parks_RecreationVisits_1979-2023.csv","r") as input_file:
+with open("US-National-Parks_RecreationVisits_1979-2023.csv", "r", encoding="utf-8") as input_file:
     print(input_file.read())
 ```
 
-This is functionally the same as our last example. The only difference is that the file is automatically closed at the end of the block. You can use whichever convention you like, but keep both in mind because they're both pretty common in the wild.
+This is functionally similar to our last example, but the file is automatically closed at the end of the block, even if an error occurs. You will see both conventions, but prefer `with` for your own code.
 
 ### File Output
 
@@ -550,9 +555,9 @@ File output is very similar. We just use mode `w`, which overwrites the file spe
 To understand file output, let's try working with a file that doesn't exist. Try pasting this code in your script.
 
 ```python
-f = open("new_text.txt","w")
-for i in range(0,100):
-    f.write(str(i**2)+"\n")
+with open("new_text.txt", "w", encoding="utf-8") as output_file:
+    for i in range(0, 100):
+        output_file.write(str(i**2) + "\n")
 ```
 
 Once you run it, you should see a new file in your directory called `new_text.txt`, which should be a text file, containing a list of numbers. We created those numbers using the built-in `range` function and the `write` method.
@@ -561,7 +566,7 @@ Here, there's something just a little tricky. `i` and `i**2` are  integers, but 
 
 To get around this, we can convert from int to string using the built-in `str` class constructor `str()` to create a new string that's the *string representation* of the integer we pass in. So even though the integer 4 and the string "4" look the same, they're different objects and different ways to represent data.
 
-For the same reason that we can't do `f.write(4)`, we also can't do `"4"+4` (or, for that matter, `4+"4"`). We have to explicitly tell python whether we want it to treat each value as an integer or a string. `"4"+str(4)` produces "44" while `int("4")+4` returns 8.
+For the same reason that we can't do `output_file.write(4)`, we also can't do `"4" + 4` (or, for that matter, `4 + "4"`). We have to explicitly tell Python whether we want it to treat each value as an integer or a string. `"4" + str(4)` produces `"44"`, while `int("4") + 4` returns `8`.
 
 The second new thing here is the newline character "\n", which is technically called a LF or Line Feed. This inserts a line break between characters in a string. If you don't include it, all the numbers will be on the same line.
 
@@ -569,6 +574,12 @@ The second new thing here is the newline character "\n", which is technically ca
 
 1. Try writing adding a function to your `Movie` class that saves the movie's information to a file. Then try writing the information to a file using the `open` function.
 2. Try adding a function to your `Movie` class that reads in a file and sets the movie's information based on the file. Then try reading in the information from a file using the `open` function.
+
+::: {.callout-tip}
+## Prefer Structured Data for Real Projects
+
+The text format in this exercise is useful for practicing file input and output, but splitting lines on punctuation can break when values contain unexpected characters or fields are missing. For a real dataset, prefer a structured format such as JSON and use Python's built-in [`json` module](https://docs.python.org/3/library/json.html){target="_blank"} to read and write it.
+:::
 
 If you're getting stuck here's a possible solution, if you click on the toggle below it will show you the solution.
 
@@ -585,7 +596,7 @@ def save_movie_info(self, file_name):
 	-----------------
 	file_name(string) -- The name of the file to save the movie's information to
 	"""
-	with open(file_name, "w") as f:
+	with open(file_name, "w", encoding="utf-8") as f:
 		f.write(f"Movie Name: {self.movie_name}\n")
 		f.write(f"Directors: {', '.join(self.directors)}\n")
 		f.write(f"Release Year: {self.release_year}\n")
@@ -618,7 +629,7 @@ def read_movie_info(self, file_name):
 	-----------------
 	file_name(string) -- The name of the file to read the movie's information from
 	"""
-	with open(file_name, "r") as f:
+	with open(file_name, "r", encoding="utf-8") as f:
 		lines = f.readlines()
 		self.movie_name = lines[0].split(": ")[1].strip()
 		self.directors = lines[1].split(": ")[1].strip().split(", ")

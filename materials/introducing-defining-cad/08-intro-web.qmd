@@ -204,18 +204,31 @@ Use your existing group repository (the one assigned to your group in the course
 
 **Step 2: Add your HTML files**
 
-Create a folder for your digital object (e.g., `member-name-object/`) and add your `index.html` file there. You might also create an `index.html` at the root of the repository that links to all group members' pages.
+Create a folder for your digital object (e.g., `digital-objects/member-name/`) and add your `index.html` file there.
+
+::: {.callout-important}
+### Your Group Repository Needs a Root `index.html`
+
+Your group must also create an `index.html` in the **root of the repository**. This file is the homepage GitHub Pages displays at your group's main website address. It should identify your group and link to each member's page using relative links such as:
+
+```html
+<a href="./digital-objects/member-name/">Member's digital object</a>
+```
+
+Without a root `index.html`, individual pages may still exist at their full URLs, but the group's main website address will not have a homepage.
+:::
 
 Example structure:
 ```
-is310-fall-2026-group-*/digital-objects/
-├── index.html (main showcase page with links to members)
-├── member1-name/
-│   └── index.html
-├── member2-name/
-│   └── index.html
-└── member3-name/
-    └── index.html
+is310-fall-2026-group-*/
+├── index.html (group homepage with links to members)
+└── digital-objects/
+    ├── member1-name/
+    │   └── index.html
+    ├── member2-name/
+    │   └── index.html
+    └── member3-name/
+        └── index.html
 ```
 
 **Step 3: Enable GitHub Pages**
@@ -228,7 +241,9 @@ GitHub will now host your site.
 
 **Step 4: Find your live site**
 
-Your group's website will be hosted at: `https://cultureasdata-uiuc.github.io/is310-fall-2026-group-*/digital-objects`
+Your group's homepage will be hosted at: `https://cultureasdata-uiuc.github.io/is310-fall-2026-group-*/`
+
+Individual project pages will use their folder paths, such as: `https://cultureasdata-uiuc.github.io/is310-fall-2026-group-*/digital-objects/member-name/`
 
 You can check deployment status in the **Actions** tab, just like with the personal github.io option.
 
