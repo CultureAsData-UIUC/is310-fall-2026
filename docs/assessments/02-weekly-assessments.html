@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -341,7 +376,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../assessments/06-collecting-digitizing-culture.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mass Digitization Assignment</span></a>
+ <span class="menu-text">Archived: Mass Digitization Assignment</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -366,8 +401,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#how-to-get-participation-credit" id="toc-how-to-get-participation-credit" class="nav-link" data-scroll-target="#how-to-get-participation-credit">How to get participation credit?</a></li>
   <li><a href="#grading-policy" id="toc-grading-policy" class="nav-link" data-scroll-target="#grading-policy">Grading Policy</a></li>
-  <li><a href="#group-labs-and-collaboration" id="toc-group-labs-and-collaboration" class="nav-link" data-scroll-target="#group-labs-and-collaboration">Group Labs and Collaboration</a></li>
-  <li><a href="#grading-policy-1" id="toc-grading-policy-1" class="nav-link" data-scroll-target="#grading-policy-1">Grading Policy</a></li>
+  <li><a href="#group-collaboration-and-work-logs" id="toc-group-collaboration-and-work-logs" class="nav-link" data-scroll-target="#group-collaboration-and-work-logs">Group Collaboration and Work Logs</a></li>
   </ul></li>
   <li><a href="#weekly-coding-assignments-25" id="toc-weekly-coding-assignments-25" class="nav-link" data-scroll-target="#weekly-coding-assignments-25">Weekly Coding Assignments (25%)</a>
   <ul class="collapse">
@@ -420,7 +454,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>Weekly Participation</td>
 <td>25%</td>
-<td>Complete assigned readings and short annotations before class. During class, contribute to discussions, participate in group labs, post in the Zoom chat, and offer peer support.</td>
+<td>Complete assigned readings and short annotations before class. During class, contribute to discussions, group project work, Zoom chat, and peer support.</td>
 </tr>
 <tr class="even">
 <td>Weekly Coding Assignments</td>
@@ -559,7 +593,7 @@ flowchart TD
 <li>Adding a substantive question, comment, link, or example in Zoom chat.</li>
 <li>Responding to a classmate’s point.</li>
 <li>Helping your group make sense of a reading, dataset, or activity.</li>
-<li>Contributing visibly to a group lab or brief synthesis activity.</li>
+<li>Contributing visibly to a group project work session and helping update the group’s work log.</li>
 <li>Asking a question during Thursday technical review.</li>
 <li>Demoing your code, bug, output, or workflow during class.</li>
 <li>Helping a peer troubleshoot during in-class homework or project work time.</li>
@@ -635,24 +669,56 @@ flowchart TD
 </div>
 <hr>
 </section>
-<section id="group-labs-and-collaboration" class="level3">
-<h3 class="anchored" data-anchor-id="group-labs-and-collaboration">Group Labs and Collaboration</h3>
-<p>Groups will be assigned within the first two weeks of class after an initial survey of student interests and backgrounds. This group will work together to complete active in-class activities and occasional out-of-class assignments, which will be documented and submitted via GitHub, as well as collaborate on the semester-long project.</p>
-<p>On group lab days, your lab work counts as the <strong>contributed</strong> part of participation. To receive full participation credit for the day, you still need both preparation and a visible contribution to the group lab, live discussion, or Zoom chat.</p>
-<p>Major group assignments will be linked from the weekly schedule when they are assigned.</p>
-<section id="structure-and-expectations" class="level4">
-<h4 class="anchored" data-anchor-id="structure-and-expectations">Structure and Expectations</h4>
+<section id="group-collaboration-and-work-logs" class="level3">
+<h3 class="anchored" data-anchor-id="group-collaboration-and-work-logs">Group Collaboration and Work Logs</h3>
+<p>Your assigned group will collaborate throughout the semester on the collective website, shared GitHub repository, resources, and principles. Instead of submitting a separate lab report each time you meet, your group will maintain a <code>group-work-log.md</code> file in the root of its GitHub repository.</p>
+<p>Update the log during or immediately after each breakout-room or project-work session. The log is a lightweight record of what happened, not a polished reflection. It should make decisions, next steps, and individual labor visible without creating unnecessary busy work.</p>
+<p>On group work days, your work counts as the <strong>contributed</strong> part of participation. To receive full participation credit for the day, you still need both preparation and a visible contribution to the group project, live discussion, or Zoom chat.</p>
+<section id="what-group-work-should-build" class="level4">
+<h4 class="anchored" data-anchor-id="what-group-work-should-build">What Group Work Should Build</h4>
+<p>Group work should gradually produce useful materials for the semester-long project. Depending on the week, this might include:</p>
 <ul>
-<li><strong>Weekly prompts and activities:</strong> Each week, your group may be assigned a prompt or task that builds on the week’s materials. This could involve finding digital objects, exploring datasets, testing a tool, or applying a concept from the readings.</li>
-<li><strong>In-class synthesis:</strong> Some weeks, your group will briefly present your findings to the class. Not every group will present every week, but even when your group is not presenting, you are still expected to submit your work to GitHub and be prepared to discuss it if called upon. Presentations should be clear, concise, and demonstrate your group’s understanding and application of the week’s materials.</li>
-<li><strong>Documentation and submission:</strong> All group work, whether presented in class or not, must be documented and submitted to your group’s GitHub repository. This documentation should include a summary of your group’s activities, details on how the labor was divided, and any relevant reflections on the process. Clear and detailed documentation is crucial for both grading and for your group’s progress on the semester-long project.</li>
+<li>Scholarship related to your shared area of culture as data.</li>
+<li>Relevant datasets, archives, collections, APIs, platforms, or tools.</li>
+<li>Notes about access, ownership, licensing, metadata, infrastructure, or limitations.</li>
+<li>Shared terminology, categories, and principles for representing your cultural materials.</li>
+<li>Website pages, navigation, repository documentation, or peer review of individual work.</li>
 </ul>
+<p>Add substantive findings to the relevant project file or website page. The work log should briefly record the activity and link to the resulting file, issue, commit, or page whenever possible.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Group Work Log Template
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## YYYY-MM-DD</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### What We Worked On</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Briefly describe the focus of the session.</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">### Decisions</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Record important choices, questions, or disagreements.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">### Contributions</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First name: specific research, writing, coding, review, or coordination.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### Next Steps</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Name the next task and who plans to take it on.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
 </section>
+<section id="grading-policy-1" class="level4">
+<h4 class="anchored" data-anchor-id="grading-policy-1">Grading Policy</h4>
+<p>Group work logs do not receive a separate grade. They provide evidence for weekly participation and the collective portion of the semester-long project. Individual contributions will be assessed holistically using the logs, project files, GitHub history, peer review, and final reflection. A raw commit count does not capture the quality or full range of collaborative labor.</p>
+<p>If someone is absent, record who was present and what the group accomplished. Other group members will not lose credit because someone was absent, and the log should not attribute work to an absent student as if they completed it.</p>
 </section>
-<section id="grading-policy-1" class="level3">
-<h3 class="anchored" data-anchor-id="grading-policy-1">Grading Policy</h3>
-<p>Your grade for weekly group work will be based on your active participation in presentations, the quality of your contributions, and the effectiveness of your collaboration. This includes both in-class activities and the quality of the work submitted on GitHub. This grade will not be impacted if a member of your group is absent or does not participate, though the group will be required to pivot their schedule and plan in that event.</p>
-<p>Weekly group work must be <strong>submitted to GitHub by midnight prior to the class when it is due</strong>. This ensures that the work is available for review and that all group members are accountable for their contributions. <strong>Late submissions will receive half credit, as long as they are accompanied by an explanation for the delay. Repeated late submissions will result in the group meeting with the Instructor.</strong></p>
 </section>
 </section>
 <section id="weekly-coding-assignments-25" class="level2">

@@ -12,7 +12,7 @@ Also the materials from our in-class scraping are available to download. Here is
 ::: {.callout-important}
 ## A Note on This Lesson (Updated 2026)
 
-The web changed underneath this lesson. When it was first written, you could scrape a Fandom wiki with a few lines of Python. Today those sites sit behind bot protection that blocks automated requests entirely, and the `cloudscraper` library we used to get around it no longer works.
+The web changed underneath this lesson. When it was first written, you could scrape a Fandom wiki with a few lines of Python. Today Fandom pages sit behind bot protection that blocks basic automated requests, and the `cloudscraper` approach used in an earlier version of this lesson no longer works reliably for this site.
 
 Rather than pretend otherwise, this lesson now walks you into that wall on purpose. You will see a real `403`, understand why it happens, and then work through what a researcher should actually do about it. The technical skills are unchanged — `requests` and `BeautifulSoup` work exactly as they always have — but you'll also come away knowing how to tell the difference between a site that is open to you and one that has asked you to stay out.
 :::
@@ -35,14 +35,14 @@ This method has also been used by scholars to do community-driven data preservat
 
 ### Is Web Scraping Legal or Ethical?
 
-Technically, most publicly available internet data is considered legal to collect, even if it's not explicitly licensed. In 2019, "the Ninth Circuit Court of Appeals ruled that automated scraping of publicly accessible data likely does not violate the Computer Fraud and Abuse Act (CFAA)."[^1] However, there are some important caveats to this. For example, this ruling only applies to US based websites and the laws in other countries might be different. One of the more recent and important European developments was the passing of the General Data Protection Regulation (GDPR) in 2018, which has implications for web scraping. In particular, the GDPR bans the scraping of emails and personal names from websites. More recently, a consortium of regulators from multiple countries released a joint statement warning social media companies that they must protect user data from scraping.[^2]
+There is no general rule that anything publicly visible online is legal to scrape and reuse. In *hiQ Labs v. LinkedIn*, the Ninth Circuit held that accessing public LinkedIn profiles likely did not violate the Computer Fraud and Abuse Act's prohibition on access "without authorization," but that decision addressed one federal statute and one set of facts. Copyright, contracts, privacy law, state law, and restrictions on reuse may still apply.[^1] Outside the United States, different laws apply. Under the European Union's General Data Protection Regulation (GDPR), scraping that processes personal data requires a lawful basis and compliance with principles such as transparency, purpose limitation, and data minimization; the GDPR does not simply ban or permit scraping based on whether names or email addresses are public. The European Data Protection Board offers current guidance on these obligations [https://www.edpb.europa.eu/news/edpb-sheds-light-on-anonymisation-and-web-scraping-for-generative-ai-and-adopts-final-version_en](https://www.edpb.europa.eu/news/edpb-sheds-light-on-anonymisation-and-web-scraping-for-generative-ai-and-adopts-final-version_en){target="_blank"}. This lesson is an introduction to responsible research practice, not legal advice.
 
-In terms of ethics, web scraping can be a bit of a grey area. It's generally considered ethical to scrape publicly available data, but it's not ethical to scrape data from a website that has a terms of service that prohibits scraping. It can be difficult to find those terms of service, but one more obvious example of a website banning scraping is if it prohibits scraping in its `robots.txt` file. A robots.txt file is a file that websites use to tell web crawlers which pages they are allowed to scrape.
+In terms of ethics, public availability is a starting point rather than automatic permission. Researchers should consider the site's terms, licenses, technical signals, community norms, server burden, the expectations of the people represented, and the possible harms of collecting or republishing the material. A site's `robots.txt` file communicates instructions to automated crawlers, but it is not a license, a contract, or a complete ethical framework. It tells us something important about a site's operational preferences, not everything we need to know about whether a project is responsible.
 
 
 ![A screenshot of the New York Times robots.txt file.](../../assets/images/robots.png)
 
-For example,the above image is of the robots.txt file for the New York Times website is [https://www.nytimes.com/robots.txt](https://www.nytimes.com/robots.txt){target="_blank"}. We can see that it lists a number of pages that are not allowed to be scraped (those are the ones with the `Disallow` directive). You might also come across `robots.txt` files that have a `Crawl-delay` directive, which tells web crawlers how long to wait between requests. The reason this is important is that if you try to web scrape a website that has a `robots.txt` file that prohibits scraping, you could be banned from the website. This is because the website might think you are a web crawler and not a human, and it might block your IP address.
+For example, the image above shows the *New York Times* `robots.txt` file [https://www.nytimes.com/robots.txt](https://www.nytimes.com/robots.txt){target="_blank"}. It lists paths that particular crawlers are asked not to access using the `Disallow` directive. You might also encounter a `Crawl-delay` directive asking crawlers to wait between requests. Ignoring these instructions can burden a site and may lead it to block your IP address, but following them does not override terms of service, copyright, privacy, or other obligations.
 
 What to collect and how to collect it is a big part of the ethics of web scraping. Melanie Walsh has a great overview of some of these tradeoffs:
 
@@ -52,7 +52,7 @@ What to collect and how to collect it is a big part of the ethics of web scrapin
 
 > In my own research, I have started seeking explicit permission from internet users when I want to quote them in a published article. In this book, I only share internet data that meets a certain threshold of publicness, such as tweets from verified Twitter accounts or Reddit posts with a certain number of upvotes. This is an approach that I have developed based on some of the models and readings included below.
 
-IRB refers to the Institutional Review Board, which is a committee that reviews and approves research involving human subjects at universities, and most of the time, web scraping or accessing digital data is considered not to be human subjects research. However, even if we don't need IRB approval, it's still important to think about the ethics of web scraping and to consider the potential consequences of our actions. I personally think Walsh's approach is a good one: to think about the specifics of your research project and to develop both a legal *and* an ethical framework that responds to those specifics. And also to think about the consent of the people whose data you are collecting. There's no one size fits all answer, but we should always think about not only if we can collect data, but also if we should and how we should.
+IRB refers to the Institutional Review Board, which reviews research involving human subjects at universities. Whether a web-data project requires review depends on the people, data, interactions, risks, and institutional rules involved; researchers should not make that determination solely because material is publicly accessible. Even when formal review is not required, we still need to consider the consequences of collection and publication. I think Walsh's approach is a useful one: develop legal and ethical practices that respond to the specifics of the project, including the expectations and consent of the people whose data you are collecting. There is no one-size-fits-all answer, but we should always ask not only whether we can collect data, but whether and how we should.
 
 ![A screenshot from Walsh chapter.](../../assets/images/walsh_web_scraping.png)
 
@@ -68,9 +68,18 @@ The first step is to install our required packages into our virtual environment.
 
 If you have already created your virtual environment, then you can either activate it using Visual Studio Code or by using the terminal. If you are using the terminal, you can activate your virtual environment by running the following command:
 
+For macOS or WSL:
+
 ```bash
 source venv/bin/activate
-pip install requests beautifulsoup4
+python -m pip install requests beautifulsoup4 rich
+```
+
+For Windows PowerShell:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+python -m pip install requests beautifulsoup4 rich
 ```
 
 Notice here we are installing two packages: `requests` and `beautifulsoup4` in a single line. **You can install as many packages as you want in a single `pip install` command, just separate them with a space.**
@@ -588,7 +597,7 @@ Notice the genuinely interesting thing here. We just read the `robots.txt` file 
 
 If you search for how to get around this, you will very quickly find the `cloudscraper` library [https://github.com/VeNoMouS/cloudscraper](https://github.com/VeNoMouS/cloudscraper){target="_blank"}, which for several years was the standard answer. It worked by imitating a browser closely enough to pass Cloudflare's challenge. Earlier versions of this very lesson taught it.
 
-**It does not work anymore.** As of this writing, running it against a Fandom wiki returns exactly the same 403:
+**It is not a reliable solution for this site.** When this lesson was verified in September 2026, running it against this Fandom wiki returned exactly the same 403:
 
 ```python
 import cloudscraper
@@ -599,7 +608,7 @@ print(response.status_code)   # 403
 print(response.text[:60])     # <!DOCTYPE html><html lang="en-US"><head><title>Just a moment
 ```
 
-I am leaving this here rather than quietly deleting it, because the failure is the lesson. Bot detection is an **arms race**: the site improves its detection, the workaround library improves its imitation, the site improves again. `cloudscraper` lost. Whatever library replaces it will also eventually lose, because one side is a volunteer open-source project and the other is a company with a large security budget.
+I am leaving this here rather than quietly deleting it, because the failure is the lesson. Bot detection is an **arms race**: the site improves its detection, the workaround library improves its imitation, and the site improves again. This particular workaround stopped working. Any research pipeline that depends on continually evading a site's defenses is likely to remain fragile because both sides keep changing.
 
 This matters for you as a researcher in two ways. **Practically**, any research pipeline built on evasion is a pipeline that will break, usually silently and usually right when you need it. **Ethically**, once a site has put up an active block, you can no longer tell yourself that scraping it is unobjectionable — you have been told no in the clearest terms a server has available. Writing code specifically to defeat that block is a meaningfully different act from writing code to read a page that was handed to you freely.
 
@@ -636,7 +645,7 @@ Let's start where we always start — the `robots.txt` file [https://tolkiengate
 
 Compare the tone of this to the Fandom file. This one is addressed to a person. It assumes you might be a human being who wants to help, and its one substantive request is simply: *don't go too fast*. The rest of the file blocks specific badly-behaved commercial crawlers by name (`MJ12bot`, `HTTrack`, `WebZIP`) — but there is no blanket ban on the sort of small, slow, scholarly scraping we want to do.
 
-This is about as clear an invitation as you will find, and it comes with an obligation attached. **We are going to add a `time.sleep()` between our requests, and this time it is not decorative** — the site has explicitly asked us to be slow, and if we aren't, we get blocked and we deserve it.
+This file does not grant unrestricted permission, but it does give us unusually direct operational guidance for a small, good-faith request: identify ourselves, move slowly, and stop if the server refuses or rate-limits us. **We are going to add a `time.sleep()` between our requests, and this time it is not decorative.**
 
 We should also identify ourselves honestly. Rather than pretending to be a browser, we'll send a `User-Agent` that says who we are and how to reach us:
 
@@ -659,11 +668,11 @@ Here is one. There's been a recent adaptation of *The Lord of the Rings* by Amaz
 
 ![](../../assets/images/rings_of_power.png)
 
-Specifically: a wiki article about a character drawn from Tolkien's books will cite those books. An article about a character invented for the show has very little to cite. So **the number of references on a character's wiki page is a rough measure of how much published text stands behind that character.** That gives us something concrete to scrape.
+Specifically: a wiki article about a character drawn from Tolkien's books will often cite those books, while an article about a character invented for the show has different sources available to it. So **the number of references on a character's wiki page gives us a rough measure of how densely Tolkien Gateway editors have documented that character.** That gives us something concrete to scrape, but it does not directly measure how much Tolkien wrote.
 
 #### Finding the Characters
 
-Tolkien Gateway organizes its pages with MediaWiki categories, and it has one for exactly what we want: [https://tolkiengateway.net/wiki/Category:The_Rings_of_Power_(TV_series)_characters](https://tolkiengateway.net/wiki/Category:The_Rings_of_Power_(TV_series){target="_blank"}_characters).
+Tolkien Gateway organizes its pages with MediaWiki categories, and it has one relevant to our question: [The Rings of Power (TV series) characters](https://tolkiengateway.net/wiki/Category:The_Rings_of_Power_(TV_series)_characters){target="_blank"}.
 
 If you open this page in your browser and use the inspector, you'll see that MediaWiki uses a consistent structure for category listings: the members live inside a `div` with the id `mw-pages`, grouped into `div` elements with the class `mw-category-group`, and each individual page is a link inside a list item.
 
@@ -704,11 +713,11 @@ Bronwyn
 ...
 ```
 
-Now, look carefully at that list, because it is telling us something we didn't ask for. There's no Galadriel here. No Elrond, no Sauron. This category contains *only* the characters **invented for the show** — the ones that exist nowhere else, and therefore need a Rings of Power page on a Tolkien wiki. Characters from the books already have pages, filed under their own categories.
+Now, look carefully at that list, because it is telling us something we didn't ask for. There's no Galadriel here. No Elrond, no Sauron. At the time this lesson was checked, this category appeared to contain the characters **invented for the show** rather than every character who appears in it. Characters adapted from Tolkien's writing already have pages filed under their own categories. That interpretation is based on inspecting the category members, not on a machine-readable field supplied by the wiki, so it should be documented and rechecked.
 
 That is a genuinely useful accident, and it is worth pausing on. **The category system is itself an argument.** Someone in this community made an editorial decision about what counts as a Rings of Power character versus a Tolkien character, and our data inherits that decision whether we notice it or not. This happens constantly in humanities data work: the categories you scrape were made by people, for their own purposes, and they encode a point of view. Part of your job as a researcher is to notice this rather than treat the categories as neutral facts.
 
-For our comparison, it means we get the "invented" group for free, and we'll have to assemble the "from the books" group ourselves.
+For our comparison, it means the category supplies a provisional "created for the show" group, while we must assemble and document a Tolkien-derived comparison group ourselves.
 
 #### Scraping an Individual Character Page
 
@@ -720,7 +729,11 @@ Two things are useful to us. The references are in an ordered list with the clas
 import time
 
 def get_soup(url):
-	response = requests.get(url, headers=HEADERS, timeout=10)
+	try:
+		response = requests.get(url, headers=HEADERS, timeout=10)
+	except requests.RequestException as error:
+		print(f"Could not reach {url}: {error}")
+		return None
 	if response.status_code != 200:
 		print(f"Failed to get {url}: {response.status_code}")
 		return None
@@ -730,7 +743,7 @@ def get_soup(url):
 def get_character_details(character_link):
 	soup = get_soup(BASE + character_link)
 	if soup is None:
-		return {"reference_count": 0, "categories": [], "category_count": 0}
+		return None
 	references = soup.select("ol.references li")
 	categories = [category.get_text() for category in soup.select("#mw-normal-catlinks li a")]
 	return {
@@ -742,7 +755,7 @@ def get_character_details(character_link):
 print(get_character_details("/wiki/Galadriel"))
 ```
 
-Notice a few things about this function. It returns a dictionary rather than printing, so the calling code decides what to do with the data. It handles failure by returning an empty result instead of crashing, so one bad page doesn't kill an hour-long scrape. And the `time.sleep(1)` lives inside `get_soup()`, which means **every** request we make is automatically polite — we cannot forget to slow down, because the slowdown is built into the only function that talks to the network.
+Notice a few things about this function. It returns a dictionary rather than printing, so the calling code decides what to do with the data. A failed request returns `None`, which lets the calling code skip or separately record the failure. It does **not** convert failure into a reference count of zero, because that would turn missing evidence into a plausible but false observation. The `time.sleep(1)` lives inside `get_soup()`, which means **every** successful request we make is automatically slowed down.
 
 Running this on Galadriel gives us `'reference_count': 85`. Eighty-five citations, on one character.
 
@@ -757,12 +770,15 @@ def fetch_category_characters(category, source):
 		return []
 	characters_data = []
 	for character in soup.select("#mw-pages .mw-category-group li a"):
+		details = get_character_details(character.get("href"))
+		if details is None:
+			continue
 		character_data = {
 			"character": character.get_text(),
 			"character_link": character.get("href"),
 			"source": source
 		}
-		character_data.update(get_character_details(character.get("href")))
+		character_data.update(details)
 		characters_data.append(character_data)
 	return characters_data
 
@@ -770,19 +786,30 @@ def fetch_named_characters(names, source):
 	characters_data = []
 	for name in names:
 		character_link = "/wiki/" + name.replace(" ", "_")
+		details = get_character_details(character_link)
+		if details is None:
+			continue
 		character_data = {"character": name, "character_link": character_link, "source": source}
-		character_data.update(get_character_details(character_link))
+		character_data.update(details)
 		characters_data.append(character_data)
 	return characters_data
 
-CANON_CHARACTERS = ["Galadriel", "Elrond", "Sauron", "Celebrimbor", "Gil-galad",
-                    "Isildur", "Elendil", "Tar-Míriel", "Durin IV", "Círdan", "Ar-Pharazôn"]
+TOLKIEN_DERIVED_CHARACTERS = ["Galadriel", "Elrond", "Sauron", "Celebrimbor", "Gil-galad",
+                              "Isildur", "Elendil", "Tar-Míriel", "Durin IV", "Círdan", "Ar-Pharazôn"]
 
 invented_characters = fetch_category_characters("Category:The Rings of Power (TV series) characters", "Created for the show")
-canon_characters = fetch_named_characters(CANON_CHARACTERS, "From Tolkien's writings")
+tolkien_derived_characters = fetch_named_characters(
+	TOLKIEN_DERIVED_CHARACTERS, "Tolkien-derived"
+)
 ```
 
-**This will take a few minutes to run**, because we are making 62 requests with a one-second pause between each. That is the correct behavior. If it finished instantly, we would be hammering a volunteer-run wiki.
+**This will take a few minutes to run**, because we are making about 63 requests with a one-second pause between each. That is the correct behavior. If it finished instantly, we would be hammering a volunteer-run wiki.
+
+::: {.callout-warning}
+## This Is an Exploratory Comparison, Not a Neutral Sample
+
+The two groups were produced differently. One comes from a community-authored category; the other is a hand-picked list of prominent characters. The labels also require interpretation, especially when an adaptation combines, renames, or substantially changes figures from earlier texts. Our comparison can reveal a pattern worth investigating, but it cannot establish a comprehensive measure of adaptation fidelity. A research-ready version would document selection rules, verify every classification, preserve uncertain cases, and test whether the result changes under a different sample.
+:::
 
 Now let's sort everything by reference count and display it with the `Rich` library from our last assignment:
 
@@ -792,10 +819,10 @@ from rich.table import Table
 
 console = Console()
 
-all_characters = canon_characters + invented_characters
+all_characters = tolkien_derived_characters + invented_characters
 all_characters.sort(key=lambda character: character["reference_count"], reverse=True)
 
-table = Table(title="Textual Evidence Behind Rings of Power Characters")
+table = Table(title="References on Tolkien Gateway Character Pages")
 table.add_column("Character", style="cyan")
 table.add_column("References", style="magenta")
 table.add_column("Categories", style="yellow")
@@ -811,21 +838,21 @@ console.print(table)
 Which gives us:
 
 ```bash
-         Textual Evidence Behind Rings of Power Characters
+             References on Tolkien Gateway Character Pages
 ┏━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃ Character   ┃ References ┃ Categories ┃ Source                  ┃
 ┡━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ Galadriel   │ 85         │ 12         │ From Tolkien's writings │
-│ Sauron      │ 80         │ 16         │ From Tolkien's writings │
-│ Celebrimbor │ 40         │ 13         │ From Tolkien's writings │
-│ Círdan      │ 37         │ 16         │ From Tolkien's writings │
-│ Gil-galad   │ 36         │ 12         │ From Tolkien's writings │
-│ Elrond      │ 35         │ 15         │ From Tolkien's writings │
-│ Ar-Pharazôn │ 17         │ 8          │ From Tolkien's writings │
-│ Elendil     │ 16         │ 13         │ From Tolkien's writings │
-│ Isildur     │ 14         │ 12         │ From Tolkien's writings │
-│ Tar-Míriel  │ 10         │ 5          │ From Tolkien's writings │
-│ Durin IV    │ 4          │ 8          │ From Tolkien's writings │
+│ Galadriel   │ 85         │ 12         │ Tolkien-derived          │
+│ Sauron      │ 80         │ 16         │ Tolkien-derived          │
+│ Celebrimbor │ 40         │ 13         │ Tolkien-derived          │
+│ Círdan      │ 37         │ 16         │ Tolkien-derived          │
+│ Gil-galad   │ 36         │ 12         │ Tolkien-derived          │
+│ Elrond      │ 35         │ 15         │ Tolkien-derived          │
+│ Ar-Pharazôn │ 17         │ 8          │ Tolkien-derived          │
+│ Elendil     │ 16         │ 13         │ Tolkien-derived          │
+│ Isildur     │ 14         │ 12         │ Tolkien-derived          │
+│ Tar-Míriel  │ 10         │ 5          │ Tolkien-derived          │
+│ Durin IV    │ 4          │ 8          │ Tolkien-derived          │
 │ Disa        │ 4          │ 2          │ Created for the show    │
 └─────────────┴────────────┴────────────┴─────────────────────────┘
 ```
@@ -833,17 +860,21 @@ Which gives us:
 And if we compute the averages:
 
 ```python
-for group, label in [(canon_characters, "From Tolkien"), (invented_characters, "Created for show")]:
+for group, label in [(tolkien_derived_characters, "Tolkien-derived"),
+					 (invented_characters, "Created for show")]:
+	if not group:
+		print(f"No data collected for {label}")
+		continue
 	average = sum(character["reference_count"] for character in group) / len(group)
 	print(f"{label:18} n={len(group):3}  average references={average:.1f}")
 ```
 
 ```bash
-From Tolkien       n= 11  average references=34.0
+Tolkien-derived    n= 11  average references=34.0
 Created for show   n= 51  average references=1.3
 ```
 
-This is a real result, and it's worth thinking about what it does and does not tell you. Every single character from Tolkien's writing outranks every single invented character. The gap is not subtle — it's roughly twenty-six to one. The show draws its named leads from a small pool of heavily-documented figures and then invents a much larger supporting cast around them, which is a defensible way to adapt a body of work that is mostly genealogy and chronicle rather than scene and dialogue.
+This is a real result from this particular sample, and it's worth thinking about what it does and does not tell you. The average for the hand-picked Tolkien-derived group is roughly twenty-six times the average for the category-derived group. But the distributions overlap: Durin IV and Disa are tied at four references in the current output. More importantly, the samples were assembled differently, so the result is descriptive evidence about these pages rather than a neutral ranking of the characters or a definitive measure of fidelity.
 
 But notice what we have **actually** measured. We have not measured how much Tolkien wrote about Galadriel. We have measured **how many citations Tolkien Gateway's editors added to a wiki page about Galadriel.** Those are different things. A popular character attracts more editors, and more editors add more citations. Our number is entangled with fan attention in ways we cannot separate from this data alone. Durin IV scores a 4 despite being drawn from the appendices, because his page is short — not because Tolkien was silent about the line of Durin.
 
@@ -948,5 +979,4 @@ Once you have completed the assignment, you should **post a link to your folder*
 
 ---
 
-[^1]: Crocker, Camille Fischer and Andrew. “Victory! Ruling in hiQ v. Linkedin Protects Scraping of Public Data.” *Electronic Frontier Foundation*, September 10, 2019. [https://www.eff.org/deeplinks/2019/09/victory-ruling-hiq-v-linkedin-protects-scraping-public-data](https://www.eff.org/deeplinks/2019/09/victory-ruling-hiq-v-linkedin-protects-scraping-public-data){target="_blank"}.
-[^2]: Lomas, Natasha. “Social Media Giants Urged to Tackle Data-Scraping Privacy Risks.” *TechCrunch* (blog), August 24, 2023. [https://techcrunch.com/2023/08/24/data-scraping-privacy-risks-joint-statement/](https://techcrunch.com/2023/08/24/data-scraping-privacy-risks-joint-statement/){target="_blank"}.
+[^1]: *hiQ Labs, Inc. v. LinkedIn Corp.*, 31 F.4th 1180 (9th Cir. 2022). [https://cdn.ca9.uscourts.gov/datastore/opinions/2022/04/18/17-16783.pdf](https://cdn.ca9.uscourts.gov/datastore/opinions/2022/04/18/17-16783.pdf){target="_blank"}.

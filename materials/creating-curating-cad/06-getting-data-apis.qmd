@@ -174,7 +174,7 @@ You should copy the key into your `first_api_script.py` and then try to get data
 api_key = "API KEY HERE"
 url = 'https://the-one-api.dev/v2/character'
 authorization_headers = {
-	'Authorization: Bearer ' + api_key
+	'Authorization': 'Bearer ' + api_key
 }
 ```
 
@@ -209,8 +209,8 @@ export THE_ONE_API_KEY="YOUR_API_KEY_HERE"
 
 For Windows/PowerShell:
 
-```sh
-setx THE_ONE_API_KEY "YOUR_API_KEY_HERE"
+```powershell
+$env:THE_ONE_API_KEY = "YOUR_API_KEY_HERE"
 ```
 
 Now you can access these environment variables in your Python script by using the `os` library.
@@ -218,14 +218,13 @@ Now you can access these environment variables in your Python script by using th
 ```python
 import os
 the_one_api_key = os.environ['THE_ONE_API_KEY']
-print(the_one_api_key)
 ```
 
-However, these will only be available in the terminal you created them in, so you would have to create them every time you open a new terminal. If you want to make them available in every terminal, you can add them to your `.bashrc` or `.zshrc` file on Macs/WSL or your `profile.ps1` file on Windows.
+These commands set the variable only for the current terminal session, so you would need to run the appropriate command again after opening a new terminal. Persistent environment variables require editing your shell profile, but a credential-storage library is simpler for this course. Do not print API keys while testing because terminal output can be copied into screenshots, logs, or shared debugging messages.
 
 This is a bit more work though, and one easier option is to use a Python library for storing API keys, called `apikey` [https://github.com/ulf1/apikey](https://github.com/ulf1/apikey){target="_blank"}.
 
-In your terminal, type `pip install "apikey>=0.2.4` to install the library. Then import it into your script and write:
+In your terminal, type `python -m pip install "apikey>=0.2.4"` to install the library. Then import it into your script and write:
 
 ```python
 import apikey
@@ -378,7 +377,7 @@ time.sleep(10)
 
 Understanding how to use query parameters and how to use the `id` of data returned from an API is critical to working with APIs, as it allows you to get specific data from an API. This is especially important when working with large datasets, as it allows you to filter and sort data to get the data you need. Remember collecting all the data is not always the best option, and can actually lead to more work depending on your research question.
 
-## The Wikimedia API: Finishing What We Started
+## From Web Scraping to MediaWiki APIs
 
 Let's return to a problem we left unsolved.
 
@@ -389,6 +388,10 @@ But we noted at the time that there was a third option. Fandom, like every wiki 
 ```python
 import requests
 
+HEADERS = {
+	"User-Agent": "is310-course/1.0 (https://YOUR-USERNAME.github.io; YOUR_NETID@illinois.edu)"
+}
+
 response = requests.get("https://lotr.fandom.com/api.php", params={
 	"action": "query",
 	"list": "categorymembers",
@@ -396,20 +399,20 @@ response = requests.get("https://lotr.fandom.com/api.php", params={
 	"cmtype": "page",
 	"cmlimit": "max",
 	"format": "json",
-}, timeout=15)
+}, headers=HEADERS, timeout=15)
 
 print(response.status_code)
 ```
 
-This returns `200`. The same server that refused to show us `/wiki/Main_Page` will happily hand us the same information through `/api.php`.
+When this lesson was checked in September 2026, this returned `200`. The platform that refused our request for the rendered `/wiki/Main_Page` made structured wiki content available through `/api.php`.
 
-This is worth dwelling on, because it is the single most useful thing to understand about the relationship between scraping and APIs. **The site was not trying to keep us away from the data. It was trying to control how the data gets requested.** Scraping is expensive for a server — it means rendering full pages, ads, images, and JavaScript for someone who only wants a list of names. An API request is cheap, predictable, and easy to rate-limit. When a site blocks scrapers but publishes an API, it is telling you: *not like that — like this.*
+This is worth dwelling on because it illustrates the relationship between scraping and APIs. **The block applied to one route and mode of access, not necessarily to every programmatic request.** A rendered page and an API response have different costs and can be governed by different infrastructure and policies. When a platform blocks page scraping but maintains an API, researchers should use the documented API and follow its terms and limits rather than treating the API as a loophole.
 
 ### The MediaWiki Action API
 
-MediaWiki is the software that runs Wikipedia, and also Wiktionary, Wikisource, Wikidata, every Fandom wiki, and a large share of the independent wikis we looked at last week. They all share the same API, which means **learning it once gives you programmatic access to an enormous amount of the world's collaboratively-written reference material.**
+**MediaWiki** is the open-source software that runs Wikipedia, Wiktionary, Wikisource, Wikidata, Fandom wikis, and many independent wikis. **Wikimedia** is the nonprofit movement and foundation that operates Wikipedia and related projects. MediaWiki sites expose similar Action APIs, although individual hosts can configure access, extensions, authentication, and rate limits differently. Learning the shared structure gives you a reusable starting point, not a guarantee that every wiki behaves identically.
 
-Every MediaWiki site exposes its API at a predictable location — `/w/api.php` on Wikimedia's own sites, `/api.php` on most others:
+Most publicly accessible MediaWiki sites expose an Action API at a predictable location — `/w/api.php` on Wikimedia's own sites and `/api.php` on many others:
 
 - English Wikipedia: [https://en.wikipedia.org/w/api.php](https://en.wikipedia.org/w/api.php){target="_blank"}
 - Wikisource: [https://en.wikisource.org/w/api.php](https://en.wikisource.org/w/api.php){target="_blank"}
@@ -417,7 +420,7 @@ Every MediaWiki site exposes its API at a predictable location — `/w/api.php` 
 
 If you open any of those in a browser, you'll get an interactive sandbox where you can build and test queries without writing any Python — which is a very good way to explore before you commit to code. The full reference lives at [https://www.mediawiki.org/wiki/API:Main_page](https://www.mediawiki.org/wiki/API:Main_page){target="_blank"}.
 
-Unlike *The One API*, **Wikimedia requires no API key.** But it does have one firm requirement, and it connects directly to the ethics we discussed last week: you must send a descriptive `User-Agent` header identifying who you are, per their policy [https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy](https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy){target="_blank"}. Requests with a generic or absent User-Agent may be refused.
+Wikimedia's public APIs do not require an API key for these examples. They do require clients to follow access policies, including sending a descriptive `User-Agent` that identifies the tool and provides contact information [https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy](https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy){target="_blank"}. Other MediaWiki hosts may have different requirements, so always check the host's documentation and policies.
 
 ```python
 import requests
@@ -443,6 +446,8 @@ params = {
 }
 
 response = requests.get(API_URL, params=params, headers=HEADERS, timeout=15)
+if response.status_code != 200:
+	raise RuntimeError(f"API request failed: {response.status_code}")
 data = response.json()
 
 for page in data["query"]["categorymembers"]:
@@ -459,9 +464,9 @@ Music of The Lord of the Rings: The Rings of Power
 
 A few things to notice here, because they generalize to most APIs you'll meet:
 
-- We're passing parameters as a **dictionary** to `params=` rather than gluing them onto the URL with `?` and `&` by hand. `requests` builds the URL for us and — importantly — handles escaping. That category title contains spaces and a colon, which are not legal in URLs. Let `requests` deal with it.
+- We're passing parameters as a **dictionary** to `params=` rather than gluing them onto the URL with `?` and `&` by hand. `requests` builds the URL and correctly encodes spaces, punctuation, and other characters used inside query values.
 - The prefixed parameters (`cmtitle`, `cmtype`, `cmlimit`) belong to the `categorymembers` module. MediaWiki uses short prefixes to keep modules from colliding, so when you read documentation for `list=langlinks` you'll see `ll`-prefixed parameters instead.
-- `format=json` is required. Without it you get HTML meant for a human.
+- `format=json` explicitly requests machine-readable JSON rather than a browser-oriented representation.
 
 ### Answering Our Original Question
 
@@ -477,6 +482,9 @@ def get_language_count(title):
 		"redirects": 1,
 		"format": "json",
 	}, headers=HEADERS, timeout=15)
+	if response.status_code != 200:
+		print(f"Could not retrieve {title}: {response.status_code}")
+		return None
 
 	pages = response.json()["query"]["pages"]
 	page = next(iter(pages.values()))
@@ -520,6 +528,8 @@ response = requests.get(API_URL, params={
 	"action": "query", "titles": "Arondir|Halbrand|Galadriel",
 	"prop": "langlinks", "lllimit": "max", "redirects": 1, "format": "json",
 }, headers=HEADERS, timeout=15)
+if response.status_code != 200:
+	raise RuntimeError(f"API request failed: {response.status_code}")
 print(response.json()["query"]["redirects"])
 ```
 
@@ -530,7 +540,7 @@ print(response.json()["query"]["redirects"])
 
 **The invented characters do not have Wikipedia articles at all.** They are redirects into a section of a single shared "List of characters" page. Our function faithfully reported the language count of that list page — the `2` was real, it just wasn't about Arondir.
 
-`Disa` fails differently, and worse. It isn't a redirect; there is a genuine English Wikipedia article at that exact title, and it's about **a genus of orchids**. Our function looked up a real page, found five language links, and returned a perfectly plausible number about a flower.
+`Disa` fails differently, and worse. It isn't a redirect; there is a genuine English Wikipedia article at that exact title. When this lesson was checked in September 2026, that article concerned **a heroine from a Swedish legendary saga**, not the television character. Our function looked up a real page, found five language links, and returned a perfectly plausible number about the wrong subject. The page attached to an ambiguous name may change again, which is precisely why the lookup must be validated.
 
 These are the two ways a title-based lookup goes wrong:
 
@@ -539,22 +549,28 @@ These are the two ways a title-based lookup goes wrong:
 
 Neither produced an exception. Both produced small integers that would have slotted straight into a spreadsheet next to Galadriel's `45` and looked entirely reasonable. If you had run this over fifty characters and gone straight to a bar chart, you would never have known.
 
-The defense is to make the API tell you what it actually resolved. Ask for the resolved titles alongside your data and compare them to what you requested:
+The first defense is to make the API tell you what it actually resolved. Ask for redirects, resolved titles, and a short article extract alongside the language data:
 
 ```python
 response = requests.get(API_URL, params={
 	"action": "query", "titles": "Arondir|Disa|Galadriel",
-	"prop": "langlinks", "lllimit": "max", "redirects": 1, "format": "json",
+	"prop": "langlinks|extracts", "lllimit": "max", "redirects": 1,
+	"exintro": 1, "explaintext": 1, "format": "json",
 }, headers=HEADERS, timeout=15)
+if response.status_code != 200:
+	raise RuntimeError(f"API request failed: {response.status_code}")
 
 data = response.json()["query"]
+print("Redirects:", data.get("redirects", []))
 for page in data["pages"].values():
-	print(page["title"], len(page.get("langlinks", [])))
+	print("\nResolved title:", page["title"])
+	print("Language links:", len(page.get("langlinks", [])))
+	print("Article preview:", page.get("extract", "")[:160])
 ```
 
-If the title that comes back isn't the title you asked for, you have a problem — and now you can see it.
+If the title that comes back is different from the title you requested, you have a matching problem. But matching titles are not sufficient: `Disa` still resolves to `Disa`, so only the article preview reveals that the page concerns a legendary Swedish figure. For a larger project, you would save the requested title, resolved title, redirect target, article preview, and ideally a Wikidata identifier for manual or computational validation. **No title-matching rule can establish subject identity on its own.**
 
-Setting the errors aside, the underlying finding matches what we reached by scraping Tolkien Gateway, arriving through a completely different door. Characters drawn from Tolkien's writing accumulate independent articles in dozens of languages; characters invented for television get a paragraph in a shared list, if they get anything at all. Two different sources, two different methods, the same result — which is roughly what "corroboration" means in this kind of work, and a good reason not to build an argument on a single dataset.
+After resolving these errors, we can compare the pattern with the Tolkien Gateway scrape. The selected Tolkien-derived characters have extensively referenced Tolkien Gateway pages and independent Wikipedia articles in many languages, while several show-created characters appear only within a shared Wikipedia list. The convergence is interesting, but it is not fully independent corroboration: both sources are community-edited wikis, and both may reproduce the same differences in fan attention, notability rules, and available source material. Comparing sources is useful partly because it lets us ask whether they share the same infrastructure and biases.
 
 ### A Different Shape: The Pageviews API
 
@@ -571,8 +587,10 @@ url = ("https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/"
        "en.wikipedia/all-access/user/Galadriel/monthly/2022010100/2023060100")
 
 response = requests.get(url, headers=HEADERS, timeout=15)
+if response.status_code != 200:
+	raise RuntimeError(f"Pageviews request failed: {response.status_code}")
 
-# The final bucket is always partial -- see the warning below
+# We deliberately requested one extra, partial month; see the warning below.
 for item in response.json()["items"][:-1]:
 	print(item["timestamp"], f'{item["views"]:>9,}')
 ```
@@ -597,7 +615,7 @@ for item in response.json()["items"][:-1]:
 2023050100    27,206
 ```
 
-Look at September 2022. The show premiered on September 1st, and readership of the Galadriel article went from about 19,000 a month to **761,399** — a fortyfold increase — then decayed over the following year without ever returning to its old baseline.
+Look at September 2022. The show premiered on September 1st, and readership of the Galadriel article rose from **77,249 in August to 761,399 in September**, nearly a tenfold month-to-month increase. September was roughly forty times the approximately 19,000 views recorded in June. Readership then declined over the following months while remaining above that June baseline in the period shown.
 
 This is cultural data of a kind that is genuinely hard to get any other way. It is a record of collective attention: hundreds of thousands of people, having watched something, going to look it up. It connects directly to the readings on bestseller lists and algorithmic popularity from our scraping week, and it lets you ask questions with real historical shape — when did people become interested in this, what made them, and did the interest last?
 
@@ -606,11 +624,11 @@ This is cultural data of a kind that is genuinely hard to get any other way. It 
 
 You may have noticed the `[:-1]` in that loop. It is there for a reason worth knowing about.
 
-With `granularity=monthly`, the Pageviews API returns a final bucket that runs from the start of the last month **up to your end timestamp** — not through the end of that month. Because we asked for data ending `2023060100` (June 1st), the June bucket covers roughly one day and reports about 800 views instead of the ~28,000 that month actually received.
+With this request, the Pageviews API returns a final bucket that runs from the start of June **up to our June 1 end timestamp**, so it reports only about one day's traffic: roughly 800 views rather than the complete month's total.
 
-Run it without the slice and you'll see it: a series that looks like readership fell off a cliff in the final month, every single time, no matter which month you end on. It is very easy to mistake this for a real collapse in attention.
+Run this particular example without the slice and the series appears to fall off a cliff in June. That drop is a boundary artifact, not a real collapse in attention. A final bucket is not inherently incomplete; it becomes incomplete when the requested end timestamp falls before the period has finished.
 
-So: **request one period more than you need, and discard the last one.** This kind of boundary behavior is extremely common in time-series APIs and is often documented briefly or not at all. Whenever you pull a time series, plot it or print it before you analyze it, and be suspicious of a dramatic move at either end of your range.
+For this workflow, **request one additional period, inspect it, and discard it only when you know it is partial.** Do not automatically delete the last observation from every API response. Boundary behavior is common in time-series APIs, so read the endpoint documentation, print or plot the result before analysis, and investigate dramatic changes at either end of the range.
 :::
 
 The date format is also unforgiving (`YYYYMMDDHH`, so `2022010100` is January 1, 2022 at hour 00), and the article title must be exactly right, underscores and all. But note what this API does *not* require: no key, no account, no application form. Wikimedia publishes this because the Wikimedia Foundation is a nonprofit whose mission includes making its data available — a very different institutional posture from the platforms in the "post-API age" we discussed earlier, and one worth noticing when you choose what to build research on.
