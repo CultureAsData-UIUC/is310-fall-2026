@@ -98,7 +98,7 @@ If Windows does not recognize `python`, try `py -m venv .venv`. These commands t
 
 Now you need to activate the virtual environment. Activation adjusts your terminal's path so that `python` and installed packages come from `.venv` rather than your system-wide Python. This helps prevent dependency conflicts between projects.
 
-On macOS or Linux, run this from the project directory:
+On macOS, Linux, or WSL, run this from the project directory:
 
 ```sh
 source .venv/bin/activate
@@ -123,6 +123,14 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 ```
 
 Only change an execution policy when you understand and trust the script you are running. The `Process` scope ends when you close that PowerShell window. After activation, your prompt should begin with `(.venv)`.
+
+To verify the exact Python executable now in use, run:
+
+```sh
+python -c "import sys; print(sys.executable)"
+```
+
+The displayed path should point inside the project's `.venv` directory.
 
 ### Deactivating Virtual Environments from the Terminal
 

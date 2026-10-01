@@ -614,7 +614,7 @@ Note
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m venv <span class="op">.</span><span class="fu">venv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If Windows does not recognize <code>python</code>, try <code>py -m venv .venv</code>. These commands tell Python to run the <code>venv</code> module and create an environment in a folder named <code>.venv</code>. <strong>You should only create one virtual environment for this course repository.</strong> For unrelated projects or courses, create separate environments so their package requirements do not conflict.</p>
 <p>Now you need to activate the virtual environment. Activation adjusts your terminal’s path so that <code>python</code> and installed packages come from <code>.venv</code> rather than your system-wide Python. This helps prevent dependency conflicts between projects.</p>
-<p>On macOS or Linux, run this from the project directory:</p>
+<p>On macOS, Linux, or WSL, run this from the project directory:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>On Windows Command Prompt:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bat code-with-copy"><code class="sourceCode dosbat"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>.venv\Scripts\activate.bat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -623,10 +623,13 @@ Note
 <p>If PowerShell says that script execution is disabled, you can allow locally created scripts for the <strong>current PowerShell session only</strong> and then retry activation:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-ExecutionPolicy</span> <span class="op">-</span>ExecutionPolicy RemoteSigned <span class="op">-</span>Scope <span class="cf">Process</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Only change an execution policy when you understand and trust the script you are running. The <code>Process</code> scope ends when you close that PowerShell window. After activation, your prompt should begin with <code>(.venv)</code>.</p>
+<p>To verify the exact Python executable now in use, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import sys; print(sys.executable)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The displayed path should point inside the project’s <code>.venv</code> directory.</p>
 <section id="deactivating-virtual-environments-from-the-terminal" class="level3">
 <h3 class="anchored" data-anchor-id="deactivating-virtual-environments-from-the-terminal">Deactivating Virtual Environments from the Terminal</h3>
 <p>While usually you’ll want to keep your virtual environment activated while you’re working on a project, you can deactivate it by running the following command in your terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">deactivate</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">deactivate</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This works in macOS/Linux shells, Command Prompt, and PowerShell. The environment name will disappear from your prompt. In VS Code, you can also close the active terminal and open a new one after selecting a different interpreter.</p>
 </section>
 </section>
@@ -635,23 +638,23 @@ Note
 <p>Since we are using <code>git</code> to track our work, we don’t want to include our virtual environment in our repository. This is because the virtual environment is specific to your computer and the libraries you have installed. If someone else were to clone your repository, they wouldn’t have the same virtual environment as you. This is why we add the virtual environment to our <code>.gitignore</code> file. This file tells <code>git</code> to ignore certain files or directories when tracking changes. You can add the following line to your <code>.gitignore</code> file to ignore your virtual environment:</p>
 <pre class="text"><code>.venv/</code></pre>
 <p>Now when we run <code>git status</code>, we shouldn’t see our virtual environment in the list of files that have been changed. If you accidentally added your virtual environment to your repository, you can remove it by running the following command:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rm <span class="at">-r</span> <span class="at">--cached</span> .venv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rm <span class="at">-r</span> <span class="at">--cached</span> .venv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Only run <code>git rm</code> if <code>.venv</code> was already committed or staged. This removes it from Git’s index without deleting your local environment. Then commit the updated <code>.gitignore</code>. If you have further issues, request assistance from the instructors.</p>
 </section>
 <section id="installing-libraries-in-virtual-environments" class="level2">
 <h2 class="anchored" data-anchor-id="installing-libraries-in-virtual-environments">Installing Libraries in Virtual Environments</h2>
 <p>Now that we have our virtual environment created and activated in VS Code, we can start to try installing external Python libraries.</p>
 <p>Today, we will try installing the Python package <code>Rich</code> by running the following command:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install rich</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install rich</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This command asks the active Python interpreter to run <code>pip</code> and install the <code>Rich</code> library. <strong>Only run it after your virtual environment is activated.</strong> Using <code>python -m pip</code> helps ensure that the package is installed for the same Python interpreter you are using.</p>
 <p>Unlike <code>Pathlib</code>, <code>rich</code> isn’t built into Python, which is why we need to install it. <code>pip</code> is a package manager for Python that allows you to install and manage Python packages. You can read more about it here <a href="https://pip.pypa.io/en/stable/" target="_blank">https://pip.pypa.io/en/stable/</a>.</p>
 <p>Check which version of Python is active by running:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>However, you’ll want to make sure that you’re running this <strong>with your virtual environment activated</strong>.</p>
 <p>You can confirm that Rich was installed into the active environment with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip show rich</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip show rich</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can also list all installed packages:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Which will show you all the libraries that are installed in your virtual environment. You should see <code>Rich</code> in the list of installed libraries.</p>
 <p>You can also look in your virtual environment directory and see if there is a <code>site-packages</code> directory. This is where all the libraries you install with <code>pip</code> are stored. You can see that the <code>Rich</code> library is installed in the <code>site-packages</code> directory.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -661,17 +664,17 @@ Note
 </figure>
 </div>
 <p>Either command should show whether you have installed <code>Rich</code> and which version is present. You can also check a package’s version from Python:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib.metadata <span class="im">import</span> version</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(version(<span class="st">"rich"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib.metadata <span class="im">import</span> version</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(version(<span class="st">"rich"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Going forward, install Python libraries inside your virtual environment.</strong></p>
 </section>
 <section id="recording-package-requirements" class="level2">
 <h2 class="anchored" data-anchor-id="recording-package-requirements">Recording Package Requirements</h2>
 <p>Virtual environments should not be committed to Git or copied between computers. Instead, record the packages needed to recreate the environment in a <code>requirements.txt</code> file:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip freeze <span class="op">&gt;</span> requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip freeze <span class="op">&gt;</span> requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>&gt;</code> operator writes the list of installed packages and their versions into <code>requirements.txt</code>. Commit this small text file to Git. Someone who clones your repository can create and activate their own virtual environment and then install the same package versions with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run <code>python -m pip freeze &gt; requirements.txt</code> again whenever you intentionally add or update packages. Review the file before committing it so that it contains only dependencies relevant to your project.</p>
 <section id="rich-python-library" class="level3">
 <h3 class="anchored" data-anchor-id="rich-python-library">Rich Python Library</h3>
@@ -692,11 +695,11 @@ Note
 <p>We can start to get a sense of what the library can do by looking at the features listed on the GitHub repository but we can also read the documentation for the library to get a better sense of what it can do <a href="https://rich.readthedocs.io/en/stable/introduction.html" target="_blank">https://rich.readthedocs.io/en/stable/introduction.html</a>.</p>
 <p>This documentation is <strong>very</strong> detailed, but we can start with the Quickstart guidelines <a href="https://rich.readthedocs.io/en/stable/introduction.html#quick-start" target="_blank">https://rich.readthedocs.io/en/stable/introduction.html#quick-start</a> to get a sense of how to use the library.</p>
 <p>From the guidelines we can see how to import the library into our Python script. In your <code>is310-coding-assignments</code> directory, create a new folder called <code>python-libraries</code> and create a new file called <code>rich_example.py</code>. In this file, add the following code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich <span class="im">import</span> <span class="bu">print</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hello, [bold magenta]World[/bold magenta]!"</span>, <span class="st">":vampire:"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich <span class="im">import</span> <span class="bu">print</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hello, [bold magenta]World[/bold magenta]!"</span>, <span class="st">":vampire:"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now you can run the script by running the following command in your terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> rich_example.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> rich_example.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If your terminal is in the <code>is310-coding-assignments</code> directory rather than <code>python-libraries</code>, run <code>python python-libraries/rich_example.py</code> instead.</p>
 <p>You should see the following output in your terminal:</p>
 <pre class="shell"><code>Hello, World! 🧛</code></pre>
@@ -708,23 +711,23 @@ Note
 </div>
 <p>Notice that the word <code>world</code> is in bold and magenta and that there is a vampire emoji at the end of the sentence. This is the power of the <code>Rich</code> library.</p>
 <p>We can also start to format our text in different ways. For example, we can add a table to our script by adding the following code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> Table(title<span class="op">=</span><span class="st">"Star Wars Movies"</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Released"</span>, style<span class="op">=</span><span class="st">"cyan"</span>, no_wrap<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Title"</span>, style<span class="op">=</span><span class="st">"magenta"</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Box Office"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 20, 2019"</span>, <span class="st">"Star Wars: The Rise of Skywalker"</span>, <span class="st">"$952,110,690"</span>)</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"May 25, 2018"</span>, <span class="st">"Solo: A Star Wars Story"</span>, <span class="st">"$393,151,347"</span>)</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 15, 2017"</span>, <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>, <span class="st">"$1,332,539,889"</span>)</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 16, 2016"</span>, <span class="st">"Rogue One: A Star Wars Story"</span>, <span class="st">"$1,332,439,889"</span>)</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> Table(title<span class="op">=</span><span class="st">"Star Wars Movies"</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Released"</span>, style<span class="op">=</span><span class="st">"cyan"</span>, no_wrap<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Title"</span>, style<span class="op">=</span><span class="st">"magenta"</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Box Office"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 20, 2019"</span>, <span class="st">"Star Wars: The Rise of Skywalker"</span>, <span class="st">"$952,110,690"</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"May 25, 2018"</span>, <span class="st">"Solo: A Star Wars Story"</span>, <span class="st">"$393,151,347"</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 15, 2017"</span>, <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>, <span class="st">"$1,332,539,889"</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 16, 2016"</span>, <span class="st">"Rogue One: A Star Wars Story"</span>, <span class="st">"$1,332,439,889"</span>)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now you can run the script by running the following command in your terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> rich_example.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> rich_example.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If your terminal is in the repository’s root directory, run <code>python python-libraries/rich_example.py</code> instead.</p>
 <p>And you should see the following output in your terminal:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -742,41 +745,41 @@ Note
 </div>
 <p>You’ll notice this documentation is somewhat difficult to read, but it does show us the different methods and attributes that are available to us in the <code>Console</code> class. We can also click the small green <code>source</code> button to see the source code for the class <a href="https://rich.readthedocs.io/en/stable/_modules/rich/console.html#Console" target="_blank">https://rich.readthedocs.io/en/stable/_modules/rich/console.html#Console</a>. While you won’t usually need to go so deep into a Python library’s code, it is helpful to know how to read it if you are getting errors or are unsure how to use a library.</p>
 <p>We can also use <code>Rich</code> with some of the more advanced data structures we have been working with. In your <code>rich_example.py</code> file, add the following code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Console instance to print formatted text</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial movie data stored in a list of dictionaries</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>movies <span class="op">=</span> [</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Released"</span>: <span class="st">"Dec 20, 2019"</span>,</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Title"</span>: <span class="st">"Star Wars: The Rise of Skywalker"</span>,</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Box Office"</span>: <span class="st">"$952,110,690"</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Released"</span>: <span class="st">"May 25, 2018"</span>,</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Title"</span>: <span class="st">"Solo: A Star Wars Story"</span>,</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Box Office"</span>: <span class="st">"$393,151,347"</span></span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Released"</span>: <span class="st">"Dec 15, 2017"</span>,</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Title"</span>: <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>,</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Box Office"</span>: <span class="st">"$1,332,539,889"</span></span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Released"</span>: <span class="st">"Dec 16, 2016"</span>,</span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Title"</span>: <span class="st">"Rogue One: A Star Wars Story"</span>,</span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Box Office"</span>: <span class="st">"$1,332,439,889"</span></span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through the list of movies</span></span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> movie <span class="kw">in</span> movies:</span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">[bold cyan]Reviewing movie information:[/bold cyan]"</span>)</span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> field, value <span class="kw">in</span> movie.items():</span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>        console.<span class="bu">print</span>(<span class="ss">f"[magenta]</span><span class="sc">{</span>field<span class="sc">}</span><span class="ss">[/magenta]: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Console instance to print formatted text</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial movie data stored in a list of dictionaries</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>movies <span class="op">=</span> [</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Released"</span>: <span class="st">"Dec 20, 2019"</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Title"</span>: <span class="st">"Star Wars: The Rise of Skywalker"</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Box Office"</span>: <span class="st">"$952,110,690"</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Released"</span>: <span class="st">"May 25, 2018"</span>,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Title"</span>: <span class="st">"Solo: A Star Wars Story"</span>,</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Box Office"</span>: <span class="st">"$393,151,347"</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Released"</span>: <span class="st">"Dec 15, 2017"</span>,</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Title"</span>: <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>,</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Box Office"</span>: <span class="st">"$1,332,539,889"</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Released"</span>: <span class="st">"Dec 16, 2016"</span>,</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Title"</span>: <span class="st">"Rogue One: A Star Wars Story"</span>,</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Box Office"</span>: <span class="st">"$1,332,439,889"</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through the list of movies</span></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> movie <span class="kw">in</span> movies:</span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">[bold cyan]Reviewing movie information:[/bold cyan]"</span>)</span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> field, value <span class="kw">in</span> movie.items():</span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>        console.<span class="bu">print</span>(<span class="ss">f"[magenta]</span><span class="sc">{</span>field<span class="sc">}</span><span class="ss">[/magenta]: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we should see the following output in our terminal:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -808,27 +811,27 @@ Note
 </ol>
 <p>To do this, you will need to use the built-in <code>input()</code> function to ask the user to enter data for each field. Rich also provides <code>Console.input()</code>, documented <a href="https://rich.readthedocs.io/en/stable/console.html#rich.console.Console.input" target="_blank">here</a>. You can use either option, but the goal is to let a user enter data relevant to your topic.</p>
 <p>Here’s an example of what this <em>could</em> look like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="st">"Here is some initial data:"</span>, style<span class="op">=</span><span class="st">"bold cyan"</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> Table(title<span class="op">=</span><span class="st">"Star Wars Movies"</span>)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Released"</span>, style<span class="op">=</span><span class="st">"cyan"</span>, no_wrap<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Title"</span>, style<span class="op">=</span><span class="st">"magenta"</span>)</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Box Office"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 20, 2019"</span>, <span class="st">"Star Wars: The Rise of Skywalker"</span>, <span class="st">"$952,110,690"</span>)</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"May 25, 2018"</span>, <span class="st">"Solo: A Star Wars Story"</span>, <span class="st">"$393,151,347"</span>)</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 15, 2017"</span>, <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>, <span class="st">"$1,332,539,889"</span>)</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 16, 2016"</span>, <span class="st">"Rogue One: A Star Wars Story"</span>, <span class="st">"$1,332,439,889"</span>)</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(table)</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">[bold cyan]Now I want you to enter your preferred movies:[/bold cyan]"</span>)</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>movie_title <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Enter the title of the movie: "</span>)</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>release_date <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Enter the release date of the movie: "</span>)</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>box_office <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Enter the box office earnings of the movie: "</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="st">"Here is some initial data:"</span>, style<span class="op">=</span><span class="st">"bold cyan"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> Table(title<span class="op">=</span><span class="st">"Star Wars Movies"</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Released"</span>, style<span class="op">=</span><span class="st">"cyan"</span>, no_wrap<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Title"</span>, style<span class="op">=</span><span class="st">"magenta"</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Box Office"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 20, 2019"</span>, <span class="st">"Star Wars: The Rise of Skywalker"</span>, <span class="st">"$952,110,690"</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"May 25, 2018"</span>, <span class="st">"Solo: A Star Wars Story"</span>, <span class="st">"$393,151,347"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 15, 2017"</span>, <span class="st">"Star Wars Ep. VIII: The Last Jedi"</span>, <span class="st">"$1,332,539,889"</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>table.add_row(<span class="st">"Dec 16, 2016"</span>, <span class="st">"Rogue One: A Star Wars Story"</span>, <span class="st">"$1,332,439,889"</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(table)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">[bold cyan]Now I want you to enter your preferred movies:[/bold cyan]"</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>movie_title <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Enter the title of the movie: "</span>)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>release_date <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Enter the release date of the movie: "</span>)</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>box_office <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Enter the box office earnings of the movie: "</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>However, you’ll notice that this script doesn’t allow for multiple entries or writes the data to a file. This is where you come in! You should ensure that <strong>your script allows for multiple entries</strong> (maybe creating a <code>for-loop</code> or a <code>function</code>, though you can use whatever you think is best) and then save the data to a file.</p>
 <ol type="1">
 <li>Once the user has entered the data, the script should print out their entry and ask the the user to confirm that the data they entered is correct. If the user confirms that the data is correct, the script should save the data to a file. If the user says the data is incorrect, the script should ask the user to re-enter the data. It is up to you to decide when to write data to a file, but you should only write the data to a file once the user has confirmed that the data is correct.</li>
