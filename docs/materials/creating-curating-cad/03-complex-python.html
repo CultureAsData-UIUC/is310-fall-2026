@@ -889,16 +889,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Depending on where your file is located, you might need to change the path. <code>pathlib</code> lets us construct paths that work across macOS, Linux, and Windows. For example, if the file is in your Downloads folder, use:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> Path.home() <span class="op">/</span> <span class="st">"Downloads"</span> <span class="op">/</span> <span class="st">"US-National-Parks_RecreationVisits_1979-2023.csv"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Computers need the <strong>exact path</strong>, so if you’re unsure where Python is looking, use <code>Path.cwd()</code> to print the current working directory.</p>
-<p>Now if this code worked, it should show you the exact file path of your spreadsheet and then the type of the object, either <code>&lt;class 'pathlib.PosixPath'&gt;</code> or <code>&lt;class 'pathlib.WindowsPath'&gt;</code>. Not to get too complicated but this is because the <code>Path</code> class is a subclass of the <code>PosixPath</code> class (not really going to get into subclassing but think of it as building classes on top of one another - like Lego or Jenga).</p>
+<p>Now if this code worked, it should show you the path of your spreadsheet and then the type of the object, either <code>&lt;class 'pathlib.PosixPath'&gt;</code> or <code>&lt;class 'pathlib.WindowsPath'&gt;</code>. Calling <code>Path()</code> creates the appropriate concrete path class for the current operating system. <code>PosixPath</code> and <code>WindowsPath</code> are subclasses of <code>Path</code>, so they share the same general interface while handling operating-system-specific path conventions.</p>
 <p>We can also look at the methods built-in to the <code>Path</code> class. One in particular is useful for us <code>read_text</code> which reads in the contents of a file and returns it as a string. Read more about it here <a href="https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_text" target="_blank">https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_text</a> and test it out in your script.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> Path(<span class="st">'US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">file</span>, <span class="bu">type</span>(<span class="bu">file</span>))</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">file</span>.read_text())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now when you save you script and rerun your code in the terminal, you should now see the entirety of our csv file in your terminal. If you try saving that to a variable and checking the type you should see that it’s a string.</p>
-<p>So now we can simply manipulate that string so that we don’t have to hand enter the data.</p>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">file</span>.read_text(encoding<span class="op">=</span><span class="st">"utf-8"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When you save your script and rerun the code, you should see the contents of the CSV file in your terminal. If you save the result of <code>read_text()</code> to a variable and check its type, you will see that it is a string. Specifying <code>encoding="utf-8"</code> makes our assumption about the text encoding explicit and produces more consistent behavior across operating systems.</p>
+<p>The CSV is still structured as rows and columns, but <code>read_text()</code> does not interpret that structure; it gives us the file’s raw text. We can manipulate that string without entering the data by hand, but later we will use tools designed to parse structured data.</p>
 <hr>
 <p>So far we’ve been using Pathlib to work with files, but there are number of libraries and even some methods built into Python for reading in and writing files.</p>
 <p>For example we could use the <a href="https://docs.python.org/3/library/functions.html#open" target="_blank"><code>open</code> built-in function in Python</a>.</p>
@@ -938,27 +938,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>r</code></td>
 <td>Read (default)</td>
-<td>Open a file for read only</td>
+<td>Open an existing file for reading</td>
 </tr>
 <tr class="even">
 <td><code>w</code></td>
 <td>Write</td>
-<td>Open a file for write only (overwrite) and will also create a new file if it doesn’t exist</td>
+<td>Open for writing, truncating an existing file or creating a new one</td>
 </tr>
 <tr class="odd">
 <td><code>a</code></td>
 <td>Append</td>
-<td>Open a file for write only (append)</td>
+<td>Open for writing at the end, creating the file if needed</td>
 </tr>
 <tr class="even">
 <td><code>r+</code></td>
-<td>Read+</td>
-<td>Write open a file for both reading and writing</td>
+<td>Read and write</td>
+<td>Open an existing file for both reading and writing</td>
 </tr>
 <tr class="odd">
 <td><code>x</code></td>
-<td>Create</td>
-<td>Create a new file</td>
+<td>Exclusive creation</td>
+<td>Create a new file and fail if it already exists</td>
 </tr>
 </tbody>
 </table>

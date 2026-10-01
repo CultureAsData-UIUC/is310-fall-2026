@@ -486,7 +486,7 @@ file = Path.home() / "Downloads" / "US-National-Parks_RecreationVisits_1979-2023
 
 Computers need the **exact path**, so if you're unsure where Python is looking, use `Path.cwd()` to print the current working directory.
 
-Now if this code worked, it should show you the exact file path of your spreadsheet and then the type of the object, either `<class 'pathlib.PosixPath'>` or `<class 'pathlib.WindowsPath'>`. Not to get too complicated but this is because the `Path` class is a subclass of the `PosixPath` class (not really going to get into subclassing but think of it as building classes on top of one another - like Lego or Jenga).
+Now if this code worked, it should show you the path of your spreadsheet and then the type of the object, either `<class 'pathlib.PosixPath'>` or `<class 'pathlib.WindowsPath'>`. Calling `Path()` creates the appropriate concrete path class for the current operating system. `PosixPath` and `WindowsPath` are subclasses of `Path`, so they share the same general interface while handling operating-system-specific path conventions.
 
 We can also look at the methods built-in to the `Path` class. One in particular is useful for us `read_text` which reads in the contents of a file and returns it as a string. Read more about it here [https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_text](https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_text){target="_blank"} and test it out in your script.
 
@@ -496,12 +496,12 @@ from pathlib import Path
 file = Path('US-National-Parks_RecreationVisits_1979-2023.csv')
 print(file, type(file))
 
-print(file.read_text())
+print(file.read_text(encoding="utf-8"))
 ```
 
-Now when you save you script and rerun your code in the terminal, you should now see the entirety of our csv file in your terminal. If you try saving that to a variable and checking the type you should see that it's a string.
+When you save your script and rerun the code, you should see the contents of the CSV file in your terminal. If you save the result of `read_text()` to a variable and check its type, you will see that it is a string. Specifying `encoding="utf-8"` makes our assumption about the text encoding explicit and produces more consistent behavior across operating systems.
 
-So now we can simply manipulate that string so that we don't have to hand enter the data.
+The CSV is still structured as rows and columns, but `read_text()` does not interpret that structure; it gives us the file's raw text. We can manipulate that string without entering the data by hand, but later we will use tools designed to parse structured data.
 
 ----
 
@@ -545,11 +545,11 @@ File output is very similar. We just use mode `w`, which overwrites the file spe
 
 |Character| Mode |Description|
 |-|-|-|
-|`r`|Read (default)| Open a file for read only|
-|`w` |Write |Open a file for write only (overwrite) and will also create a new file if it doesn't exist|
-|`a` |Append |Open a file for write only (append)|
-|`r+` |Read+ |Write open a file for both reading and writing|
-|`x` |Create |Create a new file|
+|`r`|Read (default)|Open an existing file for reading|
+|`w`|Write|Open for writing, truncating an existing file or creating a new one|
+|`a`|Append|Open for writing at the end, creating the file if needed|
+|`r+`|Read and write|Open an existing file for both reading and writing|
+|`x`|Exclusive creation|Create a new file and fail if it already exists|
 
 
 To understand file output, let's try working with a file that doesn't exist. Try pasting this code in your script.
