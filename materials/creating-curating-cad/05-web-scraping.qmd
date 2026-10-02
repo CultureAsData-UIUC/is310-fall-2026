@@ -1,20 +1,13 @@
 ---
 title: "Web Scraping with Python"
 toc: true
+draft: true
 ---
 
 ::: {.callout-note}
 ⚡️ This lesson has been adapted from Melanie Walsh's chapter on Web Scraping in <i>Introduction to Cultural Analytics & Python</i> textbook <a target="_blank" href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/02-Web-Scraping-Part1.html">https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/02-Web-Scraping-Part1.html</a>. Many thanks to Melanie for sharing their materials!
 
 Also the materials from our in-class scraping are available to download. Here is our <a target="_blank" href="../../assets/files/first_web_scraping.py" download>`first_web_scraper.py`</a>; our <a target="_blank" href="../../assets/files/hp_scraper.py" download>`hp_scraper.py`</a>; and the complete <a target="_blank" href="../../assets/files/tolkien_gateway_scraper.py" download>`tolkien_gateway_scraper.py`</a> that we build up over the second half of this lesson.
-:::
-
-::: {.callout-important}
-## A Note on This Lesson (Updated 2026)
-
-The web changed underneath this lesson. When it was first written, you could scrape a Fandom wiki with a few lines of Python. Today Fandom pages sit behind bot protection that blocks basic automated requests, and the `cloudscraper` approach used in an earlier version of this lesson no longer works reliably for this site.
-
-Rather than pretend otherwise, this lesson now walks you into that wall on purpose. You will see a real `403`, understand why it happens, and then work through what a researcher should actually do about it. The technical skills are unchanged — `requests` and `BeautifulSoup` work exactly as they always have — but you'll also come away knowing how to tell the difference between a site that is open to you and one that has asked you to stay out.
 :::
 
 Now that we have learned how to work with Python modules and read and write files, we can start to think about how to get data from the web. This is a very important skill for a digital humanist, as many of the sources we might want to work with are online.
@@ -31,7 +24,7 @@ Web scraping is also what we use to preserve the web. Remember the Wayback Machi
 
 ![A screenshot of SUCHO.](../../assets/images/sucho.png)
 
-This method has also been used by scholars to do community-driven data preservation. For example, when Russia invaded Ukraine, a group of scholars and librarians founded the *Saving Ukrainian Cultural Heritage Online* (SUCHO) group and used web scraping to preserve the content of Ukrainian websites [https://www.sucho.org/](https://www.sucho.org/){target="_blank"}. This was important because if servers are bombed, the content of those websites would be lost forever.
+This method has also been used by scholars to do community-driven data preservation. For example, when Russia invaded Ukraine, a group of DH scholars and librarians founded the *Saving Ukrainian Cultural Heritage Online* (SUCHO) group and used web scraping to preserve the content of Ukrainian websites [https://www.sucho.org/](https://www.sucho.org/){target="_blank"} from being destroyed in the bombing.
 
 ### Is Web Scraping Legal or Ethical?
 
@@ -91,7 +84,9 @@ We previously discussed Python libraries when we talked about classes and virtua
 **Library**
 
 - There's a lot of different definitions for this term, but most generally you can think of this as a collection of software that's directly used by other software. Most often, this will be a generalizable piece of logic that is useful to bundle separately so that other, unrelated pieces of software can use it. Because it's an informal term in Python and not a specific, technical one, it's more useful to think about libraries in terms of how code is organized. Used in this way, the concept of "software libraries" spans many different programing languages and development contexts: we have Python libraries, C++ libraries, Javascript libraries, operating system libraries, etc.
+
 - Let's consider libraries that we've used. The [Python Standard Library](https://docs.python.org/3/library/){target="_blank"} is the most obvious example which encompasses many different purposes and packages (more on that later), but is unified in that it is included in all Python installations so that Python code that's written using the Standard Library will run on any compatible Python environment of the expected version. Parts of the Standard Library that we've used before include packages like [pathlib](https://docs.python.org/3/library/pathlib.html){target="_blank"}.
+
 - There are also third-party libraries that people build in Python, which can be found on The Python Package Index (PyPI) <https://pypi.org/>. These are usually less expansive than the Standard Library, but can be useful because they are written for specialized tasks. This week, we'll take a look at [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/){target="_blank"}, which is analogous in scope to packages like pathlib. In fact, third party libraries are often organized into a single package. A library like Beautiful Soup can best be thought of in terms of purpose: you want to accomplish the a particular, common task like scraping a website and Beautiful Soup helps accomplish it.
 
 **Package**
@@ -331,7 +326,7 @@ for title in titles:
 
 However, you'll notice if we are running this code that we will get **all** the links on the page, not just the titles. This is because the `find_all()` method is searching the whole document and not just the `ol` tag. So we need to be more specific in our search.
 
-#### Quick In-Class Exercise
+#### Quick Practice Exercise
 
 In your `first_web_scraping.py` file, try to modify the code so that it only prints the titles of the `Top 100 EBooks yesterday` section. To do this, you'll need to access the correct tag for `Top 100 EBooks yesterday` and then use `BeautifulSoup` to navigate to the correct `ol` tag. Finally, we want to print just the title of each book. To help you I would recommend taking a look at the following functions in the `BeautifulSoup` documentation:
 
@@ -623,7 +618,7 @@ As it happens, Fandom does offer option 3, and we will take it up properly in [o
 
 ### Finding a Wiki That Welcomes Us
 
-The good news is that not every fan wiki is behind Cloudflare. In fact, one of the more interesting developments in fandom over the last several years has been communities **leaving** Fandom.com — frustrated by its advertising, autoplaying video, and control over community-written content — and re-establishing their wikis on independent infrastructure. The Zelda Wiki left in 2022; the Minecraft Wiki left in 2023; many others moved to hosts like [wiki.gg](https://www.wiki.gg/wikis){target="_blank"} or the nonprofit [Miraheze](https://miraheze.org/){target="_blank"}. This is itself a nice object lesson in who owns fan labor, and it is very much the kind of question this course is about.
+The good news is that not every fan wiki is behind Cloudflare. In fact, one of the more interesting developments in fandom over the last several years has been communities **leaving** Fandom.com, frustrated by its advertising, autoplaying video, and control over community-written content and re-establishing their wikis on independent infrastructure. The Zelda Wiki left in 2022; the Minecraft Wiki left in 2023; many others moved to hosts like [wiki.gg](https://www.wiki.gg/wikis){target="_blank"} or the nonprofit [Miraheze](https://miraheze.org/){target="_blank"}. This is itself a nice object lesson in who owns fan labor, and it is very much the kind of question this course is about.
 
 For our *Lord of the Rings* example, there is a long-running independent alternative: **Tolkien Gateway** [https://tolkiengateway.net](https://tolkiengateway.net){target="_blank"}, a community-run Tolkien wiki that has been going since 2005.
 
@@ -715,7 +710,7 @@ Bronwyn
 
 Now, look carefully at that list, because it is telling us something we didn't ask for. There's no Galadriel here. No Elrond, no Sauron. At the time this lesson was checked, this category appeared to contain the characters **invented for the show** rather than every character who appears in it. Characters adapted from Tolkien's writing already have pages filed under their own categories. That interpretation is based on inspecting the category members, not on a machine-readable field supplied by the wiki, so it should be documented and rechecked.
 
-That is a genuinely useful accident, and it is worth pausing on. **The category system is itself an argument.** Someone in this community made an editorial decision about what counts as a Rings of Power character versus a Tolkien character, and our data inherits that decision whether we notice it or not. This happens constantly in humanities data work: the categories you scrape were made by people, for their own purposes, and they encode a point of view. Part of your job as a researcher is to notice this rather than treat the categories as neutral facts.
+**The category system is itself an argument.** Someone in this community made an editorial decision about what counts as a Rings of Power character versus a Tolkien character, and our data inherits that decision whether we notice it or not. This happens constantly in humanities data work: the categories you scrape were made by people, for their own purposes, and they encode a point of view. Part of your job as a researcher is to notice this rather than treat the categories as neutral facts.
 
 For our comparison, it means the category supplies a provisional "created for the show" group, while we must assemble and document a Tolkien-derived comparison group ourselves.
 
