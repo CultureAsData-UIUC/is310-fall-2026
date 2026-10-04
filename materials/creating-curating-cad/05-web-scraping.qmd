@@ -1,7 +1,6 @@
 ---
 title: "Web Scraping with Python"
 toc: true
-draft: true
 ---
 
 ::: {.callout-note}
@@ -528,12 +527,13 @@ Now when we rerun our code, we should see that we are able to get the status cod
 
 Many web pages use relative links, so this is a common issue when scraping web pages and it's why it's important to always inspect and explore the HTML of the web page you are scraping.
 
-### Advanced Web Scraping
+### Advanced Web Scraping: Community Wikis
 
-So far we have been scraping web pages that are relatively simple, but what if we wanted to scrape a more complex web page? For example, what if we wanted to scrape a fandom wiki page? These pages are often more complex because they have more complex HTML and CSS. Let's try scraping the *Lord of the Rings* wiki page [https://lotr.fandom.com/wiki/Main_Page](https://lotr.fandom.com/wiki/Main_Page){target="_blank"}.
+So far we have been scraping web pages that are relatively simple, but what if we wanted to scrape a more complex web page? For example, what if we wanted to scrape a fandom wiki page? These pages are often more complex because they have more complex HTML and CSS. Let's try scraping the *Tolkien Gateway* wiki page [https://tolkiengateway.net/wiki/Main_Page](https://tolkiengateway.net/wiki/Main_Page), which is "The J.R.R. Tolkien Encyclopedia" and is a community-run wiki that has been going since 2005. This page has a lot of information about J.R.R. Tolkien and his works, including *The Lord of the Rings* and *The Hobbit*. It also has a lot of information about the characters, places, and events in Tolkien's works.
 
+![](../../assets/images/tolkien_gateway.png)
 
-For those unfamiliar, fandom wikis are fan-created wikis that are often used to document popular culture. I haven't been able to find a list of all of these wikis, but there is a wikipedia page listing some of the most prominent ones [https://en.wikipedia.org/wiki/List_of_fan_wikis](https://en.wikipedia.org/wiki/List_of_fan_wikis){target="_blank"}. You'll notice that many of these wikis started in the mid-2000s and have grown in popularity since then. For example, there's actually a wikipedia page for the *Star Wars* wiki [https://en.wikipedia.org/wiki/Wookieepedia](https://en.wikipedia.org/wiki/Wookieepedia){target="_blank"}, which is called *Wookieepedia*.
+For those unfamiliar, fandom wikis are fan-created wikis that are often used to document popular culture. I haven't been able to find a list of all of these wikis, but there is a wikipedia page listing some of the most prominent ones [https://en.wikipedia.org/wiki/List_of_fan_wikis](https://en.wikipedia.org/wiki/List_of_fan_wikis). You'll notice that many of these wikis started in the mid-2000s and have grown in popularity since then. For example, there's actually a wikipedia page for the *Star Wars* wiki [https://en.wikipedia.org/wiki/Wookieepedia](https://en.wikipedia.org/wiki/Wookieepedia), which is called *Wookieepedia*.
 
 ![](../../assets/images/wikipedia_wookiepedia.png)
 
@@ -541,104 +541,15 @@ This page details some of the history and statistics of *Wookieepedia*, which st
 
 ![](../../assets/images/largest_fandoms.png)
 
-Before we start scraping this fandom wiki though, we need to check for the terms of service or user policies of the website. So far I've only been able to find the following page on the wiki [https://lotr.fandom.com/wiki/LOTR:Current_policies](https://lotr.fandom.com/wiki/LOTR:Current_policies){target="_blank"} which details the current policies of the wiki and that most of the content is under a `CC-BY-SA` license. There is a terms of service for Fandom wikis [https://www.fandom.com/terms-of-use](https://www.fandom.com/terms-of-use){target="_blank"} but that also doesn't have clear information about scraping. So the final place we can check is the `robots.txt` file.
+In a previous version of this lesson, we scraped these wikis directly, but in 2023 Fandom.com (the company that hosts many of these wikis) started using Cloudflare to block automated requests. This means that if you try to scrape these wikis, you'll get a `403` error. This is a common issue when scraping web pages and it's why it's important to always check the `robots.txt` file of the web page you are scraping.
 
-We can access this by going to the root of the website and adding `/robots.txt` to the end of the URL. For example, the `robots.txt` file for the *Lord of the Rings* wiki is [https://lotr.fandom.com/robots.txt](https://lotr.fandom.com/robots.txt){target="_blank"}. This file contains the rules for web crawlers and scrapers and tells them what they can and can't scrape.
+The good news is that not every fan wiki is behind Cloudflare. In fact, one of the more interesting developments in fandom over the last several years has been communities **leaving** Fandom.com, frustrated by its advertising, autoplaying video, and control over community-written content and re-establishing their wikis on independent infrastructure. The Zelda Wiki left in 2022; the Minecraft Wiki left in 2023; many others moved to hosts like [wiki.gg](https://www.wiki.gg/wikis){target="_blank"} or the nonprofit [Miraheze](https://miraheze.org/){target="_blank"}. 
 
-![](../../assets/images/lotr_robots_txt.png)
+Let's start where we always start: the `robots.txt` file [https://tolkiengateway.net/robots.txt](https://tolkiengateway.net/robots.txt){target="_blank"}.
 
-I won't post the full file here since it's quite long, but we can work through the main relevant sections:
+![](../../assets/images/tolkien_gateway_robots.png)
 
-1. The `User-agent` section tells us what web crawlers and scrapers are allowed to scrape the website. For example, the `User-agent: *` section tells us that all web crawlers and scrapers are allowed to scrape the website. This is the most common section and means that the website is open to scraping.
-2. Within the `User-agent` section, we can see there is a `Disallow` section tells us what web crawlers and scrapers are not allowed to scrape the website. For example, the `Disallow: /wiki/Special:` section tells us that web crawlers and scrapers are not allowed to scrape the `Special:` pages on the website. You'll also notice that some bots are explicitly disallowed from scraping the website, like SemrushBot or GPTBot.
-3. Similarly, the `Allow` section tells us what web crawlers and scrapers are allowed to scrape the website. For example, the `Allow: /wiki/*` section tells us that web crawlers and scrapers are allowed to scrape the `wiki` pages on the website. We can also see the `Allow: /api.php?`, which allows crawlers to access certain API endpoints, which are often set up for structured data access, making them a good option for ethical scraping. This section is less common than the `Disallow` section but is used to allow web crawlers and scrapers to scrape certain pages on the website.
-4. The `Noindex` section tells us what web crawlers and scrapers are not allowed to index. For example, the `Noindex: /wiki/Special:` section tells us that web crawlers and scrapers are not allowed to index the `Special:` pages on the website. Although this doesn’t restrict access, it signals pages that the site prefers to keep less visible. Scraping these pages could go against the site’s intentions for privacy or low visibility.
-5. Finally, the `Sitemap` section tells us where the sitemap for the website is. For example, the `Sitemap: https://lotr.fandom.com/sitemap-newsitemapxml-index.xml` section tells us that the sitemap for the website is at `https://lotr.fandom.com/sitemap-newsitemapxml-index.xml`. This is less common than the other sections but is used to help web crawlers and scrapers find the sitemap for the website.
-
-One additional item you might see is a `Crawl-delay` section tells us how long web crawlers and scrapers should wait between requests. For example, if a `robots.txt` says `Crawl-delay: 5` that tells us that web crawlers and scrapers should wait 5 seconds between requests. However, in our case the `robots.txt` file for the *Lord of the Rings* wiki doesn't have this section.
-
-Looking through this `robots.txt` tells us that we can scrape many of the pages on the *Lord of the Rings* wiki, but we should be careful to avoid the `Special:` pages and to respect the `Noindex` sections. This is a good practice to follow when scraping websites and it's always a good idea to check the `robots.txt` file before scraping a website.
-
-So let's try scraping the *Lord of the Rings* wiki page. We can start by getting the web page using the `requests` library and then using the `BeautifulSoup` library to parse the HTML.
-
-```python
-response = requests.get("https://lotr.fandom.com/wiki/Main_Page")
-print(response.status_code)
-soup = BeautifulSoup(response.text, "html.parser")
-```
-
-### Bot Protection and the Limits of Scraping
-
-Here is where our lesson runs into the actual state of the web in 2026. If you run the code above, you will not get a `200`. You will get this:
-
-```bash
-403
-```
-
-And if you print the first few hundred characters of `response.text`, you'll see something like:
-
-```html
-<!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title>
-```
-
-**The answer: Bot Protection.**
-
-Many modern websites sit behind automated bot detection services like **Cloudflare**, which protect against unwanted scraping, denial-of-service attacks, and — increasingly — mass harvesting by AI training crawlers. Cloudflare inspects incoming requests and blocks the ones that look automated. When you visit the site in your browser, your browser presents a whole bundle of evidence that it is a browser: a `User-Agent` string, a particular ordering of headers, TLS fingerprints, the ability to execute JavaScript and store cookies. When you call `requests.get()`, you present almost none of that, and you announce yourself as `python-requests/2.x.x` besides. The `Just a moment...` page is Cloudflare's JavaScript challenge, which `requests` cannot solve because `requests` does not run JavaScript.
-
-Notice the genuinely interesting thing here. We just read the `robots.txt` file together, and it *told us we could scrape* `/wiki/*`. But the site's edge network blocks us anyway. **The stated policy and the enforced policy do not match.** `robots.txt` is a request written for well-behaved crawlers; Cloudflare is an enforcement mechanism that does not consult it. This gap between what a site says and what a site does is worth sitting with — it is exactly the sort of thing that makes web data hard to reason about ethically, and it is a fairly recent development driven by the enormous volume of AI scraping since 2023.
-
-::: {.callout-warning}
-## A Note on `cloudscraper` (and Why It No Longer Works)
-
-If you search for how to get around this, you will very quickly find the `cloudscraper` library [https://github.com/VeNoMouS/cloudscraper](https://github.com/VeNoMouS/cloudscraper){target="_blank"}, which for several years was the standard answer. It worked by imitating a browser closely enough to pass Cloudflare's challenge. Earlier versions of this very lesson taught it.
-
-**It is not a reliable solution for this site.** When this lesson was verified in September 2026, running it against this Fandom wiki returned exactly the same 403:
-
-```python
-import cloudscraper
-
-scraper = cloudscraper.create_scraper()
-response = scraper.get("https://lotr.fandom.com/wiki/Main_Page")
-print(response.status_code)   # 403
-print(response.text[:60])     # <!DOCTYPE html><html lang="en-US"><head><title>Just a moment
-```
-
-I am leaving this here rather than quietly deleting it, because the failure is the lesson. Bot detection is an **arms race**: the site improves its detection, the workaround library improves its imitation, and the site improves again. This particular workaround stopped working. Any research pipeline that depends on continually evading a site's defenses is likely to remain fragile because both sides keep changing.
-
-This matters for you as a researcher in two ways. **Practically**, any research pipeline built on evasion is a pipeline that will break, usually silently and usually right when you need it. **Ethically**, once a site has put up an active block, you can no longer tell yourself that scraping it is unobjectionable — you have been told no in the clearest terms a server has available. Writing code specifically to defeat that block is a meaningfully different act from writing code to read a page that was handed to you freely.
-
-So when you hit a wall like this, you have three legitimate options, and "try harder to look like a browser" is not among them:
-
-1. **Respect the block** and find a different source for your question.
-2. **Choose a site that permits scraping** — plenty still do, as we're about to see.
-3. **Use the site's sanctioned API**, if it offers one. This is usually the best answer, because an API is the site explicitly telling you *how* it wants to be read programmatically.
-
-As it happens, Fandom does offer option 3, and we will take it up properly in [our next lesson on APIs](06-getting-data-apis.qmd){target="_blank"}. For the rest of *this* lesson, we're going to take option 2.
-:::
-
-### Finding a Wiki That Welcomes Us
-
-The good news is that not every fan wiki is behind Cloudflare. In fact, one of the more interesting developments in fandom over the last several years has been communities **leaving** Fandom.com, frustrated by its advertising, autoplaying video, and control over community-written content and re-establishing their wikis on independent infrastructure. The Zelda Wiki left in 2022; the Minecraft Wiki left in 2023; many others moved to hosts like [wiki.gg](https://www.wiki.gg/wikis){target="_blank"} or the nonprofit [Miraheze](https://miraheze.org/){target="_blank"}. This is itself a nice object lesson in who owns fan labor, and it is very much the kind of question this course is about.
-
-For our *Lord of the Rings* example, there is a long-running independent alternative: **Tolkien Gateway** [https://tolkiengateway.net](https://tolkiengateway.net){target="_blank"}, a community-run Tolkien wiki that has been going since 2005.
-
-Let's start where we always start — the `robots.txt` file [https://tolkiengateway.net/robots.txt](https://tolkiengateway.net/robots.txt){target="_blank"}:
-
-```
-#  _____     _ _    _               ____       _
-# |_   _|__ | | | _(_) ___ _ __    / ___| __ _| |_ _____      ____ _ _   _
-#   | |/ _ \| | |/ / |/ _ \ '_ \  | |  _ / _` | __/ _ \ \ /\ / / _` | | | |
-#   | | (_) | |   <| |  __/ | | | | |_| | (_| | ||  __/\ V  V / (_| | |_| |
-#   |_|\___/|_|_|\_\_|\___|_| |_|  \____|\__,_|\__\___| \_/\_/ \__,_|\__, |
-#
-# Are you a human? Maybe you want to help with the wiki?
-#
-# Please note: There are a lot of pages on this site, and there are
-# some misbehaved spiders out there that go _way_ too fast. If you're
-# irresponsible, your access to the site may be blocked.
-```
-
-Compare the tone of this to the Fandom file. This one is addressed to a person. It assumes you might be a human being who wants to help, and its one substantive request is simply: *don't go too fast*. The rest of the file blocks specific badly-behaved commercial crawlers by name (`MJ12bot`, `HTTrack`, `WebZIP`) — but there is no blanket ban on the sort of small, slow, scholarly scraping we want to do.
+This file is addressed to a person. It assumes you might be a human being who wants to help, and its one substantive request is simply: *don't go too fast*. The rest of the file blocks specific badly-behaved commercial crawlers by name (`MJ12bot`, `HTTrack`, `WebZIP`), but there is no blanket ban on the sort of small, slow, scholarly scraping we want to do.
 
 This file does not grant unrestricted permission, but it does give us unusually direct operational guidance for a small, good-faith request: identify ourselves, move slowly, and stop if the server refuses or rate-limits us. **We are going to add a `time.sleep()` between our requests, and this time it is not decorative.**
 
@@ -648,258 +559,349 @@ We should also identify ourselves honestly. Rather than pretending to be a brows
 import requests
 from bs4 import BeautifulSoup
 
-HEADERS = {"User-Agent": "is310-course-scraper/1.0 (student project; netid@illinois.edu)"}
+HEADERS = {"User-Agent": "is310-course-scraper/1.0 (student project; netid@illinois.edu)"} # Replace netid with your actual netid
 
 response = requests.get("https://tolkiengateway.net/wiki/Main_Page", headers=HEADERS)
 print(response.status_code)
 soup = BeautifulSoup(response.text, "html.parser")
 ```
 
-This should give us a `200`. Notice the difference in what we just did: we did not disguise ourselves to slip past a filter, we introduced ourselves to a site that was willing to be read. A site administrator looking at their logs can see exactly who we are and email us if we become a problem. That is what good-faith scraping looks like.
+This should give us a `200`. Notice the difference in what we just did. We did not disguise ourselves to slip past a filter, we introduced ourselves to a site that was willing to be read. A site administrator looking at their logs can see exactly who we are and email us if we become a problem, which is what good-faith scraping looks like.
 
 Now since this wiki is huge, we need to narrow our focus to a particular goal or question. Tolkien Gateway has tens of thousands of pages, so we need an actual research question rather than a vague intention to "get the data."
 
-Here is one. There's been a recent adaptation of *The Lord of the Rings* by Amazon called *The Rings of Power*, and one of the persistent arguments about that show — in fan communities, in reviews, in a great deal of very heated internet discourse — is about **fidelity to the source material**. Some characters in the show come straight out of Tolkien's published writing. Others were invented for television. That is an argument we can actually put numbers on.
+#### Our Question: What Receives Attention in a Fan Encyclopedia?
 
-![](../../assets/images/rings_of_power.png)
+Tolkien Gateway documents both characters from Tolkien's literary works and characters created for later adaptations. We could use the structure of the wiki to ask:
 
-Specifically: a wiki article about a character drawn from Tolkien's books will often cite those books, while an article about a character invented for the show has different sources available to it. So **the number of references on a character's wiki page gives us a rough measure of how densely Tolkien Gateway editors have documented that character.** That gives us something concrete to scrape, but it does not directly measure how much Tolkien wrote.
+> **How does Tolkien Gateway distribute attention between characters from *The Lord of the Rings* books and characters created for recent *The Rings of Power* TV show?**
 
-#### Finding the Characters
+[![Click to see the page](../../assets/images/rings_of_power.png)](https://tolkiengateway.net/wiki/The_Lord_of_the_Rings:_The_Rings_of_Power){target="_blank"}
 
-Tolkien Gateway organizes its pages with MediaWiki categories, and it has one relevant to our question: [The Rings of Power (TV series) characters](https://tolkiengateway.net/wiki/Category:The_Rings_of_Power_(TV_series)_characters){target="_blank"}.
+Part of this question requires thinking about how we can measure attention from the data available on the wiki. We might for instance look at the edits to each character's page over time or discussion pages associated with each character. But first, we might start with simple metrics that are readily available: word count, character count, and internal-link counts.
 
-If you open this page in your browser and use the inspector, you'll see that MediaWiki uses a consistent structure for category listings: the members live inside a `div` with the id `mw-pages`, grouped into `div` elements with the class `mw-category-group`, and each individual page is a link inside a list item.
+Word and character counts give us two rough measures of article length. Total internal-link count captures every qualifying link occurrence, while unique internal-link count captures the number of distinct wiki destinations. These are not perfect measures, but they are a starting point for understanding attention. A long page may reflect abundant source material, sustained editorial labor, debate, popularity, or simply the age of the page. Repeated links may show recurring topics or simply editorial conventions. By starting with several simple measures, we can compare what each one makes visible and then refine our approach as we learn more about the wiki's structure and content.
 
-This is a good moment to notice something. The Fandom wiki used classes like `category-page__member-link`, which are specific to Fandom's own theme. Tolkien Gateway uses `mw-pages` and `mw-category-group`, which are **standard MediaWiki markup**. Because so many wikis run on MediaWiki, learning this one structure means you can scrape thousands of different wikis with nearly identical code. Recognizing which parts of a page's HTML are generic and which are site-specific is a large part of getting good at scraping.
+| Metric | How We Calculate It | What It Helps Us See | Important Limitation |
+|---|---|---|---|
+| `word_count` | Split the extracted text at whitespace and count the pieces | Approximate article length in words | This is not linguistic or language-model tokenization |
+| `character_count` | Count every character in the extracted text | Article length at a finer scale | Spaces and punctuation are included |
+| `internal_link_count` | Count every qualifying internal-link occurrence | How often the article connects readers elsewhere in the wiki | Repeated links to one destination count repeatedly |
+| `unique_internal_link_count` | Count each internal destination once | The range of distinct wiki pages connected to the article | Different destinations may not be equally meaningful |
 
-We can use a CSS selector to pull out those links. We've been using `find_all()` so far, but `BeautifulSoup` also gives us `select()`, which takes a CSS selector like the ones you wrote in your stylesheets — and for nested structures like this one it is much more concise:
+: Measurements collected from each character page {.striped .hover}
 
-```python
-import requests
-from bs4 import BeautifulSoup
+::: {.callout-tip}
+## All Links Versus Unique Links
 
-BASE = "https://tolkiengateway.net"
-HEADERS = {"User-Agent": "is310-course-scraper/1.0 (student project; netid@illinois.edu)"}
+Imagine that one article links to `Elrond` three times and `Galadriel` twice. Its `internal_link_count` would be **5**, because five links occur in the HTML. Its `unique_internal_link_count` would be **2**, because those links lead to only two distinct pages.
 
-response = requests.get(f"{BASE}/wiki/Category:The_Rings_of_Power_(TV_series)_characters", headers=HEADERS)
-soup = BeautifulSoup(response.text, "html.parser")
-
-characters = soup.select("#mw-pages .mw-category-group li a")
-
-print(f"Found {len(characters)} characters")
-for character in characters:
-	print(character.get_text())
-```
-
-The selector `#mw-pages .mw-category-group li a` reads as: "find the element with id `mw-pages`, then inside it find elements with class `mw-category-group`, then inside those find `li` elements, then inside those find `a` elements." Remember from CSS that `#` means id and `.` means class.
-
-This should print 51 characters:
-
-```bash
-Found 51 characters
-Abigail
-Adar (The Rings of Power)
-Arondir
-Astrid (The Rings of Power)
-Berek
-Brandyfoot Family
-Bronwyn
-...
-```
-
-Now, look carefully at that list, because it is telling us something we didn't ask for. There's no Galadriel here. No Elrond, no Sauron. At the time this lesson was checked, this category appeared to contain the characters **invented for the show** rather than every character who appears in it. Characters adapted from Tolkien's writing already have pages filed under their own categories. That interpretation is based on inspecting the category members, not on a machine-readable field supplied by the wiki, so it should be documented and rechecked.
-
-**The category system is itself an argument.** Someone in this community made an editorial decision about what counts as a Rings of Power character versus a Tolkien character, and our data inherits that decision whether we notice it or not. This happens constantly in humanities data work: the categories you scrape were made by people, for their own purposes, and they encode a point of view. Part of your job as a researcher is to notice this rather than treat the categories as neutral facts.
-
-For our comparison, it means the category supplies a provisional "created for the show" group, while we must assemble and document a Tolkien-derived comparison group ourselves.
-
-#### Scraping an Individual Character Page
-
-Now let's write a function to pull the details from a single character page. Let's look at [https://tolkiengateway.net/wiki/Galadriel](https://tolkiengateway.net/wiki/Galadriel){target="_blank"} in the inspector.
-
-Two things are useful to us. The references are in an ordered list with the class `references` at the bottom of the page, and the categories the page belongs to are in a `div` with the id `mw-normal-catlinks`.
-
-```python
-import time
-
-def get_soup(url):
-	try:
-		response = requests.get(url, headers=HEADERS, timeout=10)
-	except requests.RequestException as error:
-		print(f"Could not reach {url}: {error}")
-		return None
-	if response.status_code != 200:
-		print(f"Failed to get {url}: {response.status_code}")
-		return None
-	time.sleep(1)  # the robots.txt asked us to be slow, so we are
-	return BeautifulSoup(response.text, "html.parser")
-
-def get_character_details(character_link):
-	soup = get_soup(BASE + character_link)
-	if soup is None:
-		return None
-	references = soup.select("ol.references li")
-	categories = [category.get_text() for category in soup.select("#mw-normal-catlinks li a")]
-	return {
-		"reference_count": len(references),
-		"categories": categories,
-		"category_count": len(categories)
-	}
-
-print(get_character_details("/wiki/Galadriel"))
-```
-
-Notice a few things about this function. It returns a dictionary rather than printing, so the calling code decides what to do with the data. A failed request returns `None`, which lets the calling code skip or separately record the failure. It does **not** convert failure into a reference count of zero, because that would turn missing evidence into a plausible but false observation. The `time.sleep(1)` lives inside `get_soup()`, which means **every** successful request we make is automatically slowed down.
-
-Running this on Galadriel gives us `'reference_count': 85`. Eighty-five citations, on one character.
-
-#### Comparing the Two Groups
-
-Now we can put the comparison together. We need the invented characters (from the category) and the book characters (which we'll list ourselves, drawn from the show's principal cast):
-
-```python
-def fetch_category_characters(category, source):
-	soup = get_soup(f"{BASE}/wiki/{category.replace(' ', '_')}")
-	if soup is None:
-		return []
-	characters_data = []
-	for character in soup.select("#mw-pages .mw-category-group li a"):
-		details = get_character_details(character.get("href"))
-		if details is None:
-			continue
-		character_data = {
-			"character": character.get_text(),
-			"character_link": character.get("href"),
-			"source": source
-		}
-		character_data.update(details)
-		characters_data.append(character_data)
-	return characters_data
-
-def fetch_named_characters(names, source):
-	characters_data = []
-	for name in names:
-		character_link = "/wiki/" + name.replace(" ", "_")
-		details = get_character_details(character_link)
-		if details is None:
-			continue
-		character_data = {"character": name, "character_link": character_link, "source": source}
-		character_data.update(details)
-		characters_data.append(character_data)
-	return characters_data
-
-TOLKIEN_DERIVED_CHARACTERS = ["Galadriel", "Elrond", "Sauron", "Celebrimbor", "Gil-galad",
-                              "Isildur", "Elendil", "Tar-Míriel", "Durin IV", "Círdan", "Ar-Pharazôn"]
-
-invented_characters = fetch_category_characters("Category:The Rings of Power (TV series) characters", "Created for the show")
-tolkien_derived_characters = fetch_named_characters(
-	TOLKIEN_DERIVED_CHARACTERS, "Tolkien-derived"
-)
-```
-
-**This will take a few minutes to run**, because we are making about 63 requests with a one-second pause between each. That is the correct behavior. If it finished instantly, we would be hammering a volunteer-run wiki.
-
-::: {.callout-warning}
-## This Is an Exploratory Comparison, Not a Neutral Sample
-
-The two groups were produced differently. One comes from a community-authored category; the other is a hand-picked list of prominent characters. The labels also require interpretation, especially when an adaptation combines, renames, or substantially changes figures from earlier texts. Our comparison can reveal a pattern worth investigating, but it cannot establish a comprehensive measure of adaptation fidelity. A research-ready version would document selection rules, verify every classification, preserve uncertain cases, and test whether the result changes under a different sample.
+Neither measure is automatically better. The total count captures repeated linking practices, while the unique count captures the breadth of the article's connections. Comparing them may reveal whether a page repeatedly returns to a few topics or connects outward to many different ones.
 :::
 
-Now let's sort everything by reference count and display it with the `Rich` library from our last assignment:
+#### Following the Website's Structure
 
-```python
-from rich.console import Console
-from rich.table import Table
+Rather than typing a list of character names ourselves, we will let Tolkien Gateway's own categories guide the scraper and record the data. We begin with two category pages selected for our comparison:
 
-console = Console()
+```text
+Characters in The Lord of the Rings category
+└── every character page in that category
 
-all_characters = tolkien_derived_characters + invented_characters
-all_characters.sort(key=lambda character: character["reference_count"], reverse=True)
-
-table = Table(title="References on Tolkien Gateway Character Pages")
-table.add_column("Character", style="cyan")
-table.add_column("References", style="magenta")
-table.add_column("Categories", style="yellow")
-table.add_column("Source", style="green")
-
-for character in all_characters[:12]:
-	table.add_row(character["character"], str(character["reference_count"]),
-	              str(character["category_count"]), character["source"])
-
-console.print(table)
+The Rings of Power (TV series) characters category
+└── every character page in that category
 ```
 
-Which gives us:
+Many wikis have a portal page that lists all the characters in a work, and in the case of Tolkien Gateway, there are multiple ways to get this data, from starting at the Main Page to following the "Characters" link in the sidebar to navigating through the category tree. But we will start with the two category pages above, which are the most direct way to get a complete list of characters for each work.
 
-```bash
-             References on Tolkien Gateway Character Pages
-┏━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Character   ┃ References ┃ Categories ┃ Source                  ┃
-┡━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ Galadriel   │ 85         │ 12         │ Tolkien-derived          │
-│ Sauron      │ 80         │ 16         │ Tolkien-derived          │
-│ Celebrimbor │ 40         │ 13         │ Tolkien-derived          │
-│ Círdan      │ 37         │ 16         │ Tolkien-derived          │
-│ Gil-galad   │ 36         │ 12         │ Tolkien-derived          │
-│ Elrond      │ 35         │ 15         │ Tolkien-derived          │
-│ Ar-Pharazôn │ 17         │ 8          │ Tolkien-derived          │
-│ Elendil     │ 16         │ 13         │ Tolkien-derived          │
-│ Isildur     │ 14         │ 12         │ Tolkien-derived          │
-│ Tar-Míriel  │ 10         │ 5          │ Tolkien-derived          │
-│ Durin IV    │ 4          │ 8          │ Tolkien-derived          │
-│ Disa        │ 4          │ 2          │ Created for the show    │
-└─────────────┴────────────┴────────────┴─────────────────────────┘
-```
+- [Characters in *The Lord of the Rings*](https://tolkiengateway.net/wiki/Category:Characters_in_The_Lord_of_the_Rings){target="_blank"}
+- [*The Rings of Power* (TV series) characters](https://tolkiengateway.net/wiki/Category:The_Rings_of_Power_(TV_series)_characters){target="_blank"}
 
-And if we compute the averages:
+Our first step is to explore the underlying HTML of these pages to see how the character links are structured. We can use the browser's "Inspect" feature to look at the HTML and find the relevant elements.
 
-```python
-for group, label in [(tolkien_derived_characters, "Tolkien-derived"),
-					 (invented_characters, "Created for show")]:
-	if not group:
-		print(f"No data collected for {label}")
-		continue
-	average = sum(character["reference_count"] for character in group) / len(group)
-	print(f"{label:18} n={len(group):3}  average references={average:.1f}")
-```
+![](../../assets/images/lotr_characters_page.png)
 
-```bash
-Tolkien-derived    n= 11  average references=34.0
-Created for show   n= 51  average references=1.3
-```
+We can notice that the character links are inside a `div` with the id `mw-pages`, and each character link is inside an `li` element. We can compare this structure to the *Rings of Power* category page to see if this logic holds for both pages. If it does, we can write a function that scrapes the character links from both pages.
 
-This is a real result from this particular sample, and it's worth thinking about what it does and does not tell you. The average for the hand-picked Tolkien-derived group is roughly twenty-six times the average for the category-derived group. But the distributions overlap: Durin IV and Disa are tied at four references in the current output. More importantly, the samples were assembled differently, so the result is descriptive evidence about these pages rather than a neutral ranking of the characters or a definitive measure of fidelity.
+![](../../assets/images/rop_adaptations_page.png)
 
-But notice what we have **actually** measured. We have not measured how much Tolkien wrote about Galadriel. We have measured **how many citations Tolkien Gateway's editors added to a wiki page about Galadriel.** Those are different things. A popular character attracts more editors, and more editors add more citations. Our number is entangled with fan attention in ways we cannot separate from this data alone. Durin IV scores a 4 despite being drawn from the appendices, because his page is short — not because Tolkien was silent about the line of Durin.
+Now that we see that both pages have the same structure, we next need to take a look at the individual character pages to see how we can measure their text and internal links. We can use the "Inspect" feature again to look at the HTML of a character page.
 
-This is the single most important habit to carry out of this lesson: **be precise about what your scraped numbers are counting.** It is rarely the thing you actually want to know. It is usually a proxy, and the distance between the proxy and the concept is where research arguments live.
+![](../../assets/images/tolkien_gateway_individual_character_page.png)
 
-#### Saving Our Data
+Notice the `div` with the id `mw-content-text` and the class `mw-parser-output`. This is where the main content of the character page is located. We can use this information to calculate word count, character count, and link counts only from this `div`. This logic will help us avoid counting text and links from the sidebar, header, footer, or other parts of the page that are not relevant to our analysis.
 
-Finally, let's save this to a CSV so we can use it later:
+#### Setting Up the Script
+
+First, we will create a new file named `tolkien_gateway_scraper.py`. We start with the modules we need, the website addresses that remain constant, an honest `User-Agent`, and one shared Rich console:
 
 ```python
 import csv
+import time
 
-with open("rings_of_power_characters.csv", "w", newline="") as file:
-	writer = csv.writer(file)
-	writer.writerow(["character", "character_link", "source", "reference_count", "category_count"])
-	for character in all_characters:
-		writer.writerow([
-			character["character"],
-			character["character_link"],
-			character["source"],
-			character["reference_count"],
-			character["category_count"]
-		])
+import requests
+from bs4 import BeautifulSoup
+from rich.console import Console
+from rich.table import Table
 
-print(f"Wrote {len(all_characters)} rows")
+
+BASE_URL = "https://tolkiengateway.net"
+LITERARY_CATEGORY_URL = f"{BASE_URL}/wiki/Category:Characters_in_The_Lord_of_the_Rings"
+ADAPTATION_CATEGORY_URL = f"{BASE_URL}/wiki/Category:The_Rings_of_Power_(TV_series)_characters"
+RINGS_OF_POWER_PATH = "/wiki/The_Lord_of_the_Rings:_The_Rings_of_Power"
+HEADERS = {
+	"User-Agent": "is310-course-scraper/1.0 (student project; netid@illinois.edu)"
+}
+REQUEST_DELAY = 1.0
+RESULTS_OUTPUT = "tolkien_gateway_characters.csv"
+
+console = Console()
 ```
 
-Note the `newline=""` argument in `open()`. This is a small detail that the `csv` documentation recommends on all platforms — without it, you can end up with blank rows between every line of your file on Windows.
+The use of uppercase variable names is a common Python convention for **constants**. Constants are values that do not change throughout the execution of the program. In this case, the URLs, headers, request delay, and output file name are all constants because they remain the same regardless of which character page we are scraping. By contrast, values that change with each function call will be passed into functions as parameters.
 
-We now have a full script that imports its libraries at the top, defines small functions that each do one job, respects the site's stated wishes about crawl speed, identifies itself honestly, handles errors without crashing, and produces both a readable table and a reusable data file. That is a realistic shape for a research scraper.
+#### Downloading and Parsing Pages
+
+Since, we will be downloading multiple pages, we want to create a function that handles the downloading and parsing of pages. This function will take a URL as a parameter, download the page, and return a BeautifulSoup object. If the page cannot be downloaded, it will return `None`.
+
+```python
+def fetch_soup(url):
+	if not url:
+		console.print("[yellow]No URL was found for this page.[/yellow]")
+		return None
+
+	response = requests.get(url, headers=HEADERS, timeout=30)
+	time.sleep(REQUEST_DELAY)
+
+	if response.status_code != 200:
+		console.print(f"[red]Could not download {url}: HTTP {response.status_code}[/red]")
+		return None
+
+	return BeautifulSoup(response.text, "html.parser")
+```
+
+Because the `url` changes each time, we make it a parameter. Whereas the headers and request delay remain fixed on each loop, so the function reads those constants defined outside the function (remember the global scope!). Returning a Beautiful Soup object also means that the other functions can focus on searching HTML rather than repeating request code. Generally, we want to isolate one task per function, which makes it easier to read and test the code. We also want to avoid overloading the server with requests, so we add a `time.sleep()` after each request. That keeps our scraper slow and predictable instead of sending another request immediately when the site is already having trouble, and also prevents us from being blocked by the server for sending too many requests in a short period of time.
+
+#### Collecting Character Pages
+
+Since we have identified the structure of the category pages, we can now create a function to collect the character information. MediaWiki places category members inside the element with the id `mw-pages`. Instead of writing one long CSS selector, we can search the HTML in stages: find the character section, find its list items, and then find the link inside each item.
+
+```python
+def scrape_characters(category_page, source_url):
+	characters = []
+	if category_page is None:
+		return characters
+
+	characters_section = category_page.find(id="mw-pages")
+	if characters_section is None:
+		return characters
+
+	if source_url == LITERARY_CATEGORY_URL:
+		character_type = "literary"
+	else:
+		character_type = "adaptation"
+
+	character_items = characters_section.find_all("li")
+	for item in character_items:
+		link = item.find("a", href=True)
+		if link is None:
+			continue
+
+		characters.append({
+			"character": link.get_text(" ", strip=True),
+			"character_type": character_type,
+			"source_url": source_url,
+			"character_url": f"{BASE_URL}{link['href']}",
+		})
+
+	return characters
+```
+
+Breaking the search into named steps makes the page structure easier to inspect and debug. `find()` returns the first matching element, which is the main section of the page. Then we define the character type, by checking which category page we are scraping, and assigning the appropriate value. Finally, we use `find_all()` to get every list item in that section, and then `find()` again to get the link inside each item. We use `get_text(" ", strip=True)` to extract the visible text from the link, and `strip=True` to remove any leading or trailing whitespace. We also construct the full URL for the character page by concatenating the base URL with the relative link.
+
+We return a list of dictionaries, each containing the character's name, type, source URL, and character URL. This structure allows us to easily iterate over the characters and analyze their pages in the next step.
+
+#### Collecting Internal Links
+
+We want to collect every qualifying link first so that we can later compare all link occurrences with unique destinations. We want only relative links to other wiki pages, not links to fragments within a page:
+
+```python
+def get_internal_links(content):
+	if content is None:
+		return []
+
+	links = []
+	for link in content.find_all("a", href=True):
+		href = link["href"]
+		if href.startswith("/wiki/") and "#" not in href:
+			links.append(href)
+
+	return links
+```
+
+Here we first find every link that has an `href`, then use a regular Python `if` statement to retain relative URLs beginning with `/wiki/`. The condition `"#" not in href` excludes fragment links that point to a section within a page. The function returns every qualifying occurrence, including repeated links, which lets us calculate both total and unique counts for the links.
+
+We deliberately retain all internal wiki-link occurrences even though some links may point to categories, files, templates, or help pages. In the future, we might refine our logic to exclude those, but for now we are simply counting every link that points to another wiki page. Such a choice is part of how we start thinking about how we operationalize our research question but also the assumptions we make about what counts as attention. 
+
+#### Analyzing Each Character Page
+
+For every character, we isolate the main article content and calculate our text and link measurements:
+
+```python
+def analyze_character(character):
+	soup = fetch_soup(character["character_url"])
+	record = character.copy()
+	record["word_count"] = 0
+	record["character_count"] = 0
+	record["internal_link_count"] = 0
+	record["unique_internal_link_count"] = 0
+	record["rings_of_power_link"] = False
+
+	if soup is None:
+		return record
+
+	content = soup.select_one("#mw-content-text .mw-parser-output")
+	if content is None:
+		return record
+
+	article_text = content.get_text(" ", strip=True)
+	word_count = len(article_text.split())
+	character_count = len(article_text)
+	internal_links = get_internal_links(content)
+	unique_internal_links = []
+	for href in internal_links:
+		if href not in unique_internal_links:
+			unique_internal_links.append(href)
+
+	record["word_count"] = word_count
+	record["character_count"] = character_count
+	record["internal_link_count"] = len(internal_links)
+	record["unique_internal_link_count"] = len(unique_internal_links)
+	if record["character_type"] == "literary":
+		record["rings_of_power_link"] = RINGS_OF_POWER_PATH in internal_links
+	return record
+```
+
+`character.copy()` preserves the discovery data while allowing us to add measurements to a new dictionary. We save the extracted text once as `article_text`. `len(article_text)` counts every character, including spaces and punctuation, while `len(article_text.split())` counts whitespace-separated pieces as words. Both approaches are valid ways to measure text, but neither is a complete representation of the text's content. For instance, they may include captions, tables, citations, or interface text contained inside the selected article element. Again, we are not striving for perfection but more reproducible and consistent measurements across pages.
+
+The full `internal_links` list preserves repeated links. We then build `unique_internal_links` by appending a destination only when it is not already present. The difference between these counts is potentially meaningful: one measures how often the article links internally, while the other measures the range of distinct pages it connects to.
+
+The same logic applies to text length. Word and character counts will usually rise together, but they are not interchangeable. Pages containing long names, dates, citations, or different writing styles may have similar word counts but different character counts. Keeping both lets us inspect whether a pattern appears across measurements rather than treating one convenient number as the page's definitive size.
+
+As you review the output, consider:
+
+- Do the same character pages rank highly across word, character, total-link, and unique-link counts?
+- Which pages have many repeated links but relatively few unique destinations?
+- Are differences between literary and adaptation pages consistent across all four measurements?
+- What parts of wiki writing or formatting might produce those differences besides fan attention?
+
+![](../../assets/images/galadriel_rop_link.png)
+
+The screenshot above shows that Galadriel's page links to `/wiki/The_Lord_of_the_Rings:_The_Rings_of_Power` in its adaptation section. For literary characters, `rings_of_power_link` becomes `True` when that exact path appears and remains `False` when it does not. This gives us a simple overlap field for literary characters who appear in the show.
+
+We do not perform this overlap check for adaptation characters. They already come from a category defined as characters created for the television series, so they are not literary characters appearing in the show. A `False` value also remains an inference from editorial markup: it could mean the literary character does not appear in the show, or simply that editors have not added the expected link to the page.
+
+#### Saving and Previewing the Results
+
+The complete script includes one function that writes our list of dictionaries to a CSV and another that previews the same records as a Rich table sorted by word count:
+
+```python
+def save_csv(records, output_path):
+	if not records:
+		console.print(f"[yellow]No records to save to {output_path}[/yellow]")
+		return
+
+	with open(output_path, "w", newline="", encoding="utf-8") as file:
+		writer = csv.DictWriter(file, fieldnames=records[0].keys())
+		writer.writeheader()
+		writer.writerows(records)
+
+
+def print_results_table(records):
+	table = Table(title="Literary and Adaptation Character Pages")
+	table.add_column("Character", style="cyan")
+	table.add_column("Type", style="green")
+	table.add_column("Literary Character in Rings of Power", style="magenta")
+	table.add_column("Words", justify="right")
+	table.add_column("Characters", justify="right")
+	table.add_column("All Links", justify="right")
+	table.add_column("Unique Links", justify="right")
+
+	for record in sorted(records, key=lambda record: record["word_count"], reverse=True):
+		table.add_row(
+			record["character"],
+			record["character_type"],
+			str(record["rings_of_power_link"]),
+			str(record["word_count"]),
+			str(record["character_count"]),
+			str(record["internal_link_count"]),
+			str(record["unique_internal_link_count"]),
+		)
+
+	console.print(table)
+```
+
+![](../../assets/images/tolkien_gateway_results_table.png)
+
+The CSV preserves all records for later analysis. Sorting only happens in the terminal preview, so display order does not silently change the saved dataset. The `newline=""` argument follows the `csv` documentation's recommendation and avoids extra blank rows on Windows, while UTF-8 preserves accented characters.
+
+#### Organizing the Workflow with `main()`
+
+Our functions each perform one task. At the end of the script, we call the `main()` function to organize those tasks into the full research workflow:
+
+```python
+def main():
+	console.print("[cyan]Finding The Lord of the Rings characters...[/cyan]")
+	literary_page = fetch_soup(LITERARY_CATEGORY_URL)
+	literary_characters = scrape_characters(
+		literary_page,
+		LITERARY_CATEGORY_URL,
+	)
+
+	console.print("[cyan]Finding The Rings of Power characters...[/cyan]")
+	adaptation_character_page = fetch_soup(ADAPTATION_CATEGORY_URL)
+	adaptation_characters = scrape_characters(
+		adaptation_character_page,
+		ADAPTATION_CATEGORY_URL,
+	)
+
+	all_characters = literary_characters + adaptation_characters
+	console.print(f"[green]Found {len(all_characters)} character pages.[/green]")
+
+	results = []
+	for number, character in enumerate(all_characters, start=1):
+		console.print(f"Processing {number}/{len(all_characters)}: {character['character']}")
+		results.append(analyze_character(character))
+
+	print_results_table(results)
+	save_csv(results, RESULTS_OUTPUT)
+	console.print(f"[green]Saved {len(results)} analyzed character pages to {RESULTS_OUTPUT}[/green]")
+
+
+if __name__ == "__main__":
+	main()
+```
+
+The category URLs are constants because they are the fixed sources for this comparison. Passing each URL into `scrape_characters()` records where every character link was discovered. The two groups are collected separately and then combined after their provenance has been preserved.
+
+The final pattern is common in Python scripts. Python sets `__name__` to `"__main__"` when we run this file directly, so the condition calls `main()`. If we later import one of these functions into another Python file, the scraper will not automatically begin making requests.
+
+::: {.callout-warning}
+## What Does This Comparison Actually Measure?
+
+The script compares categories built by Tolkien Gateway editors. Those categories are part of the evidence, not neutral containers. The two groups may differ in age, source material, editorial interest, and category rules. Word counts and links may suggest where documentation is concentrated, but they cannot independently establish popularity, cultural importance, adaptation quality, or fidelity to Tolkien.
+
+When interpreting the output, ask:
+
+- Which characters receive the longest pages and the most internal links?
+- Do literary and adaptation characters appear to receive different kinds of documentation?
+- What editorial or historical processes might explain those differences?
+- Which parts of the page did our selectors include that we might not have intended to measure?
+- What additional evidence would we need before making an argument about fandom attention?
+:::
+
+The complete, commented script is available here: <a target="_blank" href="../../assets/files/tolkien_gateway_scraper.py" download>`tolkien_gateway_scraper.py`</a>. **It will take several minutes to run** because it visits every discovered character page and pauses after every request. That slowness is part of responsible scraping, not a bug.
+
+We now have a scraper that begins with a cultural question, follows links from category pages to individual character pages, records the provenance of the categories it uses, and produces both a readable table and reusable CSV. Just as importantly, we have documented why the resulting measurements remain partial and interpretive.
 
 ## Beyond BeautifulSoup and Requests
 
@@ -924,11 +926,9 @@ One caution worth repeating: Selenium drives a real browser, which means it *can
 
 Now that you have learned the basics of web scraping, it's time to try it out for your next homework assignment. In your `is310-coding-assignments`, you should have already created a new directory called `web-scraping` and a new file called `first_web_scraping.py`. You should now create a new file called `wiki_scraping.py` in the `web-scraping` directory.
 
-In this assignment, you will select a **community-run wiki** that interests you and scrape it to answer a question of your own. Because Fandom.com wikis are now behind Cloudflare, we will be working with independent wikis instead — which, as we discussed, are often the more interesting sites anyway.
+In this assignment, you will select a **community-run wiki** that interests you and scrape it to answer a question of your own. Because Fandom.com wikis are now behind Cloudflare, we will be working with independent wikis instead. You are welcome to choose whatever wiki you like, but you must check that it is reachable and that it allows scraping. You should also check the `robots.txt` file and any terms of service or community policies to ensure that you are not violating any rules.
 
-### Step 0: Verify the Site Will Actually Talk to You
-
-**Do this before you plan anything else.** Bot protection is now common enough that you should confirm a site is reachable before you invest time in it:
+I highly recommend that you start trying out the following code snippet in your `wiki_scraping.py` file to check if the wiki you have chosen is reachable and that it allows scraping. You should replace `YOUR_URL_HERE` with the URL of the wiki you have chosen.
 
 ```python
 import requests
@@ -940,9 +940,9 @@ print(response.status_code)
 print(response.text[:300])
 ```
 
-You want a `200`, and you want the preview to look like the actual page. If you see `403`, or the text contains `Just a moment...` or `Enable JavaScript and cookies`, that site is blocking you — **pick a different one rather than trying to get around it.**
+You want a `200`, and you want the preview to look like the actual page. If you see `403`, or the text contains `Just a moment...` or `Enable JavaScript and cookies`, that site is blocking you, so **pick a different one rather than trying to get around it.**
 
-These wikis were all reachable when this lesson was written, and any of them is a fine choice:
+These wikis were all reachable when this lesson was written, and you are welcome to use any of them for your assignment. You can also find your own, but make sure to check that it is reachable and that it allows scraping.
 
 | Wiki | URL |
 |---|---|
@@ -954,23 +954,25 @@ These wikis were all reachable when this lesson was written, and any of them is 
 | Baldur's Gate 3 Wiki | [bg3.wiki](https://bg3.wiki){target="_blank"} |
 | Old School RuneScape Wiki | [oldschool.runescape.wiki](https://oldschool.runescape.wiki){target="_blank"} |
 
-You are also very welcome to find your own — [wiki.gg](https://www.wiki.gg/wikis){target="_blank"} and [Miraheze](https://miraheze.org/){target="_blank"} host hundreds of independent wikis, and non-wiki sites like [Standard Ebooks](https://standardebooks.org){target="_blank"} and [Open Library](https://openlibrary.org){target="_blank"} are also open to scraping. Just run Step 0 first. If a site you really care about turns out to be blocked, that is a legitimate finding — write it up in your `README.md` and choose another.
+To help you find alternatives, you can use the following resources:
+- [wiki.gg](https://www.wiki.gg/wikis){target="_blank"} - A directory of wikis
+- [Miraheze](https://miraheze.org/){target="_blank"} - A platform for hosting independent wikis
 
-### Requirements
+Please be sure to explain your choice of wiki and your question in your `README.md`. 
 
-- [ ] **Check the site's `robots.txt` file** and any terms of service or community policies. Include a link to the `robots.txt` in your `README.md`, and briefly note what it permits and forbids. If it specifies a `Crawl-delay`, honor it.
-- [ ] **Explain your choice of wiki and your question** in your `README.md`. What are you scraping, and **why might this data be of interest or useful to researchers?** A question is better than a shopping list — "which characters have the most references" beats "all the character data."
+### Assignment Requirements
+
+- [ ] **Check the site's `robots.txt` file** and any terms of service or community policies. Include a link to the `robots.txt` in your `README.md`, and briefly note what it permits and forbids. 
+- [ ] **Explain your choice of wiki and your question** in your `README.md`. What are you scraping, and **why might this data be of interest or useful to researchers?** 
 - [ ] **Write your scraper** in `wiki_scraping.py` using `requests` and `BeautifulSoup`. Your script must:
 	- send an honest `User-Agent` header that identifies you
 	- include a `time.sleep()` between requests
-	- check `response.status_code` and handle failures without crashing
-	- scrape at least two levels — a list or category page, and then the individual pages it links to
+	- check `response.status_code` and avoid parsing non-200 responses
+	- scrape at least two levels or types of pages 
 - [ ] **Save your data** in an interoperable format (CSV or JSON) in your `web-scraping` directory.
-- [ ] **Reflect on what you actually measured**, in a short paragraph in your `README.md`. As we saw with reference counts on Tolkien Gateway, the number you collected is usually a proxy for the thing you care about, not the thing itself. What is the gap between them in your case? What would someone be wrong to conclude from your data?
+- [ ] **Reflect on what you actually measured**, in a short paragraph in your `README.md`. As we saw with word, character, total-link, and unique-link counts on Tolkien Gateway, the numbers you collect are usually proxies for the thing you care about, not the thing itself. What is the gap between them in your case? What would someone be wrong to conclude from your data?
 
-That last item is the one I care most about, so please don't skip it.
-
-Once you have completed the assignment, you should **post a link to your folder** in our GitHub discussion [https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/7](https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/7){target="_blank"}.
+Once you have completed the assignment, you should **post a link to your folder** in our GitHub discussion [https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/6](https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/6){target="_blank"}.
 
 ---
 

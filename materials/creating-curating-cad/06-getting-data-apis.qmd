@@ -1,6 +1,7 @@
 ---
 title: "Getting Cultural Data From APIs"
 toc: true
+draft: true
 ---
 
 So far in class we have briefly mentioned APIs (for example, the Spotify API), but haven't yet discussed what they are or how to use them. This week we will start to work through the basics of using APIs to get data from the web.
@@ -379,11 +380,15 @@ Understanding how to use query parameters and how to use the `id` of data return
 
 ## From Web Scraping to MediaWiki APIs
 
-Let's return to a problem we left unsolved.
+For this example, we are going to work with the *Lord of the Rings* Fandom wiki [https://lotr.fandom.com/wiki/Main_Page](https://lotr.fandom.com/wiki/Main_Page){target="_blank"}. Fandom wikis are fan-created knowledge bases devoted to popular culture. Many grew rapidly beginning in the mid-2000s, turning the interpretive and organizational labor of fan communities into large collections of structured cultural information. *Wookieepedia*, the *Star Wars* wiki, began in 2005 and became one of the best-known examples [https://en.wikipedia.org/wiki/Wookieepedia](https://en.wikipedia.org/wiki/Wookieepedia){target="_blank"}.
 
-In [our web scraping lesson](05-web-scraping.qmd){target="_blank"}, we tried to scrape the *Lord of the Rings* Fandom wiki and got a `403 Forbidden`. The site was behind Cloudflare's bot protection, `cloudscraper` couldn't get through it, and we concluded that the right response was not to try harder but to look for a sanctioned way in. We then went and scraped Tolkien Gateway instead.
+![](../../assets/images/wikipedia_wookiepedia.png)
 
-But we noted at the time that there was a third option. Fandom, like every wiki running MediaWiki software, offers an **API**. And that API is not behind the bot protection at all:
+These sites are useful for thinking about APIs because the information visible on a wiki page is already highly structured: pages have titles, categories, links, revision histories, and identifiers. Rather than extracting those elements from rendered HTML, we can ask the wiki software to return them directly.
+
+There is also a practical reason to use the API. A request for the rendered Fandom page may receive a `403 Forbidden` because the website uses automated bot protection. That does not mean the platform has hidden all of its data. It means the rendered website and the structured API are separate routes with different purposes, costs, and access rules.
+
+Because Fandom wikis run MediaWiki software, the *Lord of the Rings* wiki offers a MediaWiki **API**:
 
 ```python
 import requests
@@ -404,11 +409,12 @@ response = requests.get("https://lotr.fandom.com/api.php", params={
 print(response.status_code)
 ```
 
-When this lesson was checked in September 2026, this returned `200`. The platform that refused our request for the rendered `/wiki/Main_Page` made structured wiki content available through `/api.php`.
+When this lesson was checked in September 2026, this returned `200`. The same platform that blocked an automated request for the rendered `/wiki/Main_Page` made structured wiki content available through `/api.php`.
 
 This is worth dwelling on because it illustrates the relationship between scraping and APIs. **The block applied to one route and mode of access, not necessarily to every programmatic request.** A rendered page and an API response have different costs and can be governed by different infrastructure and policies. When a platform blocks page scraping but maintains an API, researchers should use the documented API and follow its terms and limits rather than treating the API as a loophole.
 
 ### The MediaWiki Action API
+
 
 **MediaWiki** is the open-source software that runs Wikipedia, Wiktionary, Wikisource, Wikidata, Fandom wikis, and many independent wikis. **Wikimedia** is the nonprofit movement and foundation that operates Wikipedia and related projects. MediaWiki sites expose similar Action APIs, although individual hosts can configure access, extensions, authentication, and rate limits differently. Learning the shared structure gives you a reusable starting point, not a guarantee that every wiki behaves identically.
 
@@ -470,7 +476,7 @@ A few things to notice here, because they generalize to most APIs you'll meet:
 
 ### Answering Our Original Question
 
-Back in the scraping lesson, the question we originally wanted to answer was: **how many languages has each character's page been translated into?** We measured reference counts instead, because Tolkien Gateway is English-only. On Wikipedia we can ask the real question, using `prop=langlinks`:
+Our question is: **how many languages has each character's page been translated into?** Tolkien Gateway is English-only, but on Wikipedia we can investigate this using `prop=langlinks`:
 
 ```python
 def get_language_count(title):
