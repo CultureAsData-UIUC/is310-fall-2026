@@ -31,27 +31,30 @@ def is_notes_div(attributes: str) -> bool:
 def strip_speaker_notes(text: str, source: Path) -> tuple[str, int]:
     """Remove fenced `.notes` divs while preserving all other slide content."""
     output: list[str] = []
-    note_fence_length: int | None = None
+    note_fences: list[int] = []
     removed_blocks = 0
 
     for line_number, line in enumerate(text.splitlines(keepends=True), start=1):
         opening = FENCED_DIV_OPEN.match(line)
         closing = FENCED_DIV_CLOSE.match(line)
 
-        if note_fence_length is None:
+        if not note_fences:
             if opening and is_notes_div(opening.group("attributes")):
-                note_fence_length = len(opening.group("fence"))
+                note_fences.append(len(opening.group("fence")))
                 removed_blocks += 1
                 continue
             output.append(line)
             continue
 
-        # Pandoc permits a closing fence to be longer than its opening fence.
-        if closing and len(closing.group("fence")) >= note_fence_length:
-            note_fence_length = None
-            continue
+        # Notes may contain nested fenced divs, including shorter column divs
+        # inside a longer columns div. Track those fences so an inner closing
+        # fence cannot be mistaken for the end of the speaker-notes block.
+        if opening:
+            note_fences.append(len(opening.group("fence")))
+        elif closing and len(closing.group("fence")) >= note_fences[-1]:
+            note_fences.pop()
 
-    if note_fence_length is not None:
+    if note_fences:
         raise ValueError(f"Unclosed speaker-notes block in {source}")
 
     return "".join(output), removed_blocks
