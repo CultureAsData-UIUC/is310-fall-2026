@@ -6,7 +6,7 @@ toc: true
 ::: {.callout-note}
 ⚡️ This lesson has been adapted from Melanie Walsh's chapter on Web Scraping in <i>Introduction to Cultural Analytics & Python</i> textbook <a target="_blank" href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/02-Web-Scraping-Part1.html">https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/02-Web-Scraping-Part1.html</a>. Many thanks to Melanie for sharing their materials!
 
-Also the materials from our in-class scraping are available to download. Here is our <a target="_blank" href="../../assets/files/first_web_scraping.py" download>`first_web_scraper.py`</a>; our <a target="_blank" href="../../assets/files/hp_scraper.py" download>`hp_scraper.py`</a>; and the complete <a target="_blank" href="../../assets/files/tolkien_gateway_scraper.py" download>`tolkien_gateway_scraper.py`</a> that we build up over the second half of this lesson.
+The materials from our in-class scraping are also available to download. Here is our <a target="_blank" href="../../assets/files/first_web_scraper.py" download>`first_web_scraper.py`</a> and the complete <a target="_blank" href="../../assets/files/tolkien_gateway_scraper.py" download>`tolkien_gateway_scraper.py`</a> that we build up over the second half of this lesson.
 :::
 
 Now that we have learned how to work with Python modules and read and write files, we can start to think about how to get data from the web. This is a very important skill for a digital humanist, as many of the sources we might want to work with are online.
@@ -98,7 +98,7 @@ Finally, you'll see that I often use `pip` or `pip3` when installing packages. T
 
 ----
 
-Now we can starting using these packages in our Python code. First, we need to create a new folder in our `is310-coding-assignments` called `web-scraping` and then create a new file called `first_web_scraping.py`. Then we can add the following code to our file:
+Now we can starting using these packages in our Python code. First, we need to create a new folder in our `is310-coding-assignments` called `web-scraping` and then create a new file called `first_web_scraper.py`. Then we can add the following code to our file:
 
 ```python
 import beautifulsoup4
@@ -156,7 +156,7 @@ I usually just use the built-in `html.parser` parser, but you can use the `lxml`
 
 ### BeautifulSoup Basics
 
-In the `Quick Start` guide [https://beautiful-soup-4.readthedocs.io/en/latest/#quick-start](https://beautiful-soup-4.readthedocs.io/en/latest/#quick-start){target="_blank"}, we have an example of how to use the `BeautifulSoup` class to parse an HTML document. Let's try this example in our `first_web_scraping.py` file.
+In the `Quick Start` guide [https://beautiful-soup-4.readthedocs.io/en/latest/#quick-start](https://beautiful-soup-4.readthedocs.io/en/latest/#quick-start){target="_blank"}, we have an example of how to use the `BeautifulSoup` class to parse an HTML document. Let's try this example in our `first_web_scraper.py` file.
 
 ```python
 html_doc = """
@@ -290,7 +290,7 @@ You don't need to memorize every functionality in `BeautifulSoup`, but it's good
 
 So far we've been using some fairly basic HTML but we can start working with an actual HTML document. Today we'll be using *Project Gutenberg*'s Top 100 eBooks page [https://www.gutenberg.org/browse/scores/top](https://www.gutenberg.org/browse/scores/top){target="_blank"}. This page lists the top 100 eBooks on *Project Gutenberg* and we can use `BeautifulSoup` to scrape the titles.
 
-First, we're going to save the page as an HTML file. You can do this by right clicking on the page and selecting "Save As" and then saving it as `top_100_ebooks.html` in the same directory as your `first_web_scraping.py` file.
+First, we're going to save the page as an HTML file. You can do this by right clicking on the page and selecting "Save As" and then saving it as `top_100_ebooks.html` in the same directory as your `first_web_scraper.py` file.
 
 ![](../../assets/images/save_top_100_ebooks.png)
 
@@ -327,7 +327,7 @@ However, you'll notice if we are running this code that we will get **all** the 
 
 #### Quick Practice Exercise
 
-In your `first_web_scraping.py` file, try to modify the code so that it only prints the titles of the `Top 100 EBooks yesterday` section. To do this, you'll need to access the correct tag for `Top 100 EBooks yesterday` and then use `BeautifulSoup` to navigate to the correct `ol` tag. Finally, we want to print just the title of each book. To help you I would recommend taking a look at the following functions in the `BeautifulSoup` documentation:
+In your `first_web_scraper.py` file, try to modify the code so that it only prints the titles of the `Top 100 EBooks yesterday` section. To do this, you'll need to access the correct tag for `Top 100 EBooks yesterday` and then use `BeautifulSoup` to navigate to the correct `ol` tag. Finally, we want to print just the title of each book. To help you I would recommend taking a look at the following functions in the `BeautifulSoup` documentation:
 
 - `find_next()` [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#find-all-next-and-find-next](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#find-all-next-and-find-next){target="_blank"}
 - `get_text()` [https://beautiful-soup-4.readthedocs.io/en/latest/index.html#get-text](https://beautiful-soup-4.readthedocs.io/en/latest/index.html#get-text){target="_blank"}
@@ -338,7 +338,7 @@ However, you are welcome to solve this problem in any way you want!
 
 We are now officially scraping a web page 🥳!! But what if we wanted to scrape more than one? Saving each manually would get tiring really quickly!
 
-Let's try taking our updated code but rather than working with the saved version of the web page, let's try to get the web page programmatically. To do this, we need to use the `requests` library to get the web page. We already installed requests initially so now we need to import it into our `first_web_scraping.py` file.
+Let's try taking our updated code but rather than working with the saved version of the web page, let's try to get the web page programmatically. To do this, we need to use the `requests` library to get the web page. We already installed requests initially so now we need to import it into our `first_web_scraper.py` file.
 
 ```python
 from bs4 import BeautifulSoup
@@ -924,7 +924,7 @@ One caution worth repeating: Selenium drives a real browser, which means it *can
 
 ## Community Wikis and Web Scraping Homework
 
-Now that you have learned the basics of web scraping, it's time to try it out for your next homework assignment. In your `is310-coding-assignments`, you should have already created a new directory called `web-scraping` and a new file called `first_web_scraping.py`. You should now create a new file called `wiki_scraping.py` in the `web-scraping` directory.
+Now that you have learned the basics of web scraping, it's time to try it out for your next homework assignment. In your `is310-coding-assignments`, you should have already created a new directory called `web-scraping` and a new file called `first_web_scraper.py`. You should now create a new file called `wiki_scraping.py` in the `web-scraping` directory.
 
 In this assignment, you will select a **community-run wiki** that interests you and scrape it to answer a question of your own. Because Fandom.com wikis are now behind Cloudflare, we will be working with independent wikis instead. You are welcome to choose whatever wiki you like, but you must check that it is reachable and that it allows scraping. You should also check the `robots.txt` file and any terms of service or community policies to ensure that you are not violating any rules.
 
