@@ -1,2 +1,1914 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Getting Cultural Data From APIs – IS310 - Culture As Data Fall 2026</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/images/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-529c26969d27a2a2473a4b9f3bafd9fb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-8548d451cbde00b83e20f2b3ceda2474.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-529c26969d27a2a2473a4b9f3bafd9fb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo light-content">
+    <img src="../../assets/images/favicon.ico" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">IS310 - Culture As Data Fall 2026</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../schedule/index.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../assessments/index.html"> 
+<span class="menu-text">Assessments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../policies.html"> 
+<span class="menu-text">Policies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../materials/introducing-defining-cad/01-CAD-tools.html" aria-current="page"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/creating-curating-cad/01-python-refresher-foundations.html">Creating &amp; Curating Culture as Data</a></li><li class="breadcrumb-item"><a href="../../materials/creating-curating-cad/06-getting-data-apis.html">Getting Cultural Data From APIs</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introducing &amp; Defining Culture as Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/01-CAD-tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software &amp; Tools for Culture as Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/02-intro-cli-prompt-engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Command Line &amp; Prompt Engineering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/03-intro-versioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Versioning &amp; Git</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/04-command-line-cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Command Line Cheatsheet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/05-advanced-git-github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced Git and GitHub</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/06-intro-file-formats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to File Formats &amp; Text</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/07-intro-html.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Markup &amp; Styling Web Documents</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/introducing-defining-cad/08-intro-web.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to The Web &amp; Servers</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Creating &amp; Curating Culture as Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/creating-curating-cad/01-python-refresher-foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Refresher: Foundations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/creating-curating-cad/02-python-refresher-advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Refresher II: Advanced Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/creating-curating-cad/03-complex-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complex Python: Classes &amp; Comments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/creating-curating-cad/04-virtual-environments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Virtual Environments &amp; Packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/creating-curating-cad/05-web-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Web Scraping with Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/creating-curating-cad/06-getting-data-apis.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Getting Cultural Data From APIs</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-an-api" id="toc-what-is-an-api" class="nav-link active" data-scroll-target="#what-is-an-api">What is an API?</a></li>
+  <li><a href="#from-web-scraping-to-mediawiki-apis" id="toc-from-web-scraping-to-mediawiki-apis" class="nav-link" data-scroll-target="#from-web-scraping-to-mediawiki-apis">From Web Scraping to MediaWiki APIs</a>
+  <ul class="collapse">
+  <li><a href="#the-mediawiki-action-api" id="toc-the-mediawiki-action-api" class="nav-link" data-scroll-target="#the-mediawiki-action-api">The MediaWiki Action API</a></li>
+  <li><a href="#structuring-an-api-query" id="toc-structuring-an-api-query" class="nav-link" data-scroll-target="#structuring-an-api-query">Structuring an API Query</a></li>
+  <li><a href="#answering-our-original-question" id="toc-answering-our-original-question" class="nav-link" data-scroll-target="#answering-our-original-question">Answering Our Original Question</a></li>
+  <li><a href="#a-different-shape-the-pageviews-api" id="toc-a-different-shape-the-pageviews-api" class="nav-link" data-scroll-target="#a-different-shape-the-pageviews-api">A Different Shape: The Pageviews API</a></li>
+  </ul></li>
+  <li><a href="#authentication-and-parameters-with-the-one-api" id="toc-authentication-and-parameters-with-the-one-api" class="nav-link" data-scroll-target="#authentication-and-parameters-with-the-one-api">Authentication and Parameters With The One API</a>
+  <ul class="collapse">
+  <li><a href="#making-an-api-request" id="toc-making-an-api-request" class="nav-link" data-scroll-target="#making-an-api-request">Making an API Request</a></li>
+  <li><a href="#authentication-endpoints" id="toc-authentication-endpoints" class="nav-link" data-scroll-target="#authentication-endpoints">Authentication &amp; Endpoints</a></li>
+  <li><a href="#making-api-requests" id="toc-making-api-requests" class="nav-link" data-scroll-target="#making-api-requests">Making API Requests</a></li>
+  </ul></li>
+  <li><a href="#from-direct-requests-to-api-wrappers" id="toc-from-direct-requests-to-api-wrappers" class="nav-link" data-scroll-target="#from-direct-requests-to-api-wrappers">From Direct Requests to API Wrappers</a></li>
+  <li><a href="#from-an-api-wrapper-to-a-collection-library" id="toc-from-an-api-wrapper-to-a-collection-library" class="nav-link" data-scroll-target="#from-an-api-wrapper-to-a-collection-library">From an API Wrapper to a Collection Library</a>
+  <ul class="collapse">
+  <li><a href="#searching-the-internet-archive" id="toc-searching-the-internet-archive" class="nav-link" data-scroll-target="#searching-the-internet-archive">Searching the Internet Archive</a></li>
+  <li><a href="#from-search-results-to-archival-items" id="toc-from-search-results-to-archival-items" class="nav-link" data-scroll-target="#from-search-results-to-archival-items">From Search Results to Archival Items</a></li>
+  <li><a href="#files-are-not-the-same-as-items" id="toc-files-are-not-the-same-as-items" class="nav-link" data-scroll-target="#files-are-not-the-same-as-items">Files Are Not the Same as Items</a></li>
+  </ul></li>
+  <li><a href="#moving-across-cultural-heritage-apis-europeana" id="toc-moving-across-cultural-heritage-apis-europeana" class="nav-link" data-scroll-target="#moving-across-cultural-heritage-apis-europeana">Moving Across Cultural Heritage APIs: Europeana</a>
+  <ul class="collapse">
+  <li><a href="#authenticating-with-europeana" id="toc-authenticating-with-europeana" class="nav-link" data-scroll-target="#authenticating-with-europeana">Authenticating With Europeana</a></li>
+  <li><a href="#reading-aggregated-metadata" id="toc-reading-aggregated-metadata" class="nav-link" data-scroll-target="#reading-aggregated-metadata">Reading Aggregated Metadata</a></li>
+  <li><a href="#asking-different-questions-with-search-parameters" id="toc-asking-different-questions-with-search-parameters" class="nav-link" data-scroll-target="#asking-different-questions-with-search-parameters">Asking Different Questions With Search Parameters</a></li>
+  <li><a href="#why-not-use-pyeuropeana" id="toc-why-not-use-pyeuropeana" class="nav-link" data-scroll-target="#why-not-use-pyeuropeana">Why Not Use <code>pyeuropeana</code>?</a></li>
+  <li><a href="#records-entities-and-search-results" id="toc-records-entities-and-search-results" class="nav-link" data-scroll-target="#records-entities-and-search-results">Records, Entities, and Search Results</a></li>
+  </ul></li>
+  <li><a href="#getting-culture-across-apis-homework" id="toc-getting-culture-across-apis-homework" class="nav-link" data-scroll-target="#getting-culture-across-apis-homework">GETting Culture Across APIs Homework</a>
+  <ul class="collapse">
+  <li><a href="#choosing-your-second-api" id="toc-choosing-your-second-api" class="nav-link" data-scroll-target="#choosing-your-second-api">Choosing Your Second API</a></li>
+  <li><a href="#requirements" id="toc-requirements" class="nav-link" data-scroll-target="#requirements">Requirements</a></li>
+  <li><a href="#the-comparison-the-important-part" id="toc-the-comparison-the-important-part" class="nav-link" data-scroll-target="#the-comparison-the-important-part">The Comparison (the important part)</a></li>
+  </ul></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/creating-curating-cad/01-python-refresher-foundations.html">Creating &amp; Curating Culture as Data</a></li><li class="breadcrumb-item"><a href="../../materials/creating-curating-cad/06-getting-data-apis.html">Getting Cultural Data From APIs</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Getting Cultural Data From APIs</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>So far in class we have briefly mentioned APIs (for example, the Spotify API), but haven’t yet discussed what they are or how to use them. This week we will start to work through the basics of using APIs to get data from the web.</p>
+<section id="what-is-an-api" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-an-api">What is an API?</h2>
+<p>API stands for <strong>Application Programming Interface</strong>, but what does that mean exactly?</p>
+<p>While according to <a href="https://en.wikipedia.org/wiki/API" target="_blank">Wikipedia</a>,</p>
+<blockquote class="blockquote">
+<p>An application programming interface is a connection between computers or between computer programs. It is a type of software interface, offering a service to other pieces of software. A document or standard that describes how to build or use such a connection or interface is called an API specification.</p>
+</blockquote>
+<p>But while that is technically correct, it probably leaves you with more questions than answers.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5f3c19f18169b62a0d0bf387/609b09fb261ba04c095064cb_https-lh6-googleusercontent-com-_nyclktg8po_wx5-.png" class="img-fluid figure-img"></p>
+<figcaption>API Workflow</figcaption>
+</figure>
+</div>
+<p>In this figure, you’ll notice that we have a web browser that is using the “internet cloud” to make requests and get responses from an API that is connected to a web server and a database. This might seem complex, but we’ve seen a similar relationship when we talked about how the web works. We learned previously about how web browsers use HTTP to make requests and get responses from web servers, this is essentially the same concept. APIs are just a way to get data from a server, similar to how we get web pages from a server, but instead of storing the data in a webpage (aka an HTML document), the data is stored in a database. For example, when you use a weather app, or really any app on your phone, that app is using an API to get the weather data from a server.</p>
+<p>Databases might also sound intimidating, but they are just a way to store and organize data, similar in some respects to <code>.csv</code> or <code>.json</code> files. The difference is that database systems are designed to manage large amounts of related data and allow many people or programs to retrieve and update it efficiently. Many databases organize information into tables connected through shared identifiers and are accessed using SQL, or <strong>Structured Query Language</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What is SQL?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recall our earlier discussion of <strong>tabulating machines</strong>. Hollerith’s punched-card machines helped the 1890 U.S. Census sort and count information about millions of people. These machines made tabulation faster, but people still had to decide which categories to record and punch onto the cards.</p>
+<p>By the 1970s, computers were being used to store much larger collections of information. In 1970, IBM researcher Edgar F. Codd proposed the <strong>relational database model</strong>, which organized related data into tables. Donald Chamberlin and Raymond Boyce then developed a language called <strong>SEQUEL</strong>, later renamed SQL, for asking questions of those tables. Instead of manually searching every record, someone could request particular rows, combine related tables, or calculate a result. You can read more through IBM’s histories of <a href="https://www.ibm.com/history/edgar-codd" target="_blank">Edgar Codd</a> and the <a href="https://www.ibm.com/history/relational-database" target="_blank">relational database</a>.</p>
+<p>Spreadsheets developed alongside databases but served a somewhat different purpose. VisiCalc, released in 1979, let people directly edit information and formulas in a visible grid on a personal computer. A spreadsheet is useful for working directly with a table, while a database is better suited to managing and searching larger sets of related tables. Both continue the history of organizing information into rows, columns, and categories.</p>
+</div>
+</div>
+<p>Today, many websites and applications store information in databases. An API provides a controlled way to request some of that information without giving us direct access to the underlying database. We may not write SQL ourselves, but API endpoints and parameters similarly determine which questions we are allowed to ask of the data.</p>
+<p>Rather than going to a URL in your browser, an API lets us send a similar request to a server. To help us understand APIs, let’s explore a bit of their origins and development.</p>
+<p>While HTTP and HTML became popular in the late 1980s and 1990s, web APIs became especially prominent in the early 2000s. Kin Lane, <a href="https://apievangelist.com/" target="_blank">the API Evangelist</a>, has a blog post titled “The History of APIs” <a href="https://web.archive.org/web/20190722130022/https://history.apievangelist.com/" target="_blank">https://web.archive.org/web/20190722130022/https://history.apievangelist.com/</a>, which explores this history.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>According to Lane, one of the first APIs was developed by Salesforce in 2000, which allowed developers to access data from their databases and to build applications for customer relationship management. This initial API provided access to XML data, which is a type of markup language similar to HTML (remember TEI?). This was followed by eBay, which also developed an API in 2000.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/salesforce_api.png" class="img-fluid figure-img"></p>
+<figcaption>Salesforce API</figcaption>
+</figure>
+</div>
+<p>While a lot of the infrastructure and standards for APIs were developed during the same period as the earlier web history, what really made APIs start to take off in the mid-2000s was the emergence of <strong>Web 2.0</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.ytimg.com/vi/7R6oAzie4Lc/maxresdefault.jpg" class="img-fluid figure-img"></p>
+<figcaption>Web 2.0</figcaption>
+</figure>
+</div>
+<p>Web 2.0 was a term coined by Tim O’Reilly in 2004 to describe a new era of the web that was more interactive and user-driven. This era saw the rise of social media platforms like Facebook, YouTube, and Twitter, which allowed users to create and share content online. These platforms started to have massive databases of user-generated content, and so to access this data, they needed to develop APIs.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/history_apis.png" class="img-fluid figure-img"></p>
+<figcaption>History of APIs</figcaption>
+</figure>
+</div>
+<p>The figure above comes from the chapter “A Brief History of APIs” by Jakob Jünger. Jünger argues that while the early 2000s were important for popularizing the idea of “mashups” (combining data from multiple sources), the mid-2000s saw the rise of social media APIs. Facebook, YouTube, and Twitter all introduced APIs that allowed developers to build applications that integrated social media data. For example, YouTube’s API allowed developers to upload videos and access analytics data, while Facebook’s API allowed developers to build applications that integrated with the Facebook platform, specifically their Social Graph API, which allowed developers to access data about users and their connections.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img.buzzfeed.com/buzzfeed-static/static/enhanced/webdr03/2013/3/4/18/enhanced-buzz-13392-1362441527-0.jpg?downsize=700%3A%2A&amp;output-quality=auto&amp;output-format=auto" class="img-fluid figure-img"></p>
+<figcaption>Tweetdeck Interface</figcaption>
+</figure>
+</div>
+<p>The growth in these platforms led to third-party applications built on their APIs. For example, <a href="https://en.wikipedia.org/wiki/TweetDeck" target="_blank">TweetDeck</a> used Twitter’s API to let people manage multiple accounts and schedule posts before Twitter purchased it in 2011. This era was characterized by proliferation of third-party applications and a push for standardization. Google and others attempted to standardize API interactions through initiatives such as OpenSocial, but most platforms retained unique APIs and increasingly strict control over data access. Part of this shift followed growing privacy concerns, especially the 2018 revelations that Cambridge Analytica had harvested data from millions of Facebook users without their consent and used it to target political advertisements during the 2016 US presidential election. In the aftermath, many platforms restricted their APIs, leading computational social scientist Deen Freelon to describe a “post-API age.”<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>Understanding this history is helpful because it gives us a sense of the many users of APIs, as summarized in the table below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/api_users.png" class="img-fluid figure-img"></p>
+<figcaption>API Users</figcaption>
+</figure>
+</div>
+<p>This table comes from Amelia Acker and Adam Kreisberg’s article “Social Media Data Archives in an API-Driven World” which explores how APIs are limiting access to social media data and the implications of this for archiving and research; a topic we’ve discussed in class.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> You’ll notice in this table they identify a number of different users of APIs, including <strong>individual account holders</strong> on a platform (so if you’ve ever tried to export your social media data for example), <strong>developers</strong> who build applications that use APIs, <strong>developer researchers</strong> who use APIs to study these platforms, and lastly, <strong>developer stewards</strong> who are often archivists and preservation specialists who use APIs to collect and preserve data. While these groupings are not definitive or exhaustive, they give us a sense of the many different users of APIs and the many different ways APIs are used. However, it is critical to understand that very few APIs are designed to be used by this many different groups of users, and that instead the majority of APIs are designed to be used by a single group of users, often developers building applications since that is the most profitable use of APIs.</p>
+</section>
+<section id="from-web-scraping-to-mediawiki-apis" class="level2">
+<h2 class="anchored" data-anchor-id="from-web-scraping-to-mediawiki-apis">From Web Scraping to MediaWiki APIs</h2>
+<p>We will begin with the same <code>requests</code> library we used for web scraping. The difference is what the server returns and how we work with it:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Workflow</th>
+<th>Request</th>
+<th>Response</th>
+<th>How we select data</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Web scraping</td>
+<td>Webpage URL</td>
+<td>HTML text</td>
+<td>BeautifulSoup and HTML elements</td>
+</tr>
+<tr class="even">
+<td>API request</td>
+<td>API endpoint and parameters</td>
+<td>Usually JSON</td>
+<td>Dictionary keys and list indexes</td>
+</tr>
+</tbody>
+</table>
+<p>In your <code>is310-coding-assignments</code> repository, create a folder called <code>api-getting-data</code>, then create a script inside it called <code>first_api_script.py</code>. We will use this script as we move across several APIs and Python libraries.</p>
+<p>For this example, we are going to work with the <em>Lord of the Rings</em> Fandom wiki <a href="https://lotr.fandom.com/wiki/Main_Page" target="_blank">https://lotr.fandom.com/wiki/Main_Page</a>. Fandom wikis are fan-created knowledge bases devoted to popular culture. Many grew rapidly beginning in the mid-2000s, turning the interpretive and organizational labor of fan communities into large collections of structured cultural information. <em>Wookieepedia</em>, the <em>Star Wars</em> wiki, began in 2005 and became one of the best-known examples <a href="https://en.wikipedia.org/wiki/Wookieepedia" target="_blank">https://en.wikipedia.org/wiki/Wookieepedia</a>.</p>
+<p><img src="../../assets/images/wikipedia_wookiepedia.png" class="img-fluid"></p>
+<p>These sites are useful for thinking about APIs because the information visible on a wiki page is already highly structured: pages have titles, categories, links, revision histories, and identifiers. Rather than extracting those elements from rendered HTML, we can ask the wiki software to return them directly.</p>
+<p>There is also a practical reason to use the API. A request for the rendered Fandom page may receive a <code>403 Forbidden</code> because the website uses automated bot protection. Because Fandom wikis run MediaWiki software, the <em>Lord of the Rings</em> wiki offers a MediaWiki <strong>API</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>HEADERS <span class="op">=</span> {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"User-Agent"</span>: <span class="st">"is310-course/1.0 (https://YOUR-USERNAME.github.io; YOUR_NETID@illinois.edu)"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://lotr.fandom.com/api.php"</span>, params<span class="op">=</span>{</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"action"</span>: <span class="st">"query"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"list"</span>: <span class="st">"categorymembers"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtitle"</span>: <span class="st">"Category:Canon_characters_in_The_Rings_of_Power"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtype"</span>: <span class="st">"page"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmlimit"</span>: <span class="st">"max"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In this code block, we first import the requests library. We then define a set of headers including a <code>User-Agent</code> header to identify our script and provide contact information. This pattern is a common requirement for APIs, as it allows the server to track usage and contact developers if necessary. We then make a GET request to the Fandom API endpoint. We have the following parameters:</p>
+<ul>
+<li><code>action=query</code>: This specifies that we want to perform a query action.</li>
+<li><code>list=categorymembers</code>: This specifies that we want to retrieve a list of members of a category.</li>
+<li><code>cmtitle=Category:Canon_characters_in_The_Rings_of_Power</code>: This specifies the title of the category we want to query.</li>
+<li><code>cmtype=page</code>: This specifies that we want to retrieve pages, not subcategories.</li>
+<li><code>cmlimit=max</code>: This specifies that we want to retrieve all members of the category.</li>
+<li><code>format=json</code>: This specifies that we want the response in JSON format.</li>
+</ul>
+<p>When this lesson was checked in October 2026, this returned <code>200</code>. The same platform that blocked an automated request for the rendered <code>/wiki/Main_Page</code> made structured wiki content available through <code>/api.php</code>.</p>
+<section id="the-mediawiki-action-api" class="level3">
+<h3 class="anchored" data-anchor-id="the-mediawiki-action-api">The MediaWiki Action API</h3>
+<p>To understand the MediaWiki Action API, we need to understand the history of Wikipedia and its underlying software.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://en.wikipedia.org/wiki/History_of_Wikipedia" target="_blank"><img src="https://www.searchinfluence.com/wp-content/uploads/2015/02/Wikipedia.jpg" class="img-fluid figure-img"></a></p>
+<figcaption>History of Wikipedia</figcaption>
+</figure>
+</div>
+<p>Wikipedia launched in January 2001 as an experiment connected to <strong>Nupedia</strong>, an earlier free encyclopedia whose articles went through a slower expert-review process. The first Wikipedia ran on <strong>UseModWiki</strong>, existing open-source wiki software written in Perl. Rather than using a database, UseModWiki stored pages as individual text files on the server. That was sufficient for an experimental website, but Wikipedia quickly accumulated more articles, revisions, contributors, and readers than the original software had been designed to manage.</p>
+<p>In response, Wikipedia contributors developed a new CMS specifically for the project. This software was written in <strong>PHP</strong> and used a <strong>MySQL database</strong>, allowing the site to manage its growing collection of pages and introduce Wikipedia-specific features such as namespaces, talk pages, contribution histories, and watchlists. The English-language Wikipedia adopted this database-backed software in 2002, and it was officially named <strong>MediaWiki</strong> in 2003. That same year, the nonprofit <strong>Wikimedia Foundation</strong> was created to support Wikipedia and the growing family of related projects. You can read more about the history of MediaWiki at <a href="https://www.mediawiki.org/wiki/MediaWiki_history" target="_blank">https://www.mediawiki.org/wiki/MediaWiki_history</a>.</p>
+<p>Today, <strong>MediaWiki</strong> is the open-source software that runs Wikipedia, Wiktionary, Wikisource, Wikidata, Fandom wikis, and many independent wikis. <strong>Wikimedia</strong> refers to the nonprofit movement and foundation that operates Wikipedia and related projects; it is not the name of the software.</p>
+<p>The Action API provides a documented interface through which programs can ask MediaWiki for selected parts of that underlying structure.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://www.mediawiki.org/wiki/API" target="_blank"><img src="https://miro.medium.com/v2/resize:fit:1400/1*nbQzDAu4sq80qyM4zwzBjg.png" class="img-fluid figure-img"></a></p>
+<figcaption>Click the image to visit the API documentation</figcaption>
+</figure>
+</div>
+<p>Most publicly accessible MediaWiki sites expose an Action API at a predictable location — <code>/w/api.php</code> on Wikimedia’s own sites and <code>/api.php</code> on many others:</p>
+<ul>
+<li>English Wikipedia: <a href="https://en.wikipedia.org/w/api.php" target="_blank">https://en.wikipedia.org/w/api.php</a></li>
+<li>Wikisource: <a href="https://en.wikisource.org/w/api.php" target="_blank">https://en.wikisource.org/w/api.php</a></li>
+<li>LOTR Fandom wiki: <a href="https://lotr.fandom.com/api.php" target="_blank">https://lotr.fandom.com/api.php</a></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/lotr_mediawiki.png" class="img-fluid figure-img"></p>
+<figcaption>MediaWiki API Sandbox</figcaption>
+</figure>
+</div>
+<p>If you open any of those in a browser, you’ll get an interactive sandbox where you can build and test queries without writing any Python, which is a very good way to explore before you commit to code. The full reference lives at <a href="https://www.mediawiki.org/wiki/API:Main_page" target="_blank">https://www.mediawiki.org/wiki/API:Main_page</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/lotr_mediawiki_api_sandbox.png" class="img-fluid figure-img"></p>
+<figcaption>LOTR MediaWiki API Sandbox</figcaption>
+</figure>
+</div>
+<p>Wikimedia’s public APIs do not require an API key for these examples. They do require clients to follow access policies, including sending a descriptive <code>User-Agent</code> that identifies the tool and provides contact information <a href="https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy" target="_blank">https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy</a>. Other MediaWiki hosts may have different requirements, so always check the host’s documentation and policies.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>API_URL <span class="op">=</span> <span class="st">"https://en.wikipedia.org/w/api.php"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>HEADERS <span class="op">=</span> {<span class="st">"User-Agent"</span>: <span class="st">"is310-course/1.0 (https://YOUR-USERNAME.github.io; YOUR_NETID@illinois.edu)"</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Notice this is the <em>same</em> practice we adopted for scraping Tolkien Gateway — identify yourself honestly and give someone a way to contact you. Here it isn’t just good manners; it’s the documented condition of use.</p>
+</section>
+<section id="structuring-an-api-query" class="level3">
+<h3 class="anchored" data-anchor-id="structuring-an-api-query">Structuring an API Query</h3>
+<p>Nearly everything in the action API goes through <code>action=query</code>, with additional parameters describing what you want. Let’s ask for the members of a category:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"action"</span>: <span class="st">"query"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"list"</span>: <span class="st">"categorymembers"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtitle"</span>: <span class="st">"Category:The Lord of the Rings: The Rings of Power"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtype"</span>: <span class="st">"page"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmlimit"</span>: <span class="st">"max"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(API_URL, params<span class="op">=</span>params, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f"API request failed: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> response.json()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> page <span class="kw">in</span> data[<span class="st">"query"</span>][<span class="st">"categorymembers"</span>]:</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(page[<span class="st">"title"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> Lord of the Rings: The Rings of Power</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">List</span> of The Lord of the Rings: The Rings of Power characters</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">List</span> of The Lord of the Rings: The Rings of Power features</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Music</span> of The Lord of the Rings: The Rings of Power</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A few things to notice here, because they generalize to most APIs you’ll meet:</p>
+<ul>
+<li>We’re passing parameters as a <strong>dictionary</strong> to <code>params=</code> rather than gluing them onto the URL with <code>?</code> and <code>&amp;</code> by hand. <code>requests</code> builds the URL and correctly encodes spaces, punctuation, and other characters used inside query values.</li>
+<li>The prefixed parameters (<code>cmtitle</code>, <code>cmtype</code>, <code>cmlimit</code>) belong to the <code>categorymembers</code> module. MediaWiki uses short prefixes to keep modules from colliding, so when you read documentation for <code>list=langlinks</code> you’ll see <code>ll</code>-prefixed parameters instead.</li>
+<li><code>format=json</code> explicitly requests machine-readable JSON rather than a browser-oriented representation.</li>
+</ul>
+</section>
+<section id="answering-our-original-question" class="level3">
+<h3 class="anchored" data-anchor-id="answering-our-original-question">Answering Our Original Question</h3>
+<p>Our question is: <strong>how many languages has each character’s page been translated into?</strong> Tolkien Gateway is English-only, but on Wikipedia we can investigate this using <code>prop=langlinks</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_language_count(title):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(API_URL, params<span class="op">=</span>{</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"action"</span>: <span class="st">"query"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"titles"</span>: title,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prop"</span>: <span class="st">"langlinks"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lllimit"</span>: <span class="st">"max"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"redirects"</span>: <span class="dv">1</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    }, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Could not retrieve </span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    pages <span class="op">=</span> response.json()[<span class="st">"query"</span>][<span class="st">"pages"</span>]</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    page <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(pages.values()))</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"missing"</span> <span class="kw">in</span> page:</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(page.get(<span class="st">"langlinks"</span>, []))</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> [<span class="st">"Sauron"</span>, <span class="st">"Galadriel"</span>, <span class="st">"Elrond"</span>, <span class="st">"Gil-galad"</span>, <span class="st">"Celebrimbor"</span>]:</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>character<span class="sc">:14}</span><span class="ss"> </span><span class="sc">{</span>get_language_count(character)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Sauron</span>         57</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Galadriel</span>      45</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Elrond</span>         42</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Gil-galad</span>      28</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Celebrimbor</span>    20</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That <code>next(iter(pages.values()))</code> is a little awkward, and it’s worth explaining. The API returns pages keyed by their internal page ID — <code>{"query": {"pages": {"23140073": {...}}}}</code> — and we don’t know the ID in advance. So we take the first (and here, only) value from the dictionary rather than trying to look it up by key.</p>
+<p>Now try the same function on the characters invented for the show:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> [<span class="st">"Arondir"</span>, <span class="st">"Halbrand"</span>, <span class="st">"Disa"</span>]:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>character<span class="sc">:14}</span><span class="ss"> </span><span class="sc">{</span>get_language_count(character)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Arondir</span>        2</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Halbrand</span>       2</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Disa</span>           5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Every one of these numbers is wrong, and <strong>not one of them raised an error.</strong> Let’s find out why, because the two failure modes here are ones you will meet constantly.</p>
+<p>First, <code>Arondir</code> and <code>Halbrand</code>. Ask the API to report what it did with the titles you gave it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(API_URL, params<span class="op">=</span>{</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"action"</span>: <span class="st">"query"</span>, <span class="st">"titles"</span>: <span class="st">"Arondir|Halbrand|Galadriel"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"prop"</span>: <span class="st">"langlinks"</span>, <span class="st">"lllimit"</span>: <span class="st">"max"</span>, <span class="st">"redirects"</span>: <span class="dv">1</span>, <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>}, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f"API request failed: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json()[<span class="st">"query"</span>][<span class="st">"redirects"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>[{<span class="st">'from'</span>: <span class="st">'Halbrand'</span>, <span class="st">'to'</span>: <span class="st">'List of The Lord of the Rings: The Rings of Power characters'</span>, <span class="st">'tofragment'</span>: <span class="st">'Halbrand'</span>},</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a> {<span class="st">'from'</span>: <span class="st">'Arondir'</span>, <span class="st">'to'</span>: <span class="st">'List of The Lord of the Rings: The Rings of Power characters'</span>, <span class="st">'tofragment'</span>: <span class="st">'Arondir'</span>}]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>The invented characters do not have Wikipedia articles at all.</strong> They are redirects into a section of a single shared “List of characters” page. Our function faithfully reported the language count of that list page — the <code>2</code> was real, it just wasn’t about Arondir.</p>
+<p><code>Disa</code> fails differently, and worse. It isn’t a redirect; there is a genuine English Wikipedia article at that exact title. When this lesson was checked in September 2026, that article concerned <strong>a heroine from a Swedish legendary saga</strong>, not the television character. Our function looked up a real page, found five language links, and returned a perfectly plausible number about the wrong subject. The page attached to an ambiguous name may change again, which is precisely why the lookup must be validated.</p>
+<p>These are the two ways a title-based lookup goes wrong:</p>
+<ul>
+<li><strong>The right subject at the wrong granularity</strong> — a redirect sends you to a broader page that contains your topic as a section.</li>
+<li><strong>The wrong subject entirely</strong> — a name is ambiguous, and you silently get somebody else’s article.</li>
+</ul>
+<p>Neither produced an exception. Both produced small integers that would have slotted straight into a spreadsheet next to Galadriel’s <code>45</code> and looked entirely reasonable. If you had run this over fifty characters and gone straight to a bar chart, you would never have known.</p>
+<p>The first defense is to make the API tell you what it actually resolved. Ask for redirects, resolved titles, and a short article extract alongside the language data:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(API_URL, params<span class="op">=</span>{</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"action"</span>: <span class="st">"query"</span>, <span class="st">"titles"</span>: <span class="st">"Arondir|Disa|Galadriel"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"prop"</span>: <span class="st">"langlinks|extracts"</span>, <span class="st">"lllimit"</span>: <span class="st">"max"</span>, <span class="st">"redirects"</span>: <span class="dv">1</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"exintro"</span>: <span class="dv">1</span>, <span class="st">"explaintext"</span>: <span class="dv">1</span>, <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>}, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f"API request failed: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> response.json()[<span class="st">"query"</span>]</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Redirects:"</span>, data.get(<span class="st">"redirects"</span>, []))</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> page <span class="kw">in</span> data[<span class="st">"pages"</span>].values():</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Resolved title:"</span>, page[<span class="st">"title"</span>])</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Language links:"</span>, <span class="bu">len</span>(page.get(<span class="st">"langlinks"</span>, [])))</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Article preview:"</span>, page.get(<span class="st">"extract"</span>, <span class="st">""</span>)[:<span class="dv">160</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If the title that comes back is different from the title you requested, you have a matching problem. But matching titles are not sufficient: <code>Disa</code> still resolves to <code>Disa</code>, so only the article preview reveals that the page concerns a legendary Swedish figure. For a larger project, you would save the requested title, resolved title, redirect target, article preview, and ideally a Wikidata identifier for manual or computational validation. <strong>No title-matching rule can establish subject identity on its own.</strong></p>
+<p>After resolving these errors, we can compare the pattern with the Tolkien Gateway scrape. The selected Tolkien-derived characters have extensively referenced Tolkien Gateway pages and independent Wikipedia articles in many languages, while several show-created characters appear only within a shared Wikipedia list. The convergence is interesting, but it is not fully independent corroboration: both sources are community-edited wikis, and both may reproduce the same differences in fan attention, notability rules, and available source material. Comparing sources is useful partly because it lets us ask whether they share the same infrastructure and biases.</p>
+</section>
+<section id="a-different-shape-the-pageviews-api" class="level3">
+<h3 class="anchored" data-anchor-id="a-different-shape-the-pageviews-api">A Different Shape: The Pageviews API</h3>
+<p>Wikimedia also publishes a completely separate API for <strong>traffic data</strong>, and it’s a good illustration that one organization can offer several APIs in different styles. Where the action API uses query parameters, the Pageviews API is a <strong>REST API</strong> that encodes everything in the URL path:</p>
+<pre><code>https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{project}/{access}/{agent}/{article}/{granularity}/{start}/{end}</code></pre>
+<p>Let’s ask how many people read the Galadriel article each month across 2022 — the year <em>The Rings of Power</em> premiered:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> (<span class="st">"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/"</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>       <span class="st">"en.wikipedia/all-access/user/Galadriel/monthly/2022010100/2023060100"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f"Pageviews request failed: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># We deliberately requested one extra, partial month; see the warning below.</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> response.json()[<span class="st">"items"</span>][:<span class="op">-</span><span class="dv">1</span>]:</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(item[<span class="st">"timestamp"</span>], <span class="ss">f'</span><span class="sc">{</span>item[<span class="st">"views"</span>]<span class="sc">:&gt;9,}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">2022010100</span>    54,316</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">2022020100</span>    66,108</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">2022030100</span>    28,559</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">2022040100</span>    23,323</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">2022050100</span>    19,691</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">2022060100</span>    18,763</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ex">2022070100</span>    51,683</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ex">2022080100</span>    77,249</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="ex">2022090100</span>   761,399</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="ex">2022100100</span>   393,275</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="ex">2022110100</span>    85,923</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="ex">2022120100</span>    59,012</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="ex">2023010100</span>    51,692</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="ex">2023020100</span>    38,565</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="ex">2023030100</span>    38,016</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="ex">2023040100</span>    31,706</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="ex">2023050100</span>    27,206</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Look at September 2022. The show premiered on September 1st, and readership of the Galadriel article rose from <strong>77,249 in August to 761,399 in September</strong>, nearly a tenfold month-to-month increase. September was roughly forty times the approximately 19,000 views recorded in June. Readership then declined over the following months while remaining above that June baseline in the period shown.</p>
+<p>This is cultural data of a kind that is genuinely hard to get any other way. It is a record of collective attention: hundreds of thousands of people, having watched something, going to look it up. It connects directly to the readings on bestseller lists and algorithmic popularity from our scraping week, and it lets you ask questions with real historical shape — when did people become interested in this, what made them, and did the interest last?</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Watch the Last Bucket
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You may have noticed the <code>[:-1]</code> in that loop. It is there for a reason worth knowing about.</p>
+<p>With this request, the Pageviews API returns a final bucket that runs from the start of June <strong>up to our June 1 end timestamp</strong>, so it reports only about one day’s traffic: roughly 800 views rather than the complete month’s total.</p>
+<p>Run this particular example without the slice and the series appears to fall off a cliff in June. That drop is a boundary artifact, not a real collapse in attention. A final bucket is not inherently incomplete; it becomes incomplete when the requested end timestamp falls before the period has finished.</p>
+<p>For this workflow, <strong>request one additional period, inspect it, and discard it only when you know it is partial.</strong> Do not automatically delete the last observation from every API response. Boundary behavior is common in time-series APIs, so read the endpoint documentation, print or plot the result before analysis, and investigate dramatic changes at either end of the range.</p>
+</div>
+</div>
+<p>The date format is also unforgiving (<code>YYYYMMDDHH</code>, so <code>2022010100</code> is January 1, 2022 at hour 00), and the article title must be exactly right, underscores and all. But note what this API does <em>not</em> require: no key, no account, no application form. Wikimedia publishes this because the Wikimedia Foundation is a nonprofit whose mission includes making its data available — a very different institutional posture from the platforms in the “post-API age” we discussed earlier, and one worth noticing when you choose what to build research on.</p>
+</section>
+</section>
+<section id="authentication-and-parameters-with-the-one-api" class="level2">
+<h2 class="anchored" data-anchor-id="authentication-and-parameters-with-the-one-api">Authentication and Parameters With The One API</h2>
+<p>Wikimedia allowed us to make successful requests without creating an account. Not every API is designed that way. We will next use <em>The One API</em> <a href="https://the-one-api.dev/" target="_blank">https://the-one-api.dev/</a> to examine public and restricted endpoints, authentication, filtering, and relationships among records. For those unfamiliar, the one in the name is a reference to the <em>Lord of the Rings</em> series, where the One Ring is the most powerful of the Rings of Power and is the central plot device of the series.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://render.apptornado.com/render?url=https%3A%2F%2Fthe-one-api.dev%2F&amp;w=800&amp;h=600&amp;maxAgeSec=604800&amp;signed=I-008yKAhOXaFs_OeD0MtFIpt2LjcNVOukgUWceQgkY" class="img-fluid figure-img"></p>
+<figcaption>LOTR API</figcaption>
+</figure>
+</div>
+<p>According to the documentation, “<em>The One API</em> to rule them all is a non-commercial, open-source project” and provides access to data from the <em>Lord of the Rings</em> books and movies, including characters, quotes, and books.</p>
+<p>If we go to the about page <a href="https://the-one-api.dev/about" target="_blank">https://the-one-api.dev/about</a>, we can learn that the project was created in 2019 by Ulrike Exner and Mateusz Kikmunter, who are both developers. We can also visit the GitHub repository for the project <a href="https://github.com/gitfrosh/lotr-api/graphs/contributors" target="_blank">https://github.com/gitfrosh/lotr-api/graphs/contributors</a> to see the history of the project.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/lotr_api_github_history.png" class="img-fluid figure-img"></p>
+<figcaption>LOTR API GitHub History</figcaption>
+</figure>
+</div>
+<p>So let’s try this out!</p>
+<section id="making-an-api-request" class="level3">
+<h3 class="anchored" data-anchor-id="making-an-api-request">Making an API Request</h3>
+<p>Return to <code>first_api_script.py</code>. We already imported <code>requests</code> for Wikimedia, so now create a variable containing the books endpoint from <em>The One API</em>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/book'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>If Python says that <code>requests</code> is not installed, remember to activate your virtual environment and install the packages from the lesson requirements.</strong></p>
+<p>Now how could we use this URL to get data from the API? We could use the <code>requests.get</code> method we used in the web scraping lesson. Let’s try that out.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>How could we see that this request worked? We can print the status code of the response.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Hopefully we are all seeing <code>200</code> responses, but if you are seeing a <code>404</code> or <code>403</code> response, you might need to authenticate with the API. We will discuss this more in the next section, but for now, let’s try to print out the response.</p>
+<p>In our web scraping lesson, we used the <code>.text</code> method to print out the response, but for APIs, we often use the <code>.json()</code> method. Let’s try that out.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You should see something like the following:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">'docs'</span><span class="fu">:</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        <span class="ot">[</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf5805fb53e011a64671582'</span><span class="fu">,</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Fellowship</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">Ring'</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58077b53e011a64671583'</span><span class="fu">,</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Two</span> <span class="er">Towers'</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58080b53e011a64671584'</span><span class="fu">,</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Return</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">King'</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="er">'total'</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is the data that <em>The One API</em> returned to us. It’s in a format called <code>JSON</code>, which stands for JavaScript Object Notation and was originally designed to allow websites to pass data back and forth between the browser and the server. But it’s become a really popular generic format for all sorts of things and all sorts of languages. You’ll notice that <code>JSON</code> looks very similar to a Python dictionary, and in fact, it’s a way to store data that is similar to a Python dictionary.</p>
+<p>Based on this data, we can see that <em>The One API</em> has returned data about the three books in the <em>Lord of the Rings</em> series. Each book has an <code>_id</code> and a <code>name</code>. The books themselves are returned in a list for the key <code>docs</code>, and then there are some other keys that provide information about the data that was returned, including <code>total</code>, <code>limit</code>, <code>offset</code>, <code>page</code>, and <code>pages</code>. <code>Total</code> tells us how many items were returned, <code>limit</code> tells us how many items <em>could be</em> returned per page, <code>offset</code> tells us where in the data we are (similar to indexing), <code>page</code> tells us what page we are on, and <code>pages</code> tells us how many pages of data there are.</p>
+<p>While this is a pretty minimal amount of data, it does give us a sense of how APIs work. Just as if we were going to a web browser, we can make requests to an API and get data back. This data will be structured in some way and we can use that structure to understand the data and to work with it. It is important to note that there is no one way that APIs are structured, and each API will have its own structure and its own way of working. This is why it’s important to read the documentation for an API before you start working with it.</p>
+</section>
+<section id="authentication-endpoints" class="level3">
+<h3 class="anchored" data-anchor-id="authentication-endpoints">Authentication &amp; Endpoints</h3>
+<p>So far we have just been able to send a request to <em>The One API</em> and get data back, but what if we wanted to get more specific data? For example, what if we wanted to get data about a specific character or quote from the <em>Lord of the Rings</em> series? To do this, we need to use something called an <strong>endpoint</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/lotr_api_endpoints.png" class="img-fluid figure-img"></p>
+<figcaption>LOTR API Endpoints</figcaption>
+</figure>
+</div>
+<p>If we go to <em>The One API</em> documentation <a href="https://the-one-api.dev/documentation#4" target="_blank">https://the-one-api.dev/documentation#4</a>, we see the following table that outlines what <code>endpoints</code> exist.</p>
+<p>An endpoint might sound like a very technical term, but it is essentially just a specific URL that is used to access a specific piece of data from an API. For example, if we wanted to get data about a specific character, we would use the <code>/character</code> endpoint. If we wanted to get data about a specific quote, we would use the <code>/quote</code> endpoint.</p>
+<p>We can even try out that initial book endpoint in the browser which should give us the following:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/book_url_browser.png" class="img-fluid figure-img"></p>
+<figcaption>Book URL in Browser</figcaption>
+</figure>
+</div>
+<p>However, if we try to get characters or quotes in the browser, we will see the following:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/character_url_browser.png" class="img-fluid figure-img"></p>
+<figcaption>Characters URL in Browser</figcaption>
+</figure>
+</div>
+<p>Indeed, if we update our python code we can see the exact same thing.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This should return a <code>401</code> status code, which means that we are not <strong>authorized</strong> to access this data. This is because the LOTR API requires us to authenticate before we can access data about characters or quotes. This is a common feature of APIs, as it allows the API to track who is accessing their data and to limit access to certain users.</p>
+<p>Authentication can sound intimidating but you actually do it all the time already. For example, when you login to your email, you are authenticating with a server to access your email. When you login to DUO, you are authenticating with a server to access your account. When you login to social media, you are authenticating with a server to access your account. The difference is that when you use a web browser, this is all handled automatically for you, but when you use an API, you have to do this explicitly.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/auth_lotr.png" class="img-fluid figure-img"></p>
+<figcaption>LOTR Authentication</figcaption>
+</figure>
+</div>
+<p>If we return to <em>The One API</em> documentation <a href="https://the-one-api.dev/documentation#3" target="_blank">https://the-one-api.dev/documentation#3</a>, we can see that we need to sign up for an account to use the API at this link <a href="https://the-one-api.dev/sign-up" target="_blank">https://the-one-api.dev/sign-up</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/lotr_account.png" class="img-fluid figure-img"></p>
+<figcaption>LOTR API Signup</figcaption>
+</figure>
+</div>
+<p>Once you have signed up and logged in, you should see the above page for your account, which will include your <code>API key</code>. This key is unique to you and is used to identify you when you make requests to the API. It’s like a password, so you should keep it secret and not share it with anyone.</p>
+<p>You should copy the key into your <code>first_api_script.py</code> and then try to get data about characters or quotes.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>api_key <span class="op">=</span> <span class="st">"API KEY HERE"</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>authorization_headers <span class="op">=</span> {</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Authorization'</span>: <span class="st">'Bearer '</span> <span class="op">+</span> api_key</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You’ll notice that we are using a new variable called <code>authorization_headers</code> that is a dictionary with a key of <code>'Authorization'</code> and a value of <code>'Bearer ' + api_key</code>. This is how we pass our key to <em>The One API</em> so that it knows who we are and that we are allowed to use their API.</p>
+<p>Now let’s update our <code>requests.get</code> method to include these headers.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now we should see a <code>200</code> status code, which means that we are authorized to access this data. Before we explore this new data, we need to first understand how to store our API keys securely.</p>
+<p>Currently, we just have our api key in a string in a variable, which is easy to use but it’s not the most secure. For example, if you pushed this up to GitHub, then everyone would be able to see and use your API key. You’ll notice that <em>The One API</em> says that you should limit your requests “to 100 requests every 10 minutes”. However, if you shared your key, someone could easily use it and you would be locked out of the API. Even worse, if they did something illegal with your key, you could be held responsible. So rule of thumb is don’t share your API key!</p>
+<section id="storing-api-keys" class="level4">
+<h4 class="anchored" data-anchor-id="storing-api-keys">Storing API Keys</h4>
+<p>There are a number of ways to more securely store your API keys.</p>
+<p>One option is just copying our API keys to a text file and save them there (especially because they are rarely something you can memorize), but there’s also more programmatic ways to do this.</p>
+<p>Another option is that you could store your API keys as an environment variable. Environment variables are a way to store data that is accessible to all programs running on your computer.</p>
+<p>To create an environment variable, you open your terminal and type the following, replacing <code>api_key</code> with your API key.</p>
+<p>For Macs/WSL:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">THE_ONE_API_KEY</span><span class="op">=</span><span class="st">"YOUR_API_KEY_HERE"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For Windows/PowerShell:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">THE_ONE_API_KEY</span> <span class="op">=</span> <span class="st">"YOUR_API_KEY_HERE"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now you can access these environment variables in your Python script by using the <code>os</code> library.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>the_one_api_key <span class="op">=</span> os.environ[<span class="st">'THE_ONE_API_KEY'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These commands set the variable only for the current terminal session, so you would need to run the appropriate command again after opening a new terminal. Persistent environment variables require editing your shell profile, but a credential-storage library is simpler for this course. Do not print API keys while testing because terminal output can be copied into screenshots, logs, or shared debugging messages.</p>
+<p>This is a bit more work though, and one easier option is to use a Python library for storing API keys, called <code>apikey</code> <a href="https://github.com/ulf1/apikey" target="_blank">https://github.com/ulf1/apikey</a>.</p>
+<p>In your terminal, type <code>python -m pip install "apikey&gt;=0.2.4"</code> to install the library. Then import it into your script and write:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> apikey</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>apikey.save(<span class="st">"THE_ONE_API_KEY"</span>, <span class="st">"YOUR_API_KEY_HERE"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>the_one_api_key <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>While you can use any of these options, I would recommend using the <code>apikey</code> library, as it’s the most secure and the easiest to use. If you continue with programming, you will likely end up using the <code>.zshrc</code> or <code>.bashrc</code> method, but for now, the <code>apikey</code> library is the best option.</p>
+</section>
+</section>
+<section id="making-api-requests" class="level3">
+<h3 class="anchored" data-anchor-id="making-api-requests">Making API Requests</h3>
+<p>Now that we have our api key stored securely, let’s try to get data about characters from <em>The One API</em>. We can do this by updating our <code>url</code> variable to include the <code>/character</code> endpoint.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>the_one_api_key <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>authorization_headers <span class="op">=</span> {</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Authorization'</span>: <span class="st">'Bearer '</span> <span class="op">+</span> the_one_api_key</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response.json())</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This should show a much larger amount of data, including information about all the characters from the <em>Lord of the Rings</em> series in this database. You’ll notice that the data is structured in a similar way to the data about books, with a list of characters and some other information about the data that was returned.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="er">'docs'</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbbe'</span><span class="fu">,</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adanel'</span><span class="fu">,</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adanel'</span><span class="fu">,</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>   <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Human'</span><span class="fu">,</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>   <span class="er">'birth'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>   <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Female'</span><span class="fu">,</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>   <span class="er">'death'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>   <span class="er">'hair'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>   <span class="er">'height'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>   <span class="er">'realm'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>   <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">'Belemir'</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbbf'</span><span class="fu">,</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adrahil</span> <span class="er">I'</span><span class="fu">,</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adrahil_I'</span><span class="fu">,</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>   <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Human'</span><span class="fu">,</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>   <span class="er">'birth'</span><span class="fu">:</span> <span class="er">'Before</span> <span class="fu">,</span><span class="er">TA</span> <span class="er">1944',</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>   <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Male'</span><span class="fu">,</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>   <span class="er">'death'</span><span class="fu">:</span> <span class="er">'Late</span> <span class="fu">,</span><span class="er">Third</span> <span class="er">Age',</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>   <span class="er">'hair'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>   <span class="er">'height'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>   <span class="er">'realm'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>   <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbc0'</span><span class="fu">,</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adrahil</span> <span class="er">II'</span><span class="fu">,</span></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adrahil_II'</span><span class="fu">,</span></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="er">...</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a> <span class="er">'total'</span><span class="fu">:</span> <span class="dv">933</span><span class="fu">,</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a> <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a> <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a> <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a> <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Since the api response is in json format, we can work with it similar to working with a dictionary. For example, we can see all the keys in the response by using the <code>.keys()</code> method.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>response.json().keys()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This should show the following:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dict_keys([<span class="st">'docs'</span>, <span class="st">'total'</span>, <span class="st">'limit'</span>, <span class="st">'offset'</span>, <span class="st">'page'</span>, <span class="st">'pages'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can access the <code>total</code> key to see how many characters are in the database.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>response.json()[<span class="st">'total'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This should return <code>933</code>, which means that there are 933 characters in the database. We can also loop through the <code>docs</code> key to see each character.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> response.json()[<span class="st">'docs'</span>]:</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(character)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This should show a list of dictionaries, each of which contains information about a character from the <em>Lord of the Rings</em> series. You’ll notice that each character has an <code>_id</code>, a <code>name</code>, a <code>wikiUrl</code>, a <code>race</code>, a <code>birth</code>, a <code>gender</code>, a <code>death</code>, a <code>hair</code>, a <code>height</code>, a <code>realm</code>, and a <code>spouse</code>.</p>
+<p>So if we only wanted to see the data about a certain character, like Galadriel, we could loop through the characters and print out the data for Galadriel.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> response.json()[<span class="st">'docs'</span>]:</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> character[<span class="st">'name'</span>] <span class="op">==</span> <span class="st">'Galadriel'</span>:</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(character)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Which would return the following data:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfd06'</span><span class="fu">,</span> <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Galadriel'</span><span class="fu">,</span> <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Galadriel'</span><span class="fu">,</span> <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Elf'</span><span class="fu">,</span> <span class="er">'birth'</span><span class="fu">:</span> <span class="er">'YT</span> <span class="dv">1362</span><span class="er">'</span><span class="fu">,</span> <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Female'</span><span class="fu">,</span> <span class="er">'death'</span><span class="fu">:</span> <span class="er">'Still</span> <span class="er">alive:</span> <span class="er">Departed</span> <span class="er">over</span> <span class="er">the</span> <span class="er">sea</span> <span class="er">on</span> <span class="fu">,</span><span class="er">September</span> <span class="er">29</span> <span class="er">,3021',</span> <span class="er">'hair'</span><span class="fu">:</span> <span class="er">'Golden'</span><span class="fu">,</span> <span class="er">'height'</span><span class="fu">:</span> <span class="er">'Tall'</span><span class="fu">,</span> <span class="er">'realm'</span><span class="fu">:</span> <span class="er">'Eregion</span><span class="fu">,</span><span class="er">Lothlórien,Caras</span> <span class="er">Galadhon',</span> <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">'Celeborn'</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>While we can do this using Python, we could also change our URL to only get data about Galadriel. We can do this by adding a query parameter to our URL.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Query parameters are a way to pass data to an API to get specific data back. In this case, we are passing the query parameter <code>name=Galadriel</code> to <em>The One API</em> to get data about the character Galadriel. You’ll notice that the URL has a <code>?</code> at the end of it, followed by the query parameter <code>name=Galadriel</code>. Returning to the API’s documentation <a href="https://the-one-api.dev/documentation#5" target="_blank">https://the-one-api.dev/documentation#5</a>, we can see that we can use query parameters for sorting, filtering, and pagination data from <em>The One API</em>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cdn.prod.website-files.com/66508fc2f6b862d86193f29b/6674497e8a3e4519946a3b9f_bzNgNITcGMxVszuieKXJSF7Lswjw64bI7yuOvzQIyiedIzTqURKndIZkBL6OJXZcn3mQDMinzqM939F7ATVxr70XqyJVoG8EC9KOuwndGjpc_S0howFdJXKsXkrIwB2UF2ezFSFV.png" class="img-fluid figure-img"></p>
+<figcaption>Galadriel URL in Browser</figcaption>
+</figure>
+</div>
+<p>As you can see in the figure above, you can also add multiple query parameters by separating them with an <code>&amp;</code>. For example, if we wanted to get all other elves besides Galadriel, we could use the does not match query parameter <code>name!=Galadriel</code> and chain that with the race query parameter <code>race=Elf</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name!=Galadriel&amp;race=Elf'</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total number of elves besides Galadriel: </span><span class="sc">{</span>response<span class="sc">.</span>json()[<span class="st">'total'</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Finally, we can also use the <code>id</code> in each data returned from the API to get more specific data. For example, if we wanted to get data about all the movie quotes of Galadriel, we could first get the id of Galadriel and then use that id to get data about her quotes.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>galadriel_id <span class="op">=</span> response.json()[<span class="st">'docs'</span>][<span class="dv">0</span>][<span class="st">'_id'</span>]</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>quote_url <span class="op">=</span> <span class="ss">f'https://the-one-api.dev/v2/character/</span><span class="sc">{</span>galadriel_id<span class="sc">}</span><span class="ss">/quote'</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(quote_url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Finally, let’s use the <code>time</code> library in Python so that we don’t exceed the 100 requests every 10 minutes limit.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>galadriel_id <span class="op">=</span> response.json()[<span class="st">'docs'</span>][<span class="dv">0</span>][<span class="st">'_id'</span>]</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>quote_url <span class="op">=</span> <span class="ss">f'https://the-one-api.dev/v2/character/</span><span class="sc">{</span>galadriel_id<span class="sc">}</span><span class="ss">/quote'</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(quote_url, headers<span class="op">=</span>authorization_headers)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json())</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>time.sleep(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Understanding how to use query parameters and how to use the <code>id</code> of data returned from an API is critical to working with APIs, as it allows you to get specific data from an API. This is especially important when working with large datasets, as it allows you to filter and sort data to get the data you need. Remember collecting all the data is not always the best option, and can actually lead to more work depending on your research question.</p>
+</section>
+</section>
+<section id="from-direct-requests-to-api-wrappers" class="level2">
+<h2 class="anchored" data-anchor-id="from-direct-requests-to-api-wrappers">From Direct Requests to API Wrappers</h2>
+<p>So far we have been using the <code>requests</code> library to make our API calls, which is usually how you should work with APIs. However, occasionally, developers will create Python libraries to work with APIs, which can make working with APIs easier. These libraries are called API wrappers, and they are essentially Python libraries that provide a set of functions to work with an API.</p>
+<p>You can imagine if instead having to write a <code>requests.get</code> method every time you wanted to get a character and their number of quotes from <em>The One API</em>, we could instead write a Python Class that would make the request and store the data for us. This is what an API wrapper does, it abstracts the process of making requests to an API and allows you to work with the data more easily.</p>
+<p>Indeed, a developer named Nathanial Hapeman has created one for <em>The One API</em>, which you can see here <a href="https://pypi.org/project/nrh-lotr/0.0.3/" target="_blank">https://pypi.org/project/nrh-lotr/0.0.3/</a>. If you want to try out this library, install it in your active virtual environment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install nrh-lotr==0.0.3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/lotr_library_pypi.png" class="img-fluid figure-img"></p>
+<figcaption>LOTR Library</figcaption>
+</figure>
+</div>
+<p>If you scroll down to <code>Usage</code> section, you can see how the developer has created a class called <code>LOTR</code> that takes your api key and then makes requests for you.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> apikey</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lotr <span class="im">import</span> LOTR</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>the_one_api_key <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>lotr <span class="op">=</span> LOTR(the_one_api_key)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>movies <span class="op">=</span> lotr.movies(limit<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(movies)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can also see how the library is organized if we inspect it after installing it:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/lotr_library.png" class="img-fluid figure-img"></p>
+<figcaption>LOTR Library</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Fixing Pydantic Types For NRH-LOTR
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In our class on Thursday, we ran into an issue with installing and using the <code>nrh-lotr</code> library, with this issue appearing in the terminal:</p>
+<p><img src="../../assets/images/pydantic_error.png" class="img-fluid"></p>
+<section id="what-went-wrong" class="level3">
+<h3 class="anchored" data-anchor-id="what-went-wrong">What Went Wrong?</h3>
+<p><strong>Pydantic</strong> is a data validation library that checks whether the data you receive from an API matches the types you declared in your model. When the API returned a value for <code>rottenTomatoesScore</code> of <code>66.33333333</code> (a decimal), but the model was expecting an <code>int</code> (whole number), Pydantic rejected it. You can’t fit a float into an integer without losing information, so Pydantic threw a validation error.</p>
+</section>
+<section id="the-fix" class="level3">
+<h3 class="anchored" data-anchor-id="the-fix">The Fix</h3>
+<p>The library developer assumed Rotten Tomatoes scores would be integers, but the actual API returns percentage scores with decimal values. The solution was simple: change the type annotation from <code>int</code> to <code>float</code> to allow decimal numbers:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Movie(pydantic.BaseModel):</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A LotR movie title."""</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span>: <span class="bu">str</span> <span class="op">=</span> pydantic.Field(<span class="va">None</span>, alias<span class="op">=</span><span class="st">"_id"</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    name: <span class="bu">str</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    runtimeInMinutes: <span class="bu">int</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    budgetInMillions: <span class="bu">int</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    boxOfficeRevenueInMillions: <span class="bu">float</span> <span class="co"># Changed from int to float</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    academyAwardNominations: <span class="bu">int</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    academyAwardWins: <span class="bu">int</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    rottenTomatoesScore: <span class="bu">float</span>  <span class="co"># Changed from int to float</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="../../assets/images/lotr_movie_typeset.png" class="img-fluid"></p>
+</section>
+<section id="why-this-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters">Why This Matters</h3>
+<p>This is a great example of why <strong>API wrappers are imperfect</strong>. The person who wrote <code>nrh-lotr</code> made assumptions about the data that didn’t match reality. This teaches us to:</p>
+<ul>
+<li>Always read the actual API documentation carefully</li>
+<li>Test wrapper code against real data</li>
+<li>Be aware that library developers may have made incorrect assumptions about data types</li>
+<li>Know that Pydantic validates your data to catch these mismatches early</li>
+</ul>
+</section>
+</div>
+</div>
+<p>And you can see how’s it making requests to the API by looking at the source code.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/lotr_library_source.png" class="img-fluid figure-img"></p>
+<figcaption>LOTR Library Source</figcaption>
+</figure>
+</div>
+<p>However, if you scroll down further in the documentation, you’ll notice that this library only makes requests for the following endpoints:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/movie</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/movie/{id}</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/movie/{id}/{quote}</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="ex">/quote</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="ex">/quote/{id}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Such limited functionality means that we couldn’t use this library to get data about characters or books, which is a major limitation. These types of limitations are common when working with API wrappers, as they are often created by developers who are not affiliated with the API itself and who may not have the time or resources to create a full-featured library. However, they can be a good way to get started with an API, especially if you are new to working with APIs.</p>
+</section>
+<section id="from-an-api-wrapper-to-a-collection-library" class="level2">
+<h2 class="anchored" data-anchor-id="from-an-api-wrapper-to-a-collection-library">From an API Wrapper to a Collection Library</h2>
+<p>The <code>nrh-lotr</code> package is a small wrapper created by an independent developer for selected endpoints from <em>The One API</em>. Other Python libraries support a much larger set of activities around an entire platform. To see the difference, we are going to work with the <a href="https://archive.org/" target="_blank">Internet Archive</a> and its <a href="https://archive.org/developers/internetarchive/" target="_blank"><code>internetarchive</code> Python library</a>.</p>
+<p>We have already discussed the Internet Archive as a digital library, preservation institution, and argument about universal access. Its Python library gives us another perspective on that institution: what does the Archive make computationally accessible, and how does its software define an archival item?</p>
+<p>Install the library inside your active virtual environment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install internetarchive</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The package provides both a Python library and an <code>ia</code> command-line program. This is a useful reminder that a library is not necessarily only an API wrapper. It can combine multiple endpoints and workflows into a broader interface for searching, inspecting, downloading, and contributing material.</p>
+<section id="searching-the-internet-archive" class="level3">
+<h3 class="anchored" data-anchor-id="searching-the-internet-archive">Searching the Internet Archive</h3>
+<p>We can begin with a search:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> internetarchive</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>search <span class="op">=</span> internetarchive.search_items(</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'title:"Lord of the Rings" AND mediatype:texts'</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    fields<span class="op">=</span>[<span class="st">"identifier"</span>, <span class="st">"title"</span>, <span class="st">"date"</span>],</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> result <span class="kw">in</span> search:</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(result.get(<span class="st">"identifier"</span>))</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(result.get(<span class="st">"title"</span>))</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(result.get(<span class="st">"date"</span>))</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The query combines a phrase search with a fielded search. <code>title:"Lord of the Rings"</code> asks for that phrase in the title field, while <code>mediatype:texts</code> limits the results to records that the Internet Archive classifies as texts. The <code>fields</code> argument tells the library which metadata to include in each compact search result. Just as with the parameters used by Wikimedia and <em>The One API</em>, the available fields shape both what we can ask and what the service returns.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Start Small
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An Internet Archive search can contain thousands of results. While testing, use a narrow query and stop after a small number of records:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, result <span class="kw">in</span> <span class="bu">enumerate</span>(search):</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(result.get(<span class="st">"identifier"</span>), result.get(<span class="st">"title"</span>))</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> index <span class="op">==</span> <span class="dv">9</span>:</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Later, you can decide whether your research question requires more records.</p>
+</div>
+</div>
+</section>
+<section id="from-search-results-to-archival-items" class="level3">
+<h3 class="anchored" data-anchor-id="from-search-results-to-archival-items">From Search Results to Archival Items</h3>
+<p>The search results contain enough metadata to identify possible items, but they are not necessarily the complete record. We can use an item’s identifier to request the item itself:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>identifier <span class="op">=</span> <span class="st">"YOUR_ITEM_IDENTIFIER"</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>item <span class="op">=</span> internetarchive.get_item(identifier)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(item.metadata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>An Internet Archive <strong>item</strong> is a container that can include descriptive metadata, one or more files, reviews, usage information, and relationships to collections. It might represent a book, a recording, a software program, a film, a collection of images, or a captured website. The shared item model makes these materials computationally accessible, but it also places very different cultural objects inside one common structure.</p>
+<p>We can inspect selected metadata rather than printing the entire record:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> item.metadata</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Title:"</span>, metadata.get(<span class="st">"title"</span>))</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Creator:"</span>, metadata.get(<span class="st">"creator"</span>))</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Date:"</span>, metadata.get(<span class="st">"date"</span>))</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Media type:"</span>, metadata.get(<span class="st">"mediatype"</span>))</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Collection:"</span>, metadata.get(<span class="st">"collection"</span>))</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"License:"</span>, metadata.get(<span class="st">"licenseurl"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Notice the use of <code>.get()</code>. Records contributed by different people and institutions do not always contain the same fields. A missing creator or rights statement does not necessarily mean that no creator or rights holder exists; it means that the information is not represented in that field in this record.</p>
+</section>
+<section id="files-are-not-the-same-as-items" class="level3">
+<h3 class="anchored" data-anchor-id="files-are-not-the-same-as-items">Files Are Not the Same as Items</h3>
+<p>An item can contain many files: the original upload, derivatives created by the Internet Archive, OCR text, metadata files, thumbnails, or multiple media formats.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> item.files:</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">file</span>.name, <span class="bu">file</span>.metadata.get(<span class="st">"format"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This distinction matters for research. Searching item metadata tells us about catalogued objects. Counting files tells us about digital representations and derivatives. Neither count automatically tells us how many distinct cultural works exist.</p>
+<p>Questions to consider:</p>
+<ul>
+<li>Who created the original cultural object?</li>
+<li>Who digitized or uploaded it?</li>
+<li>Who created its metadata?</li>
+<li>Which files are original, and which were generated by the platform?</li>
+<li>What rights information is available?</li>
+<li>What does the library make easier than direct API requests, and what infrastructure does it hide?</li>
+</ul>
+</section>
+</section>
+<section id="moving-across-cultural-heritage-apis-europeana" class="level2">
+<h2 class="anchored" data-anchor-id="moving-across-cultural-heritage-apis-europeana">Moving Across Cultural Heritage APIs: Europeana</h2>
+<p>The Internet Archive maintains items and files within its own platform. <a href="https://www.europeana.eu/en" target="_blank">Europeana</a>, by contrast, aggregates cultural heritage metadata from museums, galleries, libraries, and archives across Europe.</p>
+<p>Europeana was proposed in 2005 by six European heads of state as a European digital library and launched in 2008.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Its early work focused on encouraging heritage institutions to contribute digital material. Later versions placed greater emphasis on reuse, curated exhibitions, and access across institutional collections.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/europeana_library.png" class="img-fluid figure-img"></p>
+<figcaption>Europeana Library</figcaption>
+</figure>
+</div>
+<p>This structure creates an important distinction:</p>
+<ul>
+<li>The cultural object may be held by one institution.</li>
+<li>Its digital representation may have been created by that institution or another partner.</li>
+<li>Its metadata may be mapped into the Europeana Data Model.</li>
+<li>Europeana provides another record and interface through which that material can be discovered.</li>
+</ul>
+<p>The API therefore gives us access not only to objects, but to the results of institutional aggregation and metadata standardization.</p>
+<section id="authenticating-with-europeana" class="level3">
+<h3 class="anchored" data-anchor-id="authenticating-with-europeana">Authenticating With Europeana</h3>
+<p>Europeana requires an API key for most of its public APIs. You can request one from the <a href="https://pro.europeana.eu/page/get-api" target="_blank">Europeana API registration page</a>. Store it with the same <code>apikey</code> library we used for <em>The One API</em>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> apikey</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>europeana_api_key <span class="op">=</span> apikey.load(<span class="st">"EUROPEANA_API_KEY"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Europeana recommends sending the key in an <code>X-Api-Key</code> header rather than placing it in the URL. This reduces the chance that a key will be exposed through copied URLs, browser histories, or logs.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://api.europeana.eu/record/v2/search.json"</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>headers <span class="op">=</span> {</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"X-Api-Key"</span>: europeana_api_key,</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"User-Agent"</span>: <span class="st">"is310-course/1.0 (YOUR_NETID@illinois.edu)"</span>,</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"query"</span>: <span class="st">"Tolkien"</span>,</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rows"</span>: <span class="dv">10</span>,</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"profile"</span>: <span class="st">"rich"</span>,</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers, params<span class="op">=</span>params, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> response.json()</span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Total results:"</span>, data[<span class="st">"totalResults"</span>])</span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Request failed:"</span>, response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This request returns only ten records, but <code>totalResults</code> tells us how many records matched the query across Europeana. The <code>items</code> key contains the records returned on this page.</p>
+</section>
+<section id="reading-aggregated-metadata" class="level3">
+<h3 class="anchored" data-anchor-id="reading-aggregated-metadata">Reading Aggregated Metadata</h3>
+<p>Let’s inspect some of the metadata fields that made the earlier <code>pyeuropeana</code> example useful:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> data[<span class="st">"items"</span>]:</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Title:"</span>, item.get(<span class="st">"title"</span>))</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Creator:"</span>, item.get(<span class="st">"dcCreator"</span>))</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Provider:"</span>, item.get(<span class="st">"dataProvider"</span>))</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Country:"</span>, item.get(<span class="st">"country"</span>))</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Rights:"</span>, item.get(<span class="st">"rights"</span>))</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Europeana page:"</span>, item.get(<span class="st">"guid"</span>))</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These values are frequently lists, multilingual dictionaries, or absent altogether. That variation is not merely a programming inconvenience. It reflects different cataloguing traditions, languages, institutional systems, source records, and decisions made while mapping metadata into a shared model.</p>
+</section>
+<section id="asking-different-questions-with-search-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="asking-different-questions-with-search-parameters">Asking Different Questions With Search Parameters</h3>
+<p>Europeana’s Search API supports more than keyword searching. We can use parameters to narrow records by type, rights, media availability, theme, provider, or other indexed fields:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"query"</span>: <span class="st">'"Alfred Book"'</span>,</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"qf"</span>: [<span class="st">"TYPE:IMAGE"</span>],</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"reusability"</span>: <span class="st">"open AND permission"</span>,</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"media"</span>: <span class="va">True</span>,</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"thumbnail"</span>: <span class="va">True</span>,</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"profile"</span>: <span class="st">"rich"</span>,</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rows"</span>: <span class="dv">25</span>,</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers, params<span class="op">=</span>params, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> response.json()</span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Total results:"</span>, data[<span class="st">"totalResults"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The parameters encode research choices:</p>
+<ul>
+<li><code>query</code> specifies the main search; quotation marks ask for the phrase <code>Alfred Book</code>.</li>
+<li><code>qf</code> adds fielded filters.</li>
+<li><code>TYPE:IMAGE</code> includes records categorized as images.</li>
+<li><code>reusability</code> filters by rights information supplied to Europeana.</li>
+<li><code>media</code> and <code>thumbnail</code> ask for records with digital media representations.</li>
+<li><code>profile</code> controls how much metadata the API returns.</li>
+<li><code>rows</code> controls the size of this page of results.</li>
+</ul>
+<p>A query for openly reusable images is not simply finding images that exist. It is finding records whose institutions supplied enough standardized rights and media information for Europeana to identify them that way.</p>
+</section>
+<section id="why-not-use-pyeuropeana" class="level3">
+<h3 class="anchored" data-anchor-id="why-not-use-pyeuropeana">Why Not Use <code>pyeuropeana</code>?</h3>
+<p><a href="https://pypi.org/project/pyeuropeana/" target="_blank"><code>pyeuropeana</code></a> wraps Europeana’s Search, Record, Entity, and IIIF APIs and can convert search results into a Pandas DataFrame. Those conveniences are useful, but its current release depends on <code>pandas&lt;2.0</code> and does not install cleanly in our current Python environment. Rather than downgrade the course environment, we are using the maintained web API directly.</p>
+<p>This is itself a lesson about wrappers: the Europeana API still works even when a particular Python interface has fallen behind current dependencies. Working with <code>requests</code> gives us a stable fallback and helps us see the actual parameters and response structure.</p>
+</section>
+<section id="records-entities-and-search-results" class="level3">
+<h3 class="anchored" data-anchor-id="records-entities-and-search-results">Records, Entities, and Search Results</h3>
+<p>Europeana also provides APIs for individual records and contextual entities such as people, concepts, places, and time periods. This distinction matters:</p>
+<ul>
+<li>A <strong>search result</strong> is a selected summary of a matching record.</li>
+<li>A <strong>record</strong> contains fuller metadata about a cultural heritage object.</li>
+<li>An <strong>entity</strong> represents a person, place, concept, or period that may connect multiple records.</li>
+</ul>
+<p>For example, searching for <code>Tolkien</code> might find objects that mention that name, while an entity lookup attempts to identify a particular person. Neither operation guarantees that every use of the name refers to the same person. The title-resolution problems we found in Wikipedia therefore reappear in a new institutional context.</p>
+<p>Across the APIs and libraries in this lesson, notice what each system treats as its central object:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>System</th>
+<th>Central objects</th>
+<th>Primary access model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wikimedia</td>
+<td>Pages, revisions, categories, views</td>
+<td>Public APIs with a descriptive User-Agent</td>
+</tr>
+<tr class="even">
+<td>The One API</td>
+<td>Books, characters, movies, quotes</td>
+<td>Public and authenticated endpoints</td>
+</tr>
+<tr class="odd">
+<td><code>nrh-lotr</code></td>
+<td>Selected Python models of LOTR API records</td>
+<td>Third-party wrapper</td>
+</tr>
+<tr class="even">
+<td>Internet Archive</td>
+<td>Items, files, and collections</td>
+<td>Maintained Python library and APIs</td>
+</tr>
+<tr class="odd">
+<td>Europeana</td>
+<td>Aggregated records and entities</td>
+<td>Authenticated cultural-heritage APIs</td>
+</tr>
+</tbody>
+</table>
+<p>The technical differences matter, but so do the institutional ones. Each interface reflects who maintains the data, who is expected to use it, and which forms of culture have been made retrievable.</p>
+</section>
+</section>
+<section id="getting-culture-across-apis-homework" class="level2">
+<h2 class="anchored" data-anchor-id="getting-culture-across-apis-homework">GETting Culture Across APIs Homework</h2>
+<p>Now that you understand how to work with APIs, it’s time to experiment with some on your own. In your <code>api-getting-data</code> folder in your <code>is310-coding-assignments</code> repository, create a new script called <code>getting_culture.py</code>.</p>
+<p>For this assignment you will work with <strong>two APIs</strong>: the <strong>Wikimedia API</strong>, which we used above, and a <strong>second API of your own choosing</strong>. The goal is not just to make both work, but to <strong>compare them</strong> — to notice that two APIs answering questions about culture can be built on very different assumptions about who is asking and why.</p>
+<section id="choosing-your-second-api" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-your-second-api">Choosing Your Second API</h3>
+<p>Pick something you’re actually curious about. If you need inspiration:</p>
+<ul>
+<li><a href="https://github.com/public-apis/public-apis" target="_blank">https://github.com/public-apis/public-apis</a></li>
+<li><a href="https://github.com/chanonroy/cool-apis" target="_blank">https://github.com/chanonroy/cool-apis</a></li>
+<li><a href="https://apilist.fun/" target="_blank">https://apilist.fun/</a></li>
+<li>Cultural heritage collections often have excellent APIs — the <a href="https://metmuseum.github.io/" target="_blank">Metropolitan Museum of Art</a>, the <a href="https://www.si.edu/openaccess" target="_blank">Smithsonian</a>, <a href="https://openlibrary.org/developers/api" target="_blank">Open Library</a>, the <a href="https://pro.dp.la/developers" target="_blank">Digital Public Library of America</a>, and of course <strong>Europeana</strong>, which we worked through in class</li>
+<li>Or something purely for fun — SWAPI (the Star Wars API), the Pokémon API, a museum of one specific thing</li>
+</ul>
+<p>You may use <code>requests</code> or a wrapper library, and your API may or may not require a key. <strong>If it requires a key, store it using one of the methods from this lesson — never paste it into a file you push to GitHub.</strong></p>
+</section>
+<section id="requirements" class="level3">
+<h3 class="anchored" data-anchor-id="requirements">Requirements</h3>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>Query the Wikimedia API</strong> for something that interests you. This could be category members, langlinks, pageviews, article extracts, Wikidata entities, or anything else you find in the documentation. Print the response.</label></li>
+<li><label><input type="checkbox"><strong>Query your second API</strong> and print the response.</label></li>
+<li><label><input type="checkbox"><strong>Connect the two.</strong> Take a specific item from one API and look it up in the other — an artist from a museum collection and their Wikipedia article, a book from Open Library and its pageview history, a Star Wars character and their language count. The connection does not have to be perfect. <strong>If it fails or the match is ambiguous, that is a finding — write about it.</strong></label></li>
+<li><label><input type="checkbox"><strong>Save your data</strong> as JSON or CSV, with a filename that includes the API you chose. Save <strong>only the item data</strong>, not the full raw response. Inspect saved responses before committing them because some services include request details or credentials in returned metadata.</label></li>
+<li><label><input type="checkbox"><strong>Handle errors.</strong> Check <code>status_code</code> before parsing, and don’t let one bad lookup crash the script. You are welcome to use <code>Rich</code> for nicely formatted output.</label></li>
+</ul>
+</section>
+<section id="the-comparison-the-important-part" class="level3">
+<h3 class="anchored" data-anchor-id="the-comparison-the-important-part">The Comparison (the important part)</h3>
+<p>In your <code>README.md</code>, write a few paragraphs comparing the two APIs. Don’t just describe them — <strong>make an argument about what they are for</strong>. Some questions worth answering:</p>
+<ul>
+<li><strong>What did each require of you?</strong> A key? An account? An application explaining your purpose? A descriptive User-Agent? Nothing at all? What does that tell you about who each API expects to be talking to?</li>
+<li><strong>What are the rate limits, and what do they imply</strong> about the scale of use the designers anticipated?</li>
+<li><strong>How is the data shaped?</strong> Did you get clean structured JSON, or HTML you had to parse? Was it easy to get <em>one</em> thing and hard to get <em>many</em>, or the reverse? What questions does the structure make easy, and which does it quietly make hard?</li>
+<li><strong>Who runs it, and how is it funded?</strong> A nonprofit foundation, a national government, a museum, a company, one volunteer developer? What happens to your research if it shuts down or starts charging?</li>
+<li><strong>What’s missing?</strong> Every collection reflects choices about what was worth digitizing, cataloguing, or writing about. Whose culture is well represented in each of these datasets, and whose isn’t?</li>
+</ul>
+<p>That last question connects back to Acker and Kreisberg on API-driven archives and to Freelon’s “post-API age” — you are the fourth kind of user in their table, the researcher, using infrastructure built mostly for developers. <strong>Notice where that fit is uncomfortable.</strong></p>
+<p>Finally, push both your script and the data to your GitHub repository. <strong>Please remember to NOT include any private API keys, virtual environments, or other sensitive information!</strong></p>
+<p>Once you have completed the assignment, please post a link to your <code>api-getting-data</code> folder in this GitHub discussion <a href="https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/7" target="_blank">https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/7</a>, along with a brief note about which second API you chose and why.</p>
+</section>
+</section>
+<section id="additional-resources" class="level2">
+<h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
+<ul>
+<li>Snodgrass, Eric, and Winnie Soon. “API Practices and Paradigms: Exploring the Protocological Parameters of APIs as Key Facilitators of Sociotechnical Forms of Exchange.” <em>First Monday</em>, February 1, 2019. <a href="https://doi.org/10.5210/fm.v24i2.9553" target="_blank">https://doi.org/10.5210/fm.v24i2.9553</a>.</li>
+<li>Kazemi, Darius. “The Land before Modern APIs – Increment: APIs.” <em>Increment</em>, August 2020. <a href="https://qa.increment.com/apis/land-before-modern-apis/" target="_blank">https://qa.increment.com/apis/land-before-modern-apis/</a>.</li>
+<li>Loukissas, Yanni Alexander. <em>All Data Are Local: Thinking Critically in a Data-Driven Society</em>. MIT Press, 2019.</li>
+<li>Go Sugimoto, “Introduction to Populating a Website with API Data,” <em>Programming Historian</em> 8 (2019), <a href="https://doi.org/10.46430/phen0086" target="_blank">https://doi.org/10.46430/phen0086</a>.</li>
+<li>Patrick Smyth, “Creating Web APIs with Python and Flask,” <em>Programming Historian</em> 7 (2018), <a href="https://doi.org/10.46430/phen0072" target="_blank">https://doi.org/10.46430/phen0072</a>.</li>
+<li>Jeri Wieringa, “Getting Data,” <em>DH Bridge</em>, <a href="http://curriculum.dhbridge.org/modules/module03.html" target="_blank">http://curriculum.dhbridge.org/modules/module03.html</a>.</li>
+<li>Lauren Klein and Dan Sinykin, “Intro to APIs,” <em>QTM340-Fall21</em>, <a href="https://github.com/laurenfklein/QTM340-Fall21/blob/main/notebooks/class7-accessing-apis.ipynb" target="_blank">https://github.com/laurenfklein/QTM340-Fall21/blob/main/notebooks/class7-accessing-apis.ipynb</a>.</li>
+<li>Melanie Walsh, “Intro to APIs,” <em>Intro to Cultural Analytics</em>, <a href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/05-What-Is-API.html" target="_blank">https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/05-What-Is-API.html</a>.</li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Lane, Kin. “The History of APIs,” <em>API Evangelist</em>, <a href="https://history.apievangelist.com/" target="_blank">https://history.apievangelist.com/</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Jakob Jünger, “A Brief History of APIs,” in <em>Handbook of Computational Social Science</em>, Volume 2, by Uwe Engel, Anabel Quan-Haase, Sunny Xun Liu, and Lars Lyberg (Taylor &amp; Francis, 2021), <a href="https://doi.org/10.4324/9781003025245-3" target="_blank">https://doi.org/10.4324/9781003025245-3</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Freelon, Deen. “Computational Research in the Post-API Age.” <em>Political Communication</em> 35, no. 4 (October 2, 2018): 665–68. <a href="https://doi.org/10.1080/10584609.2018.1477506" target="_blank">https://doi.org/10.1080/10584609.2018.1477506</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Acker, Amelia, and Adam Kreisberg. “Social Media Data Archives in an API-Driven World.” <em>Archival Science</em> 20, no. 2 (June 1, 2020): 105–23. <a href="https://doi.org/10.1007/s10502-019-09325-9" target="_blank">https://doi.org/10.1007/s10502-019-09325-9</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>“Europeana,” <em>Wikipedia</em>, <a href="https://en.wikipedia.org/wiki/Europeana" target="_blank">https://en.wikipedia.org/wiki/Europeana</a> and Roued, Henriette. “Europeana API Explained.” <a href="https://roued.com/portfolio/europeanas-api-explained/" target="_blank">https://roued.com/portfolio/europeanas-api-explained/</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>IS310 Culture As Data - Fall 2026</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
