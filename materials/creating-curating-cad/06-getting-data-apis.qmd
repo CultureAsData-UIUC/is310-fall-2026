@@ -37,7 +37,7 @@ Rather than going to a URL in your browser, an API lets us send a similar reques
 
 While HTTP and HTML became popular in the late 1980s and 1990s, web APIs became especially prominent in the early 2000s. Kin Lane, [the API Evangelist](https://apievangelist.com/){target="_blank"}, has a blog post titled “The History of APIs” [https://web.archive.org/web/20190722130022/https://history.apievangelist.com/](https://web.archive.org/web/20190722130022/https://history.apievangelist.com/){target="_blank"}, which explores this history.[^1]
 
-According to Lane, one of the first APIs was developed by Salesforce in 2000, which allowed developers to access data from their databases and to build applications for customer relationship management. This initial API provided access to XML data, which is a type of markup language similar to HTML (remember TEI?). This was followed by eBay, which also developed an API in 2000.
+According to Lane, one of the first APIs was developed by Salesforce in 2000, which allowed developers to access data from their databases and to build applications for customer relationship management. This initial API provided access to XML data, which is a type of markup language similar to HTML (remember TEI?). This was followed by eBay, which also developed an API in 2000. As web APIs expanded during the decade, JSON increasingly joined and often replaced XML as a common format for returning structured data.
 
 ![Salesforce API](../../assets/images/salesforce_api.png)
 
@@ -110,6 +110,8 @@ In this code block, we first import the requests library. We then define a set o
 
 When this lesson was checked in October 2026, this returned `200`. The same platform that blocked an automated request for the rendered `/wiki/Main_Page` made structured wiki content available through `/api.php`.
 
+This first request gives us the basic API workflow: send a request to an endpoint, receive structured data, and use the response's organization to locate what we need. There is no single structure shared by every API, however. Each API defines its own endpoints, parameters, response schema, access rules, and limits, which is why reading its documentation is part of working with its data.
+
 ### The MediaWiki Action API
 
 To understand the MediaWiki Action API, we need to understand the history of Wikipedia and its underlying software.
@@ -138,26 +140,53 @@ If you open any of those in a browser, you'll get an interactive sandbox where y
 
 ![LOTR MediaWiki API Sandbox](../../assets/images/lotr_mediawiki_api_sandbox.png)
 
-Wikimedia's public APIs do not require an API key for these examples. They do require clients to follow access policies, including sending a descriptive `User-Agent` that identifies the tool and provides contact information [https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy](https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy){target="_blank"}. Other MediaWiki hosts may have different requirements, so always check the host's documentation and policies.
+The LOTR Fandom API does not require an API key for these examples. We will still send a descriptive `User-Agent` that identifies our script and provides contact information, just as we did when scraping Tolkien Gateway. Other MediaWiki hosts may have different requirements, so always check the host's documentation and policies.
 
 ```python
 import requests
 
-API_URL = "https://en.wikipedia.org/w/api.php"
+API_URL = "https://lotr.fandom.com/api.php"
 HEADERS = {"User-Agent": "is310-course/1.0 (https://YOUR-USERNAME.github.io; YOUR_NETID@illinois.edu)"}
 ```
 
-Notice this is the *same* practice we adopted for scraping Tolkien Gateway — identify yourself honestly and give someone a way to contact you. Here it isn't just good manners; it's the documented condition of use.
+Notice this is the *same* practice we adopted for scraping Tolkien Gateway where identify yourself honestly and give someone a way to contact you. 
 
 ### Structuring an API Query
 
-Nearly everything in the action API goes through `action=query`, with additional parameters describing what you want. Let's ask for the members of a category:
+An API request often has two parts:
+
+- The **endpoint** is the URL where the API receives requests. For the LOTR Fandom wiki, that is `https://lotr.fandom.com/api.php`.
+- **Parameters** are named options that describe what we want the API to do. Each parameter has a key and a value, such as `action=query` or `format=json`.
+
+In a URL, parameters appear after a question mark (`?`) and are joined with ampersands (`&`):
+
+```text
+https://lotr.fandom.com/api.php?action=query&format=json
+```
+
+![Anatomy of a URL query string: a question mark begins the parameters and an ampersand separates them.](https://cdn.prod.website-files.com/66508fc2f6b862d86193f29b/6674497e8a3e4519946a3b9f_bzNgNITcGMxVszuieKXJSF7Lswjw64bI7yuOvzQIyiedIzTqURKndIZkBL6OJXZcn3mQDMinzqM939F7ATVxr70XqyJVoG8EC9KOuwndGjpc_S0howFdJXKsXkrIwB2UF2ezFSFV.png)
+
+We could construct that URL ourselves, but Python's `requests` library lets us store the parameters in a dictionary and pass it through `params=`. This is easier to read and lets `requests` safely encode spaces and punctuation for us.
+
+The first parameter, `action`, tells MediaWiki which broad operation to perform. Setting `action=query` means that we want to **read structured information** from the wiki rather than edit a page or upload a file. Here, *query* does not mean our full research question, nor does it mean we are writing SQL. It means we are using the part of the Action API designed to retrieve data.
+
+Our next parameter, `list=categorymembers`, says what information we want: a list of the pages assigned to a category. Let's ask for the members of a category:
+
+::: {.callout-note collapse="true" title="How does MediaWiki organize queries?"}
+MediaWiki divides `action=query` into three main families of modules:
+
+- `prop` retrieves properties of specified pages, such as their links, categories, revisions, or language versions.
+- `list` produces lists of records, such as pages in a category, recent changes, search results, or user contributions.
+- `meta` retrieves information about the wiki or current user rather than a particular page.
+
+Our request uses the `categorymembers` module from the `list` family. Parameters that configure this module begin with `cm`: `cmtitle` identifies the category, `cmtype` selects the kinds of members to return, and `cmlimit` controls how many results may be returned. These prefixes help MediaWiki distinguish parameters belonging to different modules.
+:::
 
 ```python
 params = {
 	"action": "query",
 	"list": "categorymembers",
-	"cmtitle": "Category:The Lord of the Rings: The Rings of Power",
+	"cmtitle": "Category:Canon_characters_in_The_Rings_of_Power",
 	"cmtype": "page",
 	"cmlimit": "max",
 	"format": "json",
@@ -173,10 +202,11 @@ for page in data["query"]["categorymembers"]:
 ```
 
 ```bash
-The Lord of the Rings: The Rings of Power
-List of The Lord of the Rings: The Rings of Power characters
-List of The Lord of the Rings: The Rings of Power features
-Music of The Lord of the Rings: The Rings of Power
+Amandil
+Anárion
+Ar-Pharazôn
+Tom Bombadil
+Celeborn
 ...
 ```
 
@@ -186,174 +216,205 @@ A few things to notice here, because they generalize to most APIs you'll meet:
 - The prefixed parameters (`cmtitle`, `cmtype`, `cmlimit`) belong to the `categorymembers` module. MediaWiki uses short prefixes to keep modules from colliding, so when you read documentation for `list=langlinks` you'll see `ll`-prefixed parameters instead.
 - `format=json` explicitly requests machine-readable JSON rather than a browser-oriented representation.
 
-### Answering Our Original Question
+### Extending Our Scraping Question: What Counts as Attention?
 
-Our question is: **how many languages has each character's page been translated into?** Tolkien Gateway is English-only, but on Wikipedia we can investigate this using `prop=langlinks`:
+In the web scraping lesson, we asked how Tolkien Gateway distributes **editorial attention** across literary and adaptation characters. We counted words, characters, total links, and unique links on each page. We can now calculate the same measures for the LOTR Fandom wiki and add another relationship that MediaWiki exposes directly: links to corresponding pages in other language editions.
+
+This lets us compare two fan communities while keeping our measurements consistent:
+
+| Metric | How We Calculate It |
+|---|---|
+| Word count | Split the visible article text at whitespace |
+| Character count | Count the characters in the visible article text |
+| Internal links | Count every qualifying internal wiki-link occurrence |
+| Unique internal links | Count each internal wiki destination once |
+| Language links | Count corresponding pages reported by MediaWiki |
+
+: Measurements collected from each Fandom character page {.striped .hover}
+
+None of these values is simply "popularity." Together, they describe how extensively a page has been written, connected internally, and linked across Fandom's language editions.
+
+#### Getting a Parsed Page From the API
+
+So far we have used `action=query` to request structured information about pages. MediaWiki also provides `action=parse`, which asks the server to process one wiki page and return selected parts of it. We will request three properties:
+
+- `text` returns the page's rendered HTML.
+- `links` returns the internal wiki pages referenced by the article.
+- `langlinks` returns connections to corresponding pages in other language editions.
+
+These options are documented in MediaWiki's [`action=parse` documentation](https://www.mediawiki.org/wiki/API:Parsing_wikitext){target="_blank"}. MediaWiki generates this documentation from the API module itself, and individual installations expose their own version through `action=help`. For this specific wiki, see the [LOTR Fandom API help for the `parse` module](https://lotr.fandom.com/api.php?action=help&modules=parse){target="_blank"}. The site-specific help is useful because MediaWiki installations can run different versions and extensions, so the options supported by one wiki may not be identical to those supported by another.
+
+::: {.callout-tip collapse="true" title="Finding API documentation on another MediaWiki site"}
+If a site runs MediaWiki, try adding one of these paths to its domain:
+
+- `/api.php?action=help` lists the Action API's general help.
+- `/api.php?action=help&modules=parse` documents `action=parse`.
+- `/api.php?action=help&modules=query` documents `action=query`.
+
+Many installations also provide a visual sandbox at `/wiki/Special:ApiSandbox`, where you can select an action and construct a request interactively.
+:::
+
+Because the API returns rendered HTML in `text`, we can use BeautifulSoup's `get_text()` just as we did in the scraping lesson:
 
 ```python
-def get_language_count(title):
+from bs4 import BeautifulSoup
+
+def analyze_fandom_page(title):
 	response = requests.get(API_URL, params={
-		"action": "query",
-		"titles": title,
-		"prop": "langlinks",
-		"lllimit": "max",
-		"redirects": 1,
+		"action": "parse",
+		"page": title,
+		"prop": "text|links|langlinks",
 		"format": "json",
 	}, headers=HEADERS, timeout=15)
+
 	if response.status_code != 200:
 		print(f"Could not retrieve {title}: {response.status_code}")
 		return None
 
-	pages = response.json()["query"]["pages"]
-	page = next(iter(pages.values()))
-	if "missing" in page:
+	data = response.json()
+	if "error" in data:
+		print(f"Could not parse {title}: {data['error']['info']}")
 		return None
-	return len(page.get("langlinks", []))
 
-for character in ["Sauron", "Galadriel", "Elrond", "Gil-galad", "Celebrimbor"]:
-	print(f"{character:14} {get_language_count(character)}")
+	page = data["parse"]
+	html = page["text"]["*"]
+	soup = BeautifulSoup(html, "html.parser")
+	article_text = soup.get_text(" ", strip=True)
+
+	internal_links = []
+	for link in soup.find_all("a", href=True):
+		href = link["href"]
+		if href.startswith("/wiki/") and "#" not in href:
+			internal_links.append(href)
+
+	unique_internal_links = []
+	for href in internal_links:
+		if href not in unique_internal_links:
+			unique_internal_links.append(href)
+
+	return {
+		"character": page["title"],
+		"word_count": len(article_text.split()),
+		"character_count": len(article_text),
+		"internal_link_count": len(internal_links),
+		"unique_internal_link_count": len(unique_internal_links),
+		"language_link_count": len(page.get("langlinks", [])),
+}
 ```
 
-```bash
-Sauron         57
-Galadriel      45
-Elrond         42
-Gil-galad      28
-Celebrimbor    20
+The line `"prop": "text|links|langlinks"` asks the `parse` action to return three properties in one response. MediaWiki uses the pipe character (`|`) to separate multiple requested values. This is equivalent to saying: return the rendered page text **and** its internal links **and** its language links. This approach does not mean that these values are being combined into one string; each appears under its own key in the JSON response.
+
+The relevant part of the response has a structure like this:
+
+```json
+{
+	"parse": {
+		"title": "Galadriel",
+		"pageid": 171,
+		"text": {
+			"*": "<div class=\"mw-parser-output\">...</div>"
+		},
+		"links": [...],
+		"langlinks": [...]
+	}
+}
 ```
 
-That `next(iter(pages.values()))` is a little awkward, and it's worth explaining. The API returns pages keyed by their internal page ID — `{"query": {"pages": {"23140073": {...}}}}` — and we don't know the ID in advance. So we take the first (and here, only) value from the dictionary rather than trying to look it up by key.
+We first save the object under `"parse"` as `page`. The expression `page["text"]` then retrieves the nested dictionary containing the rendered text. Within that dictionary, MediaWiki uses the literal key `"*"` for the HTML string, so `page["text"]["*"]` retrieves the HTML itself. The asterisk is not a Python wildcard here; it is simply the name of a dictionary key chosen by MediaWiki's default JSON response format.
 
-Now try the same function on the characters invented for the show:
+The text and link logic deliberately matches our scraper. We count repeated internal links in `internal_links`, then build a second list containing each destination once. The new `language_link_count` comes from structured MediaWiki data rather than from searching the rendered HTML ourselves.
+
+#### Comparing Character Pages
+
+Now we can run the same function on a literary character and several characters created for the television adaptation:
 
 ```python
-for character in ["Arondir", "Halbrand", "Disa"]:
-	print(f"{character:14} {get_language_count(character)}")
+characters = ["Galadriel", "Arondir", "Halbrand", "Disa"]
+
+for character in characters:
+	result = analyze_fandom_page(character)
+	if result is not None:
+		print(result)
 ```
 
-```bash
-Arondir        2
-Halbrand       2
-Disa           5
-```
+When checked in October 2026, the results included:
 
-Every one of these numbers is wrong, and **not one of them raised an error.** Let's find out why, because the two failure modes here are ones you will meet constantly.
+| Character | Words | Characters | All Links | Unique Links | Language Links |
+|---|---:|---:|---:|---:|---:|
+| Galadriel | 13,931 | 77,237 | 767 | 403 | 11 |
+| Arondir | 1,788 | 10,253 | 103 | 63 | 8 |
+| Halbrand | 11 | 61 | 0 | 0 | 0 |
+| Disa | 531 | 2,940 | 50 | 25 | 8 |
 
-First, `Arondir` and `Halbrand`. Ask the API to report what it did with the titles you gave it:
+: Sample results from the LOTR Fandom parse API {.striped .hover}
 
-```python
-response = requests.get(API_URL, params={
-	"action": "query", "titles": "Arondir|Halbrand|Galadriel",
-	"prop": "langlinks", "lllimit": "max", "redirects": 1, "format": "json",
-}, headers=HEADERS, timeout=15)
-if response.status_code != 200:
-	raise RuntimeError(f"API request failed: {response.status_code}")
-print(response.json()["query"]["redirects"])
-```
+These values can change whenever Fandom editors revise the pages. That is part of what makes them cultural data rather than fixed facts.
 
-```python
-[{'from': 'Halbrand', 'to': 'List of The Lord of the Rings: The Rings of Power characters', 'tofragment': 'Halbrand'},
- {'from': 'Arondir', 'to': 'List of The Lord of the Rings: The Rings of Power characters', 'tofragment': 'Arondir'}]
-```
+#### How Do Two Wikis Represent Halbrand?
 
-**The invented characters do not have Wikipedia articles at all.** They are redirects into a section of a single shared "List of characters" page. Our function faithfully reported the language count of that list page — the `2` was real, it just wasn't about Arondir.
+Halbrand gives us a useful way to compare Tolkien Gateway with the LOTR Fandom wiki. Our Tolkien Gateway scraper finds a full article devoted to Halbrand. The Fandom API finds a short **redirect page** that sends readers to the *Rings of Power* section of its Sauron article.
 
-`Disa` fails differently, and worse. It isn't a redirect; there is a genuine English Wikipedia article at that exact title. When this lesson was checked in September 2026, that article concerned **a heroine from a Swedish legendary saga**, not the television character. Our function looked up a real page, found five language links, and returned a perfectly plausible number about the wrong subject. The page attached to an ambiguous name may change again, which is precisely why the lookup must be validated.
+Because we applied the same text and internal-link calculations to both sources, we can compare their page structures directly:
 
-These are the two ways a title-based lookup goes wrong:
+| Wiki | Page type | Words | Characters | All Links | Unique Links | Language Links |
+|---|---|---:|---:|---:|---:|---:|
+| Tolkien Gateway | Full article | 1,410 | 8,375 | 79 | 65 | Not collected |
+| LOTR Fandom | Redirect to Sauron | 11 | 61 | 0 | 0 | 0 |
 
-- **The right subject at the wrong granularity** — a redirect sends you to a broader page that contains your topic as a section.
-- **The wrong subject entirely** — a name is ambiguous, and you silently get somebody else's article.
+: Two community wikis representing Halbrand differently, checked in October 2026 {.striped .hover}
 
-Neither produced an exception. Both produced small integers that would have slotted straight into a spreadsheet next to Galadriel's `45` and looked entirely reasonable. If you had run this over fifty characters and gone straight to a bar chart, you would never have known.
+The difference is not a failed request or merely a difference in article length. The two communities have made different **organizational claims**. Tolkien Gateway treats Halbrand as an independently documented character page. Fandom treats Halbrand as an identity located within its Sauron page.
 
-The first defense is to make the API tell you what it actually resolved. Ask for redirects, resolved titles, and a short article extract alongside the language data:
+That choice affects every measurement that follows. If we compared word counts without inspecting the pages, Fandom would appear to have almost no information about Halbrand. In reality, much of that information is organized under Sauron. The data model determines where the evidence becomes countable.
 
-```python
-response = requests.get(API_URL, params={
-	"action": "query", "titles": "Arondir|Disa|Galadriel",
-	"prop": "langlinks|extracts", "lllimit": "max", "redirects": 1,
-	"exintro": 1, "explaintext": 1, "format": "json",
-}, headers=HEADERS, timeout=15)
-if response.status_code != 200:
-	raise RuntimeError(f"API request failed: {response.status_code}")
+This is why outliers require interpretation. A page with eleven words may be a redirect, disambiguation page, stub, or genuinely short article. Before treating rows from two platforms as equivalent observations, we need to ask whether they represent the same kind of object.
 
-data = response.json()["query"]
-print("Redirects:", data.get("redirects", []))
-for page in data["pages"].values():
-	print("\nResolved title:", page["title"])
-	print("Language links:", len(page.get("langlinks", [])))
-	print("Article preview:", page.get("extract", "")[:160])
-```
+#### What If Both Wikis Use Full Articles?
 
-If the title that comes back is different from the title you requested, you have a matching problem. But matching titles are not sufficient: `Disa` still resolves to `Disa`, so only the article preview reveals that the page concerns a legendary Swedish figure. For a larger project, you would save the requested title, resolved title, redirect target, article preview, and ideally a Wikidata identifier for manual or computational validation. **No title-matching rule can establish subject identity on its own.**
+Galadriel gives us a more comparable case because both communities maintain full articles devoted to the character:
 
-After resolving these errors, we can compare the pattern with the Tolkien Gateway scrape. The selected Tolkien-derived characters have extensively referenced Tolkien Gateway pages and independent Wikipedia articles in many languages, while several show-created characters appear only within a shared Wikipedia list. The convergence is interesting, but it is not fully independent corroboration: both sources are community-edited wikis, and both may reproduce the same differences in fan attention, notability rules, and available source material. Comparing sources is useful partly because it lets us ask whether they share the same infrastructure and biases.
+| Wiki | Page type | Words | Characters | All Links | Unique Links | Language Links |
+|---|---|---:|---:|---:|---:|---:|
+| Tolkien Gateway | Full article | 11,694 | 65,400 | 1,028 | 541 | Not collected |
+| LOTR Fandom | Full article | 13,931 | 77,237 | 767 | 403 | 11 |
 
-### A Different Shape: The Pageviews API
+: Two full articles about Galadriel, checked in October 2026 {.striped .hover}
 
-Wikimedia also publishes a completely separate API for **traffic data**, and it's a good illustration that one organization can offer several APIs in different styles. Where the action API uses query parameters, the Pageviews API is a **REST API** that encodes everything in the URL path:
+Fandom's Galadriel article currently contains more words and characters, while Tolkien Gateway's article contains more total and unique internal links. This is precisely why one convenient number should not stand in for "attention." Article length and network connectivity capture different editorial practices, and the rankings could change depending on which measure we privilege.
 
-```
-https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{project}/{access}/{agent}/{article}/{granularity}/{start}/{end}
-```
-
-Let's ask how many people read the Galadriel article each month across 2022 — the year *The Rings of Power* premiered:
-
-```python
-url = ("https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/"
-       "en.wikipedia/all-access/user/Galadriel/monthly/2022010100/2023060100")
-
-response = requests.get(url, headers=HEADERS, timeout=15)
-if response.status_code != 200:
-	raise RuntimeError(f"Pageviews request failed: {response.status_code}")
-
-# We deliberately requested one extra, partial month; see the warning below.
-for item in response.json()["items"][:-1]:
-	print(item["timestamp"], f'{item["views"]:>9,}')
-```
-
-```bash
-2022010100    54,316
-2022020100    66,108
-2022030100    28,559
-2022040100    23,323
-2022050100    19,691
-2022060100    18,763
-2022070100    51,683
-2022080100    77,249
-2022090100   761,399
-2022100100   393,275
-2022110100    85,923
-2022120100    59,012
-2023010100    51,692
-2023020100    38,565
-2023030100    38,016
-2023040100    31,706
-2023050100    27,206
-```
-
-Look at September 2022. The show premiered on September 1st, and readership of the Galadriel article rose from **77,249 in August to 761,399 in September**, nearly a tenfold month-to-month increase. September was roughly forty times the approximately 19,000 views recorded in June. Readership then declined over the following months while remaining above that June baseline in the period shown.
-
-This is cultural data of a kind that is genuinely hard to get any other way. It is a record of collective attention: hundreds of thousands of people, having watched something, going to look it up. It connects directly to the readings on bestseller lists and algorithmic popularity from our scraping week, and it lets you ask questions with real historical shape — when did people become interested in this, what made them, and did the interest last?
+Even this comparison is not perfectly controlled. The sites may include different captions, tables, citations, templates, or interface elements inside their article containers. Their editors may also follow different conventions for when a term should become a link. Applying the same code makes the measurements reproducible, but it does not erase differences between the platforms.
 
 ::: {.callout-warning}
-## Watch the Last Bucket
+## What Do These Measures Mean?
 
-You may have noticed the `[:-1]` in that loop. It is there for a reason worth knowing about.
+The measures describe different aspects of editorial work:
 
-With this request, the Pageviews API returns a final bucket that runs from the start of June **up to our June 1 end timestamp**, so it reports only about one day's traffic: roughly 800 views rather than the complete month's total.
+- Words and characters approximate article length.
+- Total and unique links describe how densely and broadly the page connects to the rest of the wiki.
+- Language links show that editors connected the English page to corresponding pages in other Fandom communities.
 
-Run this particular example without the slice and the series appears to fall off a cliff in June. That drop is a boundary artifact, not a real collapse in attention. A final bucket is not inherently incomplete; it becomes incomplete when the requested end timestamp falls before the period has finished.
+They do not tell us how often people read the page, whether every language page contains equivalent information, or how culturally important a character is.
 
-For this workflow, **request one additional period, inspect it, and discard it only when you know it is partial.** Do not automatically delete the last observation from every API response. Boundary behavior is common in time-series APIs, so read the endpoint documentation, print or plot the result before analysis, and investigate dramatic changes at either end of the range.
+When interpreting the results, ask:
+
+- Are we comparing full articles, redirects, lists, or stubs?
+- Which language communities are represented by the links?
+- Do corresponding pages contain similar information?
+- How do Fandom's categories and redirects shape the patterns we observe?
 :::
 
-The date format is also unforgiving (`YYYYMMDDHH`, so `2022010100` is January 1, 2022 at hour 00), and the article title must be exactly right, underscores and all. But note what this API does *not* require: no key, no account, no application form. Wikimedia publishes this because the Wikimedia Foundation is a nonprofit whose mission includes making its data available — a very different institutional posture from the platforms in the "post-API age" we discussed earlier, and one worth noticing when you choose what to build research on.
+**Comparing Scraping and API Evidence**
+
+We now have two related datasets created through different interfaces:
+
+- Our **Tolkien Gateway scraper** downloaded rendered webpages and located their article text and links through HTML selectors.
+- The **LOTR Fandom API** returned parsed page HTML, structured language links, titles, and page IDs according to MediaWiki's data model.
+
+Using the same text and link measures makes comparison possible, but it does not make the platforms equivalent. Tolkien Gateway and the One Wiki Fandom have different communities, histories, categories, interfaces, and editorial conventions. A difference in word count could reflect interest, available evidence, page age, templates, redirect practices, or community rules. But we can see how with computation we can start to compare these two communities in ways that open up new questions about how they organize and represent the same fictional world.
 
 ## Authentication and Parameters With The One API
 
-Wikimedia allowed us to make successful requests without creating an account. Not every API is designed that way. We will next use *The One API* [https://the-one-api.dev/](https://the-one-api.dev/){target="_blank"} to examine public and restricted endpoints, authentication, filtering, and relationships among records. For those unfamiliar, the one in the name is a reference to the *Lord of the Rings* series, where the One Ring is the most powerful of the Rings of Power and is the central plot device of the series.
+The One Wiki Fandom allowed us to make successful API requests without creating an account. Not every API is designed that way. We will next use *The One API* [https://the-one-api.dev/](https://the-one-api.dev/){target="_blank"} to examine public and restricted endpoints, authentication, filtering, and relationships among records. For those unfamiliar, the one in the name is a reference to the *Lord of the Rings* series, where the One Ring is the most powerful of the Rings of Power and is the central plot device of the series.
 
 ![LOTR API](https://render.apptornado.com/render?url=https%3A%2F%2Fthe-one-api.dev%2F&w=800&h=600&maxAgeSec=604800&signed=I-008yKAhOXaFs_OeD0MtFIpt2LjcNVOukgUWceQgkY)
 
@@ -367,7 +428,7 @@ So let's try this out!
 
 ### Making an API Request
 
-Return to `first_api_script.py`. We already imported `requests` for Wikimedia, so now create a variable containing the books endpoint from *The One API*:
+Return to `first_api_script.py`. We already imported `requests` for the Fandom MediaWiki API, so now create a variable containing the books endpoint from *The One API*:
 
 ```python
 import requests
@@ -424,21 +485,26 @@ You should see something like the following:
 }
 ```
 
-This is the data that *The One API* returned to us. It's in a format called `JSON`, which stands for JavaScript Object Notation and was originally designed to allow websites to pass data back and forth between the browser and the server. But it's become a really popular generic format for all sorts of things and all sorts of languages. You'll notice that `JSON` looks very similar to a Python dictionary, and in fact, it's a way to store data that is similar to a Python dictionary.
+This is the data that *The One API* returned to us. Earlier in the lesson, we saw that early web APIs such as Salesforce's returned structured data as XML. As APIs became increasingly important to the interactive, browser-based services associated with Web 2.0, developers also needed convenient ways to move structured data between servers and the JavaScript running in web browsers. **JSON**, which stands for **JavaScript Object Notation**, became one influential answer.
+
+JSON grew out of the syntax JavaScript uses to describe objects. In the early 2000s, Douglas Crockford helped popularize it as a lightweight way for web browsers and servers to exchange structured data. JSON offered a smaller format that was comparatively easy for both people and programs to read. The rise of JSON is also part of  the same history as web APIs: APIs created controlled ways to request platform data, while formats such as XML and JSON defined how that data could be represented and transmitted in the response. You can read more about the history of JSON, here:  Jay Hoffmann. “The History of JSON and the People That Created It.” HackerNoon, December 13, 2002. [https://hackernoon.com/the-history-of-json-and-the-people-that-created-it](https://hackernoon.com/the-history-of-json-and-the-people-that-created-it){target="_blank"}.
+
+
+Although its name and syntax come from JavaScript, JSON is not limited to JavaScript. Its basic structures were useful across programming languages, so it became a general-purpose data-interchange format for APIs, configuration files, and stored data. 
+
+JSON looks very similar to a Python dictionary, but they are not exactly the same thing. JSON is a **text format** with its own syntax and supported value types. When we call `response.json()`, the `requests` library parses that text and converts JSON objects into Python dictionaries and JSON arrays into Python lists. JSON uses values such as `true`, `false`, and `null`, while the corresponding Python values are `True`, `False`, and `None`.
 
 Based on this data, we can see that *The One API* has returned data about the three books in the *Lord of the Rings* series. Each book has an `_id` and a `name`. The books themselves are returned in a list for the key `docs`, and then there are some other keys that provide information about the data that was returned, including `total`, `limit`, `offset`, `page`, and `pages`. `Total` tells us how many items were returned, `limit` tells us how many items *could be* returned per page, `offset` tells us where in the data we are (similar to indexing), `page` tells us what page we are on, and `pages` tells us how many pages of data there are.
 
-While this is a pretty minimal amount of data, it does give us a sense of how APIs work. Just as if we were going to a web browser, we can make requests to an API and get data back. This data will be structured in some way and we can use that structure to understand the data and to work with it. It is important to note that there is no one way that APIs are structured, and each API will have its own structure and its own way of working. This is why it's important to read the documentation for an API before you start working with it.
+### Restricted Endpoints and Authentication
 
-### Authentication & Endpoints
-
-So far we have just been able to send a request to *The One API* and get data back, but what if we wanted to get more specific data? For example, what if we wanted to get data about a specific character or quote from the *Lord of the Rings* series? To do this, we need to use something called an **endpoint**.
+We have already used endpoints with both the MediaWiki API and *The One API*. The endpoint is the URL through which we request a particular resource. *The One API* organizes books, characters, and quotes under different endpoint paths:
 
 ![LOTR API Endpoints](../../assets/images/lotr_api_endpoints.png)
 
 If we go to *The One API* documentation [https://the-one-api.dev/documentation#4](https://the-one-api.dev/documentation#4){target="_blank"}, we see the following table that outlines what `endpoints` exist.
 
-An endpoint might sound like a very technical term, but it is essentially just a specific URL that is used to access a specific piece of data from an API. For example, if we wanted to get data about a specific character, we would use the `/character` endpoint. If we wanted to get data about a specific quote, we would use the `/quote` endpoint.
+The `/book` endpoint is publicly accessible, but `/character` and `/quote` require authentication. Moving between these endpoints therefore introduces a new question: not only **what data can this API return**, but also **who is permitted to request it and under what conditions?**
 
 We can even try out that initial book endpoint in the browser which should give us the following:
 
@@ -630,25 +696,49 @@ Which would return the following data:
 {'_id': '5cd99d4bde30eff6ebccfd06', 'name': 'Galadriel', 'wikiUrl': 'http://lotr.wikia.com//wiki/Galadriel', 'race': 'Elf', 'birth': 'YT 1362', 'gender': 'Female', 'death': 'Still alive: Departed over the sea on ,September 29 ,3021', 'hair': 'Golden', 'height': 'Tall', 'realm': 'Eregion,Lothlórien,Caras Galadhon', 'spouse': 'Celeborn'}
 ```
 
-While we can do this using Python, we could also change our URL to only get data about Galadriel. We can do this by adding a query parameter to our URL.
+This loop downloads the entire character response and then filters it locally in Python. Earlier, we learned that query parameters let us describe what we want as part of the request itself. *The One API* supports a `name` parameter, so we can ask the server to return only records matching Galadriel.
 
 ```python
-url = 'https://the-one-api.dev/v2/character?name=Galadriel'
-response = requests.get(url, headers=authorization_headers)
+url = 'https://the-one-api.dev/v2/character'
+params = {"name": "Galadriel"}
+
+response = requests.get(
+	url,
+	headers=authorization_headers,
+	params=params,
+)
+
+print(response.url)
 print(response.json())
 ```
 
-Query parameters are a way to pass data to an API to get specific data back. In this case, we are passing the query parameter `name=Galadriel` to *The One API* to get data about the character Galadriel. You'll notice that the URL has a `?` at the end of it, followed by the query parameter `name=Galadriel`. Returning to the API's documentation [https://the-one-api.dev/documentation#5](https://the-one-api.dev/documentation#5){target="_blank"}, we can see that we can use query parameters for sorting, filtering, and pagination data from *The One API*.
+The `requests` library turns that dictionary into the same URL structure we examined earlier:
 
-![Galadriel URL in Browser](https://cdn.prod.website-files.com/66508fc2f6b862d86193f29b/6674497e8a3e4519946a3b9f_bzNgNITcGMxVszuieKXJSF7Lswjw64bI7yuOvzQIyiedIzTqURKndIZkBL6OJXZcn3mQDMinzqM939F7ATVxr70XqyJVoG8EC9KOuwndGjpc_S0howFdJXKsXkrIwB2UF2ezFSFV.png)
+```text
+https://the-one-api.dev/v2/character?name=Galadriel
+```
 
-As you can see in the figure above, you can also add multiple query parameters by separating them with an `&`. For example, if we wanted to get all other elves besides Galadriel, we could use the does not match query parameter `name!=Galadriel` and chain that with the race query parameter `race=Elf`.
+Here, `name` is the parameter's key and `Galadriel` is its value. Filtering on the server means we retrieve the record we need rather than downloading all 933 character records and searching them afterward. According to [The One API's filtering documentation](https://the-one-api.dev/documentation#5){target="_blank"}, its query parameters can also filter, sort, and paginate results.
+
+We can pass multiple parameters in the same dictionary. For example, *The One API* uses `name!` to mean that a name should **not** match a value. Combining it with `race` asks for elves whose names are not Galadriel:
 
 ```python
-url = 'https://the-one-api.dev/v2/character?name!=Galadriel&race=Elf'
-response = requests.get(url, headers=authorization_headers)
+params = {
+	"name!": "Galadriel",
+	"race": "Elf",
+}
+
+response = requests.get(
+	url,
+	headers=authorization_headers,
+	params=params,
+)
+
+print(response.url)
 print(f"Total number of elves besides Galadriel: {response.json()['total']}")
 ```
+
+When represented directly in a URL, the two parameters are separated by `&`. When we use `params=`, `requests` constructs and safely encodes that query string for us.
 
 Finally, we can also use the `id` in each data returned from the API to get more specific data. For example, if we wanted to get data about all the movie quotes of Galadriel, we could first get the id of Galadriel and then use that id to get data about her quotes.
 
@@ -699,18 +789,20 @@ from lotr import LOTR
 
 the_one_api_key = apikey.load("THE_ONE_API_KEY")
 lotr = LOTR(the_one_api_key)
-movies = lotr.movies(limit=5)
-print(movies)
+quotes = lotr.quotes(limit=5)
+print(quotes)
 ```
+
+This returns five quote objects. Each object exposes selected fields from the API, including the dialogue and identifiers for its movie and character. The wrapper handles the request, authentication header, response parsing, and conversion from dictionaries into Pydantic objects. That convenience also means the wrapper's assumptions about the API become part of our workflow.
 
 We can also see how the library is organized if we inspect it after installing it:
 
 ![LOTR Library](../../assets/images/lotr_library.png)
 
 ::: {.callout-important}
-## Fixing Pydantic Types For NRH-LOTR
+## When a Wrapper's Types Do Not Match the API
 
-In our class on Thursday, we ran into an issue with installing and using the `nrh-lotr` library, with this issue appearing in the terminal:
+The `quotes()` example above works, but the wrapper's `movies()` method currently fails against the live API. Calling `lotr.movies(limit=5)` produces this validation error:
 
 ![](../../assets/images/pydantic_error.png)
 
@@ -718,9 +810,9 @@ In our class on Thursday, we ran into an issue with installing and using the `nr
 
 **Pydantic** is a data validation library that checks whether the data you receive from an API matches the types you declared in your model. When the API returned a value for `rottenTomatoesScore` of `66.33333333` (a decimal), but the model was expecting an `int` (whole number), Pydantic rejected it. You can't fit a float into an integer without losing information, so Pydantic threw a validation error.
 
-### The Fix
+### What Would Need to Change?
 
-The library developer assumed Rotten Tomatoes scores would be integers, but the actual API returns percentage scores with decimal values. The solution was simple: change the type annotation from `int` to `float` to allow decimal numbers:
+The library developer assumed Rotten Tomatoes scores would be integers, but the actual API returns percentage scores with decimal values. Inside the library's `Movie` model, those fields would need to accept decimal numbers:
 
 ```python
 class Movie(pydantic.BaseModel):
@@ -735,6 +827,8 @@ class Movie(pydantic.BaseModel):
     academyAwardWins: int
     rottenTomatoesScore: float  # Changed from int to float
 ```
+
+This excerpt explains the mismatch; it is **not** code to add to `first_api_script.py`. Defining another `Movie` class in our script would not change the model used internally by the installed wrapper. Proper fixes would include updating the package source, maintaining a corrected fork, or bypassing this method and requesting the `/movie` endpoint directly with `requests`. For this lesson, we will use the working `quotes()` method and treat the failing `movies()` method as evidence that wrappers need to be tested rather than trusted automatically.
 
 ![](../../assets/images/lotr_movie_typeset.png)
 
@@ -766,9 +860,9 @@ Such limited functionality means that we couldn't use this library to get data a
 
 ## From an API Wrapper to a Collection Library
 
-The `nrh-lotr` package is a small wrapper created by an independent developer for selected endpoints from *The One API*. Other Python libraries support a much larger set of activities around an entire platform. To see the difference, we are going to work with the [Internet Archive](https://archive.org/){target="_blank"} and its [`internetarchive` Python library](https://archive.org/developers/internetarchive/){target="_blank"}.
+The `nrh-lotr` package is a small third-party wrapper for selected endpoints from *The One API*. The [Internet Archive](https://archive.org/){target="_blank"} provides a useful contrast: its maintained [`internetarchive` Python library](https://archive.org/developers/internetarchive/){target="_blank"} supports a cultural institution and its collections rather than one entertainment dataset.
 
-We have already discussed the Internet Archive as a digital library, preservation institution, and argument about universal access. Its Python library gives us another perspective on that institution: what does the Archive make computationally accessible, and how does its software define an archival item?
+We have already discussed the Internet Archive as a digital library, preservation institution, and argument about universal access. Here, the important question is: **what does its software treat as an archival object?**
 
 Install the library inside your active virtual environment:
 
@@ -776,11 +870,15 @@ Install the library inside your active virtual environment:
 python -m pip install internetarchive
 ```
 
-The package provides both a Python library and an `ia` command-line program. This is a useful reminder that a library is not necessarily only an API wrapper. It can combine multiple endpoints and workflows into a broader interface for searching, inspecting, downloading, and contributing material.
+The package provides both a Python library and an `ia` command-line program. We will focus on three concepts exposed by the library:
 
-### Searching the Internet Archive
+- A **search result** is a compact description of something that matched a query.
+- An **item** is the Archive's container for metadata and digital materials.
+- A **file** is one representation stored inside an item, such as an original upload, OCR text, thumbnail, or platform-generated derivative.
 
-We can begin with a search:
+### One Search, One Item, Many Files
+
+The following workflow searches for texts with "Lord of the Rings" in the title, keeps three results, and inspects the first item:
 
 ```python
 import internetarchive
@@ -790,208 +888,44 @@ search = internetarchive.search_items(
 	fields=["identifier", "title", "date"],
 )
 
+results = []
 for result in search:
-	print(result.get("identifier"))
-	print(result.get("title"))
-	print(result.get("date"))
-	print()
-```
-
-The query combines a phrase search with a fielded search. `title:"Lord of the Rings"` asks for that phrase in the title field, while `mediatype:texts` limits the results to records that the Internet Archive classifies as texts. The `fields` argument tells the library which metadata to include in each compact search result. Just as with the parameters used by Wikimedia and *The One API*, the available fields shape both what we can ask and what the service returns.
-
-::: {.callout-tip}
-## Start Small
-
-An Internet Archive search can contain thousands of results. While testing, use a narrow query and stop after a small number of records:
-
-```python
-for index, result in enumerate(search):
-	print(result.get("identifier"), result.get("title"))
-	if index == 9:
+	results.append(result)
+	if len(results) == 3:
 		break
-```
 
-Later, you can decide whether your research question requires more records.
-:::
+for result in results:
+	print(result.get("identifier"), result.get("title"))
 
-### From Search Results to Archival Items
+first_identifier = results[0]["identifier"]
+item = internetarchive.get_item(first_identifier)
 
-The search results contain enough metadata to identify possible items, but they are not necessarily the complete record. We can use an item's identifier to request the item itself:
-
-```python
-identifier = "YOUR_ITEM_IDENTIFIER"
-item = internetarchive.get_item(identifier)
-
-print(item.metadata)
-```
-
-An Internet Archive **item** is a container that can include descriptive metadata, one or more files, reviews, usage information, and relationships to collections. It might represent a book, a recording, a software program, a film, a collection of images, or a captured website. The shared item model makes these materials computationally accessible, but it also places very different cultural objects inside one common structure.
-
-We can inspect selected metadata rather than printing the entire record:
-
-```python
 metadata = item.metadata
-
 print("Title:", metadata.get("title"))
 print("Creator:", metadata.get("creator"))
 print("Date:", metadata.get("date"))
 print("Media type:", metadata.get("mediatype"))
 print("Collection:", metadata.get("collection"))
 print("License:", metadata.get("licenseurl"))
-```
 
-Notice the use of `.get()`. Records contributed by different people and institutions do not always contain the same fields. A missing creator or rights statement does not necessarily mean that no creator or rights holder exists; it means that the information is not represented in that field in this record.
-
-### Files Are Not the Same as Items
-
-An item can contain many files: the original upload, derivatives created by the Internet Archive, OCR text, metadata files, thumbnails, or multiple media formats.
-
-```python
-for file in item.files:
+for file in list(item.files)[:10]:
 	print(file.name, file.metadata.get("format"))
 ```
 
-This distinction matters for research. Searching item metadata tells us about catalogued objects. Counting files tells us about digital representations and derivatives. Neither count automatically tells us how many distinct cultural works exist.
+The query combines a phrase search with a fielded filter. `title:"Lord of the Rings"` searches the title field, while `mediatype:texts` limits results to records classified by the Archive as texts. We stop after three records because a search may contain thousands of results, and we do not need to retrieve all of them while testing.
 
-Questions to consider:
+The identifier connects a compact search result to the fuller item. An item might represent a book, recording, software program, film, image collection, or captured website. Its files might include an original upload alongside OCR, metadata, thumbnails, and other derivatives generated by the platform.
 
-- Who created the original cultural object?
-- Who digitized or uploaded it?
-- Who created its metadata?
-- Which files are original, and which were generated by the platform?
-- What rights information is available?
-- What does the library make easier than direct API requests, and what infrastructure does it hide?
-
-## Moving Across Cultural Heritage APIs: Europeana
-
-The Internet Archive maintains items and files within its own platform. [Europeana](https://www.europeana.eu/en){target="_blank"}, by contrast, aggregates cultural heritage metadata from museums, galleries, libraries, and archives across Europe.
-
-Europeana was proposed in 2005 by six European heads of state as a European digital library and launched in 2008.[^5] Its early work focused on encouraging heritage institutions to contribute digital material. Later versions placed greater emphasis on reuse, curated exhibitions, and access across institutional collections.
-
-![Europeana Library](../../assets/images/europeana_library.png)
-
-This structure creates an important distinction:
-
-- The cultural object may be held by one institution.
-- Its digital representation may have been created by that institution or another partner.
-- Its metadata may be mapped into the Europeana Data Model.
-- Europeana provides another record and interface through which that material can be discovered.
-
-The API therefore gives us access not only to objects, but to the results of institutional aggregation and metadata standardization.
-
-### Authenticating With Europeana
-
-Europeana requires an API key for most of its public APIs. You can request one from the [Europeana API registration page](https://pro.europeana.eu/page/get-api){target="_blank"}. Store it with the same `apikey` library we used for *The One API*:
-
-```python
-import apikey
-
-europeana_api_key = apikey.load("EUROPEANA_API_KEY")
-```
-
-Europeana recommends sending the key in an `X-Api-Key` header rather than placing it in the URL. This reduces the chance that a key will be exposed through copied URLs, browser histories, or logs.
-
-```python
-import requests
-
-url = "https://api.europeana.eu/record/v2/search.json"
-headers = {
-	"X-Api-Key": europeana_api_key,
-	"User-Agent": "is310-course/1.0 (YOUR_NETID@illinois.edu)",
-}
-params = {
-	"query": "Tolkien",
-	"rows": 10,
-	"profile": "rich",
-}
-
-response = requests.get(url, headers=headers, params=params, timeout=15)
-
-if response.status_code == 200:
-	data = response.json()
-	print("Total results:", data["totalResults"])
-else:
-	print("Request failed:", response.status_code)
-```
-
-This request returns only ten records, but `totalResults` tells us how many records matched the query across Europeana. The `items` key contains the records returned on this page.
-
-### Reading Aggregated Metadata
-
-Let's inspect some of the metadata fields that made the earlier `pyeuropeana` example useful:
-
-```python
-for item in data["items"]:
-	print("Title:", item.get("title"))
-	print("Creator:", item.get("dcCreator"))
-	print("Provider:", item.get("dataProvider"))
-	print("Country:", item.get("country"))
-	print("Rights:", item.get("rights"))
-	print("Europeana page:", item.get("guid"))
-	print()
-```
-
-These values are frequently lists, multilingual dictionaries, or absent altogether. That variation is not merely a programming inconvenience. It reflects different cataloguing traditions, languages, institutional systems, source records, and decisions made while mapping metadata into a shared model.
-
-### Asking Different Questions With Search Parameters
-
-Europeana's Search API supports more than keyword searching. We can use parameters to narrow records by type, rights, media availability, theme, provider, or other indexed fields:
-
-```python
-params = {
-	"query": '"Alfred Book"',
-	"qf": ["TYPE:IMAGE"],
-	"reusability": "open AND permission",
-	"media": True,
-	"thumbnail": True,
-	"profile": "rich",
-	"rows": 25,
-}
-
-response = requests.get(url, headers=headers, params=params, timeout=15)
-
-if response.status_code == 200:
-	data = response.json()
-	print("Total results:", data["totalResults"])
-```
-
-The parameters encode research choices:
-
-- `query` specifies the main search; quotation marks ask for the phrase `Alfred Book`.
-- `qf` adds fielded filters.
-- `TYPE:IMAGE` includes records categorized as images.
-- `reusability` filters by rights information supplied to Europeana.
-- `media` and `thumbnail` ask for records with digital media representations.
-- `profile` controls how much metadata the API returns.
-- `rows` controls the size of this page of results.
-
-A query for openly reusable images is not simply finding images that exist. It is finding records whose institutions supplied enough standardized rights and media information for Europeana to identify them that way.
-
-### Why Not Use `pyeuropeana`?
-
-[`pyeuropeana`](https://pypi.org/project/pyeuropeana/){target="_blank"} wraps Europeana's Search, Record, Entity, and IIIF APIs and can convert search results into a Pandas DataFrame. Those conveniences are useful, but its current release depends on `pandas<2.0` and does not install cleanly in our current Python environment. Rather than downgrade the course environment, we are using the maintained web API directly.
-
-This is itself a lesson about wrappers: the Europeana API still works even when a particular Python interface has fallen behind current dependencies. Working with `requests` gives us a stable fallback and helps us see the actual parameters and response structure.
-
-### Records, Entities, and Search Results
-
-Europeana also provides APIs for individual records and contextual entities such as people, concepts, places, and time periods. This distinction matters:
-
-- A **search result** is a selected summary of a matching record.
-- A **record** contains fuller metadata about a cultural heritage object.
-- An **entity** represents a person, place, concept, or period that may connect multiple records.
-
-For example, searching for `Tolkien` might find objects that mention that name, while an entity lookup attempts to identify a particular person. Neither operation guarantees that every use of the name refers to the same person. The title-resolution problems we found in Wikipedia therefore reappear in a new institutional context.
+Notice the use of `.get()` when reading metadata. Records contributed by different people and institutions do not always contain the same fields. A missing creator or license does not establish that no creator or rights holder exists; it means that information is not represented in that field in this record.
 
 Across the APIs and libraries in this lesson, notice what each system treats as its central object:
 
 | System | Central objects | Primary access model |
 |---|---|---|
-| Wikimedia | Pages, revisions, categories, views | Public APIs with a descriptive User-Agent |
+| Fandom MediaWiki | Pages, categories, and language links | Public Action API with a descriptive User-Agent |
 | The One API | Books, characters, movies, quotes | Public and authenticated endpoints |
 | `nrh-lotr` | Selected Python models of LOTR API records | Third-party wrapper |
 | Internet Archive | Items, files, and collections | Maintained Python library and APIs |
-| Europeana | Aggregated records and entities | Authenticated cultural-heritage APIs |
 
 The technical differences matter, but so do the institutional ones. Each interface reflects who maintains the data, who is expected to use it, and which forms of culture have been made retrievable.
 
@@ -999,7 +933,7 @@ The technical differences matter, but so do the institutional ones. Each interfa
 
 Now that you understand how to work with APIs, it's time to experiment with some on your own. In your `api-getting-data` folder in your `is310-coding-assignments` repository, create a new script called `getting_culture.py`.
 
-For this assignment you will work with **two APIs**: the **Wikimedia API**, which we used above, and a **second API of your own choosing**. The goal is not just to make both work, but to **compare them** — to notice that two APIs answering questions about culture can be built on very different assumptions about who is asking and why.
+For this assignment you will work with **two APIs**: a **MediaWiki Action API**, like the LOTR Fandom API we used above, and a **second API of your own choosing**. The goal is not just to make both work, but to **compare them**, to notice that two APIs answering questions about culture can be built on very different assumptions about who is asking and why.
 
 ### Choosing Your Second API
 
@@ -1008,22 +942,22 @@ Pick something you're actually curious about. If you need inspiration:
 - [https://github.com/public-apis/public-apis](https://github.com/public-apis/public-apis){target="_blank"}
 - [https://github.com/chanonroy/cool-apis](https://github.com/chanonroy/cool-apis){target="_blank"}
 - [https://apilist.fun/](https://apilist.fun/){target="_blank"}
-- Cultural heritage collections often have excellent APIs — the [Metropolitan Museum of Art](https://metmuseum.github.io/){target="_blank"}, the [Smithsonian](https://www.si.edu/openaccess){target="_blank"}, [Open Library](https://openlibrary.org/developers/api){target="_blank"}, the [Digital Public Library of America](https://pro.dp.la/developers){target="_blank"}, and of course **Europeana**, which we worked through in class
+- Cultural heritage collections often have excellent APIs — the [Metropolitan Museum of Art](https://metmuseum.github.io/){target="_blank"}, the [Smithsonian](https://www.si.edu/openaccess){target="_blank"}, [Open Library](https://openlibrary.org/developers/api){target="_blank"}, and the [Digital Public Library of America](https://pro.dp.la/developers){target="_blank"}
 - Or something purely for fun — SWAPI (the Star Wars API), the Pokémon API, a museum of one specific thing
 
-You may use `requests` or a wrapper library, and your API may or may not require a key. **If it requires a key, store it using one of the methods from this lesson — never paste it into a file you push to GitHub.**
+You may use `requests` or a wrapper library, and your API may or may not require a key. **If it requires a key, store it using one of the methods from this lesson. Never paste it into a file you push to GitHub.**
 
 ### Requirements
 
-- [ ] **Query the Wikimedia API** for something that interests you. This could be category members, langlinks, pageviews, article extracts, Wikidata entities, or anything else you find in the documentation. Print the response.
+- [ ] **Query a MediaWiki Action API** for something that interests you. This could be category members, language links, revisions, article extracts, or another form of wiki data you find in the documentation. You may use the LOTR Fandom wiki or another MediaWiki site whose policies permit your request. Print the response.
 - [ ] **Query your second API** and print the response.
-- [ ] **Connect the two.** Take a specific item from one API and look it up in the other — an artist from a museum collection and their Wikipedia article, a book from Open Library and its pageview history, a Star Wars character and their language count. The connection does not have to be perfect. **If it fails or the match is ambiguous, that is a finding — write about it.**
+- [ ] **Connect the two.** Take a specific item from one API and look it up in the other — an artist from a museum collection and their wiki page, a book from Open Library and its entry on a literature wiki, or a fictional character and their language links. The connection does not have to be perfect. **If it fails or the match is ambiguous, that is a finding — write about it.**
 - [ ] **Save your data** as JSON or CSV, with a filename that includes the API you chose. Save **only the item data**, not the full raw response. Inspect saved responses before committing them because some services include request details or credentials in returned metadata.
 - [ ] **Handle errors.** Check `status_code` before parsing, and don't let one bad lookup crash the script. You are welcome to use `Rich` for nicely formatted output.
 
 ### The Comparison (the important part)
 
-In your `README.md`, write a few paragraphs comparing the two APIs. Don't just describe them — **make an argument about what they are for**. Some questions worth answering:
+In your `README.md`, write a paragraph comparing the two APIs. Some questions worth answering:
 
 - **What did each require of you?** A key? An account? An application explaining your purpose? A descriptive User-Agent? Nothing at all? What does that tell you about who each API expects to be talking to?
 - **What are the rate limits, and what do they imply** about the scale of use the designers anticipated?
@@ -1031,7 +965,7 @@ In your `README.md`, write a few paragraphs comparing the two APIs. Don't just d
 - **Who runs it, and how is it funded?** A nonprofit foundation, a national government, a museum, a company, one volunteer developer? What happens to your research if it shuts down or starts charging?
 - **What's missing?** Every collection reflects choices about what was worth digitizing, cataloguing, or writing about. Whose culture is well represented in each of these datasets, and whose isn't?
 
-That last question connects back to Acker and Kreisberg on API-driven archives and to Freelon's "post-API age" — you are the fourth kind of user in their table, the researcher, using infrastructure built mostly for developers. **Notice where that fit is uncomfortable.**
+That last question connects back to Acker and Kreisberg on API-driven archives and to Freelon's "post-API age". You are the fourth kind of user in their table, the researcher, using infrastructure built mostly for developers. **Notice where that fit is uncomfortable.**
 
 Finally, push both your script and the data to your GitHub repository. **Please remember to NOT include any private API keys, virtual environments, or other sensitive information!**
 
@@ -1052,4 +986,3 @@ Once you have completed the assignment, please post a link to your `api-getting-
 [^2]: Jakob Jünger, “A Brief History of APIs,” in *Handbook of Computational Social Science*, Volume 2, by Uwe Engel, Anabel Quan-Haase, Sunny Xun Liu, and Lars Lyberg (Taylor & Francis, 2021), [https://doi.org/10.4324/9781003025245-3](https://doi.org/10.4324/9781003025245-3){target="_blank"}.
 [^3]: Freelon, Deen. “Computational Research in the Post-API Age.” *Political Communication* 35, no. 4 (October 2, 2018): 665–68. [https://doi.org/10.1080/10584609.2018.1477506](https://doi.org/10.1080/10584609.2018.1477506){target="_blank"}.
 [^4]: Acker, Amelia, and Adam Kreisberg. “Social Media Data Archives in an API-Driven World.” *Archival Science* 20, no. 2 (June 1, 2020): 105–23. [https://doi.org/10.1007/s10502-019-09325-9](https://doi.org/10.1007/s10502-019-09325-9){target="_blank"}.
-[^5]: "Europeana," *Wikipedia*, [https://en.wikipedia.org/wiki/Europeana](https://en.wikipedia.org/wiki/Europeana){target="_blank"} and Roued, Henriette. "Europeana API Explained." [https://roued.com/portfolio/europeanas-api-explained/](https://roued.com/portfolio/europeanas-api-explained/){target="_blank"}.
