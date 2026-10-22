@@ -317,6 +317,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="../../materials/introducing-defining-cad/01-CAD-tools.html" aria-current="page"> 
 <span class="menu-text">Resources</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -514,6 +518,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>So far in class we have briefly mentioned APIs (for example, the Spotify API), but haven’t yet discussed what they are or how to use them. This week we will start to work through the basics of using APIs to get data from the web.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Lesson Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete, commented code developed throughout this lesson is available to download as <a target="_blank" href="../../assets/files/getting_cultural_data_apis.py" download=""><code>getting_cultural_data_apis.py</code></a>.</p>
+<p>The script follows the lesson from beginning to end. Before running it, install the required libraries, replace the <code>User-Agent</code> placeholders, and save your <em>One API</em> key using <code>apikey</code>. The script intentionally raises an error when a dependency or API key is missing so that setup problems are visible rather than silently skipped.</p>
+</div>
+</div>
 <section id="what-is-an-api" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-an-api">What is an API?</h2>
 <p>API stands for <strong>Application Programming Interface</strong>, but what does that mean exactly?</p>
@@ -620,26 +638,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>In your <code>is310-coding-assignments</code> repository, create a folder called <code>api-getting-data</code>, then create a script inside it called <code>first_api_script.py</code>. We will use this script as we move across several APIs and Python libraries.</p>
+<p>Install the lesson libraries in your activated virtual environment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install requests beautifulsoup4 rich apikey nrh-lotr==0.0.3 internetarchive</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For this example, we are going to work with the <em>Lord of the Rings</em> Fandom wiki <a href="https://lotr.fandom.com/wiki/Main_Page" target="_blank">https://lotr.fandom.com/wiki/Main_Page</a>. Fandom wikis are fan-created knowledge bases devoted to popular culture. Many grew rapidly beginning in the mid-2000s, turning the interpretive and organizational labor of fan communities into large collections of structured cultural information. <em>Wookieepedia</em>, the <em>Star Wars</em> wiki, began in 2005 and became one of the best-known examples <a href="https://en.wikipedia.org/wiki/Wookieepedia" target="_blank">https://en.wikipedia.org/wiki/Wookieepedia</a>.</p>
 <p><img src="../../assets/images/wikipedia_wookiepedia.png" class="img-fluid"></p>
 <p>These sites are useful for thinking about APIs because the information visible on a wiki page is already highly structured: pages have titles, categories, links, revision histories, and identifiers. Rather than extracting those elements from rendered HTML, we can ask the wiki software to return them directly.</p>
 <p>There is also a practical reason to use the API. A request for the rendered Fandom page may receive a <code>403 Forbidden</code> because the website uses automated bot protection. Because Fandom wikis run MediaWiki software, the <em>Lord of the Rings</em> wiki offers a MediaWiki <strong>API</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>HEADERS <span class="op">=</span> {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"User-Agent"</span>: <span class="st">"is310-course/1.0 (https://YOUR-USERNAME.github.io; YOUR_NETID@illinois.edu)"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://lotr.fandom.com/api.php"</span>, params<span class="op">=</span>{</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"action"</span>: <span class="st">"query"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"list"</span>: <span class="st">"categorymembers"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtitle"</span>: <span class="st">"Category:Canon_characters_in_The_Rings_of_Power"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtype"</span>: <span class="st">"page"</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmlimit"</span>: <span class="st">"max"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> apikey</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> internetarchive</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lotr <span class="im">import</span> LOTR</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>HEADERS <span class="op">=</span> {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"User-Agent"</span>: <span class="st">"is310-course/1.0 (https://YOUR-USERNAME.github.io; YOUR_NETID@illinois.edu)"</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">"https://lotr.fandom.com/api.php"</span>, params<span class="op">=</span>{</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"action"</span>: <span class="st">"query"</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"list"</span>: <span class="st">"categorymembers"</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtitle"</span>: <span class="st">"Category:Canon_characters_in_The_Rings_of_Power"</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtype"</span>: <span class="st">"page"</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmlimit"</span>: <span class="st">"max"</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>}, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In this code block, we first import the requests library. We then define a set of headers including a <code>User-Agent</code> header to identify our script and provide contact information. This pattern is a common requirement for APIs, as it allows the server to track usage and contact developers if necessary. We then make a GET request to the Fandom API endpoint. We have the following parameters:</p>
 <ul>
 <li><code>action=query</code>: This specifies that we want to perform a query action.</li>
@@ -690,10 +720,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>The LOTR Fandom API does not require an API key for these examples. We will still send a descriptive <code>User-Agent</code> that identifies our script and provides contact information, just as we did when scraping Tolkien Gateway. Other MediaWiki hosts may have different requirements, so always check the host’s documentation and policies.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>API_URL <span class="op">=</span> <span class="st">"https://lotr.fandom.com/api.php"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>HEADERS <span class="op">=</span> {<span class="st">"User-Agent"</span>: <span class="st">"is310-course/1.0 (https://YOUR-USERNAME.github.io; YOUR_NETID@illinois.edu)"</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>API_URL <span class="op">=</span> <span class="st">"https://lotr.fandom.com/api.php"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>HEADERS <span class="op">=</span> {<span class="st">"User-Agent"</span>: <span class="st">"is310-course/1.0 (https://YOUR-USERNAME.github.io; YOUR_NETID@illinois.edu)"</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Notice this is the <em>same</em> practice we adopted for scraping Tolkien Gateway where identify yourself honestly and give someone a way to contact you.</p>
 </section>
 <section id="structuring-an-api-query" class="level3">
@@ -715,7 +743,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The first parameter, <code>action</code>, tells MediaWiki which broad operation to perform. Setting <code>action=query</code> means that we want to <strong>read structured information</strong> from the wiki rather than edit a page or upload a file. Here, <em>query</em> does not mean our full research question, nor does it mean we are writing SQL. It means we are using the part of the Action API designed to retrieve data.</p>
 <p>Our next parameter, <code>list=categorymembers</code>, says what information we want: a list of the pages assigned to a category. Let’s ask for the members of a category:</p>
 <div class="callout callout-style-default callout-note callout-titled" title="How does MediaWiki organize queries?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -724,7 +752,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>MediaWiki divides <code>action=query</code> into three main families of modules:</p>
 <ul>
@@ -736,28 +764,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"action"</span>: <span class="st">"query"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"list"</span>: <span class="st">"categorymembers"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtitle"</span>: <span class="st">"Category:Canon_characters_in_The_Rings_of_Power"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtype"</span>: <span class="st">"page"</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmlimit"</span>: <span class="st">"max"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(API_URL, params<span class="op">=</span>params, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f"API request failed: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> response.json()</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> page <span class="kw">in</span> data[<span class="st">"query"</span>][<span class="st">"categorymembers"</span>]:</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(page[<span class="st">"title"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Amandil</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Anárion</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Ar-Pharazôn</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Tom</span> Bombadil</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Celeborn</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"action"</span>: <span class="st">"query"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"list"</span>: <span class="st">"categorymembers"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtitle"</span>: <span class="st">"Category:Canon_characters_in_The_Rings_of_Power"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmtype"</span>: <span class="st">"page"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cmlimit"</span>: <span class="st">"max"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(API_URL, params<span class="op">=</span>params, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f"API request failed: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> response.json()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> page <span class="kw">in</span> data[<span class="st">"query"</span>][<span class="st">"categorymembers"</span>]:</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(page[<span class="st">"title"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Amandil</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Anárion</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Ar-Pharazôn</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Tom</span> Bombadil</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Celeborn</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A few things to notice here, because they generalize to most APIs you’ll meet:</p>
 <ul>
 <li>We’re passing parameters as a <strong>dictionary</strong> to <code>params=</code> rather than gluing them onto the URL with <code>?</code> and <code>&amp;</code> by hand. <code>requests</code> builds the URL and correctly encodes spaces, punctuation, and other characters used inside query values.</li>
@@ -815,7 +843,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>These options are documented in MediaWiki’s <a href="https://www.mediawiki.org/wiki/API:Parsing_wikitext" target="_blank"><code>action=parse</code> documentation</a>. MediaWiki generates this documentation from the API module itself, and individual installations expose their own version through <code>action=help</code>. For this specific wiki, see the <a href="https://lotr.fandom.com/api.php?action=help&amp;modules=parse" target="_blank">LOTR Fandom API help for the <code>parse</code> module</a>. The site-specific help is useful because MediaWiki installations can run different versions and extensions, so the options supported by one wiki may not be identical to those supported by another.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Finding API documentation on another MediaWiki site">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -824,7 +852,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If a site runs MediaWiki, try adding one of these paths to its domain:</p>
 <ul>
@@ -837,74 +865,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Because the API returns rendered HTML in <code>text</code>, we can use BeautifulSoup’s <code>get_text()</code> just as we did in the scraping lesson:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> analyze_fandom_page(title):</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(API_URL, params<span class="op">=</span>{</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"action"</span>: <span class="st">"parse"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"page"</span>: title,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prop"</span>: <span class="st">"text|links|langlinks"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    }, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Could not retrieve </span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> response.json()</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"error"</span> <span class="kw">in</span> data:</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Could not parse </span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>data[<span class="st">'error'</span>][<span class="st">'info'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    page <span class="op">=</span> data[<span class="st">"parse"</span>]</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    html <span class="op">=</span> page[<span class="st">"text"</span>][<span class="st">"*"</span>]</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(html, <span class="st">"html.parser"</span>)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    article_text <span class="op">=</span> soup.get_text(<span class="st">" "</span>, strip<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    internal_links <span class="op">=</span> []</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> link <span class="kw">in</span> soup.find_all(<span class="st">"a"</span>, href<span class="op">=</span><span class="va">True</span>):</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        href <span class="op">=</span> link[<span class="st">"href"</span>]</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> href.startswith(<span class="st">"/wiki/"</span>) <span class="kw">and</span> <span class="st">"#"</span> <span class="kw">not</span> <span class="kw">in</span> href:</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>            internal_links.append(href)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    unique_internal_links <span class="op">=</span> []</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> href <span class="kw">in</span> internal_links:</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> href <span class="kw">not</span> <span class="kw">in</span> unique_internal_links:</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>            unique_internal_links.append(href)</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">"character"</span>: page[<span class="st">"title"</span>],</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>        <span class="st">"word_count"</span>: <span class="bu">len</span>(article_text.split()),</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"character_count"</span>: <span class="bu">len</span>(article_text),</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">"internal_link_count"</span>: <span class="bu">len</span>(internal_links),</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">"unique_internal_link_count"</span>: <span class="bu">len</span>(unique_internal_links),</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"language_link_count"</span>: <span class="bu">len</span>(page.get(<span class="st">"langlinks"</span>, [])),</span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> analyze_fandom_page(title):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(API_URL, params<span class="op">=</span>{</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"action"</span>: <span class="st">"parse"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"page"</span>: title,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prop"</span>: <span class="st">"text|links|langlinks"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"format"</span>: <span class="st">"json"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    }, headers<span class="op">=</span>HEADERS, timeout<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        console.<span class="bu">print</span>(<span class="ss">f"Could not retrieve </span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> response.json()</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"error"</span> <span class="kw">in</span> data:</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        console.<span class="bu">print</span>(<span class="ss">f"Could not parse </span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>data[<span class="st">'error'</span>][<span class="st">'info'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    page <span class="op">=</span> data[<span class="st">"parse"</span>]</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    html <span class="op">=</span> page[<span class="st">"text"</span>][<span class="st">"*"</span>]</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(html, <span class="st">"html.parser"</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    article_text <span class="op">=</span> soup.get_text(<span class="st">" "</span>, strip<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    internal_links <span class="op">=</span> []</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> link <span class="kw">in</span> soup.find_all(<span class="st">"a"</span>, href<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        href <span class="op">=</span> link[<span class="st">"href"</span>]</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> href.startswith(<span class="st">"/wiki/"</span>) <span class="kw">and</span> <span class="st">"#"</span> <span class="kw">not</span> <span class="kw">in</span> href:</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>            internal_links.append(href)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    unique_internal_links <span class="op">=</span> []</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> href <span class="kw">in</span> internal_links:</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> href <span class="kw">not</span> <span class="kw">in</span> unique_internal_links:</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>            unique_internal_links.append(href)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">"character"</span>: page[<span class="st">"title"</span>],</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">"word_count"</span>: <span class="bu">len</span>(article_text.split()),</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">"character_count"</span>: <span class="bu">len</span>(article_text),</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>        <span class="st">"internal_link_count"</span>: <span class="bu">len</span>(internal_links),</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"unique_internal_link_count"</span>: <span class="bu">len</span>(unique_internal_links),</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">"language_link_count"</span>: <span class="bu">len</span>(page.get(<span class="st">"langlinks"</span>, [])),</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The line <code>"prop": "text|links|langlinks"</code> asks the <code>parse</code> action to return three properties in one response. MediaWiki uses the pipe character (<code>|</code>) to separate multiple requested values. This is equivalent to saying: return the rendered page text <strong>and</strong> its internal links <strong>and</strong> its language links. This approach does not mean that these values are being combined into one string; each appears under its own key in the JSON response.</p>
 <p>The relevant part of the response has a structure like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"parse"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"Galadriel"</span><span class="fu">,</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"pageid"</span><span class="fu">:</span> <span class="dv">171</span><span class="fu">,</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"text"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"*"</span><span class="fu">:</span> <span class="st">"&lt;div class=</span><span class="ch">\"</span><span class="st">mw-parser-output</span><span class="ch">\"</span><span class="st">&gt;...&lt;/div&gt;"</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">},</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"links"</span><span class="fu">:</span> <span class="ot">[</span><span class="er">...</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"langlinks"</span><span class="fu">:</span> <span class="ot">[</span><span class="er">...</span><span class="ot">]</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"parse"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"title"</span><span class="fu">:</span> <span class="st">"Galadriel"</span><span class="fu">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"pageid"</span><span class="fu">:</span> <span class="dv">171</span><span class="fu">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"text"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"*"</span><span class="fu">:</span> <span class="st">"&lt;div class=</span><span class="ch">\"</span><span class="st">mw-parser-output</span><span class="ch">\"</span><span class="st">&gt;...&lt;/div&gt;"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">},</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"links"</span><span class="fu">:</span> <span class="ot">[</span><span class="er">...</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"langlinks"</span><span class="fu">:</span> <span class="ot">[</span><span class="er">...</span><span class="ot">]</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We first save the object under <code>"parse"</code> as <code>page</code>. The expression <code>page["text"]</code> then retrieves the nested dictionary containing the rendered text. Within that dictionary, MediaWiki uses the literal key <code>"*"</code> for the HTML string, so <code>page["text"]["*"]</code> retrieves the HTML itself. The asterisk is not a Python wildcard here; it is simply the name of a dictionary key chosen by MediaWiki’s default JSON response format.</p>
 <p>The text and link logic deliberately matches our scraper. We count repeated internal links in <code>internal_links</code>, then build a second list containing each destination once. The new <code>language_link_count</code> comes from structured MediaWiki data rather than from searching the rendered HTML ourselves.</p>
 </section>
 <section id="comparing-character-pages" class="level4">
 <h4 class="anchored" data-anchor-id="comparing-character-pages">Comparing Character Pages</h4>
 <p>Now we can run the same function on a literary character and several characters created for the television adaptation:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>characters <span class="op">=</span> [<span class="st">"Galadriel"</span>, <span class="st">"Arondir"</span>, <span class="st">"Halbrand"</span>, <span class="st">"Disa"</span>]</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> characters:</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> analyze_fandom_page(character)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>CHARACTERS <span class="op">=</span> [<span class="st">"Galadriel"</span>, <span class="st">"Arondir"</span>, <span class="st">"Halbrand"</span>, <span class="st">"Disa"</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> CHARACTERS:</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> analyze_fandom_page(character)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        console.<span class="bu">print</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When checked in October 2026, the results included:</p>
 <table class="table-striped table-hover caption-top table">
 <caption>Sample results from the LOTR Fandom parse API</caption>
@@ -1119,40 +1145,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="making-an-api-request" class="level3">
 <h3 class="anchored" data-anchor-id="making-an-api-request">Making an API Request</h3>
 <p>Return to <code>first_api_script.py</code>. We already imported <code>requests</code> for the Fandom MediaWiki API, so now create a variable containing the books endpoint from <em>The One API</em>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/book'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>BOOKS_URL <span class="op">=</span> <span class="st">"https://the-one-api.dev/v2/book"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>If Python says that <code>requests</code> is not installed, remember to activate your virtual environment and install the packages from the lesson requirements.</strong></p>
 <p>Now how could we use this URL to get data from the API? We could use the <code>requests.get</code> method we used in the web scraping lesson. Let’s try that out.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(BOOKS_URL)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>How could we see that this request worked? We can print the status code of the response.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Hopefully we are all seeing <code>200</code> responses, but if you are seeing a <code>404</code> or <code>403</code> response, you might need to authenticate with the API. We will discuss this more in the next section, but for now, let’s try to print out the response.</p>
 <p>In our web scraping lesson, we used the <code>.text</code> method to print out the response, but for APIs, we often use the <code>.json()</code> method. Let’s try that out.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should see something like the following:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">'docs'</span><span class="fu">:</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="ot">[</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf5805fb53e011a64671582'</span><span class="fu">,</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Fellowship</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">Ring'</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58077b53e011a64671583'</span><span class="fu">,</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Two</span> <span class="er">Towers'</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58080b53e011a64671584'</span><span class="fu">,</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Return</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">King'</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="er">'total'</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">'docs'</span><span class="fu">:</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="ot">[</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf5805fb53e011a64671582'</span><span class="fu">,</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Fellowship</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">Ring'</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58077b53e011a64671583'</span><span class="fu">,</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Two</span> <span class="er">Towers'</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>                <span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cf58080b53e011a64671584'</span><span class="fu">,</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                <span class="er">'name'</span><span class="fu">:</span> <span class="er">'The</span> <span class="er">Return</span> <span class="er">Of</span> <span class="er">The</span> <span class="er">King'</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="er">'total'</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is the data that <em>The One API</em> returned to us. Earlier in the lesson, we saw that early web APIs such as Salesforce’s returned structured data as XML. As APIs became increasingly important to the interactive, browser-based services associated with Web 2.0, developers also needed convenient ways to move structured data between servers and the JavaScript running in web browsers. <strong>JSON</strong>, which stands for <strong>JavaScript Object Notation</strong>, became one influential answer.</p>
 <p>JSON grew out of the syntax JavaScript uses to describe objects. In the early 2000s, Douglas Crockford helped popularize it as a lightweight way for web browsers and servers to exchange structured data. JSON offered a smaller format that was comparatively easy for both people and programs to read. The rise of JSON is also part of the same history as web APIs: APIs created controlled ways to request platform data, while formats such as XML and JSON defined how that data could be represented and transmitted in the response. You can read more about the history of JSON, here: Jay Hoffmann. “The History of JSON and the People That Created It.” HackerNoon, December 13, 2002. <a href="https://hackernoon.com/the-history-of-json-and-the-people-that-created-it" target="_blank">https://hackernoon.com/the-history-of-json-and-the-people-that-created-it</a>.</p>
 <p>Although its name and syntax come from JavaScript, JSON is not limited to JavaScript. Its basic structures were useful across programming languages, so it became a general-purpose data-interchange format for APIs, configuration files, and stored data.</p>
@@ -1185,9 +1209,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>Indeed, if we update our python code we can see the exact same thing.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>CHARACTERS_URL <span class="op">=</span> <span class="st">"https://the-one-api.dev/v2/character"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(CHARACTERS_URL)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should return a <code>401</code> status code, which means that we are not <strong>authorized</strong> to access this data. This is because the LOTR API requires us to authenticate before we can access data about characters or quotes. This is a common feature of APIs, as it allows the API to track who is accessing their data and to limit access to certain users.</p>
 <p>Authentication can sound intimidating but you actually do it all the time already. For example, when you login to your email, you are authenticating with a server to access your email. When you login to DUO, you are authenticating with a server to access your account. When you login to social media, you are authenticating with a server to access your account. The difference is that when you use a web browser, this is all handled automatically for you, but when you use an API, you have to do this explicitly.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -1205,15 +1229,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Once you have signed up and logged in, you should see the above page for your account, which will include your <code>API key</code>. This key is unique to you and is used to identify you when you make requests to the API. It’s like a password, so you should keep it secret and not share it with anyone.</p>
 <p>You should copy the key into your <code>first_api_script.py</code> and then try to get data about characters or quotes.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>api_key <span class="op">=</span> <span class="st">"API KEY HERE"</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>authorization_headers <span class="op">=</span> {</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Authorization'</span>: <span class="st">'Bearer '</span> <span class="op">+</span> api_key</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You’ll notice that we are using a new variable called <code>authorization_headers</code> that is a dictionary with a key of <code>'Authorization'</code> and a value of <code>'Bearer ' + api_key</code>. This is how we pass our key to <em>The One API</em> so that it knows who we are and that we are allowed to use their API.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>THE_ONE_API_KEY <span class="op">=</span> <span class="st">"API KEY HERE"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>CHARACTERS_URL <span class="op">=</span> <span class="st">"https://the-one-api.dev/v2/character"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>AUTHORIZATION_HEADERS <span class="op">=</span> {</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Authorization"</span>: <span class="st">"Bearer "</span> <span class="op">+</span> THE_ONE_API_KEY</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You’ll notice that we are using a new constant called <code>AUTHORIZATION_HEADERS</code> that is a dictionary with a key of <code>"Authorization"</code> and a value of <code>"Bearer " + THE_ONE_API_KEY</code>. This is how we pass our key to <em>The One API</em> so that it knows who we are and that we are allowed to use its API.</p>
 <p>Now let’s update our <code>requests.get</code> method to include these headers.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(CHARACTERS_URL, headers<span class="op">=</span>AUTHORIZATION_HEADERS)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we should see a <code>200</code> status code, which means that we are authorized to access this data. Before we explore this new data, we need to first understand how to store our API keys securely.</p>
 <p>Currently, we just have our api key in a string in a variable, which is easy to use but it’s not the most secure. For example, if you pushed this up to GitHub, then everyone would be able to see and use your API key. You’ll notice that <em>The One API</em> says that you should limit your requests “to 100 requests every 10 minutes”. However, if you shared your key, someone could easily use it and you would be locked out of the API. Even worse, if they did something illegal with your key, you could be held responsible. So rule of thumb is don’t share your API key!</p>
 <section id="storing-api-keys" class="level4">
@@ -1223,131 +1247,137 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Another option is that you could store your API keys as an environment variable. Environment variables are a way to store data that is accessible to all programs running on your computer.</p>
 <p>To create an environment variable, you open your terminal and type the following, replacing <code>api_key</code> with your API key.</p>
 <p>For Macs/WSL:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">THE_ONE_API_KEY</span><span class="op">=</span><span class="st">"YOUR_API_KEY_HERE"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">THE_ONE_API_KEY</span><span class="op">=</span><span class="st">"YOUR_API_KEY_HERE"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For Windows/PowerShell:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">THE_ONE_API_KEY</span> <span class="op">=</span> <span class="st">"YOUR_API_KEY_HERE"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">THE_ONE_API_KEY</span> <span class="op">=</span> <span class="st">"YOUR_API_KEY_HERE"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now you can access these environment variables in your Python script by using the <code>os</code> library.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>the_one_api_key <span class="op">=</span> os.environ[<span class="st">'THE_ONE_API_KEY'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>THE_ONE_API_KEY <span class="op">=</span> os.environ[<span class="st">"THE_ONE_API_KEY"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>These commands set the variable only for the current terminal session, so you would need to run the appropriate command again after opening a new terminal. Persistent environment variables require editing your shell profile, but a credential-storage library is simpler for this course. Do not print API keys while testing because terminal output can be copied into screenshots, logs, or shared debugging messages.</p>
 <p>This is a bit more work though, and one easier option is to use a Python library for storing API keys, called <code>apikey</code> <a href="https://github.com/ulf1/apikey" target="_blank">https://github.com/ulf1/apikey</a>.</p>
 <p>In your terminal, type <code>python -m pip install "apikey&gt;=0.2.4"</code> to install the library. Then import it into your script and write:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> apikey</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>apikey.save(<span class="st">"THE_ONE_API_KEY"</span>, <span class="st">"YOUR_API_KEY_HERE"</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>the_one_api_key <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> apikey</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>apikey.save(<span class="st">"THE_ONE_API_KEY"</span>, <span class="st">"YOUR_API_KEY_HERE"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>THE_ONE_API_KEY <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>While you can use any of these options, I would recommend using the <code>apikey</code> library, as it’s the most secure and the easiest to use. If you continue with programming, you will likely end up using the <code>.zshrc</code> or <code>.bashrc</code> method, but for now, the <code>apikey</code> library is the best option.</p>
 </section>
 </section>
 <section id="making-api-requests" class="level3">
 <h3 class="anchored" data-anchor-id="making-api-requests">Making API Requests</h3>
-<p>Now that we have our api key stored securely, let’s try to get data about characters from <em>The One API</em>. We can do this by updating our <code>url</code> variable to include the <code>/character</code> endpoint.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>the_one_api_key <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>authorization_headers <span class="op">=</span> {</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Authorization'</span>: <span class="st">'Bearer '</span> <span class="op">+</span> the_one_api_key</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response.json())</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now that we have our API key stored securely, let’s try to get data about characters from <em>The One API</em>. We can do this by defining a <code>CHARACTERS_URL</code> constant for the <code>/character</code> endpoint.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>THE_ONE_API_KEY <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>AUTHORIZATION_HEADERS <span class="op">=</span> {</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Authorization"</span>: <span class="st">"Bearer "</span> <span class="op">+</span> THE_ONE_API_KEY</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>CHARACTERS_URL <span class="op">=</span> <span class="st">"https://the-one-api.dev/v2/character"</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(CHARACTERS_URL, headers<span class="op">=</span>AUTHORIZATION_HEADERS)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(response.json())</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(response.status_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should show a much larger amount of data, including information about all the characters from the <em>Lord of the Rings</em> series in this database. You’ll notice that the data is structured in a similar way to the data about books, with a list of characters and some other information about the data that was returned.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="er">'docs'</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbbe'</span><span class="fu">,</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adanel'</span><span class="fu">,</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adanel'</span><span class="fu">,</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>   <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Human'</span><span class="fu">,</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>   <span class="er">'birth'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>   <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Female'</span><span class="fu">,</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>   <span class="er">'death'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>   <span class="er">'hair'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>   <span class="er">'height'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>   <span class="er">'realm'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>   <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">'Belemir'</span><span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbbf'</span><span class="fu">,</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adrahil</span> <span class="er">I'</span><span class="fu">,</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adrahil_I'</span><span class="fu">,</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>   <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Human'</span><span class="fu">,</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>   <span class="er">'birth'</span><span class="fu">:</span> <span class="er">'Before</span> <span class="fu">,</span><span class="er">TA</span> <span class="er">1944',</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>   <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Male'</span><span class="fu">,</span></span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>   <span class="er">'death'</span><span class="fu">:</span> <span class="er">'Late</span> <span class="fu">,</span><span class="er">Third</span> <span class="er">Age',</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>   <span class="er">'hair'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>   <span class="er">'height'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>   <span class="er">'realm'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>   <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbc0'</span><span class="fu">,</span></span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adrahil</span> <span class="er">II'</span><span class="fu">,</span></span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adrahil_II'</span><span class="fu">,</span></span>
-<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="er">...</span></span>
-<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a> <span class="er">'total'</span><span class="fu">:</span> <span class="dv">933</span><span class="fu">,</span></span>
-<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a> <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
-<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a> <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
-<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a> <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a> <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="er">'docs'</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbbe'</span><span class="fu">,</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adanel'</span><span class="fu">,</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adanel'</span><span class="fu">,</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>   <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Human'</span><span class="fu">,</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>   <span class="er">'birth'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>   <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Female'</span><span class="fu">,</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>   <span class="er">'death'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>   <span class="er">'hair'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>   <span class="er">'height'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>   <span class="er">'realm'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>   <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">'Belemir'</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbbf'</span><span class="fu">,</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adrahil</span> <span class="er">I'</span><span class="fu">,</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adrahil_I'</span><span class="fu">,</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>   <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Human'</span><span class="fu">,</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>   <span class="er">'birth'</span><span class="fu">:</span> <span class="er">'Before</span> <span class="fu">,</span><span class="er">TA</span> <span class="er">1944',</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>   <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Male'</span><span class="fu">,</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>   <span class="er">'death'</span><span class="fu">:</span> <span class="er">'Late</span> <span class="fu">,</span><span class="er">Third</span> <span class="er">Age',</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>   <span class="er">'hair'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>   <span class="er">'height'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>   <span class="er">'realm'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">,</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>   <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">None</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfbc0'</span><span class="fu">,</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>   <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Adrahil</span> <span class="er">II'</span><span class="fu">,</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>   <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Adrahil_II'</span><span class="fu">,</span></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a><span class="er">...</span></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a> <span class="er">'total'</span><span class="fu">:</span> <span class="dv">933</span><span class="fu">,</span></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a> <span class="er">'limit'</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a> <span class="er">'offset'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a> <span class="er">'page'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a> <span class="er">'pages'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Since the api response is in json format, we can work with it similar to working with a dictionary. For example, we can see all the keys in the response by using the <code>.keys()</code> method.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>response.json().keys()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>response.json().keys()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should show the following:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>dict_keys([<span class="st">'docs'</span>, <span class="st">'total'</span>, <span class="st">'limit'</span>, <span class="st">'offset'</span>, <span class="st">'page'</span>, <span class="st">'pages'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dict_keys([<span class="st">'docs'</span>, <span class="st">'total'</span>, <span class="st">'limit'</span>, <span class="st">'offset'</span>, <span class="st">'page'</span>, <span class="st">'pages'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can access the <code>total</code> key to see how many characters are in the database.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>response.json()[<span class="st">'total'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>response.json()[<span class="st">'total'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should return <code>933</code>, which means that there are 933 characters in the database. We can also loop through the <code>docs</code> key to see each character.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> response.json()[<span class="st">'docs'</span>]:</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(character)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> response.json()[<span class="st">'docs'</span>]:</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(character)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This should show a list of dictionaries, each of which contains information about a character from the <em>Lord of the Rings</em> series. You’ll notice that each character has an <code>_id</code>, a <code>name</code>, a <code>wikiUrl</code>, a <code>race</code>, a <code>birth</code>, a <code>gender</code>, a <code>death</code>, a <code>hair</code>, a <code>height</code>, a <code>realm</code>, and a <code>spouse</code>.</p>
 <p>So if we only wanted to see the data about a certain character, like Galadriel, we could loop through the characters and print out the data for Galadriel.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> response.json()[<span class="st">'docs'</span>]:</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> character[<span class="st">'name'</span>] <span class="op">==</span> <span class="st">'Galadriel'</span>:</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(character)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> response.json()[<span class="st">'docs'</span>]:</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> character[<span class="st">'name'</span>] <span class="op">==</span> <span class="st">'Galadriel'</span>:</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        console.<span class="bu">print</span>(character)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Which would return the following data:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfd06'</span><span class="fu">,</span> <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Galadriel'</span><span class="fu">,</span> <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Galadriel'</span><span class="fu">,</span> <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Elf'</span><span class="fu">,</span> <span class="er">'birth'</span><span class="fu">:</span> <span class="er">'YT</span> <span class="dv">1362</span><span class="er">'</span><span class="fu">,</span> <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Female'</span><span class="fu">,</span> <span class="er">'death'</span><span class="fu">:</span> <span class="er">'Still</span> <span class="er">alive:</span> <span class="er">Departed</span> <span class="er">over</span> <span class="er">the</span> <span class="er">sea</span> <span class="er">on</span> <span class="fu">,</span><span class="er">September</span> <span class="er">29</span> <span class="er">,3021',</span> <span class="er">'hair'</span><span class="fu">:</span> <span class="er">'Golden'</span><span class="fu">,</span> <span class="er">'height'</span><span class="fu">:</span> <span class="er">'Tall'</span><span class="fu">,</span> <span class="er">'realm'</span><span class="fu">:</span> <span class="er">'Eregion</span><span class="fu">,</span><span class="er">Lothlórien,Caras</span> <span class="er">Galadhon',</span> <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">'Celeborn'</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="er">'_id'</span><span class="fu">:</span> <span class="er">'</span><span class="dv">5</span><span class="er">cd99d4bde30eff6ebccfd06'</span><span class="fu">,</span> <span class="er">'name'</span><span class="fu">:</span> <span class="er">'Galadriel'</span><span class="fu">,</span> <span class="er">'wikiUrl'</span><span class="fu">:</span> <span class="er">'http://lotr.wikia.com//wiki/Galadriel'</span><span class="fu">,</span> <span class="er">'race'</span><span class="fu">:</span> <span class="er">'Elf'</span><span class="fu">,</span> <span class="er">'birth'</span><span class="fu">:</span> <span class="er">'YT</span> <span class="dv">1362</span><span class="er">'</span><span class="fu">,</span> <span class="er">'gender'</span><span class="fu">:</span> <span class="er">'Female'</span><span class="fu">,</span> <span class="er">'death'</span><span class="fu">:</span> <span class="er">'Still</span> <span class="er">alive:</span> <span class="er">Departed</span> <span class="er">over</span> <span class="er">the</span> <span class="er">sea</span> <span class="er">on</span> <span class="fu">,</span><span class="er">September</span> <span class="er">29</span> <span class="er">,3021',</span> <span class="er">'hair'</span><span class="fu">:</span> <span class="er">'Golden'</span><span class="fu">,</span> <span class="er">'height'</span><span class="fu">:</span> <span class="er">'Tall'</span><span class="fu">,</span> <span class="er">'realm'</span><span class="fu">:</span> <span class="er">'Eregion</span><span class="fu">,</span><span class="er">Lothlórien,Caras</span> <span class="er">Galadhon',</span> <span class="er">'spouse'</span><span class="fu">:</span> <span class="er">'Celeborn'</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This loop downloads the entire character response and then filters it locally in Python. Earlier, we learned that query parameters let us describe what we want as part of the request itself. <em>The One API</em> supports a <code>name</code> parameter, so we can ask the server to return only records matching Galadriel.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character'</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"name"</span>: <span class="st">"Galadriel"</span>}</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    url,</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    headers<span class="op">=</span>authorization_headers,</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    params<span class="op">=</span>params,</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.url)</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>CHARACTERS_URL <span class="op">=</span> <span class="st">"https://the-one-api.dev/v2/character"</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"name"</span>: <span class="st">"Galadriel"</span>}</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    CHARACTERS_URL,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    headers<span class="op">=</span>AUTHORIZATION_HEADERS,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    params<span class="op">=</span>params,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(response.url)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>requests</code> library turns that dictionary into the same URL structure we examined earlier:</p>
 <pre class="text"><code>https://the-one-api.dev/v2/character?name=Galadriel</code></pre>
 <p>Here, <code>name</code> is the parameter’s key and <code>Galadriel</code> is its value. Filtering on the server means we retrieve the record we need rather than downloading all 933 character records and searching them afterward. According to <a href="https://the-one-api.dev/documentation#5" target="_blank">The One API’s filtering documentation</a>, its query parameters can also filter, sort, and paginate results.</p>
 <p>We can pass multiple parameters in the same dictionary. For example, <em>The One API</em> uses <code>name!</code> to mean that a name should <strong>not</strong> match a value. Combining it with <code>race</code> asks for elves whose names are not Galadriel:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"name!"</span>: <span class="st">"Galadriel"</span>,</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"race"</span>: <span class="st">"Elf"</span>,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    url,</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    headers<span class="op">=</span>authorization_headers,</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    params<span class="op">=</span>params,</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.url)</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total number of elves besides Galadriel: </span><span class="sc">{</span>response<span class="sc">.</span>json()[<span class="st">'total'</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"name!"</span>: <span class="st">"Galadriel"</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"race"</span>: <span class="st">"Elf"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    CHARACTERS_URL,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    headers<span class="op">=</span>AUTHORIZATION_HEADERS,</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    params<span class="op">=</span>params,</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(response.url)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="ss">f"Total number of elves besides Galadriel: </span><span class="sc">{</span>response<span class="sc">.</span>json()[<span class="st">'total'</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When represented directly in a URL, the two parameters are separated by <code>&amp;</code>. When we use <code>params=</code>, <code>requests</code> constructs and safely encodes that query string for us.</p>
 <p>Finally, we can also use the <code>id</code> in each data returned from the API to get more specific data. For example, if we wanted to get data about all the movie quotes of Galadriel, we could first get the id of Galadriel and then use that id to get data about her quotes.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>galadriel_id <span class="op">=</span> response.json()[<span class="st">'docs'</span>][<span class="dv">0</span>][<span class="st">'_id'</span>]</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>quote_url <span class="op">=</span> <span class="ss">f'https://the-one-api.dev/v2/character/</span><span class="sc">{</span>galadriel_id<span class="sc">}</span><span class="ss">/quote'</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(quote_url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>CHARACTERS_URL <span class="op">=</span> <span class="st">"https://the-one-api.dev/v2/character"</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    CHARACTERS_URL,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    headers<span class="op">=</span>AUTHORIZATION_HEADERS,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    params<span class="op">=</span>{<span class="st">"name"</span>: <span class="st">"Galadriel"</span>},</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>galadriel_id <span class="op">=</span> response.json()[<span class="st">'docs'</span>][<span class="dv">0</span>][<span class="st">'_id'</span>]</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>quote_url <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>CHARACTERS_URL<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>galadriel_id<span class="sc">}</span><span class="ss">/quote"</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(quote_url, headers<span class="op">=</span>AUTHORIZATION_HEADERS)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(response.json())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Finally, let’s use the <code>time</code> library in Python so that we don’t exceed the 100 requests every 10 minutes limit.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://the-one-api.dev/v2/character?name=Galadriel'</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>galadriel_id <span class="op">=</span> response.json()[<span class="st">'docs'</span>][<span class="dv">0</span>][<span class="st">'_id'</span>]</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>quote_url <span class="op">=</span> <span class="ss">f'https://the-one-api.dev/v2/character/</span><span class="sc">{</span>galadriel_id<span class="sc">}</span><span class="ss">/quote'</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(quote_url, headers<span class="op">=</span>authorization_headers)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.json())</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>time.sleep(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>CHARACTERS_URL <span class="op">=</span> <span class="st">"https://the-one-api.dev/v2/character"</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    CHARACTERS_URL,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    headers<span class="op">=</span>AUTHORIZATION_HEADERS,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    params<span class="op">=</span>{<span class="st">"name"</span>: <span class="st">"Galadriel"</span>},</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>galadriel_id <span class="op">=</span> response.json()[<span class="st">'docs'</span>][<span class="dv">0</span>][<span class="st">'_id'</span>]</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>quote_url <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>CHARACTERS_URL<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>galadriel_id<span class="sc">}</span><span class="ss">/quote"</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(quote_url, headers<span class="op">=</span>AUTHORIZATION_HEADERS)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(response.json())</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>time.sleep(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Understanding how to use query parameters and how to use the <code>id</code> of data returned from an API is critical to working with APIs, as it allows you to get specific data from an API. This is especially important when working with large datasets, as it allows you to filter and sort data to get the data you need. Remember collecting all the data is not always the best option, and can actually lead to more work depending on your research question.</p>
 </section>
 </section>
@@ -1356,7 +1386,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>So far we have been using the <code>requests</code> library to make our API calls, which is usually how you should work with APIs. However, occasionally, developers will create Python libraries to work with APIs, which can make working with APIs easier. These libraries are called API wrappers, and they are essentially Python libraries that provide a set of functions to work with an API.</p>
 <p>You can imagine if instead having to write a <code>requests.get</code> method every time you wanted to get a character and their number of quotes from <em>The One API</em>, we could instead write a Python Class that would make the request and store the data for us. This is what an API wrapper does, it abstracts the process of making requests to an API and allows you to work with the data more easily.</p>
 <p>Indeed, a developer named Nathanial Hapeman has created one for <em>The One API</em>, which you can see here <a href="https://pypi.org/project/nrh-lotr/0.0.3/" target="_blank">https://pypi.org/project/nrh-lotr/0.0.3/</a>. If you want to try out this library, install it in your active virtual environment:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install nrh-lotr==0.0.3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install nrh-lotr==0.0.3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../assets/images/lotr_library_pypi.png" class="img-fluid figure-img"></p>
@@ -1364,13 +1394,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>If you scroll down to <code>Usage</code> section, you can see how the developer has created a class called <code>LOTR</code> that takes your api key and then makes requests for you.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> apikey</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lotr <span class="im">import</span> LOTR</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>the_one_api_key <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>lotr <span class="op">=</span> LOTR(the_one_api_key)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>quotes <span class="op">=</span> lotr.quotes(limit<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(quotes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> apikey</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lotr <span class="im">import</span> LOTR</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>THE_ONE_API_KEY <span class="op">=</span> apikey.load(<span class="st">"THE_ONE_API_KEY"</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>lotr <span class="op">=</span> LOTR(THE_ONE_API_KEY)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>quotes <span class="op">=</span> lotr.quotes(limit<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(quotes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This returns five quote objects. Each object exposes selected fields from the API, including the dialogue and identifiers for its movie and character. The wrapper handles the request, authentication header, response parsing, and conversion from dictionaries into Pydantic objects. That convenience also means the wrapper’s assumptions about the API become part of our workflow.</p>
 <p>We can also see how the library is organized if we inspect it after installing it:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -1398,17 +1428,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="what-would-need-to-change" class="level3">
 <h3 class="anchored" data-anchor-id="what-would-need-to-change">What Would Need to Change?</h3>
 <p>The library developer assumed Rotten Tomatoes scores would be integers, but the actual API returns percentage scores with decimal values. Inside the library’s <code>Movie</code> model, those fields would need to accept decimal numbers:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Movie(pydantic.BaseModel):</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A LotR movie title."""</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span>: <span class="bu">str</span> <span class="op">=</span> pydantic.Field(<span class="va">None</span>, alias<span class="op">=</span><span class="st">"_id"</span>)</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    name: <span class="bu">str</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    runtimeInMinutes: <span class="bu">int</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    budgetInMillions: <span class="bu">int</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    boxOfficeRevenueInMillions: <span class="bu">float</span> <span class="co"># Changed from int to float</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    academyAwardNominations: <span class="bu">int</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    academyAwardWins: <span class="bu">int</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    rottenTomatoesScore: <span class="bu">float</span>  <span class="co"># Changed from int to float</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Movie(pydantic.BaseModel):</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A LotR movie title."""</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span>: <span class="bu">str</span> <span class="op">=</span> pydantic.Field(<span class="va">None</span>, alias<span class="op">=</span><span class="st">"_id"</span>)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    name: <span class="bu">str</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    runtimeInMinutes: <span class="bu">int</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    budgetInMillions: <span class="bu">int</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    boxOfficeRevenueInMillions: <span class="bu">float</span> <span class="co"># Changed from int to float</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    academyAwardNominations: <span class="bu">int</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    academyAwardWins: <span class="bu">int</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    rottenTomatoesScore: <span class="bu">float</span>  <span class="co"># Changed from int to float</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This excerpt explains the mismatch; it is <strong>not</strong> code to add to <code>first_api_script.py</code>. Defining another <code>Movie</code> class in our script would not change the model used internally by the installed wrapper. Proper fixes would include updating the package source, maintaining a corrected fork, or bypassing this method and requesting the <code>/movie</code> endpoint directly with <code>requests</code>. For this lesson, we will use the working <code>quotes()</code> method and treat the failing <code>movies()</code> method as evidence that wrappers need to be tested rather than trusted automatically.</p>
 <p><img src="../../assets/images/lotr_movie_typeset.png" class="img-fluid"></p>
 </section>
@@ -1432,11 +1462,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>However, if you scroll down further in the documentation, you’ll notice that this library only makes requests for the following endpoints:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/movie</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/movie/{id}</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/movie/{id}/{quote}</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="ex">/quote</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="ex">/quote/{id}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/movie</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/movie/{id}</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/movie/{id}/{quote}</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="ex">/quote</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="ex">/quote/{id}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Such limited functionality means that we couldn’t use this library to get data about characters or books, which is a major limitation. These types of limitations are common when working with API wrappers, as they are often created by developers who are not affiliated with the API itself and who may not have the time or resources to create a full-featured library. However, they can be a good way to get started with an API, especially if you are new to working with APIs.</p>
 </section>
 <section id="from-an-api-wrapper-to-a-collection-library" class="level2">
@@ -1444,7 +1474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <code>nrh-lotr</code> package is a small third-party wrapper for selected endpoints from <em>The One API</em>. The <a href="https://archive.org/" target="_blank">Internet Archive</a> provides a useful contrast: its maintained <a href="https://archive.org/developers/internetarchive/" target="_blank"><code>internetarchive</code> Python library</a> supports a cultural institution and its collections rather than one entertainment dataset.</p>
 <p>We have already discussed the Internet Archive as a digital library, preservation institution, and argument about universal access. Here, the important question is: <strong>what does its software treat as an archival object?</strong></p>
 <p>Install the library inside your active virtual environment:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install internetarchive</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install internetarchive</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The package provides both a Python library and an <code>ia</code> command-line program. We will focus on three concepts exposed by the library:</p>
 <ul>
 <li>A <strong>search result</strong> is a compact description of something that matched a query.</li>
@@ -1454,35 +1484,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="one-search-one-item-many-files" class="level3">
 <h3 class="anchored" data-anchor-id="one-search-one-item-many-files">One Search, One Item, Many Files</h3>
 <p>The following workflow searches for texts with “Lord of the Rings” in the title, keeps three results, and inspects the first item:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> internetarchive</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>search <span class="op">=</span> internetarchive.search_items(</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'title:"Lord of the Rings" AND mediatype:texts'</span>,</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    fields<span class="op">=</span>[<span class="st">"identifier"</span>, <span class="st">"title"</span>, <span class="st">"date"</span>],</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> result <span class="kw">in</span> search:</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    results.append(result)</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(results) <span class="op">==</span> <span class="dv">3</span>:</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> result <span class="kw">in</span> results:</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(result.get(<span class="st">"identifier"</span>), result.get(<span class="st">"title"</span>))</span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>first_identifier <span class="op">=</span> results[<span class="dv">0</span>][<span class="st">"identifier"</span>]</span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>item <span class="op">=</span> internetarchive.get_item(first_identifier)</span>
-<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> item.metadata</span>
-<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Title:"</span>, metadata.get(<span class="st">"title"</span>))</span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Creator:"</span>, metadata.get(<span class="st">"creator"</span>))</span>
-<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Date:"</span>, metadata.get(<span class="st">"date"</span>))</span>
-<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Media type:"</span>, metadata.get(<span class="st">"mediatype"</span>))</span>
-<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Collection:"</span>, metadata.get(<span class="st">"collection"</span>))</span>
-<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"License:"</span>, metadata.get(<span class="st">"licenseurl"</span>))</span>
-<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> <span class="bu">list</span>(item.files)[:<span class="dv">10</span>]:</span>
-<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">file</span>.name, <span class="bu">file</span>.metadata.get(<span class="st">"format"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> internetarchive</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>INTERNET_ARCHIVE_QUERY <span class="op">=</span> <span class="st">'title:"Lord of the Rings" AND mediatype:texts'</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>search <span class="op">=</span> internetarchive.search_items(</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    INTERNET_ARCHIVE_QUERY,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    fields<span class="op">=</span>[<span class="st">"identifier"</span>, <span class="st">"title"</span>, <span class="st">"date"</span>],</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> result <span class="kw">in</span> search:</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    results.append(result)</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(results) <span class="op">==</span> <span class="dv">3</span>:</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> result <span class="kw">in</span> results:</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(result.get(<span class="st">"identifier"</span>), result.get(<span class="st">"title"</span>))</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>first_identifier <span class="op">=</span> results[<span class="dv">0</span>][<span class="st">"identifier"</span>]</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>item <span class="op">=</span> internetarchive.get_item(first_identifier)</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> item.metadata</span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="st">"Title:"</span>, metadata.get(<span class="st">"title"</span>))</span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="st">"Creator:"</span>, metadata.get(<span class="st">"creator"</span>))</span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="st">"Date:"</span>, metadata.get(<span class="st">"date"</span>))</span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="st">"Media type:"</span>, metadata.get(<span class="st">"mediatype"</span>))</span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="st">"Collection:"</span>, metadata.get(<span class="st">"collection"</span>))</span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(<span class="st">"License:"</span>, metadata.get(<span class="st">"licenseurl"</span>))</span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> <span class="bu">list</span>(item.files)[:<span class="dv">10</span>]:</span>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>    console.<span class="bu">print</span>(<span class="bu">file</span>.get(<span class="st">"name"</span>), <span class="bu">file</span>.get(<span class="st">"format"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The query combines a phrase search with a fielded filter. <code>title:"Lord of the Rings"</code> searches the title field, while <code>mediatype:texts</code> limits results to records classified by the Archive as texts. We stop after three records because a search may contain thousands of results, and we do not need to retrieve all of them while testing.</p>
 <p>The identifier connects a compact search result to the fuller item. An item might represent a book, recording, software program, film, image collection, or captured website. Its files might include an original upload alongside OCR, metadata, thumbnails, and other derivatives generated by the platform.</p>
 <p>Notice the use of <code>.get()</code> when reading metadata. Records contributed by different people and institutions do not always contain the same fields. A missing creator or license does not establish that no creator or rights holder exists; it means that information is not represented in that field in this record.</p>

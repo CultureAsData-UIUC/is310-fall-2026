@@ -5,6 +5,14 @@ toc: true
 
 So far in class we have briefly mentioned APIs (for example, the Spotify API), but haven't yet discussed what they are or how to use them. This week we will start to work through the basics of using APIs to get data from the web.
 
+::: {.callout-note}
+## Lesson Code
+
+The complete, commented code developed throughout this lesson is available to download as <a target="_blank" href="../../assets/files/getting_cultural_data_apis.py" download>`getting_cultural_data_apis.py`</a>.
+
+The script follows the lesson from beginning to end. Before running it, install the required libraries, replace the `User-Agent` placeholders, and save your *One API* key using `apikey`. The script intentionally raises an error when a dependency or API key is missing so that setup problems are visible rather than silently skipped.
+:::
+
 ## What is an API?
 
 API stands for **Application Programming Interface**, but what does that mean exactly?
@@ -72,6 +80,12 @@ We will begin with the same `requests` library we used for web scraping. The dif
 
 In your `is310-coding-assignments` repository, create a folder called `api-getting-data`, then create a script inside it called `first_api_script.py`. We will use this script as we move across several APIs and Python libraries.
 
+Install the lesson libraries in your activated virtual environment:
+
+```sh
+python -m pip install requests beautifulsoup4 rich apikey nrh-lotr==0.0.3 internetarchive
+```
+
 For this example, we are going to work with the *Lord of the Rings* Fandom wiki [https://lotr.fandom.com/wiki/Main_Page](https://lotr.fandom.com/wiki/Main_Page){target="_blank"}. Fandom wikis are fan-created knowledge bases devoted to popular culture. Many grew rapidly beginning in the mid-2000s, turning the interpretive and organizational labor of fan communities into large collections of structured cultural information. *Wookieepedia*, the *Star Wars* wiki, began in 2005 and became one of the best-known examples [https://en.wikipedia.org/wiki/Wookieepedia](https://en.wikipedia.org/wiki/Wookieepedia){target="_blank"}.
 
 ![](../../assets/images/wikipedia_wookiepedia.png)
@@ -81,7 +95,17 @@ These sites are useful for thinking about APIs because the information visible o
 There is also a practical reason to use the API. A request for the rendered Fandom page may receive a `403 Forbidden` because the website uses automated bot protection. Because Fandom wikis run MediaWiki software, the *Lord of the Rings* wiki offers a MediaWiki **API**:
 
 ```python
+import time
+
+import apikey
+import internetarchive
 import requests
+from bs4 import BeautifulSoup
+from lotr import LOTR
+from rich.console import Console
+
+
+console = Console()
 
 HEADERS = {
 	"User-Agent": "is310-course/1.0 (https://YOUR-USERNAME.github.io; YOUR_NETID@illinois.edu)"
@@ -96,7 +120,7 @@ response = requests.get("https://lotr.fandom.com/api.php", params={
 	"format": "json",
 }, headers=HEADERS, timeout=15)
 
-print(response.status_code)
+console.print(response.status_code)
 ```
 
 In this code block, we first import the requests library. We then define a set of headers including a `User-Agent` header to identify our script and provide contact information. This pattern is a common requirement for APIs, as it allows the server to track usage and contact developers if necessary. We then make a GET request to the Fandom API endpoint. We have the following parameters:
@@ -143,8 +167,6 @@ If you open any of those in a browser, you'll get an interactive sandbox where y
 The LOTR Fandom API does not require an API key for these examples. We will still send a descriptive `User-Agent` that identifies our script and provides contact information, just as we did when scraping Tolkien Gateway. Other MediaWiki hosts may have different requirements, so always check the host's documentation and policies.
 
 ```python
-import requests
-
 API_URL = "https://lotr.fandom.com/api.php"
 HEADERS = {"User-Agent": "is310-course/1.0 (https://YOUR-USERNAME.github.io; YOUR_NETID@illinois.edu)"}
 ```
@@ -198,7 +220,7 @@ if response.status_code != 200:
 data = response.json()
 
 for page in data["query"]["categorymembers"]:
-	print(page["title"])
+	console.print(page["title"])
 ```
 
 ```bash
@@ -257,8 +279,6 @@ Many installations also provide a visual sandbox at `/wiki/Special:ApiSandbox`, 
 Because the API returns rendered HTML in `text`, we can use BeautifulSoup's `get_text()` just as we did in the scraping lesson:
 
 ```python
-from bs4 import BeautifulSoup
-
 def analyze_fandom_page(title):
 	response = requests.get(API_URL, params={
 		"action": "parse",
@@ -268,12 +288,12 @@ def analyze_fandom_page(title):
 	}, headers=HEADERS, timeout=15)
 
 	if response.status_code != 200:
-		print(f"Could not retrieve {title}: {response.status_code}")
+		console.print(f"Could not retrieve {title}: {response.status_code}")
 		return None
 
 	data = response.json()
 	if "error" in data:
-		print(f"Could not parse {title}: {data['error']['info']}")
+		console.print(f"Could not parse {title}: {data['error']['info']}")
 		return None
 
 	page = data["parse"]
@@ -329,12 +349,12 @@ The text and link logic deliberately matches our scraper. We count repeated inte
 Now we can run the same function on a literary character and several characters created for the television adaptation:
 
 ```python
-characters = ["Galadriel", "Arondir", "Halbrand", "Disa"]
+CHARACTERS = ["Galadriel", "Arondir", "Halbrand", "Disa"]
 
-for character in characters:
+for character in CHARACTERS:
 	result = analyze_fandom_page(character)
 	if result is not None:
-		print(result)
+		console.print(result)
 ```
 
 When checked in October 2026, the results included:
@@ -431,9 +451,7 @@ So let's try this out!
 Return to `first_api_script.py`. We already imported `requests` for the Fandom MediaWiki API, so now create a variable containing the books endpoint from *The One API*:
 
 ```python
-import requests
-
-url = 'https://the-one-api.dev/v2/book'
+BOOKS_URL = "https://the-one-api.dev/v2/book"
 ```
 
 **If Python says that `requests` is not installed, remember to activate your virtual environment and install the packages from the lesson requirements.**
@@ -441,13 +459,13 @@ url = 'https://the-one-api.dev/v2/book'
 Now how could we use this URL to get data from the API? We could use the `requests.get` method we used in the web scraping lesson. Let's try that out.
 
 ```python
-response = requests.get(url)
+response = requests.get(BOOKS_URL)
 ```
 
 How could we see that this request worked? We can print the status code of the response.
 
 ```python
-print(response.status_code)
+console.print(response.status_code)
 ```
 
 Hopefully we are all seeing `200` responses, but if you are seeing a `404` or `403` response, you might need to authenticate with the API. We will discuss this more in the next section, but for now, let's try to print out the response.
@@ -455,7 +473,7 @@ Hopefully we are all seeing `200` responses, but if you are seeing a `404` or `4
 In our web scraping lesson, we used the `.text` method to print out the response, but for APIs, we often use the `.json()` method. Let's try that out.
 
 ```python
-print(response.json())
+console.print(response.json())
 ```
 
 You should see something like the following:
@@ -517,9 +535,9 @@ However, if we try to get characters or quotes in the browser, we will see the f
 Indeed, if we update our python code we can see the exact same thing.
 
 ```python
-url = 'https://the-one-api.dev/v2/character'
-response = requests.get(url)
-print(response.status_code)
+CHARACTERS_URL = "https://the-one-api.dev/v2/character"
+response = requests.get(CHARACTERS_URL)
+console.print(response.status_code)
 ```
 
 This should return a `401` status code, which means that we are not **authorized** to access this data. This is because the LOTR API requires us to authenticate before we can access data about characters or quotes. This is a common feature of APIs, as it allows the API to track who is accessing their data and to limit access to certain users.
@@ -537,20 +555,20 @@ Once you have signed up and logged in, you should see the above page for your ac
 You should copy the key into your `first_api_script.py` and then try to get data about characters or quotes.
 
 ```python
-api_key = "API KEY HERE"
-url = 'https://the-one-api.dev/v2/character'
-authorization_headers = {
-	'Authorization': 'Bearer ' + api_key
+THE_ONE_API_KEY = "API KEY HERE"
+CHARACTERS_URL = "https://the-one-api.dev/v2/character"
+AUTHORIZATION_HEADERS = {
+	"Authorization": "Bearer " + THE_ONE_API_KEY
 }
 ```
 
-You'll notice that we are using a new variable called `authorization_headers` that is a dictionary with a key of `'Authorization'` and a value of `'Bearer ' + api_key`. This is how we pass our key to *The One API* so that it knows who we are and that we are allowed to use their API.
+You'll notice that we are using a new constant called `AUTHORIZATION_HEADERS` that is a dictionary with a key of `"Authorization"` and a value of `"Bearer " + THE_ONE_API_KEY`. This is how we pass our key to *The One API* so that it knows who we are and that we are allowed to use its API.
 
 Now let's update our `requests.get` method to include these headers.
 
 ```python
-response = requests.get(url, headers=authorization_headers)
-print(response.status_code)
+response = requests.get(CHARACTERS_URL, headers=AUTHORIZATION_HEADERS)
+console.print(response.status_code)
 ```
 
 Now we should see a `200` status code, which means that we are authorized to access this data. Before we explore this new data, we need to first understand how to store our API keys securely.
@@ -583,7 +601,7 @@ Now you can access these environment variables in your Python script by using th
 
 ```python
 import os
-the_one_api_key = os.environ['THE_ONE_API_KEY']
+THE_ONE_API_KEY = os.environ["THE_ONE_API_KEY"]
 ```
 
 These commands set the variable only for the current terminal session, so you would need to run the appropriate command again after opening a new terminal. Persistent environment variables require editing your shell profile, but a credential-storage library is simpler for this course. Do not print API keys while testing because terminal output can be copied into screenshots, logs, or shared debugging messages.
@@ -597,26 +615,26 @@ import apikey
 
 apikey.save("THE_ONE_API_KEY", "YOUR_API_KEY_HERE")
 
-the_one_api_key = apikey.load("THE_ONE_API_KEY")
+THE_ONE_API_KEY = apikey.load("THE_ONE_API_KEY")
 ```
 
 While you can use any of these options, I would recommend using the `apikey` library, as it's the most secure and the easiest to use. If you continue with programming, you will likely end up using the `.zshrc` or `.bashrc` method, but for now, the `apikey` library is the best option.
 
 ### Making API Requests
 
-Now that we have our api key stored securely, let's try to get data about characters from *The One API*. We can do this by updating our `url` variable to include the `/character` endpoint.
+Now that we have our API key stored securely, let's try to get data about characters from *The One API*. We can do this by defining a `CHARACTERS_URL` constant for the `/character` endpoint.
 
 ```python
-the_one_api_key = apikey.load("THE_ONE_API_KEY")
-authorization_headers = {
-	'Authorization': 'Bearer ' + the_one_api_key
+THE_ONE_API_KEY = apikey.load("THE_ONE_API_KEY")
+AUTHORIZATION_HEADERS = {
+	"Authorization": "Bearer " + THE_ONE_API_KEY
 }
-url = 'https://the-one-api.dev/v2/character'
-response = requests.get(url, headers=authorization_headers)
+CHARACTERS_URL = "https://the-one-api.dev/v2/character"
+response = requests.get(CHARACTERS_URL, headers=AUTHORIZATION_HEADERS)
 if response.status_code == 200:
-	print(response.json())
+	console.print(response.json())
 else:
-	print(response.status_code)
+	console.print(response.status_code)
 ```
 
 This should show a much larger amount of data, including information about all the characters from the *Lord of the Rings* series in this database. You'll notice that the data is structured in a similar way to the data about books, with a list of characters and some other information about the data that was returned.
@@ -677,7 +695,7 @@ This should return `933`, which means that there are 933 characters in the datab
 
 ```python
 for character in response.json()['docs']:
-	print(character)
+	console.print(character)
 ```
 
 This should show a list of dictionaries, each of which contains information about a character from the *Lord of the Rings* series. You'll notice that each character has an `_id`, a `name`, a `wikiUrl`, a `race`, a `birth`, a `gender`, a `death`, a `hair`, a `height`, a `realm`, and a `spouse`.
@@ -687,7 +705,7 @@ So if we only wanted to see the data about a certain character, like Galadriel, 
 ```python
 for character in response.json()['docs']:
 	if character['name'] == 'Galadriel':
-		print(character)
+		console.print(character)
 ```
 
 Which would return the following data:
@@ -699,17 +717,17 @@ Which would return the following data:
 This loop downloads the entire character response and then filters it locally in Python. Earlier, we learned that query parameters let us describe what we want as part of the request itself. *The One API* supports a `name` parameter, so we can ask the server to return only records matching Galadriel.
 
 ```python
-url = 'https://the-one-api.dev/v2/character'
+CHARACTERS_URL = "https://the-one-api.dev/v2/character"
 params = {"name": "Galadriel"}
 
 response = requests.get(
-	url,
-	headers=authorization_headers,
+	CHARACTERS_URL,
+	headers=AUTHORIZATION_HEADERS,
 	params=params,
 )
 
-print(response.url)
-print(response.json())
+console.print(response.url)
+console.print(response.json())
 ```
 
 The `requests` library turns that dictionary into the same URL structure we examined earlier:
@@ -729,13 +747,13 @@ params = {
 }
 
 response = requests.get(
-	url,
-	headers=authorization_headers,
+	CHARACTERS_URL,
+	headers=AUTHORIZATION_HEADERS,
 	params=params,
 )
 
-print(response.url)
-print(f"Total number of elves besides Galadriel: {response.json()['total']}")
+console.print(response.url)
+console.print(f"Total number of elves besides Galadriel: {response.json()['total']}")
 ```
 
 When represented directly in a URL, the two parameters are separated by `&`. When we use `params=`, `requests` constructs and safely encodes that query string for us.
@@ -743,25 +761,31 @@ When represented directly in a URL, the two parameters are separated by `&`. Whe
 Finally, we can also use the `id` in each data returned from the API to get more specific data. For example, if we wanted to get data about all the movie quotes of Galadriel, we could first get the id of Galadriel and then use that id to get data about her quotes.
 
 ```python
-url = 'https://the-one-api.dev/v2/character?name=Galadriel'
-response = requests.get(url, headers=authorization_headers)
+CHARACTERS_URL = "https://the-one-api.dev/v2/character"
+response = requests.get(
+	CHARACTERS_URL,
+	headers=AUTHORIZATION_HEADERS,
+	params={"name": "Galadriel"},
+)
 galadriel_id = response.json()['docs'][0]['_id']
-quote_url = f'https://the-one-api.dev/v2/character/{galadriel_id}/quote'
-response = requests.get(quote_url, headers=authorization_headers)
-print(response.json())
+quote_url = f"{CHARACTERS_URL}/{galadriel_id}/quote"
+response = requests.get(quote_url, headers=AUTHORIZATION_HEADERS)
+console.print(response.json())
 ```
 
 Finally, let's use the `time` library in Python so that we don't exceed the 100 requests every 10 minutes limit.
 
 ```python
-import time
-
-url = 'https://the-one-api.dev/v2/character?name=Galadriel'
-response = requests.get(url, headers=authorization_headers)
+CHARACTERS_URL = "https://the-one-api.dev/v2/character"
+response = requests.get(
+	CHARACTERS_URL,
+	headers=AUTHORIZATION_HEADERS,
+	params={"name": "Galadriel"},
+)
 galadriel_id = response.json()['docs'][0]['_id']
-quote_url = f'https://the-one-api.dev/v2/character/{galadriel_id}/quote'
-response = requests.get(quote_url, headers=authorization_headers)
-print(response.json())
+quote_url = f"{CHARACTERS_URL}/{galadriel_id}/quote"
+response = requests.get(quote_url, headers=AUTHORIZATION_HEADERS)
+console.print(response.json())
 time.sleep(10)
 ```
 
@@ -787,10 +811,10 @@ If you scroll down to `Usage` section, you can see how the developer has created
 import apikey
 from lotr import LOTR
 
-the_one_api_key = apikey.load("THE_ONE_API_KEY")
-lotr = LOTR(the_one_api_key)
+THE_ONE_API_KEY = apikey.load("THE_ONE_API_KEY")
+lotr = LOTR(THE_ONE_API_KEY)
 quotes = lotr.quotes(limit=5)
-print(quotes)
+console.print(quotes)
 ```
 
 This returns five quote objects. Each object exposes selected fields from the API, including the dialogue and identifiers for its movie and character. The wrapper handles the request, authentication header, response parsing, and conversion from dictionaries into Pydantic objects. That convenience also means the wrapper's assumptions about the API become part of our workflow.
@@ -883,8 +907,10 @@ The following workflow searches for texts with "Lord of the Rings" in the title,
 ```python
 import internetarchive
 
+INTERNET_ARCHIVE_QUERY = 'title:"Lord of the Rings" AND mediatype:texts'
+
 search = internetarchive.search_items(
-	'title:"Lord of the Rings" AND mediatype:texts',
+	INTERNET_ARCHIVE_QUERY,
 	fields=["identifier", "title", "date"],
 )
 
@@ -895,21 +921,21 @@ for result in search:
 		break
 
 for result in results:
-	print(result.get("identifier"), result.get("title"))
+	console.print(result.get("identifier"), result.get("title"))
 
 first_identifier = results[0]["identifier"]
 item = internetarchive.get_item(first_identifier)
 
 metadata = item.metadata
-print("Title:", metadata.get("title"))
-print("Creator:", metadata.get("creator"))
-print("Date:", metadata.get("date"))
-print("Media type:", metadata.get("mediatype"))
-print("Collection:", metadata.get("collection"))
-print("License:", metadata.get("licenseurl"))
+console.print("Title:", metadata.get("title"))
+console.print("Creator:", metadata.get("creator"))
+console.print("Date:", metadata.get("date"))
+console.print("Media type:", metadata.get("mediatype"))
+console.print("Collection:", metadata.get("collection"))
+console.print("License:", metadata.get("licenseurl"))
 
 for file in list(item.files)[:10]:
-	print(file.name, file.metadata.get("format"))
+	console.print(file.get("name"), file.get("format"))
 ```
 
 The query combines a phrase search with a fielded filter. `title:"Lord of the Rings"` searches the title field, while `mediatype:texts` limits results to records classified by the Archive as texts. We stop after three records because a search may contain thousands of results, and we do not need to retrieve all of them while testing.
