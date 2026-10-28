@@ -11,11 +11,6 @@ execute:
   message: false
 ---
 
-::: {.callout-note}
-
-Download the Jupyter notebook version from our class session on Thursday: <a href="../../assets/files/Top500NovelsEDA.ipynb" download target="_blank">Top500NovelsEDA.ipynb</a>
-:::
-
 ```{python}
 #| echo: false
 # ── Hidden setup cell — loads the pre-built viz dataset ──────────────────
@@ -81,12 +76,16 @@ First, we need to create a new Jupyter notebook in our `pandas-eda` folder calle
 
 ![](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExanV4dzd4NDFqZnVqcThvOXl4b2ppNGI0ZWJhbjIyNDNwODA5YWZxbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NFA61GS9qKZ68/giphy.gif)
 
+::: {.callout-tip collapse="true"}
+## Need a reminder about `pd.read_csv()`?
+
 While this cat is adorable, we can also use the `pd.read_csv()` method to read in our data.
 
 ```python
 # Import data
 novels_df = pd.read_csv("https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv", sep="\t")
 ```
+:::
 
 Notice that I am adding an argument to the `read_csv()` method: `sep="\t"`. This tells Pandas to expect a tab-separated values file.
 
@@ -96,11 +95,15 @@ If we did not include this argument, we would likely see the following error in 
 ParserError: Error tokenizing data. C error: Expected 1 fields in line 163, saw 3
 ```
 
-This error is telling us that there is an issue with the way the data is formatted. In this case, the dataset is actually a tab-separated values (TSV) file, which means that we need to specify the `sep` parameter when we read it in. Encoding errors are common when working with data, especially data that was produced by others. The reason for this is that different operating systems and software use different character encodings to represent text. When we save a file, it is encoded in a specific way, and when we open it, we need to know how it was encoded in order to read it correctly.
+This error is telling us that there is an issue with the way the data is formatted. In this case, the dataset is actually a tab-separated values (TSV) file, which means that we need to specify the `sep` parameter when we read it in. Encoding errors are another common problem when working with data produced by other people or systems.
 
 ![](https://media.emailonacid.com/wp-content/uploads/2022/02/content_type_example.jpeg)
 
-`ISO-8859-1` and `utf-8` are both character encodings used to represent text in computers. `ISO-8859-1`, also known as `Latin-1`, is a single-byte encoding that can represent the first 256 Unicode characters but only covers Western European languages. On the other hand, `utf-8` is far more popular because it is a variable-width character encoding that can encode all possible Unicode characters.
+A computer stores numbers rather than letters. A **character encoding** supplies an agreed mapping between the numerical values stored in memory or a file and the abstract characters we understand as text. Unicode assigns each character a stable number called a **code point**; an encoding specifies how those code points become bytes; and a font determines the visible **glyphs** displayed on screen. If software reads a file using a different encoding from the one used to save it, the same bytes can be mapped to the wrong characters, producing garbled text sometimes called *mojibake*.
+
+`ISO-8859-1`, also known as `Latin-1`, is part of a family of encodings standardized by the [**International Organization for Standardization (ISO)**](https://www.iso.org/home.html){target="_blank"} and the [**International Electrotechnical Commission (IEC)**](https://www.iec.ch/){target="_blank"}. This standard uses one byte per character, which provides 256 possible numerical values, and primarily supports Latin-script Western European languages. `utf-8`, by contrast, uses between one and four bytes to encode Unicode code points and preserves compatibility with ASCII while supporting the much larger multilingual Unicode character set.
+
+In “Encoding Multilingualism: Technical Affordances of Multilingual Publication from Manuscripts to Unicode and OpenType”, Quinn Dombrowski, Manish Goregaokar, Ben Joeng (Yang), and Abeera Kamran detail how the rise of digital computing led to a proliferation of encodings, especially for non-European languages in the 1980s. But with the rise of the web, there was increasingly a need for a unified encoding standard that could support multiple languages simultaneously, which lead to the creation of Unicode and these newer standards. While Unicode greatly expanded multilingual computing, it did not succeed in making every language equally well supported.[^1]
 
 In our case, we didn't need to specify the encoding, but if we did, we could have added the `encoding` parameter to our `read_csv()` method.
 
@@ -167,11 +170,11 @@ While most of the columns have 500 non-null values, we can see that some of the 
 
 ![VIAF](https://upload.wikimedia.org/wikipedia/commons/e/ed/VIAF_Screenshot_2012.png)
 
-For those unfamiliar, VIAF stands for the Virtual International Authority File, which is a service that provides a way to link and share information about authors and their works across different libraries and institutions. The idea for VIAF originated in 1998 as an experiment in trying to link authority records. As a reminder, authority records are standardized records that provide information about a specific entity, such as an author or a work, like MARC records. VIAF was officially launched in 2003 and is operated by the Online Computer Library Center (OCLC) in partnership with various national libraries and institutions.
+For those unfamiliar, [VIAF](https://viaf.org/){target="_blank"} stands for the Virtual International Authority File, which is a service that provides a way to link and share information about authors and their works across different libraries and institutions. The idea for VIAF originated in 1998 as an experiment in trying to link authority records. As a reminder, authority records are standardized records that provide information about a specific entity, such as an author or a work, like MARC records. VIAF was officially launched in 2003 and is operated by the Online Computer Library Center (OCLC) in partnership with various national libraries and institutions.
 
-![VIAF](https://m.media-amazon.com/images/I/71J3wIQ6rRL._AC_UF1000,1000_QL80_.jpg)
+![Big Data, Little Data, No Data](https://m.media-amazon.com/images/I/71J3wIQ6rRL._AC_UF1000,1000_QL80_.jpg)
 
-The impetus for the creation of VIAF was not just sharing information, but what LIS scholar Christine L. Borgman calls the "scaling problem in name disambiguation" in her book *Big Data, Little Data, No Data: Scholarship in the Networked World*. We've already talked about this briefly in discussing the challenges of "cleaning data", but the rise of multiple digital libraries and archives has made it increasingly difficult to accurately identify and attribute works to their correct authors, which is where projects like VIAF come in. However, as we discussed in class, there are still challenges with this system. For example, authors are not the ones who enter data into VIAF. Instead, it is often librarians or archivists who are responsible for creating and maintaining these records. This means that there can be discrepancies in how authors are represented, and it can be difficult to ensure that all works by a particular author are accurately attributed to them.
+The impetus for the creation of VIAF was not just sharing information, but what LIS scholar Christine L. Borgman calls the "scaling problem in name disambiguation" in her book [*Big Data, Little Data, No Data: Scholarship in the Networked World*](https://direct.mit.edu/books/monograph/3085/Big-Data-Little-Data-No-DataScholarship-in-the){target="_blank"}. We've already talked about this briefly in discussing the challenges of "cleaning data", but the rise of multiple digital libraries and archives has made it increasingly difficult to accurately identify and attribute works to their correct authors, which is where projects like VIAF come in. However, as we discussed in class, there are still challenges with this system. For example, authors are not the ones who enter data into VIAF. Instead, it is often librarians or archivists who are responsible for creating and maintaining these records. This means that there can be discrepancies in how authors are represented, and it can be difficult to ensure that all works by a particular author are accurately attributed to them.
 
 Now knowing this background, we can start to explore which authors have missing values in this column. We can do this by using the `isna()` method to check for missing values in the `author_field_of_activity` column.
 
@@ -323,7 +326,7 @@ Now that we know we have two columns we can use to merge the DataFrames, we can 
 merged_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])
 ```
 
-While this code should work, you'll notice if you print out the `merged_df` DataFrame that while there are new columns from the `nyt_bestsellers_df` in our `merged_df` there only `NaN` values in those columns. *Why is that?*
+While this code should work, you'll notice that if you print the `merged_df` DataFrame, the new columns from `nyt_bestsellers_df` contain only `NaN` values. *Why is that?*
 
 To figure out where we went wrong, we need to check the values in the `author` and `title` columns in both DataFrames, and specifically see if any of them exist in both DataFrames. We can do this by using the `isin()` and `nunique()` method to get the unique values in each column.
 
@@ -456,7 +459,12 @@ combined_novels_nyt_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['au
 
 ## Working With the Full Combined Dataset
 
-Now that we have our combined DataFrame, we also want to bring in the full text of each novel so we can start to explore the text data directly. We've included a pre-built version of the combined dataset that has the scraped and cleaned Project Gutenberg texts, plus pre-computed word and pronoun counts, which you can download from Canvas:
+Now that we have our combined DataFrame, we also want to bring in information derived from the full text of each novel. We will use two related files:
+
+- `combined_novels_viz.csv` is the smaller file used for most of this lesson. It contains the metadata and pre-computed text measurements needed for our visualizations, but it does **not** contain the complete novels.
+- The complete dataset on Canvas includes an `eng_text` column with the Project Gutenberg texts. It is approximately 152 MB and is only needed if you want to run the string-method examples against the novels themselves.
+
+Start with the smaller file:
 
 ```python
 # Load the pre-built combined dataset
@@ -466,7 +474,7 @@ combined_novels_nyt_df = pd.read_csv('combined_novels_viz.csv')
 
 ::: {.callout-note}
 ## About this dataset
-The full dataset including raw novel texts (152 MB) is available on Canvas. The version used on this page is a smaller viz-only CSV with pre-computed columns. See the [Additional Notes](#additional-notes){target="_blank"} section for how both were created.
+The full dataset including raw novel texts (152 MB) is available on Canvas. The version used for the rendered charts on this page is a smaller visualization CSV with pre-computed columns. See the [Additional Notes](#additional-notes){target="_blank"} section for how those columns were created.
 :::
 
 Now let's look at the columns available to us:
@@ -475,11 +483,11 @@ Now let's look at the columns available to us:
 combined_novels_nyt_df.info()
 ```
 
-You'll notice we now have pre-computed columns like `word_counts`, `he_counts`, `she_counts`, and `they_counts` alongside all our metadata columns. The full novel texts are in the complete dataset on Canvas — for this lesson page we're working with the pre-computed summaries so the page loads quickly.
+You'll notice we now have pre-computed columns like `novel_length_words`, `novel_length_chars`, `he_counts`, `she_counts`, and `they_counts` alongside all our metadata columns. The full novel texts are in the complete dataset on Canvas. For most of this lesson, we will work with the pre-computed summaries so the notebook remains small and quick to load.
 
 ## String Methods for Text Analysis
 
-Now that we have the full texts in our DataFrame, we can start to use Pandas string methods to explore them. The code below is what you'd run in your own notebook against the full dataset from Canvas. The pronoun counts and word counts shown in the charts on this page were pre-computed by that same code and saved into `combined_novels_viz.csv`.
+The following examples show how the derived columns were created from `eng_text`. Run these cells only after loading the complete dataset from Canvas. If you are using `combined_novels_viz.csv`, these results are already available in the pre-computed columns and you can read through the code without rerunning it.
 
 ### Counting Characters and Words
 
@@ -552,7 +560,7 @@ Since we are working with datasets with significant documentation, we have a fai
 
 [![From Zoë Wilkinson Saldaña "Sentiment Analysis for Exploratory Data Analysis" https://programminghistorian.org/en/lessons/sentiment-analysis](../../assets/images/eda.png){target="_blank"}](https://programminghistorian.org/en/lessons/sentiment-analysis){target="_blank"}
 
-You've likely heard this term before, but let's historically contextualize this idea. The term *Exploratory Data Analysis* (EDA) was popularized by John W. Tukey, one of the most famous statisticians and mathematicians of the 20th century. Tukey was one of the first to formally define the concept of data analysis in 1962 paper titled "The Future of Data Analysis."
+You've likely heard this term before, but let's historically contextualize this idea. The term *Exploratory Data Analysis* (EDA) was popularized by [John W. Tukey](https://en.wikipedia.org/wiki/John_Tukey){target="_blank"}, one of the most famous statisticians and mathematicians of the 20th century. Tukey was one of the first to formally define the concept of data analysis in 1962 paper titled "The Future of Data Analysis."
 
 ![](../../assets/images/tukey_future_data_analysis.png)
 
@@ -566,7 +574,7 @@ Such a framing might seem straightforward today in the age of Data Science, but 
 
 This infographic gives a sense of some of the inventions and discoveries that happened at Bell Labs, which was one of the most important research and development organizations in the 20th century. In the case of Tukey, he's credited not just with exploratory data analysis but also coining both the terms `bit`, a portmanteau of binary digit, and `software` in 1958, and he was also crucial in popularizing the fourier transform for digital signal processing, which we learned about with the Syuzhet package.
 
-Tukey was a very eclectic scholar, and worked on everything from developing better sampling methods after reviewing the [Kinsey report](https://en.wikipedia.org/wiki/Kinsey_Reports){target="_blank"}, which was a landmark study of human sexuality released in two books in 1948 and 1953, to developing better methods for election polling. His central thoughts on EDA became the basis for his 1977 book *Exploratory Data Analysis*, where he argued that EDA could help suggest hypotheses that could be then tested statistically.
+Tukey was a very eclectic scholar, and worked on everything from developing better sampling methods after reviewing the [Kinsey report](https://en.wikipedia.org/wiki/Kinsey_Reports){target="_blank"}, which was a landmark study of human sexuality released in two books in 1948 and 1953, to developing better methods for election polling. His central thoughts on EDA became the basis for his 1977 [book *Exploratory Data Analysis*](https://archive.org/details/exploratorydataa0000tuke_7616){target="_blank"}, where he argued that EDA could help suggest hypotheses that could be then tested statistically.
 
 ![](https://devopedia.org/images/article/75/3879.1525341742.jpg)
 
@@ -580,7 +588,7 @@ While there are not firm principles for EDA, Tukey argued that it should cover t
 
 With Pandas we can start to implement these with code:
 
-1. We want to explore the data, so we could use `head()`, `tail()`, or `sample()` methods to display a subset of the dataset. We could also use `.shape` or `.dtypes` to see shaped of the DataFrame and the data types of each column.
+1. We want to explore the data, so we could use `head()`, `tail()`, or `sample()` methods to display a subset of the dataset. We could also use `.shape` or `.dtypes` to see the shape of the DataFrame and the data types of each column.
 
 2. Next we might use the `describe()` method to output a summary of our dataset. According to the documentation for this method, it provides "descriptive statistics include those that summarize the central tendency, dispersion and shape of a dataset's distribution, excluding NaN values." [(Read the docs here)](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html){target="_blank"}.
 
@@ -696,11 +704,17 @@ Up to now we've been using Pandas built in `plot` methods to display our data. W
 
 ![python lib tools](https://optimise2.assets-servd.host/voracious-blesbok/production/Blog/PythonVisLandscape.jpg?w=1200&auto=compress%2Cformat&fit=crop&dm=1632326979&s=35cf543e04fd14bcc881ef8e70363860)
 
-As you can see in these graphics, in Python, there are a number of visualization libraries, including `Matplotlib`, `Seaborn`, and `Plotly` that have extensive communities and documentation.
+As you can see in these graphics, in Python, there are a number of visualization libraries, including `Matplotlib`, `Seaborn`, and `Plotly` that have extensive communities and documentation. You can see more options in the [Python Graph Gallery](https://www.python-graph-gallery.com/){target="_blank"} as well.
 
 ![Altair](https://cdn.cssauthor.com/wp-content/uploads/2023/04/Altair.jpg?strip=all&lossy=1&ssl=1)
 
-Today we're going to focus on [Vega-Altair](https://altair-viz.github.io/index.html){target="_blank"}, which is a Python library built on top of Vega and Vega-Lite - two visualization libraries for JavaScript. Previously, this library was known as just `Altair` so for brevity in this lesson we will refer to it as such. The library was started in 2016 by Jake VanderPlas and has since grown to be one of the most popular libraries for data visualization in Python.
+Today we're going to focus on [Vega-Altair](https://altair-viz.github.io/index.html){target="_blank"}, a Python library built on top of Vega and Vega-Lite, two visualization systems for JavaScript. Previously, this library was known simply as `Altair`, so we will use that shorter name throughout the lesson.
+
+Altair was initiated in 2016 by [Jake VanderPlas](https://vanderplas.com/){target="_blank"} and developed with collaborators from the Python, Jupyter, and Vega-Lite communities. VanderPlas is an astronomer and scientific-software developer who has contributed to projects including SciPy, scikit-learn, Matplotlib, and Astropy, and is also the author of the [*Python Data Science Handbook*](https://jakevdp.github.io/PythonDataScienceHandbook/){target="_blank"}. His experience working with researchers and the scientific Python ecosystem helped shape Altair around exploratory analysis in notebooks and data stored in Pandas DataFrames. The project was formally described by VanderPlas and his collaborators in their 2018 article, [“Altair: Interactive Statistical Visualizations for Python”](https://doi.org/10.21105/joss.01057){target="_blank"}.
+
+The central rationale for Altair is that people exploring data should spend less time writing instructions for every incidental feature of a chart. Altair therefore uses a **declarative** approach: we describe which data fields should map to visual channels such as position, color, size, and shape, while Vega-Lite determines many of the lower-level rendering details. Underneath, Altair translates the Python code into a JSON Vega-Lite specification that JavaScript renders as a chart. As the project's [design philosophy](https://altair-viz.github.io/getting_started/project_philosophy.html){target="_blank"} explains, this constrained grammar is a deliberate tradeoff. It offers less low-level control than some plotting libraries, but provides a more consistent way to explore data and makes the relationship between the data and the resulting visual argument easier to inspect.
+
+That tradeoff is particularly useful for us. Rather than treating a visualization as decoration added after analysis, Altair asks us to state explicitly which columns become marks and encodings. This makes it easier to discuss why a bar, point, color, aggregation, or scale supports one interpretation of cultural data rather than another.
 
 *Let's install Altair*
 
@@ -718,21 +732,7 @@ Notice that this time when installing we have a slightly new syntax: `[all]`. Th
 import altair as alt
 ```
 
-Because we are using Altair in a Jupyter Notebook we also need to add a few settings (you read more about this here [https://altair-viz.github.io/user_guide/display_frontends.html#](https://altair-viz.github.io/user_guide/display_frontends.html#){target="_blank"}).
-
-If you are running your Notebook in the browser, you can run the following after you import Altair (more info here [https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-jupyter-notebook](https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-jupyter-notebook){target="_blank"}):
-
-```python
-# Optional in Jupyter Notebook: requires an up-to-date vega nbextension.
-# alt.renderers.enable('notebook')
-```
-
-If you are running it in VS Code, you can run the following (more info here [https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-vscode](https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-vscode){target="_blank"}):
-
-```python
-# Optional in VS Code
-# alt.renderers.enable('mimetype')
-```
+Current versions of Jupyter and the VS Code Jupyter extension normally display Altair charts without additional renderer configuration. If a chart does not appear, first confirm that the notebook is using the Python interpreter from the virtual environment where you installed Altair. The [Altair display documentation](https://altair-viz.github.io/user_guide/display_frontends.html){target="_blank"} lists troubleshooting options for different notebook interfaces.
 
 Now we can try out Altair with one of the built-in datasets
 
@@ -754,11 +754,7 @@ You should now see the following graph:
 
 ![](../../assets/images/altair_chart.png)
 
-If you don't see the graph and you're running your Jupyter notebook in the browser, you might need to set the kernel of your notebook [https://stackoverflow.com/questions/47295871/is-there-a-way-to-use-pipenv-with-jupyter-notebook](https://stackoverflow.com/questions/47295871/is-there-a-way-to-use-pipenv-with-jupyter-notebook){target="_blank"} or set the vega extension with following:
-
-```sh
-jupyter nbextension install --sys-prefix --py vega
-```
+If you do not see the graph, use the notebook's kernel selector to choose your course virtual environment, restart the kernel, and rerun the import and chart cells.
 
 *So let's breakdown what we're doing here*
 
@@ -776,7 +772,7 @@ Finally we are calling encoding to specify what variable we want to represent on
 
 ![](../../assets/images/encoding_data_types.png)
 
-Now that we understand a bit of Altair's syntax, let's try to recreated our `genre` by average `top_500_rank` plot that we made previously. To do this, we don't have to do `groupby`, instead Altair can handle most of the logic for us:
+Now that we understand a bit of Altair's syntax, let's try to recreate our `genre` by average `top_500_rank` plot. We do not have to call `groupby()` first because Altair can handle the aggregation for us:
 
 ```python
 alt.Chart(combined_novels_nyt_df).mark_bar().encode(
@@ -827,9 +823,9 @@ The value of using a library like Altair is that it is built to implement the id
 
 ![](../../assets/images/grammar-of-graphics.png)
 
-*The Grammar of Graphics* is both a concept and book published in 1999 by Leland Wilkinson, a statistician and computer scientist. Wilkinson developed this idea from his experience in developing SYSTAT, a statistical software package he founded in 1983, where he saw the need for a more structured and flexible framework for data visualization.
+[*The Grammar of Graphics*](https://en.wikipedia.org/wiki/Wilkinson%27s_Grammar_of_Graphics){target="_blank"} is both a concept and book published in 1999 by Leland Wilkinson, a statistician and computer scientist. Wilkinson developed this idea from his experience in developing SYSTAT, a statistical software package he founded in 1983, where he saw the need for a more structured and flexible framework for data visualization.
 
-Wilkinson's grammar aimed to define a set of rules or components that could describe any kind of statistical graphic, from simple bar charts to complex scatter plots and heatmaps. By breaking down graphics into fundamental elements (like data, geometries, and scales), his grammar provides a way to think of visualizations as composable and modular—allowing users to understand and generate diverse charts based on clear principles. Wilkinson's ideas have influenced many modern visualization tools and libraries like `ggplot2` in R, as well as Altair.
+Wilkinson's grammar aimed to define a set of rules or components that could describe any kind of statistical graphic, from simple bar charts to complex scatter plots and heatmaps. By breaking down graphics into fundamental elements (like data, geometries, and scales), his grammar provides a way to think of visualizations as composable and modular—allowing users to understand and generate diverse charts based on clear principles. Wilkinson's ideas have influenced many modern visualization tools and libraries like [`ggplot2`](https://ggplot2.tidyverse.org/){target="_blank"} in R, as well as Altair.
 
 In *The Grammar of Graphics*, every visualization is built using the following core components:
 
@@ -965,7 +961,7 @@ alt.Chart(combined_novels_nyt_df).mark_bar().encode(
 )
 ```
 
-You'll notice our syntax is again a bit more complex. You can read about how Altair enables interactivity in the documentation here [https://altair-viz.github.io/user_guide/interactions/index.html](https://altair-viz.github.io/user_guide/interactions/index.html){target="_blank"}, but to summarize, we've now added the ability not just to have a tooltip but also to visually select our categories in the legend — try clicking a genre in the legend to highlight it.
+You'll notice our syntax is again a bit more complex. You can read about how Altair enables interactivity in the documentation here [https://altair-viz.github.io/user_guide/interactions/index.html](https://altair-viz.github.io/user_guide/interactions/index.html){target="_blank"}, but to summarize, we've now added the ability not just to have a tooltip but also to visually select our categories in the legend. Try clicking a genre in the legend to highlight it.
 
 As we are starting to see Altair is a very powerful library. We will continue to explore its functionality in the coming weeks, but would highly encourage you to take a look at the example visualizations on the Altair website [https://altair-viz.github.io/gallery/index.html](https://altair-viz.github.io/gallery/index.html){target="_blank"} and the documentation [https://altair-viz.github.io/index.html](https://altair-viz.github.io/index.html){target="_blank"}.
 
@@ -973,13 +969,29 @@ As we are starting to see Altair is a very powerful library. We will continue to
 
 Now that you have begun to grasp the fundamentals of Exploratory Data Analysis (EDA) using Pandas and Altair, this assignment will guide you through a deeper exploration of the Goodreads Top Ranked Novels and *New York Times* Bestseller datasets. Your task is not only to create visualizations but also to engage critically with the data, identifying patterns, gaps, and potential biases that can inform future research.
 
-Begin by creating a new Jupyter Notebook within your `is310-coding-assignments` repository, specifically in the `pandas-eda` folder. As you start this analysis, think carefully about the title of your notebook. The title should reflect the main themes you identify through your EDA, and it should be written in CamelCase (e.g., `GenderTrendsInTopNovels` or `RatingBiasAcrossGenres`). Crafting a meaningful title is an opportunity to synthesize the focus of your work from the start.
+Begin by creating a new Jupyter Notebook within your `is310-coding-assignments` repository, specifically in the `pandas-eda` folder. Give the notebook a descriptive filename without spaces, such as `GenderTrendsInTopNovels.ipynb` or `RatingBiasAcrossGenres.ipynb`. You may begin with a broad topic, but revise the title once your EDA reveals the question or pattern you want to emphasize.
 
-You can organize your notebook in any way that makes sense to you, but you should have a rationale and **clearly** label sections using Markdown headers. You should also use `Altair` for all your EDA visualizations. There is no set number of graphs that you must create, but part of it is imagine that you are creating this notebook for someone new to these datasets, so you should consider what would be helpful to explain or include. You also need to consider what you will not analyze, since too much data analysis can be confusing and unhelpful. You should be sure to also include text interpreting your graphs and findings for your reader.
+Organize the notebook for a reader who has not seen these datasets before. Clearly label sections with Markdown headers, keep your code cells focused, and explain what each visualization contributes to your analysis. You should use Altair for your final visualizations, although you may use Pandas plots while initially exploring the data.
 
-Finally, there are no right or wrong answers for this assignment. Only your sense of what is likely of interest based on your EDA. You could focus on comparisons between the datasets or the intersection of the datasets, and you can explore a number of correlations and relationships, or just a few. So consider this notebook your first attempt at undertaking exploratory data analysis as John Tukey first proposed.
+::: {.callout-important}
+## Assignment checklist
 
-Once you have completed your assignment, push up your code to GitHub and post a link in this GitHub discussion [https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/9](https://github.com/CultureAsData-UIUC/is310-spring-2026/discussions/9){target="_blank"}. Remember to include either remote or local access to the datasets, to avoid pushing up your virtual environment, and to document your folder with a `README.md`. And finally, as always, you are welcome to use AI tools to help you complete this assignment, but again remember you need to understand what the code is doing and you need to be able to explain the overall goals and focus of the notebook.
+Your submission should include:
+
+- [ ] A clear research question or cultural pattern that guides the notebook.
+- [ ] A short introduction to the dataset or datasets, including their provenance and what one row represents.
+- [ ] An initial audit using methods such as `head()`, `shape`, `dtypes`, `describe()`, and missing-value counts.
+- [ ] A discussion of at least one missing-data, coverage, category, or bias issue that affects interpretation.
+- [ ] At least two purposeful Altair visualizations using appropriate marks, encodings, labels, and tooltips.
+- [ ] Markdown text interpreting each visualization rather than leaving the charts to speak for themselves.
+- [ ] A conclusion explaining what you found, what remains uncertain, and what you would investigate next.
+- [ ] Reproducible data access: use a stable remote URL or document where the local data file belongs. Do not commit the 152 MB full-text dataset.
+- [ ] A `README.md` explaining the notebook, required data, and how to run it.
+:::
+
+There is no single correct finding for this assignment. You might compare the two datasets, study their intersection, or investigate a smaller set of relationships. The goal is to make a defensible exploratory argument while remaining explicit about what the available data cannot establish.
+
+Once you have completed the assignment, push your `pandas-eda` folder to GitHub and post a link in the [Fall 2026 GitHub discussion](https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/9){target="_blank"}. Do not commit your virtual environment. As always, you may use AI tools, but you must understand the code, document that use according to the course policy, and be able to explain the notebook's methods and argument.
 
 ::: {.callout-note}
 In the documentation for the Top Novels dataset, there is a section on `Discussion & Activities` [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities){target="_blank"} and specifically a link to a `Google Colab` notebook exploring bias in the metadata of this dataset, available [here](https://colab.research.google.com/drive/1fxEae0BmUmipDQC2qvqGvG11fIAITZ_K?usp=sharing){target="_blank"}. For this assignment, you are welcome to build from both our in-class explorations and this existing Colab notebook. You can reuse code from both, but the overall goal is to start implementing your knowledge of EDA to consider potential future research directions with these datasets.
@@ -990,44 +1002,36 @@ In the documentation for the Top Novels dataset, there is a section on `Discussi
 ## Additional Notes: Web Scraping With `apply()` {#additional-notes}
 
 ::: {.callout-note}
-This section covers how the `eng_text` column in our combined dataset was created. It is not required reading for the homework, but is here for students who want to understand the web scraping process or replicate it themselves.
+This section sketches how the `eng_text` column and pre-computed text measurements were created. It is not required for the homework. Our web-scraping lesson provides the fuller treatment of requests, status checks, delays, and responsible access.
 :::
 
-The dataset we loaded above has an `eng_text` column containing the full text of each novel scraped from Project Gutenberg. Here's how that was done.
+The complete Canvas dataset has an `eng_text` column containing the available Project Gutenberg text for each novel. The smaller `combined_novels_viz.csv` omits those texts and retains only the measurements used in our charts.
 
-First, the dataset has a `pg_eng_url` column with links to plain-text versions of novels. We can use the `requests` library to retrieve the text from each URL, and then use the Pandas `apply()` method to do this efficiently for all rows.
+The dataset has a `pg_eng_url` column with links to plain-text versions of novels. We can use the `requests` library to retrieve the text from each URL, then use the Pandas `apply()` method to call that function for every URL.
 
 ```python
 import requests
 import pandas as pd
 
 def get_book_text(url):
-    if pd.notna(url):
-        try:
-            response = requests.get(url)
-            if response.status_code == 200:
-                return response.text
-        except Exception as e:
-            pass
+    if pd.isna(url):
+        return None
+
+    response = requests.get(url, timeout=30)
+    if response.status_code == 200:
+        return response.text
+
+    print(f"Could not download {url}: {response.status_code}")
     return None
 ```
 
-While we could loop through the DataFrame with `iterrows()`, the `apply()` method is more efficient:
+We can apply that function to every URL in the column:
 
 ```python
-# Slower approach using iterrows()
-texts = []
-for index, row in combined_novels_nyt_df.iterrows():
-    text = get_book_text(row['pg_eng_url'])
-    texts.append(text)
-
-# Faster approach using apply()
 combined_novels_nyt_df.loc[:, 'eng_text'] = combined_novels_nyt_df['pg_eng_url'].apply(get_book_text)
 ```
 
-You can read more about the `apply()` method in the Pandas documentation here [https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html){target="_blank"}. As the graphic below shows, `apply()` is significantly faster than looping for large DataFrames:
-
-![](https://www.ml4devs.com/images/illustrations/pandas-dataframe-apply-performace-comparision.webp)
+The Pandas [`apply()` documentation](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html){target="_blank"} explains how it calls a function for each value or row. It does not make the web requests themselves faster: here, most of the runtime comes from waiting for each server response. For calculations that Pandas already supports directly, prefer vectorized string, arithmetic, or aggregation methods over either `apply()` or a row-by-row loop.
 
 We also used the `tqdm` library to display a progress bar during the scraping, since retrieving hundreds of full novel texts takes a few minutes:
 
@@ -1045,3 +1049,5 @@ Finally, once we had all the texts, we saved the combined DataFrame to a CSV fil
 ```python
 combined_novels_nyt_df.to_csv("combined_novels_with_text.csv", index=False)
 ```
+
+[^1]: Quinn Dombrowski, Manish Goregaokar, Ben Joeng (Yang), and Abeera Kamran, “Encoding Multilingualism: Technical Affordances of Multilingual Publication from Manuscripts to Unicode and OpenType,” *Journal of Electronic Publishing* 27, no. 1 (2024): 309–329, [https://doi.org/10.3998/jep.5528](https://doi.org/10.3998/jep.5528){target="_blank"}.
