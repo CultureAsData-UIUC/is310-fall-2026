@@ -456,6 +456,49 @@ ul.task-list li input[type="checkbox"] {
 <p>Not all responsible data work begins from scratch though. In fact, some of the most important contributions come from uncovering how existing datasets were made, what they omit, and how they might be improved. This part of the assignment asks you to audit existing culture as data. You will critically engage with an existing dataset—especially one that lacks documentation or transparency—and make its origins, structure, and limitations legible to others.</p>
 <p>For example, you might find a movie dataset on Kaggle that includes scraped reviews and ratings, but provides little information about where the data came from or how it was cleaned. You could trace the dataset back to its source—say, IMDb or Rotten Tomatoes or even historic newspapers—and compare a sample of the original reviews to what appears in the dataset. Were the reviews shortened or misattributed? What patterns of exclusion or distortion emerge? How much has been lost in this process?</p>
 <p>Or you might find a dataset that is widely reused but lacks key metadata or flattens the complexity of the phenomenon it represents, like popular economic benchmark datasets like GDP. Your goal then would be to try and reintroduce that complexity either through supplementing it with missing information, reconciling conflicting sources, or annotating entries to flag inconsistencies or bias. These contributions not only enhance the dataset, but also model what responsible reuse looks like.</p>
+<p>An audit should move systematically from the dataset’s history to the claims it can support. For example, an audit of a movie-review dataset might include:</p>
+<table class="table-striped table-hover caption-top table">
+<caption>Dataset audit framework and example</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 34%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Audit Layer</th>
+<th>Questions</th>
+<th>Movie Dataset Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Provenance</td>
+<td>Who created the data, where and when was it collected, and why?</td>
+<td>Trace a Kaggle download back to IMDb, Rotten Tomatoes, newspapers, or another original source; identify who scraped or compiled it and when.</td>
+</tr>
+<tr class="even">
+<td>Structure</td>
+<td>What does each row, field, value, and identifier represent?</td>
+<td>Determine whether one row represents a movie, review, rating, user, or screening, and whether a rating uses a consistent scale.</td>
+</tr>
+<tr class="odd">
+<td>Transformation</td>
+<td>What was cleaned, merged, inferred, shortened, or excluded?</td>
+<td>Compare selected reviews with the source pages to identify truncated text, normalized ratings, changed titles, inferred genres, or removed duplicates.</td>
+</tr>
+<tr class="even">
+<td>Coverage</td>
+<td>Who or what is present, absent, duplicated, or incomparable?</td>
+<td>Check which years, languages, genres, platforms, reviewers, or kinds of films are overrepresented or missing.</td>
+</tr>
+<tr class="odd">
+<td>Interpretation</td>
+<td>Which claims can this evidence support, and which would exceed it?</td>
+<td>Decide whether the data measures critical reception, audience response, platform activity, or popularity—and whether it can support claims about quality or cultural importance.</td>
+</tr>
+</tbody>
+</table>
 <p>Whatever dataset you choose, this approach requires you to investigate its provenance, reflect on its transformations, and document your findings. Just like with data creation, you’ll need a clear methodology, a justification for your interventions, and a well-documented data biography that makes your process transparent.</p>
 </div>
 </div>
@@ -655,7 +698,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-body-container callout-body">
 <ul class="task-list">
-<li><label><input type="checkbox">Submit an initial structured custom dataset, containing approximately 50-100 items. If you do not have your full dataset, that is acceptable but you should detail why you have yet to collect it all and your plan for completion.</label></li>
+<li><label><input type="checkbox">Submit an initial structured custom dataset as a <code>.csv</code>, <code>.tsv</code>, <code>.json</code>, or another justified and documented structured data file, containing approximately 50-100 items. Do not submit a Google Sheet or Excel workbook. If you do not have your full dataset, that is acceptable but you should detail why you have yet to collect it all and your plan for completion.</label></li>
 <li><label><input type="checkbox">Explain the dataset’s fields, categories, organization, and inclusion or exclusion decisions.</label></li>
 <li><label><input type="checkbox">Document both transformations: cultural material to working representation, then representation to structured data.</label></li>
 <li><label><input type="checkbox">Include a computational artifact, such as a Python script, Jupyter notebook, or HTML page. <strong>This cannot be generated with standalone GUI tools.</strong></label></li>
@@ -672,6 +715,21 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Why start small?</em> We start with small-scale, custom data creation for a crucial reason: this is where you learn that every dataset embeds interpretive choices. When you work carefully through 75 items, deciding what counts, what to capture, how to categorize, you experience the intellectual and ethical labor that gets hidden when you download a dataset or automate collection at scale. It is also an opportunity to get creative and think about what data you wish would exist for your cultural topic of interest.</p>
 <p><em>What about computation?</em> While your dataset is small and reflects close interpretive work, you are required to use computational tools to assist your process. This is not about automation—it is about understanding how computation can support even custom data work. You might use computation to structure records, extract text, create an HTML curation page, check consistency, compare categories, identify missing values, visualize early patterns, or use LLMs to suggest metadata that you then check manually.</p>
 <p>You do <strong>not need to submit a completed audit at mid-semester</strong>. Instead, you need to identify the existing dataset, archive, platform, API, collection, or source you plan to audit or compare against your custom dataset. Your plan should explain why this existing data matters, how you will examine it, and how you think it might connect to the custom dataset you have created.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Required Structured Data Formats
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Your custom dataset and any revised or derived audit data must be submitted as <strong>structured data files</strong>, such as <code>.csv</code>, <code>.tsv</code>, or <code>.json</code>. Another documented, nonproprietary structured format may be appropriate when justified by your project.</p>
+<p><strong>Do not use Google Sheets or Microsoft Excel as the primary environment for creating or maintaining the dataset, and do not submit a Google Sheet or <code>.xlsx</code> workbook as your final dataset.</strong> A CSV or TSV file may look like a spreadsheet when opened in some programs, but it is a portable plain-text data format rather than a spreadsheet workbook. Work with these files using Python, Jupyter notebooks, VS Code, or another reproducible computational workflow.</p>
+<p>Your documentation should name the format you selected, explain why it fits the structure of your data, and tell another person how to read or reuse it.</p>
+</div>
+</div>
 <section id="format-submission-1" class="level3">
 <h3 class="anchored" data-anchor-id="format-submission-1">Format &amp; Submission</h3>
 <p>Your submission includes six components:</p>
@@ -690,7 +748,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Initial Custom Dataset</td>
-<td>Your custom dataset in a structured format of your choice, usually approximately 50-100 items. This is the first version of your work creating culture as data. You should have a rationale for how you organized your data.</td>
+<td>Your custom dataset as a <code>.csv</code>, <code>.tsv</code>, <code>.json</code>, or another justified and documented structured data file, usually containing approximately 50-100 items. Do not submit a Google Sheet or <code>.xlsx</code> workbook. This is the first version of your work creating culture as data, and you should explain how and why you organized it.</td>
 </tr>
 <tr class="even">
 <td>Initial Documentation</td>
@@ -715,7 +773,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -724,7 +782,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Your initial documentation should address questions such as:</p>
 <ul>
@@ -807,7 +865,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="callout-body-container callout-body">
 <p><strong>Each student submits:</strong></p>
 <ul class="task-list">
-<li><label><input type="checkbox"><strong>Custom dataset:</strong> A final structured dataset plus documentation explaining its cultural sources, transformation steps, fields and categories, interpretive decisions, limitations, and reuse conditions.</label></li>
+<li><label><input type="checkbox"><strong>Custom dataset:</strong> A final structured dataset submitted as a <code>.csv</code>, <code>.tsv</code>, <code>.json</code>, or another justified and documented structured data file—not a Google Sheet or Excel workbook—plus documentation explaining its cultural sources, transformation steps, fields and categories, interpretive decisions, limitations, and reuse conditions.</label></li>
 <li><label><input type="checkbox"><strong>Audit of existing data:</strong> The data, code, or other computational evidence produced through your audit, comparison, cleaning, or transformation, plus a write-up explaining the existing data’s provenance, your method, your findings, and its limits.</label></li>
 <li><label><input type="checkbox"><strong>Publication-ready data essay:</strong> Use the <a href="../assets/files/project-templates/data-essay-template.qmd" target="_blank">data essay template</a> to prepare one Markdown document that brings together your custom-dataset documentation, existing-data audit, synthesis reflection, and the most important tables or visualizations. It should direct readers to the fuller data, notebook, code, and reuse guidance in GitHub.</label></li>
 <li><label><input type="checkbox"><strong>Reproducible computational work:</strong> A Jupyter notebook and any supporting scripts that show how you inspected, transformed, analyzed, or visualized the data used in the essay.</label></li>
@@ -900,7 +958,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div id="group-submission" class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -909,7 +967,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Your group will collaboratively prepare a coherent collection of public data essays, maintain a shared GitHub repository, and write collective principles that synthesize what you learned about working with your particular type of cultural data. This part of the assignment is <strong>not</strong> a repeat of the individual essays, but rather a chance to develop methodological guidance and collective wisdom for future researchers. Use the <a href="../assets/files/project-templates/group-principles-template.md" target="_blank">group principles template</a> to structure this document.</p>
 <p>Think of this as writing the documentation you wish had existed when you started this project. What should someone know before they attempt to represent music as data? Or social media? Or gaming culture? Or sports? What principles emerged from your group’s diverse approaches to similar materials?</p>

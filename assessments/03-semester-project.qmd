@@ -51,6 +51,18 @@ For example, you might find a movie dataset on Kaggle that includes scraped revi
 
 Or you might find a dataset that is widely reused but lacks key metadata or flattens the complexity of the phenomenon it represents, like popular economic benchmark datasets like GDP. Your goal then would be to try and reintroduce that complexity either through supplementing it with missing information, reconciling conflicting sources, or annotating entries to flag inconsistencies or bias. These contributions not only enhance the dataset, but also model what responsible reuse looks like.
 
+An audit should move systematically from the dataset's history to the claims it can support. For example, an audit of a movie-review dataset might include:
+
+| Audit Layer | Questions | Movie Dataset Example |
+|---|---|---|
+| Provenance | Who created the data, where and when was it collected, and why? | Trace a Kaggle download back to IMDb, Rotten Tomatoes, newspapers, or another original source; identify who scraped or compiled it and when. |
+| Structure | What does each row, field, value, and identifier represent? | Determine whether one row represents a movie, review, rating, user, or screening, and whether a rating uses a consistent scale. |
+| Transformation | What was cleaned, merged, inferred, shortened, or excluded? | Compare selected reviews with the source pages to identify truncated text, normalized ratings, changed titles, inferred genres, or removed duplicates. |
+| Coverage | Who or what is present, absent, duplicated, or incomparable? | Check which years, languages, genres, platforms, reviewers, or kinds of films are overrepresented or missing. |
+| Interpretation | Which claims can this evidence support, and which would exceed it? | Decide whether the data measures critical reception, audience response, platform activity, or popularity—and whether it can support claims about quality or cultural importance. |
+
+: Dataset audit framework and example {tbl-colwidths="[16,34,50]" .striped .hover}
+
 Whatever dataset you choose, this approach requires you to investigate its provenance, reflect on its transformations, and document your findings. Just like with data creation, you’ll need a clear methodology, a justification for your interventions, and a well-documented data biography that makes your process transparent.
 :::
 
@@ -144,7 +156,7 @@ This planning document should include:
 ::: {.callout-note}
 ## Milestone 2 Checklist
 
-- [ ] Submit an initial structured custom dataset, containing approximately 50-100 items. If you do not have your full dataset, that is acceptable but you should detail why you have yet to collect it all and your plan for completion.
+- [ ] Submit an initial structured custom dataset as a `.csv`, `.tsv`, `.json`, or another justified and documented structured data file, containing approximately 50-100 items. Do not submit a Google Sheet or Excel workbook. If you do not have your full dataset, that is acceptable but you should detail why you have yet to collect it all and your plan for completion.
 - [ ] Explain the dataset's fields, categories, organization, and inclusion or exclusion decisions.
 - [ ] Document both transformations: cultural material to working representation, then representation to structured data.
 - [ ] Include a computational artifact, such as a Python script, Jupyter notebook, or HTML page. **This cannot be generated with standalone GUI tools.**
@@ -165,13 +177,23 @@ The focus for your initial custom dataset is to understand what it means to make
 
 You do **not need to submit a completed audit at mid-semester**. Instead, you need to identify the existing dataset, archive, platform, API, collection, or source you plan to audit or compare against your custom dataset. Your plan should explain why this existing data matters, how you will examine it, and how you think it might connect to the custom dataset you have created.
 
+::: {.callout-important}
+## Required Structured Data Formats
+
+Your custom dataset and any revised or derived audit data must be submitted as **structured data files**, such as `.csv`, `.tsv`, or `.json`. Another documented, nonproprietary structured format may be appropriate when justified by your project.
+
+**Do not use Google Sheets or Microsoft Excel as the primary environment for creating or maintaining the dataset, and do not submit a Google Sheet or `.xlsx` workbook as your final dataset.** A CSV or TSV file may look like a spreadsheet when opened in some programs, but it is a portable plain-text data format rather than a spreadsheet workbook. Work with these files using Python, Jupyter notebooks, VS Code, or another reproducible computational workflow.
+
+Your documentation should name the format you selected, explain why it fits the structure of your data, and tell another person how to read or reuse it.
+:::
+
 ### Format & Submission
 
 Your submission includes six components:
 
 | Component | Requirement |
 |---|---|
-| Initial Custom Dataset | Your custom dataset in a structured format of your choice, usually approximately 50-100 items. This is the first version of your work creating culture as data. You should have a rationale for how you organized your data. |
+| Initial Custom Dataset | Your custom dataset as a `.csv`, `.tsv`, `.json`, or another justified and documented structured data file, usually containing approximately 50-100 items. Do not submit a Google Sheet or `.xlsx` workbook. This is the first version of your work creating culture as data, and you should explain how and why you organized it. |
 | Initial Documentation | Your first attempt at documentation that explains the dataset, your process, your interpretive choices, relevant scholarly context, and how someone else should understand or reuse the data. This should document how your cultural materials became a working representation and how that representation became structured data. |
 | Computational Process | Evidence that you used computation to assist the custom dataset, such as a Python script, Jupyter notebook, or HTML curation page. **Again no standalone GUI tools can be used for this step.** |
 | Audit and Connection Plan | A roadmap for the second half of the project: what existing dataset, collection, platform, API, archive, or source will you audit or compare against your custom dataset, and how will this help you understand existing culture as data? |
@@ -243,7 +265,7 @@ Your collective piece will instead be your GitHub repository and a shared set of
 
 **Each student submits:**
 
-- [ ] **Custom dataset:** A final structured dataset plus documentation explaining its cultural sources, transformation steps, fields and categories, interpretive decisions, limitations, and reuse conditions.
+- [ ] **Custom dataset:** A final structured dataset submitted as a `.csv`, `.tsv`, `.json`, or another justified and documented structured data file—not a Google Sheet or Excel workbook—plus documentation explaining its cultural sources, transformation steps, fields and categories, interpretive decisions, limitations, and reuse conditions.
 - [ ] **Audit of existing data:** The data, code, or other computational evidence produced through your audit, comparison, cleaning, or transformation, plus a write-up explaining the existing data's provenance, your method, your findings, and its limits.
 - [ ] **Publication-ready data essay:** Use the [data essay template](../assets/files/project-templates/data-essay-template.qmd){target="_blank"} to prepare one Markdown document that brings together your custom-dataset documentation, existing-data audit, synthesis reflection, and the most important tables or visualizations. It should direct readers to the fuller data, notebook, code, and reuse guidance in GitHub.
 - [ ] **Reproducible computational work:** A Jupyter notebook and any supporting scripts that show how you inspected, transformed, analyzed, or visualized the data used in the essay.
