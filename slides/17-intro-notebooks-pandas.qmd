@@ -1,0 +1,501 @@
+---
+title: "(Re)Introduction to Jupyter Notebooks & Pandas"
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+    chalkboard: true
+    preview-links: auto
+---
+
+# Today's Agenda
+
+- Review web scraping homework
+- Review introduction to Jupyter notebooks lesson
+- Time permitting work in breakout groups
+- REMINDER: Tuesday please go vote in the midterm elections! No participation will be recorded for that day and I will post the class recording on Canvas.
+
+*Any questions?*
+
+## Community Wikis & Web Scraping Homework
+
+![](../assets/images/volunteer_wheel.png)
+
+# Big Question Today: How can we explore culture as data at scale? {.r-fit-text}
+
+
+## How have we run Python so far?
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```sh
+python
+```
+
+**Interpreter / REPL**
+
+:::
+::: {.column width="50%"}
+
+```sh
+python script.py
+```
+
+**Python script**
+
+:::
+::::
+
+What might we want from a third way of working?
+
+
+## What is a Jupyter notebook?
+
+[![](https://jupyter-notebook.readthedocs.io/en/stable/_images/notebook-running-code.png)](https://jupyter.org/){target="_blank"}
+
+
+## What are the origins of Jupyter notebooks?
+
+[![](../assets/images/history_jupyter.png)](https://ipython.org/){target="_blank"}
+
+
+## What are the origins of code notebooks?
+
+:::: {.columns}
+::: {.column width="50%"}
+[![](https://upload.wikimedia.org/wikipedia/en/6/62/Literate_Programming_book_cover.jpg)](https://en.wikipedia.org/wiki/Literate_programming){target="_blank"}
+:::
+::: {.column width="50%"}
+[![](https://upload.wikimedia.org/wikipedia/commons/3/3e/Mathematica_logistic_bifurcation.png)](https://www.wolfram.com/mathematica/){target="_blank"}
+:::
+::::
+
+
+## Why is it called Jupyter? What is the Python Data Science Ecosystem?
+
+:::: {.columns}
+::: {.column width="50%"}
+[![](https://www.openriskmanagement.com/post-media/2019/10/Jupyter.png)](https://docs.jupyter.org/en/latest/projects/architecture/content-architecture.html){target="_blank"}
+:::
+::: {.column width="50%"}
+[![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL1MI9ehxD6rsVCBOsC9eHUOVURJxc9mra_Ez-6eE6jvn1PqANgs4y5NEe&s=10)](https://us.pycon.org/){target="_blank"}
+:::
+::::
+
+
+## How did Jupyter become so popular? What was the notebook wars?
+
+:::: {.columns}
+::: {.column width="50%"}
+![](https://cdn.blot.im/blog_c663f02498124fc1b757cd6c65557939/_image_cache/80105af1-dd1c-4d59-8c6f-8e9e51a73c1c.png)
+:::
+::: {.column width="50%"}
+![](../assets/images/notebook_wars.png)
+:::
+::::
+
+
+## How are notebooks becoming research infrastructure?
+
+:::: {.columns}
+::: {.column width="50%"}
+[![](../assets/images/walsh_book.png)](https://melaniewalsh.github.io/Intro-Cultural-Analytics/){target="_blank"}
+:::
+::: {.column width="50%"}
+[![](../assets/images/journal_of_digital_history_articles.png)](https://journalofdigitalhistory.org/en/articles/){target="_blank"}
+:::
+::::
+
+
+## What comes after Jupyter?
+
+:::: {.columns}
+::: {.column width="50%"}
+[![](../assets/images/quarto.png)](https://quarto.org/){target="_blank"}
+:::
+::: {.column width="50%"}
+[![](https://miro.medium.com/v2/resize:fit:2000/1*8SjQ2svUj5Hf-4e2PXXDEg.gif)](https://marimo.io/){target="_blank"}
+:::
+::::
+
+
+## What should we do before installing Jupyter?
+
+. . .
+
+Activate the course virtual environment.
+
+```sh
+pip install notebook ipykernel pandas
+```
+
+
+## How can we work with Jupyter notebooks? What is the difference between VS Code vs. the browser?
+
+[![](../assets/images/open_vscode.png)](https://code.visualstudio.com/docs/datascience/jupyter-notebooks){target="_blank"}
+
+
+## Which Python is actually running this notebook? What is a kernel?
+
+**Select Kernel** → course virtual environment
+
+```python
+import sys
+
+sys.executable
+```
+
+
+## What is inside an `.ipynb` file?
+
+![](../assets/images/empty_notebook.png)
+
+
+## Why should we only run notebooks we trust?
+
+::: {.callout-warning}
+Notebook cells can change files, delete data, install software, or send information over the internet.
+:::
+
+
+## What are the two main kinds of cells?
+
+. . .
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```markdown
+## Research Question
+
+What patterns appear in this data?
+```
+
+**Markdown cell**
+
+:::
+::: {.column width="50%"}
+
+```python
+favorite_movies[0]
+```
+
+**Code cell**
+
+:::
+::::
+
+
+## How is a notebook different from a script?
+
+Let's try out some code!
+
+. . .
+
+![](../assets/images/name_error.png)
+
+
+
+
+## How do we test whether a notebook will run correctly from a fresh start?
+
+. . .
+
+**Restart Kernel and Run All Cells**
+
+1. Put imports and definitions before their use.
+2. Run cells from top to bottom.
+3. Fix hidden dependencies on old state.
+4. Save the resulting notebook.
+
+
+## How can we work with Data in Jupyter Notebooks? What is Pandas?
+
+[![](https://pandas.pydata.org/static/img/pandas.svg)](https://pandas.pydata.org/){target="_blank"}
+
+
+## Where did Pandas come from?
+
+:::: {.columns}
+::: {.column width="50%"}
+[![](../assets/images/pandas_commit_history.png)](https://github.com/pandas-dev/pandas){target="_blank"}
+:::
+::: {.column width="50%"}
+[![](../assets/images/pandas_team.png)](https://pandas.pydata.org/about/team.html){target="_blank"}
+:::
+::::
+
+
+## How do we install, import and check the version of `pandas`?
+
+. . .
+```sh
+pip install pandas
+```
+
+```python
+import pandas as pd
+```
+
+```python
+pd.__version__
+```
+
+
+## How do we get data with Pandas?
+
+. . .
+
+:::: {.columns}
+::: {.column width="50%"}
+[![](https://pandas.pydata.org/docs/_images/02_io_readwrite.svg)](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html#pandas-read-csv){target="_blank"}
+:::
+::: {.column width="50%"}
+Let's try it out:
+```python
+parks_data_df = pd.read_csv('https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv')
+# Or use the downloaded file:
+# parks_data_df = pd.read_csv('US-National-Parks_RecreationVisits_1979-2023.csv')
+```
+:::
+::::
+
+
+## What is a DataFrame?
+
+[![](https://pandas.pydata.org/docs/_images/01_table_dataframe.svg)](https://pandas.pydata.org/docs/getting_started/intro_tutorials/01_table_oriented.html){target="_blank"}
+
+
+## How can we inspect or explore a DataFrame?
+
+. . .
+
+```python
+parks_data_df.head()
+```
+
+. . .
+
+```python
+parks_data_df.sample(random_state=42)
+```
+
+. . .
+
+```python
+parks_data_df.shape
+```
+
+. . .
+
+```python
+parks_data_df.dtypes
+```
+. . .
+
+```python
+parks_data_df.info()
+```
+. . .
+
+```python
+parks_data_df.describe()
+```
+. . .
+```python
+parks_data_df.sort_values(by='RecreationVisits', ascending=False)
+```
+. . .
+```python
+parks_data_df.sort_values(by=['Year', 'RecreationVisits'], ascending=[True, False]).head(10)
+```
+
+
+## What are Pandas data types? Are any unique to Pandas?
+
+. . .
+
+| Pandas dtype | Python type | NumPy type | Usage|
+|:----------:|:----------:|:----------:|:----------:|
+| `str` or `string` | `str` | String array | Text values |
+| `object` | Any Python object | `object_` | Mixed or arbitrary Python objects |
+| `int64` | `int` | `int64` | Integer numbers |
+| `float64` | `float` | `float64` | Floating-point numbers |
+| `bool` | `bool` | `bool_` | True/False values |
+| `datetime64` | `datetime` | `datetime64` | Date and time values |
+| `timedelta64` | `timedelta` | `timedelta64` | Differences between datetimes |
+| `category` | No direct equivalent | No direct equivalent | A finite set of repeated values |
+
+
+## How can we check for missing or duplicate values? Why might that matter?
+
+. . . 
+
+```python
+parks_data_df.isna().sum()
+```
+. . .
+```python
+parks_data_df.duplicated().sum()
+```
+
+
+
+## How do we select and compare parts of a DataFrame? 
+
+*Why do one and two pairs of brackets differ?*
+
+```python
+parks_data_df['Year']
+```
+
+```python
+parks_data_df[['Year']]
+```
+
+
+## What is a Series?
+
+[![](../assets/images/pandas_series.png)](https://pandas.pydata.org/docs/reference/api/pandas.Series.html){target="_blank"}
+
+
+## How do Series differ from DataFrames?
+
+```python
+parks_data_df['Year'].to_list()
+```
+
+```python
+parks_data_df['Year'].unique()
+```
+
+
+## How do we filter rows with a condition?
+
+. . .
+
+```python
+parks_data_df[parks_data_df['state'] == 'IL']
+```
+
+
+## How do we filter for several possible values?
+
+. . .
+
+```python
+parks_data_df[parks_data_df['state'].isin(['CA', 'AK'])]
+```
+
+
+## What is `groupby()`?
+
+[![](../assets/images/groupby_mech.png)](https://pandas.pydata.org/docs/user_guide/groupby.html){target="_blank"}
+
+
+## Are we counting parks or rows?
+
+```python
+parks_data_df.groupby('state').size()
+```
+
+. . .
+
+```python
+parks_data_df.groupby('state')['park_name'].nunique()
+```
+
+
+## How do we turn the grouped result back into a table?
+
+. . .
+
+```python
+parks_data_df.groupby('state')['park_name'].nunique().reset_index()
+```
+
+```python
+parks_per_state_df = parks_data_df.groupby('state')['park_name'].nunique().reset_index()
+```
+
+
+## What other methods could we use to summarize parks per state?
+
+. . .
+
+| Pandas method | Explanation |
+|:----------:|:----------:|
+|`.count()`| Number of non-null observations|
+|`.sum()`| Sum of values|
+|`.mean()`| Mean of values|
+|`.median()`| Median of values|
+| `.min()` | Minimum value|
+| `.max()`| Maximum value|
+| `.mode()`| Mode|
+| `.std()`| Sample standard deviation of values |
+| `.describe()` | Compute set of summary statistics for Series or each DataFrame column|
+| `.value_counts()` | Count unique values in a Series|
+| `.nunique()` | Count unique values in a Series|
+| `.size()` | Count number of rows in each group|
+
+
+## How can we rename columns in a DataFrame?
+
+. . .
+
+```python
+parks_per_state_df.rename(columns={'park_name': 'num_parks'})
+```
+
+```python
+parks_per_state_df = parks_per_state_df.rename(columns={'park_name': 'num_parks'})
+```
+
+*How do these differ?*
+
+
+## How can we add new data?
+
+. . .
+
+```python
+new_state = pd.DataFrame({'state': ['IL'], 'num_parks': [0]})
+combined_parks_per_state_df = pd.concat(
+    [parks_per_state_df, new_state],
+    ignore_index=True
+)
+```
+
+
+## How can we save this data?
+
+. . .
+
+```python
+combined_parks_per_state_df.to_csv('parks_per_state.csv', index=False)
+```
+
+*Why do we need `index=False`?*
+
+## In-class notebook check
+
+Create or open `NationalParksEDA.ipynb`, then:
+
+1. Add a Markdown title and research question.
+2. Import Pandas and load the National Parks data.
+3. Inspect its shape, columns, data types, and missing values.
+4. Filter one subset that interests you.
+5. Group and aggregate the data to answer one question.
+6. Explain what your result can and cannot tell us.
+7. Restart the kernel and run all cells.
+
+
+## What should we remember?
+
+- A notebook is a document connected to a live kernel.
+- Visible order and execution order can differ.
+- Restart and run all before sharing.
+- A DataFrame represents rows and columns, but their meaning comes from provenance.
+- Selecting, filtering, and grouping are interpretive choices.
+
