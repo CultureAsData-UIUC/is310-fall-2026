@@ -229,6 +229,226 @@ Here's a quick overview of the most common methods for handling missing values i
 :::
 
 
+## Exploratory Data Analysis
+
+[![From Zoë Wilkinson Saldaña, "Sentiment Analysis for Exploratory Data Analysis"](../assets/images/eda.png)](https://programminghistorian.org/en/lessons/sentiment-analysis){fig-align="center" target="_blank"}
+
+
+## John W. Tukey & The History of EDA
+
+:::: {.columns}
+::: {.column width="50%" .r-fit-text}
+[![](../assets/images/tukey_future_data_analysis.png)](https://projecteuclid.org/download/pdf_1/euclid.aoms/1177704711){fig-align="center" target="_blank"}
+:::
+::: {.column width="50%" .r-fit-text}
+In the paper, Tukey writes:
+
+> For a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. [...] All in all, I have come to feel that my central interest is in *data analysis*, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.
+:::
+::::
+
+
+## Bell Labs
+
+![](https://memorial.bellsystem.com/images/history-%20bell_labs_large.png){fig-align="center"}
+
+
+## Tukey's Principles of EDA
+
+![](https://devopedia.org/images/article/75/3879.1525341742.jpg){fig-align="center"}
+
+## EDA With Pandas: The Toolkit
+
+::: {.r-fit-text}
+How Pandas helps us implement Tukey's principles of EDA:
+
+1. **Explore structure** — `head()`, `tail()`, `sample()`, `.shape`, `.dtypes`
+2. **Summarize** — `describe()`
+3. **Sort & rank** — `sort_values()`, `nsmallest()`, `nlargest()`
+4. **Check missing** — `isna().any()`, `isna().sum()`
+5. **Visualize** — `plot()`
+:::
+
+
+## Visualizing Data With Pandas
+
+[![](https://pandas.pydata.org/docs/_images/04_plot_overview.svg)](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html){fig-align="center" target="_blank"}
+
+
+## Matplotlib & Plots
+
+::: {.r-fit-text}
+`plot` is built into Pandas and is a wrapper around the `matplotlib` library [https://matplotlib.org/](https://matplotlib.org/){target="_blank"}, one of the most popular Python libraries for data visualization. The documentation lists the kinds of plots we can create:
+
+- 'line' : line plot (default)
+- 'bar' : vertical bar plot
+- 'barh' : horizontal bar plot
+- 'hist' : histogram
+- 'box' : boxplot
+- 'kde' : Kernel Density Estimation plot
+- 'density' : same as 'kde'
+- 'area' : area plot
+- 'pie' : pie plot
+- 'scatter' : scatter plot (DataFrame only)
+- 'hexbin' : hexbin plot (DataFrame only)
+:::
+
+## How to Visualize Our Data?
+
+*What if we wanted to create a scatter plot looking at the relationship between the `pub_year` and `top_500_rank` columns? How can we create this graph?*
+
+![](../assets/images/toprank_year_novels.png)
+
+
+## How to Visualize Our Data?
+
+*What if we wanted to explore the relationship between `genre` and the average `top_500_rank` for each genre? How can we create this graph?*
+
+![](../assets/images/genre_mean.png)
+
+
+
+## "Cleaning" Data With Pandas & GIGO
+
+
+:::: {.columns}
+::: {.column width="50%"}
+*Why might we want to subset our data?*
+
+```python
+subset_novels_df = novels_df[novels_df.genre.notna()]
+```
+:::
+::: {.column width="50%"}
+[![](https://www.harrised.com/150/images/gigo.jpeg)](https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out){fig-align="center" target="_blank" width="400"}
+:::
+::::
+
+
+## Types of Data
+
+![](../assets/images/data_types.png){fig-align="center"}
+
+
+## Data Visualization in Python
+
+:::: {.columns}
+::: {.column width="50%"}
+![](https://media.opennews.org/img/24tools/big_chart.png)
+:::
+::: {.column width="50%"}
+![](https://optimise2.assets-servd.host/voracious-blesbok/production/Blog/PythonVisLandscape.jpg?w=1200&auto=compress%2Cformat&fit=crop&dm=1632326979&s=35cf543e04fd14bcc881ef8e70363860)
+:::
+::::
+
+## Data Visualization With Altair
+
+[![](https://cdn.cssauthor.com/wp-content/uploads/2023/04/Altair.jpg?strip=all&lossy=1&ssl=1)](https://altair-viz.github.io/index.html){fig-align="center" target="_blank"}
+
+
+## Installing Altair
+
+Remember to activate your virtual environment!
+
+```sh
+pip install "altair[all]"
+```
+
+
+## Using Altair
+
+Now we can try out Altair with one of the built-in datasets
+
+```python
+import altair as alt
+from altair.datasets import data
+
+source = data.cars()
+
+alt.Chart(source).mark_circle(size=60).encode(
+    x='Horsepower',
+    y='Miles_per_Gallon',
+    color='Origin',
+    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']
+)
+```
+
+
+## Altair Class
+
+[![](../assets/images/top_level_charts.png)](https://altair-viz.github.io/user_guide/generated/toplevel/altair.Chart.html#altair.Chart){fig-align="center" target="_blank"}
+
+
+## Altair Marks
+
+[![](../assets/images/mark_types.png)](https://altair-viz.github.io/user_guide/marks/index.html){fig-align="center" target="_blank"}
+
+
+## Altair Encodings
+
+:::: {.columns}
+::: {.column width="50%"}
+[![](../assets/images/encodings.png)](https://altair-viz.github.io/user_guide/encodings/index.html){fig-align="center" target="_blank"}
+:::
+::: {.column width="50%"}
+[![](../assets/images/encoding_data_types.png)](https://altair-viz.github.io/user_guide/encodings/index.html#data-types){fig-align="center" target="_blank"}
+:::
+::::
+
+
+## Trying It Out
+
+Now that we understand a bit of Altair's syntax, let's try to recreated our `genre` by average `top_500_rank` plot that we made previously. To do this, we don't have to do `groupby`, instead Altair can handle most of the logic for us:
+
+```python
+alt.Chart(novels_df).mark_bar().encode(
+	x="genre:N",
+	y="mean(top_500_rank):Q",
+)
+```
+
+You can read more about aggregation here [https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions](https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions){target="_blank"}.
+
+
+## The Grammar of Graphics
+
+:::: {.columns}
+::: {.column width="50%"}
+![](../assets/images/grammar-of-graphics.png){fig-align="center"}
+:::
+::: {.column width="50%" .r-fit-text}
+In *The Grammar of Graphics*, every visualization is built using the following core components:
+
+1. Data: The dataset that you want to visualize.
+2. Mappings: How the data variables map to visual properties like axes, colors, or sizes.
+3. Geometries (Marks): The basic shapes used to represent the data, such as points, lines, bars, etc.
+4. Statistical transformations: Aggregations or transformations applied to the data, such as grouping, counting, or averaging.
+5. Scales: How data values are translated into visual values, like positioning on the x- or y-axis.
+6. Coordinates: The coordinate system used, such as Cartesian or polar coordinates.
+7. Faceting: How the data is split into different panels or sections to show comparisons.
+:::
+::::
+
+
+
+## Adding Color, Tooltip & Title
+
+*What is this code visualizing?*
+
+```python
+alt.Chart(novels_df).mark_bar().encode(
+    x="genre:N",
+    y="count():Q",
+    color=alt.Color("top_500_rank:Q", scale=alt.Scale(scheme="viridis")),
+    tooltip=["genre:N", "count():Q", "top_500_rank:Q", "title"]
+).properties(
+    title="Top 500 Novels by Genre",
+    width=600,
+    height=400
+)
+```
+
+
 ## Merging Data With Pandas
 
 [![](../assets/images/post45_data.png)](https://data.post45.org/){fig-align="center" target="_blank"}
@@ -472,225 +692,60 @@ combined_novels_nyt_df[['title', 'pg_eng_url', 'pg_book_id']].head(5)
 
 
 
-## Exploratory Data Analysis
-
-[![From Zoë Wilkinson Saldaña, "Sentiment Analysis for Exploratory Data Analysis"](../assets/images/eda.png)](https://programminghistorian.org/en/lessons/sentiment-analysis){fig-align="center" target="_blank"}
 
 
-## John W. Tukey & The History of EDA
-
-:::: {.columns}
-::: {.column width="50%" .r-fit-text}
-[![](../assets/images/tukey_future_data_analysis.png)](https://projecteuclid.org/download/pdf_1/euclid.aoms/1177704711){fig-align="center" target="_blank"}
-:::
-::: {.column width="50%" .r-fit-text}
-In the paper, Tukey writes:
-
-> For a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. [...] All in all, I have come to feel that my central interest is in *data analysis*, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.
-:::
-::::
-
-
-## Bell Labs
-
-![](https://memorial.bellsystem.com/images/history-%20bell_labs_large.png){fig-align="center"}
-
-
-## Tukey's Principles of EDA
-
-![](https://devopedia.org/images/article/75/3879.1525341742.jpg){fig-align="center"}
-
-## EDA With Pandas: The Toolkit
+## How do genres relate to different measures of recognition and popularity?
 
 ::: {.r-fit-text}
-How Pandas helps us implement Tukey's principles of EDA:
-
-1. **Explore structure** — `head()`, `tail()`, `sample()`, `.shape`, `.dtypes`
-2. **Summarize** — `describe()`
-3. **Sort & rank** — `sort_values()`, `nsmallest()`, `nlargest()`
-4. **Check missing** — `isna().any()`, `isna().sum()`
-5. **Visualize** — `plot()`
+| Measure | What it represents |
+|---|---|
+| NYT rank | Weekly commercial bestseller position |
+| OCLC holdings rank | Presence in library collections |
+| Goodreads ratings rank | Reader attention on a commercial platform |
+| Top 500 rank | Position in the assembled novels dataset |
 :::
 
 
-## Visualizing Data With Pandas
-
-[![](https://pandas.pydata.org/docs/_images/04_plot_overview.svg)](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html){fig-align="center" target="_blank"}
-
-
-## Matplotlib & Plots
-
-::: {.r-fit-text}
-`plot` is built into Pandas and is a wrapper around the `matplotlib` library [https://matplotlib.org/](https://matplotlib.org/){target="_blank"}, one of the most popular Python libraries for data visualization. The documentation lists the kinds of plots we can create:
-
-- 'line' : line plot (default)
-- 'bar' : vertical bar plot
-- 'barh' : horizontal bar plot
-- 'hist' : histogram
-- 'box' : boxplot
-- 'kde' : Kernel Density Estimation plot
-- 'density' : same as 'kde'
-- 'area' : area plot
-- 'pie' : pie plot
-- 'scatter' : scatter plot (DataFrame only)
-- 'hexbin' : hexbin plot (DataFrame only)
-:::
-
-## How to Visualize Our Data?
-
-*What if we wanted to create a scatter plot looking at the relationship between the `pub_year` and `top_500_rank` columns? How can we create this graph?*
-
-![](../assets/images/toprank_year_novels.png)
-
-
-## How to Visualize Our Data?
-
-*What if we wanted to explore the relationship between `genre` and the average `top_500_rank` for each genre? How can we create this graph?*
-
-![](../assets/images/genre_mean.png)
-
-
-
-## "Cleaning" Data With Pandas & GIGO
-
-
-:::: {.columns}
-::: {.column width="50%"}
-*Why might we want to subset our data?*
+## Preparing the genre comparison
 
 ```python
-subset_combined_novels_nyt_df = combined_novels_nyt_df[combined_novels_nyt_df.genre.notna()]
-```
-:::
-::: {.column width="50%"}
-[![](https://www.harrised.com/150/images/gigo.jpeg)](https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out){fig-align="center" target="_blank" width="400"}
-:::
-::::
+recognition_novels_df = novels_df.copy()
+recognition_nyt_df = nyt_bestsellers_df.copy()
 
+recognition_novels_df['title_key'] = (
+    recognition_novels_df['title'].str.strip().str.lower()
+)
+recognition_novels_df['author_key'] = (
+    recognition_novels_df['author'].str.strip().str.lower()
+)
 
-## Types of Data
-
-![](../assets/images/data_types.png){fig-align="center"}
-
-
-## Data Visualization in Python
-
-:::: {.columns}
-::: {.column width="50%"}
-![](https://media.opennews.org/img/24tools/big_chart.png)
-:::
-::: {.column width="50%"}
-![](https://optimise2.assets-servd.host/voracious-blesbok/production/Blog/PythonVisLandscape.jpg?w=1200&auto=compress%2Cformat&fit=crop&dm=1632326979&s=35cf543e04fd14bcc881ef8e70363860)
-:::
-::::
-
-## Data Visualization With Altair
-
-[![](https://cdn.cssauthor.com/wp-content/uploads/2023/04/Altair.jpg?strip=all&lossy=1&ssl=1)](https://altair-viz.github.io/index.html){fig-align="center" target="_blank"}
-
-
-## Installing Altair
-
-Remember to activate your virtual environment!
-
-```sh
-pip install "altair[all]"
-```
-
-
-## Using Altair
-
-Now we can try out Altair with one of the built-in datasets
-
-```python
-import altair as alt
-from altair.datasets import data
-
-source = data.cars()
-
-alt.Chart(source).mark_circle(size=60).encode(
-    x='Horsepower',
-    y='Miles_per_Gallon',
-    color='Origin',
-    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']
+recognition_nyt_df['title_key'] = (
+    recognition_nyt_df['nyt_title'].str.strip().str.lower()
+)
+recognition_nyt_df['author_key'] = (
+    recognition_nyt_df['author'].str.strip().str.lower()
 )
 ```
 
 
-## Altair Class
-
-[![](../assets/images/top_level_charts.png)](https://altair-viz.github.io/user_guide/generated/toplevel/altair.Chart.html#altair.Chart){fig-align="center" target="_blank"}
-
-
-## Altair Marks
-
-[![](../assets/images/mark_types.png)](https://altair-viz.github.io/user_guide/marks/index.html){fig-align="center" target="_blank"}
-
-
-## Altair Encodings
-
-:::: {.columns}
-::: {.column width="50%"}
-[![](../assets/images/encodings.png)](https://altair-viz.github.io/user_guide/encodings/index.html){fig-align="center" target="_blank"}
-:::
-::: {.column width="50%"}
-[![](../assets/images/encoding_data_types.png)](https://altair-viz.github.io/user_guide/encodings/index.html#data-types){fig-align="center" target="_blank"}
-:::
-::::
-
-
-## Trying It Out
-
-Now that we understand a bit of Altair's syntax, let's try to recreated our `genre` by average `top_500_rank` plot that we made previously. To do this, we don't have to do `groupby`, instead Altair can handle most of the logic for us:
+## Comparing genres across rankings
 
 ```python
-alt.Chart(combined_novels_nyt_df).mark_bar().encode(
-	x="genre:N",
-	y="mean(top_500_rank):Q",
+genre_summary_df = (
+    genre_recognition_df
+    .groupby('genre')
+    .agg(
+        novels=('title', 'nunique'),
+        average_nyt_rank=('average_nyt_rank', 'mean'),
+        average_oclc_rank=('oclc_holdings_rank', 'mean'),
+        average_goodreads_rank=('gr_num_ratings_rank', 'mean'),
+        average_top_500_rank=('top_500_rank', 'mean')
+    )
+    .reset_index()
 )
 ```
 
-You can read more about aggregation here [https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions](https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions){target="_blank"}.
-
-
-## The Grammar of Graphics
-
-:::: {.columns}
-::: {.column width="50%"}
-![](../assets/images/grammar-of-graphics.png){fig-align="center"}
-:::
-::: {.column width="50%" .r-fit-text}
-In *The Grammar of Graphics*, every visualization is built using the following core components:
-
-1. Data: The dataset that you want to visualize.
-2. Mappings: How the data variables map to visual properties like axes, colors, or sizes.
-3. Geometries (Marks): The basic shapes used to represent the data, such as points, lines, bars, etc.
-4. Statistical transformations: Aggregations or transformations applied to the data, such as grouping, counting, or averaging.
-5. Scales: How data values are translated into visual values, like positioning on the x- or y-axis.
-6. Coordinates: The coordinate system used, such as Cartesian or polar coordinates.
-7. Faceting: How the data is split into different panels or sections to show comparisons.
-:::
-::::
-
-
-
-## Adding Color, Tooltip & Title
-
-*What is this code visualizing?*
-
-```python
-alt.Chart(combined_novels_nyt_df).mark_bar().encode(
-    x="genre:N",
-    y="count():Q",
-    color=alt.Color("top_500_rank:Q", scale=alt.Scale(scheme="viridis")),
-    tooltip=["genre:N", "count():Q", "top_500_rank:Q", "title"]
-).properties(
-    title="Top 500 Novels by Genre",
-    width=600,
-    height=400
-)
-```
-
+*What might disagreement among these rankings reveal?*
 
 ## Pronoun Counts by Genre
 

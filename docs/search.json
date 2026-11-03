@@ -3314,7 +3314,7 @@
     "href": "schedule/21-scrolls-and-hovers.html",
     "title": "Scrolls & Hovers",
     "section": "",
-    "text": "NO PARTICIPATION RECORDED FOR MIDTERM ELECTIONS. PLEASE PRIORITIZE VOTING. RECORDING WILL BE POSTED POST-CLASS.\n\nDiscuss assigned readings.",
+    "text": "NO PARTICIPATION RECORDED FOR MIDTERM ELECTIONS. PLEASE PRIORITIZE VOTING. RECORDING WILL BE POSTED POST-CLASS.\n\nDiscuss assigned readings. Slides are available here.",
     "crumbs": [
       "Schedule",
       "November",
@@ -3326,7 +3326,7 @@
     "href": "schedule/21-scrolls-and-hovers.html#in-class-agenda",
     "title": "Scrolls & Hovers",
     "section": "",
-    "text": "NO PARTICIPATION RECORDED FOR MIDTERM ELECTIONS. PLEASE PRIORITIZE VOTING. RECORDING WILL BE POSTED POST-CLASS.\n\nDiscuss assigned readings.",
+    "text": "NO PARTICIPATION RECORDED FOR MIDTERM ELECTIONS. PLEASE PRIORITIZE VOTING. RECORDING WILL BE POSTED POST-CLASS.\n\nDiscuss assigned readings. Slides are available here.",
     "crumbs": [
       "Schedule",
       "November",
@@ -11182,6 +11182,153 @@
     "text": "Handling Missing Values\n\nHere’s a quick overview of the most common methods for handling missing values in Pandas:\n\n\n\n\n\n\n\n\nPandas Method\nDescription\nUsage\n\n\n\n\nisna()\nBoolean mask for missing values\ndf.isna().sum() to count missing\n\n\nnotna()\nBoolean mask for non-missing values\nInverse of isna()\n\n\nisnull()\nAlias for isna()\nInterchangeable with isna()\n\n\nnotnull()\nAlias for notna()\nInterchangeable with notna()\n\n\ndropna()\nRemoves rows/columns with missing values\nUse subset= to target columns\n\n\nfillna()\nFills missing values\nReplace with a value or interpolate\n\n\n\n\n\nKnowing how to work with missing data is important since we often have gaps when working with cultural datasets. Furthermore, it’s important to know that certain methods like groupby() will automatically ignore missing values, so we should always check the distribution of our data before we start analyzing it."
   },
   {
+    "objectID": "private_slides/18-eda-data-viz.html#exploratory-data-analysis",
+    "href": "private_slides/18-eda-data-viz.html#exploratory-data-analysis",
+    "title": "EDA & Data Visualization",
+    "section": "Exploratory Data Analysis",
+    "text": "Exploratory Data Analysis\n\n\n\nFrom Zoë Wilkinson Saldaña, “Sentiment Analysis for Exploratory Data Analysis”\n\n\n\nSince we are working with datasets with significant documentation, we have a fairly good sense of what is in these datasets. However, often you will be working with datasets that are less documented, and so it is important to understand how to explore them. This process is often called Exploratory Data Analysis."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#john-w.-tukey-the-history-of-eda",
+    "href": "private_slides/18-eda-data-viz.html#john-w.-tukey-the-history-of-eda",
+    "title": "EDA & Data Visualization",
+    "section": "John W. Tukey & The History of EDA",
+    "text": "John W. Tukey & The History of EDA\n\n\n\n\nIn the paper, Tukey writes:\n\nFor a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. […] All in all, I have come to feel that my central interest is in data analysis, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.\n\n\n\nYou’ve likely heard this term before, but let’s historically contextualize this idea. The term Exploratory Data Analysis (EDA) was popularized by John W. Tukey, one of the most famous statisticians and mathematicians of the 20th century. Tukey was one of the first to formally define the concept of data analysis in 1962 paper titled “The Future of Data Analysis.”\nSuch a framing might seem straightforward today in the age of Data Science, but at the time it was a radical shift for how we thought about working with data."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#bell-labs",
+    "href": "private_slides/18-eda-data-viz.html#bell-labs",
+    "title": "EDA & Data Visualization",
+    "section": "Bell Labs",
+    "text": "Bell Labs\n\n\nYou’ll notice in that image from the paper, which you can download here if you’re curious, that Tukey was affiliated with Princeton University and Bell Telephone Laboratories when he published the paper. Both of these were key institutions in the development of modern computing and statistics. For example, if you’ve heard of Alan Turing or Claude Shannon, they were also affiliated with Bell Labs, and Tukey worked with both of them, especially during World War II.\nThis infographic gives a sense of some of the inventions and discoveries that happened at Bell Labs, which was one of the most important research and development organizations in the 20th century. In the case of Tukey, he’s credited not just with exploratory data analysis but also coining both the terms bit, a portmanteau of binary digit, and software in 1958. Tukey was a very eclectic scholar, and worked on everything from developing better sampling methods after reviewing the Kinsey report, which was a landmark study of human sexuality released in two books in 1948 and 1953, to developing better methods for election polling."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#tukeys-principles-of-eda",
+    "href": "private_slides/18-eda-data-viz.html#tukeys-principles-of-eda",
+    "title": "EDA & Data Visualization",
+    "section": "Tukey’s Principles of EDA",
+    "text": "Tukey’s Principles of EDA\n\n\nHis central thoughts on EDA became the basis for his 1977 book Exploratory Data Analysis, where he argued that EDA could help suggest hypotheses that could be then tested statistically.\nSuch a shift might again seem obvious today, but at the time most statisticians focused on “confirmatory data analysis”, that is testing a hypothesis statistically rather than exploring the data first to see what might be possible. Tukey’s innovation helped set the groundwork for a lot of modern data science, where we tend to be closer to detectives trying to look for clues rather than approaching data with firm assumptions about what it represents.\nWhile there are not firm principles for EDA, Tukey argued that it should cover the following concepts:\n\nunderstanding the data’s underlying structure and extracting important variables\ndetecting outliers and anomalies\nand testing underlying assumptions through visualizations, statistics, and other methods, without initially focusing on formal modeling or hypothesis testing. This approach differs with traditional hypothesis-driven analyses, promoting a more flexible and intuitive investigation into the data."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#eda-with-pandas-the-toolkit",
+    "href": "private_slides/18-eda-data-viz.html#eda-with-pandas-the-toolkit",
+    "title": "EDA & Data Visualization",
+    "section": "EDA With Pandas: The Toolkit",
+    "text": "EDA With Pandas: The Toolkit\n\nHow Pandas helps us implement Tukey’s principles of EDA:\n\nExplore structure — head(), tail(), sample(), .shape, .dtypes\nSummarize — describe()\nSort & rank — sort_values(), nsmallest(), nlargest()\nCheck missing — isna().any(), isna().sum()\nVisualize — plot()\n\n\n\nTukey argued EDA should cover: understanding the data’s underlying structure, detecting outliers and anomalies, and testing underlying assumptions through visualizations and statistics — without initially focusing on formal modeling.\nWith Pandas we can implement these systematically:\n# Look at records and structure\nnovels_df.head()\nnovels_df.sample(5, random_state=42)\nnovels_df.shape\nnovels_df.dtypes\n# Summarize and look for extremes\nnovels_df.describe()\nnovels_df.nlargest(5, 'oclc_holdings')\nnovels_df.nsmallest(5, 'oclc_holdings')\n# Sort records and audit missing values\nnovels_df.sort_values('year')\nnovels_df.isna().any()\nnovels_df.isna().sum()\nRun these in separate cells. head() and sample() show records, while .shape and .dtypes describe the DataFrame’s structure. describe() summarizes distributions, and nlargest() or nsmallest() help surface extremes worth investigating. The missing-value methods ask different questions: any() tells us whether a column has at least one missing value, while sum() tells us how many are missing."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#visualizing-data-with-pandas",
+    "href": "private_slides/18-eda-data-viz.html#visualizing-data-with-pandas",
+    "title": "EDA & Data Visualization",
+    "section": "Visualizing Data With Pandas",
+    "text": "Visualizing Data With Pandas\n\n\nNow that we have a sense of the distribution of our data, we can start to visualize it to see if we can answer our questions."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#matplotlib-plots",
+    "href": "private_slides/18-eda-data-viz.html#matplotlib-plots",
+    "title": "EDA & Data Visualization",
+    "section": "Matplotlib & Plots",
+    "text": "Matplotlib & Plots\n\nplot is built into Pandas and is a wrapper around the matplotlib library https://matplotlib.org/, one of the most popular Python libraries for data visualization. The documentation lists the kinds of plots we can create:\n\n‘line’ : line plot (default)\n‘bar’ : vertical bar plot\n‘barh’ : horizontal bar plot\n‘hist’ : histogram\n‘box’ : boxplot\n‘kde’ : Kernel Density Estimation plot\n‘density’ : same as ‘kde’\n‘area’ : area plot\n‘pie’ : pie plot\n‘scatter’ : scatter plot (DataFrame only)\n‘hexbin’ : hexbin plot (DataFrame only)\n\n\n\nPandas also has a robust User Guide on how to plot here https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data",
+    "href": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data",
+    "title": "EDA & Data Visualization",
+    "section": "How to Visualize Our Data?",
+    "text": "How to Visualize Our Data?\nWhat if we wanted to create a scatter plot looking at the relationship between the pub_year and top_500_rank columns? How can we create this graph?\n\n\nnovels_df.plot(kind='scatter', x='pub_year', y='top_500_rank')"
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data-1",
+    "href": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data-1",
+    "title": "EDA & Data Visualization",
+    "section": "How to Visualize Our Data?",
+    "text": "How to Visualize Our Data?\nWhat if we wanted to explore the relationship between genre and the average top_500_rank for each genre? How can we create this graph?\n\n\nnovels_df.groupby('genre')['top_500_rank'].mean().plot(kind='bar')\nNow that we are starting to see how we can visualize our data, we need to start thinking more deeply about what questions might be of interest to us and how the shape of this data influences how we can answer these questions."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#cleaning-data-with-pandas-gigo",
+    "href": "private_slides/18-eda-data-viz.html#cleaning-data-with-pandas-gigo",
+    "title": "EDA & Data Visualization",
+    "section": "“Cleaning” Data With Pandas & GIGO",
+    "text": "“Cleaning” Data With Pandas & GIGO\n\n\nWhy might we want to subset our data?\nsubset_novels_df = novels_df[novels_df.genre.notna()]\n\n\n\n\nAs we’ve discussed previously, cleaning data is core part of working with data but also one that tends to get overlooked or rarely foregrounded, even though it is extremely important for any interpretation. In our current example, we’ve already started to clean our data by merging the DataFrames together and transforming the data to make it more amenable to analysis. We might also want to subset the data, since as we can see above not every book has a genre:\nDemo code to copy:\nsubset_novels_df = novels_df[novels_df.genre.notna()]\nAs we discussed in class, a lot of what motivates this “cleaning”, whether that means normalizing distributions, removing null values, and even transforming some of the data to standardize it, is the concept of GIGO.\nGIGO stands for “Garbage In, Garbage Out” and the term has been used for decades in computing to refer to when data entry errors would produce faulty results. Rob Stenson has a great post exploring the history of the term all the way back to Charles Babbage, one of the first inventors of the computer, https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out.\nGIGO is important because it essentially means that the quality of your data analysis is always dependent on the quality of your data.\nHowever, for as much as we want to prioritize quality, what are some of the downsides or tradeoffs of cleaning data? Some potential considerations include:\n\nlosing the specificity of the original data (especially a danger for historic data but also for data collected by certain institutions)\nprivileging computational power over data quality or accuracy\nreleasing datasets publicly without documenting these changes\n\nThis list is by no means exhaustive! But number one thing to remember with datasets is that the act of collecting data is in of itself an interpretation. And so cleaning data adds another layer of interpretation (sometimes many layers) to the dataset, which is why its crucial to keep a record of how you transform your data.\nIt is also important to realize that even with cleaning you will never have a perfect dataset and to remember that this is often an iterative process and not a one time thing. You will likely need to re-transform your data many times depending on your methods.\nOne best practice is to save multiple versions of your dataset as csv files, so that you don’t either overwrite your original data or have to rerun previous transformations. Remember that with Pandas we can read and write csv files using pd.read_csv() and {name of your dataframe}.to_csv()."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#types-of-data",
+    "href": "private_slides/18-eda-data-viz.html#types-of-data",
+    "title": "EDA & Data Visualization",
+    "section": "Types of Data",
+    "text": "Types of Data\n\n\nIn addition to thinking about our choices, it is also important to think about the types of data we are working with.\nData broadly divides into qualitative (categorical) and quantitative (numerical) types. These map loosely onto Pandas dtypes but go beyond them.\nThis graph outlines the main types of data you might encounter, which largely breaks down between qualitative (categorical) or quantitative (numerical). Now these data types somewhat overlap with our .dtypes in Pandas, but they also go beyond. For example, what in our dataset might be Nominal versus Ordinal, or Discrete versus Continuous? To help answer this question, we are going to explore data visualization more in depth with the Python library Altair."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#data-visualization-in-python",
+    "href": "private_slides/18-eda-data-viz.html#data-visualization-in-python",
+    "title": "EDA & Data Visualization",
+    "section": "Data Visualization in Python",
+    "text": "Data Visualization in Python\n\n\n\n\n\n\n\nUp to now we’ve been using Pandas built in plot methods to display our data. While this is helpful for quick analyses, you’ll likely want more options for both how you visualize the data and interact with it. As you can see in these graphics, in Python, there are a number of visualization libraries, including Matplotlib, Seaborn, and Plotly that have extensive communities and documentation.\nYou can see more options in the Python Graph Gallery as well."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#data-visualization-with-altair",
+    "href": "private_slides/18-eda-data-viz.html#data-visualization-with-altair",
+    "title": "EDA & Data Visualization",
+    "section": "Data Visualization With Altair",
+    "text": "Data Visualization With Altair\n\n\nToday we’re going to focus on Vega-Altair, a Python library built on Vega and Vega-Lite, two visualization systems for JavaScript. Previously, the library was known simply as Altair, so we will use that shorter name.\nAltair was initiated in 2016 by Jake VanderPlas and developed with collaborators from the Python, Jupyter, and Vega-Lite communities. VanderPlas is an astronomer and scientific-software developer who has contributed to SciPy, scikit-learn, Matplotlib, and Astropy and wrote the Python Data Science Handbook.\nAltair uses a declarative approach: we state which data fields map to channels such as position, color, size, and shape, while Vega-Lite determines lower-level rendering details. Altair translates our Python into a JSON Vega-Lite specification that JavaScript renders. This makes the relationship between data and visual argument easier to inspect, which is especially useful for exploratory cultural analysis."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#installing-altair",
+    "href": "private_slides/18-eda-data-viz.html#installing-altair",
+    "title": "EDA & Data Visualization",
+    "section": "Installing Altair",
+    "text": "Installing Altair\nRemember to activate your virtual environment!\npip install \"altair[all]\"\n\nDemo code to copy:\npip install \"altair[all]\"\nNotice that this time when installing we have a slightly new syntax: [all]. This syntax just means that we will be installing all of Altair’s dependencies and optional dependencies."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#using-altair",
+    "href": "private_slides/18-eda-data-viz.html#using-altair",
+    "title": "EDA & Data Visualization",
+    "section": "Using Altair",
+    "text": "Using Altair\nNow we can try out Altair with one of the built-in datasets\nimport altair as alt\nfrom altair.datasets import data\n\nsource = data.cars()\n\nalt.Chart(source).mark_circle(size=60).encode(\n    x='Horsepower',\n    y='Miles_per_Gallon',\n    color='Origin',\n    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']\n)\n\nDemo code to copy:\nimport altair as alt\nfrom altair.datasets import data\n\nsource = data.cars()\n\nalt.Chart(source).mark_circle(size=60).encode(\n    x='Horsepower',\n    y='Miles_per_Gallon',\n    color='Origin',\n    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']\n)\nCurrent versions of Jupyter and the VS Code Jupyter extension normally display this chart without renderer configuration. If it does not appear, first check that the notebook kernel uses the virtual environment where Altair was installed. Then restart the kernel and rerun the import and chart cells. The Altair display documentation provides frontend-specific troubleshooting."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#altair-class",
+    "href": "private_slides/18-eda-data-viz.html#altair-class",
+    "title": "EDA & Data Visualization",
+    "section": "Altair Class",
+    "text": "Altair Class\n\n\nFirst we are specifying a new Chart class. In Altair, there are a number of Chart types that we’ll delve into later but it essentially is the basic class we’ll be working with (more information here https://altair-viz.github.io/user_guide/api.html#top-level-objects)."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#altair-marks",
+    "href": "private_slides/18-eda-data-viz.html#altair-marks",
+    "title": "EDA & Data Visualization",
+    "section": "Altair Marks",
+    "text": "Altair Marks\n\n\nWe pass our data to the Chart and then specify the type of mark we are using (in our case we are using mark_point() to make points). In Altair, we can use all types of marks to represent our data https://altair-viz.github.io/user_guide/marks/index.html."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#altair-encodings",
+    "href": "private_slides/18-eda-data-viz.html#altair-encodings",
+    "title": "EDA & Data Visualization",
+    "section": "Altair Encodings",
+    "text": "Altair Encodings\n\n\n\n\n\n\n\nFinally, we specify the encoding of our graph, which is how we map our data to visual properties. In our example, we are encoding Horsepower to the x-axis, Miles_per_Gallon to the y-axis, and Origin to the color of the points. We are also adding a tooltip encoding that allows us to see more information about each point when we hover over it."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#trying-it-out",
+    "href": "private_slides/18-eda-data-viz.html#trying-it-out",
+    "title": "EDA & Data Visualization",
+    "section": "Trying It Out",
+    "text": "Trying It Out\nNow that we understand a bit of Altair’s syntax, let’s try to recreated our genre by average top_500_rank plot that we made previously. To do this, we don’t have to do groupby, instead Altair can handle most of the logic for us:\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"mean(top_500_rank):Q\",\n)\nYou can read more about aggregation here https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions.\n\nDemo code to copy:\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"mean(top_500_rank):Q\",\n)\nWe can see that some of the syntax is similar to the initial example. We are passing in our DataFrame to the Chart class, calling the mark_bar method, and then encoding the x and y axis. But some of this syntax is also new.\nFor instance, we are specifying the encodings using the N for nominal and Q for quantitative. We are also using an aggregate function to calculate the mean.\nYou can also see links to examples using these aggregations here https://altair-viz.github.io/user_guide/encodings/index.html#aggregation-functions.\nWhile it’s great we can recreate this plot, what’s the point exactly? After all we can do this in plot without having to use another library.\nThe value of using a library like Altair is that it is built to implement the idea of a Grammar of Graphics."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#the-grammar-of-graphics",
+    "href": "private_slides/18-eda-data-viz.html#the-grammar-of-graphics",
+    "title": "EDA & Data Visualization",
+    "section": "The Grammar of Graphics",
+    "text": "The Grammar of Graphics\n\n\n\n\n\n\n\n\nIn The Grammar of Graphics, every visualization is built using the following core components:\n\nData: The dataset that you want to visualize.\nMappings: How the data variables map to visual properties like axes, colors, or sizes.\nGeometries (Marks): The basic shapes used to represent the data, such as points, lines, bars, etc.\nStatistical transformations: Aggregations or transformations applied to the data, such as grouping, counting, or averaging.\nScales: How data values are translated into visual values, like positioning on the x- or y-axis.\nCoordinates: The coordinate system used, such as Cartesian or polar coordinates.\nFaceting: How the data is split into different panels or sections to show comparisons.\n\n\n\nThe Grammar of Graphics is both a concept and book published in 1999 by Leland Wilkinson, a statistician and computer scientist. Wilkinson developed this idea from his experience in developing SYSTAT, a statistical software package he founded in 1983, where he saw the need for a more structured and flexible framework for data visualization.\nWilkinson’s grammar aimed to define a set of rules or components that could describe any kind of statistical graphic, from simple bar charts to complex scatter plots and heatmaps. By breaking down graphics into fundamental elements (like data, geometries, and scales), his grammar provides a way to think of visualizations as composable and modular—allowing users to understand and generate diverse charts based on clear principles. Wilkinson’s ideas have influenced many modern visualization tools and libraries like ggplot2 in R, as well as Altair.\nAltair is built around these principles, making it easier to create clear and interpretable visualizations by specifying each component in your code. This approach is not only flexible but also emphasizes transparency, helping you understand how your data is represented visually. It’s also more extensible, allowing for more complex and interactive visualizations, such as linked plots or selections, which would be difficult to achieve with simpler plotting libraries.\nBy embracing the Grammar of Graphics, Altair enables you to think more abstractly about the relationship between data and visualization, offering a consistent, rule-based system to produce a wide variety of visual outputs."
+  },
+  {
+    "objectID": "private_slides/18-eda-data-viz.html#adding-color-tooltip-title",
+    "href": "private_slides/18-eda-data-viz.html#adding-color-tooltip-title",
+    "title": "EDA & Data Visualization",
+    "section": "Adding Color, Tooltip & Title",
+    "text": "Adding Color, Tooltip & Title\nWhat is this code visualizing?\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    color=alt.Color(\"top_500_rank:Q\", scale=alt.Scale(scheme=\"viridis\")),\n    tooltip=[\"genre:N\", \"count():Q\", \"top_500_rank:Q\", \"title\"]\n).properties(\n    title=\"Top 500 Novels by Genre\",\n    width=600,\n    height=400\n)\n\nDemo code to copy:\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    color=alt.Color(\"top_500_rank:Q\", scale=alt.Scale(scheme=\"viridis\")),\n    tooltip=[\"genre:N\", \"count():Q\", \"top_500_rank:Q\", \"title\"]\n).properties(\n    title=\"Top 500 Novels by Genre\",\n    width=600,\n    height=400\n)\nLet’s try out some of Altair’s more advanced functionality to see how it implements this Grammar of Graphics.\nBuild the chart incrementally. First ask Altair to count the records in each genre:\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    tooltip=[\"genre:N\", \"count():Q\"]\n)\nThen add the rank as a color encoding and customize its scale with the code displayed on the slide. This progression makes each change to the visual argument inspectable instead of introducing the full chart at once.\nWe can add several new encodings: - color — encode a third variable visually - tooltip — show values on hover - properties() — set title, width, height\nalt.Color() lets us customize the color scale — here we’re using the “viridis” color scheme, which is perceptually uniform and colorblind-friendly.\nWe can also use Altair to visualize the pronoun counts we calculated earlier. To do this we need to reshape our data using a melt operation:"
+  },
+  {
     "objectID": "private_slides/18-eda-data-viz.html#merging-data-with-pandas",
     "href": "private_slides/18-eda-data-viz.html#merging-data-with-pandas",
     "title": "EDA & Data Visualization",
@@ -11315,151 +11462,25 @@
     "text": "Extracting Information With str.extract()\nstr.extract() uses a regular expression to pull specific pieces of text out of a string. For example, each of our Project Gutenberg URLs follows a consistent pattern — we could extract the book ID number from it:\ncombined_novels_nyt_df['pg_book_id'] = combined_novels_nyt_df['pg_eng_url'].str.extract(r'/epub/(\\d+)/')\ncombined_novels_nyt_df[['title', 'pg_eng_url', 'pg_book_id']].head(5)\n\nDemo code to copy:\ncombined_novels_nyt_df['pg_book_id'] = combined_novels_nyt_df['pg_eng_url'].str.extract(r'/epub/(\\d+)/')\ncombined_novels_nyt_df[['title', 'pg_eng_url', 'pg_book_id']].head(5)\nThe pattern (\\d+) matches one or more digits, and the parentheses tell str.extract() to return that matched group. This kind of extraction is useful any time you have structured information embedded in a string column — for example, extracting years from date strings, or domain names from URLs.\nPandas string methods are great for simple pattern matching, but they treat text as a raw sequence of characters. In the next lesson, we’ll move into tokenization — the process of breaking text into meaningful linguistic units — which gives us more powerful tools for things like counting actual word forms, handling punctuation, and comparing texts across genres."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#exploratory-data-analysis",
-    "href": "private_slides/18-eda-data-viz.html#exploratory-data-analysis",
+    "objectID": "private_slides/18-eda-data-viz.html#how-do-genres-relate-to-different-measures-of-recognition-and-popularity",
+    "href": "private_slides/18-eda-data-viz.html#how-do-genres-relate-to-different-measures-of-recognition-and-popularity",
     "title": "EDA & Data Visualization",
-    "section": "Exploratory Data Analysis",
-    "text": "Exploratory Data Analysis\n\n\n\nFrom Zoë Wilkinson Saldaña, “Sentiment Analysis for Exploratory Data Analysis”\n\n\n\nSince we are working with datasets with significant documentation, we have a fairly good sense of what is in these datasets. However, often you will be working with datasets that are less documented, and so it is important to understand how to explore them. This process is often called Exploratory Data Analysis."
+    "section": "How do genres relate to different measures of recognition and popularity?",
+    "text": "How do genres relate to different measures of recognition and popularity?\n\n\n\n\nMeasure\nWhat it represents\n\n\n\n\nNYT rank\nWeekly commercial bestseller position\n\n\nOCLC holdings rank\nPresence in library collections\n\n\nGoodreads ratings rank\nReader attention on a commercial platform\n\n\nTop 500 rank\nPosition in the assembled novels dataset\n\n\n\n\n\nThis is the question that connects our exploratory work to the merged dataset. These columns all look like ranks, but they represent different institutions, users, selection processes, and ideas of recognition.\nLower numbers mean higher ranks in each measure. Before comparing genres, normalize titles and authors, average the repeated weekly NYT ranks so each novel has one value, and inspect how many novels each measure actually covers.\nThe earlier use of capitalize() only changed THE STAND to The stand, which still did not match The Stand. Lowercase title and author keys produce 126 exact matches rather than 10."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#john-w.-tukey-the-history-of-eda",
-    "href": "private_slides/18-eda-data-viz.html#john-w.-tukey-the-history-of-eda",
+    "objectID": "private_slides/18-eda-data-viz.html#preparing-the-genre-comparison",
+    "href": "private_slides/18-eda-data-viz.html#preparing-the-genre-comparison",
     "title": "EDA & Data Visualization",
-    "section": "John W. Tukey & The History of EDA",
-    "text": "John W. Tukey & The History of EDA\n\n\n\n\nIn the paper, Tukey writes:\n\nFor a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. […] All in all, I have come to feel that my central interest is in data analysis, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.\n\n\n\nYou’ve likely heard this term before, but let’s historically contextualize this idea. The term Exploratory Data Analysis (EDA) was popularized by John W. Tukey, one of the most famous statisticians and mathematicians of the 20th century. Tukey was one of the first to formally define the concept of data analysis in 1962 paper titled “The Future of Data Analysis.”\nSuch a framing might seem straightforward today in the age of Data Science, but at the time it was a radical shift for how we thought about working with data."
+    "section": "Preparing the genre comparison",
+    "text": "Preparing the genre comparison\nrecognition_novels_df = novels_df.copy()\nrecognition_nyt_df = nyt_bestsellers_df.copy()\n\nrecognition_novels_df['title_key'] = (\n    recognition_novels_df['title'].str.strip().str.lower()\n)\nrecognition_novels_df['author_key'] = (\n    recognition_novels_df['author'].str.strip().str.lower()\n)\n\nrecognition_nyt_df['title_key'] = (\n    recognition_nyt_df['nyt_title'].str.strip().str.lower()\n)\nrecognition_nyt_df['author_key'] = (\n    recognition_nyt_df['author'].str.strip().str.lower()\n)\n\nRun these as separate notebook cells if that makes the logic easier to follow. We preserve the original titles and authors and create separate matching keys."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#bell-labs",
-    "href": "private_slides/18-eda-data-viz.html#bell-labs",
+    "objectID": "private_slides/18-eda-data-viz.html#comparing-genres-across-rankings",
+    "href": "private_slides/18-eda-data-viz.html#comparing-genres-across-rankings",
     "title": "EDA & Data Visualization",
-    "section": "Bell Labs",
-    "text": "Bell Labs\n\n\nYou’ll notice in that image from the paper, which you can download here if you’re curious, that Tukey was affiliated with Princeton University and Bell Telephone Laboratories when he published the paper. Both of these were key institutions in the development of modern computing and statistics. For example, if you’ve heard of Alan Turing or Claude Shannon, they were also affiliated with Bell Labs, and Tukey worked with both of them, especially during World War II.\nThis infographic gives a sense of some of the inventions and discoveries that happened at Bell Labs, which was one of the most important research and development organizations in the 20th century. In the case of Tukey, he’s credited not just with exploratory data analysis but also coining both the terms bit, a portmanteau of binary digit, and software in 1958. Tukey was a very eclectic scholar, and worked on everything from developing better sampling methods after reviewing the Kinsey report, which was a landmark study of human sexuality released in two books in 1948 and 1953, to developing better methods for election polling."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#tukeys-principles-of-eda",
-    "href": "private_slides/18-eda-data-viz.html#tukeys-principles-of-eda",
-    "title": "EDA & Data Visualization",
-    "section": "Tukey’s Principles of EDA",
-    "text": "Tukey’s Principles of EDA\n\n\nHis central thoughts on EDA became the basis for his 1977 book Exploratory Data Analysis, where he argued that EDA could help suggest hypotheses that could be then tested statistically.\nSuch a shift might again seem obvious today, but at the time most statisticians focused on “confirmatory data analysis”, that is testing a hypothesis statistically rather than exploring the data first to see what might be possible. Tukey’s innovation helped set the groundwork for a lot of modern data science, where we tend to be closer to detectives trying to look for clues rather than approaching data with firm assumptions about what it represents.\nWhile there are not firm principles for EDA, Tukey argued that it should cover the following concepts:\n\nunderstanding the data’s underlying structure and extracting important variables\ndetecting outliers and anomalies\nand testing underlying assumptions through visualizations, statistics, and other methods, without initially focusing on formal modeling or hypothesis testing. This approach differs with traditional hypothesis-driven analyses, promoting a more flexible and intuitive investigation into the data."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#eda-with-pandas-the-toolkit",
-    "href": "private_slides/18-eda-data-viz.html#eda-with-pandas-the-toolkit",
-    "title": "EDA & Data Visualization",
-    "section": "EDA With Pandas: The Toolkit",
-    "text": "EDA With Pandas: The Toolkit\n\nHow Pandas helps us implement Tukey’s principles of EDA:\n\nExplore structure — head(), tail(), sample(), .shape, .dtypes\nSummarize — describe()\nSort & rank — sort_values(), nsmallest(), nlargest()\nCheck missing — isna().any(), isna().sum()\nVisualize — plot()\n\n\n\nTukey argued EDA should cover: understanding the data’s underlying structure, detecting outliers and anomalies, and testing underlying assumptions through visualizations and statistics — without initially focusing on formal modeling.\nWith Pandas we can implement these systematically:\n# Look at records and structure\ncombined_novels_nyt_df.head()\ncombined_novels_nyt_df.sample(5, random_state=42)\ncombined_novels_nyt_df.shape\ncombined_novels_nyt_df.dtypes\n# Summarize and look for extremes\ncombined_novels_nyt_df.describe()\ncombined_novels_nyt_df.nlargest(5, 'oclc_holdings')\ncombined_novels_nyt_df.nsmallest(5, 'oclc_holdings')\n# Sort records and audit missing values\ncombined_novels_nyt_df.sort_values('year')\ncombined_novels_nyt_df.isna().any()\ncombined_novels_nyt_df.isna().sum()\nRun these in separate cells. head() and sample() show records, while .shape and .dtypes describe the DataFrame’s structure. describe() summarizes distributions, and nlargest() or nsmallest() help surface extremes worth investigating. The missing-value methods ask different questions: any() tells us whether a column has at least one missing value, while sum() tells us how many are missing."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#visualizing-data-with-pandas",
-    "href": "private_slides/18-eda-data-viz.html#visualizing-data-with-pandas",
-    "title": "EDA & Data Visualization",
-    "section": "Visualizing Data With Pandas",
-    "text": "Visualizing Data With Pandas\n\n\nNow that we have a sense of the distribution of our data, we can start to visualize it to see if we can answer our questions."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#matplotlib-plots",
-    "href": "private_slides/18-eda-data-viz.html#matplotlib-plots",
-    "title": "EDA & Data Visualization",
-    "section": "Matplotlib & Plots",
-    "text": "Matplotlib & Plots\n\nplot is built into Pandas and is a wrapper around the matplotlib library https://matplotlib.org/, one of the most popular Python libraries for data visualization. The documentation lists the kinds of plots we can create:\n\n‘line’ : line plot (default)\n‘bar’ : vertical bar plot\n‘barh’ : horizontal bar plot\n‘hist’ : histogram\n‘box’ : boxplot\n‘kde’ : Kernel Density Estimation plot\n‘density’ : same as ‘kde’\n‘area’ : area plot\n‘pie’ : pie plot\n‘scatter’ : scatter plot (DataFrame only)\n‘hexbin’ : hexbin plot (DataFrame only)\n\n\n\nPandas also has a robust User Guide on how to plot here https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data",
-    "href": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data",
-    "title": "EDA & Data Visualization",
-    "section": "How to Visualize Our Data?",
-    "text": "How to Visualize Our Data?\nWhat if we wanted to create a scatter plot looking at the relationship between the pub_year and top_500_rank columns? How can we create this graph?\n\n\ncombined_novels_nyt_df.plot(kind='scatter', x='pub_year', y='top_500_rank')"
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data-1",
-    "href": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data-1",
-    "title": "EDA & Data Visualization",
-    "section": "How to Visualize Our Data?",
-    "text": "How to Visualize Our Data?\nWhat if we wanted to explore the relationship between genre and the average top_500_rank for each genre? How can we create this graph?\n\n\ncombined_novels_nyt_df.groupby('genre')['top_500_rank'].mean().plot(kind='bar')\nNow that we are starting to see how we can visualize our data, we need to start thinking more deeply about what questions might be of interest to us and how the shape of this data influences how we can answer these questions."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#cleaning-data-with-pandas-gigo",
-    "href": "private_slides/18-eda-data-viz.html#cleaning-data-with-pandas-gigo",
-    "title": "EDA & Data Visualization",
-    "section": "“Cleaning” Data With Pandas & GIGO",
-    "text": "“Cleaning” Data With Pandas & GIGO\n\n\nWhy might we want to subset our data?\nsubset_combined_novels_nyt_df = combined_novels_nyt_df[combined_novels_nyt_df.genre.notna()]\n\n\n\n\nAs we’ve discussed previously, cleaning data is core part of working with data but also one that tends to get overlooked or rarely foregrounded, even though it is extremely important for any interpretation. In our current example, we’ve already started to clean our data by merging the DataFrames together and transforming the data to make it more amenable to analysis. We might also want to subset the data, since as we can see above not every book has a genre:\nDemo code to copy:\nsubset_combined_novels_nyt_df = combined_novels_nyt_df[combined_novels_nyt_df.genre.notna()]\nAs we discussed in class, a lot of what motivates this “cleaning”, whether that means normalizing distributions, removing null values, and even transforming some of the data to standardize it, is the concept of GIGO.\nGIGO stands for “Garbage In, Garbage Out” and the term has been used for decades in computing to refer to when data entry errors would produce faulty results. Rob Stenson has a great post exploring the history of the term all the way back to Charles Babbage, one of the first inventors of the computer, https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out.\nGIGO is important because it essentially means that the quality of your data analysis is always dependent on the quality of your data.\nHowever, for as much as we want to prioritize quality, what are some of the downsides or tradeoffs of cleaning data? Some potential considerations include:\n\nlosing the specificity of the original data (especially a danger for historic data but also for data collected by certain institutions)\nprivileging computational power over data quality or accuracy\nreleasing datasets publicly without documenting these changes\n\nThis list is by no means exhaustive! But number one thing to remember with datasets is that the act of collecting data is in of itself an interpretation. And so cleaning data adds another layer of interpretation (sometimes many layers) to the dataset, which is why its crucial to keep a record of how you transform your data.\nIt is also important to realize that even with cleaning you will never have a perfect dataset and to remember that this is often an iterative process and not a one time thing. You will likely need to re-transform your data many times depending on your methods.\nOne best practice is to save multiple versions of your dataset as csv files, so that you don’t either overwrite your original data or have to rerun previous transformations. Remember that with Pandas we can read and write csv files using pd.read_csv() and {name of your dataframe}.to_csv()."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#types-of-data",
-    "href": "private_slides/18-eda-data-viz.html#types-of-data",
-    "title": "EDA & Data Visualization",
-    "section": "Types of Data",
-    "text": "Types of Data\n\n\nIn addition to thinking about our choices, it is also important to think about the types of data we are working with.\nData broadly divides into qualitative (categorical) and quantitative (numerical) types. These map loosely onto Pandas dtypes but go beyond them.\nThis graph outlines the main types of data you might encounter, which largely breaks down between qualitative (categorical) or quantitative (numerical). Now these data types somewhat overlap with our .dtypes in Pandas, but they also go beyond. For example, what in our dataset might be Nominal versus Ordinal, or Discrete versus Continuous? To help answer this question, we are going to explore data visualization more in depth with the Python library Altair."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#data-visualization-in-python",
-    "href": "private_slides/18-eda-data-viz.html#data-visualization-in-python",
-    "title": "EDA & Data Visualization",
-    "section": "Data Visualization in Python",
-    "text": "Data Visualization in Python\n\n\n\n\n\n\n\nUp to now we’ve been using Pandas built in plot methods to display our data. While this is helpful for quick analyses, you’ll likely want more options for both how you visualize the data and interact with it. As you can see in these graphics, in Python, there are a number of visualization libraries, including Matplotlib, Seaborn, and Plotly that have extensive communities and documentation.\nYou can see more options in the Python Graph Gallery as well."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#data-visualization-with-altair",
-    "href": "private_slides/18-eda-data-viz.html#data-visualization-with-altair",
-    "title": "EDA & Data Visualization",
-    "section": "Data Visualization With Altair",
-    "text": "Data Visualization With Altair\n\n\nToday we’re going to focus on Vega-Altair, a Python library built on Vega and Vega-Lite, two visualization systems for JavaScript. Previously, the library was known simply as Altair, so we will use that shorter name.\nAltair was initiated in 2016 by Jake VanderPlas and developed with collaborators from the Python, Jupyter, and Vega-Lite communities. VanderPlas is an astronomer and scientific-software developer who has contributed to SciPy, scikit-learn, Matplotlib, and Astropy and wrote the Python Data Science Handbook.\nAltair uses a declarative approach: we state which data fields map to channels such as position, color, size, and shape, while Vega-Lite determines lower-level rendering details. Altair translates our Python into a JSON Vega-Lite specification that JavaScript renders. This makes the relationship between data and visual argument easier to inspect, which is especially useful for exploratory cultural analysis."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#installing-altair",
-    "href": "private_slides/18-eda-data-viz.html#installing-altair",
-    "title": "EDA & Data Visualization",
-    "section": "Installing Altair",
-    "text": "Installing Altair\nRemember to activate your virtual environment!\npip install \"altair[all]\"\n\nDemo code to copy:\npip install \"altair[all]\"\nNotice that this time when installing we have a slightly new syntax: [all]. This syntax just means that we will be installing all of Altair’s dependencies and optional dependencies."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#using-altair",
-    "href": "private_slides/18-eda-data-viz.html#using-altair",
-    "title": "EDA & Data Visualization",
-    "section": "Using Altair",
-    "text": "Using Altair\nNow we can try out Altair with one of the built-in datasets\nimport altair as alt\nfrom altair.datasets import data\n\nsource = data.cars()\n\nalt.Chart(source).mark_circle(size=60).encode(\n    x='Horsepower',\n    y='Miles_per_Gallon',\n    color='Origin',\n    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']\n)\n\nDemo code to copy:\nimport altair as alt\nfrom altair.datasets import data\n\nsource = data.cars()\n\nalt.Chart(source).mark_circle(size=60).encode(\n    x='Horsepower',\n    y='Miles_per_Gallon',\n    color='Origin',\n    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']\n)\nCurrent versions of Jupyter and the VS Code Jupyter extension normally display this chart without renderer configuration. If it does not appear, first check that the notebook kernel uses the virtual environment where Altair was installed. Then restart the kernel and rerun the import and chart cells. The Altair display documentation provides frontend-specific troubleshooting."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#altair-class",
-    "href": "private_slides/18-eda-data-viz.html#altair-class",
-    "title": "EDA & Data Visualization",
-    "section": "Altair Class",
-    "text": "Altair Class\n\n\nFirst we are specifying a new Chart class. In Altair, there are a number of Chart types that we’ll delve into later but it essentially is the basic class we’ll be working with (more information here https://altair-viz.github.io/user_guide/api.html#top-level-objects)."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#altair-marks",
-    "href": "private_slides/18-eda-data-viz.html#altair-marks",
-    "title": "EDA & Data Visualization",
-    "section": "Altair Marks",
-    "text": "Altair Marks\n\n\nWe pass our data to the Chart and then specify the type of mark we are using (in our case we are using mark_point() to make points). In Altair, we can use all types of marks to represent our data https://altair-viz.github.io/user_guide/marks/index.html."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#altair-encodings",
-    "href": "private_slides/18-eda-data-viz.html#altair-encodings",
-    "title": "EDA & Data Visualization",
-    "section": "Altair Encodings",
-    "text": "Altair Encodings\n\n\n\n\n\n\n\nFinally, we specify the encoding of our graph, which is how we map our data to visual properties. In our example, we are encoding Horsepower to the x-axis, Miles_per_Gallon to the y-axis, and Origin to the color of the points. We are also adding a tooltip encoding that allows us to see more information about each point when we hover over it."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#trying-it-out",
-    "href": "private_slides/18-eda-data-viz.html#trying-it-out",
-    "title": "EDA & Data Visualization",
-    "section": "Trying It Out",
-    "text": "Trying It Out\nNow that we understand a bit of Altair’s syntax, let’s try to recreated our genre by average top_500_rank plot that we made previously. To do this, we don’t have to do groupby, instead Altair can handle most of the logic for us:\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"mean(top_500_rank):Q\",\n)\nYou can read more about aggregation here https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions.\n\nDemo code to copy:\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"mean(top_500_rank):Q\",\n)\nWe can see that some of the syntax is similar to the initial example. We are passing in our DataFrame to the Chart class, calling the mark_bar method, and then encoding the x and y axis. But some of this syntax is also new.\nFor instance, we are specifying the encodings using the N for nominal and Q for quantitative. We are also using an aggregate function to calculate the mean.\nYou can also see links to examples using these aggregations here https://altair-viz.github.io/user_guide/encodings/index.html#aggregation-functions.\nWhile it’s great we can recreate this plot, what’s the point exactly? After all we can do this in plot without having to use another library.\nThe value of using a library like Altair is that it is built to implement the idea of a Grammar of Graphics."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#the-grammar-of-graphics",
-    "href": "private_slides/18-eda-data-viz.html#the-grammar-of-graphics",
-    "title": "EDA & Data Visualization",
-    "section": "The Grammar of Graphics",
-    "text": "The Grammar of Graphics\n\n\n\n\n\n\n\n\nIn The Grammar of Graphics, every visualization is built using the following core components:\n\nData: The dataset that you want to visualize.\nMappings: How the data variables map to visual properties like axes, colors, or sizes.\nGeometries (Marks): The basic shapes used to represent the data, such as points, lines, bars, etc.\nStatistical transformations: Aggregations or transformations applied to the data, such as grouping, counting, or averaging.\nScales: How data values are translated into visual values, like positioning on the x- or y-axis.\nCoordinates: The coordinate system used, such as Cartesian or polar coordinates.\nFaceting: How the data is split into different panels or sections to show comparisons.\n\n\n\nThe Grammar of Graphics is both a concept and book published in 1999 by Leland Wilkinson, a statistician and computer scientist. Wilkinson developed this idea from his experience in developing SYSTAT, a statistical software package he founded in 1983, where he saw the need for a more structured and flexible framework for data visualization.\nWilkinson’s grammar aimed to define a set of rules or components that could describe any kind of statistical graphic, from simple bar charts to complex scatter plots and heatmaps. By breaking down graphics into fundamental elements (like data, geometries, and scales), his grammar provides a way to think of visualizations as composable and modular—allowing users to understand and generate diverse charts based on clear principles. Wilkinson’s ideas have influenced many modern visualization tools and libraries like ggplot2 in R, as well as Altair.\nAltair is built around these principles, making it easier to create clear and interpretable visualizations by specifying each component in your code. This approach is not only flexible but also emphasizes transparency, helping you understand how your data is represented visually. It’s also more extensible, allowing for more complex and interactive visualizations, such as linked plots or selections, which would be difficult to achieve with simpler plotting libraries.\nBy embracing the Grammar of Graphics, Altair enables you to think more abstractly about the relationship between data and visualization, offering a consistent, rule-based system to produce a wide variety of visual outputs."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#adding-color-tooltip-title",
-    "href": "private_slides/18-eda-data-viz.html#adding-color-tooltip-title",
-    "title": "EDA & Data Visualization",
-    "section": "Adding Color, Tooltip & Title",
-    "text": "Adding Color, Tooltip & Title\nWhat is this code visualizing?\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    color=alt.Color(\"top_500_rank:Q\", scale=alt.Scale(scheme=\"viridis\")),\n    tooltip=[\"genre:N\", \"count():Q\", \"top_500_rank:Q\", \"title\"]\n).properties(\n    title=\"Top 500 Novels by Genre\",\n    width=600,\n    height=400\n)\n\nDemo code to copy:\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    color=alt.Color(\"top_500_rank:Q\", scale=alt.Scale(scheme=\"viridis\")),\n    tooltip=[\"genre:N\", \"count():Q\", \"top_500_rank:Q\", \"title\"]\n).properties(\n    title=\"Top 500 Novels by Genre\",\n    width=600,\n    height=400\n)\nLet’s try out some of Altair’s more advanced functionality to see how it implements this Grammar of Graphics.\nBuild the chart incrementally. First ask Altair to count the records in each genre:\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    tooltip=[\"genre:N\", \"count():Q\"]\n)\nThen add the rank as a color encoding and customize its scale with the code displayed on the slide. This progression makes each change to the visual argument inspectable instead of introducing the full chart at once.\nWe can add several new encodings: - color — encode a third variable visually - tooltip — show values on hover - properties() — set title, width, height\nalt.Color() lets us customize the color scale — here we’re using the “viridis” color scheme, which is perceptually uniform and colorblind-friendly.\nWe can also use Altair to visualize the pronoun counts we calculated earlier. To do this we need to reshape our data using a melt operation:"
+    "section": "Comparing genres across rankings",
+    "text": "Comparing genres across rankings\ngenre_summary_df = (\n    genre_recognition_df\n    .groupby('genre')\n    .agg(\n        novels=('title', 'nunique'),\n        average_nyt_rank=('average_nyt_rank', 'mean'),\n        average_oclc_rank=('oclc_holdings_rank', 'mean'),\n        average_goodreads_rank=('gr_num_ratings_rank', 'mean'),\n        average_top_500_rank=('top_500_rank', 'mean')\n    )\n    .reset_index()\n)\nWhat might disagreement among these rankings reveal?\n\nThe notebook contains the complete sequence, including the coverage counts, exclusion of the literal na genre, minimum sample threshold, reshaping with melt(), and the faceted Altair chart.\nThere are 221 records whose genre is literally stored as na. Excluding those records is consequential and must be documented. We then retain named genres represented by at least ten novels. Ask students to look for genres that move between systems: a genre might receive substantial Goodreads attention but rank differently through library holdings or the assembled Top 500 list."
   },
   {
     "objectID": "private_slides/18-eda-data-viz.html#pronoun-counts-by-genre",
@@ -14749,6 +14770,153 @@
     "text": "Handling Missing Values\n\nHere’s a quick overview of the most common methods for handling missing values in Pandas:\n\n\n\n\n\n\n\n\nPandas Method\nDescription\nUsage\n\n\n\n\nisna()\nBoolean mask for missing values\ndf.isna().sum() to count missing\n\n\nnotna()\nBoolean mask for non-missing values\nInverse of isna()\n\n\nisnull()\nAlias for isna()\nInterchangeable with isna()\n\n\nnotnull()\nAlias for notna()\nInterchangeable with notna()\n\n\ndropna()\nRemoves rows/columns with missing values\nUse subset= to target columns\n\n\nfillna()\nFills missing values\nReplace with a value or interpolate"
   },
   {
+    "objectID": "slides/18-eda-data-viz.html#exploratory-data-analysis",
+    "href": "slides/18-eda-data-viz.html#exploratory-data-analysis",
+    "title": "EDA & Data Visualization",
+    "section": "Exploratory Data Analysis",
+    "text": "Exploratory Data Analysis\n\n\n\nFrom Zoë Wilkinson Saldaña, “Sentiment Analysis for Exploratory Data Analysis”"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#john-w.-tukey-the-history-of-eda",
+    "href": "slides/18-eda-data-viz.html#john-w.-tukey-the-history-of-eda",
+    "title": "EDA & Data Visualization",
+    "section": "John W. Tukey & The History of EDA",
+    "text": "John W. Tukey & The History of EDA\n\n\n\n\nIn the paper, Tukey writes:\n\nFor a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. […] All in all, I have come to feel that my central interest is in data analysis, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data."
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#bell-labs",
+    "href": "slides/18-eda-data-viz.html#bell-labs",
+    "title": "EDA & Data Visualization",
+    "section": "Bell Labs",
+    "text": "Bell Labs"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#tukeys-principles-of-eda",
+    "href": "slides/18-eda-data-viz.html#tukeys-principles-of-eda",
+    "title": "EDA & Data Visualization",
+    "section": "Tukey’s Principles of EDA",
+    "text": "Tukey’s Principles of EDA"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#eda-with-pandas-the-toolkit",
+    "href": "slides/18-eda-data-viz.html#eda-with-pandas-the-toolkit",
+    "title": "EDA & Data Visualization",
+    "section": "EDA With Pandas: The Toolkit",
+    "text": "EDA With Pandas: The Toolkit\n\nHow Pandas helps us implement Tukey’s principles of EDA:\n\nExplore structure — head(), tail(), sample(), .shape, .dtypes\nSummarize — describe()\nSort & rank — sort_values(), nsmallest(), nlargest()\nCheck missing — isna().any(), isna().sum()\nVisualize — plot()"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#visualizing-data-with-pandas",
+    "href": "slides/18-eda-data-viz.html#visualizing-data-with-pandas",
+    "title": "EDA & Data Visualization",
+    "section": "Visualizing Data With Pandas",
+    "text": "Visualizing Data With Pandas"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#matplotlib-plots",
+    "href": "slides/18-eda-data-viz.html#matplotlib-plots",
+    "title": "EDA & Data Visualization",
+    "section": "Matplotlib & Plots",
+    "text": "Matplotlib & Plots\n\nplot is built into Pandas and is a wrapper around the matplotlib library https://matplotlib.org/, one of the most popular Python libraries for data visualization. The documentation lists the kinds of plots we can create:\n\n‘line’ : line plot (default)\n‘bar’ : vertical bar plot\n‘barh’ : horizontal bar plot\n‘hist’ : histogram\n‘box’ : boxplot\n‘kde’ : Kernel Density Estimation plot\n‘density’ : same as ‘kde’\n‘area’ : area plot\n‘pie’ : pie plot\n‘scatter’ : scatter plot (DataFrame only)\n‘hexbin’ : hexbin plot (DataFrame only)"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#how-to-visualize-our-data",
+    "href": "slides/18-eda-data-viz.html#how-to-visualize-our-data",
+    "title": "EDA & Data Visualization",
+    "section": "How to Visualize Our Data?",
+    "text": "How to Visualize Our Data?\nWhat if we wanted to create a scatter plot looking at the relationship between the pub_year and top_500_rank columns? How can we create this graph?"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#how-to-visualize-our-data-1",
+    "href": "slides/18-eda-data-viz.html#how-to-visualize-our-data-1",
+    "title": "EDA & Data Visualization",
+    "section": "How to Visualize Our Data?",
+    "text": "How to Visualize Our Data?\nWhat if we wanted to explore the relationship between genre and the average top_500_rank for each genre? How can we create this graph?"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#cleaning-data-with-pandas-gigo",
+    "href": "slides/18-eda-data-viz.html#cleaning-data-with-pandas-gigo",
+    "title": "EDA & Data Visualization",
+    "section": "“Cleaning” Data With Pandas & GIGO",
+    "text": "“Cleaning” Data With Pandas & GIGO\n\n\nWhy might we want to subset our data?\nsubset_novels_df = novels_df[novels_df.genre.notna()]"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#types-of-data",
+    "href": "slides/18-eda-data-viz.html#types-of-data",
+    "title": "EDA & Data Visualization",
+    "section": "Types of Data",
+    "text": "Types of Data"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#data-visualization-in-python",
+    "href": "slides/18-eda-data-viz.html#data-visualization-in-python",
+    "title": "EDA & Data Visualization",
+    "section": "Data Visualization in Python",
+    "text": "Data Visualization in Python"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#data-visualization-with-altair",
+    "href": "slides/18-eda-data-viz.html#data-visualization-with-altair",
+    "title": "EDA & Data Visualization",
+    "section": "Data Visualization With Altair",
+    "text": "Data Visualization With Altair"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#installing-altair",
+    "href": "slides/18-eda-data-viz.html#installing-altair",
+    "title": "EDA & Data Visualization",
+    "section": "Installing Altair",
+    "text": "Installing Altair\nRemember to activate your virtual environment!\npip install \"altair[all]\""
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#using-altair",
+    "href": "slides/18-eda-data-viz.html#using-altair",
+    "title": "EDA & Data Visualization",
+    "section": "Using Altair",
+    "text": "Using Altair\nNow we can try out Altair with one of the built-in datasets\nimport altair as alt\nfrom altair.datasets import data\n\nsource = data.cars()\n\nalt.Chart(source).mark_circle(size=60).encode(\n    x='Horsepower',\n    y='Miles_per_Gallon',\n    color='Origin',\n    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']\n)"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#altair-class",
+    "href": "slides/18-eda-data-viz.html#altair-class",
+    "title": "EDA & Data Visualization",
+    "section": "Altair Class",
+    "text": "Altair Class"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#altair-marks",
+    "href": "slides/18-eda-data-viz.html#altair-marks",
+    "title": "EDA & Data Visualization",
+    "section": "Altair Marks",
+    "text": "Altair Marks"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#altair-encodings",
+    "href": "slides/18-eda-data-viz.html#altair-encodings",
+    "title": "EDA & Data Visualization",
+    "section": "Altair Encodings",
+    "text": "Altair Encodings"
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#trying-it-out",
+    "href": "slides/18-eda-data-viz.html#trying-it-out",
+    "title": "EDA & Data Visualization",
+    "section": "Trying It Out",
+    "text": "Trying It Out\nNow that we understand a bit of Altair’s syntax, let’s try to recreated our genre by average top_500_rank plot that we made previously. To do this, we don’t have to do groupby, instead Altair can handle most of the logic for us:\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"mean(top_500_rank):Q\",\n)\nYou can read more about aggregation here https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions."
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#the-grammar-of-graphics",
+    "href": "slides/18-eda-data-viz.html#the-grammar-of-graphics",
+    "title": "EDA & Data Visualization",
+    "section": "The Grammar of Graphics",
+    "text": "The Grammar of Graphics\n\n\n\n\n\n\n\n\nIn The Grammar of Graphics, every visualization is built using the following core components:\n\nData: The dataset that you want to visualize.\nMappings: How the data variables map to visual properties like axes, colors, or sizes.\nGeometries (Marks): The basic shapes used to represent the data, such as points, lines, bars, etc.\nStatistical transformations: Aggregations or transformations applied to the data, such as grouping, counting, or averaging.\nScales: How data values are translated into visual values, like positioning on the x- or y-axis.\nCoordinates: The coordinate system used, such as Cartesian or polar coordinates.\nFaceting: How the data is split into different panels or sections to show comparisons."
+  },
+  {
+    "objectID": "slides/18-eda-data-viz.html#adding-color-tooltip-title",
+    "href": "slides/18-eda-data-viz.html#adding-color-tooltip-title",
+    "title": "EDA & Data Visualization",
+    "section": "Adding Color, Tooltip & Title",
+    "text": "Adding Color, Tooltip & Title\nWhat is this code visualizing?\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    color=alt.Color(\"top_500_rank:Q\", scale=alt.Scale(scheme=\"viridis\")),\n    tooltip=[\"genre:N\", \"count():Q\", \"top_500_rank:Q\", \"title\"]\n).properties(\n    title=\"Top 500 Novels by Genre\",\n    width=600,\n    height=400\n)"
+  },
+  {
     "objectID": "slides/18-eda-data-viz.html#merging-data-with-pandas",
     "href": "slides/18-eda-data-viz.html#merging-data-with-pandas",
     "title": "EDA & Data Visualization",
@@ -14882,151 +15050,25 @@
     "text": "Extracting Information With str.extract()\nstr.extract() uses a regular expression to pull specific pieces of text out of a string. For example, each of our Project Gutenberg URLs follows a consistent pattern — we could extract the book ID number from it:\ncombined_novels_nyt_df['pg_book_id'] = combined_novels_nyt_df['pg_eng_url'].str.extract(r'/epub/(\\d+)/')\ncombined_novels_nyt_df[['title', 'pg_eng_url', 'pg_book_id']].head(5)"
   },
   {
-    "objectID": "slides/18-eda-data-viz.html#exploratory-data-analysis",
-    "href": "slides/18-eda-data-viz.html#exploratory-data-analysis",
+    "objectID": "slides/18-eda-data-viz.html#how-do-genres-relate-to-different-measures-of-recognition-and-popularity",
+    "href": "slides/18-eda-data-viz.html#how-do-genres-relate-to-different-measures-of-recognition-and-popularity",
     "title": "EDA & Data Visualization",
-    "section": "Exploratory Data Analysis",
-    "text": "Exploratory Data Analysis\n\n\n\nFrom Zoë Wilkinson Saldaña, “Sentiment Analysis for Exploratory Data Analysis”"
+    "section": "How do genres relate to different measures of recognition and popularity?",
+    "text": "How do genres relate to different measures of recognition and popularity?\n\n\n\n\nMeasure\nWhat it represents\n\n\n\n\nNYT rank\nWeekly commercial bestseller position\n\n\nOCLC holdings rank\nPresence in library collections\n\n\nGoodreads ratings rank\nReader attention on a commercial platform\n\n\nTop 500 rank\nPosition in the assembled novels dataset"
   },
   {
-    "objectID": "slides/18-eda-data-viz.html#john-w.-tukey-the-history-of-eda",
-    "href": "slides/18-eda-data-viz.html#john-w.-tukey-the-history-of-eda",
+    "objectID": "slides/18-eda-data-viz.html#preparing-the-genre-comparison",
+    "href": "slides/18-eda-data-viz.html#preparing-the-genre-comparison",
     "title": "EDA & Data Visualization",
-    "section": "John W. Tukey & The History of EDA",
-    "text": "John W. Tukey & The History of EDA\n\n\n\n\nIn the paper, Tukey writes:\n\nFor a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. […] All in all, I have come to feel that my central interest is in data analysis, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data."
+    "section": "Preparing the genre comparison",
+    "text": "Preparing the genre comparison\nrecognition_novels_df = novels_df.copy()\nrecognition_nyt_df = nyt_bestsellers_df.copy()\n\nrecognition_novels_df['title_key'] = (\n    recognition_novels_df['title'].str.strip().str.lower()\n)\nrecognition_novels_df['author_key'] = (\n    recognition_novels_df['author'].str.strip().str.lower()\n)\n\nrecognition_nyt_df['title_key'] = (\n    recognition_nyt_df['nyt_title'].str.strip().str.lower()\n)\nrecognition_nyt_df['author_key'] = (\n    recognition_nyt_df['author'].str.strip().str.lower()\n)"
   },
   {
-    "objectID": "slides/18-eda-data-viz.html#bell-labs",
-    "href": "slides/18-eda-data-viz.html#bell-labs",
+    "objectID": "slides/18-eda-data-viz.html#comparing-genres-across-rankings",
+    "href": "slides/18-eda-data-viz.html#comparing-genres-across-rankings",
     "title": "EDA & Data Visualization",
-    "section": "Bell Labs",
-    "text": "Bell Labs"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#tukeys-principles-of-eda",
-    "href": "slides/18-eda-data-viz.html#tukeys-principles-of-eda",
-    "title": "EDA & Data Visualization",
-    "section": "Tukey’s Principles of EDA",
-    "text": "Tukey’s Principles of EDA"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#eda-with-pandas-the-toolkit",
-    "href": "slides/18-eda-data-viz.html#eda-with-pandas-the-toolkit",
-    "title": "EDA & Data Visualization",
-    "section": "EDA With Pandas: The Toolkit",
-    "text": "EDA With Pandas: The Toolkit\n\nHow Pandas helps us implement Tukey’s principles of EDA:\n\nExplore structure — head(), tail(), sample(), .shape, .dtypes\nSummarize — describe()\nSort & rank — sort_values(), nsmallest(), nlargest()\nCheck missing — isna().any(), isna().sum()\nVisualize — plot()"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#visualizing-data-with-pandas",
-    "href": "slides/18-eda-data-viz.html#visualizing-data-with-pandas",
-    "title": "EDA & Data Visualization",
-    "section": "Visualizing Data With Pandas",
-    "text": "Visualizing Data With Pandas"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#matplotlib-plots",
-    "href": "slides/18-eda-data-viz.html#matplotlib-plots",
-    "title": "EDA & Data Visualization",
-    "section": "Matplotlib & Plots",
-    "text": "Matplotlib & Plots\n\nplot is built into Pandas and is a wrapper around the matplotlib library https://matplotlib.org/, one of the most popular Python libraries for data visualization. The documentation lists the kinds of plots we can create:\n\n‘line’ : line plot (default)\n‘bar’ : vertical bar plot\n‘barh’ : horizontal bar plot\n‘hist’ : histogram\n‘box’ : boxplot\n‘kde’ : Kernel Density Estimation plot\n‘density’ : same as ‘kde’\n‘area’ : area plot\n‘pie’ : pie plot\n‘scatter’ : scatter plot (DataFrame only)\n‘hexbin’ : hexbin plot (DataFrame only)"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#how-to-visualize-our-data",
-    "href": "slides/18-eda-data-viz.html#how-to-visualize-our-data",
-    "title": "EDA & Data Visualization",
-    "section": "How to Visualize Our Data?",
-    "text": "How to Visualize Our Data?\nWhat if we wanted to create a scatter plot looking at the relationship between the pub_year and top_500_rank columns? How can we create this graph?"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#how-to-visualize-our-data-1",
-    "href": "slides/18-eda-data-viz.html#how-to-visualize-our-data-1",
-    "title": "EDA & Data Visualization",
-    "section": "How to Visualize Our Data?",
-    "text": "How to Visualize Our Data?\nWhat if we wanted to explore the relationship between genre and the average top_500_rank for each genre? How can we create this graph?"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#cleaning-data-with-pandas-gigo",
-    "href": "slides/18-eda-data-viz.html#cleaning-data-with-pandas-gigo",
-    "title": "EDA & Data Visualization",
-    "section": "“Cleaning” Data With Pandas & GIGO",
-    "text": "“Cleaning” Data With Pandas & GIGO\n\n\nWhy might we want to subset our data?\nsubset_combined_novels_nyt_df = combined_novels_nyt_df[combined_novels_nyt_df.genre.notna()]"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#types-of-data",
-    "href": "slides/18-eda-data-viz.html#types-of-data",
-    "title": "EDA & Data Visualization",
-    "section": "Types of Data",
-    "text": "Types of Data"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#data-visualization-in-python",
-    "href": "slides/18-eda-data-viz.html#data-visualization-in-python",
-    "title": "EDA & Data Visualization",
-    "section": "Data Visualization in Python",
-    "text": "Data Visualization in Python"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#data-visualization-with-altair",
-    "href": "slides/18-eda-data-viz.html#data-visualization-with-altair",
-    "title": "EDA & Data Visualization",
-    "section": "Data Visualization With Altair",
-    "text": "Data Visualization With Altair"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#installing-altair",
-    "href": "slides/18-eda-data-viz.html#installing-altair",
-    "title": "EDA & Data Visualization",
-    "section": "Installing Altair",
-    "text": "Installing Altair\nRemember to activate your virtual environment!\npip install \"altair[all]\""
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#using-altair",
-    "href": "slides/18-eda-data-viz.html#using-altair",
-    "title": "EDA & Data Visualization",
-    "section": "Using Altair",
-    "text": "Using Altair\nNow we can try out Altair with one of the built-in datasets\nimport altair as alt\nfrom altair.datasets import data\n\nsource = data.cars()\n\nalt.Chart(source).mark_circle(size=60).encode(\n    x='Horsepower',\n    y='Miles_per_Gallon',\n    color='Origin',\n    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']\n)"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#altair-class",
-    "href": "slides/18-eda-data-viz.html#altair-class",
-    "title": "EDA & Data Visualization",
-    "section": "Altair Class",
-    "text": "Altair Class"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#altair-marks",
-    "href": "slides/18-eda-data-viz.html#altair-marks",
-    "title": "EDA & Data Visualization",
-    "section": "Altair Marks",
-    "text": "Altair Marks"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#altair-encodings",
-    "href": "slides/18-eda-data-viz.html#altair-encodings",
-    "title": "EDA & Data Visualization",
-    "section": "Altair Encodings",
-    "text": "Altair Encodings"
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#trying-it-out",
-    "href": "slides/18-eda-data-viz.html#trying-it-out",
-    "title": "EDA & Data Visualization",
-    "section": "Trying It Out",
-    "text": "Trying It Out\nNow that we understand a bit of Altair’s syntax, let’s try to recreated our genre by average top_500_rank plot that we made previously. To do this, we don’t have to do groupby, instead Altair can handle most of the logic for us:\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"mean(top_500_rank):Q\",\n)\nYou can read more about aggregation here https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions."
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#the-grammar-of-graphics",
-    "href": "slides/18-eda-data-viz.html#the-grammar-of-graphics",
-    "title": "EDA & Data Visualization",
-    "section": "The Grammar of Graphics",
-    "text": "The Grammar of Graphics\n\n\n\n\n\n\n\n\nIn The Grammar of Graphics, every visualization is built using the following core components:\n\nData: The dataset that you want to visualize.\nMappings: How the data variables map to visual properties like axes, colors, or sizes.\nGeometries (Marks): The basic shapes used to represent the data, such as points, lines, bars, etc.\nStatistical transformations: Aggregations or transformations applied to the data, such as grouping, counting, or averaging.\nScales: How data values are translated into visual values, like positioning on the x- or y-axis.\nCoordinates: The coordinate system used, such as Cartesian or polar coordinates.\nFaceting: How the data is split into different panels or sections to show comparisons."
-  },
-  {
-    "objectID": "slides/18-eda-data-viz.html#adding-color-tooltip-title",
-    "href": "slides/18-eda-data-viz.html#adding-color-tooltip-title",
-    "title": "EDA & Data Visualization",
-    "section": "Adding Color, Tooltip & Title",
-    "text": "Adding Color, Tooltip & Title\nWhat is this code visualizing?\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    color=alt.Color(\"top_500_rank:Q\", scale=alt.Scale(scheme=\"viridis\")),\n    tooltip=[\"genre:N\", \"count():Q\", \"top_500_rank:Q\", \"title\"]\n).properties(\n    title=\"Top 500 Novels by Genre\",\n    width=600,\n    height=400\n)"
+    "section": "Comparing genres across rankings",
+    "text": "Comparing genres across rankings\ngenre_summary_df = (\n    genre_recognition_df\n    .groupby('genre')\n    .agg(\n        novels=('title', 'nunique'),\n        average_nyt_rank=('average_nyt_rank', 'mean'),\n        average_oclc_rank=('oclc_holdings_rank', 'mean'),\n        average_goodreads_rank=('gr_num_ratings_rank', 'mean'),\n        average_top_500_rank=('top_500_rank', 'mean')\n    )\n    .reset_index()\n)\nWhat might disagreement among these rankings reveal?"
   },
   {
     "objectID": "slides/18-eda-data-viz.html#pronoun-counts-by-genre",
