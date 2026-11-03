@@ -35,6 +35,7 @@ combined_novels_nyt_df['pub_date'] = pd.to_datetime(
 )
 ```
 
+
 In our last lesson, we tried to answer the following questions:
 
 1. What is the average number of visits for each state?
@@ -44,27 +45,20 @@ In our last lesson, we tried to answer the following questions:
 Here's my solutions to these questions:
 
 ```python
-# Load libraries
-import re
+# Load library
 import pandas as pd
 
 # Load the data
-parks_data_df = pd.read_csv('https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv') # or use the local path pd.read_csv('US-National-Parks_RecreationVisits_1979-2023.csv')
+parks_data_df = pd.read_csv('https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv')
 
-# Function to split on uppercase letters and insert underscores
-def split_on_uppercase(name):
-	return re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
-
-# Apply the function to each column name
-new_column_names = [split_on_uppercase(col) for col in parks_data_df.columns]
-parks_data_df.columns = new_column_names
 # 1. What is the average number of visits for each state?
-print(parks_data_df.groupby(['state'])['recreation_visits'].mean().reset_index())
+print(parks_data_df.groupby(['State'])['RecreationVisits'].mean().reset_index())
 # 2. What is the average number of visits for each National Park?
-print(parks_data_df.groupby(['park_name'])['recreation_visits'].mean().reset_index())
+print(parks_data_df.groupby(['ParkName'])['RecreationVisits'].mean().reset_index())
 # 3. How many National Parks are there in each state?
-print(parks_data_df.groupby(['state'])['park_name'].nunique().reset_index())
+print(parks_data_df.groupby(['State'])['ParkName'].nunique().reset_index())
 ```
+
 
 We could store each of these in new variables but we also want to visualize this data to help us better understand it. That's what we'll be exploring further in this next lesson.
 
@@ -85,6 +79,7 @@ While this cat is adorable, we can also use the `pd.read_csv()` method to read i
 # Import data
 novels_df = pd.read_csv("https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv", sep="\t")
 ```
+
 :::
 
 Notice that I am adding an argument to the `read_csv()` method: `sep="\t"`. This tells Pandas to expect a tab-separated values file.
@@ -111,6 +106,7 @@ In our case, we didn't need to specify the encoding, but if we did, we could hav
 # Import data
 novels_df = pd.read_csv("https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv", sep="\t", encoding='utf-8')
 ```
+
 
 
 Now we can start to explore this dataset. What methods could we use to get a sense of the data?
@@ -182,17 +178,20 @@ Now knowing this background, we can start to explore which authors have missing 
 novels_df[novels_df['author_field_of_activity'].isna()]
 ```
 
+
 Here we are using the `isna()` method to **filter** our DataFrame to only show rows where the `author_field_of_activity` column is null. If we wanted to see only rows where the column is not null, we could use the `notna()` method instead.
 
 ```python
 novels_df[novels_df['author_field_of_activity'].notna()]
 ```
 
+
 This will give us a DataFrame with all the authors who have a field of activity listed. We could also use the `~` operator to negate the boolean values returned by `isna()`.
 
 ```python
 novels_df[~novels_df['author_field_of_activity'].isna()]
 ```
+
 
 We haven't seen the `~` operator before, but it is a common way to negate boolean values in Python. So for example, if we had a boolean variable `x` that was `True`, then `~x` would be `False`. In addition, Pandas also has `isnull()` and `notnull()` methods that can be used interchangeably with `isna()` and `notna()`.
 
@@ -201,6 +200,7 @@ Finally, if we wanted to get rid of all rows in the `novels_df` DataFrame that h
 ```python
 novels_df_cleaned = novels_df.dropna(subset=['author_field_of_activity'])
 ```
+
 
 `dropna()` is a powerful method that can be used to remove missing values from a DataFrame. The `subset` parameter allows us to specify which columns we want to check for missing values. If we don't specify a subset, `dropna()` will remove any row that has a missing value in any column.
 
@@ -215,348 +215,92 @@ Here's a quick overview of the most common methods for handling missing values i
 | `dropna()`                      | Removes missing values from a DataFrame or Series | Can be used to drop rows or columns with missing values |
 | `fillna()`                      | Fills missing values with a specified value or method | Can be used to replace NaN values with a specific value or interpolate missing values |
 
-Knowing how to work with missing data is important since we often have gaps when working with cultural datasets. Furthermore, it's important to know that certain methods like `groupby()` will automatically ignore missing values, so we should always check the distribution of our data before we start analyzing it.
+Knowing how to work with missing data is important since we often have gaps when working with cultural datasets. Furthermore, it's important to know that certain methods like `groupby()` will automatically ignore missing values, so we should always check the distribution of our data before we start analyzing it. We can also start to see where this author field of activity looks like on VIAF, like for Mark Twain's VIAF file here [https://viaf.org/en/processed/LC%257Cn%20%2079021164](https://viaf.org/en/processed/LC%257Cn%20%2079021164){target="_blank"}.
 
-## Merging Data With Pandas
+### "Cleaning" Data With Pandas
 
-Now that we are understanding how to work with missing data, we can also start to explore how to augment our dataset in various ways. One of the most common ways to do this is through **merging** datasets together.
-
-We've already seen one approach `pd.concat()` that allows us to concatenate DataFrames (aka add them together), but now we want to focus on the `merge()` method.
-
-First though we need another dataset to merge with our `novels_df`. We could take a look at sites like Kaggle to find more datasets, or more specific ones like the *Post45 Data Collective*, which "peer reviews and houses literary and cultural data from 1945 to the present" [https://data.post45.org/](https://data.post45.org/){target="_blank"}.
-
-![Post45](../../assets/images/post45_data.png)
-
-While there's a number of relevant datasets in the *Post45 Data Collective*, we could use the one about *New York Times* Hardcover Fiction Bestsellers, 1931–2020, created by Jordan Pruett [https://data.post45.org/nyt-fiction-bestsellers-data/](https://data.post45.org/nyt-fiction-bestsellers-data/){target="_blank"}. According to the documentation, this dataset contains the following:
-
-> The New York Times Hardcover Fiction Bestsellers (1931–2020) contains three related datasets. The first dataset provides a tabular representation of the hardcover fiction bestseller list of The New York Times every week between 1931 and 2020. The second dataset provides title-level data for every unique title that appeared on the hardcover fiction bestseller list during this time period. The third dataset provides HathiTrust Digital Library identifiers for every unique title that appeared on the hardcover fiction bestseller list and that also has a corresponding volume in the HathiTrust Digital Library.
-
-> Previous research using similar data has been limited to partial segments of the list, such as the top 200 longest-running bestsellers since a certain date (Piper and Portelance, 2016) or bestsellers from only particular years (Sorenson, 2007). By contrast, this dataset covers the full list since its inception in 1931, along with each reported work's title, author(s), date of appearance, and rank.
-
-Getting this additional dataset will allow us to explore the relationship between the *New York Times* bestsellers and the top 500 novels as recorded by OCLC.
-
-![NYT Data](../../assets/images/nyt_data.png)
-
-If we click on the `Explore/download data` for the first dataset, we see a new page that has the remote url for the dataset: [https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv](https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv){target="_blank"}.
-
-Notice the `raw.githubusercontent.com` in the URL. This tells us that this is a raw file from a GitHub repository, which is a common way to share datasets, and we can even see the actual file here [https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers](https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers){target="_blank"}.
-
-We can copy that and load it into a new DataFrame.
+As we've discussed previously, `cleaning` data is core part of working with data but also one that tends to get overlooked or rarely foregrounded, even though it is extremely important for any interpretation. In our current example, we've already started to clean our data by merging the DataFrames together and transforming the data to make it more amenable to analysis. We might also want to subset the data, since as we can see above not every book has a author_field_of_activity value. We can do this by using the `notna()` method to filter our DataFrame to only include rows where the `author_field_of_activity` column is not null:
 
 ```python
-nyt_bestsellers_df = pd.read_csv("https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv", sep="\t", encoding='utf-8')
+subset_novels_df = novels_df[novels_df.author_field_of_activity.notna()]
 ```
 
-Now that we have both datasets loaded, we can start to explore them. Let's take a look at the columns in the `nyt_bestsellers_df.info()` DataFrame.
+As we discussed in class, a lot of what motivates this "cleaning", whether that means normalizing distributions, removing null values, and even transforming some of the data to standardize it, is the concept of **GIGO**.
+
+![](https://www.harrised.com/150/images/gigo.jpeg)
+
+GIGO stands for "Garbage In, Garbage Out" and the term has been used for decades in computing to refer to when data entry errors would produce faulty results. Rob Stenson has a great  post exploring the history of the term all the way back to Charles Babbage, one of the first inventors of the computer, [https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out](https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out){target="_blank"}.
+
+GIGO is important because it essentially means that the quality of your data analysis is always dependent on the quality of your data.
+
+However, for as much as we want to prioritize quality, what are some of the downsides or tradeoffs of cleaning data? Some potential considerations include:
+
+- losing the specificity of the original data (especially a danger for historic data but also for data collected by certain institutions)
+- privileging computational power over data quality or accuracy
+- releasing datasets publicly without documenting these changes
+
+This list is by no means exhaustive! But number one thing to remember with datasets is that **the act of collecting data is in of itself an interpretation**. And so cleaning data adds another layer of interpretation (sometimes many layers) to the dataset, which is why its crucial to keep a record of how you transform your data.
+
+It is also important to realize that even with cleaning you will never have a *perfect* dataset and to remember that this is often an *iterative process* and not a one time thing. You will likely need to re-transform your data many times depending on your methods.
+
+One best practice is to save multiple versions of your dataset as `csv` files, so that you don't either overwrite your original data or have to rerun previous transformations. Remember that with Pandas we can read and write `csv` files using `pd.read_csv()` and `{name of your dataframe}.to_csv()`.
+
+So in our case we might want to see first how many authors have a recorded field of activity and how many are missing. We can do this by using the `notna()` and `isna()` methods to count the number of non-null and null values in the `author_field_of_activity` column:
+
+```python
+recorded_activities = novels_df['author_field_of_activity'].notna().sum()
+missing_activities = novels_df['author_field_of_activity'].isna().sum()
+
+print(f"Recorded fields of activity: {recorded_activities}")
+print(f"Missing fields of activity: {missing_activities}")
+```
+
+We might also want to think about why author field of activity could be relevant or missing for certain authors. For example, we might want to explore whether there are any patterns in the missing data based on the author's nationality, gender, or time period. This could help us understand whether there are any biases in the dataset and how we might need to account for them in our analysis.
+
+Part of this is first exploring what is in the `author_field_of_activity` column. We can do this by using the `value_counts()` method to see the unique values in the column and how many times they occur:
+
+```python
+subset_novels_df['author_field_of_activity'].value_counts()
+```
 
 Which gives us the following output:
 
 ```bash
-<class 'pandas.core.frame.DataFrame'>
-RangeIndex: 60386 entries, 0 to 60385
-Data columns (total 6 columns):
- #   Column    Non-Null Count  Dtype
----  ------    --------------  -----
- 0   year      60386 non-null  int64
- 1   week      60386 non-null  object
- 2   rank      60386 non-null  int64
- 3   title_id  60386 non-null  int64
- 4   title     60386 non-null  object
- 5   author    60376 non-null  object
-dtypes: int64(3), object(3)
-memory usage: 2.8+ MB
+author_field_of_activity
+english literature                                                                                  28
+childrens literature                                                                                21
+motion pictures production and direction,motion picture authorship,law,fiction authorship,acting    19
+literature                                                                                          12
+novels,fiction                                                                                      11
+                                                                                                    ..
+short stories,novels,motion picture plays,fiction,screenplays                                        1
+fiction authorship                                                                                   1
+novels,fiction authorship                                                                            1
+literature,creative nonfiction,world war 1939 1945                                                   1
+fiction,drama,motion picture authorship,editing                                                      1
+Name: count, Length: 121, dtype: int64
 ```
 
-We can see that this dataset has 60386 rows and 6 columns. The columns are `year`, `week`, `rank`, `title_id`, `title`, and `author`. We can also see that the `author` column has ten missing values, but that overall, this dataset has very few null values and is much larger than the `novels_df` DataFrame.
-
-Now we can start to merge the two DataFrames together. We've mentioned merging datasets a bit when we discussed joining data in class and SQL, but now we want to dig into details. Often times when we're working with datasets, we will have our data split into multiple `csv` files or have differently shaped datasets (i.e. some of them will have more rows or columns than other datasets). Pandas has built in functionality that let's us merge together DataFrames so that we can perform analysis on the combined dataset, which you can read about in the very extensive documentation here [https://pandas.pydata.org/docs/user_guide/merging.html](https://pandas.pydata.org/docs/user_guide/merging.html){target="_blank"}.
-
-While this documentation shows a number of ways to combined datasets (`concat` let's you combine datasets by stacking them on top of each other, `join` let's you combine datasets by joining them on a common index, and `merge` let's you combine datasets by joining them on a common column), we will focus on the `merge` method.
-
-![](../../assets/images/merge_syntax.png)
-
-If we take a look at the documentation, we see the syntax above, which shows us that in Pandas we use the `merge()` function to combine datasets. The `merge()` function takes in a number of parameters, but the most important ones are `left`, `right`, `how`, and `on`. The `left` and `right` parameters are the DataFrames we want to merge, the `how` parameter is the type of join we want to undertake, and the `on` parameter is the column we want to join the DataFrames on.
-
-We can also see an example of how this works in the figure below.
-
-![](../../assets/images/merge_example.png)
-
-You'll notice that we can see a description of the types of `how` parameters we can use. These are the same types of joins that we discussed in class and in SQL. The `how` parameter can be set to `left`, `right`, `outer`, or `inner`. The `left` join will return all the rows from the left DataFrame and the matching rows from the right DataFrame. The `right` join will return all the rows from the right DataFrame and the matching rows from the left DataFrame. The `outer` join will return all the rows from the left DataFrame and the right DataFrame. The `inner` join will return only the rows that match in both DataFrames.
-
-![](https://miro.medium.com/max/700/1*9eH1_7VbTZPZd9jBiGIyNA.png)
-
-Now that we are starting to understand this logic, we can consider how we might merge our datasets. First, we can double check the columns in our `novels_df` and `nyt_bestsellers_df` DataFrames to see if there are any common columns we can use to merge them.
-
+Now we see that an author can have multiple fields of activity, which is why we see some of the values separated by commas. One problem for us then is if we want to look at the distribution of fields of activity, we will need to split these values into separate rows. We can do this by using Pandas string methods. We will use the `str.split()` method to split the values in the `author_field_of_activity` column on the comma and then use the `explode()` method to create a new row for each value:
 ```python
-novels_df.columns, nyt_bestsellers_df.columns
+subset_novels_df['individual_author_field_of_activity'] = subset_novels_df['author_field_of_activity'].str.split(',')
+exploded_subset_novels_df = subset_novels_df.explode('individual_author_field_of_activity')
 ```
 
-This gives us the following output:
-
-```bash
-(Index(['top_500_rank', 'title', 'author', 'pub_year', 'orig_lang', 'genre',
-        'author_birth', 'author_death', 'author_gender', 'author_primary_lang',
-        'author_nationality', 'author_field_of_activity', 'author_occupation',
-        'oclc_holdings', 'oclc_eholdings', 'oclc_total_editions',
-        'oclc_holdings_rank', 'oclc_editions_rank', 'gr_avg_rating',
-        'gr_num_ratings', 'gr_num_reviews', 'gr_avg_rating_rank',
-        'gr_num_ratings_rank', 'oclc_owi', 'author_viaf', 'gr_url', 'wiki_url',
-        'pg_eng_url', 'pg_orig_url'],
-       dtype='object'),
- Index(['year', 'week', 'rank', 'title_id', 'title', 'author'], dtype='object'))
-```
-
-We could eyeball the likely similar columns, but we can also use the `intersection()` method to find the common columns.
-
+Now we should see that we have a new column called `individual_author_field_of_activity` that contains the split values from the `author_field_of_activity` column. We can then use the `value_counts()` method again to see the distribution of individual fields of activity:
 ```python
-set(novels_df.columns).intersection(set(nyt_bestsellers_df.columns))
+exploded_subset_novels_df['individual_author_field_of_activity'].value_counts()
 ```
 
-This gives us the following output:
+But the bigger thing to understand is that we have now added more rows to our DataFrame, so our list of authors is now longer than the original 500. This is an important consideration when working with data, as it can affect our analysis and visualizations.
 
-```bash
-{'author', 'title'}
-```
+Here `.str.split()` changes each comma-separated string into a list, while `explode()` changes the shape of the DataFrame so that each list item receives its own row. These are interpretive transformations: after exploding, one row no longer represents one novel but one novel-activity relationship. We will return to additional string methods when we encounter a second text-formatting problem during the merge.
 
-`intersection()` is a built-in Python method that returns the common elements between two sets. `set()` is another built-in Python method that creates a `set object`, which is an unordered collection of unique elements (somewhat similar to `tuples`). Sets can be very useful when you want to find the **unique** elements in a list. In this case, we are using `set()` to convert the column names of both DataFrames into sets, and then using `intersection()` to find the common columns.
+## Exploratory Data Analysis (EDA) With Pandas
 
-Now that we know we have two columns we can use to merge the DataFrames, we can start to do that. Let's say we want to do a left join, which will return all the rows from the `novels_df` DataFrame and the matching rows from the `nyt_bestsellers_df` DataFrame.
+Now that we have started to subset and reshape it, we next want to start thinking about how we can visualize and analyze our data. In essence, we are starting to do a process called *Exploratory Data Analysis* (EDA). EDA is an approach to analyzing data sets to summarize their main characteristics, often with visual methods. It is a crucial step in the data analysis process, as it allows us to understand the data we are working with and identify any patterns, trends, or anomalies that may be present.
 
-```python
-merged_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])
-```
-
-While this code should work, you'll notice that if you print the `merged_df` DataFrame, the new columns from `nyt_bestsellers_df` contain only `NaN` values. *Why is that?*
-
-To figure out where we went wrong, we need to check the values in the `author` and `title` columns in both DataFrames, and specifically see if any of them exist in both DataFrames. We can do this by using the `isin()` and `nunique()` method to get the unique values in each column.
-
-```python
-shared_authors = novels_df[novels_df['author'].isin(nyt_bestsellers_df['author'])]['author'].nunique()
-shared_titles = novels_df[novels_df['title'].isin(nyt_bestsellers_df['title'])]['title'].nunique()
-
-print(f"Number of shared authors: {shared_authors}")
-print(f"Number of shared titles: {shared_titles}")
-```
-
-This prints out the following:
-
-```bash
-Number of shared authors: 122
-Number of shared titles: 0
-```
-
-This output tells us that while there are 122 shared authors, there are no shared titles. This is surprising, so let's investigate further. There's a number of ways we could solve this mystery, but let's first try seeing what the most prolific authors are in both datasets.
-
-```python
-novels_df[novels_df['author'].isin(nyt_bestsellers_df['author'])]['author'].value_counts().head(5)
-```
-
-This gives us the following output:
-
-```bash
-John Grisham          19
-John Steinbeck         8
-Nicholas Sparks        7
-Stephen King           7
-Dan Brown              5
-Name: author, dtype: int64
-```
-
-And now let's do the same for the `nyt_bestsellers_df` DataFrame.
-
-```python
-nyt_bestsellers_df[nyt_bestsellers_df['author'].isin(novels_df['author'])]['author'].value_counts()
-```
-
-This gives us the following output:
-
-```bash
-Stephen King               892
-John Grisham               789
-David Baldacci             396
-Nicholas Sparks            390
-Herman Wouk                375
-```
-
-We can see that across both datasets `Stephen King` and `John Grisham` are the most prolific authors, but we still don't know why there are no shared titles. Let's try filtering for the titles in the `novels_df` and `nyt_bestsellers_df` DataFrames.
-
-```python
-novel_titles = novels_df[novels_df.author == "Stephen King"].title.unique()
-nyt_titles = nyt_bestsellers_df[nyt_bestsellers_df.author == "Stephen King"].title.unique()
-
-print(f"Stephen King's novels: {novel_titles}")
-print(f"Stephen King's NYT bestsellers: {nyt_titles}")
-```
-
-This gives us the following output:
-
-```bash
-Stephen King's novels: ['The Stand' 'It' 'The Shining' 'Misery' 'Carrie' 'The Gunslinger'
- 'Dreamcatcher']
-Stephen King's NYT bestsellers: ['THE SHINING' 'THE STAND' 'THE DEAD ZONE' ...]
-```
-
-We can see that King has had many bestsellers and that there is overlap in the titles. However, the titles in the `nyt_bestsellers_df` DataFrame are all uppercase, while the titles in the `novels_df` DataFrame are capitalized. This is the reason why there are no shared titles in the two DataFrames — and it's a perfect segue into talking about Pandas' built-in string methods.
-
-## String Methods in Pandas
-
-Part of what makes Pandas so powerful is that it has a number of built-in methods for working with `string` data, accessible through the `.str` accessor. An in-depth discussion of these methods is available in the Pandas documentation [https://pandas.pydata.org/docs/user_guide/text.html](https://pandas.pydata.org/docs/user_guide/text.html){target="_blank"}, but here is a summary of the most useful ones:
-
-| Pandas String Method | Explanation |
-|---------------------|-------------|
-| `df['column'].str.lower()` | lowercase all the values in a column |
-| `df['column'].str.upper()` | uppercase all the values in a column |
-| `df['column'].str.capitalize()` | capitalize the first letter of each value |
-| `df['column'].str.replace('old', 'new')` | replace all instances of one string with another |
-| `df['column'].str.split('delimiter')` | split a column by a delimiter like a comma or space |
-| `df['column'].str.strip()` | remove leading and trailing whitespace |
-| `df['column'].str.len()` | count the number of characters in each value |
-| `df['column'].str.contains('pattern')` | check if a column contains a particular pattern |
-| `df['column'].str.startswith('pattern')` | check if a column starts with a particular pattern |
-| `df['column'].str.endswith('pattern')` | check if a column ends with a particular pattern |
-| `df['column'].str.count('pattern')` | count occurrences of a pattern in each value |
-| `df['column'].str.extract('pattern')` | extract the first regex match in each value |
-| `df['column'].str.findall('pattern')` | find all regex matches in each value |
-
-In our case, we can use `str.capitalize()` to fix the title casing problem in `nyt_bestsellers_df`. Notice how we first rename the original column so we don't lose it, then create a new normalized `title` column:
-
-```python
-nyt_bestsellers_df = nyt_bestsellers_df.rename(columns={'title': 'nyt_title'})
-nyt_bestsellers_df['title'] = nyt_bestsellers_df['nyt_title'].str.capitalize()
-```
-
-If we rerun our shared titles check, we should now see some overlap:
-
-```python
-shared_titles = novels_df[novels_df['title'].isin(nyt_bestsellers_df['title'])]['title'].nunique()
-print(f"Number of shared titles: {shared_titles}")
-```
-
-We should now see `12` shared titles. Now we can merge the two DataFrames. One of the things we need to decide is how we want to merge. Since we want to keep all the novels in the `novels_df` DataFrame, we will do a left join. However, we could also experiment with inner and outer joins to see how many rows we would get back.
-
-```python
-inner_merged_df = novels_df.merge(nyt_bestsellers_df, how='inner', on=['author', 'title'])
-outer_merged_df = novels_df.merge(nyt_bestsellers_df, how='outer', on=['author', 'title'])
-left_merged_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])
-print(f"Inner merge length: {len(inner_merged_df)}")
-print(f"Outer merge length: {len(outer_merged_df)}")
-print(f"Left merge length: {len(left_merged_df)}")
-```
-
-This should give us the following output:
-
-```bash
-Inner merge length: 231
-Outer merge length: 60876
-Left merge length: 721
-```
-
-We can see that how we merge the DataFrames can have a significant impact on the number of rows we get back. Depending on our research questions, we might want the outer merge to see all the data and rankings between the datasets, or the inner merge to focus on the novels that are in both datasets. For the remainder of this lesson, we'll use the left merge since we want the full dataset of novels, and then the additional information from the bestsellers to augment our analysis.
-
-```python
-combined_novels_nyt_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])
-```
-
-## Working With the Full Combined Dataset
-
-Now that we have our combined DataFrame, we also want to bring in information derived from the full text of each novel. We will use two related files:
-
-- `combined_novels_viz.csv` is the smaller file used for most of this lesson. It contains the metadata and pre-computed text measurements needed for our visualizations, but it does **not** contain the complete novels.
-- The complete dataset on Canvas includes an `eng_text` column with the Project Gutenberg texts. It is approximately 152 MB and is only needed if you want to run the string-method examples against the novels themselves.
-
-Start with the smaller file:
-
-```python
-# Load the pre-built combined dataset
-# Download combined_novels_viz.csv from Canvas if running this notebook locally
-combined_novels_nyt_df = pd.read_csv('combined_novels_viz.csv')
-```
-
-::: {.callout-note}
-## About this dataset
-The full dataset including raw novel texts (152 MB) is available on Canvas. The version used for the rendered charts on this page is a smaller visualization CSV with pre-computed columns. See the [Additional Notes](#additional-notes){target="_blank"} section for how those columns were created.
-:::
-
-Now let's look at the columns available to us:
-
-```python
-combined_novels_nyt_df.info()
-```
-
-You'll notice we now have pre-computed columns like `novel_length_words`, `novel_length_chars`, `he_counts`, `she_counts`, and `they_counts` alongside all our metadata columns. The full novel texts are in the complete dataset on Canvas. For most of this lesson, we will work with the pre-computed summaries so the notebook remains small and quick to load.
-
-## String Methods for Text Analysis
-
-The following examples show how the derived columns were created from `eng_text`. Run these cells only after loading the complete dataset from Canvas. If you are using `combined_novels_viz.csv`, these results are already available in the pre-computed columns and you can read through the code without rerunning it.
-
-### Counting Characters and Words
-
-The simplest measure of a text is its length. We can count the number of characters in each novel using `str.len()`:
-
-```python
-combined_novels_nyt_df['novel_length_chars'] = combined_novels_nyt_df['eng_text'].str.len()
-combined_novels_nyt_df[['title', 'author', 'novel_length_chars']].sort_values('novel_length_chars', ascending=False).head(10)
-```
-
-To get a more useful **word count**, we can split the text on spaces and count the resulting list:
-
-```python
-combined_novels_nyt_df['novel_length_words'] = combined_novels_nyt_df['eng_text'].str.split().str.len()
-combined_novels_nyt_df[['title', 'author', 'novel_length_words']].sort_values('novel_length_words', ascending=False).head(10)
-```
-
-### Searching for Patterns With `str.contains()`
-
-`str.contains()` checks whether each value in a column matches a given pattern. This is useful for filtering rows, counting occurrences, or finding subsets of a dataset. For example, how many of the novels in our dataset include the word "war" in their `genre` field?
-
-```python
-combined_novels_nyt_df[combined_novels_nyt_df['genre'].str.contains('war', case=False, na=False)][['title', 'author', 'genre']]
-```
-
-The `case=False` argument makes the search case-insensitive, and `na=False` tells Pandas to treat missing values as non-matches rather than raising an error.
-
-We can also use `str.contains()` on the text column itself. For example, let's count how many novels contain the word "she" at all:
-
-```python
-combined_novels_nyt_df['mentions_she'] = combined_novels_nyt_df['eng_text'].str.contains(r'\bshe\b', case=False, na=False)
-combined_novels_nyt_df['mentions_she'].value_counts()
-```
-
-Here we use a **regex** pattern `\bshe\b` — the `\b` characters are "word boundaries" that ensure we match the standalone word "she" rather than the letters inside words like "sheer" or "fisherman."
-
-### Counting Occurrences With `str.count()`
-
-Rather than just knowing *whether* a word appears, `str.count()` tells us *how many times* it appears. This is especially useful for comparing word frequencies across documents. Let's count pronouns to start exploring gender representation across our novels:
-
-```python
-combined_novels_nyt_df['he_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\bhe\b')
-combined_novels_nyt_df['she_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\bshe\b')
-combined_novels_nyt_df['they_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\bthey\b')
-
-combined_novels_nyt_df[['title', 'author', 'genre', 'he_counts', 'she_counts', 'they_counts']].head(10)
-```
-
-You'll notice that `he` tends to be much more frequent than the other two pronouns. Now this might be because of the novels we have in our dataset, but it could also be a reflection of the texts themselves. This kind of question is exactly what EDA is for!
-
-### Extracting Information With `str.extract()`
-
-`str.extract()` uses a regular expression to pull specific pieces of text out of a string. For example, each of our Project Gutenberg URLs follows a consistent pattern — we could extract the book ID number from it:
-
-```python
-combined_novels_nyt_df['pg_book_id'] = combined_novels_nyt_df['pg_eng_url'].str.extract(r'/epub/(\d+)/')
-combined_novels_nyt_df[['title', 'pg_eng_url', 'pg_book_id']].head(5)
-```
-
-The pattern `(\d+)` matches one or more digits, and the parentheses tell `str.extract()` to return that matched group. This kind of extraction is useful any time you have structured information embedded in a string column — for example, extracting years from date strings, or domain names from URLs.
-
-::: {.callout-tip}
-## When string methods aren't enough
-Pandas string methods are great for simple pattern matching, but they treat text as a raw sequence of characters. In the next lesson, we'll move into **tokenization** — the process of breaking text into meaningful linguistic units — which gives us more powerful tools for things like counting actual word forms, handling punctuation, and comparing texts across genres.
-:::
-
-## EDA With Pandas
-
-Since we are working with datasets with significant documentation, we have a fairly good sense of what is in these datasets. However, often you will be working with datasets that are less documented, and so it is important to understand how to explore them. This process is often called *Exploratory Data Analysis*.
+Since we are working with a dataset with significant documentation, we have a fairly good sense of what is in these datasets. However, often you will be working with datasets that are less documented, and so it is important to understand how to explore them. 
 
 [![From Zoë Wilkinson Saldaña "Sentiment Analysis for Exploratory Data Analysis" https://programminghistorian.org/en/lessons/sentiment-analysis](../../assets/images/eda.png){target="_blank"}](https://programminghistorian.org/en/lessons/sentiment-analysis){target="_blank"}
 
@@ -586,7 +330,7 @@ While there are not firm principles for EDA, Tukey argued that it should cover t
 - detecting outliers and anomalies
 - and testing underlying assumptions through visualizations, statistics, and other methods, without initially focusing on formal modeling or hypothesis testing. This approach differs with traditional hypothesis-driven analyses, promoting a more flexible and intuitive investigation into the data.
 
-With Pandas we can start to implement these with code:
+With Pandas we have already started to do some EDA, but let's review our methods:
 
 1. We want to explore the data, so we could use `head()`, `tail()`, or `sample()` methods to display a subset of the dataset. We could also use `.shape` or `.dtypes` to see the shape of the DataFrame and the data types of each column.
 
@@ -597,32 +341,6 @@ With Pandas we can start to implement these with code:
 4. We can use the `isna()` to see what values might be missing in the dataset. Remember that `isna()` can be run on either individual columns or the entire DataFrame, and that you can chain it with other methods `any()` to check if there are *any* null values in the data.
 
 5. Finally we would use the `plot()` method to do some initial graphing of the trends in our data to fully help explore its distribution and potential correlations.
-
-So in our case, we might first use `.dtypes` on our `combined_novels_nyt_df` to see what types of data we have.
-
-```python
-combined_novels_nyt_df.dtypes
-```
-
-Then we might use the `describe()` method to output a summary of our dataset.
-
-```python
-combined_novels_nyt_df.describe()
-```
-
-We could also use the `sort_values()` method to organize the dataset by the `year` or `pub_year` column.
-
-```python
-combined_novels_nyt_df.sort_values('year')
-```
-
-We could also use the `isna()` method to see what values might be missing in the dataset.
-
-```python
-combined_novels_nyt_df.isna().any()
-```
-
-Now that we have a sense of the distribution of our data, we can start to visualize it to see if we can answer our questions.
 
 Like many of the methods above, `plot` is built into Pandas and is a wrapper around the `matplotlib` library [https://matplotlib.org/](https://matplotlib.org/){target="_blank"}, one of the most popular Python libraries for data visualization. This means that we can use the `plot()` method to create a variety of different plots. We can read more about the `plot()` method in the Pandas documentation here [https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html){target="_blank"}, where it lists the kinds of plots we can create:
 
@@ -640,11 +358,23 @@ Like many of the methods above, `plot` is built into Pandas and is a wrapper aro
 
 Pandas also has a robust User Guide on how to plot here [https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html){target="_blank"}.
 
-From these examples we can see that the `plot` syntax requires specifying the type of graph we want to create, and then what we want on the x and y axis. For example, if we wanted to create a scatter plot looking at the relationship between the `pub_year` and `top_500_rank` columns, we could do the following:
+From these examples we can see that the `plot` syntax requires specifying the type of graph we want to create, and then what we want on the x and y axis. For example, if we wanted to now see our distribution of author field of activity, we could do the following:
 
 ```python
-combined_novels_nyt_df.plot(kind='scatter', x='pub_year', y='top_500_rank')
+exploded_subset_novels_df['individual_author_field_of_activity'].value_counts().plot(kind='barh', figsize=(10, 30), title='Distribution of Individual Author Fields of Activity')
 ```
+
+Which gives us the following output:
+
+![](../../assets/images/individual_field_frequency.png)
+
+
+We could also create a scatter plot looking at the relationship between the `pub_year` and `top_500_rank` columns, we could do the following:
+
+```python
+novels_df.plot(kind='scatter', x='pub_year', y='top_500_rank')
+```
+
 
 We should see the following graph:
 
@@ -653,48 +383,14 @@ We should see the following graph:
 We could also use a `groupby()` to explore the relationship between `genre` and the average `top_500_rank` for each genre, and then plot that directly:
 
 ```python
-combined_novels_nyt_df.groupby('genre')['top_500_rank'].mean().plot(kind='bar')
+novels_df.groupby('genre')['top_500_rank'].mean().plot(kind='bar')
 ```
+
 
 Which gives us the following output:
 
 ![](../../assets/images/genre_mean.png)
 
-Now that we are starting to see how we can visualize our data, we need to start thinking more deeply about what questions might be of interest to us and how the shape of this data influences how we can answer these questions.
-
-### "Cleaning" Data With Pandas
-
-As we've discussed previously, `cleaning` data is core part of working with data but also one that tends to get overlooked or rarely foregrounded, even though it is extremely important for any interpretation. In our current example, we've already started to clean our data by merging the DataFrames together and transforming the data to make it more amenable to analysis. We might also want to subset the data, since as we can see above not every book has a genre:
-
-```python
-subset_combined_novels_nyt_df = combined_novels_nyt_df[combined_novels_nyt_df.genre.notna()]
-```
-
-As we discussed in class, a lot of what motivates this "cleaning", whether that means normalizing distributions, removing null values, and even transforming some of the data to standardize it, is the concept of **GIGO**.
-
-![](https://www.harrised.com/150/images/gigo.jpeg)
-
-GIGO stands for "Garbage In, Garbage Out" and the term has been used for decades in computing to refer to when data entry errors would produce faulty results. Rob Stenson has a great  post exploring the history of the term all the way back to Charles Babbage, one of the first inventors of the computer, [https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out](https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out){target="_blank"}.
-
-GIGO is important because it essentially means that the quality of your data analysis is always dependent on the quality of your data.
-
-However, for as much as we want to prioritize quality, what are some of the downsides or tradeoffs of cleaning data? Some potential considerations include:
-
-- losing the specificity of the original data (especially a danger for historic data but also for data collected by certain institutions)
-- privileging computational power over data quality or accuracy
-- releasing datasets publicly without documenting these changes
-
-This list is by no means exhaustive! But number one thing to remember with datasets is that **the act of collecting data is in of itself an interpretation**. And so cleaning data adds another layer of interpretation (sometimes many layers) to the dataset, which is why its crucial to keep a record of how you transform your data.
-
-It is also important to realize that even with cleaning you will never have a *perfect* dataset and to remember that this is often an *iterative process* and not a one time thing. You will likely need to re-transform your data many times depending on your methods.
-
-One best practice is to save multiple versions of your dataset as `csv` files, so that you don't either overwrite your original data or have to rerun previous transformations. Remember that with Pandas we can read and write `csv` files using `pd.read_csv()` and `{name of your dataframe}.to_csv()`.
-
-In addition to thinking about our choices, it is also important to think about the types of data we are working with.
-
-![](../../assets/images/data_types.png)
-
-This graph outlines the main types of data you might encounter, which largely breaks down between qualitative (categorical) or quantitative (numerical). Now these data types somewhat overlap with our `.dtypes` in Pandas, but they also go beyond. For example, what in our dataset might be `Nominal` versus `Ordinal`, or `Discrete` versus `Continuous`? To help answer this question, we are going to explore data visualization more in depth with the Python library `Altair`.
 
 ## Data Visualization With Altair
 
@@ -732,6 +428,7 @@ Notice that this time when installing we have a slightly new syntax: `[all]`. Th
 import altair as alt
 ```
 
+
 Current versions of Jupyter and the VS Code Jupyter extension normally display Altair charts without additional renderer configuration. If a chart does not appear, first confirm that the notebook is using the Python interpreter from the virtual environment where you installed Altair. The [Altair display documentation](https://altair-viz.github.io/user_guide/display_frontends.html){target="_blank"} lists troubleshooting options for different notebook interfaces.
 
 Now we can try out Altair with one of the built-in datasets
@@ -749,6 +446,7 @@ alt.Chart(source).mark_circle(size=60).encode(
     tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']
 )
 ```
+
 
 You should now see the following graph:
 
@@ -775,11 +473,12 @@ Finally we are calling encoding to specify what variable we want to represent on
 Now that we understand a bit of Altair's syntax, let's try to recreate our `genre` by average `top_500_rank` plot. We do not have to call `groupby()` first because Altair can handle the aggregation for us:
 
 ```python
-alt.Chart(combined_novels_nyt_df).mark_bar().encode(
+alt.Chart(novels_df).mark_bar().encode(
 	x="genre:N",
 	y="mean(top_500_rank):Q",
 )
 ```
+
 
 Which gives us the following output:
 
@@ -841,7 +540,502 @@ Altair is built around these principles, making it easier to create clear and in
 
 By embracing the Grammar of Graphics, Altair enables you to think more abstractly about the relationship between data and visualization, offering a consistent, rule-based system to produce a wide variety of visual outputs.
 
----
+### Visualizing the Reshaped Activity Data
+
+Now we can use Altair to revisit the activity values we split and exploded earlier. First, we turn the counts into a small DataFrame with one row per activity:
+
+```python
+activity_counts_df = (
+    exploded_subset_novels_df['individual_author_field_of_activity']
+    .value_counts()
+    .reset_index()
+)
+activity_counts_df.head()
+```
+
+Then we map the activity names and counts to Altair's visual encodings:
+
+```python
+alt.Chart(activity_counts_df.head(20)).mark_bar().encode(
+    x=alt.X('count:Q', title='Number of Novel Records'),
+    y=alt.Y(
+        'individual_author_field_of_activity:N',
+        title='Field of Activity',
+        sort='-x'
+    ),
+    tooltip=[
+        alt.Tooltip('individual_author_field_of_activity:N', title='Activity'),
+        alt.Tooltip('count:Q', title='Novel Records')
+    ]
+).properties(
+    title='Most Common Author Fields of Activity',
+    width=650,
+    height=500
+)
+```
+
+This chart is more readable and interactive than the quick Pandas plot, but it does not solve the underlying interpretive problems. It still counts novel-activity relationships rather than unique authors, depends on VIAF and Library of Congress descriptions, and excludes records with missing activity data. Visualization helps us see the data's structure; it does not make that structure neutral.
+
+Now that we have inspected, reshaped, and visualized one dataset on its own, we are better prepared to combine it with another source.
+
+
+## Merging Data With Pandas
+
+Now that we are understanding how to work with missing data, we can also start to explore how to augment our dataset in various ways. One of the most common ways to do this is through **merging** datasets together.
+
+We've already seen one approach `pd.concat()` that allows us to concatenate DataFrames (aka add them together), but now we want to focus on the `merge()` method.
+
+First though we need another dataset to merge with our `novels_df`. We could take a look at sites like Kaggle to find more datasets, or more specific ones like the *Post45 Data Collective*, which "peer reviews and houses literary and cultural data from 1945 to the present" [https://data.post45.org/](https://data.post45.org/){target="_blank"}.
+
+![Post45](../../assets/images/post45_data.png)
+
+While there's a number of relevant datasets in the *Post45 Data Collective*, we could use the one about *New York Times* Hardcover Fiction Bestsellers, 1931–2020, created by Jordan Pruett [https://data.post45.org/nyt-fiction-bestsellers-data/](https://data.post45.org/nyt-fiction-bestsellers-data/){target="_blank"}. According to the documentation, this dataset contains the following:
+
+> The New York Times Hardcover Fiction Bestsellers (1931–2020) contains three related datasets. The first dataset provides a tabular representation of the hardcover fiction bestseller list of The New York Times every week between 1931 and 2020. The second dataset provides title-level data for every unique title that appeared on the hardcover fiction bestseller list during this time period. The third dataset provides HathiTrust Digital Library identifiers for every unique title that appeared on the hardcover fiction bestseller list and that also has a corresponding volume in the HathiTrust Digital Library.
+
+> Previous research using similar data has been limited to partial segments of the list, such as the top 200 longest-running bestsellers since a certain date (Piper and Portelance, 2016) or bestsellers from only particular years (Sorenson, 2007). By contrast, this dataset covers the full list since its inception in 1931, along with each reported work's title, author(s), date of appearance, and rank.
+
+Getting this additional dataset will allow us to explore the relationship between the *New York Times* bestsellers and the top 500 novels as recorded by OCLC.
+
+![NYT Data](../../assets/images/nyt_data.png)
+
+If we click on the `Explore/download data` for the first dataset, we see a new page that has the remote url for the dataset: [https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv](https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv){target="_blank"}.
+
+Notice the `raw.githubusercontent.com` in the URL. This tells us that this is a raw file from a GitHub repository, which is a common way to share datasets, and we can even see the actual file here [https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers](https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers){target="_blank"}.
+
+We can copy that and load it into a new DataFrame.
+
+```python
+nyt_bestsellers_df = pd.read_csv("https://raw.githubusercontent.com/Post45-Data-Collective/data/refs/heads/main/nyt_hardcover_fiction_bestsellers/nyt_hardcover_fiction_bestsellers-lists.csv", encoding='utf-8')
+```
+
+
+Now that we have both datasets loaded, we can start to explore them. Let's take a look at the columns in the `nyt_bestsellers_df.info()` DataFrame.
+
+Which gives us the following output:
+
+```bash
+<class 'pandas.DataFrame'>
+RangeIndex: 60386 entries, 0 to 60385
+Data columns (total 15 columns):
+ #   Column                     Non-Null Count  Dtype  
+---  ------                     --------------  -----  
+ 0   Unnamed: 0                 60386 non-null  int64  
+ 1   author                     60376 non-null  str    
+ 2   author_authorized_heading  55717 non-null  str    
+ 3   author_lccn                55622 non-null  str    
+ 4   author_viaf                55717 non-null  object 
+ 5   author_wikidata            54485 non-null  str    
+ 6   oclc_eholdings             56567 non-null  float64
+ 7   oclc_holdings              56567 non-null  float64
+ 8   oclc_isbn                  33723 non-null  str    
+ 9   oclc_owi                   56567 non-null  float64
+ 10  rank                       60386 non-null  int64  
+ 11  title                      60386 non-null  str    
+ 12  title_id                   60386 non-null  int64  
+ 13  week                       60386 non-null  str    
+ 14  year                       60386 non-null  int64  
+dtypes: float64(3), int64(4), object(1), str(7)
+memory usage: 11.7+ MB
+```
+
+We can see that this dataset has 60386 rows and 14 columns. We an see that the original author did not exclude the index so we have an `Unnamed: 0` column. We can also see that the `author` column has ten missing values, but that overall, this dataset has very few null values and is much larger than the `novels_df` DataFrame.
+
+Now we can start to merge the two DataFrames together. We've mentioned merging datasets a bit when we discussed joining data in class and SQL, but now we want to dig into details. Often times when we're working with datasets, we will have our data split into multiple `csv` files or have differently shaped datasets (i.e. some of them will have more rows or columns than other datasets). Pandas has built in functionality that let's us merge together DataFrames so that we can perform analysis on the combined dataset, which you can read about in the very extensive documentation here [https://pandas.pydata.org/docs/user_guide/merging.html](https://pandas.pydata.org/docs/user_guide/merging.html){target="_blank"}.
+
+While this documentation shows a number of ways to combined datasets (`concat` let's you combine datasets by stacking them on top of each other, `join` let's you combine datasets by joining them on a common index, and `merge` let's you combine datasets by joining them on a common column), we will focus on the `merge` method.
+
+![](../../assets/images/merge_syntax.png)
+
+If we take a look at the documentation, we see the syntax above, which shows us that in Pandas we use the `merge()` function to combine datasets. The `merge()` function takes in a number of parameters, but the most important ones are `left`, `right`, `how`, and `on`. The `left` and `right` parameters are the DataFrames we want to merge, the `how` parameter is the type of join we want to undertake, and the `on` parameter is the column we want to join the DataFrames on.
+
+We can also see an example of how this works in the figure below.
+
+![](../../assets/images/merge_example.png)
+
+You'll notice that we can see a description of the types of `how` parameters we can use. These are the same types of joins that we discussed in class and in SQL. The `how` parameter can be set to `left`, `right`, `outer`, or `inner`. The `left` join will return all the rows from the left DataFrame and the matching rows from the right DataFrame. The `right` join will return all the rows from the right DataFrame and the matching rows from the left DataFrame. The `outer` join will return all the rows from the left DataFrame and the right DataFrame. The `inner` join will return only the rows that match in both DataFrames.
+
+![](https://miro.medium.com/max/700/1*9eH1_7VbTZPZd9jBiGIyNA.png)
+
+Now that we are starting to understand this logic, we can consider how we might merge our datasets. First, we can double check the columns in our `novels_df` and `nyt_bestsellers_df` DataFrames to see if there are any common columns we can use to merge them.
+
+```python
+novels_df.columns, nyt_bestsellers_df.columns
+```
+
+
+This gives us the following output:
+
+```bash
+(Index(['top_500_rank', 'title', 'author', 'pub_year', 'orig_lang', 'genre',
+        'author_birth', 'author_death', 'author_gender', 'author_primary_lang',
+        'author_nationality', 'author_field_of_activity', 'author_occupation',
+        'oclc_holdings', 'oclc_eholdings', 'oclc_total_editions',
+        'oclc_holdings_rank', 'oclc_editions_rank', 'gr_avg_rating',
+        'gr_num_ratings', 'gr_num_reviews', 'gr_avg_rating_rank',
+        'gr_num_ratings_rank', 'oclc_owi', 'author_viaf', 'gr_url', 'wiki_url',
+        'pg_eng_url', 'pg_orig_url'],
+       dtype='str'),
+ Index(['Unnamed: 0', 'author', 'author_authorized_heading', 'author_lccn',
+        'author_viaf', 'author_wikidata', 'oclc_eholdings', 'oclc_holdings',
+        'oclc_isbn', 'oclc_owi', 'rank', 'title', 'title_id', 'week', 'year'],
+       dtype='str'))
+```
+
+We could eyeball the likely similar columns, but we can also use the `intersection()` method to find the common columns.
+
+```python
+set(novels_df.columns).intersection(set(nyt_bestsellers_df.columns))
+```
+
+This gives us the following output:
+
+```bash
+{'author',
+ 'author_viaf',
+ 'oclc_eholdings',
+ 'oclc_holdings',
+ 'oclc_owi',
+ 'title'}
+```
+
+`intersection()` is a built-in Python method that returns the common elements between two sets. `set()` creates an unordered collection of unique elements. Here we convert the column names of both DataFrames into sets and find the names they share.
+
+We can try using all six shared columns as merge keys. We will start with a basic left merge, which should keep every row from `novels_df` and add matching information from `nyt_bestsellers_df`.
+
+```python
+merge_columns = [
+    'title',
+    'author',
+    'author_viaf',
+    'oclc_eholdings',
+    'oclc_holdings',
+    'oclc_owi'
+]
+
+merged_df = novels_df.merge(
+    nyt_bestsellers_df,
+    how='left',
+    on=merge_columns
+)
+
+print(f"Rows in novels_df: {len(novels_df)}")
+print(f"Rows in merged_df: {len(merged_df)}")
+merged_df[['author', 'title']].head()
+```
+
+The code runs without an error, returns a DataFrame, and preserves all 500 rows from `novels_df`. At first glance, the merge seems to have worked.
+
+But did Pandas actually add any information from the NYT dataset? The `rank` column came from `nyt_bestsellers_df`, so it gives us a useful way to test the result.
+
+```python
+merged_df[['author', 'title', 'rank']].head(10)
+```
+
+Every value in `rank` is `NaN`. We can count the non-missing ranks to check the entire DataFrame rather than relying on its first ten rows:
+
+```python
+merged_df['rank'].notna().sum()
+```
+
+The result is `0`. The merge operation completed, but it did not find a single matching record. This happened quietly because a left merge always preserves the rows from the left DataFrame.
+
+Pandas can make the result more explicit with the optional `indicator=True` argument. It adds a `_merge` column that identifies where each row came from.
+
+```python
+diagnostic_merged_df = novels_df.merge(
+    nyt_bestsellers_df,
+    how='left',
+    on=merge_columns,
+    indicator=True
+)
+
+diagnostic_merged_df['_merge'].value_counts()
+```
+
+This confirms that all 500 rows are `left_only` and zero are `both`:
+
+```bash
+_merge
+left_only     500
+right_only      0
+both            0
+```
+
+A successful **merge operation** is not the same as successful **record matching**. Pandas requires every merge key in a row to match exactly. One mismatch is enough to prevent the entire row from matching, and using more keys creates more opportunities for a mismatch.
+
+Before inspecting the titles, let's compare Stephen King's values in the other shared columns. Do these fields appear to explain the failed merge?
+
+```python
+novels_df[novels_df.author == "Stephen King"][
+    ['author_viaf', 'oclc_eholdings', 'oclc_holdings', 'oclc_owi']
+]
+```
+
+```python
+nyt_bestsellers_df[nyt_bestsellers_df.author == "Stephen King"][
+    ['author_viaf', 'oclc_eholdings', 'oclc_holdings', 'oclc_owi']
+]
+```
+
+For Stephen King, the VIAF and OCLC values appear to contain the same data in both datasets. That is encouraging, but it does not prove that every merge key matches. We still need to inspect `author` and `title`, especially because text comparisons are case-sensitive.
+
+We can use `isin()` and `nunique()` to count how many author and title values appear in both DataFrames.
+
+```python
+shared_authors = novels_df[novels_df['author'].isin(nyt_bestsellers_df['author'])]['author'].nunique()
+shared_titles = novels_df[novels_df['title'].isin(nyt_bestsellers_df['title'])]['title'].nunique()
+
+print(f"Number of shared authors: {shared_authors}")
+print(f"Number of shared titles: {shared_titles}")
+```
+
+
+This prints out the following:
+
+```bash
+Number of shared authors: 122
+Number of shared titles: 0
+```
+
+This output tells us that while there are 122 shared authors, there are no shared titles. This is surprising, so let's investigate further. There's a number of ways we could solve this mystery, but let's first try seeing what the most prolific authors are in both datasets.
+
+```python
+novels_df[novels_df['author'].isin(nyt_bestsellers_df['author'])]['author'].value_counts().head(5)
+```
+
+
+This gives us the following output:
+
+```bash
+John Grisham          19
+John Steinbeck         8
+Nicholas Sparks        7
+Stephen King           7
+Dan Brown              5
+Name: author, dtype: int64
+```
+
+And now let's do the same for the `nyt_bestsellers_df` DataFrame.
+
+```python
+nyt_bestsellers_df[nyt_bestsellers_df['author'].isin(novels_df['author'])]['author'].value_counts()
+```
+
+
+This gives us the following output:
+
+```bash
+Stephen King               892
+John Grisham               789
+David Baldacci             396
+Nicholas Sparks            390
+Herman Wouk                375
+```
+
+We can see that across both datasets `Stephen King` and `John Grisham` are the most prolific authors, but we still don't know why there are no shared titles. Let's try filtering for the titles in the `novels_df` and `nyt_bestsellers_df` DataFrames.
+
+```python
+novel_titles = novels_df[novels_df.author == "Stephen King"].title.unique()
+nyt_titles = nyt_bestsellers_df[nyt_bestsellers_df.author == "Stephen King"].title.unique()
+
+print(f"Stephen King's novels: {novel_titles}")
+print(f"Stephen King's NYT bestsellers: {nyt_titles}")
+```
+
+
+This gives us the following output:
+
+```bash
+Stephen King's novels: ['The Stand' 'It' 'The Shining' 'Misery' 'Carrie' 'The Gunslinger'
+ 'Dreamcatcher']
+Stephen King's NYT bestsellers: ['THE SHINING' 'THE STAND' 'THE DEAD ZONE' ...]
+```
+
+We can see that King has had many bestsellers and that there is overlap in the titles. However, the titles in the `nyt_bestsellers_df` DataFrame are all uppercase, while the titles in the `novels_df` DataFrame are capitalized. This is the reason why there are no shared titles in the two DataFrames — and it's a perfect segue into talking about Pandas' built-in string methods.
+
+## String Methods in Pandas
+
+Part of what makes Pandas so powerful is that it has a number of built-in methods for working with `string` data, accessible through the `.str` accessor. An in-depth discussion of these methods is available in the Pandas documentation [https://pandas.pydata.org/docs/user_guide/text.html](https://pandas.pydata.org/docs/user_guide/text.html){target="_blank"}, but here is a summary of the most useful ones:
+
+| Pandas String Method | Explanation |
+|---------------------|-------------|
+| `df['column'].str.lower()` | lowercase all the values in a column |
+| `df['column'].str.upper()` | uppercase all the values in a column |
+| `df['column'].str.capitalize()` | capitalize the first letter of each value |
+| `df['column'].str.replace('old', 'new')` | replace all instances of one string with another |
+| `df['column'].str.split('delimiter')` | split a column by a delimiter like a comma or space |
+| `df['column'].str.strip()` | remove leading and trailing whitespace |
+| `df['column'].str.len()` | count the number of characters in each value |
+| `df['column'].str.contains('pattern')` | check if a column contains a particular pattern |
+| `df['column'].str.startswith('pattern')` | check if a column starts with a particular pattern |
+| `df['column'].str.endswith('pattern')` | check if a column ends with a particular pattern |
+| `df['column'].str.count('pattern')` | count occurrences of a pattern in each value |
+| `df['column'].str.extract('pattern')` | extract the first regex match in each value |
+| `df['column'].str.findall('pattern')` | find all regex matches in each value |
+
+In our case, we can use `str.capitalize()` to fix the title casing problem in `nyt_bestsellers_df`. Notice how we first rename the original column so we don't lose it, then create a new normalized `title` column:
+
+```python
+nyt_bestsellers_df = nyt_bestsellers_df.rename(columns={'title': 'nyt_title'})
+nyt_bestsellers_df['title'] = nyt_bestsellers_df['nyt_title'].str.capitalize()
+```
+
+
+If we rerun our shared titles check, we should now see some overlap:
+
+```python
+shared_titles = novels_df[novels_df['title'].isin(nyt_bestsellers_df['title'])]['title'].nunique()
+print(f"Number of shared titles: {shared_titles}")
+```
+
+
+We should now see `12` shared titles. Now we can merge the two DataFrames. One of the things we need to decide is how we want to merge. Since we want to keep all the novels in the `novels_df` DataFrame, we will do a left join. However, we could also experiment with inner and outer joins to see how many rows we would get back.
+
+```python
+inner_merged_df = novels_df.merge(nyt_bestsellers_df, how='inner', on=['author', 'title'])
+outer_merged_df = novels_df.merge(nyt_bestsellers_df, how='outer', on=['author', 'title'])
+left_merged_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])
+print(f"Inner merge length: {len(inner_merged_df)}")
+print(f"Outer merge length: {len(outer_merged_df)}")
+print(f"Left merge length: {len(left_merged_df)}")
+```
+
+
+This should give us the following output:
+
+```bash
+Inner merge length: 231
+Outer merge length: 60876
+Left merge length: 721
+```
+
+We can see that how we merge the DataFrames can have a significant impact on the number of rows we get back. Depending on our research questions, we might want the outer merge to see all the data and rankings between the datasets, or the inner merge to focus on the novels that are in both datasets. For the remainder of this lesson, we'll use the left merge since we want the full dataset of novels, and then the additional information from the bestsellers to augment our analysis.
+
+```python
+combined_novels_nyt_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])
+```
+
+
+## Working With the Full Combined Dataset
+
+Now that we have our combined DataFrame, we also want to bring in information derived from the full text of each novel. We will use two related files:
+
+- `combined_novels_viz.csv` is the smaller file used for most of this lesson. It contains the metadata and pre-computed text measurements needed for our visualizations, but it does **not** contain the complete novels.
+- The complete dataset on Canvas includes an `eng_text` column with the Project Gutenberg texts. It is approximately 152 MB and is only needed if you want to run the string-method examples against the novels themselves.
+
+Start with the smaller file:
+
+```python
+# Load the pre-built combined dataset
+# Download combined_novels_viz.csv from Canvas if running this notebook locally
+combined_novels_nyt_df = pd.read_csv('combined_novels_viz.csv')
+```
+
+
+::: {.callout-note}
+## About this dataset
+The full dataset including raw novel texts (152 MB) is available on Canvas. The version used for the rendered charts on this page is a smaller visualization CSV with pre-computed columns. See the [Additional Notes](#additional-notes){target="_blank"} section for how those columns were created.
+:::
+
+Now let's look at the columns available to us:
+
+```python
+combined_novels_nyt_df.info()
+```
+
+
+You'll notice we now have pre-computed columns like `novel_length_words`, `novel_length_chars`, `he_counts`, `she_counts`, and `they_counts` alongside all our metadata columns. The full novel texts are in the complete dataset on Canvas. For most of this lesson, we will work with the pre-computed summaries so the notebook remains small and quick to load.
+
+## String Methods for Text Analysis
+
+The following examples show how the derived columns were created from `eng_text`. Run these cells only after loading the complete dataset from Canvas. If you are using `combined_novels_viz.csv`, these results are already available in the pre-computed columns and you can read through the code without rerunning it.
+
+### Counting Characters and Words
+
+The simplest measure of a text is its length. We can count the number of characters in each novel using `str.len()`:
+
+```python
+# With the complete Canvas dataset, this column was created with:
+# combined_novels_nyt_df['novel_length_chars'] = combined_novels_nyt_df['eng_text'].str.len()
+
+# The smaller lesson file already contains the result.
+combined_novels_nyt_df[['title', 'author', 'novel_length_chars']].sort_values('novel_length_chars', ascending=False).head(10)
+```
+
+
+To get a more useful **word count**, we can split the text on spaces and count the resulting list:
+
+```python
+# With the complete Canvas dataset, this column was created with:
+# combined_novels_nyt_df['novel_length_words'] = combined_novels_nyt_df['eng_text'].str.split().str.len()
+
+# The smaller lesson file already contains the result.
+combined_novels_nyt_df[['title', 'author', 'novel_length_words']].sort_values('novel_length_words', ascending=False).head(10)
+```
+
+
+### Searching for Patterns With `str.contains()`
+
+`str.contains()` checks whether each value in a column matches a given pattern. This is useful for filtering rows, counting occurrences, or finding subsets of a dataset. For example, how many of the novels in our dataset include the word "war" in their `genre` field?
+
+```python
+combined_novels_nyt_df[combined_novels_nyt_df['genre'].str.contains('war', case=False, na=False)][['title', 'author', 'genre']]
+```
+
+
+The `case=False` argument makes the search case-insensitive, and `na=False` tells Pandas to treat missing values as non-matches rather than raising an error.
+
+We can also use `str.contains()` on the text column itself. For example, let's count how many novels contain the word "she" at all:
+
+```python
+# With the complete Canvas dataset, this column was created with:
+# combined_novels_nyt_df['mentions_she'] = combined_novels_nyt_df['eng_text'].str.contains(r'\bshe\b', case=False, na=False)
+
+# The smaller lesson file already contains the result.
+combined_novels_nyt_df['mentions_she'].value_counts()
+```
+
+
+Here we use a **regex** pattern `\bshe\b` — the `\b` characters are "word boundaries" that ensure we match the standalone word "she" rather than the letters inside words like "sheer" or "fisherman."
+
+### Counting Occurrences With `str.count()`
+
+Rather than just knowing *whether* a word appears, `str.count()` tells us *how many times* it appears. This is especially useful for comparing word frequencies across documents. Let's count pronouns to start exploring gender representation across our novels:
+
+```python
+# With the complete Canvas dataset, these columns were created with:
+# combined_novels_nyt_df['he_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\bhe\b')
+# combined_novels_nyt_df['she_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\bshe\b')
+# combined_novels_nyt_df['they_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\bthey\b')
+
+# The smaller lesson file already contains the results.
+combined_novels_nyt_df[['title', 'author', 'genre', 'he_counts', 'she_counts', 'they_counts']].head(10)
+```
+
+
+You'll notice that `he` tends to be much more frequent than the other two pronouns. Now this might be because of the novels we have in our dataset, but it could also be a reflection of the texts themselves. This kind of question is exactly what EDA is for!
+
+### Extracting Information With `str.extract()`
+
+`str.extract()` uses a regular expression to pull specific pieces of text out of a string. For example, each of our Project Gutenberg URLs follows a consistent pattern — we could extract the book ID number from it:
+
+```python
+combined_novels_nyt_df['pg_book_id'] = combined_novels_nyt_df['pg_eng_url'].str.extract(r'/epub/(\d+)/')
+combined_novels_nyt_df[['title', 'pg_eng_url', 'pg_book_id']].head(5)
+```
+
+
+The pattern `(\d+)` matches one or more digits, and the parentheses tell `str.extract()` to return that matched group. This kind of extraction is useful any time you have structured information embedded in a string column — for example, extracting years from date strings, or domain names from URLs.
+
+::: {.callout-tip}
+## When string methods aren't enough
+Pandas string methods are great for simple pattern matching, but they treat text as a raw sequence of characters. In the next lesson, we'll move into **tokenization** — the process of breaking text into meaningful linguistic units — which gives us more powerful tools for things like counting actual word forms, handling punctuation, and comparing texts across genres.
+:::
+
+## Visualizing the Combined Data With Altair
+
+Now that we have merged the datasets and loaded the pre-computed text measurements, we can use Altair to explore relationships that were not available in the original novels metadata alone.
 
 Let's try out some of Altair's more advanced functionality to see how it implements this Grammar of Graphics.
 
@@ -855,6 +1049,7 @@ alt.Chart(combined_novels_nyt_df).mark_bar().encode(
 	tooltip=["genre:N", "count():Q", "top_500_rank:Q", "title"]
 )
 ```
+
 
 Which gives us the following chart:
 
@@ -874,6 +1069,7 @@ alt.Chart(combined_novels_nyt_df).mark_bar().encode(
 	height=400
 )
 ```
+
 
 Which produces the following chart:
 
@@ -917,6 +1113,7 @@ alt.Chart(melted_df[melted_df['genre'].notna()]).mark_bar().encode(
 )
 ```
 
+
 This visualization starts to let us ask research questions: are certain genres more likely to use masculine pronouns? Does that change over time? These are exactly the kinds of hypotheses that EDA can surface before we move to more rigorous methods.
 
 We could also see these patterns over time. Altair is great at visualizing dates, however, you'll notice our primary date column, `pub_year` only has the year in it. If we try to use it in Altair as is, we get the following graph:
@@ -928,6 +1125,7 @@ alt.Chart(combined_novels_nyt_df).mark_bar().encode(
 	color="genre:N"
 )
 ```
+
 
 ![](../../assets/images/date_broken_altair.png)
 
@@ -961,6 +1159,7 @@ alt.Chart(combined_novels_nyt_df).mark_bar().encode(
 )
 ```
 
+
 You'll notice our syntax is again a bit more complex. You can read about how Altair enables interactivity in the documentation here [https://altair-viz.github.io/user_guide/interactions/index.html](https://altair-viz.github.io/user_guide/interactions/index.html){target="_blank"}, but to summarize, we've now added the ability not just to have a tooltip but also to visually select our categories in the legend. Try clicking a genre in the legend to highlight it.
 
 As we are starting to see Altair is a very powerful library. We will continue to explore its functionality in the coming weeks, but would highly encourage you to take a look at the example visualizations on the Altair website [https://altair-viz.github.io/gallery/index.html](https://altair-viz.github.io/gallery/index.html){target="_blank"} and the documentation [https://altair-viz.github.io/index.html](https://altair-viz.github.io/index.html){target="_blank"}.
@@ -982,7 +1181,7 @@ Your submission should include:
 - [ ] A short introduction to the dataset or datasets, including their provenance and what one row represents.
 - [ ] An initial audit using methods such as `head()`, `shape`, `dtypes`, `describe()`, and missing-value counts.
 - [ ] A discussion of at least one missing-data, coverage, category, or bias issue that affects interpretation.
-- [ ] At least two Altair visualizations using appropriate marks, encodings, labels, and tooltips.
+- [ ] At least two purposeful Altair visualizations using appropriate marks, encodings, labels, and tooltips.
 - [ ] Markdown text interpreting each visualization rather than leaving the charts to speak for themselves.
 - [ ] A conclusion explaining what you found, what remains uncertain, and what you would investigate next.
 - [ ] Reproducible data access: use a stable remote URL or document where the local data file belongs. Do not commit the 152 MB full-text dataset.
@@ -1040,10 +1239,11 @@ combined_novels_nyt_df['eng_text'] = combined_novels_nyt_df['pg_eng_url'].progre
 
 You can read more in the Pandas [`apply()` documentation](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html){target="_blank"} and the [`tqdm` documentation](https://tqdm.github.io/){target="_blank"}.
 
-Finally, once we had all the texts, we saved the combined DataFrame to a CSV file so we wouldn't have to re-scrape every time:
+Finally, once we had all the texts, we saved the combined DataFrame to a CSV file so we would not have to re-scrape every time:
 
 ```python
 combined_novels_nyt_df.to_csv("combined_novels_with_text.csv", index=False)
 ```
+
 
 [^1]: Quinn Dombrowski, Manish Goregaokar, Ben Joeng (Yang), and Abeera Kamran, “Encoding Multilingualism: Technical Affordances of Multilingual Publication from Manuscripts to Unicode and OpenType,” *Journal of Electronic Publishing* 27, no. 1 (2024): 309–329, [https://doi.org/10.3998/jep.5528](https://doi.org/10.3998/jep.5528){target="_blank"}.

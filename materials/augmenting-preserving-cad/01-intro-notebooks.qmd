@@ -477,82 +477,42 @@ parks_data_df['Year'].unique()
 
 Which gives us the following list `[1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]`.
 
-While the columns in the `parks_data_df` are capitalized, usually we try to keep column names lowercase and use underscores instead of spaces for ease of typing. So let's try renaming all of the columns programmatically. First, we need to get all the column names using the `columns` attribute of the `DataFrame`, which can see is an attribute in the documentation [https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.columns.html](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.columns.html){target="_blank"}.
-
-```python
-parks_data_df.columns
-```
-
-Then we can use a list comprehension to create a new list of column names that are all lowercase and have underscores instead of spaces.
-
-```python
-new_column_names = [col.lower().replace(' ', '_') for col in parks_data_df.columns]
-```
-
-Finally, we can assign this new list to the `columns` attribute of the DataFrame.
-
-```python
-parks_data_df.columns = new_column_names
-parks_data_df.columns
-```
-
-![](../../assets/images/col_names.png)
-
-You'll notice that column names like `RecreationVisits` are now `recreationvisits`, which is much easier to work with but still a bit hard to read. We could use the following code
-
-```python
-import re
-
-# We need to reload the data to reset the column names back to their original state
-parks_data_df = pd.read_csv('https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv') # or use the local path pd.read_csv('US-National-Parks_RecreationVisits_1979-2023.csv')
-
-# Function to split on uppercase letters and insert underscores
-def split_on_uppercase(name):
-    return re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
-
-# Apply the function to each column name
-new_column_names = [split_on_uppercase(col) for col in parks_data_df.columns]
-parks_data_df.columns = new_column_names
-```
-
-Now if we check the column names again, we should see that they are all lowercase and have underscores instead of spaces. However, we will only see that if we reload the original dataset, otherwise it will not work. Why is that? **Hint: Remember Jupyter Notebooks are not Python scripts!**
-
 ### Filtering & Grouping Data with Pandas
 
 One of the things that makes Pandas so powerful is that it allows us to filter data easily. We can filter data using boolean indexing, which allows us to select rows based on conditions, just like `if` statements in Python.
 
-For example, if we want to filter the DataFrame to only include rows for visits to Illinois, we could select the `state` column and see how many rows have the value `IL`, we can do the following:
+For example, if we want to filter the DataFrame to only include rows for visits to Illinois, we could select the `State` column and see how many rows have the value `IL`, we can do the following:
 
 ```python
-parks_data_df[parks_data_df['state'] == 'IL']
+parks_data_df[parks_data_df['State'] == 'IL']
 ```
 
 Now we'll see that this gives us zero values because this dataset is only for "the current 63 National Parks administered by the United States National Park Service (NPS), from 1979 to 2023."
 
 ![](../../assets/images/parks_map.png)
 
-While we could've checked this map prior to filtering, we can also check the unique values in the `state` column to see what values exist.
+While we could've checked this map prior to filtering, we can also check the unique values in the `State` column to see what values exist.
 
 ```python
-parks_data_df['state'].unique()
+parks_data_df['State'].unique()
 ```
 
 However, `unique()` only gives us the unique values in the column, but it doesn't tell us how many times each value appears. For that, we can use the `value_counts()` method, which counts the number of occurrences of each unique value in a column. We can read more about the method here [https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.value_counts.html#pandas-dataframe-value-counts](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.value_counts.html#pandas-dataframe-value-counts){target="_blank"}.
 
 ```python
-parks_data_df['state'].value_counts()
+parks_data_df['State'].value_counts()
 ```
 
 This will give us a count of how many times each state appears in the dataset. We could subset our `parks_data_df` DataFrame to only include rows for a specific state, like `California` which is the highest frequency state, using the following code:
 
 ```python
-parks_data_df[parks_data_df['state'] == 'CA']
+parks_data_df[parks_data_df['State'] == 'CA']
 ```
 
 We could also filter for multiple states using the `isin()` method, which checks if a value is in a list of values (more info here [https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.isin.html#pandas.DataFrame.isin](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.isin.html#pandas.DataFrame.isin){target="_blank"}). For example, if we want to filter for both `California` and `Alaska`, we could do the following:
 
 ```python
-parks_data_df[parks_data_df['state'].isin(['CA', 'AK'])]
+parks_data_df[parks_data_df['State'].isin(['CA', 'AK'])]
 ```
 
 Now we can see the rows for both states. However, that doesn't tell us how many parks exist in each state. To get that information, we can use the `groupby()` method, which allows us to group rows by a specific column and then perform an aggregation function on the grouped data. There's detailed documentation available here [https://pandas.pydata.org/docs/user_guide/groupby.html#group-by-split-apply-combine](https://pandas.pydata.org/docs/user_guide/groupby.html#group-by-split-apply-combine){target="_blank"}.
@@ -563,34 +523,34 @@ Now we can see the rows for both states. However, that doesn't tell us how many 
 
 The above figures start to explain the logic of `groupby()`, but let's break it down further.
 
-First, we select one or more columns by which we want to group our data. In our case, we can group by `state`. Grouping alone does not tell us how many parks exist there; it creates a `DataFrameGroupBy` object that is ready for a subsequent aggregation.
+First, we select one or more columns by which we want to group our data. In our case, we can group by `State`. Grouping alone does not tell us how many parks exist there; it creates a `DataFrameGroupBy` object that is ready for a subsequent aggregation.
 
 ```python
-parks_data_df.groupby('state')
+parks_data_df.groupby('State')
 ```
 
 While this code works, we'll see that it only returns a `DataFrameGroupBy` object, which is not very useful on its own. To see the actual data, we could use the `get_group()` method to see the data for a specific state.
 
 ```python
-parks_data_df.groupby('state').get_group('CA')
+parks_data_df.groupby('State').get_group('CA')
 ```
 
 Now we see that we are getting a subset of our data! However, where `groupby()` really shines is when we aggregate the grouped data. For example, the following counts the number of **rows** for each state:
 
 ```python
-parks_data_df.groupby('state').size()
+parks_data_df.groupby('State').size()
 ```
 
-This code uses the `size()` method to count the number of rows in each group. Because this dataset contains one row per park and year, the result is the number of park-year observations in each state, **not** the number of distinct parks. If we want the number of unique parks, we can select `park_name` and use `nunique()` instead.
+This code uses the `size()` method to count the number of rows in each group. Because this dataset contains one row per park and year, the result is the number of park-year observations in each state, **not** the number of distinct parks. If we want the number of unique parks, we can select `ParkName` and use `nunique()` instead.
 
 ```python
-parks_data_df.groupby('state')['park_name'].nunique()
+parks_data_df.groupby('State')['ParkName'].nunique()
 ```
 
 Which begins with the following output (the complete result includes all states represented in the dataset):
 
 ```bash
-state
+State
 AK    8
 AR    1
 AS    1
@@ -608,12 +568,12 @@ MO    1
 MT    1
 ```
 
-Both `size()` and this use of `nunique()` return a Series because each state is associated with one aggregated value. When we use `groupby()`, we can specify both the columns that define the groups and the columns that should be aggregated. Here, `state` defines the groups and `park_name` supplies the values whose unique count we want.
+Both `size()` and this use of `nunique()` return a Series because each state is associated with one aggregated value. When we use `groupby()`, we can specify both the columns that define the groups and the columns that should be aggregated. Here, `State` defines the groups and `ParkName` supplies the values whose unique count we want.
 
 Because we are getting a Series, we can also convert it back to a DataFrame using the `reset_index()` method, which will turn the Series back into a DataFrame.
 
 ```python
-parks_data_df.groupby('state')['park_name'].nunique().reset_index()
+parks_data_df.groupby('State')['ParkName'].nunique().reset_index()
 ```
 
 ![](https://pynative.com/wp-content/uploads/2021/02/dataframe.png)
@@ -623,7 +583,7 @@ You'll often see `reset_index()` being used in Pandas. But what is the index? Th
 Now we have an actual DataFrame that we can save to a new variable, which we can call `parks_per_state_df`.
 
 ```python
-parks_per_state_df = parks_data_df.groupby('state')['park_name'].nunique().reset_index()
+parks_per_state_df = parks_data_df.groupby('State')['ParkName'].nunique().reset_index()
 ```
 
 `nunique()` is just one of many methods we could use with `groupby()`. We could also use `sum()`, `mean()`, `min()`, `max()`, and more. Here's a short summary table of some of the built-in methods we can use with both Series, DataFrames, and GroupBy objects, and you can see more in the user guide here: [https://pandas.pydata.org/pandas-docs/stable/user_guide/basics.html#descriptive-statistics](https://pandas.pydata.org/pandas-docs/stable/user_guide/basics.html#descriptive-statistics){target="_blank"}.
@@ -650,13 +610,13 @@ Now we have a new DataFrame that contains the number of parks in each state, but
 As you can see in this figure, we can use the `rename()` method, which requires passing a dictionary to the `columns` parameter, where the keys are the old column names and the values are the new column names.
 
 ```python
-parks_per_state_df.rename(columns={'park_name': 'num_parks'})
+parks_per_state_df.rename(columns={'ParkName': 'num_parks'})
 ```
 
 However, this method returns a new DataFrame. If we want to keep the renamed result, we should assign it back to our variable:
 
 ```python
-parks_per_state_df = parks_per_state_df.rename(columns={'park_name': 'num_parks'})
+parks_per_state_df = parks_per_state_df.rename(columns={'ParkName': 'num_parks'})
 ```
 
 We can use the same assignment pattern when sorting. This makes it visible that the operation produces an updated DataFrame:
@@ -670,7 +630,7 @@ Now when we run this cell, `parks_per_state_df` will have the new column, and be
 Finally, so far we have been using only data from the `parks_data_df` DataFrame, but we can also add new data. For example, if we deliberately wanted to add Illinois to our summary, we could do the following:
 
 ```python
-new_state = pd.DataFrame({'state': ['IL'], 'num_parks': [0]})
+new_state = pd.DataFrame({'State': ['IL'], 'num_parks': [0]})
 combined_parks_per_state_df = pd.concat(
     [parks_per_state_df, new_state],
     ignore_index=True
@@ -680,7 +640,7 @@ combined_parks_per_state_df = pd.concat(
 Let's break this down. First, we create a new DataFrame called `new_state` that contains the new data we want to add. There are many ways we could create this DataFrame, but we used a dictionary where the keys are the column names and the values are lists of the data we want to add. Alternatively, we could also use a list of dictionaries, like the following:
 
 ```python
-new_state = pd.DataFrame([{'state': 'IL', 'num_parks': 0}])
+new_state = pd.DataFrame([{'State': 'IL', 'num_parks': 0}])
 ```
 
 The core thing is that we are using the `DataFrame` class to create a new DataFrame and passing in data with the same column names as the summary. We assign `num_parks` as `0` because we have established that the dataset's definition of a national park produces a known count of zero for Illinois. A missing value would mean that the count is unknown or unavailable, which is a different claim.
@@ -688,7 +648,7 @@ The core thing is that we are using the `DataFrame` class to create a new DataFr
 Pandas can represent missing data with several markers depending on the column's dtype, including `NaN`, `None`, `NaT`, and `pd.NA`. For a simple explicit missing value, we can use `pd.NA` without importing another library:
 
 ```python
-unknown_state = pd.DataFrame({'state': ['XX'], 'num_parks': [pd.NA]})
+unknown_state = pd.DataFrame({'State': ['XX'], 'num_parks': [pd.NA]})
 ```
 
 The choice between zero and a missing value requires a substantive decision about what the data means. In our Illinois example, zero is appropriate because it represents a known absence according to this dataset's scope. `pd.concat()` combines the summary and new row, while `ignore_index=True` creates a new sequential index for the combined DataFrame. We'll get more into merging and joining DataFrames in the next lesson.
