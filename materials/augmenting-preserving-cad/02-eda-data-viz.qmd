@@ -982,7 +982,7 @@ Your submission should include:
 - [ ] A short introduction to the dataset or datasets, including their provenance and what one row represents.
 - [ ] An initial audit using methods such as `head()`, `shape`, `dtypes`, `describe()`, and missing-value counts.
 - [ ] A discussion of at least one missing-data, coverage, category, or bias issue that affects interpretation.
-- [ ] At least two purposeful Altair visualizations using appropriate marks, encodings, labels, and tooltips.
+- [ ] At least two Altair visualizations using appropriate marks, encodings, labels, and tooltips.
 - [ ] Markdown text interpreting each visualization rather than leaving the charts to speak for themselves.
 - [ ] A conclusion explaining what you found, what remains uncertain, and what you would investigate next.
 - [ ] Reproducible data access: use a stable remote URL or document where the local data file belongs. Do not commit the 152 MB full-text dataset.
@@ -1014,7 +1014,7 @@ import requests
 import pandas as pd
 
 def get_book_text(url):
-    if pd.isna(url):
+    if pd.isna(url) or not url.startswith("https://"):
         return None
 
     response = requests.get(url, timeout=30)
@@ -1025,24 +1025,20 @@ def get_book_text(url):
     return None
 ```
 
-We can apply that function to every URL in the column:
+The first `if` statement skips both actual missing values and placeholders such as `NA_not-pub-domain`. Those placeholders describe novels that do not have a downloadable Project Gutenberg text, but they are strings rather than URLs. Since the usable links in this column are secure web addresses, we make a request only when the value begins with `https://`.
 
-```python
-combined_novels_nyt_df.loc[:, 'eng_text'] = combined_novels_nyt_df['pg_eng_url'].apply(get_book_text)
-```
-
-The Pandas [`apply()` documentation](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html){target="_blank"} explains how it calls a function for each value or row. It does not make the web requests themselves faster: here, most of the runtime comes from waiting for each server response. For calculations that Pandas already supports directly, prefer vectorized string, arithmetic, or aggregation methods over either `apply()` or a row-by-row loop.
-
-We also used the `tqdm` library to display a progress bar during the scraping, since retrieving hundreds of full novel texts takes a few minutes:
+We can use `tqdm` with Pandas to apply that function to every URL while displaying a progress bar. Retrieving hundreds of full novel texts takes several minutes, so the progress bar lets us see that the code is still working:
 
 ```python
 from tqdm import tqdm
 
 tqdm.pandas(desc="Getting English Texts")
-combined_novels_nyt_df.loc[:, 'eng_text'] = combined_novels_nyt_df['pg_eng_url'].progress_apply(get_book_text)
+combined_novels_nyt_df['eng_text'] = combined_novels_nyt_df['pg_eng_url'].progress_apply(get_book_text)
 ```
 
-You can read more about `tqdm` here [https://tqdm.github.io/](https://tqdm.github.io/){target="_blank"}.
+`progress_apply()` performs the same row-by-row operation as Pandas `apply()`, but `tqdm` adds the progress display. We should run **only this version**, since running both would download every novel twice. Neither method makes the web requests themselves faster: most of the runtime comes from waiting for each server response. For calculations that Pandas already supports directly, prefer vectorized string, arithmetic, or aggregation methods over either form of `apply()`.
+
+You can read more in the Pandas [`apply()` documentation](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html){target="_blank"} and the [`tqdm` documentation](https://tqdm.github.io/){target="_blank"}.
 
 Finally, once we had all the texts, we saved the combined DataFrame to a CSV file so we wouldn't have to re-scrape every time:
 
