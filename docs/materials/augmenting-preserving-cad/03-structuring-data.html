@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Structuring Unstructured Data: Tokenization, NER &amp; Networks – IS310 - Culture As Data Fall 2026</title>
+<title>Structuring Data: Merging, Strings &amp; Tokens – IS310 - Culture As Data Fall 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -113,6 +113,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -343,28 +346,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#from-structured-to-unstructured-data" id="toc-from-structured-to-unstructured-data" class="nav-link active" data-scroll-target="#from-structured-to-unstructured-data">From Structured to Unstructured Data</a></li>
-  <li><a href="#tokenization" id="toc-tokenization" class="nav-link" data-scroll-target="#tokenization">Tokenization</a>
-  <ul class="collapse">
-  <li><a href="#why-tokenization-matters-zipfs-law" id="toc-why-tokenization-matters-zipfs-law" class="nav-link" data-scroll-target="#why-tokenization-matters-zipfs-law">Why Tokenization Matters: Zipf’s Law</a></li>
+  <li><a href="#merging-cultural-datasets" id="toc-merging-cultural-datasets" class="nav-link active" data-scroll-target="#merging-cultural-datasets">Merging Cultural Datasets</a></li>
+  <li><a href="#how-does-a-merge-work" id="toc-how-does-a-merge-work" class="nav-link" data-scroll-target="#how-does-a-merge-work">How Does a Merge Work?</a></li>
+  <li><a href="#why-did-the-records-not-match" id="toc-why-did-the-records-not-match" class="nav-link" data-scroll-target="#why-did-the-records-not-match">Why Did the Records Not Match?</a></li>
+  <li><a href="#string-methods-in-pandas" id="toc-string-methods-in-pandas" class="nav-link" data-scroll-target="#string-methods-in-pandas">String Methods in Pandas</a></li>
+  <li><a href="#why-did-500-rows-become-more-than-4000" id="toc-why-did-500-rows-become-more-than-4000" class="nav-link" data-scroll-target="#why-did-500-rows-become-more-than-4000">Why Did 500 Rows Become More Than 4,000?</a></li>
+  <li><a href="#from-string-methods-to-text-analysis" id="toc-from-string-methods-to-text-analysis" class="nav-link" data-scroll-target="#from-string-methods-to-text-analysis">From String Methods to Text Analysis</a></li>
+  <li><a href="#what-is-tokenization" id="toc-what-is-tokenization" class="nav-link" data-scroll-target="#what-is-tokenization">What Is Tokenization?</a></li>
   <li><a href="#tokenization-choices-are-interpretive-choices" id="toc-tokenization-choices-are-interpretive-choices" class="nav-link" data-scroll-target="#tokenization-choices-are-interpretive-choices">Tokenization Choices Are Interpretive Choices</a></li>
-  <li><a href="#stop-words" id="toc-stop-words" class="nav-link" data-scroll-target="#stop-words">Stop Words</a></li>
-  </ul></li>
-  <li><a href="#named-entity-recognition-ner" id="toc-named-entity-recognition-ner" class="nav-link" data-scroll-target="#named-entity-recognition-ner">Named Entity Recognition (NER)</a>
-  <ul class="collapse">
-  <li><a href="#ner-with-spacy" id="toc-ner-with-spacy" class="nav-link" data-scroll-target="#ner-with-spacy">NER with spaCy</a></li>
-  <li><a href="#how-spacy-works" id="toc-how-spacy-works" class="nav-link" data-scroll-target="#how-spacy-works">How spaCy Works</a></li>
-  <li><a href="#applying-ner-to-our-novels" id="toc-applying-ner-to-our-novels" class="nav-link" data-scroll-target="#applying-ner-to-our-novels">Applying NER to Our Novels</a></li>
-  <li><a href="#building-a-named-entities-dataframe" id="toc-building-a-named-entities-dataframe" class="nav-link" data-scroll-target="#building-a-named-entities-dataframe">Building a Named Entities DataFrame</a></li>
-  </ul></li>
-  <li><a href="#from-ner-to-networks" id="toc-from-ner-to-networks" class="nav-link" data-scroll-target="#from-ner-to-networks">From NER to Networks</a>
-  <ul class="collapse">
-  <li><a href="#creating-a-co-occurrence-network" id="toc-creating-a-co-occurrence-network" class="nav-link" data-scroll-target="#creating-a-co-occurrence-network">Creating a Co-Occurrence Network</a></li>
-  <li><a href="#visualizing-the-network" id="toc-visualizing-the-network" class="nav-link" data-scroll-target="#visualizing-the-network">Visualizing the Network</a></li>
-  <li><a href="#network-centrality" id="toc-network-centrality" class="nav-link" data-scroll-target="#network-centrality">Network Centrality</a></li>
-  <li><a href="#community-detection" id="toc-community-detection" class="nav-link" data-scroll-target="#community-detection">Community Detection</a></li>
-  </ul></li>
-  <li><a href="#interpreting-networks-as-cultural-humanists" id="toc-interpreting-networks-as-cultural-humanists" class="nav-link" data-scroll-target="#interpreting-networks-as-cultural-humanists">Interpreting Networks as Cultural Humanists</a></li>
+  <li><a href="#what-structure-did-we-create" id="toc-what-structure-did-we-create" class="nav-link" data-scroll-target="#what-structure-did-we-create">What Structure Did We Create?</a></li>
   </ul>
 </nav>
     </div>
@@ -374,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Structuring Unstructured Data: Tokenization, NER &amp; Networks</h1>
+<h1 class="title">Structuring Data: Merging, Strings &amp; Tokens</h1>
 </div>
 
 
@@ -391,75 +381,1164 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In the last lesson, we used Pandas string methods to do some initial exploration of the novel texts in our combined dataset — counting characters, searching for patterns, and comparing pronoun frequencies across genres. These methods are fast and useful, but they treat text as a raw sequence of characters rather than as language.</p>
-<p>Today we go a step further. We’ll look at what it actually means to <strong>structure</strong> unstructured text data, starting with the foundational concept of <em>tokenization</em>, then moving to <em>Named Entity Recognition</em> (NER) to extract meaningful entities from our novels, and finally using those entities to build a <strong>network</strong> that captures relationships between characters across our corpus.</p>
-<hr>
-<section id="from-structured-to-unstructured-data" class="level2">
-<h2 class="anchored" data-anchor-id="from-structured-to-unstructured-data">From Structured to Unstructured Data</h2>
-<p>When we looked at the Top 500 Novels dataset, most of the columns were already structured: genres, rankings, publication years. We could group, filter, and plot them directly. But now that we have the full text of each novel in our <code>eng_text</code> column, we have <strong>unstructured data</strong> — text that is not easily searchable or analyzable without additional processing.</p>
-<p><img src="https://i.pinimg.com/736x/b0/04/b5/b004b543748ba1350c5d66c16c678607.jpg" class="img-fluid"></p>
-<p>The challenge of structuring cultural data like this sits at the heart of several overlapping fields:</p>
-<p><img src="https://miro.medium.com/max/1200/0*ewkxRItArykG27dU.png" class="img-fluid"></p>
-<p>Rather than trying to define all of text analysis at once, it’s helpful to make a key distinction between two fundamental goals:</p>
-<p><strong>Information Retrieval (IR)</strong> first developed in the 1950s and 1960s (think Vannevar Bush and the Memex!) and its goal is to find relevant documents for a user’s needs or queries. IR doesn’t necessarily require <em>understanding</em> the content of documents — it can treat them as a “bag of words” and find patterns in word frequencies.</p>
-<p><img src="../../assets/images/IR_figure.png" class="img-fluid"></p>
-<p><strong>Information Extraction (IE)</strong> is different. Rather than finding documents, it extracts specific structured facts <em>from</em> documents — things like who is mentioned, what organizations are named, what events are described. It requires understanding both syntax and semantics.</p>
-<p><img src="../../assets/images/IE_figure.png" class="img-fluid"></p>
-<p>Both approaches require a common first step: <strong>tokenization</strong>.</p>
-<hr>
-</section>
-<section id="tokenization" class="level2">
-<h2 class="anchored" data-anchor-id="tokenization">Tokenization</h2>
-<p>Tokenization is the process of breaking text into smaller units called <em>tokens</em>, which can be words, phrases, or characters. Before we can count words, find named entities, or build any model over text, we need to decide how to divide it up.</p>
-<p><img src="https://miro.medium.com/v2/resize:fit:2000/1*pj8KnjxgCszpDqJSS2741w.jpeg" class="img-fluid"></p>
-<p>The field of corpus linguistics replaced the informal term “word” with the more precise terms <strong>token</strong> (a specific occurrence in a text) and <strong>type</strong> (the abstract word form). For example, “run,” “running,” and “ran” are three different tokens but they all belong to the same type. This distinction matters a lot for analysis.</p>
-<section id="why-tokenization-matters-zipfs-law" class="level3">
-<h3 class="anchored" data-anchor-id="why-tokenization-matters-zipfs-law">Why Tokenization Matters: Zipf’s Law</h3>
-<p>One of the most important scholars in this area was George Zipf, who in the 1930s discovered that in any corpus, the most common word appears roughly twice as often as the second most common, three times as often as the third, and so on. This distribution is known as <strong>Zipf’s Law</strong>.</p>
-<p>Zipf actually discovered this pattern while analyzing James Joyce’s <em>Ulysses</em> — one of the first computational humanities projects! It tells us that a small number of words dominate any text, which has major implications for analysis. When we look at word frequencies, we’ll always see common function words (the, and, of, in) swamping everything else unless we handle them deliberately.</p>
-<p>We can explore this with NLTK (remember to <code>pip install nltk</code>):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk <span class="im">import</span> word_tokenize, FreqDist</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the pre-scraped combined dataset</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df <span class="op">=</span> pd.read_csv(<span class="st">"combined_novels_with_text.csv"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at token frequency in the first two novels</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> FreqDist(<span class="bu">sum</span>(</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    combined_novels_nyt_df[<span class="dv">0</span>:<span class="dv">2</span>][<span class="st">'eng_text'</span>].dropna().<span class="bu">map</span>(word_tokenize),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    []</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>tokens.plot(<span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This will show the characteristic “long tail” distribution of Zipf’s Law — a few words with very high frequency, and then a sharp dropoff.</p>
-</section>
-<section id="tokenization-choices-are-interpretive-choices" class="level3">
-<h3 class="anchored" data-anchor-id="tokenization-choices-are-interpretive-choices">Tokenization Choices Are Interpretive Choices</h3>
-<p>There is no single “correct” way to tokenize text. Every choice shapes your analysis:</p>
+<p>In the last lesson, we used exploratory data analysis to investigate the shape, categories, missing values, and provenance of an existing dataset. We also saw that changing the <strong>unit of observation</strong> could change the patterns we found.</p>
+<p>In this lesson, we will focus on two related ways of structuring data:</p>
+<ol type="1">
+<li><strong>Merging datasets</strong> requires us to decide when records from different sources represent the same cultural object.</li>
+<li><strong>Tokenizing text</strong> requires us to decide how an unstructured string becomes structured, countable units.</li>
+</ol>
+<p>Neither process is automatic. Both depend on choices about representation, comparison, and what should count as the same thing.</p>
+<div id="fdaca588" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="merging-cultural-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="merging-cultural-datasets">Merging Cultural Datasets</h2>
+<p>Data about one cultural object is often distributed across several datasets. One source might describe a book’s library holdings, another its bestseller history, and another its publication history or reception. Merging can bring those sources together, but only after we identify fields that can connect their records.</p>
+<p>We will continue working with the <a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html" target="_blank">Top 500 “Greatest” Novels dataset</a> created by Anna Preus and Aashna Sheth. This dataset begins with OCLC’s list of widely held novels and adds metadata from VIAF, Goodreads, Wikipedia, Project Gutenberg, and other sources.</p>
+<div id="e203012a" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>novels_url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>novels_df <span class="op">=</span> pd.read_csv(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    novels_url,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">"utf-8"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>novels_df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>(500, 29)</code></pre>
+</div>
+</div>
+<p>To add another perspective on literary attention, we will use data from the <a href="https://data.post45.org/" target="_blank">Post45 Data Collective</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/post45_data.png" class="img-fluid figure-img"></p>
+<figcaption>Post45 Data Collective</figcaption>
+</figure>
+</div>
+<p>The Post45 Data Collective “peer reviews and houses literary and cultural data from 1945 to the present.” Treating datasets as scholarly publications matters: the collective asks us to consider who created a dataset, how it was documented, what it covers, and how it should be cited rather than treating a downloadable file as context-free evidence.</p>
+<p>We will use Jordan Pruett’s <a href="https://data.post45.org/nyt-fiction-bestsellers-data/" target="_blank"><em>New York Times</em> Hardcover Fiction Bestsellers, 1931–2020</a>. It includes three related datasets:</p>
 <ul>
-<li><strong>Lowercasing</strong> — should “The” and “the” count as the same token?</li>
-<li><strong>Punctuation</strong> — removing it simplifies counting but loses information (question marks, em-dashes)</li>
-<li><strong>Stemming vs.&nbsp;lemmatization</strong> — reducing “running” to “run” normalizes forms, but collapses distinctions</li>
-<li><strong>Stop words</strong> — common words like “the” and “of” often overwhelm analyses and get removed, but the choice of which words to remove is itself interpretive</li>
-<li><strong>Bigrams</strong> — sometimes two-word phrases (“New York”, “not good”) carry more meaning than single tokens</li>
+<li>weekly appearances on the bestseller list;</li>
+<li>title-level information about unique books;</li>
+<li>HathiTrust identifiers for titles that could be matched to digitized volumes.</li>
 </ul>
-<p>Let’s compare two approaches on our data. First, a simple space-split:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df[<span class="st">'word_count_split'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">str</span>.split().<span class="bu">str</span>.<span class="bu">len</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then NLTK’s word tokenizer, which is smarter about punctuation and contractions:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tokenize_text(text):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.notna(text):</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> word_tokenize(text)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> []</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df[<span class="st">'tokens'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">apply</span>(tokenize_text)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df[<span class="st">'word_count_nltk'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'tokens'</span>].<span class="bu">apply</span>(<span class="bu">len</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the two</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df[[<span class="st">'title'</span>, <span class="st">'word_count_split'</span>, <span class="st">'word_count_nltk'</span>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You’ll find the NLTK counts are slightly higher, because it correctly separates punctuation attached to words (like “said.” becoming “said” and “.”).</p>
+<p>The weekly dataset lets us ask which novels in OCLC’s Top 500 also appeared on the <em>New York Times</em> list, how often they appeared, and what their best recorded rank was.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/nyt_data.png" class="img-fluid figure-img"></p>
+<figcaption>New York Times bestseller data</figcaption>
+</figure>
+</div>
+<div id="9bdbb698" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nyt_url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/Post45-Data-Collective/data/refs/heads/main/nyt_hardcover_fiction_bestsellers/nyt_hardcover_fiction_bestsellers-lists.csv"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>nyt_bestsellers_df <span class="op">=</span> pd.read_csv(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    nyt_url,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">"utf-8"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>nyt_bestsellers_df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>(60386, 15)</code></pre>
+</div>
+</div>
+<p>Before combining anything, inspect both DataFrames:</p>
+<div id="47a71fdd" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>novels_df[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'top_500_rank'</span>]].head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">author</th>
+<th data-quarto-table-cell-role="th">top_500_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Don Quixote</td>
+<td>Miguel de Cervantes</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Alice's Adventures in Wonderland</td>
+<td>Lewis Carroll</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>The Adventures of Huckleberry Finn</td>
+<td>Mark Twain</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>The Adventures of Tom Sawyer</td>
+<td>Mark Twain</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Treasure Island</td>
+<td>Robert Louis Stevenson</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="4a3c6837" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nyt_bestsellers_df[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'rank'</span>, <span class="st">'week'</span>]].head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">author</th>
+<th data-quarto-table-cell-role="th">rank</th>
+<th data-quarto-table-cell-role="th">week</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>THE TEN COMMANDMENTS</td>
+<td>Warwick Deeping</td>
+<td>1</td>
+<td>1931-10-12</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>FINCHE'S FORTUNE</td>
+<td>Mazo de la Roche</td>
+<td>2</td>
+<td>1931-10-12</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>THE GOOD EARTH</td>
+<td>Pearl S. Buck</td>
+<td>3</td>
+<td>1931-10-12</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>SHADOWS ON THE ROCK</td>
+<td>Willa Cather</td>
+<td>4</td>
+<td>1931-10-12</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>SCARMOUCHE THE KING MAKER</td>
+<td>Rafael Sabatini</td>
+<td>5</td>
+<td>1931-10-12</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>These DataFrames have different units of observation:</p>
+<ul>
+<li>Each row in <code>novels_df</code> represents one novel in OCLC’s Top 500 list.</li>
+<li>Each row in <code>nyt_bestsellers_df</code> represents one title’s appearance during one week on the bestseller list.</li>
+</ul>
+<p>That difference will become important after the merge.</p>
 </section>
-<section id="stop-words" class="level3">
-<h3 class="anchored" data-anchor-id="stop-words">Stop Words</h3>
-<p><em>Stop words</em> are the most common words in a language, and they are often removed from text data because they don’t carry much content meaning. The term was coined by Hans Peter Luhn in 1958, when he was developing the concept of Keywords In Context (KWIC) indexing.</p>
+<section id="how-does-a-merge-work" class="level2">
+<h2 class="anchored" data-anchor-id="how-does-a-merge-work">How Does a Merge Work?</h2>
+<p>Pandas provides several ways to combine DataFrames. We previously encountered <code>concat()</code>, which can stack data vertically or horizontally. The <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html" target="_blank"><code>merge()</code> method</a> instead connects rows using one or more shared keys, much like a database join.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/merge_syntax.png" class="img-fluid figure-img"></p>
+<figcaption>Pandas merge syntax</figcaption>
+</figure>
+</div>
+<p>The most important arguments are:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>right</code></td>
+<td>The second DataFrame to merge with the DataFrame before <code>.merge()</code></td>
+</tr>
+<tr class="even">
+<td><code>how</code></td>
+<td>Which records should remain: <code>left</code>, <code>right</code>, <code>inner</code>, or <code>outer</code></td>
+</tr>
+<tr class="odd">
+<td><code>on</code></td>
+<td>The shared column or columns used as keys</td>
+</tr>
+<tr class="even">
+<td><code>indicator</code></td>
+<td>Whether Pandas should report where each merged row came from</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/merge_example.png" class="img-fluid figure-img"></p>
+<figcaption>Examples of matching rows during a merge</figcaption>
+</figure>
+</div>
+<p>A <strong>left merge</strong> keeps every row from the left DataFrame and adds matching information from the right DataFrame. An <strong>inner merge</strong> keeps only records that match in both. An <strong>outer merge</strong> preserves records from both DataFrames, whether they match or not.</p>
+<p>The two datasets both have <code>author</code> and <code>title</code> columns, so we might begin with a left merge using those fields:</p>
+<div id="a0ce6cb0" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>first_merge_df <span class="op">=</span> novels_df.merge(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    nyt_bestsellers_df,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">'left'</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span>[<span class="st">'author'</span>, <span class="st">'title'</span>],</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    indicator<span class="op">=</span><span class="va">True</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>first_merge_df[<span class="st">'_merge'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>_merge
+left_only     500
+right_only      0
+both            0
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>The code runs and returns a DataFrame, but every row is marked <code>left_only</code>. We can also inspect <code>rank</code>, which came from the bestseller data:</p>
+<div id="e236f58c" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>first_merge_df[<span class="st">'rank'</span>].notna().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>np.int64(0)</code></pre>
+</div>
+</div>
+<p>The result is <code>0</code>. The <strong>merge operation</strong> succeeded, but the <strong>record matching</strong> failed. A left merge preserves every row from <code>novels_df</code> even when Pandas finds no matches, so a result with 500 rows can look successful while containing no new information.</p>
+</section>
+<section id="why-did-the-records-not-match" class="level2">
+<h2 class="anchored" data-anchor-id="why-did-the-records-not-match">Why Did the Records Not Match?</h2>
+<p>Pandas compares string keys exactly. We can begin diagnosing the failure by counting shared author and title values:</p>
+<div id="3c694852" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>shared_authors <span class="op">=</span> novels_df[</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    novels_df[<span class="st">'author'</span>].isin(nyt_bestsellers_df[<span class="st">'author'</span>])</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>][<span class="st">'author'</span>].nunique()</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>shared_titles <span class="op">=</span> novels_df[</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    novels_df[<span class="st">'title'</span>].isin(nyt_bestsellers_df[<span class="st">'title'</span>])</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>][<span class="st">'title'</span>].nunique()</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shared authors:"</span>, shared_authors)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shared titles:"</span>, shared_titles)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shared authors: 122
+Shared titles: 0</code></pre>
+</div>
+</div>
+<p>There are shared authors but no exact shared titles. Looking at one author represented in both datasets helps reveal why:</p>
+<div id="44d6dca9" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>novel_titles <span class="op">=</span> novels_df[</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    novels_df[<span class="st">'author'</span>] <span class="op">==</span> <span class="st">'Stephen King'</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>][<span class="st">'title'</span>].unique()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>nyt_titles <span class="op">=</span> nyt_bestsellers_df[</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    nyt_bestsellers_df[<span class="st">'author'</span>] <span class="op">==</span> <span class="st">'Stephen King'</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>][<span class="st">'title'</span>].unique()</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"OCLC titles:"</span>, novel_titles)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"NYT titles:"</span>, nyt_titles[:<span class="dv">10</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OCLC titles: &lt;ArrowStringArray&gt;
+[     'The Stand',             'It',    'The Shining',         'Misery',
+         'Carrie', 'The Gunslinger',   'Dreamcatcher']
+Length: 7, dtype: str
+NYT titles: &lt;ArrowStringArray&gt;
+[      'THE SHINING',         'THE STAND',     'THE DEAD ZONE',
+       'FIRESTARTER',              'CUJO', 'DIFFERENT SEASONS',
+         'CHRISTINE',      'PET SEMATARY',     'SKELETON CREW',
+ 'THE BACHMAN BOOKS']
+Length: 10, dtype: str</code></pre>
+</div>
+</div>
+<p>The values refer to some of the same books, but the OCLC-derived titles use title case while the <em>New York Times</em> titles use uppercase. To Pandas, <code>The Shining</code> and <code>THE SHINING</code> are different strings.</p>
+<p>This is not simply a formatting inconvenience. Each source preserves conventions created for a different purpose. Before merging them, we must decide which differences can be normalized without erasing meaningful distinctions.</p>
+</section>
+<section id="string-methods-in-pandas" class="level2">
+<h2 class="anchored" data-anchor-id="string-methods-in-pandas">String Methods in Pandas</h2>
+<p>Pandas provides methods for working with text through the <a href="https://pandas.pydata.org/docs/user_guide/text.html" target="_blank"><code>.str</code> accessor</a>. We place <code>.str</code> after a Series and then select the operation we want to perform on every recorded string.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>String method</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>.str.lower()</code></td>
+<td>Converts text to lowercase</td>
+</tr>
+<tr class="even">
+<td><code>.str.upper()</code></td>
+<td>Converts text to uppercase</td>
+</tr>
+<tr class="odd">
+<td><code>.str.strip()</code></td>
+<td>Removes whitespace from the beginning and end</td>
+</tr>
+<tr class="even">
+<td><code>.str.replace()</code></td>
+<td>Replaces one pattern with another</td>
+</tr>
+<tr class="odd">
+<td><code>.str.split()</code></td>
+<td>Divides each string into a list</td>
+</tr>
+<tr class="even">
+<td><code>.str.len()</code></td>
+<td>Counts characters or items in a list</td>
+</tr>
+<tr class="odd">
+<td><code>.str.contains()</code></td>
+<td>Tests whether a string contains a pattern</td>
+</tr>
+<tr class="even">
+<td><code>.str.count()</code></td>
+<td>Counts occurrences of a pattern</td>
+</tr>
+<tr class="odd">
+<td><code>.str.extract()</code></td>
+<td>Extracts part of a string using a pattern</td>
+</tr>
+<tr class="even">
+<td><code>.str.findall()</code></td>
+<td>Returns every matching part of a string</td>
+</tr>
+</tbody>
+</table>
+<p>We should preserve the original titles and create separate <strong>merge keys</strong> for comparison. Lowercasing and stripping whitespace are reasonable here because capitalization and surrounding spaces do not distinguish these books.</p>
+<div id="9ca9d589" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'title_key'</span>] <span class="op">=</span> novels_df[<span class="st">'title'</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.strip()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'author_key'</span>] <span class="op">=</span> novels_df[<span class="st">'author'</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.strip()</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>nyt_bestsellers_df[<span class="st">'title_key'</span>] <span class="op">=</span> (</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    nyt_bestsellers_df[<span class="st">'title'</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.strip()</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>nyt_bestsellers_df[<span class="st">'author_key'</span>] <span class="op">=</span> (</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    nyt_bestsellers_df[<span class="st">'author'</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.strip()</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Notice that we did not overwrite <code>title</code> or <code>author</code>. The original values remain available for display, provenance, and future comparison, while the new columns record the normalization used for this particular merge.</p>
+<p>Now the keys share values:</p>
+<div id="60c8f852" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>shared_title_keys <span class="op">=</span> novels_df[</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    novels_df[<span class="st">'title_key'</span>].isin(nyt_bestsellers_df[<span class="st">'title_key'</span>])</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>][<span class="st">'title_key'</span>].nunique()</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shared normalized titles:"</span>, shared_title_keys)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shared normalized titles: 140</code></pre>
+</div>
+</div>
+<p>We can rerun the merge using the normalized author and title keys:</p>
+<div id="80f6320a" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>weekly_merged_df <span class="op">=</span> novels_df.merge(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    nyt_bestsellers_df,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">'left'</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span>[<span class="st">'author_key'</span>, <span class="st">'title_key'</span>],</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    suffixes<span class="op">=</span>(<span class="st">'_oclc'</span>, <span class="st">'_nyt'</span>),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    indicator<span class="op">=</span><span class="va">True</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>weekly_merged_df[<span class="st">'_merge'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>_merge
+both          3776
+left_only      374
+right_only       0
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>This time Pandas finds matches. The <code>suffixes</code> argument preserves columns such as <code>title</code> and <code>author</code> from both sources by renaming them <code>title_oclc</code>, <code>title_nyt</code>, <code>author_oclc</code>, and <code>author_nyt</code>.</p>
+</section>
+<section id="why-did-500-rows-become-more-than-4000" class="level2">
+<h2 class="anchored" data-anchor-id="why-did-500-rows-become-more-than-4000">Why Did 500 Rows Become More Than 4,000?</h2>
+<p>Always check the shape after a merge:</p>
+<div id="f4821ae1" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rows before merging:"</span>, <span class="bu">len</span>(novels_df))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rows after merging:"</span>, <span class="bu">len</span>(weekly_merged_df))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows before merging: 500
+Rows after merging: 4150</code></pre>
+</div>
+</div>
+<p>The merged DataFrame has more than 4,000 rows. This is not necessarily an error. One novel can match many weekly bestseller records. For example, <em>To Kill a Mockingbird</em> appears once in <code>novels_df</code> but many times in the Post45 data because it remained on the list across multiple weeks.</p>
+<div id="a7ed5692" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>weekly_merged_df[</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    weekly_merged_df[<span class="st">'title_oclc'</span>] <span class="op">==</span> <span class="st">'To Kill a Mockingbird'</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>][[<span class="st">'title_oclc'</span>, <span class="st">'rank'</span>, <span class="st">'week'</span>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title_oclc</th>
+<th data-quarto-table-cell-role="th">rank</th>
+<th data-quarto-table-cell-role="th">week</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">29</th>
+<td>To Kill a Mockingbird</td>
+<td>13.0</td>
+<td>1960-08-07</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">30</th>
+<td>To Kill a Mockingbird</td>
+<td>12.0</td>
+<td>1960-08-14</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">31</th>
+<td>To Kill a Mockingbird</td>
+<td>8.0</td>
+<td>1960-08-21</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">32</th>
+<td>To Kill a Mockingbird</td>
+<td>7.0</td>
+<td>1960-08-28</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33</th>
+<td>To Kill a Mockingbird</td>
+<td>7.0</td>
+<td>1960-09-04</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">34</th>
+<td>To Kill a Mockingbird</td>
+<td>6.0</td>
+<td>1960-09-11</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">35</th>
+<td>To Kill a Mockingbird</td>
+<td>7.0</td>
+<td>1960-09-18</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">36</th>
+<td>To Kill a Mockingbird</td>
+<td>5.0</td>
+<td>1960-09-25</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">37</th>
+<td>To Kill a Mockingbird</td>
+<td>5.0</td>
+<td>1960-10-02</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">38</th>
+<td>To Kill a Mockingbird</td>
+<td>4.0</td>
+<td>1960-10-09</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The merge changed the unit of observation from <strong>one row per novel</strong> to approximately <strong>one row per novel-week appearance</strong>, with unmatched novels retained as single rows. This structure is useful for studying movement through the weekly list, but it would give frequently listed books more weight in a novel-level comparison.</p>
+<p>If we want to preserve one row per novel, we should first summarize the weekly data at the title level:</p>
+<div id="35abbc84" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>nyt_title_summary_df <span class="op">=</span> nyt_bestsellers_df.groupby(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'author_key'</span>, <span class="st">'title_key'</span>],</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    as_index<span class="op">=</span><span class="va">False</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>).agg(</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    best_nyt_rank<span class="op">=</span>(<span class="st">'rank'</span>, <span class="st">'min'</span>),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    nyt_list_appearances<span class="op">=</span>(<span class="st">'rank'</span>, <span class="st">'size'</span>),</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    first_nyt_week<span class="op">=</span>(<span class="st">'week'</span>, <span class="st">'min'</span>),</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    last_nyt_week<span class="op">=</span>(<span class="st">'week'</span>, <span class="st">'max'</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>nyt_title_summary_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">author_key</th>
+<th data-quarto-table-cell-role="th">title_key</th>
+<th data-quarto-table-cell-role="th">best_nyt_rank</th>
+<th data-quarto-table-cell-role="th">nyt_list_appearances</th>
+<th data-quarto-table-cell-role="th">first_nyt_week</th>
+<th data-quarto-table-cell-role="th">last_nyt_week</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>! by fannie flagg</td>
+<td>welcome to the world, baby girl</td>
+<td>4</td>
+<td>11</td>
+<td>1998-10-11</td>
+<td>1999-01-10</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>! by jackie collins</td>
+<td>thrill</td>
+<td>5</td>
+<td>6</td>
+<td>1998-03-08</td>
+<td>1998-04-12</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>! by terry brooks</td>
+<td>magic kingdom for sale: sold</td>
+<td>12</td>
+<td>2</td>
+<td>1986-05-11</td>
+<td>1986-06-01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>! by terry pratchett</td>
+<td>thud</td>
+<td>4</td>
+<td>2</td>
+<td>2005-10-02</td>
+<td>2005-10-09</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>! by w. e. b. griffin</td>
+<td>retreat, hell</td>
+<td>4</td>
+<td>5</td>
+<td>2004-01-25</td>
+<td>2004-02-22</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Here, <code>groupby()</code> gathers all weekly rows sharing an author and title key. The <code>agg()</code> method then creates four title-level values:</p>
+<ul>
+<li>the book’s best numerical rank;</li>
+<li>its number of weekly appearances;</li>
+<li>its first recorded week;</li>
+<li>its last recorded week.</li>
+</ul>
+<p>Now we can merge one title-level table with another:</p>
+<div id="c45ccd62" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>combined_novels_df <span class="op">=</span> novels_df.merge(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    nyt_title_summary_df,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">'left'</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span>[<span class="st">'author_key'</span>, <span class="st">'title_key'</span>],</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    indicator<span class="op">=</span><span class="va">True</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rows in combined dataset:"</span>, <span class="bu">len</span>(combined_novels_df))</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matched novels:"</span>, combined_novels_df[<span class="st">'best_nyt_rank'</span>].notna().<span class="bu">sum</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows in combined dataset: 500
+Matched novels: 126</code></pre>
+</div>
+</div>
+<p>This result preserves all 500 OCLC novels while adding bestseller summaries where our normalized keys found matches. It also preserves unmatched novels as meaningful evidence: not every widely held library book appeared on this particular bestseller list, and not every record can necessarily be aligned through title and author alone.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Matching Is an Interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lowercasing and stripping whitespace solve one visible inconsistency, but they do not prove that every match is correct or that every non-match represents a different book. Titles may contain subtitles, punctuation, abbreviations, alternate spellings, translations, or edition statements. Authors may appear under pseudonyms or different authorized names. More advanced projects may require identifiers, documented crosswalks, or carefully reviewed fuzzy matching.</p>
+</div>
+</div>
+</section>
+<section id="from-string-methods-to-text-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="from-string-methods-to-text-analysis">From String Methods to Text Analysis</h2>
+<p>So far, we have used string methods on short, structured fields such as titles and author names. The same methods can operate on longer text, but the questions become different.</p>
+<p>A title is already stored as one field with an expected function. A novel, review, annotation, or newspaper article is usually stored as one long string. We often call this <strong>unstructured data</strong> because its internal words, sentences, people, places, and relationships are not yet represented as separate fields or records.</p>
+<p>The distinction is relative rather than absolute. A text file has technical structure, and prose follows linguistic conventions. What it lacks is the specific tabular structure needed for a computational question.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.pinimg.com/736x/b0/04/b5/b004b543748ba1350c5d66c16c678607.jpg" class="img-fluid figure-img"></p>
+<figcaption>From unstructured text toward structured information</figcaption>
+</figure>
+</div>
+<p>Two overlapping fields approach this problem differently:</p>
+<ul>
+<li><strong>Information retrieval</strong> focuses on finding documents relevant to a query. A search engine may locate documents using words and their frequencies without fully interpreting every sentence.</li>
+<li><strong>Information extraction</strong> focuses on turning information within documents into structured data, such as names, places, dates, events, or relationships.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/images/IR_figure.png" class="img-fluid figure-img"></p>
+<figcaption>Information retrieval</figcaption>
+</figure>
+</div>
+<p>Both approaches commonly begin by breaking text into smaller units through <strong>tokenization</strong>.</p>
+</section>
+<section id="what-is-tokenization" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-tokenization">What Is Tokenization?</h2>
+<p>Tokenization is the process of dividing text into units called <strong>tokens</strong>. A token might be a word, punctuation mark, subword, character, or another unit selected for a particular method.</p>
+<p>Corpus linguistics also distinguishes between a <strong>token</strong>, one occurrence in a text, and a <strong>type</strong>, a distinct form. In the sentence <code>data structures data</code>, there are three tokens but only two lowercase types: <code>data</code> and <code>structures</code>.</p>
+<p>We can begin with a small DataFrame containing three short texts:</p>
+<div id="cb1d4a47" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>text_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'document'</span>: [<span class="st">'review_1'</span>, <span class="st">'review_2'</span>, <span class="st">'review_3'</span>],</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'text'</span>: [</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'The novel was strange, moving, and strange again.'</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'A moving story with an unforgettable ending!'</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'The ending was strange but memorable.'</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>text_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">document</th>
+<th data-quarto-table-cell-role="th">text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>The novel was strange, moving, and strange again.</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>review_2</td>
+<td>A moving story with an unforgettable ending!</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>review_3</td>
+<td>The ending was strange but memorable.</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The <code>text</code> column contains strings. We could count their characters with a Pandas string method:</p>
+<div id="4d4200cf" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>text_df[<span class="st">'character_count'</span>] <span class="op">=</span> text_df[<span class="st">'text'</span>].<span class="bu">str</span>.<span class="bu">len</span>()</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>text_df[[<span class="st">'document'</span>, <span class="st">'character_count'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">document</th>
+<th data-quarto-table-cell-role="th">character_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>49</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>review_2</td>
+<td>44</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>review_3</td>
+<td>37</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Character counts give us one structured measurement, but they do not tell us which words appear. A simple first tokenization strategy is to lowercase each string and split it at whitespace:</p>
+<div id="5b29c43d" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>text_df[<span class="st">'tokens'</span>] <span class="op">=</span> text_df[<span class="st">'text'</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.split()</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>text_df[[<span class="st">'document'</span>, <span class="st">'tokens'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">document</th>
+<th data-quarto-table-cell-role="th">tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>[the, novel, was, strange,, moving,, and, stra...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>review_2</td>
+<td>[a, moving, story, with, an, unforgettable, en...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>review_3</td>
+<td>[the, ending, was, strange, but, memorable.]</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Each cell in <code>tokens</code> now contains a Python list. As with the author activities in the previous lesson, we can use <code>explode()</code> to create one row per document-token relationship:</p>
+<div id="246aeea2" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>tokens_df <span class="op">=</span> text_df.explode(<span class="st">'tokens'</span>).copy()</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>tokens_df[[<span class="st">'document'</span>, <span class="st">'tokens'</span>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">document</th>
+<th data-quarto-table-cell-role="th">tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>the</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>novel</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>was</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>strange,</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>moving,</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>and</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>strange</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>again.</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>review_2</td>
+<td>a</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>review_2</td>
+<td>moving</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The DataFrame has changed from one row per document to one row per token occurrence. That new structure lets us count the tokens:</p>
+<div id="8238232e" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>token_counts_df <span class="op">=</span> tokens_df[<span class="st">'tokens'</span>].value_counts().reset_index()</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>token_counts_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">tokens</th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>the</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>was</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>strange</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>novel</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>strange,</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>moving,</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>and</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>again.</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>a</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>moving</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>story</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>with</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>an</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">13</th>
+<td>unforgettable</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>ending!</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">15</th>
+<td>ending</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">16</th>
+<td>but</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">17</th>
+<td>memorable.</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>However, the output exposes a problem: <code>strange,</code> and <code>strange</code> are treated as different tokens because the comma remains attached. <code>ending!</code> and <code>ending</code> also differ. Splitting at whitespace is a tokenization decision, not a neutral discovery of the text’s natural units.</p>
+<p>Pandas can use a regular-expression pattern with <code>str.findall()</code> to retrieve word-like sequences instead:</p>
+<div id="938ce79f" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>text_df[<span class="st">'word_tokens'</span>] <span class="op">=</span> (</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    text_df[<span class="st">'text'</span>]</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">str</span>.lower()</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">str</span>.findall(<span class="vs">r"</span><span class="dv">\b</span><span class="pp">[</span><span class="dv">\w</span><span class="pp">']</span><span class="op">+</span><span class="dv">\b</span><span class="vs">"</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>word_tokens_df <span class="op">=</span> text_df.explode(<span class="st">'word_tokens'</span>).copy()</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>word_tokens_df[[<span class="st">'document'</span>, <span class="st">'word_tokens'</span>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">document</th>
+<th data-quarto-table-cell-role="th">word_tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>the</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>novel</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>was</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>strange</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>moving</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>and</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>strange</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>review_1</td>
+<td>again</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>review_2</td>
+<td>a</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>review_2</td>
+<td>moving</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The pattern asks for sequences of letters, numbers, underscores, or apostrophes between word boundaries. It separates punctuation from the words, but it also makes interpretive choices. Hyphenated words, multilingual scripts, emoji, abbreviations, and contractions may require different rules.</p>
+<p>Now we can count token occurrences and distinct types:</p>
+<div id="04d72649" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>word_counts_df <span class="op">=</span> (</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    word_tokens_df[<span class="st">'word_tokens'</span>]</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of tokens:"</span>, <span class="bu">len</span>(word_tokens_df))</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of types:"</span>, word_tokens_df[<span class="st">'word_tokens'</span>].nunique())</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>word_counts_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of tokens: 21
+Number of types: 15</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">word_tokens</th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>strange</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>the</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>was</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>moving</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>ending</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>novel</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>and</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>again</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>a</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>story</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>with</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>an</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>unforgettable</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">13</th>
+<td>but</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>memorable</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="tokenization-choices-are-interpretive-choices" class="level2">
+<h2 class="anchored" data-anchor-id="tokenization-choices-are-interpretive-choices">Tokenization Choices Are Interpretive Choices</h2>
+<p>There is no single correct tokenization for every question. Decisions may include:</p>
+<ul>
+<li>whether <code>The</code> and <code>the</code> should become the same type;</li>
+<li>whether punctuation should become tokens or be removed;</li>
+<li>whether <code>don't</code> should remain one token or become two;</li>
+<li>whether hyphenated expressions should remain together;</li>
+<li>how to segment languages that do not use spaces between every word;</li>
+<li>whether words should be reduced to stems or dictionary forms;</li>
+<li>whether common words should be retained or treated as stop words;</li>
+<li>whether meaningful phrases should be represented as multiword tokens.</li>
+</ul>
+<p>These decisions turn qualitative language into structured representations. That structure enables counting and comparison, but it also determines which distinctions remain visible.</p>
+<p>One reason these decisions matter is that word frequencies are highly uneven. Linguist George Kingsley Zipf showed that a small number of words occur extremely frequently while most words are comparatively rare, a pattern often called <strong>Zipf’s law</strong>. Common function words such as <code>the</code>, <code>and</code>, and <code>of</code> will often dominate a frequency table.</p>
+<p>Researchers sometimes remove common <strong>stop words</strong> to emphasize less frequent content words. Hans Peter Luhn helped popularize this approach while developing automatic indexing methods in the mid-20th century.</p>
 <table>
 <tbody><tr>
 <td>
@@ -471,310 +1550,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr>
 <td colspan="2" style="text-align: center;">
-Images from Luhn, H. P. “Key Word-in-Context Index for Technical Literature (Kwic Index).” <em>American Documentation</em> 11, no. 4 (1960): 288–95. <a target="_blank" href="https://doi.org/10.1002/asi.5090110403">https://doi.org/10.1002/asi.5090110403</a>.
+Images from H. P. Luhn, “Key Word-in-Context Index for Technical Literature (KWIC Index),” <em>American Documentation</em> 11, no. 4 (1960): 288–95.
 </td>
 </tr>
 </tbody></table>
-<p>NLTK has a built-in stop words list:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>stop_words <span class="op">=</span> <span class="bu">set</span>(stopwords.words(<span class="st">'english'</span>))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_stop_words(text):</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.notna(text):</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">' '</span>.join([w <span class="cf">for</span> w <span class="kw">in</span> text.split() <span class="cf">if</span> w.lower() <span class="kw">not</span> <span class="kw">in</span> stop_words])</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> text</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df[<span class="st">'text_no_stopwords'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">apply</span>(remove_stop_words)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>However, this is another interpretive decision. For example, “not” is on the NLTK stop words list, but it’s clearly important for sentiment analysis. We’ve also discussed earlier in the course how crude filtering lists can inadvertently remove content from marginalized communities. Before removing stop words, always inspect the list and consider what you might be losing.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You can remove specific words from the stop list</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stop_words.discard(<span class="st">'not'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<hr>
+<p>But removing frequent words is not automatically better. A word such as <code>not</code> may be common while remaining essential to meaning. Pronouns, articles, and punctuation can also be important evidence for style, characterization, narration, or identity. Any stop-word list should be inspected and documented rather than accepted as a neutral default.</p>
 </section>
-</section>
-<section id="named-entity-recognition-ner" class="level2">
-<h2 class="anchored" data-anchor-id="named-entity-recognition-ner">Named Entity Recognition (NER)</h2>
-<p>Now that we have a sense of how to structure text at the word level, we can move to something more powerful: extracting <em>named entities</em> — the people, places, organizations, and other specific referents that appear in a text.</p>
-<p>From <a href="https://en.wikipedia.org/wiki/Named-entity_recognition" target="_blank">Wikipedia</a>:</p>
-<blockquote class="blockquote">
-<p>“Named-entity recognition (NER) is a subtask of information extraction that seeks to locate and classify named entities mentioned in unstructured text into pre-defined categories such as person names, organizations, locations, medical codes, time expressions, quantities, monetary values, percentages, etc.”</p>
-</blockquote>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://miro.medium.com/max/1400/0*zDbB-LV-Dlm_F_PX.png" class="img-fluid figure-img"></p>
-<figcaption>spacy ner</figcaption>
-</figure>
-</div>
-<p>The concept of “named entity” first developed at the Message Understanding Conference-6 in 1995. The field really takes off with the Text Analysis Conferences beginning in 2009 and has since become central to computational humanities — for example, in the Data-Sitters Club article we read, the authors used NER to track character mentions across multilingual translations of <em>The Baby-Sitters Club</em> series.</p>
-<section id="ner-with-spacy" class="level3">
-<h3 class="anchored" data-anchor-id="ner-with-spacy">NER with spaCy</h3>
-<p>We’ll use <a href="https://spacy.io/" target="_blank">spaCy</a>, a powerful and widely used NLP library. First, install it and download the English model:</p>
-<pre class="shell"><code>pip install spacy
-python -m spacy download en_core_web_sm</code></pre>
-<p>Now let’s load the library and try a quick example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">'en_core_web_sm'</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(<span class="st">"Apple is looking at buying U.K. startup for $1 billion"</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ent <span class="kw">in</span> doc.ents:</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(ent.text, ent.start_char, ent.end_char, ent.label_)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We should see:</p>
-<pre><code>Apple 0 5 ORG
-U.K. 27 31 GPE
-$1 billion 44 54 MONEY</code></pre>
-<p>This is telling us the text of the entity, its character positions in the document, and its label. spaCy uses the following entity types among others:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://devopedia.org/images/article/256/8660.1580659054.png" class="img-fluid figure-img"></p>
-<figcaption>ner entities</figcaption>
-</figure>
-</div>
-</section>
-<section id="how-spacy-works" class="level3">
-<h3 class="anchored" data-anchor-id="how-spacy-works">How spaCy Works</h3>
-<p>spaCy uses a pipeline of statistical models to process text:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://d33wubrfki0l68.cloudfront.net/3ad0582d97663a1272ffc4ccf09f1c5b335b17e9/7f49c/pipeline-fde48da9b43661abcdf62ab70a546d71.svg" class="img-fluid figure-img"></p>
-<figcaption>spacy pipeline</figcaption>
-</figure>
-</div>
-<p>The key thing to understand is that spaCy’s NER is based on trained machine learning models — it makes predictions about which label most likely applies based on patterns learned from large annotated datasets. This means it can generalize well to new text, but it also inherits the biases and limitations of its training data.</p>
-<p>We can also visualize how spaCy is analyzing a sentence using its built-in <code>displacy</code> visualizer:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spacy <span class="im">import</span> displacy</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(<span class="st">"Elizabeth Bennet and Mr. Darcy meet at Netherfield in Hertfordshire."</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>displacy.render(doc, style<span class="op">=</span><span class="st">"ent"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="applying-ner-to-our-novels" class="level3">
-<h3 class="anchored" data-anchor-id="applying-ner-to-our-novels">Applying NER to Our Novels</h3>
-<p>Now let’s apply NER to our novel texts. Since spaCy needs to process each text individually, we’ll write a function and use <code>apply()</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_entities(text, entity_type<span class="op">=</span><span class="st">'PERSON'</span>):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Extract all entities of a given type from a text."""</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.notna(text) <span class="kw">and</span> <span class="bu">len</span>(<span class="bu">str</span>(text)) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Limit to first 100,000 characters to keep things fast</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        doc <span class="op">=</span> nlp(<span class="bu">str</span>(text)[:<span class="dv">100000</span>])</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [ent.text <span class="cf">for</span> ent <span class="kw">in</span> doc.ents <span class="cf">if</span> ent.label_ <span class="op">==</span> entity_type]</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> []</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract person entities from each novel</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This will take a few minutes — a good time to grab coffee!</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>combined_novels_nyt_df[<span class="st">'person_entities'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">apply</span>(</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: get_entities(x, <span class="st">'PERSON'</span>)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Processing full novel texts through spaCy’s pipeline is slow. For in-class work, it’s fine to limit to the first 100,000 characters of each text, or to work with a small subset of novels. The code above uses that character limit.</p>
-</div>
-</div>
-<p>Now let’s take a look at what entities were found in a few novels:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> combined_novels_nyt_df[<span class="dv">0</span>:<span class="dv">5</span>].iterrows():</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>row[<span class="st">'title'</span>]<span class="sc">}</span><span class="ss"> by </span><span class="sc">{</span>row[<span class="st">'author'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Show the 10 most common person entities</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> collections <span class="im">import</span> Counter</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    entity_counts <span class="op">=</span> Counter(row[<span class="st">'person_entities'</span>])</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(entity_counts.most_common(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You’ll immediately notice something important: spaCy is imperfect. It might tag “Mr.” or “Chapter” as a PERSON, or miss characters referred to only by pronoun. This is a known limitation of statistical NER on literary texts, where characters may be addressed differently throughout a novel (by name, title, nickname, or pronoun). This is exactly the problem the Data-Sitters Club authors grappled with in their multilingual analysis.</p>
-</section>
-<section id="building-a-named-entities-dataframe" class="level3">
-<h3 class="anchored" data-anchor-id="building-a-named-entities-dataframe">Building a Named Entities DataFrame</h3>
-<p>Rather than keeping entities as lists inside our existing DataFrame, it’s often more useful to create a separate <strong>entities DataFrame</strong> — one row per entity mention — which we can then analyze and merge back in:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>entity_rows <span class="op">=</span> []</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> combined_novels_nyt_df.iterrows():</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> entity <span class="kw">in</span> row[<span class="st">'person_entities'</span>]:</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        entity_rows.append({</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">'title'</span>: row[<span class="st">'title'</span>],</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">'author'</span>: row[<span class="st">'author'</span>],</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">'genre'</span>: row[<span class="st">'genre'</span>],</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">'pub_year'</span>: row[<span class="st">'pub_year'</span>],</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">'entity'</span>: entity</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>entities_df <span class="op">=</span> pd.DataFrame(entity_rows)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(entities_df.shape)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>entities_df.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now we can ask questions like: which person entities appear most frequently across the entire corpus?</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>entities_df[<span class="st">'entity'</span>].value_counts().head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or which entities are most common within each genre?</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>entities_df.groupby([<span class="st">'genre'</span>, <span class="st">'entity'</span>]).size().reset_index(name<span class="op">=</span><span class="st">'count'</span>).sort_values(<span class="st">'count'</span>, ascending<span class="op">=</span><span class="va">False</span>).groupby(<span class="st">'genre'</span>).head(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<hr>
-</section>
-</section>
-<section id="from-ner-to-networks" class="level2">
-<h2 class="anchored" data-anchor-id="from-ner-to-networks">From NER to Networks</h2>
-<p>Now we get to one of the most powerful applications of NER: using extracted entities to build a <strong>network</strong> that represents relationships across a corpus.</p>
-<p>The basic idea comes from <em>The Network Turn</em> (which we read earlier in the course): networks are an abstraction that let us represent and compute over relationships between entities. A network has two components:</p>
-<ul>
-<li><strong>Nodes</strong> — the entities (in our case, character names)</li>
-<li><strong>Edges</strong> — connections between entities (in our case, co-occurrence: two characters appearing in the same novel)</li>
-</ul>
-<p>As the authors of <em>The Network Turn</em> note:</p>
-<blockquote class="blockquote">
-<p>Nothing is naturally a network; rather, networks are an abstraction into which we squeeze the world. Nevertheless, almost anything can be turned into a network.</p>
-</blockquote>
-<p>The key interpretive question is: what counts as a relationship? We’ll start with the simplest approach — two characters are “connected” if they both appear in the same novel. Later you might want to use a sliding window approach (characters co-occurring within N words of each other), which captures more local interaction patterns.</p>
-<section id="creating-a-co-occurrence-network" class="level3">
-<h3 class="anchored" data-anchor-id="creating-a-co-occurrence-network">Creating a Co-Occurrence Network</h3>
-<p>Let’s build a network where nodes are the most common named persons across our corpus, and edges connect characters who appear in the same novel.</p>
-<p>First, let’s identify the most frequently occurring entities to use as our nodes, filtering out noise:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the top 50 most common entity names across the corpus</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>top_entities <span class="op">=</span> entities_df[<span class="st">'entity'</span>].value_counts().head(<span class="dv">50</span>).index.tolist()</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter our entities DataFrame to just these</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>filtered_entities_df <span class="op">=</span> entities_df[entities_df[<span class="st">'entity'</span>].isin(top_entities)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now we’ll build an edge list. For each novel, any two entities that appear together create an edge (or strengthen an existing one):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>edge_counts <span class="op">=</span> {}</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> title, group <span class="kw">in</span> filtered_entities_df.groupby(<span class="st">'title'</span>):</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get unique entities in this novel</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    novel_entities <span class="op">=</span> group[<span class="st">'entity'</span>].unique().tolist()</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create edges for all pairs</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> entity1, entity2 <span class="kw">in</span> combinations(novel_entities, <span class="dv">2</span>):</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        pair <span class="op">=</span> <span class="bu">tuple</span>(<span class="bu">sorted</span>([entity1, entity2]))</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        edge_counts[pair] <span class="op">=</span> edge_counts.get(pair, <span class="dv">0</span>) <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to a DataFrame</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>edges_df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    [(e1, e2, w) <span class="cf">for</span> (e1, e2), w <span class="kw">in</span> edge_counts.items()],</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'source'</span>, <span class="st">'target'</span>, <span class="st">'weight'</span>]</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of edges: </span><span class="sc">{</span><span class="bu">len</span>(edges_df)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>edges_df.sort_values(<span class="st">'weight'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now we can create a <code>networkx</code> graph from this edge list:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.from_pandas_edgelist(edges_df, source<span class="op">=</span><span class="st">'source'</span>, target<span class="op">=</span><span class="st">'target'</span>, edge_attr<span class="op">=</span><span class="st">'weight'</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Nodes: </span><span class="sc">{</span>G<span class="sc">.</span>number_of_nodes()<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Edges: </span><span class="sc">{</span>G<span class="sc">.</span>number_of_edges()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="visualizing-the-network" class="level3">
-<h3 class="anchored" data-anchor-id="visualizing-the-network">Visualizing the Network</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">14</span>))</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>nx.draw(</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    G,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    with_labels<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    font_size<span class="op">=</span><span class="dv">8</span>,</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    node_size<span class="op">=</span><span class="dv">800</span>,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    node_color<span class="op">=</span><span class="st">'steelblue'</span>,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    edge_color<span class="op">=</span><span class="st">'lightgray'</span>,</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.8</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Character Co-occurrence Network Across Top 500 Novels"</span>)</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You’ll see a force-directed graph where nodes that are more central tend to be pulled toward the middle. But we can do better than a generic layout — let’s use network algorithms to surface what’s actually interesting.</p>
-</section>
-<section id="network-centrality" class="level3">
-<h3 class="anchored" data-anchor-id="network-centrality">Network Centrality</h3>
-<p>Network analysis gives us computational measures of how important each node is. Two of the most useful:</p>
-<ul>
-<li><strong>Degree centrality</strong> — how many other nodes does this node connect to? A high degree means an entity co-occurs with many others.</li>
-<li><strong>Betweenness centrality</strong> — how often does this node lie on the shortest path between two other nodes? High betweenness means an entity is a “bridge” between otherwise disconnected parts of the network.</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>degree_centrality <span class="op">=</span> nx.degree_centrality(G)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>betweenness_centrality <span class="op">=</span> nx.betweenness_centrality(G)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a summary DataFrame</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>centrality_df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'entity'</span>: <span class="bu">list</span>(degree_centrality.keys()),</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'degree_centrality'</span>: <span class="bu">list</span>(degree_centrality.values()),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'betweenness_centrality'</span>: [betweenness_centrality[n] <span class="cf">for</span> n <span class="kw">in</span> degree_centrality.keys()]</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'degree_centrality'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top 10 by Degree Centrality:"</span>)</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(centrality_df.head(<span class="dv">10</span>))</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top 10 by Betweenness Centrality:"</span>)</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(centrality_df.sort_values(<span class="st">'betweenness_centrality'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The two measures often highlight different entities. A character like “God” might have very high degree centrality (appearing across many novels) but low betweenness centrality (not bridging distinct communities). Conversely, an entity that bridges, say, a cluster of 19th-century novels and a cluster of 20th-century ones might rank highly on betweenness even if it doesn’t appear in that many books.</p>
-<p>We can visualize the network with node size proportional to degree centrality:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">14</span>))</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>node_sizes <span class="op">=</span> [G.degree(v) <span class="op">*</span> <span class="dv">150</span> <span class="cf">for</span> v <span class="kw">in</span> G]</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>nx.draw(</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    G,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    with_labels<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    font_size<span class="op">=</span><span class="dv">8</span>,</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    node_size<span class="op">=</span>node_sizes,</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    node_color<span class="op">=</span><span class="st">'steelblue'</span>,</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    edge_color<span class="op">=</span><span class="st">'lightgray'</span>,</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.8</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Character Co-occurrence Network (node size = degree centrality)"</span>)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="community-detection" class="level3">
-<h3 class="anchored" data-anchor-id="community-detection">Community Detection</h3>
-<p>Beyond individual nodes, we can also look for <strong>communities</strong> — groups of nodes that are more densely connected to each other than to the rest of the network. The Louvain algorithm is a popular method for this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> networkx.algorithms <span class="im">import</span> community</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>communities <span class="op">=</span> community.louvain_communities(G, seed<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Map each node to its community number</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>community_map <span class="op">=</span> {}</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, com <span class="kw">in</span> <span class="bu">enumerate</span>(communities):</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> node <span class="kw">in</span> com:</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        community_map[node] <span class="op">=</span> i</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [community_map[node] <span class="cf">for</span> node <span class="kw">in</span> G.nodes()]</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">14</span>))</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>nx.draw(</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    G,</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    node_color<span class="op">=</span>colors,</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    with_labels<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    font_size<span class="op">=</span><span class="dv">8</span>,</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    node_size<span class="op">=</span><span class="dv">800</span>,</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    edge_color<span class="op">=</span><span class="st">'lightgray'</span>,</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.8</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Character Co-occurrence Network with Community Detection"</span>)</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Each color represents a detected community. Do the communities correspond to anything meaningful — a genre, a time period, a set of canonically linked authors? This is where the computational result becomes a <em>humanities</em> result: the network hands you a pattern, and you have to interpret it.</p>
-<hr>
-</section>
-</section>
-<section id="interpreting-networks-as-cultural-humanists" class="level2">
-<h2 class="anchored" data-anchor-id="interpreting-networks-as-cultural-humanists">Interpreting Networks as Cultural Humanists</h2>
-<p>At this point it’s worth stepping back to think critically about what our network actually represents. The authors of <em>The Network Turn</em> warn us that:</p>
-<blockquote class="blockquote">
-<p>We move across a landscape of abstraction, which entails more information loss the further we travel.</p>
-</blockquote>
-<p>Our network has made several interpretive choices, each of which loses something:</p>
-<ol type="1">
-<li><strong>Entity extraction</strong> — spaCy makes errors, especially on literary texts. “Mr.” may be tagged as a person; a character’s nickname may not match their full name.</li>
-<li><strong>Filtering to top entities</strong> — by keeping only the 50 most common names, we’ve already shaped what the network can see.</li>
-<li><strong>Co-occurrence at the novel level</strong> — two characters are “connected” because they appear in the same book, not because they interact directly. This is a very coarse definition of relationship.</li>
-<li><strong>Treating all co-occurrences as equal</strong> — the edge between “Elizabeth” and “Darcy” in <em>Pride and Prejudice</em> carries a very different meaning than two names that both happen to appear in a long Victorian novel.</li>
-</ol>
-<p>None of these choices are wrong — they are tradeoffs. The question is whether the pattern that emerges at this level of abstraction is still meaningful for your research question.</p>
+<section id="what-structure-did-we-create" class="level2">
+<h2 class="anchored" data-anchor-id="what-structure-did-we-create">What Structure Did We Create?</h2>
+<p>Across this lesson, we made several transformations:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Starting representation</th>
+<th>Transformation</th>
+<th>New representation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Two independent metadata tables</td>
+<td>Normalize keys and merge</td>
+<td>One table connecting library and bestseller evidence</td>
+</tr>
+<tr class="even">
+<td>Weekly bestseller appearances</td>
+<td>Group and aggregate</td>
+<td>One summary row per author-title pair</td>
+</tr>
+<tr class="odd">
+<td>One text string per document</td>
+<td>Tokenize and explode</td>
+<td>One row per document-token occurrence</td>
+</tr>
+<tr class="even">
+<td>Repeated token rows</td>
+<td>Count distinct values</td>
+<td>A frequency table of token types</td>
+</tr>
+</tbody>
+</table>
+<p>Each transformation makes a new question possible. It also changes the unit of observation and introduces assumptions that should be recorded.</p>
+<p>Merging asks: <strong>When do two records describe the same object?</strong></p>
+<p>Tokenization asks: <strong>What should count as a meaningful unit of text?</strong></p>
+<p>These are technical questions, but they are also interpretive questions about cultural data.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>A Note on Gazetteers and Rules-Based NER
+<span class="screen-reader-only">Note</span>Next Steps
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>One way to improve NER for literary texts is to supplement spaCy’s statistical model with a <strong>gazetteer</strong> — a pre-compiled list of known entities. For example, if we had a list of character names for each novel, we could add those to spaCy as rules so it always recognizes them correctly. You can read more about this approach in William Mattingly’s textbook <a href="http://ner.pythonhumanities.com/02_rules_based_ner.html" class="uri">http://ner.pythonhumanities.com/02_rules_based_ner.html</a> and the spaCy documentation on the <code>EntityRuler</code> <a href="https://spacy.io/api/entityruler" class="uri">https://spacy.io/api/entityruler</a>.</p>
+<p>This draft currently ends with tokenization. Named Entity Recognition and networks from the older lesson can remain in a later lesson on computational text analysis, where we can build from tokens toward extracting people, places, organizations, and relationships.</p>
 </div>
 </div>
-<hr>
 
 
 </section>
