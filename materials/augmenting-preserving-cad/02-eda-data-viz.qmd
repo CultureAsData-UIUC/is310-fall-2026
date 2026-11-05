@@ -1,5 +1,6 @@
 ---
-title: "EDA & Data Visualization"
+title: "Exploratory Data Analysis & Data Visualization"
+draft: true
 toc: true
 format: html
 jupyter: python3
@@ -11,29 +12,11 @@ execute:
   message: false
 ---
 
-```{python}
-#| echo: false
-# ── Hidden setup cell — loads the pre-built viz dataset ──────────────────
-# This CSV was produced by prep/02-prep.ipynb (available on the course repo).
-# The full dataset including novel texts (152 MB) is on Canvas.
-import re
-import pandas as pd
-import altair as alt
-# Force Vega-Embed to load from CDN as a plain script, not via RequireJS
-alt.renderers.set_embed_options(
-    vega_version=alt.VEGA_VERSION,
-    vegalite_version=alt.VEGALITE_VERSION,
-    vegaembed_version=alt.VEGAEMBED_VERSION
-)
+::: {.callout-note}
+## Revised Lesson
 
-
-combined_novels_nyt_df = pd.read_csv('../../assets/files/combined_novels_viz.csv')
-
-combined_novels_nyt_df['pub_date'] = pd.to_datetime(
-    combined_novels_nyt_df['pub_year'].astype(str) + '-01-01',
-    errors='coerce'
-)
-```
+If you read our previous lesson on EDA and data visualization, you may notice that this version has been substantially revised. The content is largely the same, but the examples have been updated to use a different dataset and question. Please follow this version for your homework assignment!
+:::
 
 
 In our last lesson, we tried to answer the following questions:
@@ -60,9 +43,11 @@ print(parks_data_df.groupby(['State'])['ParkName'].nunique().reset_index())
 ```
 
 
-We could store each of these in new variables but we also want to visualize this data to help us better understand it. That's what we'll be exploring further in this next lesson.
+We could store each of these in new variables but we also want to visualize this data to help us better understand it. That's what we'll be exploring further in this next lesson through undertaking the steps of *exploratory data analysis*.
 
 ---
+
+## Reading & Encoding Data
 
 Rather than working with just the National Parks Data, we can also start to explore the remainder of the datasets from the *Responsible Datasets in Context Project*. For example, let's take a look at the "Top 500 Greatest Novels" dataset by Anna Preus and Aashna Sheth [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html){target="_blank"}.
 
@@ -102,12 +87,19 @@ In “Encoding Multilingualism: Technical Affordances of Multilingual Publicatio
 
 In our case, we didn't need to specify the encoding, but if we did, we could have added the `encoding` parameter to our `read_csv()` method.
 
-```python
+```{python}
+# Import libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import altair as alt
+
 # Import data
-novels_df = pd.read_csv("https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv", sep="\t", encoding='utf-8')
+novels_df = pd.read_csv(
+    "https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv",
+    sep="\t",
+    encoding="utf-8"
+)
 ```
-
-
 
 Now we can start to explore this dataset. What methods could we use to get a sense of the data?
 
@@ -116,51 +108,122 @@ Now we can start to explore this dataset. What methods could we use to get a sen
 There's many answers to this question, but say we use `novels_df.info()`. We would see the following output:
 
 ```bash
-<class 'pandas.core.frame.DataFrame'>
+<class 'pandas.DataFrame'>
 RangeIndex: 500 entries, 0 to 499
 Data columns (total 29 columns):
- #   Column                    Non-Null Count  Dtype
----  ------                    --------------  -----
- 0   top_500_rank              500 non-null    int64
- 1   title                     500 non-null    object
- 2   author                    500 non-null    object
- 3   pub_year                  500 non-null    int64
- 4   orig_lang                 500 non-null    object
- 5   genre                     500 non-null    object
- 6   author_birth              499 non-null    object
- 7   author_death              496 non-null    object
- 8   author_gender             499 non-null    object
- 9   author_primary_lang       499 non-null    object
-10  author_nationality        499 non-null    object
-11  author_field_of_activity  329 non-null    object
-12  author_occupation         458 non-null    object
-13  oclc_holdings             495 non-null    float64
-14  oclc_eholdings            495 non-null    float64
-15  oclc_total_editions       495 non-null    float64
-16  oclc_holdings_rank        495 non-null    float64
-17  oclc_editions_rank        495 non-null    float64
-18  gr_avg_rating             500 non-null    float64
-19  gr_num_ratings            500 non-null    object
-20  gr_num_reviews            500 non-null    object
-21  gr_avg_rating_rank        500 non-null    int64
-22  gr_num_ratings_rank       500 non-null    int64
-23  oclc_owi                  495 non-null    float64
-24  author_viaf               500 non-null    object
-25  gr_url                    480 non-null    object
-26  wiki_url                  500 non-null    object
-27  pg_eng_url                500 non-null    object
-28  pg_orig_url               64 non-null     object
-dtypes: float64(7), int64(4), object(18)
-memory usage: 113.4+ KB
+ #   Column                    Non-Null Count  Dtype  
+---  ------                    --------------  -----  
+ 0   top_500_rank              500 non-null    int64  
+ 1   title                     500 non-null    str    
+ 2   author                    500 non-null    str    
+ 3   pub_year                  500 non-null    int64  
+ 4   orig_lang                 500 non-null    str    
+ 5   genre                     500 non-null    str    
+ 6   author_birth              499 non-null    str    
+ 7   author_death              496 non-null    str    
+ 8   author_gender             500 non-null    str    
+ 9   author_primary_lang       500 non-null    str    
+ 10  author_nationality        500 non-null    str    
+ 11  author_field_of_activity  329 non-null    str    
+ 12  author_occupation         459 non-null    str    
+ 13  oclc_holdings             495 non-null    float64
+ 14  oclc_eholdings            495 non-null    float64
+ 15  oclc_total_editions       495 non-null    float64
+ 16  oclc_holdings_rank        495 non-null    float64
+ 17  oclc_editions_rank        495 non-null    float64
+ 18  gr_avg_rating             500 non-null    float64
+ 19  gr_num_ratings            500 non-null    str    
+ 20  gr_num_reviews            500 non-null    str    
+ 21  gr_avg_rating_rank        500 non-null    int64  
+ 22  gr_num_ratings_rank       500 non-null    int64  
+ 23  oclc_owi                  495 non-null    float64
+ 24  author_viaf               500 non-null    object 
+ 25  gr_url                    480 non-null    str    
+ 26  wiki_url                  500 non-null    str    
+ 27  pg_eng_url                500 non-null    str    
+ 28  pg_orig_url               64 non-null     str    
+dtypes: float64(7), int64(4), object(1), str(17)
+memory usage: 258.2+ KB
 ```
 
 This overview is telling us that we have far more columns in this datasets, each column's name and data type, and specifically the number of **non-null values** in each column.
 
-## Missing Data in Pandas
+We could also use `describe()` to get a summary of the numeric columns in the dataset:
 
-In the last lesson, we covered how we could add null values to a DataFrame, but now we want to explore how we can work with them. Pandas has a lot of documentation for handling **missing data** that you can read here [https://pandas.pydata.org/docs/user_guide/missing_data.html](https://pandas.pydata.org/docs/user_guide/missing_data.html){target="_blank"}. For our purposes, we're mostly concerned with the `isna()` and `notna()` methods.
+```python
+novels_df.describe()
+```
 
-While most of the columns have 500 non-null values, we can see that some of the columns have missing values. For example, `author_field_of_activity` has 329 non-null values, which means that there are 171 missing values. We can start to get a sense of what that column contains if we return to the dataset documentation, specifically the section "What's in the Data" [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data){target="_blank"}. From there we can learn the following about this column:
+This should give us the following output:
+
+::: {.table-responsive}
+| Statistic | top_500_rank | pub_year | oclc_holdings | oclc_eholdings | oclc_total_editions | oclc_holdings_rank | oclc_editions_rank | gr_avg_rating | gr_avg_rating_rank | gr_num_ratings_rank | oclc_owi |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| count | 500.0 | 500.0 | 495.0 | 495.0 | 495.0 | 495.0 | 495.0 | 500.0 | 500.0 | 500.0 | 495.0 |
+| mean | 250.5 | 1932.132 | 10401.438383838384 | 2218.5939393939393 | 896.6424242424242 | 248.0 | 248.0 | 3.97144 | 250.5 | 250.5 | 1602208445.3272727 |
+| std | 144.4818327679989 | 84.30654638595425 | 5694.5090033480465 | 3084.5957147485274 | 1019.0155721348034 | 143.03845636750978 | 143.03845636750978 | 0.22768752627062921 | 144.4818327679989 | 144.4818327679989 | 2675299121.6826034 |
+| min | 1.0 | 1021.0 | 996.0 | 25.0 | 21.0 | 1.0 | 1.0 | 3.29 | 1.0 | 1.0 | 1040.0 |
+| 25% | 125.75 | 1900.0 | 6800.0 | 352.0 | 241.0 | 124.5 | 124.5 | 3.83 | 125.75 | 125.75 | 397287.5 |
+| 50% | 250.5 | 1948.0 | 8318.0 | 558.0 | 485.0 | 248.0 | 248.0 | 3.98 | 250.5 | 250.5 | 16756029.0 |
+| 75% | 375.25 | 1989.0 | 12184.0 | 3223.0 | 1207.5 | 371.5 | 371.5 | 4.12 | 375.25 | 375.25 | 2830458773.5 |
+| max | 500.0 | 2015.0 | 37702.0 | 15545.0 | 9017.0 | 495.0 | 495.0 | 4.62 | 500.0 | 500.0 | 12392760730.0 |
+:::
+
+By default, `describe()` summarizes only numeric columns. We can ask Pandas to include every column by passing `include="all"`:
+
+```python
+novels_df.describe(include="all")
+```
+
+For readability, the categorical and identifier portion of that wide output is transposed below. Each row now represents one field:
+
+::: {.table-responsive}
+| Field | Count | Unique | Most Frequent Value | Frequency |
+|---|---:|---:|---|---:|
+| title | 500 | 500 | Don Quixote | 1 |
+| author | 500 | 279 | John Grisham | 19 |
+| orig_lang | 500 | 12 | English | 430 |
+| genre | 500 | 14 | na | 221 |
+| author_birth | 499 | 152 | 1955 | 21 |
+| author_death | 496 | 134 | ALIVE | 144 |
+| author_gender | 500 | 2 | male | 355 |
+| author_primary_lang | 500 | 11 | eng | 427 |
+| author_nationality | 500 | 23 | US | 257 |
+| author_field_of_activity | 329 | 121 | english literature | 28 |
+| author_occupation | 459 | 148 | authors | 57 |
+| gr_num_ratings | 500 | 500 | 269,435 | 1 |
+| gr_num_reviews | 500 | 497 | 4,209 | 2 |
+| author_viaf | 500 | 279 | 7449742 | 19 |
+| gr_url | 480 | 479 | https://www.goodreads.com/book/show/11991.The_Fall?ref=nav_sb_ss_4_8 | 2 |
+| wiki_url | 500 | 499 | https://en.wikipedia.org/wiki/In_Search_of_Lost_Time | 2 |
+| pg_eng_url | 500 | 182 | NA_not-pub-domain | 310 |
+| pg_orig_url | 64 | 32 | unavailable | 32 |
+:::
+
+These summaries do more than describe the dataset. They help us begin to an **audit** this dataset, speficially giving us a bird's-eye view of its structure and content. This perspective helps us start to cinsider how the dataset was assembled, what its fields represent, and which limitations might shape our interpretation.
+
+The `count` row immediately raises questions about coverage:
+
+- Why does `author_field_of_activity` contain only 329 recorded values?
+- Why does `author_occupation` contain 459?
+- Why are OCLC fields present for 495 novels rather than all 500?
+- Why does `gr_url` contain 480 links?
+- Why does `pg_orig_url` contain only 64 recorded values?
+
+But `count` does not reveal every kind of missing data. Pandas counts any string as a recorded value, including placeholders such as:
+
+- `na`, the most frequent value in `genre`.
+- `NA_not-pub-domain`, the most frequent value in `pg_eng_url`.
+- `unavailable`, the most frequent value in `pg_orig_url`.
+- `ALIVE`, a value in `author_death` that records a status rather than a death year.
+
+This means a field can be **technically non-null while still lacking the information we expected it to contain**. Auditing therefore requires us to inspect  and think carefully about what constitutes **missing data** in the context of the dataset. This includes both **formal null values** and the conventions used to represent unavailable, inapplicable, unknown, or withheld information.
+
+## Exploring Missing Data
+
+Our initial description has already shown us **where** values are absent. The next question is not simply how to remove those rows, but **why a field might be missing and whether that missingness is patterned**.
+
+For example, `author_field_of_activity` has 329 non-null values, which means that there are 171 missing values. We can start to get a sense of what that column contains if we return to the dataset documentation, specifically the section "What's in the Data" [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data){target="_blank"}. From there we can learn the following about this column:
 
 > AUTHOR_FIELD_OF_ACTIVITY: Author's primary fields of activity, according to VIAF. VIAF includes data from multiple global partner institutions, but we only collect VIAF data associated with the Library of Congress (LOC).
 
@@ -170,38 +233,69 @@ For those unfamiliar, [VIAF](https://viaf.org/){target="_blank"} stands for the 
 
 ![Big Data, Little Data, No Data](https://m.media-amazon.com/images/I/71J3wIQ6rRL._AC_UF1000,1000_QL80_.jpg)
 
-The impetus for the creation of VIAF was not just sharing information, but what LIS scholar Christine L. Borgman calls the "scaling problem in name disambiguation" in her book [*Big Data, Little Data, No Data: Scholarship in the Networked World*](https://direct.mit.edu/books/monograph/3085/Big-Data-Little-Data-No-DataScholarship-in-the){target="_blank"}. We've already talked about this briefly in discussing the challenges of "cleaning data", but the rise of multiple digital libraries and archives has made it increasingly difficult to accurately identify and attribute works to their correct authors, which is where projects like VIAF come in. However, as we discussed in class, there are still challenges with this system. For example, authors are not the ones who enter data into VIAF. Instead, it is often librarians or archivists who are responsible for creating and maintaining these records. This means that there can be discrepancies in how authors are represented, and it can be difficult to ensure that all works by a particular author are accurately attributed to them.
+The impetus for the creation of VIAF was not just sharing information, but what LIS scholar Christine L. Borgman calls the "scaling problem in name disambiguation" in her book [*Big Data, Little Data, No Data: Scholarship in the Networked World*](https://direct.mit.edu/books/monograph/3085/Big-Data-Little-Data-No-DataScholarship-in-the){target="_blank"}. We've already talked about this briefly in discussing the challenges of "cleaning data", but the rise of multiple digital libraries and archives has made it increasingly difficult to accurately identify and attribute works to their correct authors, which is where projects like VIAF come in. However, as we discussed in class, there are still challenges with this system. For example, authors are not the ones who enter data into VIAF. Instead, it is often librarians or archivists who are responsible for creating and maintaining these records. This means that there can be discrepancies in how authors are represented, and it can be difficult to ensure that all works by a particular author are accurately attributed to them. 
 
-Now knowing this background, we can start to explore which authors have missing values in this column. We can do this by using the `isna()` method to check for missing values in the `author_field_of_activity` column.
+This `author_field_of_activity` field  therefore reflects cataloguing practices, available source records, institutional priorities, and the choices made when Preus and Sheth constructed this dataset.
 
-```python
-novels_df[novels_df['author_field_of_activity'].isna()]
+A null could therefore indicate several different things:
+
+- The relevant Library of Congress authority record lacks a field of activity.
+- VIAF's contributing records disagree or provide uneven descriptions.
+- Some languages, regions, periods, or literary traditions received different cataloguing attention.
+- The dataset's collection process did not retrieve or preserve a value.
+
+We can also start to see where this author field of activity looks like on VIAF, like for Mark Twain's VIAF file here [https://viaf.org/en/processed/LC%257Cn%20%2079021164](https://viaf.org/en/processed/LC%257Cn%20%2079021164){target="_blank"}.
+
+One easy solution might be to simply filter out these rows. In the last lesson, we covered how we could add null values to a DataFrame, but now we want to explore how we can work with them. Pandas has a lot of documentation for handling **missing data** that you can read here [https://pandas.pydata.org/docs/user_guide/missing_data.html](https://pandas.pydata.org/docs/user_guide/missing_data.html){target="_blank"}. For our purposes, we're mostly concerned with the `isna()` and `notna()` methods.
+
+But instead of using these to remove rows, we can start to use them to consider why there might be patterns around which authors have a recorded field of activity and which do not.
+
+Pandas usually displays an absent value as `NaN`, which means **Not a Number**. The name comes from numerical computing, but Pandas also uses `NaN` to represent missing text and other unavailable values. It does not mean that the original author or cataloguer literally entered the letters `NaN`.
+
+These two methods let us test for that missingness:
+
+| Method | Returns `True` when... | Typical use |
+|---|---|---|
+| `.isna()` | the value is missing | Find or count absent values |
+| `.notna()` | the value is recorded | Keep records available for a particular analysis |
+
+Both methods return Boolean values: `True` or `False` for every row. We can place that Boolean Series inside square brackets to filter the DataFrame. First, let us inspect the authors whose field of activity is missing:
+
+```{python}
+missing_activity_df = novels_df[
+    novels_df['author_field_of_activity'].isna()
+]
+
+missing_activity_df.head(10)
 ```
 
+Then we can use `notna()` to inspect the rows where VIAF and the Library of Congress supplied a value:
 
-Here we are using the `isna()` method to **filter** our DataFrame to only show rows where the `author_field_of_activity` column is null. If we wanted to see only rows where the column is not null, we could use the `notna()` method instead.
+```{python}
+recorded_activity_df = novels_df[
+    novels_df['author_field_of_activity'].notna()
+]
 
-```python
-novels_df[novels_df['author_field_of_activity'].notna()]
+recorded_activity_df.head(10)
 ```
 
+The original `novels_df` still contains all 500 novels. We have not established that the missing rows are errors, and we have not deleted anything. We could also use the `~` operator to negate the boolean values returned by `isna()` instead of using `notna()`. This will give us the same result as the previous code snippet:
 
-This will give us a DataFrame with all the authors who have a field of activity listed. We could also use the `~` operator to negate the boolean values returned by `isna()`.
-
-```python
-novels_df[~novels_df['author_field_of_activity'].isna()]
+```{python}
+recorded_activity_df = novels_df[
+	~novels_df['author_field_of_activity'].isna()
+]
+recorded_activity_df.head(10)
 ```
 
-
-We haven't seen the `~` operator before, but it is a common way to negate boolean values in Python. So for example, if we had a boolean variable `x` that was `True`, then `~x` would be `False`. In addition, Pandas also has `isnull()` and `notnull()` methods that can be used interchangeably with `isna()` and `notna()`.
+We haven't seen the `~` operator before, but Pandas uses it to reverse every value in a Boolean Series: `True` becomes `False`, and `False` becomes `True`. In addition, Pandas also has `isnull()` and `notnull()` methods that can be used interchangeably with `isna()` and `notna()`.
 
 Finally, if we wanted to get rid of all rows in the `novels_df` DataFrame that have missing values in the `author_field_of_activity` column, we could either use our filtering logic to assign the result to a new variable or we could use the `dropna()` method.
 
 ```python
-novels_df_cleaned = novels_df.dropna(subset=['author_field_of_activity'])
+dropped_authors_df = novels_df.dropna(subset=['author_field_of_activity'])
+dropped_authors_df.head(10)
 ```
-
-
 `dropna()` is a powerful method that can be used to remove missing values from a DataFrame. The `subset` parameter allows us to specify which columns we want to check for missing values. If we don't specify a subset, `dropna()` will remove any row that has a missing value in any column.
 
 Here's a quick overview of the most common methods for handling missing values in Pandas:
@@ -215,94 +309,60 @@ Here's a quick overview of the most common methods for handling missing values i
 | `dropna()`                      | Removes missing values from a DataFrame or Series | Can be used to drop rows or columns with missing values |
 | `fillna()`                      | Fills missing values with a specified value or method | Can be used to replace NaN values with a specific value or interpolate missing values |
 
-Knowing how to work with missing data is important since we often have gaps when working with cultural datasets. Furthermore, it's important to know that certain methods like `groupby()` will automatically ignore missing values, so we should always check the distribution of our data before we start analyzing it. We can also start to see where this author field of activity looks like on VIAF, like for Mark Twain's VIAF file here [https://viaf.org/en/processed/LC%257Cn%20%2079021164](https://viaf.org/en/processed/LC%257Cn%20%2079021164){target="_blank"}.
+However, before we can drop rows we need to also start to consider how that might impact the shape of the dataset and also what patterns if any might explain why some authors have fields of activity recorded and others do not. For example, we can start to explore the `author_gender` field to see if there are any patterns in the missing data.
 
-### "Cleaning" Data With Pandas
-
-As we've discussed previously, `cleaning` data is core part of working with data but also one that tends to get overlooked or rarely foregrounded, even though it is extremely important for any interpretation. In our current example, we've already started to clean our data by merging the DataFrames together and transforming the data to make it more amenable to analysis. We might also want to subset the data, since as we can see above not every book has a author_field_of_activity value. We can do this by using the `notna()` method to filter our DataFrame to only include rows where the `author_field_of_activity` column is not null:
-
-```python
-subset_novels_df = novels_df[novels_df.author_field_of_activity.notna()]
+```{python}
+missing_activity_df['author_gender'].value_counts()
 ```
 
-As we discussed in class, a lot of what motivates this "cleaning", whether that means normalizing distributions, removing null values, and even transforming some of the data to standardize it, is the concept of **GIGO**.
+How does that compare with the rows where a field of activity was recorded?
 
-![](https://www.harrised.com/150/images/gigo.jpeg)
-
-GIGO stands for "Garbage In, Garbage Out" and the term has been used for decades in computing to refer to when data entry errors would produce faulty results. Rob Stenson has a great  post exploring the history of the term all the way back to Charles Babbage, one of the first inventors of the computer, [https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out](https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out){target="_blank"}.
-
-GIGO is important because it essentially means that the quality of your data analysis is always dependent on the quality of your data.
-
-However, for as much as we want to prioritize quality, what are some of the downsides or tradeoffs of cleaning data? Some potential considerations include:
-
-- losing the specificity of the original data (especially a danger for historic data but also for data collected by certain institutions)
-- privileging computational power over data quality or accuracy
-- releasing datasets publicly without documenting these changes
-
-This list is by no means exhaustive! But number one thing to remember with datasets is that **the act of collecting data is in of itself an interpretation**. And so cleaning data adds another layer of interpretation (sometimes many layers) to the dataset, which is why its crucial to keep a record of how you transform your data.
-
-It is also important to realize that even with cleaning you will never have a *perfect* dataset and to remember that this is often an *iterative process* and not a one time thing. You will likely need to re-transform your data many times depending on your methods.
-
-One best practice is to save multiple versions of your dataset as `csv` files, so that you don't either overwrite your original data or have to rerun previous transformations. Remember that with Pandas we can read and write `csv` files using `pd.read_csv()` and `{name of your dataframe}.to_csv()`.
-
-So in our case we might want to see first how many authors have a recorded field of activity and how many are missing. We can do this by using the `notna()` and `isna()` methods to count the number of non-null and null values in the `author_field_of_activity` column:
-
-```python
-recorded_activities = novels_df['author_field_of_activity'].notna().sum()
-missing_activities = novels_df['author_field_of_activity'].isna().sum()
-
-print(f"Recorded fields of activity: {recorded_activities}")
-print(f"Missing fields of activity: {missing_activities}")
+```{python}
+recorded_activity_df['author_gender'].value_counts()
 ```
 
-We might also want to think about why author field of activity could be relevant or missing for certain authors. For example, we might want to explore whether there are any patterns in the missing data based on the author's nationality, gender, or time period. This could help us understand whether there are any biases in the dataset and how we might need to account for them in our analysis.
+We can use the same approach to explore other fields. Original language may help us ask whether cataloguing coverage varies across linguistic traditions:
 
-Part of this is first exploring what is in the `author_field_of_activity` column. We can do this by using the `value_counts()` method to see the unique values in the column and how many times they occur:
-
-```python
-subset_novels_df['author_field_of_activity'].value_counts()
+```{python}
+missing_activity_df['orig_lang'].value_counts()
 ```
 
-Which gives us the following output:
-
-```bash
-author_field_of_activity
-english literature                                                                                  28
-childrens literature                                                                                21
-motion pictures production and direction,motion picture authorship,law,fiction authorship,acting    19
-literature                                                                                          12
-novels,fiction                                                                                      11
-                                                                                                    ..
-short stories,novels,motion picture plays,fiction,screenplays                                        1
-fiction authorship                                                                                   1
-novels,fiction authorship                                                                            1
-literature,creative nonfiction,world war 1939 1945                                                   1
-fiction,drama,motion picture authorship,editing                                                      1
-Name: count, Length: 121, dtype: int64
+```{python}
+recorded_activity_df['orig_lang'].value_counts()
 ```
 
-Now we see that an author can have multiple fields of activity, which is why we see some of the values separated by commas. One problem for us then is if we want to look at the distribution of fields of activity, we will need to split these values into separate rows. We can do this by using Pandas string methods. We will use the `str.split()` method to split the values in the `author_field_of_activity` column on the comma and then use the `explode()` method to create a new row for each value:
-```python
-subset_novels_df['individual_author_field_of_activity'] = subset_novels_df['author_field_of_activity'].str.split(',')
-exploded_subset_novels_df = subset_novels_df.explode('individual_author_field_of_activity')
+The [`value_counts()` method](https://pandas.pydata.org/docs/reference/api/pandas.Series.value_counts.html){target="_blank"} counts how often each distinct value appears in a Series. By default, it sorts the results from most to least frequent and leaves out null values. Adding `dropna=False` includes missing values as their own category.
+
+Our earlier `describe(include='all')` output helps us decide which columns might be useful for comparison. A column with a relatively small number of repeated categories is easier to inspect than a column containing hundreds of unique URLs or identifiers. For example:
+
+- `author_gender` has 2 distinct recorded values.
+- `orig_lang` has 12.
+- `author_nationality` has 23.
+- `pub_year` is numeric and ranges from 1021 to 2015.
+
+We can inspect the distribution of each categorical field before deciding which relationship to explore:
+
+```{python}
+novels_df['author_gender'].value_counts(dropna=False)
 ```
 
-Now we should see that we have a new column called `individual_author_field_of_activity` that contains the split values from the `author_field_of_activity` column. We can then use the `value_counts()` method again to see the distribution of individual fields of activity:
-```python
-exploded_subset_novels_df['individual_author_field_of_activity'].value_counts()
+```{python}
+novels_df['orig_lang'].value_counts(dropna=False)
 ```
 
-But the bigger thing to understand is that we have now added more rows to our DataFrame, so our list of authors is now longer than the original 500. This is an important consideration when working with data, as it can affect our analysis and visualizations.
+```{python}
+novels_df['author_nationality'].value_counts(dropna=False)
+```
 
-Here `.str.split()` changes each comma-separated string into a list, while `explode()` changes the shape of the DataFrame so that each list item receives its own row. These are interpretive transformations: after exploding, one row no longer represents one novel but one novel-activity relationship. We will return to additional string methods when we encounter a second text-formatting problem during the merge.
+These tables let us see which categories are common, rare, or missing. We can also run the same method on `missing_activity_df` and `recorded_activity_df`, as we did above. But once we begin comparing several categories across two subsets, it becomes difficult to identify a distribution by reading lists of numbers. This is where exploratory data analysis and visualization become useful.
 
-## Exploratory Data Analysis (EDA) With Pandas
+## What Is Exploratory Data Analysis?
 
-Now that we have started to subset and reshape it, we next want to start thinking about how we can visualize and analyze our data. In essence, we are starting to do a process called *Exploratory Data Analysis* (EDA). EDA is an approach to analyzing data sets to summarize their main characteristics, often with visual methods. It is a crucial step in the data analysis process, as it allows us to understand the data we are working with and identify any patterns, trends, or anomalies that may be present.
-
-Since we are working with a dataset with significant documentation, we have a fairly good sense of what is in these datasets. However, often you will be working with datasets that are less documented, and so it is important to understand how to explore them. 
+Since we are working with a dataset with significant documentation, we have a fairly good sense of what is in these datasets. However, often you will be working with datasets that are far less documented, and so it is important to understand how to explore them, especially for your audits.
 
 [![From Zoë Wilkinson Saldaña "Sentiment Analysis for Exploratory Data Analysis" https://programminghistorian.org/en/lessons/sentiment-analysis](../../assets/images/eda.png){target="_blank"}](https://programminghistorian.org/en/lessons/sentiment-analysis){target="_blank"}
+
+*Exploratory Data Analysis* (EDA) is an approach to analyzing data sets to summarize their main characteristics, often with visual methods. It is a crucial step in the data analysis process, as it allows us to understand the data we are working with and identify any patterns, trends, or anomalies that may be present.
 
 You've likely heard this term before, but let's historically contextualize this idea. The term *Exploratory Data Analysis* (EDA) was popularized by [John W. Tukey](https://en.wikipedia.org/wiki/John_Tukey){target="_blank"}, one of the most famous statisticians and mathematicians of the 20th century. Tukey was one of the first to formally define the concept of data analysis in 1962 paper titled "The Future of Data Analysis."
 
@@ -358,892 +418,170 @@ Like many of the methods above, `plot` is built into Pandas and is a wrapper aro
 
 Pandas also has a robust User Guide on how to plot here [https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html){target="_blank"}.
 
-From these examples we can see that the `plot` syntax requires specifying the type of graph we want to create, and then what we want on the x and y axis. For example, if we wanted to now see our distribution of author field of activity, we could do the following:
+Before plotting, we need to decide what question we want to explore. We have seen missing values in `author_field_of_activity`, while `genre` contains a small set of repeated categories. This gives us one focused question:
 
-```python
-exploded_subset_novels_df['individual_author_field_of_activity'].value_counts().plot(kind='barh', figsize=(10, 30), title='Distribution of Individual Author Fields of Activity')
-```
+> How are novels distributed across genres, and does the availability of author field-of-activity metadata vary across those genres?
 
-Which gives us the following output:
+To compare the categories, we need one Boolean column that records whether each novel has a field of activity. Unlike our earlier filters, this column remains attached to every row in the full dataset:
 
-![](../../assets/images/individual_field_frequency.png)
-
-
-We could also create a scatter plot looking at the relationship between the `pub_year` and `top_500_rank` columns, we could do the following:
-
-```python
-novels_df.plot(kind='scatter', x='pub_year', y='top_500_rank')
-```
-
-
-We should see the following graph:
-
-![](../../assets/images/toprank_year_novels.png)
-
-We could also use a `groupby()` to explore the relationship between `genre` and the average `top_500_rank` for each genre, and then plot that directly:
-
-```python
-novels_df.groupby('genre')['top_500_rank'].mean().plot(kind='bar')
-```
-
-
-Which gives us the following output:
-
-![](../../assets/images/genre_mean.png)
-
-
-## Data Visualization With Altair
-
-Up to now we've been using Pandas built in `plot` methods to display our data. While this is helpful for quick analyses, you'll likely want more options for both how you visualize the data and interact with it.
-
-![](https://media.opennews.org/img/24tools/big_chart.png)
-
-![python lib tools](https://optimise2.assets-servd.host/voracious-blesbok/production/Blog/PythonVisLandscape.jpg?w=1200&auto=compress%2Cformat&fit=crop&dm=1632326979&s=35cf543e04fd14bcc881ef8e70363860)
-
-As you can see in these graphics, in Python, there are a number of visualization libraries, including `Matplotlib`, `Seaborn`, and `Plotly` that have extensive communities and documentation. You can see more options in the [Python Graph Gallery](https://www.python-graph-gallery.com/){target="_blank"} as well.
-
-![Altair](https://cdn.cssauthor.com/wp-content/uploads/2023/04/Altair.jpg?strip=all&lossy=1&ssl=1)
-
-Today we're going to focus on [Vega-Altair](https://altair-viz.github.io/index.html){target="_blank"}, a Python library built on top of Vega and Vega-Lite, two visualization systems for JavaScript. Previously, this library was known simply as `Altair`, so we will use that shorter name throughout the lesson.
-
-Altair was initiated in 2016 by [Jake VanderPlas](https://vanderplas.com/){target="_blank"} and developed with collaborators from the Python, Jupyter, and Vega-Lite communities. VanderPlas is an astronomer and scientific-software developer who has contributed to projects including SciPy, scikit-learn, Matplotlib, and Astropy, and is also the author of the [*Python Data Science Handbook*](https://jakevdp.github.io/PythonDataScienceHandbook/){target="_blank"}. His experience working with researchers and the scientific Python ecosystem helped shape Altair around exploratory analysis in notebooks and data stored in Pandas DataFrames. The project was formally described by VanderPlas and his collaborators in their 2018 article, [“Altair: Interactive Statistical Visualizations for Python”](https://doi.org/10.21105/joss.01057){target="_blank"}.
-
-The central rationale for Altair is that people exploring data should spend less time writing instructions for every incidental feature of a chart. Altair therefore uses a **declarative** approach: we describe which data fields should map to visual channels such as position, color, size, and shape, while Vega-Lite determines many of the lower-level rendering details. Underneath, Altair translates the Python code into a JSON Vega-Lite specification that JavaScript renders as a chart. As the project's [design philosophy](https://altair-viz.github.io/getting_started/project_philosophy.html){target="_blank"} explains, this constrained grammar is a deliberate tradeoff. It offers less low-level control than some plotting libraries, but provides a more consistent way to explore data and makes the relationship between the data and the resulting visual argument easier to inspect.
-
-That tradeoff is particularly useful for us. Rather than treating a visualization as decoration added after analysis, Altair asks us to state explicitly which columns become marks and encodings. This makes it easier to discuss why a bar, point, color, aggregation, or scale supports one interpretation of cultural data rather than another.
-
-*Let's install Altair*
-
-Remember to activate your virtual environment!
-
-```sh
-pip install "altair[all]"
-```
-
-Notice that this time when installing we have a slightly new syntax: `[all]`. This syntax just means that we will be installing all of Altair's dependencies **and** optional dependencies.
-
-*Now let's try it out in our Jupyter Notebook*
-
-```python
-import altair as alt
-```
-
-
-Current versions of Jupyter and the VS Code Jupyter extension normally display Altair charts without additional renderer configuration. If a chart does not appear, first confirm that the notebook is using the Python interpreter from the virtual environment where you installed Altair. The [Altair display documentation](https://altair-viz.github.io/user_guide/display_frontends.html){target="_blank"} lists troubleshooting options for different notebook interfaces.
-
-Now we can try out Altair with one of the built-in datasets
-
-```python
-import altair as alt
-from altair.datasets import data
-
-source = data.cars()
-
-alt.Chart(source).mark_circle(size=60).encode(
-    x='Horsepower',
-    y='Miles_per_Gallon',
-    color='Origin',
-    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']
+```{python}
+novels_df['has_field_of_activity'] = (
+    novels_df['author_field_of_activity'].notna()
 )
 ```
 
+Before plotting, inspect the genre values, including placeholders and missing values:
 
-You should now see the following graph:
-
-![](../../assets/images/altair_chart.png)
-
-If you do not see the graph, use the notebook's kernel selector to choose your course virtual environment, restart the kernel, and rerun the import and chart cells.
-
-*So let's breakdown what we're doing here*
-
-First we are specifying a new [`Chart` class](https://altair-viz.github.io/user_guide/generated/toplevel/altair.Chart.html#altair.Chart){target="_blank"}. In Altair, there are a number of Chart types that we'll delve into later but it essentially is the basic class we'll be working with (more information here [https://altair-viz.github.io/user_guide/api.html#top-level-objects](https://altair-viz.github.io/user_guide/api.html#top-level-objects){target="_blank"}).
-
-![](../../assets/images/top_level_charts.png)
-
-We pass our data to the `Chart` and then specify the type of `mark` we are using (in our case we are using `mark_point()` to make points). In Altair, we can use all types of marks to represent our data [https://altair-viz.github.io/user_guide/marks/index.html](https://altair-viz.github.io/user_guide/marks/index.html){target="_blank"}.
-
-![](../../assets/images/mark_types.png)
-
-Finally we are calling encoding to specify what variable we want to represent on the `x` and `y` axis, as well as through the `color` encoding. Altair has many fields for encoding [https://altair-viz.github.io/user_guide/encodings/index.html](https://altair-viz.github.io/user_guide/encodings/index.html){target="_blank"}
-
-![](../../assets/images/encodings.png)
-
-![](../../assets/images/encoding_data_types.png)
-
-Now that we understand a bit of Altair's syntax, let's try to recreate our `genre` by average `top_500_rank` plot. We do not have to call `groupby()` first because Altair can handle the aggregation for us:
-
-```python
-alt.Chart(novels_df).mark_bar().encode(
-	x="genre:N",
-	y="mean(top_500_rank):Q",
-)
+```{python}
+novels_df['genre'].value_counts(dropna=False)
 ```
 
+The string `na` is currently counted as a genre. In this dataset it functions as a placeholder for unavailable information, so we will replace it with Pandas's explicit missing-value marker, `pd.NA`. This is an interpretive cleaning decision that we should verify against the documentation and record.
 
-Which gives us the following output:
-
-![](../../assets/images/altair_genre_top500.png)
-
-We can see that some of the syntax is similar to the initial example. We are passing in our DataFrame to the `Chart` class, calling the `mark_bar` method, and then encoding the `x` and `y` axis. But some of this syntax is also new.
-
-For instance, we are specifying the `encodings` using the `N` for nominal and `Q` for quantitative. We are also using an `aggregate` function to calculate the `mean`. You can read more about aggregation here [https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions](https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions){target="_blank"}, but generally Altair has the following aggregations built-in:
-
-| Aggregation Operation | Description | Syntax |
-|-----------------------|-------------|--------|
-| `count`               | The total count of data objects in the group. Note: 'count' operates directly on the input objects and returns the same value regardless of the provided field. | `count()` |
-| `valid`               | The count of field values that are not null, undefined, or NaN. | `valid(column_name)` |
-| `values`              | A list of data objects in the group. | `values(column_name)` |
-| `missing`             | The count of null or undefined field values. | `missing(column_name)` |
-| `distinct`            | The count of distinct field values. | `distinct(column_name)` |
-| `sum`                 | The sum of field values. | `sum(column_name)` |
-| `product`             | The product of field values. | `product(column_name)` |
-| `mean`                | The mean (average) field value. | `mean(column_name)` |
-| `average`             | The mean (average) field value. Identical to mean. | `average(column_name)` |
-| `variance`            | The sample variance of field values. | `variance(column_name)` |
-| `variancep`           | The population variance of field values. | `variancep(column_name)` |
-| `stdev`               | The sample standard deviation of field values. | `stdev(column_name)` |
-| `stdevp`              | The population standard deviation of field values. | `stdevp(column_name)` |
-| `stderr`              | The standard error of field values. | `stderr(column_name)` |
-| `median`              | The median field value. | `median(column_name)` |
-| `q1`                  | The lower quartile boundary of field values. | `q1(column_name)` |
-| `q3`                  | The upper quartile boundary of field values. | `q3(column_name)` |
-| `ci0`                 | The lower boundary of the bootstrapped 95% confidence interval of the mean field value. | `ci0(column_name)` |
-| `ci1`                 | The upper boundary of the bootstrapped 95% confidence interval of the mean field value. | `ci1(column_name)` |
-| `min`                 | The minimum field value. | `min(column_name)` |
-| `max`                 | The maximum field value. | `max(column_name)` |
-| `argmin`              | An input data object containing the minimum field value. Note: When used inside encoding, argmin must be specified as an object. | `argmin(column_name)` |
-| `argmax`              | An input data object containing the maximum field value. Note: When used inside encoding, argmax must be specified as an object. | `argmax(column_name)` |
-
-You can also see links to examples using these aggregations here [https://altair-viz.github.io/user_guide/encodings/index.html#binning-and-aggregation](https://altair-viz.github.io/user_guide/encodings/index.html#binning-and-aggregation){target="_blank"}.
-
-While it's great we can recreate this plot, what's the point exactly? After all we can do this in `plot` without having to use another library.
-
-The value of using a library like Altair is that it is built to implement the idea of a `Grammar of Graphics`.
-
-![](../../assets/images/grammar-of-graphics.png)
-
-[*The Grammar of Graphics*](https://en.wikipedia.org/wiki/Wilkinson%27s_Grammar_of_Graphics){target="_blank"} is both a concept and book published in 1999 by Leland Wilkinson, a statistician and computer scientist. Wilkinson developed this idea from his experience in developing SYSTAT, a statistical software package he founded in 1983, where he saw the need for a more structured and flexible framework for data visualization.
-
-Wilkinson's grammar aimed to define a set of rules or components that could describe any kind of statistical graphic, from simple bar charts to complex scatter plots and heatmaps. By breaking down graphics into fundamental elements (like data, geometries, and scales), his grammar provides a way to think of visualizations as composable and modular—allowing users to understand and generate diverse charts based on clear principles. Wilkinson's ideas have influenced many modern visualization tools and libraries like [`ggplot2`](https://ggplot2.tidyverse.org/){target="_blank"} in R, as well as Altair.
-
-In *The Grammar of Graphics*, every visualization is built using the following core components:
-
-1. Data: The dataset that you want to visualize.
-2. Mappings: How the data variables map to visual properties like axes, colors, or sizes.
-3. Geometries (Marks): The basic shapes used to represent the data, such as points, lines, bars, etc.
-4. Statistical transformations: Aggregations or transformations applied to the data, such as grouping, counting, or averaging.
-5. Scales: How data values are translated into visual values, like positioning on the x- or y-axis.
-6. Coordinates: The coordinate system used, such as Cartesian or polar coordinates.
-7. Faceting: How the data is split into different panels or sections to show comparisons.
-
-Altair is built around these principles, making it easier to create clear and interpretable visualizations by specifying each component in your code. This approach is not only flexible but also emphasizes transparency, helping you understand how your data is represented visually. It's also more extensible, allowing for more complex and interactive visualizations, such as linked plots or selections, which would be difficult to achieve with simpler plotting libraries.
-
-By embracing the Grammar of Graphics, Altair enables you to think more abstractly about the relationship between data and visualization, offering a consistent, rule-based system to produce a wide variety of visual outputs.
-
-### Visualizing the Reshaped Activity Data
-
-Now we can use Altair to revisit the activity values we split and exploded earlier. First, we turn the counts into a small DataFrame with one row per activity:
-
-```python
-activity_counts_df = (
-    exploded_subset_novels_df['individual_author_field_of_activity']
-    .value_counts()
-    .reset_index()
-)
-activity_counts_df.head()
+```{python}
+novels_df['genre'] = novels_df['genre'].replace('na', pd.NA)
+genre_counts = novels_df['genre'].value_counts()
+genre_counts
 ```
 
-Then we map the activity names and counts to Altair's visual encodings:
+We can plot that Series directly. Pandas sends the plotting instructions to Matplotlib:
 
-```python
-alt.Chart(activity_counts_df.head(20)).mark_bar().encode(
-    x=alt.X('count:Q', title='Number of Novel Records'),
-    y=alt.Y(
-        'individual_author_field_of_activity:N',
-        title='Field of Activity',
-        sort='-x'
+```{python}
+genre_counts.plot(
+    kind='bar',
+    figsize=(10, 5),
+    color='#4c78a8'
+)
+
+plt.title('Novels by Genre')
+plt.xlabel('Genre')
+plt.ylabel('Number of Novels')
+plt.xticks(rotation=45)
+plt.show()
+```
+
+## What Does Altair Add?
+
+[Vega-Altair](https://altair-viz.github.io/){target="_blank"} is a Python visualization library built on Vega-Lite. Matplotlib asks us to construct and style a figure. Altair is **declarative**: we describe how fields in our data should map to visual properties, and Altair constructs the chart.
+
+An Altair chart usually has three parts:
+
+1. `alt.Chart(data)` identifies the DataFrame.
+2. A mark such as `.mark_bar()` identifies the graphical form.
+3. `.encode()` maps columns to visual channels such as `x`, `y`, `color`, and `tooltip`.
+
+We can use the original filtered DataFrame directly. Genre controls the x-axis, Altair counts the rows for us, and the Boolean `has_field_of_activity` column controls color. Tooltips add the interactive detail that our Matplotlib chart lacked:
+
+```{python}
+genre_df = novels_df[
+    novels_df['genre'].notna()
+].copy()
+
+genre_activity_chart = alt.Chart(
+    genre_df
+).mark_bar().encode(
+    x=alt.X(
+        'genre:N',
+        title='Genre',
+        sort='-y'
+    ),
+    y=alt.Y('count():Q', title='Number of Novels'),
+    color=alt.Color(
+        'has_field_of_activity:N',
+        title='Field of Activity Recorded'
     ),
     tooltip=[
-        alt.Tooltip('individual_author_field_of_activity:N', title='Activity'),
-        alt.Tooltip('count:Q', title='Novel Records')
-    ]
-).properties(
-    title='Most Common Author Fields of Activity',
-    width=650,
-    height=500
-)
-```
-
-This chart is more readable and interactive than the quick Pandas plot, but it does not solve the underlying interpretive problems. It still counts novel-activity relationships rather than unique authors, depends on VIAF and Library of Congress descriptions, and excludes records with missing activity data. Visualization helps us see the data's structure; it does not make that structure neutral.
-
-Now that we have inspected, reshaped, and visualized one dataset on its own, we are better prepared to combine it with another source.
-
-
-## Merging Data With Pandas
-
-Now that we are understanding how to work with missing data, we can also start to explore how to augment our dataset in various ways. One of the most common ways to do this is through **merging** datasets together.
-
-We've already seen one approach `pd.concat()` that allows us to concatenate DataFrames (aka add them together), but now we want to focus on the `merge()` method.
-
-First though we need another dataset to merge with our `novels_df`. We could take a look at sites like Kaggle to find more datasets, or more specific ones like the *Post45 Data Collective*, which "peer reviews and houses literary and cultural data from 1945 to the present" [https://data.post45.org/](https://data.post45.org/){target="_blank"}.
-
-![Post45](../../assets/images/post45_data.png)
-
-While there's a number of relevant datasets in the *Post45 Data Collective*, we could use the one about *New York Times* Hardcover Fiction Bestsellers, 1931–2020, created by Jordan Pruett [https://data.post45.org/nyt-fiction-bestsellers-data/](https://data.post45.org/nyt-fiction-bestsellers-data/){target="_blank"}. According to the documentation, this dataset contains the following:
-
-> The New York Times Hardcover Fiction Bestsellers (1931–2020) contains three related datasets. The first dataset provides a tabular representation of the hardcover fiction bestseller list of The New York Times every week between 1931 and 2020. The second dataset provides title-level data for every unique title that appeared on the hardcover fiction bestseller list during this time period. The third dataset provides HathiTrust Digital Library identifiers for every unique title that appeared on the hardcover fiction bestseller list and that also has a corresponding volume in the HathiTrust Digital Library.
-
-> Previous research using similar data has been limited to partial segments of the list, such as the top 200 longest-running bestsellers since a certain date (Piper and Portelance, 2016) or bestsellers from only particular years (Sorenson, 2007). By contrast, this dataset covers the full list since its inception in 1931, along with each reported work's title, author(s), date of appearance, and rank.
-
-Getting this additional dataset will allow us to explore the relationship between the *New York Times* bestsellers and the top 500 novels as recorded by OCLC.
-
-![NYT Data](../../assets/images/nyt_data.png)
-
-If we click on the `Explore/download data` for the first dataset, we see a new page that has the remote url for the dataset: [https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv](https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv){target="_blank"}.
-
-Notice the `raw.githubusercontent.com` in the URL. This tells us that this is a raw file from a GitHub repository, which is a common way to share datasets, and we can even see the actual file here [https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers](https://github.com/Post45-Data-Collective/data/tree/main/nyt_hardcover_fiction_bestsellers){target="_blank"}.
-
-We can copy that and load it into a new DataFrame.
-
-```python
-nyt_bestsellers_df = pd.read_csv("https://raw.githubusercontent.com/Post45-Data-Collective/data/refs/heads/main/nyt_hardcover_fiction_bestsellers/nyt_hardcover_fiction_bestsellers-lists.csv", encoding='utf-8')
-```
-
-
-Now that we have both datasets loaded, we can start to explore them. Let's take a look at the columns in the `nyt_bestsellers_df.info()` DataFrame.
-
-Which gives us the following output:
-
-```bash
-<class 'pandas.DataFrame'>
-RangeIndex: 60386 entries, 0 to 60385
-Data columns (total 15 columns):
- #   Column                     Non-Null Count  Dtype  
----  ------                     --------------  -----  
- 0   Unnamed: 0                 60386 non-null  int64  
- 1   author                     60376 non-null  str    
- 2   author_authorized_heading  55717 non-null  str    
- 3   author_lccn                55622 non-null  str    
- 4   author_viaf                55717 non-null  object 
- 5   author_wikidata            54485 non-null  str    
- 6   oclc_eholdings             56567 non-null  float64
- 7   oclc_holdings              56567 non-null  float64
- 8   oclc_isbn                  33723 non-null  str    
- 9   oclc_owi                   56567 non-null  float64
- 10  rank                       60386 non-null  int64  
- 11  title                      60386 non-null  str    
- 12  title_id                   60386 non-null  int64  
- 13  week                       60386 non-null  str    
- 14  year                       60386 non-null  int64  
-dtypes: float64(3), int64(4), object(1), str(7)
-memory usage: 11.7+ MB
-```
-
-We can see that this dataset has 60386 rows and 14 columns. We an see that the original author did not exclude the index so we have an `Unnamed: 0` column. We can also see that the `author` column has ten missing values, but that overall, this dataset has very few null values and is much larger than the `novels_df` DataFrame.
-
-Now we can start to merge the two DataFrames together. We've mentioned merging datasets a bit when we discussed joining data in class and SQL, but now we want to dig into details. Often times when we're working with datasets, we will have our data split into multiple `csv` files or have differently shaped datasets (i.e. some of them will have more rows or columns than other datasets). Pandas has built in functionality that let's us merge together DataFrames so that we can perform analysis on the combined dataset, which you can read about in the very extensive documentation here [https://pandas.pydata.org/docs/user_guide/merging.html](https://pandas.pydata.org/docs/user_guide/merging.html){target="_blank"}.
-
-While this documentation shows a number of ways to combined datasets (`concat` let's you combine datasets by stacking them on top of each other, `join` let's you combine datasets by joining them on a common index, and `merge` let's you combine datasets by joining them on a common column), we will focus on the `merge` method.
-
-![](../../assets/images/merge_syntax.png)
-
-If we take a look at the documentation, we see the syntax above, which shows us that in Pandas we use the `merge()` function to combine datasets. The `merge()` function takes in a number of parameters, but the most important ones are `left`, `right`, `how`, and `on`. The `left` and `right` parameters are the DataFrames we want to merge, the `how` parameter is the type of join we want to undertake, and the `on` parameter is the column we want to join the DataFrames on.
-
-We can also see an example of how this works in the figure below.
-
-![](../../assets/images/merge_example.png)
-
-You'll notice that we can see a description of the types of `how` parameters we can use. These are the same types of joins that we discussed in class and in SQL. The `how` parameter can be set to `left`, `right`, `outer`, or `inner`. The `left` join will return all the rows from the left DataFrame and the matching rows from the right DataFrame. The `right` join will return all the rows from the right DataFrame and the matching rows from the left DataFrame. The `outer` join will return all the rows from the left DataFrame and the right DataFrame. The `inner` join will return only the rows that match in both DataFrames.
-
-![](https://miro.medium.com/max/700/1*9eH1_7VbTZPZd9jBiGIyNA.png)
-
-Now that we are starting to understand this logic, we can consider how we might merge our datasets. First, we can double check the columns in our `novels_df` and `nyt_bestsellers_df` DataFrames to see if there are any common columns we can use to merge them.
-
-```python
-novels_df.columns, nyt_bestsellers_df.columns
-```
-
-
-This gives us the following output:
-
-```bash
-(Index(['top_500_rank', 'title', 'author', 'pub_year', 'orig_lang', 'genre',
-        'author_birth', 'author_death', 'author_gender', 'author_primary_lang',
-        'author_nationality', 'author_field_of_activity', 'author_occupation',
-        'oclc_holdings', 'oclc_eholdings', 'oclc_total_editions',
-        'oclc_holdings_rank', 'oclc_editions_rank', 'gr_avg_rating',
-        'gr_num_ratings', 'gr_num_reviews', 'gr_avg_rating_rank',
-        'gr_num_ratings_rank', 'oclc_owi', 'author_viaf', 'gr_url', 'wiki_url',
-        'pg_eng_url', 'pg_orig_url'],
-       dtype='str'),
- Index(['Unnamed: 0', 'author', 'author_authorized_heading', 'author_lccn',
-        'author_viaf', 'author_wikidata', 'oclc_eholdings', 'oclc_holdings',
-        'oclc_isbn', 'oclc_owi', 'rank', 'title', 'title_id', 'week', 'year'],
-       dtype='str'))
-```
-
-We could eyeball the likely similar columns, but we can also use the `intersection()` method to find the common columns.
-
-```python
-set(novels_df.columns).intersection(set(nyt_bestsellers_df.columns))
-```
-
-This gives us the following output:
-
-```bash
-{'author',
- 'author_viaf',
- 'oclc_eholdings',
- 'oclc_holdings',
- 'oclc_owi',
- 'title'}
-```
-
-`intersection()` is a built-in Python method that returns the common elements between two sets. `set()` creates an unordered collection of unique elements. Here we convert the column names of both DataFrames into sets and find the names they share.
-
-We can try using all six shared columns as merge keys. We will start with a basic left merge, which should keep every row from `novels_df` and add matching information from `nyt_bestsellers_df`.
-
-```python
-merge_columns = [
-    'title',
-    'author',
-    'author_viaf',
-    'oclc_eholdings',
-    'oclc_holdings',
-    'oclc_owi'
-]
-
-merged_df = novels_df.merge(
-    nyt_bestsellers_df,
-    how='left',
-    on=merge_columns
-)
-
-print(f"Rows in novels_df: {len(novels_df)}")
-print(f"Rows in merged_df: {len(merged_df)}")
-merged_df[['author', 'title']].head()
-```
-
-The code runs without an error, returns a DataFrame, and preserves all 500 rows from `novels_df`. At first glance, the merge seems to have worked.
-
-But did Pandas actually add any information from the NYT dataset? The `rank` column came from `nyt_bestsellers_df`, so it gives us a useful way to test the result.
-
-```python
-merged_df[['author', 'title', 'rank']].head(10)
-```
-
-Every value in `rank` is `NaN`. We can count the non-missing ranks to check the entire DataFrame rather than relying on its first ten rows:
-
-```python
-merged_df['rank'].notna().sum()
-```
-
-The result is `0`. The merge operation completed, but it did not find a single matching record. This happened quietly because a left merge always preserves the rows from the left DataFrame.
-
-Pandas can make the result more explicit with the optional `indicator=True` argument. It adds a `_merge` column that identifies where each row came from.
-
-```python
-diagnostic_merged_df = novels_df.merge(
-    nyt_bestsellers_df,
-    how='left',
-    on=merge_columns,
-    indicator=True
-)
-
-diagnostic_merged_df['_merge'].value_counts()
-```
-
-This confirms that all 500 rows are `left_only` and zero are `both`:
-
-```bash
-_merge
-left_only     500
-right_only      0
-both            0
-```
-
-A successful **merge operation** is not the same as successful **record matching**. Pandas requires every merge key in a row to match exactly. One mismatch is enough to prevent the entire row from matching, and using more keys creates more opportunities for a mismatch.
-
-Before inspecting the titles, let's compare Stephen King's values in the other shared columns. Do these fields appear to explain the failed merge?
-
-```python
-novels_df[novels_df.author == "Stephen King"][
-    ['author_viaf', 'oclc_eholdings', 'oclc_holdings', 'oclc_owi']
-]
-```
-
-```python
-nyt_bestsellers_df[nyt_bestsellers_df.author == "Stephen King"][
-    ['author_viaf', 'oclc_eholdings', 'oclc_holdings', 'oclc_owi']
-]
-```
-
-For Stephen King, the VIAF and OCLC values appear to contain the same data in both datasets. That is encouraging, but it does not prove that every merge key matches. We still need to inspect `author` and `title`, especially because text comparisons are case-sensitive.
-
-We can use `isin()` and `nunique()` to count how many author and title values appear in both DataFrames.
-
-```python
-shared_authors = novels_df[novels_df['author'].isin(nyt_bestsellers_df['author'])]['author'].nunique()
-shared_titles = novels_df[novels_df['title'].isin(nyt_bestsellers_df['title'])]['title'].nunique()
-
-print(f"Number of shared authors: {shared_authors}")
-print(f"Number of shared titles: {shared_titles}")
-```
-
-
-This prints out the following:
-
-```bash
-Number of shared authors: 122
-Number of shared titles: 0
-```
-
-This output tells us that while there are 122 shared authors, there are no shared titles. This is surprising, so let's investigate further. There's a number of ways we could solve this mystery, but let's first try seeing what the most prolific authors are in both datasets.
-
-```python
-novels_df[novels_df['author'].isin(nyt_bestsellers_df['author'])]['author'].value_counts().head(5)
-```
-
-
-This gives us the following output:
-
-```bash
-John Grisham          19
-John Steinbeck         8
-Nicholas Sparks        7
-Stephen King           7
-Dan Brown              5
-Name: author, dtype: int64
-```
-
-And now let's do the same for the `nyt_bestsellers_df` DataFrame.
-
-```python
-nyt_bestsellers_df[nyt_bestsellers_df['author'].isin(novels_df['author'])]['author'].value_counts()
-```
-
-
-This gives us the following output:
-
-```bash
-Stephen King               892
-John Grisham               789
-David Baldacci             396
-Nicholas Sparks            390
-Herman Wouk                375
-```
-
-We can see that across both datasets `Stephen King` and `John Grisham` are the most prolific authors, but we still don't know why there are no shared titles. Let's try filtering for the titles in the `novels_df` and `nyt_bestsellers_df` DataFrames.
-
-```python
-novel_titles = novels_df[novels_df.author == "Stephen King"].title.unique()
-nyt_titles = nyt_bestsellers_df[nyt_bestsellers_df.author == "Stephen King"].title.unique()
-
-print(f"Stephen King's novels: {novel_titles}")
-print(f"Stephen King's NYT bestsellers: {nyt_titles}")
-```
-
-
-This gives us the following output:
-
-```bash
-Stephen King's novels: ['The Stand' 'It' 'The Shining' 'Misery' 'Carrie' 'The Gunslinger'
- 'Dreamcatcher']
-Stephen King's NYT bestsellers: ['THE SHINING' 'THE STAND' 'THE DEAD ZONE' ...]
-```
-
-We can see that King has had many bestsellers and that there is overlap in the titles. However, the titles in the `nyt_bestsellers_df` DataFrame are all uppercase, while the titles in the `novels_df` DataFrame are capitalized. This is the reason why there are no shared titles in the two DataFrames — and it's a perfect segue into talking about Pandas' built-in string methods.
-
-## String Methods in Pandas
-
-Part of what makes Pandas so powerful is that it has a number of built-in methods for working with `string` data, accessible through the `.str` accessor. An in-depth discussion of these methods is available in the Pandas documentation [https://pandas.pydata.org/docs/user_guide/text.html](https://pandas.pydata.org/docs/user_guide/text.html){target="_blank"}, but here is a summary of the most useful ones:
-
-| Pandas String Method | Explanation |
-|---------------------|-------------|
-| `df['column'].str.lower()` | lowercase all the values in a column |
-| `df['column'].str.upper()` | uppercase all the values in a column |
-| `df['column'].str.capitalize()` | capitalize the first letter of each value |
-| `df['column'].str.replace('old', 'new')` | replace all instances of one string with another |
-| `df['column'].str.split('delimiter')` | split a column by a delimiter like a comma or space |
-| `df['column'].str.strip()` | remove leading and trailing whitespace |
-| `df['column'].str.len()` | count the number of characters in each value |
-| `df['column'].str.contains('pattern')` | check if a column contains a particular pattern |
-| `df['column'].str.startswith('pattern')` | check if a column starts with a particular pattern |
-| `df['column'].str.endswith('pattern')` | check if a column ends with a particular pattern |
-| `df['column'].str.count('pattern')` | count occurrences of a pattern in each value |
-| `df['column'].str.extract('pattern')` | extract the first regex match in each value |
-| `df['column'].str.findall('pattern')` | find all regex matches in each value |
-
-In our case, we can use `str.capitalize()` to fix the title casing problem in `nyt_bestsellers_df`. Notice how we first rename the original column so we don't lose it, then create a new normalized `title` column:
-
-```python
-nyt_bestsellers_df = nyt_bestsellers_df.rename(columns={'title': 'nyt_title'})
-nyt_bestsellers_df['title'] = nyt_bestsellers_df['nyt_title'].str.capitalize()
-```
-
-
-If we rerun our shared titles check, we should now see some overlap:
-
-```python
-shared_titles = novels_df[novels_df['title'].isin(nyt_bestsellers_df['title'])]['title'].nunique()
-print(f"Number of shared titles: {shared_titles}")
-```
-
-
-We should now see `12` shared titles. Now we can merge the two DataFrames. One of the things we need to decide is how we want to merge. Since we want to keep all the novels in the `novels_df` DataFrame, we will do a left join. However, we could also experiment with inner and outer joins to see how many rows we would get back.
-
-```python
-inner_merged_df = novels_df.merge(nyt_bestsellers_df, how='inner', on=['author', 'title'])
-outer_merged_df = novels_df.merge(nyt_bestsellers_df, how='outer', on=['author', 'title'])
-left_merged_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])
-print(f"Inner merge length: {len(inner_merged_df)}")
-print(f"Outer merge length: {len(outer_merged_df)}")
-print(f"Left merge length: {len(left_merged_df)}")
-```
-
-
-This should give us the following output:
-
-```bash
-Inner merge length: 231
-Outer merge length: 60876
-Left merge length: 721
-```
-
-We can see that how we merge the DataFrames can have a significant impact on the number of rows we get back. Depending on our research questions, we might want the outer merge to see all the data and rankings between the datasets, or the inner merge to focus on the novels that are in both datasets. For the remainder of this lesson, we'll use the left merge since we want the full dataset of novels, and then the additional information from the bestsellers to augment our analysis.
-
-```python
-combined_novels_nyt_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])
-```
-
-
-## Working With the Full Combined Dataset
-
-Now that we have our combined DataFrame, we also want to bring in information derived from the full text of each novel. We will use two related files:
-
-- `combined_novels_viz.csv` is the smaller file used for most of this lesson. It contains the metadata and pre-computed text measurements needed for our visualizations, but it does **not** contain the complete novels.
-- The complete dataset on Canvas includes an `eng_text` column with the Project Gutenberg texts. It is approximately 152 MB and is only needed if you want to run the string-method examples against the novels themselves.
-
-Start with the smaller file:
-
-```python
-# Load the pre-built combined dataset
-# Download combined_novels_viz.csv from Canvas if running this notebook locally
-combined_novels_nyt_df = pd.read_csv('combined_novels_viz.csv')
-```
-
-
-::: {.callout-note}
-## About this dataset
-The full dataset including raw novel texts (152 MB) is available on Canvas. The version used for the rendered charts on this page is a smaller visualization CSV with pre-computed columns. See the [Additional Notes](#additional-notes){target="_blank"} section for how those columns were created.
-:::
-
-Now let's look at the columns available to us:
-
-```python
-combined_novels_nyt_df.info()
-```
-
-
-You'll notice we now have pre-computed columns like `novel_length_words`, `novel_length_chars`, `he_counts`, `she_counts`, and `they_counts` alongside all our metadata columns. The full novel texts are in the complete dataset on Canvas. For most of this lesson, we will work with the pre-computed summaries so the notebook remains small and quick to load.
-
-## String Methods for Text Analysis
-
-The following examples show how the derived columns were created from `eng_text`. Run these cells only after loading the complete dataset from Canvas. If you are using `combined_novels_viz.csv`, these results are already available in the pre-computed columns and you can read through the code without rerunning it.
-
-### Counting Characters and Words
-
-The simplest measure of a text is its length. We can count the number of characters in each novel using `str.len()`:
-
-```python
-# With the complete Canvas dataset, this column was created with:
-# combined_novels_nyt_df['novel_length_chars'] = combined_novels_nyt_df['eng_text'].str.len()
-
-# The smaller lesson file already contains the result.
-combined_novels_nyt_df[['title', 'author', 'novel_length_chars']].sort_values('novel_length_chars', ascending=False).head(10)
-```
-
-
-To get a more useful **word count**, we can split the text on spaces and count the resulting list:
-
-```python
-# With the complete Canvas dataset, this column was created with:
-# combined_novels_nyt_df['novel_length_words'] = combined_novels_nyt_df['eng_text'].str.split().str.len()
-
-# The smaller lesson file already contains the result.
-combined_novels_nyt_df[['title', 'author', 'novel_length_words']].sort_values('novel_length_words', ascending=False).head(10)
-```
-
-
-### Searching for Patterns With `str.contains()`
-
-`str.contains()` checks whether each value in a column matches a given pattern. This is useful for filtering rows, counting occurrences, or finding subsets of a dataset. For example, how many of the novels in our dataset include the word "war" in their `genre` field?
-
-```python
-combined_novels_nyt_df[combined_novels_nyt_df['genre'].str.contains('war', case=False, na=False)][['title', 'author', 'genre']]
-```
-
-
-The `case=False` argument makes the search case-insensitive, and `na=False` tells Pandas to treat missing values as non-matches rather than raising an error.
-
-We can also use `str.contains()` on the text column itself. For example, let's count how many novels contain the word "she" at all:
-
-```python
-# With the complete Canvas dataset, this column was created with:
-# combined_novels_nyt_df['mentions_she'] = combined_novels_nyt_df['eng_text'].str.contains(r'\bshe\b', case=False, na=False)
-
-# The smaller lesson file already contains the result.
-combined_novels_nyt_df['mentions_she'].value_counts()
-```
-
-
-Here we use a **regex** pattern `\bshe\b` — the `\b` characters are "word boundaries" that ensure we match the standalone word "she" rather than the letters inside words like "sheer" or "fisherman."
-
-### Counting Occurrences With `str.count()`
-
-Rather than just knowing *whether* a word appears, `str.count()` tells us *how many times* it appears. This is especially useful for comparing word frequencies across documents. Let's count pronouns to start exploring gender representation across our novels:
-
-```python
-# With the complete Canvas dataset, these columns were created with:
-# combined_novels_nyt_df['he_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\bhe\b')
-# combined_novels_nyt_df['she_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\bshe\b')
-# combined_novels_nyt_df['they_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\bthey\b')
-
-# The smaller lesson file already contains the results.
-combined_novels_nyt_df[['title', 'author', 'genre', 'he_counts', 'she_counts', 'they_counts']].head(10)
-```
-
-
-You'll notice that `he` tends to be much more frequent than the other two pronouns. Now this might be because of the novels we have in our dataset, but it could also be a reflection of the texts themselves. This kind of question is exactly what EDA is for!
-
-### Extracting Information With `str.extract()`
-
-`str.extract()` uses a regular expression to pull specific pieces of text out of a string. For example, each of our Project Gutenberg URLs follows a consistent pattern — we could extract the book ID number from it:
-
-```python
-combined_novels_nyt_df['pg_book_id'] = combined_novels_nyt_df['pg_eng_url'].str.extract(r'/epub/(\d+)/')
-combined_novels_nyt_df[['title', 'pg_eng_url', 'pg_book_id']].head(5)
-```
-
-
-The pattern `(\d+)` matches one or more digits, and the parentheses tell `str.extract()` to return that matched group. This kind of extraction is useful any time you have structured information embedded in a string column — for example, extracting years from date strings, or domain names from URLs.
-
-::: {.callout-tip}
-## When string methods aren't enough
-Pandas string methods are great for simple pattern matching, but they treat text as a raw sequence of characters. In the next lesson, we'll move into **tokenization** — the process of breaking text into meaningful linguistic units — which gives us more powerful tools for things like counting actual word forms, handling punctuation, and comparing texts across genres.
-:::
-
-## Visualizing the Combined Data With Altair
-
-Now that we have merged the datasets and loaded the pre-computed text measurements, we can use Altair to explore relationships that were not available in the original novels metadata alone.
-
-Let's try out some of Altair's more advanced functionality to see how it implements this Grammar of Graphics.
-
-For example, we could rather than looking at the relationship between `genre` and average `top 500 rank`, instead look at the relationship between book titles, genre, and that rank with the following code:
-
-```python
-alt.Chart(combined_novels_nyt_df).mark_bar().encode(
-	x="genre:N",
-	y="count():Q",
-	color="top_500_rank:Q",
-	tooltip=["genre:N", "count():Q", "top_500_rank:Q", "title"]
-)
-```
-
-
-Which gives us the following chart:
-
-![](../../assets/images/interactive_genre.png)
-
-Here we are using two new encodings: `color` and `tooltip`. We could also add a title and even change the color scheme:
-
-```python
-alt.Chart(combined_novels_nyt_df).mark_bar().encode(
-	x="genre:N",
-	y="count():Q",
-	color=alt.Color("top_500_rank:Q", scale=alt.Scale(scheme="viridis")),
-	tooltip=["genre:N", "count():Q", "top_500_rank:Q", "title"]
-).properties(
-	title="Top 500 Novels by Genre",
-	width=600,
-	height=400
-)
-```
-
-
-Which produces the following chart:
-
-![](../../assets/images/proper_altair.png)
-
-We can also use Altair to visualize the pronoun counts we calculated earlier. To do this we need to reshape our data using a **melt** operation:
-
-![](../../assets/images/reshaping_melt.png)
-
-Melting in Pandas is a way to reshape your data from wide to long, since sometimes you want to look at the relationship between multiple columns. In this case, we are melting the `they_counts`, `she_counts`, and `he_counts` columns into a single long-form DataFrame with the pronoun name in one column and the count in another.
-
-```{python}
-#| label: fig-pronouns-by-genre
-#| fig-cap: "Pronoun Counts by Genre"
-import pandas as pd
-import altair as alt
-melted_df = pd.melt(
-    combined_novels_nyt_df,
-    id_vars=['title', 'author', 'pub_year', 'genre'],
-    value_vars=['he_counts', 'she_counts', 'they_counts'],
-    var_name='pronoun',
-    value_name='pronoun_count'
-).assign(pronoun=lambda df: df['pronoun'].str.replace('_count', ''))
-
-selection = alt.selection_point(fields=['pronoun'], bind='legend')
-
-alt.Chart(melted_df[melted_df['genre'].notna()]).mark_bar().encode(
-    x=alt.X('genre:N', title='Genre', sort='-y'),
-    y=alt.Y('sum(pronoun_count):Q', title='Total Pronoun Count'),
-    color=alt.Color('pronoun:N', title='Pronoun'),
-    opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
-    tooltip=[
         alt.Tooltip('genre:N', title='Genre'),
-        alt.Tooltip('pronoun:N', title='Pronoun'),
-        alt.Tooltip('sum(pronoun_count):Q', title='Count', format=',')
+        alt.Tooltip(
+            'has_field_of_activity:N',
+            title='Field Recorded'
+        ),
+        alt.Tooltip('count():Q', title='Novels')
     ]
-).add_params(selection).properties(
-    title='Pronoun Counts by Genre',
-    width=600,
+).properties(
+    title='Genre and the Availability of Author Field Metadata',
+    width=650,
     height=400
 )
+
+genre_activity_chart
 ```
 
+Hover over each segment to see the genre, metadata status, and count. The chart adds a second dimension to the Matplotlib distribution without requiring us to reshape several unrelated categorical fields.
 
-This visualization starts to let us ask research questions: are certain genres more likely to use masculine pronouns? Does that change over time? These are exactly the kinds of hypotheses that EDA can surface before we move to more rigorous methods.
+## What Question Comes Next?
 
-We could also see these patterns over time. Altair is great at visualizing dates, however, you'll notice our primary date column, `pub_year` only has the year in it. If we try to use it in Altair as is, we get the following graph:
+So far we have asked whether field-of-activity metadata is available. A more substantive cultural question would compare the contents of that metadata with genre:
 
-```python
-alt.Chart(combined_novels_nyt_df).mark_bar().encode(
-	x="pub_year:T",
-	y="count():Q",
-	color="genre:N"
-)
-```
+> What relationships appear between a novel's genre and its author's recorded fields of activity?
 
-
-![](../../assets/images/date_broken_altair.png)
-
-To get this graph working correctly, we need a column that is formatted as `datetime` in Pandas. To do this, there's a number of solutions but one of the easiest is to just create a new column called `pub_date` and use the Pandas `to_datetime()` functionality to cast `pub_year` into a `datetime` format.
-
-```python
-combined_novels_nyt_df['pub_date'] = pd.to_datetime(
-    combined_novels_nyt_df['pub_year'].astype(str) + '-01-01',
-    errors='coerce'
-)
-```
+Now inspect the activity field:
 
 ```{python}
-#| label: fig-genres-over-time
-#| fig-cap: "Top 500 Novels by Genre Over Time"
-
-selection = alt.selection_point(fields=['genre'], bind='legend')
-
-alt.Chart(combined_novels_nyt_df).mark_bar().encode(
-    x=alt.X('pub_date:T', title='Publication Year'),
-    y=alt.Y('count():Q', title='Number of Novels'),
-    color=alt.Color('genre:N', title='Genre'),
-    tooltip=['genre:N', 'count():Q'],
-    opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
-).add_params(selection).transform_filter(
-    alt.datum.genre != None
-).properties(
-    title='Top 500 Novels by Genre Over Time',
-    width=800,
-    height=400
-)
+novels_df['author_field_of_activity'].value_counts().head(20)
 ```
 
+There are 121 distinct recorded values, and many cells contain several comma-separated activities. For example, `novels,fiction` is currently one string rather than two activities. We cannot responsibly compare individual activities with genre until we split those strings and reshape the resulting lists into separate rows.
 
-You'll notice our syntax is again a bit more complex. You can read about how Altair enables interactivity in the documentation here [https://altair-viz.github.io/user_guide/interactions/index.html](https://altair-viz.github.io/user_guide/interactions/index.html){target="_blank"}, but to summarize, we've now added the ability not just to have a tooltip but also to visually select our categories in the legend. Try clicking a genre in the legend to highlight it.
+That is a useful EDA result: exploration has identified the next methodological problem. We will answer the fuller genre-and-activity question in the next lesson on string methods, `explode()`, and reshaping.
 
-As we are starting to see Altair is a very powerful library. We will continue to explore its functionality in the coming weeks, but would highly encourage you to take a look at the example visualizations on the Altair website [https://altair-viz.github.io/gallery/index.html](https://altair-viz.github.io/gallery/index.html){target="_blank"} and the documentation [https://altair-viz.github.io/index.html](https://altair-viz.github.io/index.html){target="_blank"}.
+## What Signal Can We Defend?
+
+The Altair chart may show differences in metadata availability, but it does not explain why those differences exist. The genre categories are broad, uneven, and supplied by this dataset. The activity values come from Library of Congress data gathered through VIAF. Before making stronger claims, we would need to investigate how genre was assigned, split the compound activity strings, and inspect the underlying authority records.
+
+The phrase **“garbage in, garbage out”** is often used to suggest that poor inputs inevitably create poor outputs. Its early history, however, also reminds us that people have long debated where responsibility lies when computational results are misleading. Read more in [“Is This the First Time Anyone Printed ‘Garbage In, Garbage Out’?”](https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out){target="_blank"}.
+
+[![](https://www.harrised.com/150/images/gigo.jpeg)](https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out){fig-align="center" target="_blank" width="400"}
+
+In cultural data, unclear categories and missing provenance are not necessarily garbage that we can simply delete. They may be evidence of how institutions described culture, whose records were prioritized, and what the dataset cannot tell us. Sometimes EDA finds a strong signal. Sometimes it reveals that we do not yet know enough to explain one responsibly.
+
+::: {.callout-warning}
+## Cleaning is an interpretive decision
+
+Preserve the original data, give transformed subsets descriptive names, and document every replacement or exclusion. There is no universally clean dataset—only data prepared for a particular question.
+:::
+
+## What Did We Learn?
+
+In this lesson, we:
+
+- Identified the dataset’s unit of observation and provenance.
+- Inspected its shape, columns, data types, and samples.
+- Audited missing metadata with `isna()` and `notna()`.
+- Converted missingness into an analytical Boolean variable.
+- Used `value_counts()` to inspect categorical distributions.
+- Used Pandas and Matplotlib to create initial count visualizations.
+- Recreated a question in Altair to add interactive tooltips.
+- Replaced a textual missing-value placeholder with `pd.NA`.
+- Identified why comparing genre with individual activity terms requires further string processing and reshaping.
+- Considered how unequal category sizes limit comparisons.
+- Used an unclear result to identify the next data problem rather than forcing a claim.
 
 ## Exploring and Visualizing Culture Homework
 
-Now that you have begun to grasp the fundamentals of Exploratory Data Analysis (EDA) using Pandas and Altair, this assignment will guide you through a deeper exploration of the Goodreads Top Ranked Novels and *New York Times* Bestseller datasets. Your task is not only to create visualizations but also to engage critically with the data, identifying patterns, gaps, and potential biases that can inform future research.
+Create a Jupyter notebook in the `pandas-eda` folder of your `is310-coding-assignments` repository. Give it a descriptive filename without spaces.
 
-Begin by creating a new Jupyter Notebook within your `is310-coding-assignments` repository, specifically in the `pandas-eda` folder. Give the notebook a descriptive filename without spaces, such as `GenderTrendsInTopNovels.ipynb` or `RatingBiasAcrossGenres.ipynb`. You may begin with a broad topic, but revise the title once your EDA reveals the question or pattern you want to emphasize.
-
-Organize the notebook for a reader who has not seen these datasets before. Clearly label sections with Markdown headers, keep your code cells focused, and explain what each visualization contributes to your analysis. You should use Altair for your final visualizations, although you may use Pandas plots while initially exploring the data.
+Use the Top 500 Novels dataset to investigate **one** question about its categories, coverage, rankings, or missing data. You may build directly from the field-of-activity example, but your final notebook should investigate a different column, comparison, or hypothesis.
 
 ::: {.callout-important}
 ## Assignment checklist
 
-Your submission should include:
+Your notebook should include:
 
-- [ ] A clear research question or cultural pattern that guides the notebook.
-- [ ] A short introduction to the dataset or datasets, including their provenance and what one row represents.
-- [ ] An initial audit using methods such as `head()`, `shape`, `dtypes`, `describe()`, and missing-value counts.
-- [ ] A discussion of at least one missing-data, coverage, category, or bias issue that affects interpretation.
-- [ ] At least two purposeful Altair visualizations using appropriate marks, encodings, labels, and tooltips.
-- [ ] Markdown text interpreting each visualization rather than leaving the charts to speak for themselves.
-- [ ] A conclusion explaining what you found, what remains uncertain, and what you would investigate next.
-- [ ] Reproducible data access: use a stable remote URL or document where the local data file belongs. Do not commit the 152 MB full-text dataset.
-- [ ] A `README.md` explaining the notebook, required data, and how to run it.
+- [ ] One clear exploratory question.
+- [ ] A short explanation of the dataset’s provenance and unit of observation.
+- [ ] An initial inspection using `head()`, `shape`, `info()`, or `sample()`.
+- [ ] At least one missingness, category, coverage, or sample-size check.
+- [ ] A summary table created with a method such as `value_counts()` to address your question.
+- [ ] One purposeful Altair visualization with a title, axis labels, and tooltips.
+- [ ] A Markdown interpretation explaining what the visualization shows.
+- [ ] At least one limitation or alternative explanation.
+- [ ] A conclusion identifying what you would investigate next.
+- [ ] A `README.md` explaining the notebook and how to run it.
 :::
 
-There is no single correct finding for this assignment. You might compare the two datasets, study their intersection, or investigate a smaller set of relationships. The goal is to make a defensible exploratory argument while remaining explicit about what the available data cannot establish.
+The goal is not to use the largest number of methods or produce the most complicated chart. The goal is to make one defensible exploratory claim while remaining explicit about how the data and your decisions shaped it.
 
-Once you have completed the assignment, push your `pandas-eda` folder to GitHub and post a link in the [Fall 2026 GitHub discussion](https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/9){target="_blank"}. Do not commit your virtual environment. As always, you may use AI tools, but you must understand the code, document that use according to the course policy, and be able to explain the notebook's methods and argument.
-
-::: {.callout-note}
-In the documentation for the Top Novels dataset, there is a section on `Discussion & Activities` [https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities](https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=discussion-%26-activities){target="_blank"} and specifically a link to a `Google Colab` notebook exploring bias in the metadata of this dataset, available [here](https://colab.research.google.com/drive/1fxEae0BmUmipDQC2qvqGvG11fIAITZ_K?usp=sharing){target="_blank"}. For this assignment, you are welcome to build from both our in-class explorations and this existing Colab notebook. You can reuse code from both, but the overall goal is to start implementing your knowledge of EDA to consider potential future research directions with these datasets.
-:::
-
----
-
-## Additional Notes: Web Scraping With `apply()` {#additional-notes}
-
-::: {.callout-note}
-This section sketches how the `eng_text` column and pre-computed text measurements were created. It is not required for the homework. Our web-scraping lesson provides the fuller treatment of requests, status checks, delays, and responsible access.
-:::
-
-The complete Canvas dataset has an `eng_text` column containing the available Project Gutenberg text for each novel. The smaller `combined_novels_viz.csv` omits those texts and retains only the measurements used in our charts.
-
-The dataset has a `pg_eng_url` column with links to plain-text versions of novels. We can use the `requests` library to retrieve the text from each URL, then use the Pandas `apply()` method to call that function for every URL.
-
-```python
-import requests
-import pandas as pd
-
-def get_book_text(url):
-    if pd.isna(url) or not url.startswith("https://"):
-        return None
-
-    response = requests.get(url, timeout=30)
-    if response.status_code == 200:
-        return response.text
-
-    print(f"Could not download {url}: {response.status_code}")
-    return None
-```
-
-The first `if` statement skips both actual missing values and placeholders such as `NA_not-pub-domain`. Those placeholders describe novels that do not have a downloadable Project Gutenberg text, but they are strings rather than URLs. Since the usable links in this column are secure web addresses, we make a request only when the value begins with `https://`.
-
-We can use `tqdm` with Pandas to apply that function to every URL while displaying a progress bar. Retrieving hundreds of full novel texts takes several minutes, so the progress bar lets us see that the code is still working:
-
-```python
-from tqdm import tqdm
-
-tqdm.pandas(desc="Getting English Texts")
-combined_novels_nyt_df['eng_text'] = combined_novels_nyt_df['pg_eng_url'].progress_apply(get_book_text)
-```
-
-`progress_apply()` performs the same row-by-row operation as Pandas `apply()`, but `tqdm` adds the progress display. We should run **only this version**, since running both would download every novel twice. Neither method makes the web requests themselves faster: most of the runtime comes from waiting for each server response. For calculations that Pandas already supports directly, prefer vectorized string, arithmetic, or aggregation methods over either form of `apply()`.
-
-You can read more in the Pandas [`apply()` documentation](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html){target="_blank"} and the [`tqdm` documentation](https://tqdm.github.io/){target="_blank"}.
-
-Finally, once we had all the texts, we saved the combined DataFrame to a CSV file so we would not have to re-scrape every time:
-
-```python
-combined_novels_nyt_df.to_csv("combined_novels_with_text.csv", index=False)
-```
-
+Push the `pandas-eda` folder to GitHub and post a link in the [Fall 2026 GitHub discussion](https://github.com/CultureAsData-UIUC/is310-fall-2026/discussions/9){target="_blank"}. Do not commit your virtual environment. You may use AI tools according to the course policy, but you must understand and be able to explain every operation in the submitted notebook.
 
 [^1]: Quinn Dombrowski, Manish Goregaokar, Ben Joeng (Yang), and Abeera Kamran, “Encoding Multilingualism: Technical Affordances of Multilingual Publication from Manuscripts to Unicode and OpenType,” *Journal of Electronic Publishing* 27, no. 1 (2024): 309–329, [https://doi.org/10.3998/jep.5528](https://doi.org/10.3998/jep.5528){target="_blank"}.
