@@ -11050,473 +11050,270 @@
     "text": "Any questions?\nTime for breakout groups! Please continue working on Milestone 2 if you have not submitted it yet. If you have submitted, please continue working on your homework assignments. As a reminder, participation for group time needs to be recorded in the group-work-log.md file in your repository."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#reminder-milestone-2",
-    "href": "private_slides/18-eda-data-viz.html#reminder-milestone-2",
-    "title": "EDA & Data Visualization",
-    "section": "REMINDER: MILESTONE 2",
-    "text": "REMINDER: MILESTONE 2\nReminder: Milestone 2 is due TODAY. Please ensure it is in your group’s GitHub respository and clearly marked as your work. If you have any questions, please reach out!"
+    "objectID": "private_slides/18-eda-data-viz.html#where-did-we-leave-off",
+    "href": "private_slides/18-eda-data-viz.html#where-did-we-leave-off",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Where did we leave off?",
+    "text": "Where did we leave off?\n\nWhat is the average number of visits for each state?\nWhat is the average number of visits for each National Park?\nHow many National Parks are there in each state?\n\n\nAsk students to recall groupby(), selecting a column, and aggregation methods.\nDemo code:\nimport pandas as pd\n\nparks_data_df = pd.read_csv(\n    'https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv'\n)\n\nprint(parks_data_df.groupby('State')['RecreationVisits'].mean().reset_index())\nprint(parks_data_df.groupby('ParkName')['RecreationVisits'].mean().reset_index())\nprint(parks_data_df.groupby('State')['ParkName'].nunique().reset_index())\nWe are no longer renaming all the columns. Use their names exactly as they appear in the source dataset."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#last-lesson-recap",
-    "href": "private_slides/18-eda-data-viz.html#last-lesson-recap",
-    "title": "EDA & Data Visualization",
-    "section": "Last Lesson Recap",
-    "text": "Last Lesson Recap\nIn our last lesson, we tried to answer the following questions:\n\nWhat is the average number of visits for each state?\nWhat is the average number of visits for each National Park?\nHow many National Parks are there in each state?\n\nAnyone want to share their solutions?"
+    "objectID": "private_slides/18-eda-data-viz.html#what-else-can-we-learn-before-answering-a-question",
+    "href": "private_slides/18-eda-data-viz.html#what-else-can-we-learn-before-answering-a-question",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What else can we learn before answering a question?",
+    "text": "What else can we learn before answering a question?\n\n\nIntroduce Anna Preus and Aashna Sheth’s Top 500 “Greatest” Novels dataset. The starting list comes from OCLC library holdings, while the expanded dataset adds author, bibliographic, Goodreads, Wikipedia, VIAF, and Project Gutenberg information.\nFrame the session as an audit: before treating columns as evidence, inspect their structure, coverage, provenance, and units."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#my-solution",
-    "href": "private_slides/18-eda-data-viz.html#my-solution",
-    "title": "EDA & Data Visualization",
-    "section": "My Solution",
-    "text": "My Solution\nHere’s the solution code:\nimport re\nimport pandas as pd\n\nparks_data_df = pd.read_csv('https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv')\n\ndef split_on_uppercase(name):\n    return re.sub(r'(?&lt;!^)(?=[A-Z])', '_', name).lower()\n\nnew_column_names = [split_on_uppercase(col) for col in parks_data_df.columns]\nparks_data_df.columns = new_column_names\n\nprint(parks_data_df.groupby(['state'])['recreation_visits'].mean().reset_index())\nprint(parks_data_df.groupby(['park_name'])['recreation_visits'].mean().reset_index())\nprint(parks_data_df.groupby(['state'])['park_name'].nunique().reset_index())\nWe could store each of these in new variables, but we also want to visualize this data. That’s what we’re exploring today.\n\nDemo code to copy:\nimport re\nimport pandas as pd\n\nparks_data_df = pd.read_csv('https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv')\n\ndef split_on_uppercase(name):\n    return re.sub(r'(?&lt;!^)(?=[A-Z])', '_', name).lower()\n\nnew_column_names = [split_on_uppercase(col) for col in parks_data_df.columns]\nparks_data_df.columns = new_column_names\n\nprint(parks_data_df.groupby(['state'])['recreation_visits'].mean().reset_index())\nprint(parks_data_df.groupby(['park_name'])['recreation_visits'].mean().reset_index())\nprint(parks_data_df.groupby(['state'])['park_name'].nunique().reset_index())"
+    "objectID": "private_slides/18-eda-data-viz.html#how-do-we-read-a-tsv-file",
+    "href": "private_slides/18-eda-data-viz.html#how-do-we-read-a-tsv-file",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "How do we read a TSV file?",
+    "text": "How do we read a TSV file?\nnovels_df = pd.read_csv(\n    \"https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv\",\n    sep=\"\\t\",\n    encoding=\"utf-8\"\n)\nWhat do sep and encoding describe?\n\nDemo code: copy the visible block into the notebook.\nnovels_df = pd.read_csv(\n    \"https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv\",\n    sep=\"\\t\",\n    encoding=\"utf-8\"\n)\nsep=\"\\t\" tells Pandas that tabs separate fields. encoding=\"utf-8\" tells software how bytes map to characters. UTF-8 is already the default here, but stating it makes that assumption visible."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#a-new-dataset-top-500-novels",
-    "href": "private_slides/18-eda-data-viz.html#a-new-dataset-top-500-novels",
-    "title": "EDA & Data Visualization",
-    "section": "A New Dataset: Top 500 Novels",
-    "text": "A New Dataset: Top 500 Novels\n\nFirst, we need to create a new Jupyter notebook in our pandas-eda folder called Top500NovelsEDA.ipynb and then load in the data. As a reminder, how can we read data in Pandas?\n\nRather than working with just the National Parks data, we can also start to explore the remainder of the datasets from the Responsible Datasets in Context Project. Specifically, let’s take a look at the “Top 500 Greatest Novels” dataset by Anna Preus and Aashna Sheth.\nThis dataset compiles metadata about 500 novels ranked highly across multiple sources, including OCLC holdings and Goodreads ratings. It’s a great example of a dataset that is part curated list and part bibliographic metadata."
+    "objectID": "private_slides/18-eda-data-viz.html#what-is-a-character-encoding",
+    "href": "private_slides/18-eda-data-viz.html#what-is-a-character-encoding",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What is a character encoding?",
+    "text": "What is a character encoding?\n\n\n\n\n\n\n\nA computer stores numerical values rather than letters. Unicode assigns abstract characters code points; an encoding specifies how those values become bytes; a font determines the displayed glyph.\nConnect this to Dombrowski, Goregaokar, Joeng, and Kamran: Unicode expanded multilingual computing but did not make every writing system equally supported. Encoding is both a technical standard and part of a longer history of which languages computing systems prioritize."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#loading-the-novels-data",
-    "href": "private_slides/18-eda-data-viz.html#loading-the-novels-data",
-    "title": "EDA & Data Visualization",
-    "section": "Loading the Novels Data",
-    "text": "Loading the Novels Data\nTo load the dataset, we need to look at the GitHub repository https://github.com/melaniewalsh/responsible-datasets-in-context/tree/main/datasets/top-500-novels and find the raw URL for the final_merged_dataset_no_full_text.tsv file.\nnovels_df = pd.read_csv(\n    \"https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/\"\n    \"main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv\",\n    sep=\"\\t\"\n)\nWhat does sep=\"\\t\" tell Pandas? What would happen without it?\n\nDemo code to copy:\nnovels_df = pd.read_csv(\n    \"https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/\"\n    \"main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv\",\n    sep=\"\\t\"\n)"
+    "objectID": "private_slides/18-eda-data-viz.html#what-is-the-shape-of-this-dataset",
+    "href": "private_slides/18-eda-data-viz.html#what-is-the-shape-of-this-dataset",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What is the shape of this dataset?",
+    "text": "What is the shape of this dataset?\nnovels_df.shape\nnovels_df.info()\nnovels_df.head()\nWhat does each method reveal?\n\nDemo code: run each expression in its own notebook cell.\nnovels_df.shape\nnovels_df.info()\nnovels_df.head()\n\nshape returns rows and columns.\ninfo() reports columns, data types, and non-null counts.\nhead() lets us inspect actual records and values.\n\nThe dataset contains 500 rows and 29 columns. Each row represents one novel in OCLC’s Top 500 list."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#tab-separated-values-encoding",
-    "href": "private_slides/18-eda-data-viz.html#tab-separated-values-encoding",
-    "title": "EDA & Data Visualization",
-    "section": "Tab-Separated Values & Encoding",
-    "text": "Tab-Separated Values & Encoding\nIf we omit sep=\"\\t\", we should see the following error:\nParserError: Error tokenizing data. C error: Expected 1 fields in line 163, saw 3\nWhat is encoding?\n\n\nThis error tells us that Pandas assumed commas separated the fields, while this file uses tabs. The sep=\"\\t\" argument describes the file’s structural delimiter. That differs from a character encoding, which tells software how stored bytes map to characters.\nA computer stores numbers rather than letters. Unicode assigns abstract characters stable numerical code points; an encoding specifies how those code points become bytes; and a font determines the visible glyph shown on screen. If software reads bytes using a different encoding from the one used to save them, the resulting text can become garbled or mojibake.\nISO-8859-1, also known as Latin-1, is a single-byte encoding primarily designed for Western European languages. UTF-8 uses between one and four bytes and can encode the much larger Unicode character set while remaining compatible with ASCII. Connect this to Dombrowski, Goregaokar, Joeng, and Kamran’s history of multilingual publication: Unicode greatly expanded multilingual computing, but technical standardization did not make every writing system equally supported."
+    "objectID": "private_slides/18-eda-data-viz.html#what-does-describe-summarize",
+    "href": "private_slides/18-eda-data-viz.html#what-does-describe-summarize",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What does describe() summarize?",
+    "text": "What does describe() summarize?\nnovels_df.describe()\n\nnovels_df.describe(include=\"all\")\n\nBy default, describe() summarizes numeric columns. include=\"all\" also summarizes categorical and identifier fields.\nDemo code:\nnovels_df.describe()\nnovels_df.describe(include=\"all\")\nAsk students what count, unique, top, and freq mean. Draw attention to:\n\n500 titles but only 279 authors;\nna as the most frequent genre;\n329 recorded author fields of activity;\n495 rather than 500 OCLC records;\nonly 64 recorded original-language Project Gutenberg URLs."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#what-are-encodings",
-    "href": "private_slides/18-eda-data-viz.html#what-are-encodings",
-    "title": "EDA & Data Visualization",
-    "section": "What are encodings?",
-    "text": "What are encodings?\n\n\n\n\n\n\n\nISO-8859-1, also known as Latin-1, is part of a family of encodings standardized by the International Organization for Standardization (ISO) and the International Electrotechnical Commission (IEC). This standard uses one byte per character, which provides 256 possible numerical values, and primarily supports Latin-script Western European languages. utf-8, by contrast, uses between one and four bytes to encode Unicode code points and preserves compatibility with ASCII while supporting the much larger multilingual Unicode character set.\nIn “Encoding Multilingualism: Technical Affordances of Multilingual Publication from Manuscripts to Unicode and OpenType”, Quinn Dombrowski, Manish Goregaokar, Ben Joeng (Yang), and Abeera Kamran detail how the rise of digital computing led to a proliferation of encodings, especially for non-European languages in the 1980s. But with the rise of the web, there was increasingly a need for a unified encoding standard that could support multiple languages simultaneously, which lead to the creation of Unicode and these newer standards. While Unicode greatly expanded multilingual computing, it did not succeed in making every language equally well supported.\nQuinn Dombrowski, Manish Goregaokar, Ben Joeng (Yang), and Abeera Kamran, “Encoding Multilingualism: Technical Affordances of Multilingual Publication from Manuscripts to Unicode and OpenType,” Journal of Electronic Publishing 27, no. 1 (2024): 309–329, https://doi.org/10.3998/jep.5528."
+    "objectID": "private_slides/18-eda-data-viz.html#when-is-recorded-data-still-missing-information",
+    "href": "private_slides/18-eda-data-viz.html#when-is-recorded-data-still-missing-information",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "When is recorded data still missing information?",
+    "text": "When is recorded data still missing information?\n\n\n\nField\nPandas count\nCommon recorded value\n\n\n\n\ngenre\n500\nna\n\n\npg_eng_url\n500\nNA_not-pub-domain\n\n\npg_orig_url\n64\nunavailable\n\n\nauthor_death\n496\nALIVE\n\n\n\n\nPandas counts any string as non-null. A field can therefore be technically complete while containing placeholders, statuses, or values that do not provide the information a researcher expected.\nAuditing requires distinguishing formal null values from conventions for unavailable, unknown, inapplicable, or withheld information."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#how-could-we-specify-both-the-delimiter-and-encoding",
-    "href": "private_slides/18-eda-data-viz.html#how-could-we-specify-both-the-delimiter-and-encoding",
-    "title": "EDA & Data Visualization",
-    "section": "How could we specify both the delimiter and encoding?",
-    "text": "How could we specify both the delimiter and encoding?\nUTF-8 is already Pandas’s default here, but we can state it explicitly:\n# Import data\nnovels_df = pd.read_csv(\"https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv\", sep=\"\\t\", encoding='utf-8')\n\nDemo code to copy:\n# Import data\nnovels_df = pd.read_csv(\"https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv\", sep=\"\\t\", encoding='utf-8')"
+    "objectID": "private_slides/18-eda-data-viz.html#why-do-only-329-rows-have-a-field-of-activity",
+    "href": "private_slides/18-eda-data-viz.html#why-do-only-329-rows-have-a-field-of-activity",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Why do only 329 rows have a field of activity?",
+    "text": "Why do only 329 rows have a field of activity?\n\nAUTHOR_FIELD_OF_ACTIVITY: Author’s primary fields of activity, according to VIAF. VIAF includes data from multiple global partner institutions, but we only collect VIAF data associated with the Library of Congress (LOC).\n\n\nReturn to the dataset documentation rather than guessing from the column name.\nThe field is person-level authority metadata. Missingness could arise because the Library of Congress authority record lacks the field, records disagree, coverage varies by language or period, or the dataset construction process did not retrieve a value."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#missing-data-in-pandas",
-    "href": "private_slides/18-eda-data-viz.html#missing-data-in-pandas",
-    "title": "EDA & Data Visualization",
-    "section": "Missing Data in Pandas",
-    "text": "Missing Data in Pandas\nnovels_df.info()\nauthor_field_of_activity  329 non-null    object\nauthor_occupation         458 non-null    object\nWhat does 329 non-null mean? Let’s return to the documentation to find out.\n\nWhat does NaN mean? Is it the same as zero or an empty string?\nIn the last lesson, we covered how we could add null values to a DataFrame, but now we want to explore how we can work with them. Pandas has a lot of documentation for handling missing data that you can read here https://pandas.pydata.org/docs/user_guide/missing_data.html. For our purposes, we’re mostly concerned with the isna() and notna() methods.\nDemo code to copy:\nnovels_df.info()\nThe info() method shows us how many values in each column are not missing. This dataset has 500 rows, so 329 non-null means that 329 rows contain a value and 171 rows are missing one.\nPandas often displays a missing value as NaN, meaning Not a Number. The term comes from floating-point computing, but Pandas also uses it as a missing-value marker in columns that contain text or mixed data. Depending on a column’s data type, we may also encounter None, NaT for missing dates, or the newer pd.NA marker. Pandas methods such as isna() treat these as missing values.\nA missing value is not automatically the same as:\n\n0, which is a recorded numerical value\n\"\", which is an empty string that may still count as present\nFalse, which is a recorded Boolean value\n\nThis distinction matters because replacing missing data with zero would assert that we know the value is zero. In this case, missing VIAF metadata does not mean that an author had no field of activity; it means this dataset does not provide one.\nWhy? This column comes from VIAF — the Virtual International Authority File. VIAF is a service that links authority records across libraries and institutions. Not every author in our dataset has a VIAF record, which is why some values are missing.\nPandas has a lot of documentation for handling missing data at https://pandas.pydata.org/docs/user_guide/missing_data.html."
+    "objectID": "private_slides/18-eda-data-viz.html#what-is-viaf-trying-to-structure",
+    "href": "private_slides/18-eda-data-viz.html#what-is-viaf-trying-to-structure",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What is VIAF trying to structure?",
+    "text": "What is VIAF trying to structure?\n\n\nVIAF is the Virtual International Authority File. It links authority records about people and organizations contributed by libraries and other institutions. OCLC operates VIAF in partnership with national libraries.\nConnect this to Christine Borgman’s “scaling problem in name disambiguation.” As collections and catalogues grow, distinguishing people who share names and connecting variant names becomes increasingly difficult.\nThe values are not self-descriptions entered by authors. They reflect institutional cataloguing practices and available source records."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#how-can-we-test-for-missing-values",
-    "href": "private_slides/18-eda-data-viz.html#how-can-we-test-for-missing-values",
-    "title": "EDA & Data Visualization",
-    "section": "How can we test for missing values?",
-    "text": "How can we test for missing values?\n\n.isna() vs. .notna()\n# Select one Series to test\nfield_activity = novels_df['author_field_of_activity']\n\n# True means missing with isna()\nfield_missing = field_activity.isna()\nfield_missing.head()\n# True means present with notna()\nfield_present = field_activity.notna()\nfield_present.head()\n# Count and calculate missing values\nfield_missing_count = field_missing.sum()\nfield_missing_percent = field_missing_count / len(novels_df) * 100\n\nprint(field_missing_count)\nprint(f\"{field_missing_percent:.1f}% missing\")\n\nWhat does True represent in the Boolean Series returned by isna()?\nDemo code to copy:\n# Select one Series to test\nfield_activity = novels_df['author_field_of_activity']\n\n# True means missing with isna()\nfield_missing = field_activity.isna()\nfield_missing.head()\n# True means present with notna()\nfield_present = field_activity.notna()\nfield_present.head()\n# Count and calculate missing values\nfield_missing_count = field_missing.sum()\nfield_missing_percent = field_missing_count / len(novels_df) * 100\n\nprint(field_missing_count)\nprint(f\"{field_missing_percent:.1f}% missing\")\nRun these as separate notebook cells so students can inspect each intermediate result. We first select one Series and save it as field_activity. That lets us apply both methods to exactly the same values.\nfield_activity.isna() asks, “Is this value missing?” A missing value therefore becomes True. field_activity.notna() asks the opposite question, “Is this value present?” The same missing value therefore becomes False. The two Boolean Series should always be opposites.\nWe use isna() when missingness itself is what we want to investigate. For example, it is useful when we want to:\n\ncount how much data is missing\ninspect the records with incomplete metadata\ncompare whether missingness is concentrated in particular groups\ndecide whether values should be retained, filled, or removed\n\nWe use notna() when we need values that are actually present. For example, it is useful when we want to:\n\nfilter to records that can support a particular calculation\ndisplay authors who have a recorded field of activity\nremove missing values from a chart or comparison without dropping rows based on every other column\n\nPandas provides both methods because code should express the question we intend to ask. We could invert an isna() mask with ~, but field_activity.notna() is usually easier for a reader to understand than ~field_activity.isna(). The two methods produce opposite masks; the choice is primarily about which condition makes the analysis clearer.\nThe name NaN comes from Not a Number, a special value defined by the IEEE floating-point standard and used extensively by NumPy as np.nan. NumPy arrays traditionally needed every value to share one data type. A floating-point NaN provided a practical way to mark a missing numerical value while keeping the array numerical, and Pandas inherited this convention because it was built on NumPy.\nThat history explains some initially surprising behavior. np.nan is not meant to represent a normal value, and it does not compare equal to itself. Therefore, students should not write:\nnovels_df['author_field_of_activity'] == np.nan\nInstead, use Pandas’s missing-value methods:\nnovels_df['author_field_of_activity'].isna()\nnovels_df['author_field_of_activity'].notna()\nThese methods consistently recognize np.nan, Python’s None, Pandas’s pd.NA, and NaT in date columns. Newer Pandas data types increasingly use pd.NA as a more general missing-value marker, but students will still encounter NaN frequently in imported data and notebook output.\nCalling .sum() on field_missing counts missing values because Pandas treats True as 1 and False as 0 for this calculation. We divide that count by the total number of rows and multiply by 100 to calculate the percentage missing. We could similarly use field_present.sum() to count present values; the two counts should add up to the total number of rows.\nThis comparison also prepares students for filtering: use an isna() mask when they want rows with missing data and a notna() mask when they want rows with recorded data."
+    "objectID": "private_slides/18-eda-data-viz.html#what-does-nan-mean",
+    "href": "private_slides/18-eda-data-viz.html#what-does-nan-mean",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What does NaN mean?",
+    "text": "What does NaN mean?\nnovels_df['author_field_of_activity'].isna()\nnovels_df['author_field_of_activity'].notna()\nWhat does True mean in each result?\n\nNaN means Not a Number. Pandas also uses it as a missing-value marker in text columns. It does not mean that a cataloguer entered the letters NaN.\nisna() returns True where the value is missing. notna() returns True where a value is recorded.\nDemo code:\nnovels_df['author_field_of_activity'].isna()\nnovels_df['author_field_of_activity'].notna()"
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#author_field_of_activity",
-    "href": "private_slides/18-eda-data-viz.html#author_field_of_activity",
-    "title": "EDA & Data Visualization",
-    "section": "AUTHOR_FIELD_OF_ACTIVITY",
-    "text": "AUTHOR_FIELD_OF_ACTIVITY\nFrom the documentation, we can learn the following about this column:\n\nAUTHOR_FIELD_OF_ACTIVITY: Author’s primary fields of activity, according to VIAF. VIAF includes data from multiple global partner institutions, but we only collect VIAF data associated with the Library of Congress (LOC)."
+    "objectID": "private_slides/18-eda-data-viz.html#how-can-booleans-filter-a-dataframe",
+    "href": "private_slides/18-eda-data-viz.html#how-can-booleans-filter-a-dataframe",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "How can Booleans filter a DataFrame?",
+    "text": "How can Booleans filter a DataFrame?\nmissing_activity_df = novels_df[\n    novels_df['author_field_of_activity'].isna()\n]\nrecorded_activity_df = novels_df[\n    novels_df['author_field_of_activity'].notna()\n]\n\nDemo code: run both blocks and inspect each with head().\nmissing_activity_df = novels_df[\n    novels_df['author_field_of_activity'].isna()\n]\nmissing_activity_df.head(10)\nrecorded_activity_df = novels_df[\n    novels_df['author_field_of_activity'].notna()\n]\nrecorded_activity_df.head(10)\nSquare brackets keep rows where the Boolean Series is True. These operations create subsets; they do not delete rows from novels_df.\nThe lesson’s collapsed callout also preserves ~, isnull(), notnull(), dropna(), and fillna() as optional reference material."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#viaf-the-virtual-international-authority-file",
-    "href": "private_slides/18-eda-data-viz.html#viaf-the-virtual-international-authority-file",
-    "title": "EDA & Data Visualization",
-    "section": "VIAF: The Virtual International Authority File",
-    "text": "VIAF: The Virtual International Authority File\n\n\n\n\n\n\n\n\n\n\n\nFor those unfamiliar, VIAF stands for the Virtual International Authority File, which is a service that provides a way to link and share information about authors and their works across different libraries and institutions. The idea for VIAF originated in 1998 as an experiment in trying to link authority records. As a reminder, authority records are standardized records that provide information about a specific entity, such as an author or a work, like MARC records. VIAF was officially launched in 2003 and is operated by the Online Computer Library Center (OCLC) in partnership with various national libraries and institutions.\nThe impetus for the creation of VIAF was not just sharing information, but what LIS scholar Christine L. Borgman calls the “scaling problem in name disambiguation” in her book Big Data, Little Data, No Data: Scholarship in the Networked World. We’ve already talked about this briefly in discussing the challenges of “cleaning data”, but the rise of multiple digital libraries and archives has made it increasingly difficult to accurately identify and attribute works to their correct authors, which is where projects like VIAF come in. However, as we discussed in class, there are still challenges with this system. For example, authors are not the ones who enter data into VIAF. Instead, it is often librarians or archivists who are responsible for creating and maintaining these records. This means that there can be discrepancies in how authors are represented, and it can be difficult to ensure that all works by a particular author are accurately attributed to them."
+    "objectID": "private_slides/18-eda-data-viz.html#can-missingness-have-a-pattern",
+    "href": "private_slides/18-eda-data-viz.html#can-missingness-have-a-pattern",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Can missingness have a pattern?",
+    "text": "Can missingness have a pattern?\nmissing_activity_df['author_gender'].value_counts()\nrecorded_activity_df['author_gender'].value_counts()\nmissing_activity_df['orig_lang'].value_counts()\nrecorded_activity_df['orig_lang'].value_counts()\n\nThe value_counts() method counts distinct values and sorts them from most to least frequent.\nDemo code:\nmissing_activity_df['author_gender'].value_counts()\nrecorded_activity_df['author_gender'].value_counts()\nmissing_activity_df['orig_lang'].value_counts()\nrecorded_activity_df['orig_lang'].value_counts()\nWe are not yet claiming that gender or language explains missingness. We are generating possible comparisons and inspecting whether the distribution appears patterned."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#handling-missing-values",
-    "href": "private_slides/18-eda-data-viz.html#handling-missing-values",
-    "title": "EDA & Data Visualization",
-    "section": "Handling Missing Values",
-    "text": "Handling Missing Values\nHow can we filter to show only rows with missing values in a specific column?\n\nnovels_df[novels_df['author_field_of_activity'].isna()]\n\nNow knowing this background, we can start to explore which authors have missing values in this column. We can do this by using the isna() method to check for missing values in the author_field_of_activity column.\nDemo code to copy:\nnovels_df[novels_df['author_field_of_activity'].isna()]\nHere we are using the isna() method to filter our DataFrame to only show rows where the author_field_of_activity column is null."
+    "objectID": "private_slides/18-eda-data-viz.html#what-is-eda",
+    "href": "private_slides/18-eda-data-viz.html#what-is-eda",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What is EDA?",
+    "text": "What is EDA?\n\n\nExploratory Data Analysis summarizes a dataset’s characteristics and searches for patterns, anomalies, and assumptions, often through visual methods.\nThe goal is not to prove a predetermined hypothesis. It is to learn what questions the data can support and what additional investigation is required."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#handling-missing-values-1",
-    "href": "private_slides/18-eda-data-viz.html#handling-missing-values-1",
-    "title": "EDA & Data Visualization",
-    "section": "Handling Missing Values",
-    "text": "Handling Missing Values\nWhat if we wanted to see only rows where the column is not null?\nnovels_df[novels_df['author_field_of_activity'].notna()]\nWhat if we use the ~ operator?\nnovels_df[~novels_df['author_field_of_activity'].isna()]\n\nIf we wanted to see only rows where the column is not null, we could use the notna() method instead.\nThis will give us a DataFrame with all the authors who have a field of activity listed. We could also use the ~ operator to negate the boolean values returned by isna().\nDemo code to copy:\nnovels_df[novels_df['author_field_of_activity'].notna()]\nnovels_df[~novels_df['author_field_of_activity'].isna()]\nHere isna() returns a Pandas Boolean Series, and Pandas overloads the ~ operator to invert every value in that Series: True becomes False and False becomes True. This is not the same as applying ~ to an ordinary Python Boolean, where it acts as a bitwise operator on the integer representation. For clarity, students can generally prefer notna() when that directly expresses the intended test. Pandas also provides isnull() and notnull() as aliases for isna() and notna()."
+    "objectID": "private_slides/18-eda-data-viz.html#who-popularized-exploratory-data-analysis",
+    "href": "private_slides/18-eda-data-viz.html#who-popularized-exploratory-data-analysis",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Who popularized Exploratory Data Analysis?",
+    "text": "Who popularized Exploratory Data Analysis?\n\n\n\n\n\n\n\nJohn W. Tukey argued in “The Future of Data Analysis” (1962) that data analysis involved procedures, interpretation, planning data collection, and relevant statistical machinery. His 1977 book Exploratory Data Analysis emphasized examining data before formal hypothesis testing.\nTukey worked at Princeton and Bell Labs and contributed to sampling, polling, digital signal processing, and the vocabulary of computing."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#handling-missing-values-2",
-    "href": "private_slides/18-eda-data-viz.html#handling-missing-values-2",
-    "title": "EDA & Data Visualization",
-    "section": "Handling Missing Values",
-    "text": "Handling Missing Values\nWhat if we wanted to get rid of all rows with missing values in a specific column?\n\nnovels_df_cleaned = novels_df.dropna(subset=['author_field_of_activity'])\n\nFinally, if we wanted to get rid of all rows in the novels_df DataFrame that have missing values in the author_field_of_activity column, we could either use our filtering logic to assign the result to a new variable or we could use the dropna() method.\ndropna() is a powerful method that can be used to remove missing values from a DataFrame. The subset parameter allows us to specify which columns we want to check for missing values. If we don’t specify a subset, dropna() will remove any row that has a missing value in any column.\nDemo code to copy:\nnovels_df_cleaned = novels_df.dropna(subset=['author_field_of_activity'])"
+    "objectID": "private_slides/18-eda-data-viz.html#what-does-eda-ask-us-to-do",
+    "href": "private_slides/18-eda-data-viz.html#what-does-eda-ask-us-to-do",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What does EDA ask us to do?",
+    "text": "What does EDA ask us to do?\n\nUnderstand structure and important variables\nDetect outliers and anomalies\nExamine missingness and coverage\nTest assumptions through summaries and visualization\nGenerate questions before formal modeling\n\n\nConnect each point to methods students already know:\n\nhead(), sample(), shape, and dtypes inspect structure.\ndescribe() and value_counts() summarize distributions.\nsort_values(), nsmallest(), and nlargest() expose extremes.\nisna() tests missingness.\nplots make distributions and relationships easier to inspect."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#handling-missing-values-3",
-    "href": "private_slides/18-eda-data-viz.html#handling-missing-values-3",
-    "title": "EDA & Data Visualization",
-    "section": "Handling Missing Values",
-    "text": "Handling Missing Values\n\nHere’s a quick overview of the most common methods for handling missing values in Pandas:\n\n\n\n\n\n\n\n\nPandas Method\nDescription\nUsage\n\n\n\n\nisna()\nBoolean mask for missing values\ndf.isna().sum() to count missing\n\n\nnotna()\nBoolean mask for non-missing values\nInverse of isna()\n\n\nisnull()\nAlias for isna()\nInterchangeable with isna()\n\n\nnotnull()\nAlias for notna()\nInterchangeable with notna()\n\n\ndropna()\nRemoves rows/columns with missing values\nUse subset= to target columns\n\n\nfillna()\nFills missing values\nReplace with a value or interpolate\n\n\n\n\n\nKnowing how to work with missing data is important since we often have gaps when working with cultural datasets. Furthermore, it’s important to know that certain methods like groupby() will automatically ignore missing values, so we should always check the distribution of our data before we start analyzing it."
+    "objectID": "private_slides/18-eda-data-viz.html#what-does-a-quick-pandas-plot-reveal",
+    "href": "private_slides/18-eda-data-viz.html#what-does-a-quick-pandas-plot-reveal",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What does a quick Pandas plot reveal?",
+    "text": "What does a quick Pandas plot reveal?\ngenre_counts = novels_df['genre'].value_counts()\n\ngenre_counts.plot(\n    kind='bar',\n    figsize=(10, 5),\n    color='#4c78a8'\n)\n\nPandas plotting is a wrapper around Matplotlib. This is useful for quick exploration.\nDemo code:\ngenre_counts = novels_df['genre'].value_counts()\n\ngenre_counts.plot(\n    kind='bar',\n    figsize=(10, 5),\n    color='#4c78a8'\n)\nAsk students what the chart makes easier to see than the frequency table and what the na bar tells us about the source metadata."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#exploratory-data-analysis",
-    "href": "private_slides/18-eda-data-viz.html#exploratory-data-analysis",
-    "title": "EDA & Data Visualization",
-    "section": "Exploratory Data Analysis",
-    "text": "Exploratory Data Analysis\n\n\n\nFrom Zoë Wilkinson Saldaña, “Sentiment Analysis for Exploratory Data Analysis”\n\n\n\nSince we are working with datasets with significant documentation, we have a fairly good sense of what is in these datasets. However, often you will be working with datasets that are less documented, and so it is important to understand how to explore them. This process is often called Exploratory Data Analysis."
+    "objectID": "private_slides/18-eda-data-viz.html#can-we-see-library-rank-over-time",
+    "href": "private_slides/18-eda-data-viz.html#can-we-see-library-rank-over-time",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Can we see library rank over time?",
+    "text": "Can we see library rank over time?\nnovels_df.plot(\n    x='pub_year',\n    y='oclc_holdings_rank',\n    kind='scatter',\n    figsize=(10, 5),\n    color='#4c78a8'\n)\n\nThis chart shows distribution and possible temporal patterns, but hovering cannot identify individual novels. This limitation sets up Altair’s interactive tooltips.\nDemo code:\nnovels_df.plot(\n    x='pub_year',\n    y='oclc_holdings_rank',\n    kind='scatter',\n    figsize=(10, 5),\n    color='#4c78a8'\n)"
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#john-w.-tukey-the-history-of-eda",
-    "href": "private_slides/18-eda-data-viz.html#john-w.-tukey-the-history-of-eda",
-    "title": "EDA & Data Visualization",
-    "section": "John W. Tukey & The History of EDA",
-    "text": "John W. Tukey & The History of EDA\n\n\n\n\nIn the paper, Tukey writes:\n\nFor a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. […] All in all, I have come to feel that my central interest is in data analysis, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.\n\n\n\nYou’ve likely heard this term before, but let’s historically contextualize this idea. The term Exploratory Data Analysis (EDA) was popularized by John W. Tukey, one of the most famous statisticians and mathematicians of the 20th century. Tukey was one of the first to formally define the concept of data analysis in 1962 paper titled “The Future of Data Analysis.”\nSuch a framing might seem straightforward today in the age of Data Science, but at the time it was a radical shift for how we thought about working with data."
+    "objectID": "private_slides/18-eda-data-viz.html#why-are-there-so-many-visualization-libraries",
+    "href": "private_slides/18-eda-data-viz.html#why-are-there-so-many-visualization-libraries",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Why are there so many visualization libraries?",
+    "text": "Why are there so many visualization libraries?\n\n\nPython visualization libraries make different tradeoffs. Matplotlib offers low-level control; Pandas provides convenient wrappers; Seaborn emphasizes statistical graphics; Plotly emphasizes interaction.\nToday we use Vega-Altair because its declarative grammar makes relationships between data fields and visual channels explicit."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#bell-labs",
-    "href": "private_slides/18-eda-data-viz.html#bell-labs",
-    "title": "EDA & Data Visualization",
-    "section": "Bell Labs",
-    "text": "Bell Labs\n\n\nYou’ll notice in that image from the paper, which you can download here if you’re curious, that Tukey was affiliated with Princeton University and Bell Telephone Laboratories when he published the paper. Both of these were key institutions in the development of modern computing and statistics. For example, if you’ve heard of Alan Turing or Claude Shannon, they were also affiliated with Bell Labs, and Tukey worked with both of them, especially during World War II.\nThis infographic gives a sense of some of the inventions and discoveries that happened at Bell Labs, which was one of the most important research and development organizations in the 20th century. In the case of Tukey, he’s credited not just with exploratory data analysis but also coining both the terms bit, a portmanteau of binary digit, and software in 1958. Tukey was a very eclectic scholar, and worked on everything from developing better sampling methods after reviewing the Kinsey report, which was a landmark study of human sexuality released in two books in 1948 and 1953, to developing better methods for election polling."
+    "objectID": "private_slides/18-eda-data-viz.html#where-did-altair-come-from",
+    "href": "private_slides/18-eda-data-viz.html#where-did-altair-come-from",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Where did Altair come from?",
+    "text": "Where did Altair come from?\n\n\nJake VanderPlas initiated Altair in 2016 with collaborators from the Python, Jupyter, and Vega-Lite communities. Altair translates Python declarations into Vega-Lite JSON specifications rendered with JavaScript.\nIts constrained grammar sacrifices some low-level control in exchange for consistency, inspectability, and rapid exploratory visualization in notebooks."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#tukeys-principles-of-eda",
-    "href": "private_slides/18-eda-data-viz.html#tukeys-principles-of-eda",
-    "title": "EDA & Data Visualization",
-    "section": "Tukey’s Principles of EDA",
-    "text": "Tukey’s Principles of EDA\n\n\nHis central thoughts on EDA became the basis for his 1977 book Exploratory Data Analysis, where he argued that EDA could help suggest hypotheses that could be then tested statistically.\nSuch a shift might again seem obvious today, but at the time most statisticians focused on “confirmatory data analysis”, that is testing a hypothesis statistically rather than exploring the data first to see what might be possible. Tukey’s innovation helped set the groundwork for a lot of modern data science, where we tend to be closer to detectives trying to look for clues rather than approaching data with firm assumptions about what it represents.\nWhile there are not firm principles for EDA, Tukey argued that it should cover the following concepts:\n\nunderstanding the data’s underlying structure and extracting important variables\ndetecting outliers and anomalies\nand testing underlying assumptions through visualizations, statistics, and other methods, without initially focusing on formal modeling or hypothesis testing. This approach differs with traditional hypothesis-driven analyses, promoting a more flexible and intuitive investigation into the data."
+    "objectID": "private_slides/18-eda-data-viz.html#how-do-we-install-and-import-altair",
+    "href": "private_slides/18-eda-data-viz.html#how-do-we-install-and-import-altair",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "How do we install and import Altair?",
+    "text": "How do we install and import Altair?\npip install \"altair[all]\"\nimport altair as alt\n\nRemind students to activate their virtual environment and select the same environment as the notebook kernel.\nTerminal command:\npip install \"altair[all]\"\nNotebook cell:\nimport altair as alt\nCurrent VS Code and Jupyter versions should render charts without extra renderer configuration."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#eda-with-pandas-the-toolkit",
-    "href": "private_slides/18-eda-data-viz.html#eda-with-pandas-the-toolkit",
-    "title": "EDA & Data Visualization",
-    "section": "EDA With Pandas: The Toolkit",
-    "text": "EDA With Pandas: The Toolkit\n\nHow Pandas helps us implement Tukey’s principles of EDA:\n\nExplore structure — head(), tail(), sample(), .shape, .dtypes\nSummarize — describe()\nSort & rank — sort_values(), nsmallest(), nlargest()\nCheck missing — isna().any(), isna().sum()\nVisualize — plot()\n\n\n\nTukey argued EDA should cover: understanding the data’s underlying structure, detecting outliers and anomalies, and testing underlying assumptions through visualizations and statistics — without initially focusing on formal modeling.\nWith Pandas we can implement these systematically:\n# Look at records and structure\nnovels_df.head()\nnovels_df.sample(5, random_state=42)\nnovels_df.shape\nnovels_df.dtypes\n# Summarize and look for extremes\nnovels_df.describe()\nnovels_df.nlargest(5, 'oclc_holdings')\nnovels_df.nsmallest(5, 'oclc_holdings')\n# Sort records and audit missing values\nnovels_df.sort_values('year')\nnovels_df.isna().any()\nnovels_df.isna().sum()\nRun these in separate cells. head() and sample() show records, while .shape and .dtypes describe the DataFrame’s structure. describe() summarizes distributions, and nlargest() or nsmallest() help surface extremes worth investigating. The missing-value methods ask different questions: any() tells us whether a column has at least one missing value, while sum() tells us how many are missing."
+    "objectID": "private_slides/18-eda-data-viz.html#how-does-an-altair-chart-work",
+    "href": "private_slides/18-eda-data-viz.html#how-does-an-altair-chart-work",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "How does an Altair chart work?",
+    "text": "How does an Altair chart work?\nfrom altair.datasets import data\n\nsource = data.cars()\n\nalt.Chart(source).mark_circle(size=60).encode(\n    x='Horsepower',\n    y='Miles_per_Gallon',\n    color='Origin',\n    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']\n)\n\nDemo code: copy the visible block.\nfrom altair.datasets import data\n\nsource = data.cars()\n\nalt.Chart(source).mark_circle(size=60).encode(\n    x='Horsepower',\n    y='Miles_per_Gallon',\n    color='Origin',\n    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']\n)\nBreak the expression into:\n\nChart(source): the data;\nmark_circle(): the graphical marks;\nencode(): mappings between fields and visual channels;\ntooltip: information revealed through interaction."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#visualizing-data-with-pandas",
-    "href": "private_slides/18-eda-data-viz.html#visualizing-data-with-pandas",
-    "title": "EDA & Data Visualization",
-    "section": "Visualizing Data With Pandas",
-    "text": "Visualizing Data With Pandas\n\n\nNow that we have a sense of the distribution of our data, we can start to visualize it to see if we can answer our questions."
+    "objectID": "private_slides/18-eda-data-viz.html#what-are-marks-and-encodings",
+    "href": "private_slides/18-eda-data-viz.html#what-are-marks-and-encodings",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What are marks and encodings?",
+    "text": "What are marks and encodings?\n\n\n\n\n\n\n\nMarks are the geometric objects used to represent records or aggregates: points, bars, lines, rectangles, and so on.\nEncodings map fields to position, color, size, shape, or tooltips. These mappings make a visual argument about which differences matter."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#matplotlib-plots",
-    "href": "private_slides/18-eda-data-viz.html#matplotlib-plots",
-    "title": "EDA & Data Visualization",
-    "section": "Matplotlib & Plots",
-    "text": "Matplotlib & Plots\n\nplot is built into Pandas and is a wrapper around the matplotlib library https://matplotlib.org/, one of the most popular Python libraries for data visualization. The documentation lists the kinds of plots we can create:\n\n‘line’ : line plot (default)\n‘bar’ : vertical bar plot\n‘barh’ : horizontal bar plot\n‘hist’ : histogram\n‘box’ : boxplot\n‘kde’ : Kernel Density Estimation plot\n‘density’ : same as ‘kde’\n‘area’ : area plot\n‘pie’ : pie plot\n‘scatter’ : scatter plot (DataFrame only)\n‘hexbin’ : hexbin plot (DataFrame only)\n\n\n\nPandas also has a robust User Guide on how to plot here https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html."
+    "objectID": "private_slides/18-eda-data-viz.html#can-altair-identify-individual-novels",
+    "href": "private_slides/18-eda-data-viz.html#can-altair-identify-individual-novels",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Can Altair identify individual novels?",
+    "text": "Can Altair identify individual novels?\nalt.Chart(novels_df).mark_circle(size=60).encode(\n    x='pub_year',\n    y='top_500_rank',\n    tooltip=['title', 'author', 'pub_year', 'top_500_rank']\n)\n\nHover over points to identify titles and authors. Compare this with the static Pandas scatter plot.\nDemo code:\nalt.Chart(novels_df).mark_circle(size=60).encode(\n    x='pub_year',\n    y='top_500_rank',\n    tooltip=['title', 'author', 'pub_year', 'top_500_rank']\n)"
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data",
-    "href": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data",
-    "title": "EDA & Data Visualization",
-    "section": "How to Visualize Our Data?",
-    "text": "How to Visualize Our Data?\nWhat if we wanted to create a scatter plot looking at the relationship between the pub_year and top_500_rank columns? How can we create this graph?\n\n\nnovels_df.plot(kind='scatter', x='pub_year', y='top_500_rank')"
+    "objectID": "private_slides/18-eda-data-viz.html#what-do-altairs-data-types-mean",
+    "href": "private_slides/18-eda-data-viz.html#what-do-altairs-data-types-mean",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What do Altair’s data types mean?",
+    "text": "What do Altair’s data types mean?\n\n\n\n\nCode\nType\n\n\n\n\nN\nNominal\n\n\nO\nOrdinal\n\n\nQ\nQuantitative\n\n\nT\nTemporal\n\n\n\n\nAltair types describe the analytical meaning of a field, not merely its Pandas storage type.\nAsk students whether rank is quantitative or ordinal, whether genre is nominal, and whether publication year should be treated as temporal."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data-1",
-    "href": "private_slides/18-eda-data-viz.html#how-to-visualize-our-data-1",
-    "title": "EDA & Data Visualization",
-    "section": "How to Visualize Our Data?",
-    "text": "How to Visualize Our Data?\nWhat if we wanted to explore the relationship between genre and the average top_500_rank for each genre? How can we create this graph?\n\n\nnovels_df.groupby('genre')['top_500_rank'].mean().plot(kind='bar')\nNow that we are starting to see how we can visualize our data, we need to start thinking more deeply about what questions might be of interest to us and how the shape of this data influences how we can answer these questions."
+    "objectID": "private_slides/18-eda-data-viz.html#why-does-a-temporal-year-need-conversion",
+    "href": "private_slides/18-eda-data-viz.html#why-does-a-temporal-year-need-conversion",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Why does a temporal year need conversion?",
+    "text": "Why does a temporal year need conversion?\nnovels_df['pub_year'] = pd.to_datetime(\n    novels_df['pub_year'],\n    errors='coerce',\n    format='%Y'\n)\nalt.Chart(novels_df).mark_circle(size=60).encode(\n    x='pub_year:T',\n    y='top_500_rank:Q',\n    tooltip=['title', 'author', 'pub_year', 'top_500_rank']\n)\n\nThe original pub_year is stored as an integer. pd.to_datetime() casts it to a datetime value that Altair can interpret temporally.\nDemo code:\nnovels_df['pub_year'] = pd.to_datetime(\n    novels_df['pub_year'],\n    errors='coerce',\n    format='%Y'\n)\nnovels_df['pub_year'].head()\nalt.Chart(novels_df).mark_circle(size=60).encode(\n    x='pub_year:T',\n    y='top_500_rank:Q',\n    tooltip=['title', 'author', 'pub_year', 'top_500_rank']\n)\nerrors='coerce' turns values that cannot be parsed into missing datetime values rather than stopping with an exception. format='%Y' states that the source contains four-digit years."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#cleaning-data-with-pandas-gigo",
-    "href": "private_slides/18-eda-data-viz.html#cleaning-data-with-pandas-gigo",
-    "title": "EDA & Data Visualization",
-    "section": "“Cleaning” Data With Pandas & GIGO",
-    "text": "“Cleaning” Data With Pandas & GIGO\n\n\nWhy might we want to subset our data?\nsubset_novels_df = novels_df[novels_df.genre.notna()]\n\n\n\n\nAs we’ve discussed previously, cleaning data is core part of working with data but also one that tends to get overlooked or rarely foregrounded, even though it is extremely important for any interpretation. In our current example, we’ve already started to clean our data by merging the DataFrames together and transforming the data to make it more amenable to analysis. We might also want to subset the data, since as we can see above not every book has a genre:\nDemo code to copy:\nsubset_novels_df = novels_df[novels_df.genre.notna()]\nAs we discussed in class, a lot of what motivates this “cleaning”, whether that means normalizing distributions, removing null values, and even transforming some of the data to standardize it, is the concept of GIGO.\nGIGO stands for “Garbage In, Garbage Out” and the term has been used for decades in computing to refer to when data entry errors would produce faulty results. Rob Stenson has a great post exploring the history of the term all the way back to Charles Babbage, one of the first inventors of the computer, https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out.\nGIGO is important because it essentially means that the quality of your data analysis is always dependent on the quality of your data.\nHowever, for as much as we want to prioritize quality, what are some of the downsides or tradeoffs of cleaning data? Some potential considerations include:\n\nlosing the specificity of the original data (especially a danger for historic data but also for data collected by certain institutions)\nprivileging computational power over data quality or accuracy\nreleasing datasets publicly without documenting these changes\n\nThis list is by no means exhaustive! But number one thing to remember with datasets is that the act of collecting data is in of itself an interpretation. And so cleaning data adds another layer of interpretation (sometimes many layers) to the dataset, which is why its crucial to keep a record of how you transform your data.\nIt is also important to realize that even with cleaning you will never have a perfect dataset and to remember that this is often an iterative process and not a one time thing. You will likely need to re-transform your data many times depending on your methods.\nOne best practice is to save multiple versions of your dataset as csv files, so that you don’t either overwrite your original data or have to rerun previous transformations. Remember that with Pandas we can read and write csv files using pd.read_csv() and {name of your dataframe}.to_csv()."
+    "objectID": "private_slides/18-eda-data-viz.html#can-publication-year-explain-missing-activity-metadata",
+    "href": "private_slides/18-eda-data-viz.html#can-publication-year-explain-missing-activity-metadata",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Can publication year explain missing activity metadata?",
+    "text": "Can publication year explain missing activity metadata?\nnovels_df['has_field_of_activity'] = (\n    novels_df['author_field_of_activity'].notna()\n)\nalt.Chart(novels_df).mark_circle(size=60).encode(\n    x='pub_year:T',\n    y='top_500_rank:Q',\n    color='has_field_of_activity:N',\n    tooltip=['title', 'author', 'pub_year', 'top_500_rank']\n)\n\nThe Boolean column preserves all rows and records whether each novel’s author has activity metadata.\nDemo code:\nnovels_df['has_field_of_activity'] = (\n    novels_df['author_field_of_activity'].notna()\n)\nnovels_df['has_field_of_activity'].value_counts()\nalt.Chart(novels_df).mark_circle(size=60).encode(\n    x='pub_year:T',\n    y='top_500_rank:Q',\n    color='has_field_of_activity:N',\n    tooltip=['title', 'author', 'pub_year', 'top_500_rank']\n)\nThe visualization does not show an obvious temporal pattern that explains the missing values. Lack of a clear signal is still a finding: the explanation may not be represented in these columns."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#types-of-data",
-    "href": "private_slides/18-eda-data-viz.html#types-of-data",
-    "title": "EDA & Data Visualization",
-    "section": "Types of Data",
-    "text": "Types of Data\n\n\nIn addition to thinking about our choices, it is also important to think about the types of data we are working with.\nData broadly divides into qualitative (categorical) and quantitative (numerical) types. These map loosely onto Pandas dtypes but go beyond them.\nThis graph outlines the main types of data you might encounter, which largely breaks down between qualitative (categorical) or quantitative (numerical). Now these data types somewhat overlap with our .dtypes in Pandas, but they also go beyond. For example, what in our dataset might be Nominal versus Ordinal, or Discrete versus Continuous? To help answer this question, we are going to explore data visualization more in depth with the Python library Altair."
+    "objectID": "private_slides/18-eda-data-viz.html#what-should-we-do-when-the-dataset-cannot-explain-its-own-gaps",
+    "href": "private_slides/18-eda-data-viz.html#what-should-we-do-when-the-dataset-cannot-explain-its-own-gaps",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What should we do when the dataset cannot explain its own gaps?",
+    "text": "What should we do when the dataset cannot explain its own gaps?\n\n\nReturn to Heather Krause’s data biographies. Treat the dataset like a source whose background and motivations require investigation:\n\nWhere did it come from?\nWho collected it?\nHow was it collected?\nWhy was it collected?\n\nFor author_field_of_activity, missingness could arise in Library of Congress authority records, VIAF aggregation, or Preus and Sheth’s data collection. EDA identifies the question; provenance research is needed to answer it."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#data-visualization-in-python",
-    "href": "private_slides/18-eda-data-viz.html#data-visualization-in-python",
-    "title": "EDA & Data Visualization",
-    "section": "Data Visualization in Python",
-    "text": "Data Visualization in Python\n\n\n\n\n\n\n\nUp to now we’ve been using Pandas built in plot methods to display our data. While this is helpful for quick analyses, you’ll likely want more options for both how you visualize the data and interact with it. As you can see in these graphics, in Python, there are a number of visualization libraries, including Matplotlib, Seaborn, and Plotly that have extensive communities and documentation.\nYou can see more options in the Python Graph Gallery as well."
+    "objectID": "private_slides/18-eda-data-viz.html#what-relationships-appear-between-genre-and-author-activity",
+    "href": "private_slides/18-eda-data-viz.html#what-relationships-appear-between-genre-and-author-activity",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What relationships appear between genre and author activity?",
+    "text": "What relationships appear between genre and author activity?\nnovels_df['author_field_of_activity'].value_counts().head(20)\nWhat is difficult about values such as novels,fiction?\n\nThe column contains 121 distinct recorded strings, and many cells combine multiple activities separated by commas. We need individual activities before comparing them with genre.\nDemo code:\nnovels_df['author_field_of_activity'].value_counts().head(20)"
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#data-visualization-with-altair",
-    "href": "private_slides/18-eda-data-viz.html#data-visualization-with-altair",
-    "title": "EDA & Data Visualization",
-    "section": "Data Visualization With Altair",
-    "text": "Data Visualization With Altair\n\n\nToday we’re going to focus on Vega-Altair, a Python library built on Vega and Vega-Lite, two visualization systems for JavaScript. Previously, the library was known simply as Altair, so we will use that shorter name.\nAltair was initiated in 2016 by Jake VanderPlas and developed with collaborators from the Python, Jupyter, and Vega-Lite communities. VanderPlas is an astronomer and scientific-software developer who has contributed to SciPy, scikit-learn, Matplotlib, and Astropy and wrote the Python Data Science Handbook.\nAltair uses a declarative approach: we state which data fields map to channels such as position, color, size, and shape, while Vega-Lite determines lower-level rendering details. Altair translates our Python into a JSON Vega-Lite specification that JavaScript renders. This makes the relationship between data and visual argument easier to inspect, which is especially useful for exploratory cultural analysis."
+    "objectID": "private_slides/18-eda-data-viz.html#how-can-we-split-compound-values",
+    "href": "private_slides/18-eda-data-viz.html#how-can-we-split-compound-values",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "How can we split compound values?",
+    "text": "How can we split compound values?\nnovels_df['individual_author_activity'] = (\n    novels_df['author_field_of_activity'].str.split(',')\n)\n\nstr.split(',') changes each recorded string into a Python list. The DataFrame still has one row per novel, but one cell may now contain several activity values.\nDemo code:\nnovels_df['individual_author_activity'] = (\n    novels_df['author_field_of_activity'].str.split(',')\n)\nInspect the original and new columns together:\nnovels_df[[\n    'author_field_of_activity',\n    'individual_author_activity'\n]].head(10)"
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#installing-altair",
-    "href": "private_slides/18-eda-data-viz.html#installing-altair",
-    "title": "EDA & Data Visualization",
-    "section": "Installing Altair",
-    "text": "Installing Altair\nRemember to activate your virtual environment!\npip install \"altair[all]\"\n\nDemo code to copy:\npip install \"altair[all]\"\nNotice that this time when installing we have a slightly new syntax: [all]. This syntax just means that we will be installing all of Altair’s dependencies and optional dependencies."
+    "objectID": "private_slides/18-eda-data-viz.html#what-does-explode-change",
+    "href": "private_slides/18-eda-data-viz.html#what-does-explode-change",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What does explode() change?",
+    "text": "What does explode() change?\nexploded_novels_df = novels_df.explode(\n    'individual_author_activity'\n).copy()\n\nprint(\"Rows before:\", len(novels_df))\nprint(\"Rows after:\", len(exploded_novels_df))\n\nBefore exploding, each row represents one novel. After exploding, each row represents one novel-activity relationship. A novel associated with four activities now appears in four rows.\nDemo code:\nexploded_novels_df = novels_df.explode(\n    'individual_author_activity'\n).copy()\n\nprint(\"Rows before:\", len(novels_df))\nprint(\"Rows after:\", len(exploded_novels_df))\nThis is the same conceptual issue students will encounter when tokenizing text: turning lists into rows changes the unit of observation."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#using-altair",
-    "href": "private_slides/18-eda-data-viz.html#using-altair",
-    "title": "EDA & Data Visualization",
-    "section": "Using Altair",
-    "text": "Using Altair\nNow we can try out Altair with one of the built-in datasets\nimport altair as alt\nfrom altair.datasets import data\n\nsource = data.cars()\n\nalt.Chart(source).mark_circle(size=60).encode(\n    x='Horsepower',\n    y='Miles_per_Gallon',\n    color='Origin',\n    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']\n)\n\nDemo code to copy:\nimport altair as alt\nfrom altair.datasets import data\n\nsource = data.cars()\n\nalt.Chart(source).mark_circle(size=60).encode(\n    x='Horsepower',\n    y='Miles_per_Gallon',\n    color='Origin',\n    tooltip=['Name', 'Origin', 'Horsepower', 'Miles_per_Gallon']\n)\nCurrent versions of Jupyter and the VS Code Jupyter extension normally display this chart without renderer configuration. If it does not appear, first check that the notebook kernel uses the virtual environment where Altair was installed. Then restart the kernel and rerun the import and chart cells. The Altair display documentation provides frontend-specific troubleshooting."
+    "objectID": "private_slides/18-eda-data-viz.html#what-happens-when-we-visualize-every-category",
+    "href": "private_slides/18-eda-data-viz.html#what-happens-when-we-visualize-every-category",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What happens when we visualize every category?",
+    "text": "What happens when we visualize every category?\nalt.Chart(exploded_novels_df).mark_rect().encode(\n    x='genre:N',\n    y='individual_author_activity:N',\n    color='count():Q',\n    tooltip=[\n        'genre:N',\n        'individual_author_activity:N',\n        'count():Q'\n    ]\n)\n\nThe heatmap exposes concentrations but also the difficulty of displaying a high-cardinality field.\nDemo code:\nalt.Chart(exploded_novels_df).mark_rect().encode(\n    x='genre:N',\n    y='individual_author_activity:N',\n    color='count():Q',\n    tooltip=[\n        'genre:N',\n        'individual_author_activity:N',\n        'count():Q'\n    ]\n)\ncount() represents novel-activity relationships, not unique novels or authors. That unit must remain visible in the interpretation."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#altair-class",
-    "href": "private_slides/18-eda-data-viz.html#altair-class",
-    "title": "EDA & Data Visualization",
-    "section": "Altair Class",
-    "text": "Altair Class\n\n\nFirst we are specifying a new Chart class. In Altair, there are a number of Chart types that we’ll delve into later but it essentially is the basic class we’ll be working with (more information here https://altair-viz.github.io/user_guide/api.html#top-level-objects)."
+    "objectID": "private_slides/18-eda-data-viz.html#which-rows-can-support-this-comparison",
+    "href": "private_slides/18-eda-data-viz.html#which-rows-can-support-this-comparison",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Which rows can support this comparison?",
+    "text": "Which rows can support this comparison?\ngenre_activity_chart_df = exploded_novels_df[\n    exploded_novels_df['genre'].notna()\n    & (exploded_novels_df['genre'] != 'na')\n    & exploded_novels_df['individual_author_activity'].notna()\n].copy()\n\nA row missing genre cannot be placed on the x-axis; a row missing activity cannot be placed on the y-axis. Excluding the literal string na is an interpretive decision because Pandas treats it as recorded text, not a formal null.\nDemo code:\ngenre_activity_chart_df = exploded_novels_df[\n    exploded_novels_df['genre'].notna()\n    & (exploded_novels_df['genre'] != 'na')\n    & exploded_novels_df['individual_author_activity'].notna()\n].copy()\nDocument the effect:\nprint(\"All exploded rows:\", len(exploded_novels_df))\nprint(\"Rows used in chart:\", len(genre_activity_chart_df))"
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#altair-marks",
-    "href": "private_slides/18-eda-data-viz.html#altair-marks",
-    "title": "EDA & Data Visualization",
-    "section": "Altair Marks",
-    "text": "Altair Marks\n\n\nWe pass our data to the Chart and then specify the type of mark we are using (in our case we are using mark_point() to make points). In Altair, we can use all types of marks to represent our data https://altair-viz.github.io/user_guide/marks/index.html."
+    "objectID": "private_slides/18-eda-data-viz.html#does-every-author-contribute-equally",
+    "href": "private_slides/18-eda-data-viz.html#does-every-author-contribute-equally",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Does every author contribute equally?",
+    "text": "Does every author contribute equally?\nrepeated_authors_df = novels_df['author'].value_counts().reset_index()\nrepeated_authors_df = repeated_authors_df[\n    repeated_authors_df['count'] &gt; 1\n]\nalt.Chart(repeated_authors_df).mark_bar().encode(\n    x='count:Q',\n    y=alt.Y('author:N', sort='-x'),\n    tooltip=['author:N', 'count:Q']\n)\n\nSome authors contribute several novels. Their authority terms are repeated once for every included novel.\nDemo code:\nrepeated_authors_df = novels_df['author'].value_counts().reset_index()\nrepeated_authors_df = repeated_authors_df[\n    repeated_authors_df['count'] &gt; 1\n]\nrepeated_authors_df.head(10)\nalt.Chart(repeated_authors_df).mark_bar().encode(\n    x='count:Q',\n    y=alt.Y('author:N', sort='-x'),\n    tooltip=['author:N', 'count:Q']\n)\nExplain sort='-x': Altair orders the y-axis categories by their x values in descending order. Pandas row order and Altair visual order are separate decisions."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#altair-encodings",
-    "href": "private_slides/18-eda-data-viz.html#altair-encodings",
-    "title": "EDA & Data Visualization",
-    "section": "Altair Encodings",
-    "text": "Altair Encodings\n\n\n\n\n\n\n\nFinally, we specify the encoding of our graph, which is how we map our data to visual properties. In our example, we are encoding Horsepower to the x-axis, Miles_per_Gallon to the y-axis, and Origin to the color of the points. We are also adding a tooltip encoding that allows us to see more information about each point when we hover over it."
+    "objectID": "private_slides/18-eda-data-viz.html#how-can-we-reduce-prolific-author-effects",
+    "href": "private_slides/18-eda-data-viz.html#how-can-we-reduce-prolific-author-effects",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "How can we reduce prolific-author effects?",
+    "text": "How can we reduce prolific-author effects?\nunique_author_activity_df = genre_activity_chart_df.drop_duplicates(\n    subset=['author', 'genre', 'individual_author_activity']\n)\nalt.Chart(unique_author_activity_df).mark_rect().encode(\n    x='genre:N',\n    y='individual_author_activity:N',\n    color='count():Q',\n    tooltip=['genre:N', 'individual_author_activity:N', 'count():Q']\n)\n\nThis heatmap counts unique author-genre-activity relationships. Publishing several novels in the same genre no longer gives an author extra weight in that cell.\nDemo code:\nunique_author_activity_df = genre_activity_chart_df.drop_duplicates(\n    subset=['author', 'genre', 'individual_author_activity']\n)\n\nprint(\"Novel-activity relationships:\", len(genre_activity_chart_df))\nprint(\"Unique author-genre-activity relationships:\", len(unique_author_activity_df))\nalt.Chart(unique_author_activity_df).mark_rect().encode(\n    x='genre:N',\n    y='individual_author_activity:N',\n    color='count():Q',\n    tooltip=['genre:N', 'individual_author_activity:N', 'count():Q']\n)\nThe same author can still appear in several cells if they have multiple activities or write in multiple genres."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#trying-it-out",
-    "href": "private_slides/18-eda-data-viz.html#trying-it-out",
-    "title": "EDA & Data Visualization",
-    "section": "Trying It Out",
-    "text": "Trying It Out\nNow that we understand a bit of Altair’s syntax, let’s try to recreated our genre by average top_500_rank plot that we made previously. To do this, we don’t have to do groupby, instead Altair can handle most of the logic for us:\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"mean(top_500_rank):Q\",\n)\nYou can read more about aggregation here https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions.\n\nDemo code to copy:\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"mean(top_500_rank):Q\",\n)\nWe can see that some of the syntax is similar to the initial example. We are passing in our DataFrame to the Chart class, calling the mark_bar method, and then encoding the x and y axis. But some of this syntax is also new.\nFor instance, we are specifying the encodings using the N for nominal and Q for quantitative. We are also using an aggregate function to calculate the mean.\nYou can also see links to examples using these aggregations here https://altair-viz.github.io/user_guide/encodings/index.html#aggregation-functions.\nWhile it’s great we can recreate this plot, what’s the point exactly? After all we can do this in plot without having to use another library.\nThe value of using a library like Altair is that it is built to implement the idea of a Grammar of Graphics."
+    "objectID": "private_slides/18-eda-data-viz.html#which-apparent-patterns-survive-deduplication",
+    "href": "private_slides/18-eda-data-viz.html#which-apparent-patterns-survive-deduplication",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "Which apparent patterns survive deduplication?",
+    "text": "Which apparent patterns survive deduplication?\n\n\n\nRelationship\nNovel-activity rows\nUnique authors\n\n\n\n\nFantasy + novels\n20\n4\n\n\nThrillers + law\n11\n2\n\n\nThrillers + acting\n10\n1\n\n\nScience fiction + science fiction\n12\n7\n\n\nHistory + literature\n6\n6\n\n\n\n\nFantasy + novels is driven by Rowling, Lewis, Tolkien, and King. Ten thriller + law rows come from Grisham, and all ten thriller + acting rows come from Grisham.\nScience fiction + science fiction and history + literature remain distributed across more authors. Comparing the charts separates relationships shared across authors from those amplified by prolific authors."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#the-grammar-of-graphics",
-    "href": "private_slides/18-eda-data-viz.html#the-grammar-of-graphics",
-    "title": "EDA & Data Visualization",
-    "section": "The Grammar of Graphics",
-    "text": "The Grammar of Graphics\n\n\n\n\n\n\n\n\nIn The Grammar of Graphics, every visualization is built using the following core components:\n\nData: The dataset that you want to visualize.\nMappings: How the data variables map to visual properties like axes, colors, or sizes.\nGeometries (Marks): The basic shapes used to represent the data, such as points, lines, bars, etc.\nStatistical transformations: Aggregations or transformations applied to the data, such as grouping, counting, or averaging.\nScales: How data values are translated into visual values, like positioning on the x- or y-axis.\nCoordinates: The coordinate system used, such as Cartesian or polar coordinates.\nFaceting: How the data is split into different panels or sections to show comparisons.\n\n\n\nThe Grammar of Graphics is both a concept and book published in 1999 by Leland Wilkinson, a statistician and computer scientist. Wilkinson developed this idea from his experience in developing SYSTAT, a statistical software package he founded in 1983, where he saw the need for a more structured and flexible framework for data visualization.\nWilkinson’s grammar aimed to define a set of rules or components that could describe any kind of statistical graphic, from simple bar charts to complex scatter plots and heatmaps. By breaking down graphics into fundamental elements (like data, geometries, and scales), his grammar provides a way to think of visualizations as composable and modular—allowing users to understand and generate diverse charts based on clear principles. Wilkinson’s ideas have influenced many modern visualization tools and libraries like ggplot2 in R, as well as Altair.\nAltair is built around these principles, making it easier to create clear and interpretable visualizations by specifying each component in your code. This approach is not only flexible but also emphasizes transparency, helping you understand how your data is represented visually. It’s also more extensible, allowing for more complex and interactive visualizations, such as linked plots or selections, which would be difficult to achieve with simpler plotting libraries.\nBy embracing the Grammar of Graphics, Altair enables you to think more abstractly about the relationship between data and visualization, offering a consistent, rule-based system to produce a wide variety of visual outputs."
+    "objectID": "private_slides/18-eda-data-viz.html#what-are-we-really-comparing",
+    "href": "private_slides/18-eda-data-viz.html#what-are-we-really-comparing",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What are we really comparing?",
+    "text": "What are we really comparing?\nPerson-level authority metadata\nVIAF + Library of Congress records\n\nWork-level descriptive metadata\nGenres from OCLC’s original Top 500 list\n\nThe chart does not directly reveal authors’ creative practices. It shows what happens when metadata created at different levels and for different institutional purposes is combined.\nThe strongest defensible claim is descriptive: some recorded genre-activity relationships are more common across represented authors than others. The chart does not establish causation."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#adding-color-tooltip-title",
-    "href": "private_slides/18-eda-data-viz.html#adding-color-tooltip-title",
-    "title": "EDA & Data Visualization",
-    "section": "Adding Color, Tooltip & Title",
-    "text": "Adding Color, Tooltip & Title\nWhat is this code visualizing?\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    color=alt.Color(\"top_500_rank:Q\", scale=alt.Scale(scheme=\"viridis\")),\n    tooltip=[\"genre:N\", \"count():Q\", \"top_500_rank:Q\", \"title\"]\n).properties(\n    title=\"Top 500 Novels by Genre\",\n    width=600,\n    height=400\n)\n\nDemo code to copy:\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    color=alt.Color(\"top_500_rank:Q\", scale=alt.Scale(scheme=\"viridis\")),\n    tooltip=[\"genre:N\", \"count():Q\", \"top_500_rank:Q\", \"title\"]\n).properties(\n    title=\"Top 500 Novels by Genre\",\n    width=600,\n    height=400\n)\nLet’s try out some of Altair’s more advanced functionality to see how it implements this Grammar of Graphics.\nBuild the chart incrementally. First ask Altair to count the records in each genre:\nalt.Chart(novels_df).mark_bar().encode(\n    x=\"genre:N\",\n    y=\"count():Q\",\n    tooltip=[\"genre:N\", \"count():Q\"]\n)\nThen add the rank as a color encoding and customize its scale with the code displayed on the slide. This progression makes each change to the visual argument inspectable instead of introducing the full chart at once.\nWe can add several new encodings: - color — encode a third variable visually - tooltip — show values on hover - properties() — set title, width, height\nalt.Color() lets us customize the color scale — here we’re using the “viridis” color scheme, which is perceptually uniform and colorblind-friendly.\nWe can also use Altair to visualize the pronoun counts we calculated earlier. To do this we need to reshape our data using a melt operation:"
+    "objectID": "private_slides/18-eda-data-viz.html#what-does-garbage-in-garbage-out-leave-out",
+    "href": "private_slides/18-eda-data-viz.html#what-does-garbage-in-garbage-out-leave-out",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What does “Garbage In, Garbage Out” leave out?",
+    "text": "What does “Garbage In, Garbage Out” leave out?\n\n\nGIGO describes how faulty inputs can produce faulty outputs, but “garbage” is not always obvious. Cultural data may preserve historical specificity, institutional categories, missingness, or disagreement.\nCleaning is interpretive. Keep original data, create transformed copies, and document what was normalized, filtered, split, or deduplicated."
   },
   {
-    "objectID": "private_slides/18-eda-data-viz.html#merging-data-with-pandas",
-    "href": "private_slides/18-eda-data-viz.html#merging-data-with-pandas",
-    "title": "EDA & Data Visualization",
-    "section": "Merging Data With Pandas",
-    "text": "Merging Data With Pandas\n\n\nNow that we are understanding how to work with missing data, we can also start to explore how to augment our dataset in various ways. One of the most common ways to do this is through merging datasets together.\nWe’ve already seen one approach pd.concat() that allows us to concatenate DataFrames (aka add them together), but now we want to focus on the merge() method.\nFirst though we need another dataset to merge with our novels_df. We could take a look at sites like Kaggle to find more datasets, or more specific ones like the Post45 Data Collective, which “peer reviews and houses literary and cultural data from 1945 to the present” https://data.post45.org/."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#nyt-bestsellers-dataset",
-    "href": "private_slides/18-eda-data-viz.html#nyt-bestsellers-dataset",
-    "title": "EDA & Data Visualization",
-    "section": "NYT Bestsellers Dataset",
-    "text": "NYT Bestsellers Dataset\nLet’s use the one about New York Times Hardcover Fiction Bestsellers, 1931–2020, created by Jordan Pruett https://data.post45.org/nyt-fiction-bestsellers-data/.\n\nNYT Data\nAccording to the documentation, this dataset contains the following:\n\nThe New York Times Hardcover Fiction Bestsellers (1931–2020) contains three related datasets. The first dataset provides a tabular representation of the hardcover fiction bestseller list of The New York Times every week between 1931 and 2020. The second dataset provides title-level data for every unique title that appeared on the hardcover fiction bestseller list during this time period. The third dataset provides HathiTrust Digital Library identifiers for every unique title that appeared on the hardcover fiction bestseller list and that also has a corresponding volume in the HathiTrust Digital Library.\n\n\nPrevious research using similar data has been limited to partial segments of the list, such as the top 200 longest-running bestsellers since a certain date (Piper and Portelance, 2016) or bestsellers from only particular years (Sorenson, 2007). By contrast, this dataset covers the full list since its inception in 1931, along with each reported work’s title, author(s), date of appearance, and rank.\n\nGetting this additional dataset will allow us to explore the relationship between the New York Times bestsellers and the top 500 novels as recorded by OCLC."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#loading-the-nyt-bestsellers-data",
-    "href": "private_slides/18-eda-data-viz.html#loading-the-nyt-bestsellers-data",
-    "title": "EDA & Data Visualization",
-    "section": "Loading the NYT Bestsellers Data",
-    "text": "Loading the NYT Bestsellers Data\nIf we click on the Explore/download data for the first dataset, we see a new page that has the remote url for the dataset.\nnyt_bestsellers_df = pd.read_csv(\n    \"https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv\",\n    sep=\"\\t\",\n    encoding='utf-8'\n)\nHow could we explore this dataset?\n\nDemo code to copy:\nnyt_bestsellers_df = pd.read_csv(\n    \"https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv\",\n    sep=\"\\t\",\n    encoding='utf-8'\n)\nNow that we have both datasets loaded, we can start to explore them. Let’s take a look at the columns in the nyt_bestsellers_df.info() DataFrame.\nWhich gives us the following output:\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 60386 entries, 0 to 60385\nData columns (total 6 columns):\n #   Column    Non-Null Count  Dtype \n---  ------    --------------  ----- \n 0   year      60386 non-null  int64 \n 1   week      60386 non-null  object\n 2   rank      60386 non-null  int64 \n 3   title_id  60386 non-null  int64 \n 4   title     60386 non-null  object\n 5   author    60376 non-null  object\ndtypes: int64(3), object(3)\nmemory usage: 2.8+ MB\nWe can see that this dataset has 60386 rows and 6 columns. The columns are year, week, rank, title_id, title, and author. We can also see that the author column has ten missing values, but that overall, this dataset has very few null values and is much larger than the novels_df DataFrame."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#merging-data-with-pandas-1",
-    "href": "private_slides/18-eda-data-viz.html#merging-data-with-pandas-1",
-    "title": "EDA & Data Visualization",
-    "section": "Merging Data with Pandas",
-    "text": "Merging Data with Pandas\n\nPandas has built in functionality that let’s us merge together DataFrames so that we can perform analysis on the combined dataset, with extensive documentation https://pandas.pydata.org/docs/user_guide/merging.html.\n\nNow we can start to merge the two DataFrames together. We’ve mentioned merging datasets a bit when we discussed joining data in class and SQL, but now we want to dig into details. Often times when we’re working with datasets, we will have our data split into multiple csv files or have differently shaped datasets (i.e. some of them will have more rows or columns than other datasets). While this documentation shows a number of ways to combined datasets (concat let’s you combine datasets by stacking them on top of each other, join let’s you combine datasets by joining them on a common index, and merge let’s you combine datasets by joining them on a common column), we will focus on the merge method.\nOften when working with datasets, our data is split across multiple files or has different shapes. Pandas lets us merge DataFrames together. The core method is merge(), which takes several key parameters:\n\nleft / right — the DataFrames to merge\nhow — the type of join: left, right, inner, or outer\non — the column(s) to join on\n\nThere’s also concat() which stacks DataFrames on top of each other, and join() which joins on the index."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#merging-syntax",
-    "href": "private_slides/18-eda-data-viz.html#merging-syntax",
-    "title": "EDA & Data Visualization",
-    "section": "Merging Syntax",
-    "text": "Merging Syntax\n\n\nIf we take a look at the documentation, we see the syntax above, which shows us that in Pandas we use the merge() function to combine datasets. The merge() function takes in a number of parameters, but the most important ones are left, right, how, and on. The left and right parameters are the DataFrames we want to merge, the how parameter is the type of join we want to undertake, and the on parameter is the column we want to join the DataFrames on."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#types-of-joins",
-    "href": "private_slides/18-eda-data-viz.html#types-of-joins",
-    "title": "EDA & Data Visualization",
-    "section": "Types of Joins",
-    "text": "Types of Joins\n\n\nYou’ll notice that we can see a description of the types of how parameters we can use. These are the same types of joins that we discussed in class and in SQL. The how parameter can be set to left, right, outer, or inner. The left join will return all the rows from the left DataFrame and the matching rows from the right DataFrame. The right join will return all the rows from the right DataFrame and the matching rows from the left DataFrame. The outer join will return all the rows from the left DataFrame and the right DataFrame. The inner join will return only the rows that match in both DataFrames."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#finding-common-columns",
-    "href": "private_slides/18-eda-data-viz.html#finding-common-columns",
-    "title": "EDA & Data Visualization",
-    "section": "Finding Common Columns",
-    "text": "Finding Common Columns\nnovels_df.columns, nyt_bestsellers_df.columns\nHow can we find the common columns?\n\nset(novels_df.columns).intersection(set(nyt_bestsellers_df.columns))\nWhat happens when we merge on these two columns?\n\nNow that we are starting to understand this logic, we can consider how we might merge our datasets. First, we can double check the columns in our novels_df and nyt_bestsellers_df DataFrames to see if there are any common columns we can use to merge them. https://www.w3schools.com/python/ref_set_intersection.asp provides a good overview of the intersection() method, which is a built-in Python method that returns the common elements between two sets. set() is another built-in Python method that creates a set object, which is an unordered collection of unique elements (somewhat similar to tuples). Sets can be very useful when you want to find the unique elements in a list. In this case, we are using set() to convert the column names of both DataFrames into sets, and then using intersection() to find the common columns.\nDemo code to copy:\nnovels_df.columns, nyt_bestsellers_df.columns\nset(novels_df.columns).intersection(set(nyt_bestsellers_df.columns))\nWe could eyeball the likely similar columns, but we can also use the intersection() method to find the common columns. intersection() is a built-in Python method that returns the common elements between two sets. set() is another built-in Python method that creates a set object, which is an unordered collection of unique elements (somewhat similar to tuples). Sets can be very useful when you want to find the unique elements in a list. In this case, we are using set() to convert the column names of both DataFrames into sets, and then using intersection() to find the common columns."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#attempting-to-merge",
-    "href": "private_slides/18-eda-data-viz.html#attempting-to-merge",
-    "title": "EDA & Data Visualization",
-    "section": "Attempting to Merge",
-    "text": "Attempting to Merge\nmerged_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])\nWhile this code should work, you’ll notice if you print out the merged_df DataFrame that while there are new columns from the nyt_bestsellers_df in our merged_df there only NaN values in those columns. Why is that?\n\nDemo code to copy:\nmerged_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])\nTo figure out where we went wrong, we need to check the values in the author and title columns in both DataFrames, and specifically see if any of them exist in both DataFrames. We can do this by using the isin() and nunique() method to get the unique values in each column.\nshared_authors = novels_df[novels_df['author'].isin(nyt_bestsellers_df['author'])]['author'].nunique()\nshared_titles = novels_df[novels_df['title'].isin(nyt_bestsellers_df['title'])]['title'].nunique()\n\nprint(f\"Number of shared authors: {shared_authors}\")\nprint(f\"Number of shared titles: {shared_titles}\")\nThis output tells us that while there are 122 shared authors, there are no shared titles. This is surprising, so let’s investigate further. There’s a number of ways we could solve this mystery, but let’s first try seeing what the most prolific authors are in both datasets."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#investigating-the-most-prolific-authors",
-    "href": "private_slides/18-eda-data-viz.html#investigating-the-most-prolific-authors",
-    "title": "EDA & Data Visualization",
-    "section": "Investigating the Most Prolific Authors",
-    "text": "Investigating the Most Prolific Authors\nnovels_df[novels_df['author'].isin(nyt_bestsellers_df['author'])]['author'].value_counts().head(5)\nnyt_bestsellers_df[nyt_bestsellers_df['author'].isin(novels_df['author'])]['author'].value_counts()\n\nDemo code to copy:\nnovels_df[novels_df['author'].isin(nyt_bestsellers_df['author'])]['author'].value_counts().head(5)\nnyt_bestsellers_df[nyt_bestsellers_df['author'].isin(novels_df['author'])]['author'].value_counts()\nThis gives us the following output:\nJohn Grisham          19\nJohn Steinbeck         8\nNicholas Sparks        7\nStephen King           7\nDan Brown              5\nName: author, dtype: int64\nAnd now let’s do the same for the nyt_bestsellers_df DataFrame.\nThis gives us the following output:\nStephen King               892\nJohn Grisham               789\nDavid Baldacci             396\nNicholas Sparks            390\nHerman Wouk                375\nWe can see that across both datasets Stephen King and John Grisham are the most prolific authors, but we still don’t know why there are no shared titles. Let’s try filtering for the titles in the novels_df and nyt_bestsellers_df DataFrames."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#the-problem-title-casing",
-    "href": "private_slides/18-eda-data-viz.html#the-problem-title-casing",
-    "title": "EDA & Data Visualization",
-    "section": "The Problem: Title Casing",
-    "text": "The Problem: Title Casing\nnovel_titles = novels_df[novels_df.author == \"Stephen King\"].title.unique()\nnyt_titles = nyt_bestsellers_df[nyt_bestsellers_df.author == \"Stephen King\"].title.unique()\nnovels:  ['The Stand' 'It' 'The Shining' ...]\nNYT:     ['THE SHINING' 'THE STAND' 'IT' ...]\n\nDemo code to copy:\nnovel_titles = novels_df[novels_df.author == \"Stephen King\"].title.unique()\nnyt_titles = nyt_bestsellers_df[nyt_bestsellers_df.author == \"Stephen King\"].title.unique()\nWe can see that King has had many bestsellers and that there is overlap in the titles. However, the titles in the nyt_bestsellers_df DataFrame are all uppercase, while the titles in the novels_df DataFrame are capitalized. This is the reason why there are no shared titles in the two DataFrames — and it’s a perfect segue into talking about Pandas’ built-in string methods."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#string-methods-in-pandas",
-    "href": "private_slides/18-eda-data-viz.html#string-methods-in-pandas",
-    "title": "EDA & Data Visualization",
-    "section": "String Methods in Pandas",
-    "text": "String Methods in Pandas\n\n\n\n\n\n\n\n\nPandas String Method\nExplanation\n\n\n\n\ndf['column'].str.lower()\nLowercase all values\n\n\ndf['column'].str.upper()\nUppercase all values\n\n\ndf['column'].str.capitalize()\nCapitalize the first letter of each value\n\n\ndf['column'].str.replace('old', 'new')\nReplace all instances of one string with another\n\n\ndf['column'].str.split('delimiter')\nSplit a column by a delimiter\n\n\ndf['column'].str.strip()\nRemove leading and trailing whitespace\n\n\ndf['column'].str.len()\nCount characters in each value\n\n\ndf['column'].str.contains('pattern')\nCheck if a column contains a pattern\n\n\ndf['column'].str.startswith('pattern')\nCheck if a column starts with a pattern\n\n\ndf['column'].str.endswith('pattern')\nCheck if a column ends with a pattern\n\n\ndf['column'].str.count('pattern')\nCount occurrences of a pattern in each value\n\n\ndf['column'].str.extract('pattern')\nExtract the first regex match in each value\n\n\ndf['column'].str.findall('pattern')\nFind all regex matches in each value\n\n\n\nAn in-depth discussion of these methods is available in the Pandas documentation https://pandas.pydata.org/docs/user_guide/text.html.\n\n\nPandas has a rich set of string methods accessible through the .str accessor. We’ve already seen str.capitalize() used to fix the NYT title casing. But these methods are useful any time you need to clean or analyze string columns.\nFull documentation: https://pandas.pydata.org/docs/user_guide/text.html"
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#fixing-the-casing-merging",
-    "href": "private_slides/18-eda-data-viz.html#fixing-the-casing-merging",
-    "title": "EDA & Data Visualization",
-    "section": "Fixing the Casing & Merging",
-    "text": "Fixing the Casing & Merging\nHow could we fix the casing issue and merge the two DataFrames?\n\n# Preserve original, create normalized version\nnyt_bestsellers_df = nyt_bestsellers_df.rename(columns={'title': 'nyt_title'})\nnyt_bestsellers_df['title'] = nyt_bestsellers_df['nyt_title'].str.capitalize()\nIf we rerun our shared titles check, we should now see some overlap:\nshared_titles = novels_df[novels_df['title'].isin(nyt_bestsellers_df['title'])]['title'].nunique()\nprint(f\"Number of shared titles: {shared_titles}\")\n\nDemo code to copy:\n# Preserve original, create normalized version\nnyt_bestsellers_df = nyt_bestsellers_df.rename(columns={'title': 'nyt_title'})\nnyt_bestsellers_df['title'] = nyt_bestsellers_df['nyt_title'].str.capitalize()\nshared_titles = novels_df[novels_df['title'].isin(nyt_bestsellers_df['title'])]['title'].nunique()\nprint(f\"Number of shared titles: {shared_titles}\")\nIn our case, we can use str.capitalize() to fix the title casing problem in nyt_bestsellers_df. Notice how we first rename the original column so we don’t lose it, then create a new normalized title column: We rename the original title column first so we don’t lose data, then create a normalized version. After this fix we get 12 shared titles — not many, but enough to work with."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#final-merge",
-    "href": "private_slides/18-eda-data-viz.html#final-merge",
-    "title": "EDA & Data Visualization",
-    "section": "Final Merge",
-    "text": "Final Merge\ninner_merged_df = novels_df.merge(nyt_bestsellers_df, how='inner', on=['author', 'title'])\nouter_merged_df = novels_df.merge(nyt_bestsellers_df, how='outer', on=['author', 'title'])\nleft_merged_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])\nprint(f\"Inner merge length: {len(inner_merged_df)}\")\nprint(f\"Outer merge length: {len(outer_merged_df)}\")\nprint(f\"Left merge length: {len(left_merged_df)}\")\nThis should give us the following output:\nInner merge length: 231\nOuter merge length: 60876\nLeft merge length: 721\nSo our final merge will be the left merge, which keeps all the novels and adds NYT bestseller data where available.\ncombined_novels_nyt_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])\n\nDemo code to copy:\ninner_merged_df = novels_df.merge(nyt_bestsellers_df, how='inner', on=['author', 'title'])\nouter_merged_df = novels_df.merge(nyt_bestsellers_df, how='outer', on=['author', 'title'])\nleft_merged_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])\nprint(f\"Inner merge length: {len(inner_merged_df)}\")\nprint(f\"Outer merge length: {len(outer_merged_df)}\")\nprint(f\"Left merge length: {len(left_merged_df)}\")\ncombined_novels_nyt_df = novels_df.merge(nyt_bestsellers_df, how='left', on=['author', 'title'])\nThe different merge types give very different row counts: - Left (721): all 500 novels, some repeated for multiple NYT appearances - Inner (231): only novels that appeared on both lists - Outer (60876): everything from both datasets\nWe’ll use the left merge so we keep the full novels dataset."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#working-with-the-full-combined-dataset",
-    "href": "private_slides/18-eda-data-viz.html#working-with-the-full-combined-dataset",
-    "title": "EDA & Data Visualization",
-    "section": "Working With the Full Combined Dataset",
-    "text": "Working With the Full Combined Dataset\n\nWe will use two related files:\n\ncombined_novels_viz.csv contains metadata and pre-computed text measurements but not the complete novels.\nThe complete dataset on Canvas includes an eng_text column containing available Project Gutenberg texts. It is approximately 152 MB.\n\nStart with the smaller file:\ncombined_novels_nyt_df = pd.read_csv('combined_novels_viz.csv')\ncombined_novels_nyt_df.info()\n\n\nDemo code to copy:\ncombined_novels_nyt_df = pd.read_csv('combined_novels_viz.csv')\ncombined_novels_nyt_df.info()\nThe smaller file includes novel_length_words, novel_length_chars, he_counts, she_counts, and they_counts alongside the metadata. It is sufficient for the EDA and visualization examples and keeps the notebook quick to load.\nThe following string-method slides explain how those measurements were produced. Run code involving eng_text only after loading the complete Canvas dataset. Students using the smaller file should read those examples without rerunning them.\nIf you want to demonstrate the string methods live, first switch to the optional full-text file from Canvas:\ncombined_novels_nyt_df = pd.read_csv('combined_novels_with_text.csv')\ncombined_novels_nyt_df.info()\nPoint out that this is a deliberate dataset switch. The smaller visualization file has the derived measurements but no eng_text; the full-text file has eng_text but requires us to create the measurements in the following cells. Do not run the string-method cells against combined_novels_viz.csv, because that file intentionally omits the full texts.\nThe Additional Notes in the lesson document the collection process."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#counting-characters-and-words",
-    "href": "private_slides/18-eda-data-viz.html#counting-characters-and-words",
-    "title": "EDA & Data Visualization",
-    "section": "Counting Characters and Words",
-    "text": "Counting Characters and Words\nThe simplest measure of a text is its length. We can count the number of characters in each novel using str.len():\ncombined_novels_nyt_df['novel_length_chars'] = combined_novels_nyt_df['eng_text'].str.len()\ncombined_novels_nyt_df[['title', 'author', 'novel_length_chars']].sort_values('novel_length_chars', ascending=False).head(10)\nTo get a more useful word count, we can split the text on spaces and count the resulting list:\ncombined_novels_nyt_df['novel_length_words'] = combined_novels_nyt_df['eng_text'].str.split().str.len()\ncombined_novels_nyt_df[['title', 'author', 'novel_length_words']].sort_values('novel_length_words', ascending=False).head(10)\n\nDemo code to copy:\ncombined_novels_nyt_df['novel_length_chars'] = combined_novels_nyt_df['eng_text'].str.len()\ncombined_novels_nyt_df[['title', 'author', 'novel_length_chars']].sort_values('novel_length_chars', ascending=False).head(10)\ncombined_novels_nyt_df['novel_length_words'] = combined_novels_nyt_df['eng_text'].str.split().str.len()\ncombined_novels_nyt_df[['title', 'author', 'novel_length_words']].sort_values('novel_length_words', ascending=False).head(10)"
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#searching-for-patterns-with-str.contains",
-    "href": "private_slides/18-eda-data-viz.html#searching-for-patterns-with-str.contains",
-    "title": "EDA & Data Visualization",
-    "section": "Searching for Patterns With str.contains()",
-    "text": "Searching for Patterns With str.contains()\nstr.contains() checks whether each value in a column matches a given pattern. This is useful for filtering rows, counting occurrences, or finding subsets of a dataset. For example, how many of the novels in our dataset include the word “war” in their genre field?\ncombined_novels_nyt_df[combined_novels_nyt_df['genre'].str.contains('war', case=False, na=False)][['title', 'author', 'genre']]\n\nDemo code to copy:\ncombined_novels_nyt_df[combined_novels_nyt_df['genre'].str.contains('war', case=False, na=False)][['title', 'author', 'genre']]\nThe case=False argument makes the search case-insensitive, and na=False tells Pandas to treat missing values as non-matches rather than raising an error."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#how-did-we-generate-the-counts-columns",
-    "href": "private_slides/18-eda-data-viz.html#how-did-we-generate-the-counts-columns",
-    "title": "EDA & Data Visualization",
-    "section": "How did we generate the counts columns?",
-    "text": "How did we generate the counts columns?\nWe can also use str.contains() on the text column itself. For example, let’s count how many novels contain the word “she” at all:\ncombined_novels_nyt_df['mentions_she'] = combined_novels_nyt_df['eng_text'].str.contains(r'\\bshe\\b', case=False, na=False)\ncombined_novels_nyt_df['mentions_she'].value_counts()\nHere we use a regex pattern \\bshe\\b — the \\b characters are “word boundaries” that ensure we match the standalone word “she” rather than the letters inside words like “sheer” or “fisherman.”\n\nNext week will cover more advanced text analysis techniques.\nDemo code to copy:\ncombined_novels_nyt_df['mentions_she'] = combined_novels_nyt_df['eng_text'].str.contains(r'\\bshe\\b', case=False, na=False)\ncombined_novels_nyt_df['mentions_she'].value_counts()"
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#counting-occurrences-with-str.count",
-    "href": "private_slides/18-eda-data-viz.html#counting-occurrences-with-str.count",
-    "title": "EDA & Data Visualization",
-    "section": "Counting Occurrences With str.count()",
-    "text": "Counting Occurrences With str.count()\nRather than just knowing whether a word appears, str.count() tells us how many times it appears. This is especially useful for comparing word frequencies across documents. Let’s count pronouns to start exploring gender representation across our novels:\ncombined_novels_nyt_df['he_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\\bhe\\b')\ncombined_novels_nyt_df['she_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\\bshe\\b')\ncombined_novels_nyt_df['they_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\\bthey\\b')\n\ncombined_novels_nyt_df[['title', 'author', 'genre', 'he_counts', 'she_counts', 'they_counts']].head(10)\n\nDemo code to copy:\ncombined_novels_nyt_df['he_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\\bhe\\b')\ncombined_novels_nyt_df['she_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\\bshe\\b')\ncombined_novels_nyt_df['they_counts'] = combined_novels_nyt_df['eng_text'].str.count(r'\\bthey\\b')\n\ncombined_novels_nyt_df[['title', 'author', 'genre', 'he_counts', 'she_counts', 'they_counts']].head(10)\nYou’ll notice that he tends to be much more frequent than the other two pronouns. Now this might be because of the novels we have in our dataset, but it could also be a reflection of the texts themselves. This kind of question is exactly what EDA is for!"
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#extracting-information-with-str.extract",
-    "href": "private_slides/18-eda-data-viz.html#extracting-information-with-str.extract",
-    "title": "EDA & Data Visualization",
-    "section": "Extracting Information With str.extract()",
-    "text": "Extracting Information With str.extract()\nstr.extract() uses a regular expression to pull specific pieces of text out of a string. For example, each of our Project Gutenberg URLs follows a consistent pattern — we could extract the book ID number from it:\ncombined_novels_nyt_df['pg_book_id'] = combined_novels_nyt_df['pg_eng_url'].str.extract(r'/epub/(\\d+)/')\ncombined_novels_nyt_df[['title', 'pg_eng_url', 'pg_book_id']].head(5)\n\nDemo code to copy:\ncombined_novels_nyt_df['pg_book_id'] = combined_novels_nyt_df['pg_eng_url'].str.extract(r'/epub/(\\d+)/')\ncombined_novels_nyt_df[['title', 'pg_eng_url', 'pg_book_id']].head(5)\nThe pattern (\\d+) matches one or more digits, and the parentheses tell str.extract() to return that matched group. This kind of extraction is useful any time you have structured information embedded in a string column — for example, extracting years from date strings, or domain names from URLs.\nPandas string methods are great for simple pattern matching, but they treat text as a raw sequence of characters. In the next lesson, we’ll move into tokenization — the process of breaking text into meaningful linguistic units — which gives us more powerful tools for things like counting actual word forms, handling punctuation, and comparing texts across genres."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#how-do-genres-relate-to-different-measures-of-recognition-and-popularity",
-    "href": "private_slides/18-eda-data-viz.html#how-do-genres-relate-to-different-measures-of-recognition-and-popularity",
-    "title": "EDA & Data Visualization",
-    "section": "How do genres relate to different measures of recognition and popularity?",
-    "text": "How do genres relate to different measures of recognition and popularity?\n\n\n\n\nMeasure\nWhat it represents\n\n\n\n\nNYT rank\nWeekly commercial bestseller position\n\n\nOCLC holdings rank\nPresence in library collections\n\n\nGoodreads ratings rank\nReader attention on a commercial platform\n\n\nTop 500 rank\nPosition in the assembled novels dataset\n\n\n\n\n\nThis is the question that connects our exploratory work to the merged dataset. These columns all look like ranks, but they represent different institutions, users, selection processes, and ideas of recognition.\nLower numbers mean higher ranks in each measure. Before comparing genres, normalize titles and authors, average the repeated weekly NYT ranks so each novel has one value, and inspect how many novels each measure actually covers.\nThe earlier use of capitalize() only changed THE STAND to The stand, which still did not match The Stand. Lowercase title and author keys produce 126 exact matches rather than 10."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#preparing-the-genre-comparison",
-    "href": "private_slides/18-eda-data-viz.html#preparing-the-genre-comparison",
-    "title": "EDA & Data Visualization",
-    "section": "Preparing the genre comparison",
-    "text": "Preparing the genre comparison\nrecognition_novels_df = novels_df.copy()\nrecognition_nyt_df = nyt_bestsellers_df.copy()\n\nrecognition_novels_df['title_key'] = (\n    recognition_novels_df['title'].str.strip().str.lower()\n)\nrecognition_novels_df['author_key'] = (\n    recognition_novels_df['author'].str.strip().str.lower()\n)\n\nrecognition_nyt_df['title_key'] = (\n    recognition_nyt_df['nyt_title'].str.strip().str.lower()\n)\nrecognition_nyt_df['author_key'] = (\n    recognition_nyt_df['author'].str.strip().str.lower()\n)\n\nRun these as separate notebook cells if that makes the logic easier to follow. We preserve the original titles and authors and create separate matching keys."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#comparing-genres-across-rankings",
-    "href": "private_slides/18-eda-data-viz.html#comparing-genres-across-rankings",
-    "title": "EDA & Data Visualization",
-    "section": "Comparing genres across rankings",
-    "text": "Comparing genres across rankings\ngenre_summary_df = (\n    genre_recognition_df\n    .groupby('genre')\n    .agg(\n        novels=('title', 'nunique'),\n        average_nyt_rank=('average_nyt_rank', 'mean'),\n        average_oclc_rank=('oclc_holdings_rank', 'mean'),\n        average_goodreads_rank=('gr_num_ratings_rank', 'mean'),\n        average_top_500_rank=('top_500_rank', 'mean')\n    )\n    .reset_index()\n)\nWhat might disagreement among these rankings reveal?\n\nThe notebook contains the complete sequence, including the coverage counts, exclusion of the literal na genre, minimum sample threshold, reshaping with melt(), and the faceted Altair chart.\nThere are 221 records whose genre is literally stored as na. Excluding those records is consequential and must be documented. We then retain named genres represented by at least ten novels. Ask students to look for genres that move between systems: a genre might receive substantial Goodreads attention but rank differently through library holdings or the assembled Top 500 list."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#pronoun-counts-by-genre",
-    "href": "private_slides/18-eda-data-viz.html#pronoun-counts-by-genre",
-    "title": "EDA & Data Visualization",
-    "section": "Pronoun Counts by Genre",
-    "text": "Pronoun Counts by Genre\nHow could we visualize if certain genres more likely to use particular pronouns? What columns would we pass to Altair as encodings?\n\nLet’s explore this code!\nmelted_df = pd.melt(\n    combined_novels_nyt_df,\n    id_vars=['title', 'author', 'pub_year', 'genre'],\n    value_vars=['he_counts', 'she_counts', 'they_counts'],\n    var_name='pronoun',\n    value_name='pronoun_count'\n).assign(pronoun=lambda df: df['pronoun'].str.replace('_counts', '', regex=False))\n\nDemo code to copy:\nmelted_df = pd.melt(\n    combined_novels_nyt_df,\n    id_vars=['title', 'author', 'pub_year', 'genre'],\n    value_vars=['he_counts', 'she_counts', 'they_counts'],\n    var_name='pronoun',\n    value_name='pronoun_count'\n).assign(pronoun=lambda df: df['pronoun'].str.replace('_counts', '', regex=False))"
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#reshaping-data-with-pandas",
-    "href": "private_slides/18-eda-data-viz.html#reshaping-data-with-pandas",
-    "title": "EDA & Data Visualization",
-    "section": "Reshaping Data With Pandas",
-    "text": "Reshaping Data With Pandas\n\n\nMelting in Pandas is a way to reshape your data from wide to long, since sometimes you want to look at the relationship between multiple columns. In this case, we are melting the they_counts, she_counts, and he_counts columns into a single long-form DataFrame with the pronoun name in one column and the count in another. A “wide” DataFrame has one column per pronoun (he_count, she_count, they_count). A “long” DataFrame has one row per pronoun-novel combination, with a pronoun column and a count column. Altair works much better with long-form data.\npd.melt() transforms a wide DataFrame into a long one. Key parameters:\n\nid_vars — columns to keep as-is (they identify the row)\nvalue_vars — columns to “melt” into rows\nvar_name — name for the new column that holds the old column names\nvalue_name — name for the new column that holds the values\n\nThis is one of the most useful reshaping operations in Pandas. You’ll also encounter pivot() and pivot_table() which do the reverse. More at: https://pandas.pydata.org/docs/user_guide/reshaping.html"
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#putting-it-all-together",
-    "href": "private_slides/18-eda-data-viz.html#putting-it-all-together",
-    "title": "EDA & Data Visualization",
-    "section": "Putting It All Together",
-    "text": "Putting It All Together\nimport pandas as pd\nimport altair as alt\nmelted_df = pd.melt(\n    combined_novels_nyt_df,\n    id_vars=['title', 'author', 'pub_year', 'genre'],\n    value_vars=['he_counts', 'she_counts', 'they_counts'],\n    var_name='pronoun',\n    value_name='pronoun_count'\n).assign(pronoun=lambda df: df['pronoun'].str.replace('_counts', '', regex=False))\n\nselection = alt.selection_point(fields=['pronoun'], bind='legend')\n\nalt.Chart(melted_df[melted_df['genre'].notna()]).mark_bar().encode(\n    x=alt.X('genre:N', title='Genre', sort='-y'),\n    y=alt.Y('sum(pronoun_count):Q', title='Total Pronoun Count'),\n    color=alt.Color('pronoun:N', title='Pronoun'),\n    opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),\n    tooltip=[\n        alt.Tooltip('genre:N', title='Genre'),\n        alt.Tooltip('pronoun:N', title='Pronoun'),\n        alt.Tooltip('sum(pronoun_count):Q', title='Count', format=',')\n    ]\n).add_params(selection).properties(\n    title='Pronoun Counts by Genre',\n    width=600,\n    height=400\n)\n\nDemo code to copy:\nimport pandas as pd\nimport altair as alt\nmelted_df = pd.melt(\n    combined_novels_nyt_df,\n    id_vars=['title', 'author', 'pub_year', 'genre'],\n    value_vars=['he_counts', 'she_counts', 'they_counts'],\n    var_name='pronoun',\n    value_name='pronoun_count'\n).assign(pronoun=lambda df: df['pronoun'].str.replace('_counts', '', regex=False))\n\nselection = alt.selection_point(fields=['pronoun'], bind='legend')\n\nalt.Chart(melted_df[melted_df['genre'].notna()]).mark_bar().encode(\n    x=alt.X('genre:N', title='Genre', sort='-y'),\n    y=alt.Y('sum(pronoun_count):Q', title='Total Pronoun Count'),\n    color=alt.Color('pronoun:N', title='Pronoun'),\n    opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),\n    tooltip=[\n        alt.Tooltip('genre:N', title='Genre'),\n        alt.Tooltip('pronoun:N', title='Pronoun'),\n        alt.Tooltip('sum(pronoun_count):Q', title='Count', format=',')\n    ]\n).add_params(selection).properties(\n    title='Pronoun Counts by Genre',\n    width=600,\n    height=400\n)"
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#altair-interactivity-selections",
-    "href": "private_slides/18-eda-data-viz.html#altair-interactivity-selections",
-    "title": "EDA & Data Visualization",
-    "section": "Altair Interactivity: Selections",
-    "text": "Altair Interactivity: Selections\nFull interactivity documentation: https://altair-viz.github.io/user_guide/interactions/index.html\nselection = alt.selection_point(fields=['genre'], bind='legend')\n\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x='genre:N',\n    y='count():Q',\n    color='genre:N',\n    opacity=alt.condition(selection, alt.value(1), alt.value(0.2))\n).add_params(selection)\n\nDemo code to copy:\nselection = alt.selection_point(fields=['genre'], bind='legend')\n\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x='genre:N',\n    y='count():Q',\n    color='genre:N',\n    opacity=alt.condition(selection, alt.value(1), alt.value(0.2))\n).add_params(selection)\nalt.selection_point() creates an interactive selection. By binding it to the legend (bind='legend'), clicking a legend item highlights that category and fades the rest.\nalt.condition() applies a conditional encoding — full opacity for selected items, 20% opacity for everything else. This is a core pattern for interactive filtering in Altair.\nThis visualization starts to let us ask research questions: are certain genres more likely to use masculine pronouns? Does that change over time? These are exactly the kinds of hypotheses that EDA can surface before we move to more rigorous methods."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#handling-dates-in-altair",
-    "href": "private_slides/18-eda-data-viz.html#handling-dates-in-altair",
-    "title": "EDA & Data Visualization",
-    "section": "Handling Dates in Altair",
-    "text": "Handling Dates in Altair\nWhat happens if we use pub_year directly as a temporal encoding?\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=\"pub_year:T\",\n    y=\"count():Q\",\n    color=\"genre:N\"\n)\n\nDemo code to copy:\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=\"pub_year:T\",\n    y=\"count():Q\",\n    color=\"genre:N\"\n)\nWe could also see these patterns over time. Altair is great at visualizing dates, however, you’ll notice our primary date column, pub_year only has the year in it. If we try to use it in Altair as is, we get the following graph: Altair’s :T (temporal) encoding expects a proper datetime column, not a plain integer."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#dates-in-pandas",
-    "href": "private_slides/18-eda-data-viz.html#dates-in-pandas",
-    "title": "EDA & Data Visualization",
-    "section": "Dates in Pandas",
-    "text": "Dates in Pandas\nTo fix this, we can create a pub_date column:\ncombined_novels_nyt_df['pub_date'] = pd.to_datetime(\n    combined_novels_nyt_df['pub_year'].astype(str) + '-01-01',\n    errors='coerce'\n)\nWe append -01-01 to make a full date string (January 1st of each year), then use pd.to_datetime() to parse it. errors='coerce' turns any unparseable values into NaT (Not a Time) rather than raising an error.\n\nDemo code to copy:\ncombined_novels_nyt_df['pub_date'] = pd.to_datetime(\n    combined_novels_nyt_df['pub_year'].astype(str) + '-01-01',\n    errors='coerce'\n)"
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#top-500-novels-by-genre-over-time",
-    "href": "private_slides/18-eda-data-viz.html#top-500-novels-by-genre-over-time",
-    "title": "EDA & Data Visualization",
-    "section": "Top 500 Novels by Genre Over Time",
-    "text": "Top 500 Novels by Genre Over Time\nClick a genre in the legend to highlight it\n#| label: fig-genres-over-time\n#| fig-cap: \"Top 500 Novels by Genre Over Time\"\n\nselection = alt.selection_point(fields=['genre'], bind='legend')\n\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=alt.X('pub_date:T', title='Publication Year'),\n    y=alt.Y('count():Q', title='Number of Novels'),\n    color=alt.Color('genre:N', title='Genre'),\n    tooltip=['genre:N', 'count():Q'],\n    opacity=alt.condition(selection, alt.value(1), alt.value(0.2))\n).add_params(selection).transform_filter(\n    alt.datum.genre != None\n).properties(\n    title='Top 500 Novels by Genre Over Time',\n    width=800,\n    height=400\n)\n\nDemo code to copy:\n#| label: fig-genres-over-time\n#| fig-cap: \"Top 500 Novels by Genre Over Time\"\n\nselection = alt.selection_point(fields=['genre'], bind='legend')\n\nalt.Chart(combined_novels_nyt_df).mark_bar().encode(\n    x=alt.X('pub_date:T', title='Publication Year'),\n    y=alt.Y('count():Q', title='Number of Novels'),\n    color=alt.Color('genre:N', title='Genre'),\n    tooltip=['genre:N', 'count():Q'],\n    opacity=alt.condition(selection, alt.value(1), alt.value(0.2))\n).add_params(selection).transform_filter(\n    alt.datum.genre != None\n).properties(\n    title='Top 500 Novels by Genre Over Time',\n    width=800,\n    height=400\n)\nThis is our final chart — it combines everything we’ve learned: the merged dataset, Altair’s Grammar of Graphics, temporal encoding, and interactive selections.\nThe chart shows how the genre composition of canonized novels has shifted across publication years. Try clicking different genres to isolate them. Notice that “Novel” (unclassified) dominates early periods, while specific genre labels become more common in the 20th century — is that a feature of the novels themselves, or of how genre metadata was assigned?\nThe full code for this chart is in the lesson materials."
-  },
-  {
-    "objectID": "private_slides/18-eda-data-viz.html#homework-exploring-and-visualizing-culture",
-    "href": "private_slides/18-eda-data-viz.html#homework-exploring-and-visualizing-culture",
-    "title": "EDA & Data Visualization",
-    "section": "Homework: Exploring and Visualizing Culture",
-    "text": "Homework: Exploring and Visualizing Culture\nNew homework: Exploring and Visualizing Culture Homework. Due November 16, 2026.\n\nThere are no right or wrong answers for this assignment. The goal is to start implementing EDA as Tukey envisioned it — as a detective process, not a confirmatory one.\nStudents may compare the datasets, study their intersection, or investigate a smaller relationship. Their final notebook needs an argument supported by exploratory evidence, not merely a sequence of charts.\nThe notebook filename should be descriptive and contain no spaces, such as GenderTrendsInTopNovels.ipynb. Students should use a stable remote URL or document where a local data file belongs. They should not commit the 152 MB full-text dataset or their virtual environment.\nThe full assignment checklist and optional Colab example are in the EDA and Data Visualization lesson."
+    "objectID": "private_slides/18-eda-data-viz.html#what-matters-most",
+    "href": "private_slides/18-eda-data-viz.html#what-matters-most",
+    "title": "Exploratory Data Analysis & Data Visualization",
+    "section": "What matters most?",
+    "text": "What matters most?\n\nThe goal is not to use the largest number of methods or produce the most complicated chart.\n\n\nInspect the data. Make one purposeful visualization. Explain what you notice.\n\nStudents should create the notebook in the pandas-eda folder of their coding repository, push it to GitHub, and submit the repository link through the designated discussion."
   },
   {
     "objectID": "projects/index.html",

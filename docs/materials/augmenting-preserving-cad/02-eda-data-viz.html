@@ -538,6 +538,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If you attended Section B on November 3, you can skim this lesson because we covered the majority of this material in class. Professor LeBlanc will also try to post a video covering the revised lesson on Canvas soon.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Want to follow along interactively?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Download the Jupyter notebook version of this lesson: <a href="../../assets/files/Top500NovelsEDA.ipynb" download="" target="_blank">Top500NovelsEDA.ipynb</a></p>
+<p>Open it in VS Code or Jupyter, select your course virtual environment as the kernel, and run the cells as you work through the lesson. The notebook begins without saved outputs so that you can produce and inspect each result yourself.</p>
+</div>
+</div>
 <p>In our last lesson, we tried to answer the following questions:</p>
 <ol type="1">
 <li>What is the average number of visits for each state?</li>
@@ -565,7 +579,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>First, we need to create a new Jupyter notebook in our <code>pandas-eda</code> folder called <code>Top500NovelsEDA.ipynb</code> and then load in the data. As a reminder, how can we <strong>read</strong> data in Pandas?</p>
 <p><img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExanV4dzd4NDFqZnVqcThvOXl4b2ppNGI0ZWJhbjIyNDNwODA5YWZxbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NFA61GS9qKZ68/giphy.gif" class="img-fluid"></p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -574,7 +588,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>While this cat is adorable, we can also use the <code>pd.read_csv()</code> method to read in our data.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data</span></span>
@@ -591,7 +605,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>ISO-8859-1</code>, also known as <code>Latin-1</code>, is part of a family of encodings standardized by the <a href="https://www.iso.org/home.html" target="_blank"><strong>International Organization for Standardization (ISO)</strong></a> and the <a href="https://www.iec.ch/" target="_blank"><strong>International Electrotechnical Commission (IEC)</strong></a>. This standard uses one byte per character, which provides 256 possible numerical values, and primarily supports Latin-script Western European languages. <code>utf-8</code>, by contrast, uses between one and four bytes to encode Unicode code points and preserves compatibility with ASCII while supporting the much larger multilingual Unicode character set.</p>
 <p>In “Encoding Multilingualism: Technical Affordances of Multilingual Publication from Manuscripts to Unicode and OpenType,” Quinn Dombrowski, Manish Goregaokar, Ben Joeng (Yang), and Abeera Kamran detail how the rise of digital computing led to a proliferation of encodings, especially for non-European languages in the 1980s. But with the rise of the web, there was an increasing need for a unified encoding standard that could support multiple languages simultaneously, which led to the creation of Unicode and these newer standards. While Unicode greatly expanded multilingual computing, it did not succeed in making every language equally well supported.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>In our case, we didn’t need to specify the encoding, but if we did, we could have added the <code>encoding</code> parameter to our <code>read_csv()</code> method.</p>
-<div id="812bc227" class="cell" data-execution_count="1">
+<div id="ac588e82" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libraries</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1025,13 +1039,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>Both methods return Boolean values: <code>True</code> or <code>False</code> for every row. We can place that Boolean Series inside square brackets to filter the DataFrame. First, let us inspect the authors whose field of activity is missing:</p>
-<div id="01e03783" class="cell" data-execution_count="2">
+<div id="fa0d6ca3" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>missing_activity_df <span class="op">=</span> novels_df[</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    novels_df[<span class="st">'author_field_of_activity'</span>].isna()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>missing_activity_df.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -1311,13 +1325,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Then we can use <code>notna()</code> to inspect the rows where VIAF and the Library of Congress supplied a value:</p>
-<div id="c8183310" class="cell" data-execution_count="3">
+<div id="054628b9" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>recorded_activity_df <span class="op">=</span> novels_df[</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    novels_df[<span class="st">'author_field_of_activity'</span>].notna()</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>recorded_activity_df.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -1598,7 +1612,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The original <code>novels_df</code> still contains all 500 novels. We have not established that the missing rows are errors, and we have not deleted anything.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1607,15 +1621,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We could use the <code>~</code> operator to negate the Boolean values returned by <code>isna()</code> instead of using <code>notna()</code>. This gives us the same result as the previous code snippet:</p>
-<div id="62999e50" class="cell" data-execution_count="4">
+<div id="9d21b5eb" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>recorded_activity_df <span class="op">=</span> novels_df[</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">~</span>novels_df[<span class="st">'author_field_of_activity'</span>].isna()</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>recorded_activity_df.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="37">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
 
@@ -1950,9 +1964,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Before dropping rows, we need to consider how that decision would change the shape of the dataset and whether any patterns might explain why some authors have fields of activity recorded while others do not. For example, we can explore the <code>author_gender</code> field to see whether missing activity metadata is distributed unevenly.</p>
-<div id="989585bf" class="cell" data-execution_count="5">
+<div id="dffc2ea9" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>missing_activity_df[<span class="st">'author_gender'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="38">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>author_gender
 male      128
 female     43
@@ -1960,9 +1974,9 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>How does that compare with the rows where a field of activity was recorded?</p>
-<div id="4661f127" class="cell" data-execution_count="6">
+<div id="59cdb84b" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>recorded_activity_df[<span class="st">'author_gender'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="39">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>author_gender
 male      227
 female    102
@@ -1970,9 +1984,9 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>We can use the same approach to explore other fields. Original language may help us ask whether cataloguing coverage varies across linguistic traditions:</p>
-<div id="9755a133" class="cell" data-execution_count="7">
+<div id="8579f307" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>missing_activity_df[<span class="st">'orig_lang'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="40">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>orig_lang
 English       139
 French         16
@@ -1987,9 +2001,9 @@ Polish          1
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="fea7346a" class="cell" data-execution_count="8">
+<div id="b4d980e9" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>recorded_activity_df[<span class="st">'orig_lang'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="41">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>orig_lang
 English    291
 German      10
@@ -2011,18 +2025,18 @@ Name: count, dtype: int64</code></pre>
 <li><code>pub_year</code> is numeric and ranges from 1021 to 2015.</li>
 </ul>
 <p>We can inspect the distribution of each categorical field before deciding which relationship to explore:</p>
-<div id="2046c82a" class="cell" data-execution_count="9">
+<div id="6e54ccb1" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'author_gender'</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>author_gender
 male      355
 female    145
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="48515e9b" class="cell" data-execution_count="10">
+<div id="e305343b" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'orig_lang'</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>orig_lang
 English       430
 French         25
@@ -2039,9 +2053,9 @@ Polish          1
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="76d01e01" class="cell" data-execution_count="11">
+<div id="ea15003c" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'author_nationality'</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>author_nationality
 US    257
 GB    149
@@ -2123,7 +2137,7 @@ Name: count, dtype: int64</code></pre>
 </ul>
 <p>Pandas also has a robust User Guide on how to plot here <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html" target="_blank">https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html</a>.</p>
 <p>To get a sense of how <code>plot</code> works we can try visualizing the distribution of <code>genre</code> values across the dataset. We can use the <code>value_counts()</code> method to count the number of novels in each genre, and then use the <code>plot()</code> method to create a bar chart of those counts. We can also specify the figure size and color of the bars:</p>
-<div id="7378a57f" class="cell" data-execution_count="12">
+<div id="3b193bf7" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>genre_counts <span class="op">=</span> novels_df[<span class="st">'genre'</span>].value_counts()</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>genre_counts.plot(</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">'bar'</span>,</span>
@@ -2140,7 +2154,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 <p>In this code, we are first using the <code>value_counts()</code> method to count the number of novels in each genre, and then we are using the <code>plot()</code> method, passing the arguments of <code>kind='bar'</code> to create a bar chart, <code>figsize=(10, 5)</code> to set the size of the figure, and <code>color='#4c78a8'</code> to set the color of the bars.</p>
 <p>We could also look at the distribution of OCLC rank over time by plotting the <code>pub_year</code> against the <code>oclc_holdings_rank</code>. This would give us a sense of how the popularity of novels has changed over time, and whether there are any trends or patterns in the data.</p>
-<div id="f1475193" class="cell" data-execution_count="13">
+<div id="b985d023" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>novels_df.plot(</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'pub_year'</span>,</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'oclc_holdings_rank'</span>,</span>
@@ -2188,7 +2202,7 @@ Name: count, dtype: int64</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Current versions of Jupyter and the VS Code Jupyter extension normally display Altair charts without additional renderer configuration. If a chart does not appear, first confirm that the notebook is using the Python interpreter from the virtual environment where you installed Altair. The <a href="https://altair-viz.github.io/user_guide/display_frontends.html" target="_blank">Altair display documentation</a> lists troubleshooting options for different notebook interfaces.</p>
 <p>Now we can try out Altair with one of the built-in datasets</p>
-<div id="07c5fae6" class="cell" data-execution_count="14">
+<div id="173bf1f5" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> altair.datasets <span class="im">import</span> data</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2200,26 +2214,26 @@ Name: count, dtype: int64</code></pre>
 <span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'Origin'</span>,</span>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    tooltip<span class="op">=</span>[<span class="st">'Name'</span>, <span class="st">'Origin'</span>, <span class="st">'Horsepower'</span>, <span class="st">'Miles_per_Gallon'</span>]</span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="47">
+<div class="cell-output cell-output-display" data-execution_count="14">
 
 <style>
-  #altair-viz-97896c54eab849b69a2293018bdb69f4.vega-embed {
+  #altair-viz-024a068b4cfc4a6ebbc02ca4a3182dcb.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-97896c54eab849b69a2293018bdb69f4.vega-embed details,
-  #altair-viz-97896c54eab849b69a2293018bdb69f4.vega-embed details summary {
+  #altair-viz-024a068b4cfc4a6ebbc02ca4a3182dcb.vega-embed details,
+  #altair-viz-024a068b4cfc4a6ebbc02ca4a3182dcb.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-97896c54eab849b69a2293018bdb69f4"></div>
+<div id="altair-viz-024a068b4cfc4a6ebbc02ca4a3182dcb"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-97896c54eab849b69a2293018bdb69f4") {
-      outputDiv = document.getElementById("altair-viz-97896c54eab849b69a2293018bdb69f4");
+    if (outputDiv.id !== "altair-viz-024a068b4cfc4a6ebbc02ca4a3182dcb") {
+      outputDiv = document.getElementById("altair-viz-024a068b4cfc4a6ebbc02ca4a3182dcb");
     }
 
     const paths = {
@@ -2281,32 +2295,32 @@ Name: count, dtype: int64</code></pre>
 <p><img src="../../assets/images/encodings.png" class="img-fluid"></p>
 <p><img src="../../assets/images/encoding_data_types.png" class="img-fluid"></p>
 <p>Now that we understand a bit of Altair’s syntax, let’s try to recreate our <code>pub_year</code> by <code>top_500_rank</code> plot, but this time add a hover effect to see which novel is which data point.</p>
-<div id="77f2444f" class="cell" data-execution_count="15">
+<div id="3ac74982" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>alt.Chart(novels_df).mark_circle(size<span class="op">=</span><span class="dv">60</span>).encode(</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'pub_year'</span>,</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'top_500_rank'</span>,</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    tooltip<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>, <span class="st">'top_500_rank'</span>]</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="48">
+<div class="cell-output cell-output-display" data-execution_count="15">
 
 <style>
-  #altair-viz-20f9abc83e8f47bab751b9ce1aeb5eb2.vega-embed {
+  #altair-viz-a3f15558acf24762a7b78e6f272d9109.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-20f9abc83e8f47bab751b9ce1aeb5eb2.vega-embed details,
-  #altair-viz-20f9abc83e8f47bab751b9ce1aeb5eb2.vega-embed details summary {
+  #altair-viz-a3f15558acf24762a7b78e6f272d9109.vega-embed details,
+  #altair-viz-a3f15558acf24762a7b78e6f272d9109.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-20f9abc83e8f47bab751b9ce1aeb5eb2"></div>
+<div id="altair-viz-a3f15558acf24762a7b78e6f272d9109"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-20f9abc83e8f47bab751b9ce1aeb5eb2") {
-      outputDiv = document.getElementById("altair-viz-20f9abc83e8f47bab751b9ce1aeb5eb2");
+    if (outputDiv.id !== "altair-viz-a3f15558acf24762a7b78e6f272d9109") {
+      outputDiv = document.getElementById("altair-viz-a3f15558acf24762a7b78e6f272d9109");
     }
 
     const paths = {
@@ -2360,32 +2374,32 @@ Name: count, dtype: int64</code></pre>
 </div>
 <p>We can see that we are using much of the same syntax from the Altair example. We are specifying the <code>Chart</code> class and passing our data via the <code>novels_df</code> DataFrame, then we are selecting the <code>mark_circle()</code> as our mark, and then calling the <code>encode()</code> method where we specify the <code>x</code>, <code>y</code>, and <code>tooltip</code> encodings.</p>
 <p>Now part of the power of Altair is that we can be intentional in specifying the data types of our encodings. For example, we can specify that the <code>pub_year</code> is a temporal variable and that the <code>top_500_rank</code> is a quantitative variable. This will help Altair to better understand how to visualize our data.</p>
-<div id="ed785536" class="cell" data-execution_count="16">
+<div id="e83d0327" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>alt.Chart(novels_df).mark_circle(size<span class="op">=</span><span class="dv">60</span>).encode(</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'pub_year:T'</span>,</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'top_500_rank:Q'</span>,</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    tooltip<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>, <span class="st">'top_500_rank'</span>]</span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="49">
+<div class="cell-output cell-output-display" data-execution_count="16">
 
 <style>
-  #altair-viz-77c07ca8570045b2ac175d8bc83322c8.vega-embed {
+  #altair-viz-548a8b9a4c99460d8fee9355da1e2d75.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-77c07ca8570045b2ac175d8bc83322c8.vega-embed details,
-  #altair-viz-77c07ca8570045b2ac175d8bc83322c8.vega-embed details summary {
+  #altair-viz-548a8b9a4c99460d8fee9355da1e2d75.vega-embed details,
+  #altair-viz-548a8b9a4c99460d8fee9355da1e2d75.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-77c07ca8570045b2ac175d8bc83322c8"></div>
+<div id="altair-viz-548a8b9a4c99460d8fee9355da1e2d75"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-77c07ca8570045b2ac175d8bc83322c8") {
-      outputDiv = document.getElementById("altair-viz-77c07ca8570045b2ac175d8bc83322c8");
+    if (outputDiv.id !== "altair-viz-548a8b9a4c99460d8fee9355da1e2d75") {
+      outputDiv = document.getElementById("altair-viz-548a8b9a4c99460d8fee9355da1e2d75");
     }
 
     const paths = {
@@ -2438,10 +2452,10 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>Now notice when we set the temporal encoding, our chart no longer displays years on the x-axis, but instead as a weird number. That is because we need to <strong>cast</strong> our <code>pub_year</code> column as a datetime object. We can do this using the <code>pd.to_datetime()</code> method.</p>
-<div id="97f77063" class="cell" data-execution_count="17">
+<div id="21e3f6f2" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'pub_year'</span>] <span class="op">=</span> pd.to_datetime(novels_df[<span class="st">'pub_year'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>, <span class="bu">format</span><span class="op">=</span><span class="st">'%Y'</span>)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'pub_year'</span>].head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="50">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>0   1605-01-01
 1   1865-01-01
 2   1884-01-01
@@ -2451,32 +2465,32 @@ Name: pub_year, dtype: datetime64[us]</code></pre>
 </div>
 </div>
 <p>Now if we remake our Altair chart, we can see that the x-axis is now displaying years as we would expect.</p>
-<div id="0542ce14" class="cell" data-execution_count="18">
+<div id="ce7ded3d" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>alt.Chart(novels_df).mark_circle(size<span class="op">=</span><span class="dv">60</span>).encode(</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'pub_year:T'</span>,</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'top_500_rank:Q'</span>,</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    tooltip<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>, <span class="st">'top_500_rank'</span>]</span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="51">
+<div class="cell-output cell-output-display" data-execution_count="18">
 
 <style>
-  #altair-viz-f4b19da0754d41a1bb15c82539623003.vega-embed {
+  #altair-viz-723b7a48ef7a41b198469e6eb1aef700.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-f4b19da0754d41a1bb15c82539623003.vega-embed details,
-  #altair-viz-f4b19da0754d41a1bb15c82539623003.vega-embed details summary {
+  #altair-viz-723b7a48ef7a41b198469e6eb1aef700.vega-embed details,
+  #altair-viz-723b7a48ef7a41b198469e6eb1aef700.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-f4b19da0754d41a1bb15c82539623003"></div>
+<div id="altair-viz-723b7a48ef7a41b198469e6eb1aef700"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-f4b19da0754d41a1bb15c82539623003") {
-      outputDiv = document.getElementById("altair-viz-f4b19da0754d41a1bb15c82539623003");
+    if (outputDiv.id !== "altair-viz-723b7a48ef7a41b198469e6eb1aef700") {
+      outputDiv = document.getElementById("altair-viz-723b7a48ef7a41b198469e6eb1aef700");
     }
 
     const paths = {
@@ -2532,12 +2546,12 @@ Name: pub_year, dtype: datetime64[us]</code></pre>
 <p><img src="../../assets/images/data_types.png" class="img-fluid"></p>
 <p>This graph outlines the main types of data you might encounter, which largely breaks down between qualitative (categorical) or quantitative (numerical). Now these data types somewhat overlap with our <code>.dtypes</code> in Pandas, but they also go beyond. For example, what in our dataset might be <code>Nominal</code> versus <code>Ordinal</code>, or <code>Discrete</code> versus <code>Continuous</code>?</p>
 <p>If we come back to our original question around what might explain why some authors have a recorded field of activity and others do not, we can start to think of making a new column that will help us explore this question. We can create a new column called <code>has_field_of_activity</code> that will be a Boolean column that records whether each novel has a field of activity. This will allow us to compare the two subsets of novels with and without recorded fields of activity.</p>
-<div id="24a4b11f" class="cell" data-execution_count="19">
+<div id="5af53576" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'has_field_of_activity'</span>] <span class="op">=</span> (</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    novels_df[<span class="st">'author_field_of_activity'</span>].notna()</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'has_field_of_activity'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="52">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>has_field_of_activity
 True     329
 False    171
@@ -2545,33 +2559,33 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>Now we could update our chart to color the points by whether or not the novel has a recorded field of activity. This will allow us to see if there are any patterns in the data that might explain why some authors have a recorded field of activity and others do not.</p>
-<div id="50994ccd" class="cell" data-execution_count="20">
+<div id="53875603" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>alt.Chart(novels_df).mark_circle(size<span class="op">=</span><span class="dv">60</span>).encode(</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'pub_year:T'</span>,</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'top_500_rank:Q'</span>,</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'has_field_of_activity:N'</span>,</span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    tooltip<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>, <span class="st">'top_500_rank'</span>]</span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="53">
+<div class="cell-output cell-output-display" data-execution_count="20">
 
 <style>
-  #altair-viz-96f65513dd9046f09fc05ebc2fba86d0.vega-embed {
+  #altair-viz-7e64d7d666814dda8ecb42cc5c0059fb.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-96f65513dd9046f09fc05ebc2fba86d0.vega-embed details,
-  #altair-viz-96f65513dd9046f09fc05ebc2fba86d0.vega-embed details summary {
+  #altair-viz-7e64d7d666814dda8ecb42cc5c0059fb.vega-embed details,
+  #altair-viz-7e64d7d666814dda8ecb42cc5c0059fb.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-96f65513dd9046f09fc05ebc2fba86d0"></div>
+<div id="altair-viz-7e64d7d666814dda8ecb42cc5c0059fb"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-96f65513dd9046f09fc05ebc2fba86d0") {
-      outputDiv = document.getElementById("altair-viz-96f65513dd9046f09fc05ebc2fba86d0");
+    if (outputDiv.id !== "altair-viz-7e64d7d666814dda8ecb42cc5c0059fb") {
+      outputDiv = document.getElementById("altair-viz-7e64d7d666814dda8ecb42cc5c0059fb");
     }
 
     const paths = {
@@ -2641,7 +2655,7 @@ Name: count, dtype: int64</code></pre>
 <p>Altair is built around these principles, making it easier to create clear and interpretable visualizations by specifying each component in your code. This approach is not only flexible but also emphasizes transparency, helping you understand how your data is represented visually. It’s also more extensible, allowing for more complex and interactive visualizations, such as linked plots or selections, which would be difficult to achieve with simpler plotting libraries.</p>
 <p>By embracing the Grammar of Graphics, Altair enables you to think more abstractly about the relationship between data and visualization, offering a consistent, rule-based system to produce a wide variety of visual outputs.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2650,10 +2664,10 @@ Name: count, dtype: int64</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We could use a <code>for</code> loop to visualize several categorical columns and compare each one with whether the novel has a recorded field of activity. This offers a faster way to look for possible patterns across multiple fields, but it uses more advanced Python and Altair syntax than the rest of this lesson.</p>
-<div id="6bf09c8f" class="cell" data-execution_count="21">
+<div id="7adda605" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>categorical_columns <span class="op">=</span> [</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'genre'</span>,</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'author_gender'</span>,</span>
@@ -2673,26 +2687,26 @@ Name: count, dtype: int64</code></pre>
 <span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>    charts.append(chart)</span>
 <span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>alt.vconcat(<span class="op">*</span>charts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="54">
+<div class="cell-output cell-output-display" data-execution_count="21">
 
 <style>
-  #altair-viz-5966c25f799b4add9c765f153f5ba97d.vega-embed {
+  #altair-viz-069dff28e3c444cf9261cf0e86eb1672.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-5966c25f799b4add9c765f153f5ba97d.vega-embed details,
-  #altair-viz-5966c25f799b4add9c765f153f5ba97d.vega-embed details summary {
+  #altair-viz-069dff28e3c444cf9261cf0e86eb1672.vega-embed details,
+  #altair-viz-069dff28e3c444cf9261cf0e86eb1672.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-5966c25f799b4add9c765f153f5ba97d"></div>
+<div id="altair-viz-069dff28e3c444cf9261cf0e86eb1672"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-5966c25f799b4add9c765f153f5ba97d") {
-      outputDiv = document.getElementById("altair-viz-5966c25f799b4add9c765f153f5ba97d");
+    if (outputDiv.id !== "altair-viz-069dff28e3c444cf9261cf0e86eb1672") {
+      outputDiv = document.getElementById("altair-viz-069dff28e3c444cf9261cf0e86eb1672");
     }
 
     const paths = {
@@ -2766,9 +2780,9 @@ Name: count, dtype: int64</code></pre>
 <p>What relationships appear between a novel’s genre and its author’s recorded fields of activity?</p>
 </blockquote>
 <p>Let’s first inspect the activity field:</p>
-<div id="d98580b0" class="cell" data-execution_count="22">
+<div id="3dd796c0" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'author_field_of_activity'</span>].value_counts().head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="55">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>author_field_of_activity
 english literature                                                                                                                                                                                                              28
 childrens literature                                                                                                                                                                                                            21
@@ -2795,7 +2809,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 <p>There are 121 distinct recorded values, and many cells contain several comma-separated activities. For example, <code>novels,fiction</code> is currently one string rather than two activities. We cannot responsibly compare individual activities with genre until we split those strings and reshape the resulting lists into separate rows.</p>
 <p>The <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.split.html" target="_blank"><code>str.split()</code> method</a> separates each string wherever it finds a comma. Each cell in the new column becomes a Python list:</p>
-<div id="f37cbbae" class="cell" data-execution_count="23">
+<div id="d88c4473" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>novels_df[<span class="st">'individual_author_activity'</span>] <span class="op">=</span> (</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    novels_df[<span class="st">'author_field_of_activity'</span>].<span class="bu">str</span>.split(<span class="st">','</span>)</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -2804,7 +2818,7 @@ Name: count, dtype: int64</code></pre>
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'author_field_of_activity'</span>,</span>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'individual_author_activity'</span></span>
 <span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="56">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <div>
 
 
@@ -2874,7 +2888,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>We can then use <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.explode.html" target="_blank"><code>explode()</code></a> to give every item in each list its own row:</p>
-<div id="a4542ff9" class="cell" data-execution_count="24">
+<div id="062b0fc7" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>exploded_novels_df <span class="op">=</span> novels_df.explode(</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'individual_author_activity'</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>).copy()</span>
@@ -2888,9 +2902,9 @@ Rows after exploding: 1143</code></pre>
 </div>
 <p>This operation changes the DataFrame’s <strong>unit of observation</strong>. Before exploding, each row represented one novel. After exploding, each row represents one novel–activity relationship. A novel associated with four activities now appears in four rows, while its title, author, and genre are repeated.</p>
 <p>Use <code>unique()</code> to retrieve each distinct individual activity, then convert the result to a Python list:</p>
-<div id="c5f0f7db" class="cell" data-execution_count="25">
+<div id="ac08169b" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>exploded_novels_df[<span class="st">'individual_author_activity'</span>].unique().tolist()[<span class="dv">0</span>:<span class="dv">10</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="58">
+<div class="cell-output cell-output-display" data-execution_count="25">
 <pre><code>[nan,
  'writing',
  'teaching',
@@ -2904,7 +2918,7 @@ Rows after exploding: 1143</code></pre>
 </div>
 </div>
 <p>Now Altair can count how often each genre and individual activity occur together. This first chart deliberately includes every individual activity so that we can see what happens when a categorical field contains many distinct values:</p>
-<div id="e9d18b9f" class="cell" data-execution_count="26">
+<div id="c03b3d2c" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>alt.Chart(exploded_novels_df).mark_rect().encode(</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'genre:N'</span>,</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'individual_author_activity:N'</span>,</span>
@@ -2915,26 +2929,26 @@ Rows after exploding: 1143</code></pre>
 <span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'count():Q'</span></span>
 <span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
 <span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="59">
+<div class="cell-output cell-output-display" data-execution_count="26">
 
 <style>
-  #altair-viz-e3dbe870026346f2b24f48dec6cb0404.vega-embed {
+  #altair-viz-2d7e2e29d776447291710a435e47b235.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-e3dbe870026346f2b24f48dec6cb0404.vega-embed details,
-  #altair-viz-e3dbe870026346f2b24f48dec6cb0404.vega-embed details summary {
+  #altair-viz-2d7e2e29d776447291710a435e47b235.vega-embed details,
+  #altair-viz-2d7e2e29d776447291710a435e47b235.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-e3dbe870026346f2b24f48dec6cb0404"></div>
+<div id="altair-viz-2d7e2e29d776447291710a435e47b235"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-e3dbe870026346f2b24f48dec6cb0404") {
-      outputDiv = document.getElementById("altair-viz-e3dbe870026346f2b24f48dec6cb0404");
+    if (outputDiv.id !== "altair-viz-2d7e2e29d776447291710a435e47b235") {
+      outputDiv = document.getElementById("altair-viz-2d7e2e29d776447291710a435e47b235");
     }
 
     const paths = {
@@ -2988,7 +3002,7 @@ Rows after exploding: 1143</code></pre>
 </div>
 <p>The chart helps us look for concentrations, but it also shows the limits of displaying every category at once. Most importantly, the counts are not counts of unique novels. They are counts of novel–activity relationships created through <code>explode()</code>. That distinction must remain visible in any interpretation.</p>
 <p>For a more focused comparison, we will create a filtered view containing rows that have both values needed by the heatmap. A row without a genre cannot be placed on the x-axis, and a row without an individual activity cannot be placed on the y-axis. We also exclude the textual genre category <code>"na"</code>. Unlike an actual null, <code>"na"</code> is a recorded string, so leaving it out is an interpretive choice rather than a technical requirement.</p>
-<div id="3bba2b12" class="cell" data-execution_count="27">
+<div id="d5c52fea" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>genre_activity_chart_df <span class="op">=</span> exploded_novels_df[</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    exploded_novels_df[<span class="st">'genre'</span>].notna()</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (exploded_novels_df[<span class="st">'genre'</span>] <span class="op">!=</span> <span class="st">'na'</span>)</span>
@@ -2996,7 +3010,7 @@ Rows after exploding: 1143</code></pre>
 <span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>].copy()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This filtering does not delete rows from <code>exploded_novels_df</code>. It creates a separate DataFrame designed for a chart that compares recorded genres with recorded activities. We should document how many relationships were excluded:</p>
-<div id="8e3f9188" class="cell" data-execution_count="28">
+<div id="d8f4c9cc" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"All exploded rows: </span><span class="sc">{</span><span class="bu">len</span>(exploded_novels_df)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Rows used in the final chart: </span><span class="sc">{</span><span class="bu">len</span>(genre_activity_chart_df)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -3005,7 +3019,7 @@ Rows used in the final chart: 626</code></pre>
 </div>
 </div>
 <p>Now we can use the same Altair syntax with the filtered DataFrame:</p>
-<div id="d7142d6f" class="cell" data-execution_count="29">
+<div id="4d271a30" class="cell" data-execution_count="29">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>alt.Chart(genre_activity_chart_df).mark_rect().encode(</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'genre:N'</span>,</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'individual_author_activity:N'</span>,</span>
@@ -3016,26 +3030,26 @@ Rows used in the final chart: 626</code></pre>
 <span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'count():Q'</span></span>
 <span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
 <span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="62">
+<div class="cell-output cell-output-display" data-execution_count="29">
 
 <style>
-  #altair-viz-4863424b2c2044bfb0cfd523ef0620f9.vega-embed {
+  #altair-viz-8313efa9b6f44a428947334550ee7762.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-4863424b2c2044bfb0cfd523ef0620f9.vega-embed details,
-  #altair-viz-4863424b2c2044bfb0cfd523ef0620f9.vega-embed details summary {
+  #altair-viz-8313efa9b6f44a428947334550ee7762.vega-embed details,
+  #altair-viz-8313efa9b6f44a428947334550ee7762.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-4863424b2c2044bfb0cfd523ef0620f9"></div>
+<div id="altair-viz-8313efa9b6f44a428947334550ee7762"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-4863424b2c2044bfb0cfd523ef0620f9") {
-      outputDiv = document.getElementById("altair-viz-4863424b2c2044bfb0cfd523ef0620f9");
+    if (outputDiv.id !== "altair-viz-8313efa9b6f44a428947334550ee7762") {
+      outputDiv = document.getElementById("altair-viz-8313efa9b6f44a428947334550ee7762");
     }
 
     const paths = {
@@ -3088,7 +3102,7 @@ Rows used in the final chart: 626</code></pre>
 </div>
 </div>
 <p>However, before interpreting those counts, we need to ask whether every author contributes equally to the dataset. <code>value_counts()</code> shows how many novels are associated with each author. We can filter that Series to authors who appear more than once and turn it into a DataFrame for visualization:</p>
-<div id="d3fcc7d5" class="cell" data-execution_count="30">
+<div id="499f7b8e" class="cell" data-execution_count="30">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>repeated_authors_df <span class="op">=</span> novels_df[<span class="st">'author'</span>].value_counts().reset_index()</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>repeated_authors_df <span class="op">=</span> repeated_authors_df[</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    repeated_authors_df[<span class="st">'count'</span>] <span class="op">&gt;</span> <span class="dv">1</span></span>
@@ -3104,7 +3118,7 @@ Rows used in the final chart: 626</code></pre>
 <span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>    ascending<span class="op">=</span><span class="va">False</span></span>
 <span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>repeated_authors_df.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="63">
+<div class="cell-output cell-output-display" data-execution_count="30">
 <div>
 
 
@@ -3174,7 +3188,7 @@ Rows used in the final chart: 626</code></pre>
 </div>
 </div>
 <p>In this code, we are using the <code>value_counts()</code> method to count the number of novels associated with each author, and then we are using the <code>reset_index()</code> method to turn the resulting Series into a DataFrame. We are then filtering the DataFrame to only include authors who have more than one novel, and renaming the columns to be more descriptive. Finally, we are sorting the DataFrame by the <code>count</code> column in descending order.</p>
-<div id="d22d194f" class="cell" data-execution_count="31">
+<div id="810aec8c" class="cell" data-execution_count="31">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>alt.Chart(repeated_authors_df).mark_bar().encode(</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'count:Q'</span>,</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">'author:N'</span>, sort<span class="op">=</span><span class="st">'-x'</span>),</span>
@@ -3183,26 +3197,26 @@ Rows used in the final chart: 626</code></pre>
 <span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'count:Q'</span></span>
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>    ]</span>
 <span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="64">
+<div class="cell-output cell-output-display" data-execution_count="31">
 
 <style>
-  #altair-viz-4c24ce613aa94010bef393e5f167fb0d.vega-embed {
+  #altair-viz-93c0f6ade84549ad99f8b7d4264319e0.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-4c24ce613aa94010bef393e5f167fb0d.vega-embed details,
-  #altair-viz-4c24ce613aa94010bef393e5f167fb0d.vega-embed details summary {
+  #altair-viz-93c0f6ade84549ad99f8b7d4264319e0.vega-embed details,
+  #altair-viz-93c0f6ade84549ad99f8b7d4264319e0.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-4c24ce613aa94010bef393e5f167fb0d"></div>
+<div id="altair-viz-93c0f6ade84549ad99f8b7d4264319e0"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-4c24ce613aa94010bef393e5f167fb0d") {
-      outputDiv = document.getElementById("altair-viz-4c24ce613aa94010bef393e5f167fb0d");
+    if (outputDiv.id !== "altair-viz-93c0f6ade84549ad99f8b7d4264319e0") {
+      outputDiv = document.getElementById("altair-viz-93c0f6ade84549ad99f8b7d4264319e0");
     }
 
     const paths = {
@@ -3257,7 +3271,7 @@ Rows used in the final chart: 626</code></pre>
 <p>Notice in this code we are using the <code>mark_bar()</code> method to create a bar chart, and we are using the <code>encode()</code> method to specify the x and y encodings. We are also using the <code>sort='-x'</code> argument to sort the authors by their count in descending order. To use sort, we need to do a slightly different syntax than we have used before. We need to use the <code>alt.Y()</code> method to specify the y encoding, and then we can pass the <code>sort</code> argument to that method. In Altair, we can use either the name of our columns directly or we can use the classes <code>alt.X()</code> and <code>alt.Y()</code> to specify the encodings. The latter is useful when we want to pass additional arguments to the encoding, such as sorting.</p>
 <p>This chart shows that some authors contribute several novels while others contribute only one. In our exploded heatmap, an author with many novels contributes their activity terms once for every novel. The apparent strength of a genre–activity relationship may therefore partly reflect which prolific authors appear repeatedly in the Top 500.</p>
 <p>To reduce that effect, we can count each author only once for each genre and individual activity combination. The <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.drop_duplicates.html" target="_blank"><code>drop_duplicates()</code> method</a> creates one row per unique author–genre–activity relationship:</p>
-<div id="6edd55dc" class="cell" data-execution_count="32">
+<div id="dcef4cd5" class="cell" data-execution_count="32">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>unique_author_activity_df <span class="op">=</span> genre_activity_chart_df.drop_duplicates(</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    subset<span class="op">=</span>[<span class="st">'author'</span>, <span class="st">'genre'</span>, <span class="st">'individual_author_activity'</span>]</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -3271,7 +3285,7 @@ Unique author-genre-activity relationships: 330</code></pre>
 </div>
 <p>In this code, we are using the <code>drop_duplicates()</code> and are passing the <code>subset</code> argument to specify which columns to consider when determining duplicates. We are then printing the number of novel–activity relationships in the original DataFrame and the number of unique author–genre–activity relationships in the new DataFrame.</p>
 <p>We can now recreate the heatmap with this more defensible unit of observation:</p>
-<div id="90c99e5d" class="cell" data-execution_count="33">
+<div id="332ee9f9" class="cell" data-execution_count="33">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>alt.Chart(unique_author_activity_df).mark_rect().encode(</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'genre:N'</span>,</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'individual_author_activity:N'</span>,</span>
@@ -3282,26 +3296,26 @@ Unique author-genre-activity relationships: 330</code></pre>
 <span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'count():Q'</span></span>
 <span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
 <span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="66">
+<div class="cell-output cell-output-display" data-execution_count="33">
 
 <style>
-  #altair-viz-7f9e9e9f8f83415e96f9ff44df4854fa.vega-embed {
+  #altair-viz-b38b4843a5a44804a10905b09e272e23.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-7f9e9e9f8f83415e96f9ff44df4854fa.vega-embed details,
-  #altair-viz-7f9e9e9f8f83415e96f9ff44df4854fa.vega-embed details summary {
+  #altair-viz-b38b4843a5a44804a10905b09e272e23.vega-embed details,
+  #altair-viz-b38b4843a5a44804a10905b09e272e23.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-7f9e9e9f8f83415e96f9ff44df4854fa"></div>
+<div id="altair-viz-b38b4843a5a44804a10905b09e272e23"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-7f9e9e9f8f83415e96f9ff44df4854fa") {
-      outputDiv = document.getElementById("altair-viz-7f9e9e9f8f83415e96f9ff44df4854fa");
+    if (outputDiv.id !== "altair-viz-b38b4843a5a44804a10905b09e272e23") {
+      outputDiv = document.getElementById("altair-viz-b38b4843a5a44804a10905b09e272e23");
     }
 
     const paths = {
