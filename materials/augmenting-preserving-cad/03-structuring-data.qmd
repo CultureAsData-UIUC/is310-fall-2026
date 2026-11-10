@@ -385,14 +385,18 @@ merged_df['has_title_nyt'] = merged_df['title_nyt'].notna().map({True: 'Yes', Fa
 merged_df['oclc_pub_date'] = merged_df.pub_year.astype(str) + '-01-01'
 merged_df['oclc_pub_date'] = pd.to_datetime(merged_df['oclc_pub_date'], format='%Y-%m-%d')
 
-# Count each OCLC novel once, even if it matched many weekly NYT rows
-alt.Chart(merged_df).mark_bar().encode(
+# Keep one row per OCLC novel before giving the data to Altair
+oclc_publication_chart_df = merged_df[
+    ['top_500_rank', 'oclc_pub_date', 'has_title_nyt']
+].drop_duplicates()
+
+alt.Chart(oclc_publication_chart_df).mark_bar().encode(
     x=alt.X(
         'oclc_pub_date:T',
-        title='Publication Decade'
+        title='Publication Year'
     ),
     y=alt.Y(
-        'distinct(top_500_rank):Q',
+        'count():Q',
         title='Unique OCLC Novels'
     ),
     color=alt.Color('has_title_nyt:N', legend=alt.Legend(title="NYT Appearance"))
@@ -400,26 +404,32 @@ alt.Chart(merged_df).mark_bar().encode(
 
 ```
 
-In this code, we are first importing Altair and then doing a similar process to what we did in the last lesson by creating a new column in the merged DataFrame to indicate whether or not the novel appeared on the NYT list. We then create a new column for the publication date of the novel by converting the `pub_year` column to a string and adding `-01-01` to create a date format that can be used in Altair. We then convert this new column to a datetime format using `pd.to_datetime()`. Finally, we create a bar chart using Altair that shows the number of unique OCLC novels published in each decade, colored by whether or not they appeared on the NYT list. We can see that the majority of novels in OCLC's Top 500 were published before the *New York Times* list began, which is why most of them did not appear on the list.
+In this code, we are first importing Altair and then doing a similar process to what we did in the last lesson by creating a new column in the merged DataFrame to indicate whether or not the novel appeared on the NYT list. We then create a publication date by converting `pub_year` to a string, adding `-01-01`, and casting the result with `pd.to_datetime()`.
+
+The merge expanded some OCLC novels into multiple rows because one title can match many weekly NYT records. Before plotting, we select only the fields needed for the chart and use `drop_duplicates()` to return to one row per OCLC novel. Altair can then use `count()` because each row in `oclc_publication_chart_df` now represents one novel. This both clarifies the unit of observation and prevents the chart from embedding repeated rows that do not change the result.
 
 We can also explore the distribution of NYT bestseller appearances over time, and how that distribution changes when we distinguish titles that also appear in OCLC's Top 500. Each row in the NYT dataset represents one title appearing on the list during one week, so here we use `count()` to preserve those repeated weekly appearances. A novel that remained on the list for many weeks will therefore contribute more records than a novel that appeared only once.
 
 ```{python}
-alt.data_transformers.disable_max_rows()
 right_merge_df['in_oclc_top_500'] = right_merge_df['_merge'].map({
     'both': 'Yes',
     'right_only': 'No'
 })
 
-right_merge_df['week'] = pd.to_datetime(right_merge_df['week'], format='%Y-%m-%d', errors='coerce')
+# Count weekly appearances before passing the summarized data to Altair
+nyt_appearance_chart_df = right_merge_df[
+    ['year', 'in_oclc_top_500']
+].value_counts().reset_index(name='weekly_appearances')
 
-alt.Chart(right_merge_df).mark_bar().encode(
+nyt_appearance_chart_df['nyt_year'] = pd.to_datetime(nyt_appearance_chart_df.year.astype(str) + "-01-01", errors="coerce")
+
+alt.Chart(nyt_appearance_chart_df).mark_bar().encode(
     x=alt.X(
-        'week:T',
+        'nyt_year:T',
         title='NYT Bestseller Year'
     ),
     y=alt.Y(
-        'count():Q',
+        'weekly_appearances:Q',
         title='Weekly Bestseller Appearances'
     ),
     color=alt.Color(
@@ -429,7 +439,25 @@ alt.Chart(right_merge_df).mark_bar().encode(
 )
 ```
 
-Notice in this chart we are using `alt.data_transformers.disable_max_rows()` to disable the maximum row limit for Altair, which is necessary because we have a large dataset (read more about it here [https://altair-viz.github.io/user_guide/large_datasets.html](https://altair-viz.github.io/user_guide/large_datasets.html){target="_blank"}). We are also creating a new column in the `right_merge_df` DataFrame to indicate whether or not the novel appeared in OCLC's Top 500 using the `_merge` column created by the merge. We then convert the `week` column to a datetime format using `pd.to_datetime()`. Finally, we create a bar chart using Altair that shows the number of weekly bestseller appearances in each year, colored by whether or not the novel appeared in OCLC's Top 500.
+We first use the `_merge` column to record whether each weekly NYT appearance matched an OCLC novel. The NYT data already includes a `year` column, so we select that field alongside `in_oclc_top_500`. The `value_counts()` method counts every combination of year and OCLC status, while `reset_index(name='weekly_appearances')` turns those counts into a small DataFrame with three columns: `year`, `in_oclc_top_500`, and `weekly_appearances`.
+
+The summarized `year` values are still stored as integers. To use Altair's temporal encoding, we convert each year into a complete date. `astype(str)` changes the integer year into text, adding `"-01-01"` supplies a month and day, and `pd.to_datetime()` casts the resulting value as a datetime. January 1 is only a placeholder that lets each year be represented on a temporal axis; it does not claim that the bestseller appearances happened on that specific date. If a value cannot be converted, `errors="coerce"` records it as a missing datetime rather than stopping the code.
+
+The original rows still represent weekly bestseller appearances, so a book that remained on the list for many weeks still contributes multiple times. We have summarized those appearances by year and OCLC status, but we have not changed what they count.
+
+::: {.callout-note collapse="true"}
+## Why summarize before giving the data to Altair?
+
+Altair normally raises a `MaxRowsError` when a chart receives more than 5,000 rows. This safeguard warns us that Altair ordinarily embeds its input data inside the chart specification and therefore inside the rendered HTML page. We can remove the safeguard with:
+
+```python
+alt.data_transformers.disable_max_rows()
+```
+
+However, disabling the limit and passing the full weekly dataset would make this lesson's HTML file tens of megabytes larger. It would also give the browser thousands of repeated rows even though the chart only needs one total for each year and OCLC status.
+
+When a chart displays aggregate counts, it is usually clearer and more efficient to calculate those counts in Pandas first. The smaller `nyt_appearance_chart_df` makes the chart's unit of observation explicit and keeps the published lesson manageable. See Altair's [documentation on large datasets](https://altair-viz.github.io/user_guide/large_datasets.html){target="_blank"} for other approaches when a visualization genuinely needs row-level data.
+:::
 
 This chart therefore shows how much of the weekly bestseller record is represented by the OCLC collection while retaining differences in how long books remained on the list. In merging these datasets, we can see that we are only subsetting to a very small portion of the NYT dataset, but again that can be a useful perspective for understanding the relationship between these two cultural datasets, as well as how institutional popularity differs from popular bestsellers.
 
@@ -1203,9 +1231,13 @@ Now that we have entities identified, we want to compare the results for `PERSON
 For example, this chart can use `has_person` to show how many titles in each group do or do not contain a predicted person:
 
 ```{python}
-alt.Chart(focused_entity_df).mark_bar().encode(
+person_chart_df = focused_entity_df[
+    ['dataset_group', 'has_person']
+].value_counts().reset_index(name='title_count')
+
+alt.Chart(person_chart_df).mark_bar().encode(
     x='dataset_group:N',
-    y='count():Q',
+    y='title_count:Q',
     color='has_person:N'
 )
 ```
@@ -1213,14 +1245,20 @@ alt.Chart(focused_entity_df).mark_bar().encode(
 To visualize geopolitical places instead, we would have to replace `has_person` with `has_gpe`:
 
 ```{python}
-alt.Chart(focused_entity_df).mark_bar().encode(
+gpe_chart_df = focused_entity_df[
+    ['dataset_group', 'has_gpe']
+].value_counts().reset_index(name='title_count')
+
+alt.Chart(gpe_chart_df).mark_bar().encode(
     x='dataset_group:N',
-    y='count():Q',
+    y='title_count:Q',
     color='has_gpe:N'
 )
 ```
 
-These charts work separately, but the DataFrame does not yet contain one field whose values are `PERSON` and `GPE`. We can use `melt()` again. This time, `value_vars` explicitly identifies the two columns we want to reshape. The resulting data will contain two rows per title: one for `PERSON` and one for `GPE`. The entity category will be stored in `entity_type`, and its Boolean result will be stored in `has_entity`.
+For each chart, `value_counts()` calculates the small set of grouped totals before Altair receives the data. This produces the same bars without embedding every title record in both charts.
+
+These charts work separately, but the original DataFrame does not yet contain one field whose values are `PERSON` and `GPE`. We can use `melt()` again. This time, `value_vars` explicitly identifies the two columns we want to reshape. The resulting data will contain two rows per title: one for `PERSON` and one for `GPE`. The entity category will be stored in `entity_type`, and its Boolean result will be stored in `has_entity`.
 
 ```{python}
 focused_entity_long_df = focused_entity_df.melt(
