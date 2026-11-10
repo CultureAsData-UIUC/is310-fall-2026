@@ -10,7 +10,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <title>IS310 - Culture As Data Fall 2026 – EDA &amp; Data Visualization</title>
+  <title>IS310 - Culture As Data Fall 2026 – Exploratory Data Analysis &amp; Data Visualization</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -201,7 +201,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">EDA &amp; Data Visualization</h1>
+  <h1 class="title">Exploratory Data Analysis &amp; Data Visualization</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -211,764 +211,455 @@
 <section id="todays-agenda" class="title-slide slide level1 center">
 <h1>Today’s Agenda</h1>
 <ul>
-<li>Review remainder of last lesson’s National Parks EDA and Pandas syntax</li>
-<li>Review EDA &amp; Data Visualization lesson</li>
-<li>Time permitting work in breakout groups</li>
+<li>Review GETting Culture Across APIs homework</li>
+<li>Revisit exploratory data analysis with the Top 500 Novels</li>
+<li>Discuss assigned readings</li>
 </ul>
+<p><strong>Milestone 2 Feedback &amp; Grades will be updated in next 24 hours, along with participation grades. Thank you for your patience!</strong></p>
 <p><em>Any questions?</em></p>
 </section>
-<section id="reminder-milestone-2" class="slide level2">
-<h2>REMINDER: MILESTONE 2</h2>
-<p><strong>Reminder</strong>: Milestone 2 is due TODAY. Please ensure it is in your group’s GitHub respository and clearly marked as your work. If you have any questions, please reach out!</p>
+<section id="volunteer-wheel-homework-assignment" class="slide level2">
+<h2>Volunteer Wheel &amp; Homework Assignment</h2>
+<p><a href="volunteer-wheel.html" target="_blank"><img data-src="../assets/images/volunteer_wheel.png"></a></p>
 </section>
-<section id="last-lesson-recap" class="slide level2">
-<h2>Last Lesson Recap</h2>
-<p>In our last lesson, we tried to answer the following questions:</p>
+<section id="want-to-follow-along-in-a-notebook" class="slide level2">
+<h2>Want to follow along in a notebook?</h2>
+<p><a href="../assets/files/Top500NovelsEDA.ipynb" target="_blank">Download <code>Top500NovelsEDA.ipynb</code></a></p>
+<p>Open the notebook, select your course virtual environment as the kernel, and run each cell as we work through the lesson.</p>
+</section>
+<section id="where-did-we-leave-off" class="slide level2">
+<h2>Where did we leave off?</h2>
 <ol type="1">
 <li>What is the average number of visits for each state?</li>
 <li>What is the average number of visits for each National Park?</li>
 <li>How many National Parks are there in each state?</li>
 </ol>
-<p><em>Anyone want to share their solutions?</em></p>
 </section>
-<section id="my-solution" class="slide level2">
-<h2>My Solution</h2>
-<p>Here’s the solution code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a><span class="im">import</span> re</span>
-<span id="cb1-2"><a aria-label="2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a aria-label="3"></a></span>
-<span id="cb1-4"><a aria-label="4"></a>parks_data_df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/national-parks/US-National-Parks_RecreationVisits_1979-2023.csv'</span>)</span>
-<span id="cb1-5"><a aria-label="5"></a></span>
-<span id="cb1-6"><a aria-label="6"></a><span class="kw">def</span> split_on_uppercase(name):</span>
-<span id="cb1-7"><a aria-label="7"></a>    <span class="cf">return</span> re.sub(<span class="vs">r'</span><span class="kw">(</span><span class="fu">?&lt;</span><span class="vs">!</span><span class="dv">^</span><span class="kw">)</span><span class="ex">(</span><span class="fu">?=</span><span class="pp">[A-Z]</span><span class="ex">)</span><span class="vs">'</span>, <span class="st">'_'</span>, name).lower()</span>
-<span id="cb1-8"><a aria-label="8"></a></span>
-<span id="cb1-9"><a aria-label="9"></a>new_column_names <span class="op">=</span> [split_on_uppercase(col) <span class="cf">for</span> col <span class="kw">in</span> parks_data_df.columns]</span>
-<span id="cb1-10"><a aria-label="10"></a>parks_data_df.columns <span class="op">=</span> new_column_names</span>
-<span id="cb1-11"><a aria-label="11"></a></span>
-<span id="cb1-12"><a aria-label="12"></a><span class="bu">print</span>(parks_data_df.groupby([<span class="st">'state'</span>])[<span class="st">'recreation_visits'</span>].mean().reset_index())</span>
-<span id="cb1-13"><a aria-label="13"></a><span class="bu">print</span>(parks_data_df.groupby([<span class="st">'park_name'</span>])[<span class="st">'recreation_visits'</span>].mean().reset_index())</span>
-<span id="cb1-14"><a aria-label="14"></a><span class="bu">print</span>(parks_data_df.groupby([<span class="st">'state'</span>])[<span class="st">'park_name'</span>].nunique().reset_index())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We could store each of these in new variables, but we also want to visualize this data. That’s what we’re exploring today.</p>
+<section id="what-else-can-we-learn-before-answering-a-question" class="slide level2">
+<h2>What else can we learn before answering a question?</h2>
+<p><a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html" data-fig-align="center" target="_blank" width="650"><img data-src="https://www.responsible-datasets-in-context.com/posts/top-500-novels/images/top_500_kit.png"></a></p>
 </section>
-<section id="a-new-dataset-top-500-novels" class="slide level2">
-<h2>A New Dataset: Top 500 Novels</h2>
-<p><a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html" data-fig-align="center" target="_blank" width="600"><img data-src="https://www.responsible-datasets-in-context.com/posts/top-500-novels/images/top_500_kit.png"></a></p>
-<p>First, we need to create a new Jupyter notebook in our <code>pandas-eda</code> folder called <code>Top500NovelsEDA.ipynb</code> and then load in the data. As a reminder, how can we <strong>read</strong> data in Pandas?</p>
+<section id="how-do-we-read-a-tsv-file" class="slide level2">
+<h2>How do we read a TSV file?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a>novels_df <span class="op">=</span> pd.read_csv(</span>
+<span id="cb1-2"><a aria-label="2"></a>    <span class="st">"https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/refs/heads/main/datasets/top-500-novels/top-500-novels-metadata_2025-01-11.tsv"</span>,</span>
+<span id="cb1-3"><a aria-label="3"></a>    sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>,</span>
+<span id="cb1-4"><a aria-label="4"></a>    encoding<span class="op">=</span><span class="st">"utf-8"</span></span>
+<span id="cb1-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>What do <code>sep</code> and <code>encoding</code> describe?</em></p>
 </section>
-<section id="loading-the-novels-data" class="slide level2">
-<h2>Loading the Novels Data</h2>
-<p>To load the dataset, we need to look at the GitHub repository <a href="https://github.com/melaniewalsh/responsible-datasets-in-context/tree/main/datasets/top-500-novels" target="_blank">https://github.com/melaniewalsh/responsible-datasets-in-context/tree/main/datasets/top-500-novels</a> and find the raw URL for the <code>final_merged_dataset_no_full_text.tsv</code> file.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-label="1"></a>novels_df <span class="op">=</span> pd.read_csv(</span>
-<span id="cb2-2"><a aria-label="2"></a>    <span class="st">"https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/"</span></span>
-<span id="cb2-3"><a aria-label="3"></a>    <span class="st">"main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv"</span>,</span>
-<span id="cb2-4"><a aria-label="4"></a>    sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span></span>
-<span id="cb2-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>What does <code>sep="\t"</code> tell Pandas? What would happen without it?</em></p>
-</section>
-<section id="tab-separated-values-encoding" class="slide level2">
-<h2>Tab-Separated Values &amp; Encoding</h2>
-<p>If we omit <code>sep="\t"</code>, we should see the following error:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a aria-label="1"></a><span class="ex">ParserError:</span> Error tokenizing data. C error: Expected 1 fields in line 163, saw 3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>What is encoding?</em></p>
-
-<img data-src="https://media.emailonacid.com/wp-content/uploads/2022/02/content_type_example.jpeg" class="r-stretch"></section>
-<section id="what-are-encodings" class="slide level2">
-<h2>What are encodings?</h2>
+<section id="what-is-a-character-encoding" class="slide level2">
+<h2>What is a character encoding?</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><img data-src="https://www.explainxkcd.com/w/images/6/63/the_history_of_unicode.png"></p>
 </div><div class="column" style="width:50%;">
-<p><img data-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFZk7SAXuYxpwlPQOzXWHl5zNI9s03h9VIYrIJbhbI9G0251DZPshv4ZBp&amp;s=10.png"></p>
+<p><img data-src="https://media.emailonacid.com/wp-content/uploads/2022/02/content_type_example.jpeg"></p>
 </div></div>
 </section>
-<section id="how-could-we-specify-both-the-delimiter-and-encoding" class="slide level2">
-<h2>How could we specify both the delimiter and encoding?</h2>
-<p>UTF-8 is already Pandas’s default here, but we can state it explicitly:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Import data</span></span>
-<span id="cb4-2"><a aria-label="2"></a>novels_df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/melaniewalsh/responsible-datasets-in-context/main/datasets/top-500-novels/final_merged_dataset_no_full_text.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="what-is-the-shape-of-this-dataset" class="slide level2">
+<h2>What is the shape of this dataset?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-label="1"></a>novels_df.shape</span>
+<span id="cb2-2"><a aria-label="2"></a>novels_df.info()</span>
+<span id="cb2-3"><a aria-label="3"></a>novels_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>What does each method reveal?</em></p>
 </section>
-<section id="missing-data-in-pandas" class="slide level2">
-<h2>Missing Data in Pandas</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a aria-label="1"></a>novels_df.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a aria-label="1"></a><span class="ex">author_field_of_activity</span>  329 non-null    object</span>
-<span id="cb6-2"><a aria-label="2"></a><span class="ex">author_occupation</span>         458 non-null    object</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>What does 329 non-null mean?</em> Let’s return to the <a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html?tab=data-essay#whats-in-the-data" target="_blank">documentation to find out</a>.</p>
-</section>
-<section id="how-can-we-test-for-missing-values" class="slide level2">
-<h2>How can we test for missing values?</h2>
+<section id="what-does-describe-summarize" class="slide level2">
+<h2>What does <code>describe()</code> summarize?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a aria-label="1"></a>novels_df.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
-<p><code>.isna()</code> vs.&nbsp;<code>.notna()</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a><span class="co"># Select one Series to test</span></span>
-<span id="cb7-2"><a aria-label="2"></a>field_activity <span class="op">=</span> novels_df[<span class="st">'author_field_of_activity'</span>]</span>
-<span id="cb7-3"><a aria-label="3"></a></span>
-<span id="cb7-4"><a aria-label="4"></a><span class="co"># True means missing with isna()</span></span>
-<span id="cb7-5"><a aria-label="5"></a>field_missing <span class="op">=</span> field_activity.isna()</span>
-<span id="cb7-6"><a aria-label="6"></a>field_missing.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a><span class="co"># True means present with notna()</span></span>
-<span id="cb8-2"><a aria-label="2"></a>field_present <span class="op">=</span> field_activity.notna()</span>
-<span id="cb8-3"><a aria-label="3"></a>field_present.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a><span class="co"># Count and calculate missing values</span></span>
-<span id="cb9-2"><a aria-label="2"></a>field_missing_count <span class="op">=</span> field_missing.<span class="bu">sum</span>()</span>
-<span id="cb9-3"><a aria-label="3"></a>field_missing_percent <span class="op">=</span> field_missing_count <span class="op">/</span> <span class="bu">len</span>(novels_df) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb9-4"><a aria-label="4"></a></span>
-<span id="cb9-5"><a aria-label="5"></a><span class="bu">print</span>(field_missing_count)</span>
-<span id="cb9-6"><a aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>field_missing_percent<span class="sc">:.1f}</span><span class="ss">% missing"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a>novels_df.describe(include<span class="op">=</span><span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="author_field_of_activity" class="slide level2">
-<h2>AUTHOR_FIELD_OF_ACTIVITY</h2>
-<p>From the documentation, we can learn the following about this column:</p>
+<section id="when-is-recorded-data-still-missing-information" class="slide level2">
+<h2>When is recorded data still missing information?</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Field</th>
+<th style="text-align: right;">Pandas count</th>
+<th>Common recorded value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>genre</code></td>
+<td style="text-align: right;">500</td>
+<td><code>na</code></td>
+</tr>
+<tr class="even">
+<td><code>pg_eng_url</code></td>
+<td style="text-align: right;">500</td>
+<td><code>NA_not-pub-domain</code></td>
+</tr>
+<tr class="odd">
+<td><code>pg_orig_url</code></td>
+<td style="text-align: right;">64</td>
+<td><code>unavailable</code></td>
+</tr>
+<tr class="even">
+<td><code>author_death</code></td>
+<td style="text-align: right;">496</td>
+<td><code>ALIVE</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="why-do-only-329-rows-have-a-field-of-activity" class="slide level2">
+<h2>Why do only 329 rows have a field of activity?</h2>
 <blockquote>
 <p>AUTHOR_FIELD_OF_ACTIVITY: Author’s primary fields of activity, according to VIAF. VIAF includes data from multiple global partner institutions, but we only collect VIAF data associated with the Library of Congress (LOC).</p>
 </blockquote>
 </section>
-<section id="viaf-the-virtual-international-authority-file" class="slide level2">
-<h2>VIAF: The Virtual International Authority File</h2>
+<section id="what-is-viaf-trying-to-structure" class="slide level2">
+<h2>What is VIAF trying to structure?</h2>
+<p><a href="https://viaf.org/" data-fig-align="center" target="_blank" width="750"><img data-src="https://upload.wikimedia.org/wikipedia/commons/e/ed/VIAF_Screenshot_2012.png"></a></p>
+</section>
+<section id="what-does-nan-mean" class="slide level2">
+<h2>What does <code>NaN</code> mean?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a aria-label="1"></a>novels_df[<span class="st">'author_field_of_activity'</span>].isna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a>novels_df[<span class="st">'author_field_of_activity'</span>].notna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>What does <code>True</code> mean in each result?</em></p>
+</section>
+<section id="how-can-booleans-filter-a-dataframe" class="slide level2">
+<h2>How can Booleans filter a DataFrame?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a>missing_activity_df <span class="op">=</span> novels_df[</span>
+<span id="cb7-2"><a aria-label="2"></a>    novels_df[<span class="st">'author_field_of_activity'</span>].isna()</span>
+<span id="cb7-3"><a aria-label="3"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a>recorded_activity_df <span class="op">=</span> novels_df[</span>
+<span id="cb8-2"><a aria-label="2"></a>    novels_df[<span class="st">'author_field_of_activity'</span>].notna()</span>
+<span id="cb8-3"><a aria-label="3"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="can-missingness-have-a-pattern" class="slide level2">
+<h2>Can missingness have a pattern?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a>missing_activity_df[<span class="st">'author_gender'</span>].value_counts()</span>
+<span id="cb9-2"><a aria-label="2"></a>recorded_activity_df[<span class="st">'author_gender'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a>missing_activity_df[<span class="st">'orig_lang'</span>].value_counts()</span>
+<span id="cb10-2"><a aria-label="2"></a>recorded_activity_df[<span class="st">'orig_lang'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="exploratory-data-analysis" class="title-slide slide level1 center">
+<h1>Exploratory Data Analysis</h1>
+
+</section>
+<section id="what-is-eda" class="slide level2">
+<h2>What is EDA?</h2>
+<p><a href="https://programminghistorian.org/en/lessons/sentiment-analysis" data-fig-align="center" target="_blank" width="750"><img data-src="../assets/images/eda.png"></a></p>
+</section>
+<section id="who-popularized-exploratory-data-analysis" class="slide level2">
+<h2>Who popularized Exploratory Data Analysis?</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/e/ed/VIAF_Screenshot_2012.png" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
+<p><a href="https://projecteuclid.org/download/pdf_1/euclid.aoms/1177704711" target="_blank"><img data-src="../assets/images/tukey_future_data_analysis.png"></a></p>
 </div><div class="column" style="width:50%;">
-<p><img data-src="https://m.media-amazon.com/images/I/71J3wIQ6rRL._AC_UF1000,1000_QL80_.jpg"></p>
+<p><img data-src="https://devopedia.org/images/article/75/3879.1525341742.jpg"></p>
 </div></div>
 </section>
-<section id="handling-missing-values" class="slide level2">
-<h2>Handling Missing Values</h2>
-<p><em>How can we filter to show only rows with missing values in a specific column?</em></p>
-<div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a>novels_df[novels_df[<span class="st">'author_field_of_activity'</span>].isna()]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="what-does-eda-ask-us-to-do" class="slide level2">
+<h2>What does EDA ask us to do?</h2>
+<ul>
+<li>Understand structure and important variables</li>
+<li>Detect outliers and anomalies</li>
+<li>Examine missingness and coverage</li>
+<li>Test assumptions through summaries and visualization</li>
+<li>Generate questions before formal modeling</li>
+</ul>
 </section>
-<section id="handling-missing-values-1" class="slide level2">
-<h2>Handling Missing Values</h2>
-<p><em>What if we wanted to see only rows where the column is not null?</em></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a aria-label="1"></a>novels_df[novels_df[<span class="st">'author_field_of_activity'</span>].notna()]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>What if we use the <code>~</code> operator?</em></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a aria-label="1"></a>novels_df[<span class="op">~</span>novels_df[<span class="st">'author_field_of_activity'</span>].isna()]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="what-does-a-quick-pandas-plot-reveal" class="slide level2">
+<h2>What does a quick Pandas plot reveal?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a aria-label="1"></a>genre_counts <span class="op">=</span> novels_df[<span class="st">'genre'</span>].value_counts()</span>
+<span id="cb11-2"><a aria-label="2"></a></span>
+<span id="cb11-3"><a aria-label="3"></a>genre_counts.plot(</span>
+<span id="cb11-4"><a aria-label="4"></a>    kind<span class="op">=</span><span class="st">'bar'</span>,</span>
+<span id="cb11-5"><a aria-label="5"></a>    figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>),</span>
+<span id="cb11-6"><a aria-label="6"></a>    color<span class="op">=</span><span class="st">'#4c78a8'</span></span>
+<span id="cb11-7"><a aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="handling-missing-values-2" class="slide level2">
-<h2>Handling Missing Values</h2>
-<p><em>What if we wanted to get rid of all rows with missing values in a specific column?</em></p>
-<div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a aria-label="1"></a>novels_df_cleaned <span class="op">=</span> novels_df.dropna(subset<span class="op">=</span>[<span class="st">'author_field_of_activity'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="can-we-see-library-rank-over-time" class="slide level2">
+<h2>Can we see library rank over time?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a aria-label="1"></a>novels_df.plot(</span>
+<span id="cb12-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'pub_year'</span>,</span>
+<span id="cb12-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'oclc_holdings_rank'</span>,</span>
+<span id="cb12-4"><a aria-label="4"></a>    kind<span class="op">=</span><span class="st">'scatter'</span>,</span>
+<span id="cb12-5"><a aria-label="5"></a>    figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>),</span>
+<span id="cb12-6"><a aria-label="6"></a>    color<span class="op">=</span><span class="st">'#4c78a8'</span></span>
+<span id="cb12-7"><a aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="data-visualization-with-altair" class="title-slide slide level1 center">
+<h1>Data Visualization With Altair</h1>
+
 </section>
-<section id="handling-missing-values-3" class="slide level2">
-<h2>Handling Missing Values</h2>
-<div class="r-fit-text" style="font-size: 0.45em">
-<p>Here’s a quick overview of the most common methods for handling missing values in Pandas:</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 42%">
-<col style="width: 37%">
-<col style="width: 20%">
-</colgroup>
+<section id="why-are-there-so-many-visualization-libraries" class="slide level2">
+<h2>Why are there so many visualization libraries?</h2>
+
+<img data-src="https://optimise2.assets-servd.host/voracious-blesbok/production/Blog/PythonVisLandscape.jpg?w=1200&amp;auto=compress%2Cformat&amp;fit=crop&amp;dm=1632326979&amp;s=35cf543e04fd14bcc881ef8e70363860" class="r-stretch"></section>
+<section id="where-did-altair-come-from" class="slide level2">
+<h2>Where did Altair come from?</h2>
+<p><a href="https://altair-viz.github.io/" data-fig-align="center" target="_blank" width="650"><img data-src="https://cdn.cssauthor.com/wp-content/uploads/2023/04/Altair.jpg?strip=all&amp;lossy=1&amp;ssl=1"></a></p>
+</section>
+<section id="how-do-we-install-and-import-altair" class="slide level2">
+<h2>How do we install and import Altair?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a aria-label="1"></a><span class="ex">pip</span> install <span class="st">"altair[all]"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a aria-label="1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-does-an-altair-chart-work" class="slide level2">
+<h2>How does an Altair chart work?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a aria-label="1"></a><span class="im">from</span> altair.datasets <span class="im">import</span> data</span>
+<span id="cb15-2"><a aria-label="2"></a></span>
+<span id="cb15-3"><a aria-label="3"></a>source <span class="op">=</span> data.cars()</span>
+<span id="cb15-4"><a aria-label="4"></a></span>
+<span id="cb15-5"><a aria-label="5"></a>alt.Chart(source).mark_circle(size<span class="op">=</span><span class="dv">60</span>).encode(</span>
+<span id="cb15-6"><a aria-label="6"></a>    x<span class="op">=</span><span class="st">'Horsepower'</span>,</span>
+<span id="cb15-7"><a aria-label="7"></a>    y<span class="op">=</span><span class="st">'Miles_per_Gallon'</span>,</span>
+<span id="cb15-8"><a aria-label="8"></a>    color<span class="op">=</span><span class="st">'Origin'</span>,</span>
+<span id="cb15-9"><a aria-label="9"></a>    tooltip<span class="op">=</span>[<span class="st">'Name'</span>, <span class="st">'Origin'</span>, <span class="st">'Horsepower'</span>, <span class="st">'Miles_per_Gallon'</span>]</span>
+<span id="cb15-10"><a aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-are-marks-and-encodings" class="slide level2">
+<h2>What are marks and encodings?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="../assets/images/mark_types.png"></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/images/encodings.png"></p>
+</div></div>
+</section>
+<section id="why-does-altair-separate-marks-from-encodings" class="slide level2">
+<h2>Why does Altair separate marks from encodings?</h2>
+<p><a href="https://en.wikipedia.org/wiki/Grammar_of_graphics" data-fig-align="center" target="_blank" width="750"><img data-src="../assets/images/grammar-of-graphics.png"></a></p>
+</section>
+<section id="can-altair-identify-individual-novels" class="slide level2">
+<h2>Can Altair identify individual novels?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a aria-label="1"></a>alt.Chart(novels_df).mark_circle(size<span class="op">=</span><span class="dv">60</span>).encode(</span>
+<span id="cb16-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'pub_year'</span>,</span>
+<span id="cb16-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'top_500_rank'</span>,</span>
+<span id="cb16-4"><a aria-label="4"></a>    tooltip<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>, <span class="st">'top_500_rank'</span>]</span>
+<span id="cb16-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-do-altairs-data-types-mean" class="slide level2">
+<h2>What do Altair’s data types mean?</h2>
+
+<img data-src="../assets/images/data_types.png" class="r-stretch"><table class="caption-top">
 <thead>
 <tr class="header">
-<th>Pandas Method</th>
-<th>Description</th>
-<th>Usage</th>
+<th>Code</th>
+<th>Type</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>isna()</code></td>
-<td>Boolean mask for missing values</td>
-<td><code>df.isna().sum()</code> to count missing</td>
+<td><code>N</code></td>
+<td>Nominal</td>
 </tr>
 <tr class="even">
-<td><code>notna()</code></td>
-<td>Boolean mask for non-missing values</td>
-<td>Inverse of <code>isna()</code></td>
+<td><code>O</code></td>
+<td>Ordinal</td>
 </tr>
 <tr class="odd">
-<td><code>isnull()</code></td>
-<td>Alias for <code>isna()</code></td>
-<td>Interchangeable with <code>isna()</code></td>
+<td><code>Q</code></td>
+<td>Quantitative</td>
 </tr>
 <tr class="even">
-<td><code>notnull()</code></td>
-<td>Alias for <code>notna()</code></td>
-<td>Interchangeable with <code>notna()</code></td>
-</tr>
-<tr class="odd">
-<td><code>dropna()</code></td>
-<td>Removes rows/columns with missing values</td>
-<td>Use <code>subset=</code> to target columns</td>
-</tr>
-<tr class="even">
-<td><code>fillna()</code></td>
-<td>Fills missing values</td>
-<td>Replace with a value or interpolate</td>
+<td><code>T</code></td>
+<td>Temporal</td>
 </tr>
 </tbody>
 </table>
-</div>
 </section>
-<section id="exploratory-data-analysis" class="slide level2">
-<h2>Exploratory Data Analysis</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="https://programminghistorian.org/en/lessons/sentiment-analysis" data-fig-align="center" target="_blank"><img data-src="../assets/images/eda.png"></a></p>
-<figcaption>From Zoë Wilkinson Saldaña, “Sentiment Analysis for Exploratory Data Analysis”</figcaption>
-</figure>
-</div>
+<section id="what-happens-if-an-integer-year-is-labeled-temporal" class="slide level2">
+<h2>What happens if an integer year is labeled temporal?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a aria-label="1"></a>alt.Chart(novels_df).mark_circle(size<span class="op">=</span><span class="dv">60</span>).encode(</span>
+<span id="cb17-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'pub_year:T'</span>,</span>
+<span id="cb17-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'top_500_rank:Q'</span>,</span>
+<span id="cb17-4"><a aria-label="4"></a>    tooltip<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>, <span class="st">'top_500_rank'</span>]</span>
+<span id="cb17-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Why does the x-axis look wrong?</em></p>
 </section>
-<section id="john-w.-tukey-the-history-of-eda" class="slide level2">
-<h2>John W. Tukey &amp; The History of EDA</h2>
-<div class="columns">
-<div class="column r-fit-text" style="width:50%;">
-<p><a href="https://projecteuclid.org/download/pdf_1/euclid.aoms/1177704711" data-fig-align="center" target="_blank"><img data-src="../assets/images/tukey_future_data_analysis.png"></a></p>
-</div><div class="column r-fit-text" style="width:50%;">
-<p>In the paper, Tukey writes:</p>
-<blockquote>
-<p>For a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. […] All in all, I have come to feel that my central interest is in <em>data analysis</em>, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.</p>
-</blockquote>
-</div></div>
-</section>
-<section id="bell-labs" class="slide level2">
-<h2>Bell Labs</h2>
-
-<img data-src="https://memorial.bellsystem.com/images/history-%20bell_labs_large.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="tukeys-principles-of-eda" class="slide level2">
-<h2>Tukey’s Principles of EDA</h2>
-
-<img data-src="https://devopedia.org/images/article/75/3879.1525341742.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="eda-with-pandas-the-toolkit" class="slide level2">
-<h2>EDA With Pandas: The Toolkit</h2>
-<div class="r-fit-text">
-<p>How Pandas helps us implement Tukey’s principles of EDA:</p>
-<ol type="1">
-<li><strong>Explore structure</strong> — <code>head()</code>, <code>tail()</code>, <code>sample()</code>, <code>.shape</code>, <code>.dtypes</code></li>
-<li><strong>Summarize</strong> — <code>describe()</code></li>
-<li><strong>Sort &amp; rank</strong> — <code>sort_values()</code>, <code>nsmallest()</code>, <code>nlargest()</code></li>
-<li><strong>Check missing</strong> — <code>isna().any()</code>, <code>isna().sum()</code></li>
-<li><strong>Visualize</strong> — <code>plot()</code></li>
-</ol>
-</div>
-</section>
-<section id="visualizing-data-with-pandas" class="slide level2">
-<h2>Visualizing Data With Pandas</h2>
-<p><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html" data-fig-align="center" target="_blank"><img data-src="https://pandas.pydata.org/docs/_images/04_plot_overview.svg"></a></p>
-</section>
-<section id="matplotlib-plots" class="slide level2">
-<h2>Matplotlib &amp; Plots</h2>
-<div class="r-fit-text">
-<p><code>plot</code> is built into Pandas and is a wrapper around the <code>matplotlib</code> library <a href="https://matplotlib.org/" target="_blank">https://matplotlib.org/</a>, one of the most popular Python libraries for data visualization. The documentation lists the kinds of plots we can create:</p>
-<ul>
-<li>‘line’ : line plot (default)</li>
-<li>‘bar’ : vertical bar plot</li>
-<li>‘barh’ : horizontal bar plot</li>
-<li>‘hist’ : histogram</li>
-<li>‘box’ : boxplot</li>
-<li>‘kde’ : Kernel Density Estimation plot</li>
-<li>‘density’ : same as ‘kde’</li>
-<li>‘area’ : area plot</li>
-<li>‘pie’ : pie plot</li>
-<li>‘scatter’ : scatter plot (DataFrame only)</li>
-<li>‘hexbin’ : hexbin plot (DataFrame only)</li>
-</ul>
-</div>
-</section>
-<section id="how-to-visualize-our-data" class="slide level2">
-<h2>How to Visualize Our Data?</h2>
-<p><em>What if we wanted to create a scatter plot looking at the relationship between the <code>pub_year</code> and <code>top_500_rank</code> columns? How can we create this graph?</em></p>
-
-<img data-src="../assets/images/toprank_year_novels.png" class="r-stretch"></section>
-<section id="how-to-visualize-our-data-1" class="slide level2">
-<h2>How to Visualize Our Data?</h2>
-<p><em>What if we wanted to explore the relationship between <code>genre</code> and the average <code>top_500_rank</code> for each genre? How can we create this graph?</em></p>
-
-<img data-src="../assets/images/genre_mean.png" class="r-stretch"></section>
-<section id="cleaning-data-with-pandas-gigo" class="slide level2">
-<h2>“Cleaning” Data With Pandas &amp; GIGO</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><em>Why might we want to subset our data?</em></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a aria-label="1"></a>subset_novels_df <span class="op">=</span> novels_df[novels_df.genre.notna()]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column" style="width:50%;">
-<p><a href="https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out" data-fig-align="center" target="_blank" width="400"><img data-src="https://www.harrised.com/150/images/gigo.jpeg"></a></p>
-</div></div>
-</section>
-<section id="types-of-data" class="slide level2">
-<h2>Types of Data</h2>
-
-<img data-src="../assets/images/data_types.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="data-visualization-in-python" class="slide level2">
-<h2>Data Visualization in Python</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="https://media.opennews.org/img/24tools/big_chart.png"></p>
-</div><div class="column" style="width:50%;">
-<p><img data-src="https://optimise2.assets-servd.host/voracious-blesbok/production/Blog/PythonVisLandscape.jpg?w=1200&amp;auto=compress%2Cformat&amp;fit=crop&amp;dm=1632326979&amp;s=35cf543e04fd14bcc881ef8e70363860"></p>
-</div></div>
-</section>
-<section id="data-visualization-with-altair" class="slide level2">
-<h2>Data Visualization With Altair</h2>
-<p><a href="https://altair-viz.github.io/index.html" data-fig-align="center" target="_blank"><img data-src="https://cdn.cssauthor.com/wp-content/uploads/2023/04/Altair.jpg?strip=all&amp;lossy=1&amp;ssl=1"></a></p>
-</section>
-<section id="installing-altair" class="slide level2">
-<h2>Installing Altair</h2>
-<p>Remember to activate your virtual environment!</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a aria-label="1"></a><span class="ex">pip</span> install <span class="st">"altair[all]"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="using-altair" class="slide level2">
-<h2>Using Altair</h2>
-<p>Now we can try out Altair with one of the built-in datasets</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a aria-label="1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
-<span id="cb16-2"><a aria-label="2"></a><span class="im">from</span> altair.datasets <span class="im">import</span> data</span>
-<span id="cb16-3"><a aria-label="3"></a></span>
-<span id="cb16-4"><a aria-label="4"></a>source <span class="op">=</span> data.cars()</span>
-<span id="cb16-5"><a aria-label="5"></a></span>
-<span id="cb16-6"><a aria-label="6"></a>alt.Chart(source).mark_circle(size<span class="op">=</span><span class="dv">60</span>).encode(</span>
-<span id="cb16-7"><a aria-label="7"></a>    x<span class="op">=</span><span class="st">'Horsepower'</span>,</span>
-<span id="cb16-8"><a aria-label="8"></a>    y<span class="op">=</span><span class="st">'Miles_per_Gallon'</span>,</span>
-<span id="cb16-9"><a aria-label="9"></a>    color<span class="op">=</span><span class="st">'Origin'</span>,</span>
-<span id="cb16-10"><a aria-label="10"></a>    tooltip<span class="op">=</span>[<span class="st">'Name'</span>, <span class="st">'Origin'</span>, <span class="st">'Horsepower'</span>, <span class="st">'Miles_per_Gallon'</span>]</span>
-<span id="cb16-11"><a aria-label="11"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="altair-class" class="slide level2">
-<h2>Altair Class</h2>
-<p><a href="https://altair-viz.github.io/user_guide/generated/toplevel/altair.Chart.html#altair.Chart" data-fig-align="center" target="_blank"><img data-src="../assets/images/top_level_charts.png"></a></p>
-</section>
-<section id="altair-marks" class="slide level2">
-<h2>Altair Marks</h2>
-<p><a href="https://altair-viz.github.io/user_guide/marks/index.html" data-fig-align="center" target="_blank"><img data-src="../assets/images/mark_types.png"></a></p>
-</section>
-<section id="altair-encodings" class="slide level2">
-<h2>Altair Encodings</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><a href="https://altair-viz.github.io/user_guide/encodings/index.html" data-fig-align="center" target="_blank"><img data-src="../assets/images/encodings.png"></a></p>
-</div><div class="column" style="width:50%;">
-<p><a href="https://altair-viz.github.io/user_guide/encodings/index.html#data-types" data-fig-align="center" target="_blank"><img data-src="../assets/images/encoding_data_types.png"></a></p>
-</div></div>
-</section>
-<section id="trying-it-out" class="slide level2">
-<h2>Trying It Out</h2>
-<p>Now that we understand a bit of Altair’s syntax, let’s try to recreated our <code>genre</code> by average <code>top_500_rank</code> plot that we made previously. To do this, we don’t have to do <code>groupby</code>, instead Altair can handle most of the logic for us:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a aria-label="1"></a>alt.Chart(novels_df).mark_bar().encode(</span>
-<span id="cb17-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">"genre:N"</span>,</span>
-<span id="cb17-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">"mean(top_500_rank):Q"</span>,</span>
-<span id="cb17-4"><a aria-label="4"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You can read more about aggregation here <a href="https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions" target="_blank">https://altair-viz.github.io/user_guide/transform/aggregate.html#aggregation-functions</a>.</p>
-</section>
-<section id="the-grammar-of-graphics" class="slide level2">
-<h2>The Grammar of Graphics</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../assets/images/grammar-of-graphics.png" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</div><div class="column r-fit-text" style="width:50%;">
-<p>In <em>The Grammar of Graphics</em>, every visualization is built using the following core components:</p>
-<ol type="1">
-<li>Data: The dataset that you want to visualize.</li>
-<li>Mappings: How the data variables map to visual properties like axes, colors, or sizes.</li>
-<li>Geometries (Marks): The basic shapes used to represent the data, such as points, lines, bars, etc.</li>
-<li>Statistical transformations: Aggregations or transformations applied to the data, such as grouping, counting, or averaging.</li>
-<li>Scales: How data values are translated into visual values, like positioning on the x- or y-axis.</li>
-<li>Coordinates: The coordinate system used, such as Cartesian or polar coordinates.</li>
-<li>Faceting: How the data is split into different panels or sections to show comparisons.</li>
-</ol>
-</div></div>
-</section>
-<section id="adding-color-tooltip-title" class="slide level2">
-<h2>Adding Color, Tooltip &amp; Title</h2>
-<p><em>What is this code visualizing?</em></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a aria-label="1"></a>alt.Chart(novels_df).mark_bar().encode(</span>
-<span id="cb18-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">"genre:N"</span>,</span>
-<span id="cb18-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">"count():Q"</span>,</span>
-<span id="cb18-4"><a aria-label="4"></a>    color<span class="op">=</span>alt.Color(<span class="st">"top_500_rank:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"viridis"</span>)),</span>
-<span id="cb18-5"><a aria-label="5"></a>    tooltip<span class="op">=</span>[<span class="st">"genre:N"</span>, <span class="st">"count():Q"</span>, <span class="st">"top_500_rank:Q"</span>, <span class="st">"title"</span>]</span>
-<span id="cb18-6"><a aria-label="6"></a>).properties(</span>
-<span id="cb18-7"><a aria-label="7"></a>    title<span class="op">=</span><span class="st">"Top 500 Novels by Genre"</span>,</span>
-<span id="cb18-8"><a aria-label="8"></a>    width<span class="op">=</span><span class="dv">600</span>,</span>
-<span id="cb18-9"><a aria-label="9"></a>    height<span class="op">=</span><span class="dv">400</span></span>
-<span id="cb18-10"><a aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="merging-data-with-pandas" class="slide level2">
-<h2>Merging Data With Pandas</h2>
-<p><a href="https://data.post45.org/" data-fig-align="center" target="_blank"><img data-src="../assets/images/post45_data.png"></a></p>
-</section>
-<section id="nyt-bestsellers-dataset" class="slide level2">
-<h2>NYT Bestsellers Dataset</h2>
-<p>Let’s use the one about <em>New York Times</em> Hardcover Fiction Bestsellers, 1931–2020, created by Jordan Pruett <a href="https://data.post45.org/nyt-fiction-bestsellers-data/" target="_blank">https://data.post45.org/nyt-fiction-bestsellers-data/</a>.</p>
-
-<img data-src="../assets/images/nyt_data.png" class="r-stretch quarto-figure-center"><p class="caption">NYT Data</p></section>
-<section id="loading-the-nyt-bestsellers-data" class="slide level2">
-<h2>Loading the NYT Bestsellers Data</h2>
-<p>If we click on the <code>Explore/download data</code> for the first dataset, we see a new page that has the remote url for the dataset.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a aria-label="1"></a>nyt_bestsellers_df <span class="op">=</span> pd.read_csv(</span>
-<span id="cb19-2"><a aria-label="2"></a>    <span class="st">"https://raw.githubusercontent.com/ecds/post45-datasets/main/nyt_full.tsv"</span>,</span>
-<span id="cb19-3"><a aria-label="3"></a>    sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>,</span>
-<span id="cb19-4"><a aria-label="4"></a>    encoding<span class="op">=</span><span class="st">'utf-8'</span></span>
+<section id="why-does-a-temporal-year-need-conversion" class="slide level2">
+<h2>Why does a temporal year need conversion?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a aria-label="1"></a>novels_df[<span class="st">'pub_year'</span>] <span class="op">=</span> pd.to_datetime(</span>
+<span id="cb18-2"><a aria-label="2"></a>    novels_df[<span class="st">'pub_year'</span>],</span>
+<span id="cb18-3"><a aria-label="3"></a>    errors<span class="op">=</span><span class="st">'coerce'</span>,</span>
+<span id="cb18-4"><a aria-label="4"></a>    <span class="bu">format</span><span class="op">=</span><span class="st">'%Y'</span></span>
+<span id="cb18-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a aria-label="1"></a>alt.Chart(novels_df).mark_circle(size<span class="op">=</span><span class="dv">60</span>).encode(</span>
+<span id="cb19-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'pub_year:T'</span>,</span>
+<span id="cb19-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'top_500_rank:Q'</span>,</span>
+<span id="cb19-4"><a aria-label="4"></a>    tooltip<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>, <span class="st">'top_500_rank'</span>]</span>
 <span id="cb19-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>How could we explore this dataset?</em></p>
 </section>
-<section id="merging-data-with-pandas-1" class="slide level2">
-<h2>Merging Data with Pandas</h2>
+<section id="can-publication-year-explain-missing-activity-metadata" class="slide level2">
+<h2>Can publication year explain missing activity metadata?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a aria-label="1"></a>novels_df[<span class="st">'has_field_of_activity'</span>] <span class="op">=</span> (</span>
+<span id="cb20-2"><a aria-label="2"></a>    novels_df[<span class="st">'author_field_of_activity'</span>].notna()</span>
+<span id="cb20-3"><a aria-label="3"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a aria-label="1"></a>alt.Chart(novels_df).mark_circle(size<span class="op">=</span><span class="dv">60</span>).encode(</span>
+<span id="cb21-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'pub_year:T'</span>,</span>
+<span id="cb21-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'top_500_rank:Q'</span>,</span>
+<span id="cb21-4"><a aria-label="4"></a>    color<span class="op">=</span><span class="st">'has_field_of_activity:N'</span>,</span>
+<span id="cb21-5"><a aria-label="5"></a>    tooltip<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>, <span class="st">'top_500_rank'</span>]</span>
+<span id="cb21-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-should-we-do-when-the-dataset-cannot-explain-its-own-gaps" class="slide level2">
+<h2>What should we do when the dataset cannot explain its own gaps?</h2>
+<p><a href="https://heatherkrause.medium.com/data-biographies-getting-to-know-your-data-better-to-achieve-better-analysis-6e35d9f8e3f2" data-fig-align="center" target="_blank" width="750"><img data-src="../assets/images/data-biographies-rwanda-1.jpg"></a></p>
+</section></section>
+<section>
+<section id="reshaping-metadata" class="title-slide slide level1 center">
+<h1>Reshaping Metadata</h1>
 
-<img data-src="../assets/images/merge_syntax.png" class="quarto-figure quarto-figure-center r-stretch"><p>Pandas has built in functionality that let’s us merge together DataFrames so that we can perform analysis on the combined dataset, with extensive documentation <a href="https://pandas.pydata.org/docs/user_guide/merging.html" target="_blank">https://pandas.pydata.org/docs/user_guide/merging.html</a>.</p>
 </section>
-<section id="merging-syntax" class="slide level2">
-<h2>Merging Syntax</h2>
-
-<img data-src="../assets/images/merge_example.png" class="r-stretch"></section>
-<section id="types-of-joins" class="slide level2">
-<h2>Types of Joins</h2>
-
-<img data-src="https://miro.medium.com/max/700/1*9eH1_7VbTZPZd9jBiGIyNA.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="finding-common-columns" class="slide level2">
-<h2>Finding Common Columns</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a aria-label="1"></a>novels_df.columns, nyt_bestsellers_df.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>How can we find the common columns?</em></p>
-<div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a aria-label="1"></a><span class="bu">set</span>(novels_df.columns).intersection(<span class="bu">set</span>(nyt_bestsellers_df.columns))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>What happens when we merge on these two columns?</em></p>
-</div>
+<section id="what-relationships-appear-between-genre-and-author-activity" class="slide level2">
+<h2>What relationships appear between genre and author activity?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a aria-label="1"></a>novels_df[<span class="st">'author_field_of_activity'</span>].value_counts().head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>What is difficult about values such as <code>novels,fiction</code>?</em></p>
 </section>
-<section id="attempting-to-merge" class="slide level2">
-<h2>Attempting to Merge</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a aria-label="1"></a>merged_df <span class="op">=</span> novels_df.merge(nyt_bestsellers_df, how<span class="op">=</span><span class="st">'left'</span>, on<span class="op">=</span>[<span class="st">'author'</span>, <span class="st">'title'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>While this code should work, you’ll notice if you print out the <code>merged_df</code> DataFrame that while there are new columns from the <code>nyt_bestsellers_df</code> in our <code>merged_df</code> there only <code>NaN</code> values in those columns. <em>Why is that?</em></p>
+<section id="how-can-we-split-compound-values" class="slide level2">
+<h2>How can we split compound values?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a aria-label="1"></a>novels_df[<span class="st">'individual_author_activity'</span>] <span class="op">=</span> (</span>
+<span id="cb23-2"><a aria-label="2"></a>    novels_df[<span class="st">'author_field_of_activity'</span>].<span class="bu">str</span>.split(<span class="st">','</span>)</span>
+<span id="cb23-3"><a aria-label="3"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="investigating-the-most-prolific-authors" class="slide level2">
-<h2>Investigating the Most Prolific Authors</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a aria-label="1"></a>novels_df[novels_df[<span class="st">'author'</span>].isin(nyt_bestsellers_df[<span class="st">'author'</span>])][<span class="st">'author'</span>].value_counts().head(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a aria-label="1"></a>nyt_bestsellers_df[nyt_bestsellers_df[<span class="st">'author'</span>].isin(novels_df[<span class="st">'author'</span>])][<span class="st">'author'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="what-does-explode-change" class="slide level2">
+<h2>What does <code>explode()</code> change?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a aria-label="1"></a>exploded_novels_df <span class="op">=</span> novels_df.explode(</span>
+<span id="cb24-2"><a aria-label="2"></a>    <span class="st">'individual_author_activity'</span></span>
+<span id="cb24-3"><a aria-label="3"></a>).copy()</span>
+<span id="cb24-4"><a aria-label="4"></a></span>
+<span id="cb24-5"><a aria-label="5"></a><span class="bu">print</span>(<span class="st">"Rows before:"</span>, <span class="bu">len</span>(novels_df))</span>
+<span id="cb24-6"><a aria-label="6"></a><span class="bu">print</span>(<span class="st">"Rows after:"</span>, <span class="bu">len</span>(exploded_novels_df))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="the-problem-title-casing" class="slide level2">
-<h2>The Problem: Title Casing</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a aria-label="1"></a>novel_titles <span class="op">=</span> novels_df[novels_df.author <span class="op">==</span> <span class="st">"Stephen King"</span>].title.unique()</span>
-<span id="cb25-2"><a aria-label="2"></a>nyt_titles <span class="op">=</span> nyt_bestsellers_df[nyt_bestsellers_df.author <span class="op">==</span> <span class="st">"Stephen King"</span>].title.unique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a aria-label="1"></a><span class="ex">novels:</span>  [<span class="st">'The Stand'</span> <span class="st">'It'</span> <span class="st">'The Shining'</span> ...]</span>
-<span id="cb26-2"><a aria-label="2"></a><span class="ex">NYT:</span>     [<span class="st">'THE SHINING'</span> <span class="st">'THE STAND'</span> <span class="st">'IT'</span> ...]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="what-happens-when-we-visualize-every-category" class="slide level2">
+<h2>What happens when we visualize every category?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a aria-label="1"></a>alt.Chart(exploded_novels_df).mark_rect().encode(</span>
+<span id="cb25-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'genre:N'</span>,</span>
+<span id="cb25-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'individual_author_activity:N'</span>,</span>
+<span id="cb25-4"><a aria-label="4"></a>    color<span class="op">=</span><span class="st">'count():Q'</span>,</span>
+<span id="cb25-5"><a aria-label="5"></a>    tooltip<span class="op">=</span>[</span>
+<span id="cb25-6"><a aria-label="6"></a>        <span class="st">'genre:N'</span>,</span>
+<span id="cb25-7"><a aria-label="7"></a>        <span class="st">'individual_author_activity:N'</span>,</span>
+<span id="cb25-8"><a aria-label="8"></a>        <span class="st">'count():Q'</span></span>
+<span id="cb25-9"><a aria-label="9"></a>    ]</span>
+<span id="cb25-10"><a aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="string-methods-in-pandas" class="slide level2 scrollable smaller">
-<h2>String Methods in Pandas</h2>
-<div class="r-fit-text">
+<section id="which-rows-can-support-this-comparison" class="slide level2">
+<h2>Which rows can support this comparison?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a aria-label="1"></a>genre_activity_chart_df <span class="op">=</span> exploded_novels_df[</span>
+<span id="cb26-2"><a aria-label="2"></a>    exploded_novels_df[<span class="st">'genre'</span>].notna()</span>
+<span id="cb26-3"><a aria-label="3"></a>    <span class="op">&amp;</span> (exploded_novels_df[<span class="st">'genre'</span>] <span class="op">!=</span> <span class="st">'na'</span>)</span>
+<span id="cb26-4"><a aria-label="4"></a>    <span class="op">&amp;</span> exploded_novels_df[<span class="st">'individual_author_activity'</span>].notna()</span>
+<span id="cb26-5"><a aria-label="5"></a>].copy()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-changes-after-filtering" class="slide level2">
+<h2>What changes after filtering?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a aria-label="1"></a>alt.Chart(genre_activity_chart_df).mark_rect().encode(</span>
+<span id="cb27-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'genre:N'</span>,</span>
+<span id="cb27-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'individual_author_activity:N'</span>,</span>
+<span id="cb27-4"><a aria-label="4"></a>    color<span class="op">=</span><span class="st">'count():Q'</span>,</span>
+<span id="cb27-5"><a aria-label="5"></a>    tooltip<span class="op">=</span>[</span>
+<span id="cb27-6"><a aria-label="6"></a>        <span class="st">'genre:N'</span>,</span>
+<span id="cb27-7"><a aria-label="7"></a>        <span class="st">'individual_author_activity:N'</span>,</span>
+<span id="cb27-8"><a aria-label="8"></a>        <span class="st">'count():Q'</span></span>
+<span id="cb27-9"><a aria-label="9"></a>    ]</span>
+<span id="cb27-10"><a aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="does-every-author-contribute-equally" class="slide level2">
+<h2>Does every author contribute equally?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a aria-label="1"></a>repeated_authors_df <span class="op">=</span> novels_df[<span class="st">'author'</span>].value_counts().reset_index()</span>
+<span id="cb28-2"><a aria-label="2"></a>repeated_authors_df <span class="op">=</span> repeated_authors_df[</span>
+<span id="cb28-3"><a aria-label="3"></a>    repeated_authors_df[<span class="st">'count'</span>] <span class="op">&gt;</span> <span class="dv">1</span></span>
+<span id="cb28-4"><a aria-label="4"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a aria-label="1"></a>alt.Chart(repeated_authors_df).mark_bar().encode(</span>
+<span id="cb29-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'count:Q'</span>,</span>
+<span id="cb29-3"><a aria-label="3"></a>    y<span class="op">=</span>alt.Y(<span class="st">'author:N'</span>, sort<span class="op">=</span><span class="st">'-x'</span>),</span>
+<span id="cb29-4"><a aria-label="4"></a>    tooltip<span class="op">=</span>[<span class="st">'author:N'</span>, <span class="st">'count:Q'</span>]</span>
+<span id="cb29-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-can-we-reduce-prolific-author-effects" class="slide level2">
+<h2>How can we reduce prolific-author effects?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a aria-label="1"></a>unique_author_activity_df <span class="op">=</span> genre_activity_chart_df.drop_duplicates(</span>
+<span id="cb30-2"><a aria-label="2"></a>    subset<span class="op">=</span>[<span class="st">'author'</span>, <span class="st">'genre'</span>, <span class="st">'individual_author_activity'</span>]</span>
+<span id="cb30-3"><a aria-label="3"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a aria-label="1"></a>alt.Chart(unique_author_activity_df).mark_rect().encode(</span>
+<span id="cb31-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'genre:N'</span>,</span>
+<span id="cb31-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'individual_author_activity:N'</span>,</span>
+<span id="cb31-4"><a aria-label="4"></a>    color<span class="op">=</span><span class="st">'count():Q'</span>,</span>
+<span id="cb31-5"><a aria-label="5"></a>    tooltip<span class="op">=</span>[<span class="st">'genre:N'</span>, <span class="st">'individual_author_activity:N'</span>, <span class="st">'count():Q'</span>]</span>
+<span id="cb31-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="which-apparent-patterns-survive-deduplication" class="slide level2">
+<h2>Which apparent patterns survive deduplication?</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 61%">
-<col style="width: 38%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Pandas String Method</th>
-<th>Explanation</th>
+<th>Relationship</th>
+<th style="text-align: right;">Novel-activity rows</th>
+<th style="text-align: right;">Unique authors</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>df['column'].str.lower()</code></td>
-<td>Lowercase all values</td>
+<td>Fantasy + novels</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="even">
-<td><code>df['column'].str.upper()</code></td>
-<td>Uppercase all values</td>
+<td>Thrillers + law</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="odd">
-<td><code>df['column'].str.capitalize()</code></td>
-<td>Capitalize the first letter of each value</td>
+<td>Thrillers + acting</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
-<td><code>df['column'].str.replace('old', 'new')</code></td>
-<td>Replace all instances of one string with another</td>
+<td>Science fiction + science fiction</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">7</td>
 </tr>
 <tr class="odd">
-<td><code>df['column'].str.split('delimiter')</code></td>
-<td>Split a column by a delimiter</td>
-</tr>
-<tr class="even">
-<td><code>df['column'].str.strip()</code></td>
-<td>Remove leading and trailing whitespace</td>
-</tr>
-<tr class="odd">
-<td><code>df['column'].str.len()</code></td>
-<td>Count characters in each value</td>
-</tr>
-<tr class="even">
-<td><code>df['column'].str.contains('pattern')</code></td>
-<td>Check if a column contains a pattern</td>
-</tr>
-<tr class="odd">
-<td><code>df['column'].str.startswith('pattern')</code></td>
-<td>Check if a column starts with a pattern</td>
-</tr>
-<tr class="even">
-<td><code>df['column'].str.endswith('pattern')</code></td>
-<td>Check if a column ends with a pattern</td>
-</tr>
-<tr class="odd">
-<td><code>df['column'].str.count('pattern')</code></td>
-<td>Count occurrences of a pattern in each value</td>
-</tr>
-<tr class="even">
-<td><code>df['column'].str.extract('pattern')</code></td>
-<td>Extract the first regex match in each value</td>
-</tr>
-<tr class="odd">
-<td><code>df['column'].str.findall('pattern')</code></td>
-<td>Find all regex matches in each value</td>
+<td>History + literature</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">6</td>
 </tr>
 </tbody>
 </table>
-<p>An in-depth discussion of these methods is available in the Pandas documentation <a href="https://pandas.pydata.org/docs/user_guide/text.html" target="_blank">https://pandas.pydata.org/docs/user_guide/text.html</a>.</p>
-</div>
 </section>
-<section id="fixing-the-casing-merging" class="slide level2">
-<h2>Fixing the Casing &amp; Merging</h2>
-<p><em>How could we fix the casing issue and merge the two DataFrames?</em></p>
+<section id="what-are-we-really-comparing" class="slide level2">
+<h2>What are we really comparing?</h2>
+<p><strong>Person-level authority metadata</strong></p>
+<p>VIAF + Library of Congress records</p>
 <div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a aria-label="1"></a><span class="co"># Preserve original, create normalized version</span></span>
-<span id="cb27-2"><a aria-label="2"></a>nyt_bestsellers_df <span class="op">=</span> nyt_bestsellers_df.rename(columns<span class="op">=</span>{<span class="st">'title'</span>: <span class="st">'nyt_title'</span>})</span>
-<span id="cb27-3"><a aria-label="3"></a>nyt_bestsellers_df[<span class="st">'title'</span>] <span class="op">=</span> nyt_bestsellers_df[<span class="st">'nyt_title'</span>].<span class="bu">str</span>.capitalize()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If we rerun our shared titles check, we should now see some overlap:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a aria-label="1"></a>shared_titles <span class="op">=</span> novels_df[novels_df[<span class="st">'title'</span>].isin(nyt_bestsellers_df[<span class="st">'title'</span>])][<span class="st">'title'</span>].nunique()</span>
-<span id="cb28-2"><a aria-label="2"></a><span class="bu">print</span>(<span class="ss">f"Number of shared titles: </span><span class="sc">{</span>shared_titles<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Work-level descriptive metadata</strong></p>
+<p>Genres from OCLC’s original Top 500 list</p>
 </div>
 </section>
-<section id="final-merge" class="slide level2">
-<h2>Final Merge</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a aria-label="1"></a>inner_merged_df <span class="op">=</span> novels_df.merge(nyt_bestsellers_df, how<span class="op">=</span><span class="st">'inner'</span>, on<span class="op">=</span>[<span class="st">'author'</span>, <span class="st">'title'</span>])</span>
-<span id="cb29-2"><a aria-label="2"></a>outer_merged_df <span class="op">=</span> novels_df.merge(nyt_bestsellers_df, how<span class="op">=</span><span class="st">'outer'</span>, on<span class="op">=</span>[<span class="st">'author'</span>, <span class="st">'title'</span>])</span>
-<span id="cb29-3"><a aria-label="3"></a>left_merged_df <span class="op">=</span> novels_df.merge(nyt_bestsellers_df, how<span class="op">=</span><span class="st">'left'</span>, on<span class="op">=</span>[<span class="st">'author'</span>, <span class="st">'title'</span>])</span>
-<span id="cb29-4"><a aria-label="4"></a><span class="bu">print</span>(<span class="ss">f"Inner merge length: </span><span class="sc">{</span><span class="bu">len</span>(inner_merged_df)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb29-5"><a aria-label="5"></a><span class="bu">print</span>(<span class="ss">f"Outer merge length: </span><span class="sc">{</span><span class="bu">len</span>(outer_merged_df)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb29-6"><a aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Left merge length: </span><span class="sc">{</span><span class="bu">len</span>(left_merged_df)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This should give us the following output:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a aria-label="1"></a><span class="ex">Inner</span> merge length: 231</span>
-<span id="cb30-2"><a aria-label="2"></a><span class="ex">Outer</span> merge length: 60876</span>
-<span id="cb30-3"><a aria-label="3"></a><span class="ex">Left</span> merge length: 721</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>So our final merge will be the left merge, which keeps all the novels and adds NYT bestseller data where available.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a aria-label="1"></a>combined_novels_nyt_df <span class="op">=</span> novels_df.merge(nyt_bestsellers_df, how<span class="op">=</span><span class="st">'left'</span>, on<span class="op">=</span>[<span class="st">'author'</span>, <span class="st">'title'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="what-does-garbage-in-garbage-out-leave-out" class="slide level2">
+<h2>What does “Garbage In, Garbage Out” leave out?</h2>
+<p><a href="https://www.atlasobscura.com/articles/is-this-the-first-time-anyone-printed-garbage-in-garbage-out" data-fig-align="center" target="_blank" width="500"><img data-src="https://www.harrised.com/150/images/gigo.jpeg"></a></p>
+</section></section>
+<section>
+<section id="exploring-and-visualizing-culture-homework" class="title-slide slide level1 center">
+<h1>Exploring and Visualizing Culture Homework</h1>
+<p>Choose one dataset from <a href="https://www.responsible-datasets-in-context.com/" target="_blank">Responsible Datasets in Context</a>.</p>
+<ol type="1">
+<li>Explore its shape and contents with Pandas.</li>
+<li>Create at least one Altair chart.</li>
+<li>Explain briefly what you notice.</li>
+</ol>
 </section>
-<section id="working-with-the-full-combined-dataset" class="slide level2">
-<h2>Working With the Full Combined Dataset</h2>
-<div class="r-fit-text">
-<p>We will use two related files:</p>
-<ul>
-<li><code>combined_novels_viz.csv</code> contains metadata and pre-computed text measurements but not the complete novels.</li>
-<li>The complete dataset on Canvas includes an <code>eng_text</code> column containing available Project Gutenberg texts. It is approximately 152 MB.</li>
-</ul>
-<p>Start with the smaller file:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a aria-label="1"></a>combined_novels_nyt_df <span class="op">=</span> pd.read_csv(<span class="st">'combined_novels_viz.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a aria-label="1"></a>combined_novels_nyt_df.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="counting-characters-and-words" class="slide level2">
-<h2>Counting Characters and Words</h2>
-<p>The simplest measure of a text is its length. We can count the number of characters in each novel using <code>str.len()</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a aria-label="1"></a>combined_novels_nyt_df[<span class="st">'novel_length_chars'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">str</span>.<span class="bu">len</span>()</span>
-<span id="cb34-2"><a aria-label="2"></a>combined_novels_nyt_df[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'novel_length_chars'</span>]].sort_values(<span class="st">'novel_length_chars'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>To get a more useful <strong>word count</strong>, we can split the text on spaces and count the resulting list:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a aria-label="1"></a>combined_novels_nyt_df[<span class="st">'novel_length_words'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">str</span>.split().<span class="bu">str</span>.<span class="bu">len</span>()</span>
-<span id="cb35-2"><a aria-label="2"></a>combined_novels_nyt_df[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'novel_length_words'</span>]].sort_values(<span class="st">'novel_length_words'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="searching-for-patterns-with-str.contains" class="slide level2">
-<h2>Searching for Patterns With <code>str.contains()</code></h2>
-<p><code>str.contains()</code> checks whether each value in a column matches a given pattern. This is useful for filtering rows, counting occurrences, or finding subsets of a dataset. For example, how many of the novels in our dataset include the word “war” in their <code>genre</code> field?</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a aria-label="1"></a>combined_novels_nyt_df[combined_novels_nyt_df[<span class="st">'genre'</span>].<span class="bu">str</span>.contains(<span class="st">'war'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>)][[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'genre'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="how-did-we-generate-the-counts-columns" class="slide level2">
-<h2>How did we generate the counts columns?</h2>
-<p>We can also use <code>str.contains()</code> on the text column itself. For example, let’s count how many novels contain the word “she” at all:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a aria-label="1"></a>combined_novels_nyt_df[<span class="st">'mentions_she'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">str</span>.contains(<span class="vs">r'</span><span class="dv">\b</span><span class="vs">she</span><span class="dv">\b</span><span class="vs">'</span>, case<span class="op">=</span><span class="va">False</span>, na<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb37-2"><a aria-label="2"></a>combined_novels_nyt_df[<span class="st">'mentions_she'</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Here we use a <strong>regex</strong> pattern <code>\bshe\b</code> — the <code>\b</code> characters are “word boundaries” that ensure we match the standalone word “she” rather than the letters inside words like “sheer” or “fisherman.”</p>
-</section>
-<section id="counting-occurrences-with-str.count" class="slide level2">
-<h2>Counting Occurrences With <code>str.count()</code></h2>
-<p>Rather than just knowing <em>whether</em> a word appears, <code>str.count()</code> tells us <em>how many times</em> it appears. This is especially useful for comparing word frequencies across documents. Let’s count pronouns to start exploring gender representation across our novels:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a aria-label="1"></a>combined_novels_nyt_df[<span class="st">'he_counts'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">str</span>.count(<span class="vs">r'</span><span class="dv">\b</span><span class="vs">he</span><span class="dv">\b</span><span class="vs">'</span>)</span>
-<span id="cb38-2"><a aria-label="2"></a>combined_novels_nyt_df[<span class="st">'she_counts'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">str</span>.count(<span class="vs">r'</span><span class="dv">\b</span><span class="vs">she</span><span class="dv">\b</span><span class="vs">'</span>)</span>
-<span id="cb38-3"><a aria-label="3"></a>combined_novels_nyt_df[<span class="st">'they_counts'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'eng_text'</span>].<span class="bu">str</span>.count(<span class="vs">r'</span><span class="dv">\b</span><span class="vs">they</span><span class="dv">\b</span><span class="vs">'</span>)</span>
-<span id="cb38-4"><a aria-label="4"></a></span>
-<span id="cb38-5"><a aria-label="5"></a>combined_novels_nyt_df[[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'genre'</span>, <span class="st">'he_counts'</span>, <span class="st">'she_counts'</span>, <span class="st">'they_counts'</span>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="extracting-information-with-str.extract" class="slide level2">
-<h2>Extracting Information With <code>str.extract()</code></h2>
-<p><code>str.extract()</code> uses a regular expression to pull specific pieces of text out of a string. For example, each of our Project Gutenberg URLs follows a consistent pattern — we could extract the book ID number from it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a aria-label="1"></a>combined_novels_nyt_df[<span class="st">'pg_book_id'</span>] <span class="op">=</span> combined_novels_nyt_df[<span class="st">'pg_eng_url'</span>].<span class="bu">str</span>.extract(<span class="vs">r'/epub/</span><span class="kw">(</span><span class="dv">\d</span><span class="op">+</span><span class="kw">)</span><span class="vs">/'</span>)</span>
-<span id="cb39-2"><a aria-label="2"></a>combined_novels_nyt_df[[<span class="st">'title'</span>, <span class="st">'pg_eng_url'</span>, <span class="st">'pg_book_id'</span>]].head(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="how-do-genres-relate-to-different-measures-of-recognition-and-popularity" class="slide level2">
-<h2>How do genres relate to different measures of recognition and popularity?</h2>
-<div class="r-fit-text">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Measure</th>
-<th>What it represents</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>NYT rank</td>
-<td>Weekly commercial bestseller position</td>
-</tr>
-<tr class="even">
-<td>OCLC holdings rank</td>
-<td>Presence in library collections</td>
-</tr>
-<tr class="odd">
-<td>Goodreads ratings rank</td>
-<td>Reader attention on a commercial platform</td>
-</tr>
-<tr class="even">
-<td>Top 500 rank</td>
-<td>Position in the assembled novels dataset</td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="preparing-the-genre-comparison" class="slide level2">
-<h2>Preparing the genre comparison</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a aria-label="1"></a>recognition_novels_df <span class="op">=</span> novels_df.copy()</span>
-<span id="cb40-2"><a aria-label="2"></a>recognition_nyt_df <span class="op">=</span> nyt_bestsellers_df.copy()</span>
-<span id="cb40-3"><a aria-label="3"></a></span>
-<span id="cb40-4"><a aria-label="4"></a>recognition_novels_df[<span class="st">'title_key'</span>] <span class="op">=</span> (</span>
-<span id="cb40-5"><a aria-label="5"></a>    recognition_novels_df[<span class="st">'title'</span>].<span class="bu">str</span>.strip().<span class="bu">str</span>.lower()</span>
-<span id="cb40-6"><a aria-label="6"></a>)</span>
-<span id="cb40-7"><a aria-label="7"></a>recognition_novels_df[<span class="st">'author_key'</span>] <span class="op">=</span> (</span>
-<span id="cb40-8"><a aria-label="8"></a>    recognition_novels_df[<span class="st">'author'</span>].<span class="bu">str</span>.strip().<span class="bu">str</span>.lower()</span>
-<span id="cb40-9"><a aria-label="9"></a>)</span>
-<span id="cb40-10"><a aria-label="10"></a></span>
-<span id="cb40-11"><a aria-label="11"></a>recognition_nyt_df[<span class="st">'title_key'</span>] <span class="op">=</span> (</span>
-<span id="cb40-12"><a aria-label="12"></a>    recognition_nyt_df[<span class="st">'nyt_title'</span>].<span class="bu">str</span>.strip().<span class="bu">str</span>.lower()</span>
-<span id="cb40-13"><a aria-label="13"></a>)</span>
-<span id="cb40-14"><a aria-label="14"></a>recognition_nyt_df[<span class="st">'author_key'</span>] <span class="op">=</span> (</span>
-<span id="cb40-15"><a aria-label="15"></a>    recognition_nyt_df[<span class="st">'author'</span>].<span class="bu">str</span>.strip().<span class="bu">str</span>.lower()</span>
-<span id="cb40-16"><a aria-label="16"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="comparing-genres-across-rankings" class="slide level2">
-<h2>Comparing genres across rankings</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a aria-label="1"></a>genre_summary_df <span class="op">=</span> (</span>
-<span id="cb41-2"><a aria-label="2"></a>    genre_recognition_df</span>
-<span id="cb41-3"><a aria-label="3"></a>    .groupby(<span class="st">'genre'</span>)</span>
-<span id="cb41-4"><a aria-label="4"></a>    .agg(</span>
-<span id="cb41-5"><a aria-label="5"></a>        novels<span class="op">=</span>(<span class="st">'title'</span>, <span class="st">'nunique'</span>),</span>
-<span id="cb41-6"><a aria-label="6"></a>        average_nyt_rank<span class="op">=</span>(<span class="st">'average_nyt_rank'</span>, <span class="st">'mean'</span>),</span>
-<span id="cb41-7"><a aria-label="7"></a>        average_oclc_rank<span class="op">=</span>(<span class="st">'oclc_holdings_rank'</span>, <span class="st">'mean'</span>),</span>
-<span id="cb41-8"><a aria-label="8"></a>        average_goodreads_rank<span class="op">=</span>(<span class="st">'gr_num_ratings_rank'</span>, <span class="st">'mean'</span>),</span>
-<span id="cb41-9"><a aria-label="9"></a>        average_top_500_rank<span class="op">=</span>(<span class="st">'top_500_rank'</span>, <span class="st">'mean'</span>)</span>
-<span id="cb41-10"><a aria-label="10"></a>    )</span>
-<span id="cb41-11"><a aria-label="11"></a>    .reset_index()</span>
-<span id="cb41-12"><a aria-label="12"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>What might disagreement among these rankings reveal?</em></p>
-</section>
-<section id="pronoun-counts-by-genre" class="slide level2">
-<h2>Pronoun Counts by Genre</h2>
-<p><em>How could we visualize if certain genres more likely to use particular pronouns? What columns would we pass to Altair as encodings?</em></p>
+<section id="what-matters-most" class="slide level2">
+<h2>What matters most?</h2>
+<blockquote>
+<p>The goal is not to use the largest number of methods or produce the most complicated chart.</p>
+</blockquote>
 <div class="fragment">
-<p>Let’s explore this code!</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a aria-label="1"></a>melted_df <span class="op">=</span> pd.melt(</span>
-<span id="cb42-2"><a aria-label="2"></a>    combined_novels_nyt_df,</span>
-<span id="cb42-3"><a aria-label="3"></a>    id_vars<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>, <span class="st">'genre'</span>],</span>
-<span id="cb42-4"><a aria-label="4"></a>    value_vars<span class="op">=</span>[<span class="st">'he_counts'</span>, <span class="st">'she_counts'</span>, <span class="st">'they_counts'</span>],</span>
-<span id="cb42-5"><a aria-label="5"></a>    var_name<span class="op">=</span><span class="st">'pronoun'</span>,</span>
-<span id="cb42-6"><a aria-label="6"></a>    value_name<span class="op">=</span><span class="st">'pronoun_count'</span></span>
-<span id="cb42-7"><a aria-label="7"></a>).assign(pronoun<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'pronoun'</span>].<span class="bu">str</span>.replace(<span class="st">'_counts'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Inspect the data. Make one purposeful visualization. Explain what you notice.</strong></p>
+
+
 </div>
-</section>
-<section id="reshaping-data-with-pandas" class="slide level2">
-<h2>Reshaping Data With Pandas</h2>
-
-<img data-src="../assets/images/reshaping_melt.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="putting-it-all-together" class="slide level2">
-<h2>Putting It All Together</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a aria-label="1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb43-2"><a aria-label="2"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
-<span id="cb43-3"><a aria-label="3"></a>melted_df <span class="op">=</span> pd.melt(</span>
-<span id="cb43-4"><a aria-label="4"></a>    combined_novels_nyt_df,</span>
-<span id="cb43-5"><a aria-label="5"></a>    id_vars<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'pub_year'</span>, <span class="st">'genre'</span>],</span>
-<span id="cb43-6"><a aria-label="6"></a>    value_vars<span class="op">=</span>[<span class="st">'he_counts'</span>, <span class="st">'she_counts'</span>, <span class="st">'they_counts'</span>],</span>
-<span id="cb43-7"><a aria-label="7"></a>    var_name<span class="op">=</span><span class="st">'pronoun'</span>,</span>
-<span id="cb43-8"><a aria-label="8"></a>    value_name<span class="op">=</span><span class="st">'pronoun_count'</span></span>
-<span id="cb43-9"><a aria-label="9"></a>).assign(pronoun<span class="op">=</span><span class="kw">lambda</span> df: df[<span class="st">'pronoun'</span>].<span class="bu">str</span>.replace(<span class="st">'_counts'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>))</span>
-<span id="cb43-10"><a aria-label="10"></a></span>
-<span id="cb43-11"><a aria-label="11"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">'pronoun'</span>], bind<span class="op">=</span><span class="st">'legend'</span>)</span>
-<span id="cb43-12"><a aria-label="12"></a></span>
-<span id="cb43-13"><a aria-label="13"></a>alt.Chart(melted_df[melted_df[<span class="st">'genre'</span>].notna()]).mark_bar().encode(</span>
-<span id="cb43-14"><a aria-label="14"></a>    x<span class="op">=</span>alt.X(<span class="st">'genre:N'</span>, title<span class="op">=</span><span class="st">'Genre'</span>, sort<span class="op">=</span><span class="st">'-y'</span>),</span>
-<span id="cb43-15"><a aria-label="15"></a>    y<span class="op">=</span>alt.Y(<span class="st">'sum(pronoun_count):Q'</span>, title<span class="op">=</span><span class="st">'Total Pronoun Count'</span>),</span>
-<span id="cb43-16"><a aria-label="16"></a>    color<span class="op">=</span>alt.Color(<span class="st">'pronoun:N'</span>, title<span class="op">=</span><span class="st">'Pronoun'</span>),</span>
-<span id="cb43-17"><a aria-label="17"></a>    opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="dv">1</span>), alt.value(<span class="fl">0.2</span>)),</span>
-<span id="cb43-18"><a aria-label="18"></a>    tooltip<span class="op">=</span>[</span>
-<span id="cb43-19"><a aria-label="19"></a>        alt.Tooltip(<span class="st">'genre:N'</span>, title<span class="op">=</span><span class="st">'Genre'</span>),</span>
-<span id="cb43-20"><a aria-label="20"></a>        alt.Tooltip(<span class="st">'pronoun:N'</span>, title<span class="op">=</span><span class="st">'Pronoun'</span>),</span>
-<span id="cb43-21"><a aria-label="21"></a>        alt.Tooltip(<span class="st">'sum(pronoun_count):Q'</span>, title<span class="op">=</span><span class="st">'Count'</span>, <span class="bu">format</span><span class="op">=</span><span class="st">','</span>)</span>
-<span id="cb43-22"><a aria-label="22"></a>    ]</span>
-<span id="cb43-23"><a aria-label="23"></a>).add_params(selection).properties(</span>
-<span id="cb43-24"><a aria-label="24"></a>    title<span class="op">=</span><span class="st">'Pronoun Counts by Genre'</span>,</span>
-<span id="cb43-25"><a aria-label="25"></a>    width<span class="op">=</span><span class="dv">600</span>,</span>
-<span id="cb43-26"><a aria-label="26"></a>    height<span class="op">=</span><span class="dv">400</span></span>
-<span id="cb43-27"><a aria-label="27"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="altair-interactivity-selections" class="slide level2">
-<h2>Altair Interactivity: Selections</h2>
-<p>Full interactivity documentation: <a href="https://altair-viz.github.io/user_guide/interactions/index.html" target="_blank">https://altair-viz.github.io/user_guide/interactions/index.html</a></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a aria-label="1"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">'genre'</span>], bind<span class="op">=</span><span class="st">'legend'</span>)</span>
-<span id="cb44-2"><a aria-label="2"></a></span>
-<span id="cb44-3"><a aria-label="3"></a>alt.Chart(combined_novels_nyt_df).mark_bar().encode(</span>
-<span id="cb44-4"><a aria-label="4"></a>    x<span class="op">=</span><span class="st">'genre:N'</span>,</span>
-<span id="cb44-5"><a aria-label="5"></a>    y<span class="op">=</span><span class="st">'count():Q'</span>,</span>
-<span id="cb44-6"><a aria-label="6"></a>    color<span class="op">=</span><span class="st">'genre:N'</span>,</span>
-<span id="cb44-7"><a aria-label="7"></a>    opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="dv">1</span>), alt.value(<span class="fl">0.2</span>))</span>
-<span id="cb44-8"><a aria-label="8"></a>).add_params(selection)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="handling-dates-in-altair" class="slide level2">
-<h2>Handling Dates in Altair</h2>
-<p><em>What happens if we use <code>pub_year</code> directly as a temporal encoding?</em></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a aria-label="1"></a>alt.Chart(combined_novels_nyt_df).mark_bar().encode(</span>
-<span id="cb45-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">"pub_year:T"</span>,</span>
-<span id="cb45-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">"count():Q"</span>,</span>
-<span id="cb45-4"><a aria-label="4"></a>    color<span class="op">=</span><span class="st">"genre:N"</span></span>
-<span id="cb45-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="dates-in-pandas" class="slide level2">
-<h2>Dates in Pandas</h2>
-<p>To fix this, we can create a <code>pub_date</code> column:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a aria-label="1"></a>combined_novels_nyt_df[<span class="st">'pub_date'</span>] <span class="op">=</span> pd.to_datetime(</span>
-<span id="cb46-2"><a aria-label="2"></a>    combined_novels_nyt_df[<span class="st">'pub_year'</span>].astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">'-01-01'</span>,</span>
-<span id="cb46-3"><a aria-label="3"></a>    errors<span class="op">=</span><span class="st">'coerce'</span></span>
-<span id="cb46-4"><a aria-label="4"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We append <code>-01-01</code> to make a full date string (January 1st of each year), then use <code>pd.to_datetime()</code> to parse it. <code>errors='coerce'</code> turns any unparseable values into NaT (Not a Time) rather than raising an error.</p>
-</section>
-<section id="top-500-novels-by-genre-over-time" class="slide level2">
-<h2>Top 500 Novels by Genre Over Time</h2>
-<p><em>Click a genre in the legend to highlight it</em></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a aria-label="1"></a><span class="co">#| label: fig-genres-over-time</span></span>
-<span id="cb47-2"><a aria-label="2"></a><span class="co">#| fig-cap: "Top 500 Novels by Genre Over Time"</span></span>
-<span id="cb47-3"><a aria-label="3"></a></span>
-<span id="cb47-4"><a aria-label="4"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">'genre'</span>], bind<span class="op">=</span><span class="st">'legend'</span>)</span>
-<span id="cb47-5"><a aria-label="5"></a></span>
-<span id="cb47-6"><a aria-label="6"></a>alt.Chart(combined_novels_nyt_df).mark_bar().encode(</span>
-<span id="cb47-7"><a aria-label="7"></a>    x<span class="op">=</span>alt.X(<span class="st">'pub_date:T'</span>, title<span class="op">=</span><span class="st">'Publication Year'</span>),</span>
-<span id="cb47-8"><a aria-label="8"></a>    y<span class="op">=</span>alt.Y(<span class="st">'count():Q'</span>, title<span class="op">=</span><span class="st">'Number of Novels'</span>),</span>
-<span id="cb47-9"><a aria-label="9"></a>    color<span class="op">=</span>alt.Color(<span class="st">'genre:N'</span>, title<span class="op">=</span><span class="st">'Genre'</span>),</span>
-<span id="cb47-10"><a aria-label="10"></a>    tooltip<span class="op">=</span>[<span class="st">'genre:N'</span>, <span class="st">'count():Q'</span>],</span>
-<span id="cb47-11"><a aria-label="11"></a>    opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="dv">1</span>), alt.value(<span class="fl">0.2</span>))</span>
-<span id="cb47-12"><a aria-label="12"></a>).add_params(selection).transform_filter(</span>
-<span id="cb47-13"><a aria-label="13"></a>    alt.datum.genre <span class="op">!=</span> <span class="va">None</span></span>
-<span id="cb47-14"><a aria-label="14"></a>).properties(</span>
-<span id="cb47-15"><a aria-label="15"></a>    title<span class="op">=</span><span class="st">'Top 500 Novels by Genre Over Time'</span>,</span>
-<span id="cb47-16"><a aria-label="16"></a>    width<span class="op">=</span><span class="dv">800</span>,</span>
-<span id="cb47-17"><a aria-label="17"></a>    height<span class="op">=</span><span class="dv">400</span></span>
-<span id="cb47-18"><a aria-label="18"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="homework-exploring-and-visualizing-culture" class="slide level2">
-<h2>Homework: Exploring and Visualizing Culture</h2>
-<p>New homework: <a href="../materials/augmenting-preserving-cad/02-eda-data-viz.html#exploring-and-visualizing-culture-homework" target="_blank">Exploring and Visualizing Culture Homework</a>. Due <strong>November 16, 2026</strong>.</p>
-
-
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
