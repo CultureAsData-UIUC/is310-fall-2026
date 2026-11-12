@@ -403,7 +403,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="https://miro.medium.com/v2/resize:fit:2000/1*pj8KnjxgCszpDqJSS2741w.jpeg" class="img-fluid"></p>
 <p>The field of corpus linguistics replaced the informal term “word” with the more precise terms <strong>token</strong> (a specific occurrence in a text) and <strong>type</strong> (the abstract word form). For example, “run,” “running,” and “ran” are three different tokens but they all belong to the same type. This distinction matters a lot for analysis.</p>
 <p>We can begin with a small DataFrame containing three short texts:</p>
-<div id="a07fb36b" class="cell" data-execution_count="1">
+<div id="d08e3268" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>text_df <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'document'</span>: [<span class="st">'review_1'</span>, <span class="st">'review_2'</span>, <span class="st">'review_3'</span>],</span>
@@ -450,7 +450,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The <code>text</code> column contains strings. We could count their characters with a Pandas string method:</p>
-<div id="aabff010" class="cell" data-execution_count="2">
+<div id="91baf6fb" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>text_df[<span class="st">'character_count'</span>] <span class="op">=</span> text_df[<span class="st">'text'</span>].<span class="bu">str</span>.<span class="bu">len</span>()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>text_df[[<span class="st">'document'</span>, <span class="st">'character_count'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -488,7 +488,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Character counts give us one structured measurement, but they do not tell us which words appear. A simple first tokenization strategy is to lowercase each string and split it at whitespace:</p>
-<div id="970cddc7" class="cell" data-execution_count="3">
+<div id="a173915d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>text_df[<span class="st">'tokens'</span>] <span class="op">=</span> text_df[<span class="st">'text'</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.split()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>text_df[[<span class="st">'document'</span>, <span class="st">'tokens'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -526,7 +526,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Each cell in <code>tokens</code> now contains a Python list. As with the author activities in the previous lesson, we can use <code>explode()</code> to create one row per document-token relationship:</p>
-<div id="ccaf8e36" class="cell" data-execution_count="4">
+<div id="7261863c" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tokens_df <span class="op">=</span> text_df.explode(<span class="st">'tokens'</span>).copy()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>tokens_df[[<span class="st">'document'</span>, <span class="st">'tokens'</span>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -599,7 +599,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The DataFrame has changed from one row per document to one row per token occurrence. That new structure lets us count the tokens:</p>
-<div id="b990bc76" class="cell" data-execution_count="5">
+<div id="190dd336" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>token_counts_df <span class="op">=</span> tokens_df[<span class="st">'tokens'</span>].value_counts().reset_index()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>token_counts_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -713,7 +713,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>However, the output exposes a problem: <code>strange,</code> and <code>strange</code> are treated as different tokens because the comma remains attached. <code>ending!</code> and <code>ending</code> also differ. Splitting at whitespace is a tokenization decision, not a neutral discovery of the text’s natural units.</p>
 <p>Pandas can use a regular-expression pattern with <code>str.findall()</code> to retrieve word-like sequences instead:</p>
-<div id="c983dfe7" class="cell" data-execution_count="6">
+<div id="95e21eb0" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>text_df[<span class="st">'word_tokens'</span>] <span class="op">=</span> (</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    text_df[<span class="st">'text'</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">str</span>.lower()</span>
@@ -793,7 +793,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The pattern asks for sequences of letters, numbers, underscores, or apostrophes between word boundaries. It separates punctuation from the words, but it also makes interpretive choices. Hyphenated words, multilingual scripts, emoji, abbreviations, and contractions may require different rules.</p>
 <p>Now we can count token occurrences and distinct types:</p>
-<div id="2c55a937" class="cell" data-execution_count="7">
+<div id="b35c8bc9" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>word_counts_df <span class="op">=</span> (</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    word_tokens_df[<span class="st">'word_tokens'</span>]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
@@ -1063,27 +1063,27 @@ Number of types: 15</code></pre>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{<span class="st">'index'</span>: <span class="st">'entity_type'</span>, <span class="dv">0</span>: <span class="st">'total_count'</span>})</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>totals[<span class="st">'entity_type'</span>] <span class="op">=</span> totals[<span class="st">'entity_type'</span>].<span class="bu">str</span>.replace(<span class="st">'_count'</span>, <span class="st">''</span>).<span class="bu">str</span>.upper()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="4e3bfa5d" class="cell" data-execution_count="8">
+<div id="cb819ef0" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 
 <style>
-  #altair-viz-5650991367c2491b85e37bc8077c3852.vega-embed {
+  #altair-viz-2d0385a04d2a41f1b24547fcd3c81046.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-5650991367c2491b85e37bc8077c3852.vega-embed details,
-  #altair-viz-5650991367c2491b85e37bc8077c3852.vega-embed details summary {
+  #altair-viz-2d0385a04d2a41f1b24547fcd3c81046.vega-embed details,
+  #altair-viz-2d0385a04d2a41f1b24547fcd3c81046.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-5650991367c2491b85e37bc8077c3852"></div>
+<div id="altair-viz-2d0385a04d2a41f1b24547fcd3c81046"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-5650991367c2491b85e37bc8077c3852") {
-      outputDiv = document.getElementById("altair-viz-5650991367c2491b85e37bc8077c3852");
+    if (outputDiv.id !== "altair-viz-2d0385a04d2a41f1b24547fcd3c81046") {
+      outputDiv = document.getElementById("altair-viz-2d0385a04d2a41f1b24547fcd3c81046");
     }
 
     const paths = {
@@ -1155,7 +1155,7 @@ Number of types: 15</code></pre>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: (x <span class="op">-</span> x.<span class="bu">min</span>()) <span class="op">/</span> (x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Notice here though that I am normalizing the counts within each entity type, not across the whole dataset. This is because <code>PERSON</code> counts are on a completely different scale than <code>EVENT</code> counts, and I want to be able to compare genres within each entity type without one dominating the visualization.</p>
-<div id="6680195f" class="cell" data-execution_count="9">
+<div id="9237fefd" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_entity_means.csv'</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>stacked_bar <span class="op">=</span> alt.Chart(genre_means).mark_bar().encode(</span>
@@ -1177,23 +1177,23 @@ Number of types: 15</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="9">
 
 <style>
-  #altair-viz-6525c3a7aa924713b7808ec367983bbf.vega-embed {
+  #altair-viz-cdeb98a0377e4d088d58877753b10d2e.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-6525c3a7aa924713b7808ec367983bbf.vega-embed details,
-  #altair-viz-6525c3a7aa924713b7808ec367983bbf.vega-embed details summary {
+  #altair-viz-cdeb98a0377e4d088d58877753b10d2e.vega-embed details,
+  #altair-viz-cdeb98a0377e4d088d58877753b10d2e.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-6525c3a7aa924713b7808ec367983bbf"></div>
+<div id="altair-viz-cdeb98a0377e4d088d58877753b10d2e"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-6525c3a7aa924713b7808ec367983bbf") {
-      outputDiv = document.getElementById("altair-viz-6525c3a7aa924713b7808ec367983bbf");
+    if (outputDiv.id !== "altair-viz-cdeb98a0377e4d088d58877753b10d2e") {
+      outputDiv = document.getElementById("altair-viz-cdeb98a0377e4d088d58877753b10d2e");
     }
 
     const paths = {
@@ -1246,7 +1246,7 @@ Number of types: 15</code></pre>
 </div>
 </div>
 <p>This graph gives us a much better sense of how different genres use different kinds of entities. But it is still tricky to see the relationship. A heatmap would be a much better option.</p>
-<div id="3e433e77" class="cell" data-execution_count="10">
+<div id="c457f086" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>heatmap <span class="op">=</span> alt.Chart(genre_means).mark_rect().encode(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'entity_type:N'</span>, title<span class="op">=</span><span class="st">'Entity Type'</span>),</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">'genre:N'</span>, title<span class="op">=</span><span class="st">'Genre'</span>, sort<span class="op">=</span><span class="st">'-x'</span>),</span>
@@ -1269,23 +1269,23 @@ Number of types: 15</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="10">
 
 <style>
-  #altair-viz-35a87e564b6f4c74bf166da1874ca202.vega-embed {
+  #altair-viz-6d27bfbed24948a28a81cc39415409d9.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-35a87e564b6f4c74bf166da1874ca202.vega-embed details,
-  #altair-viz-35a87e564b6f4c74bf166da1874ca202.vega-embed details summary {
+  #altair-viz-6d27bfbed24948a28a81cc39415409d9.vega-embed details,
+  #altair-viz-6d27bfbed24948a28a81cc39415409d9.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-35a87e564b6f4c74bf166da1874ca202"></div>
+<div id="altair-viz-6d27bfbed24948a28a81cc39415409d9"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-35a87e564b6f4c74bf166da1874ca202") {
-      outputDiv = document.getElementById("altair-viz-35a87e564b6f4c74bf166da1874ca202");
+    if (outputDiv.id !== "altair-viz-6d27bfbed24948a28a81cc39415409d9") {
+      outputDiv = document.getElementById("altair-viz-6d27bfbed24948a28a81cc39415409d9");
     }
 
     const paths = {
@@ -1601,7 +1601,7 @@ Note
 <span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.DataFrame(fingerprint_rows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Which gives us the following genre vocabulary fingerprints:</p>
-<div id="5ebb169d" class="cell" data-execution_count="11">
+<div id="fe00fb64" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint.csv'</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>alt.Chart(fingerprint_df).mark_bar().encode(</span>
@@ -1614,23 +1614,23 @@ Note
 <div class="cell-output cell-output-display" data-execution_count="11">
 
 <style>
-  #altair-viz-78f87969726041b7bca17f8b97088ebe.vega-embed {
+  #altair-viz-c2da199a3dbc462b9601e3272b7d7196.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-78f87969726041b7bca17f8b97088ebe.vega-embed details,
-  #altair-viz-78f87969726041b7bca17f8b97088ebe.vega-embed details summary {
+  #altair-viz-c2da199a3dbc462b9601e3272b7d7196.vega-embed details,
+  #altair-viz-c2da199a3dbc462b9601e3272b7d7196.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-78f87969726041b7bca17f8b97088ebe"></div>
+<div id="altair-viz-c2da199a3dbc462b9601e3272b7d7196"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-78f87969726041b7bca17f8b97088ebe") {
-      outputDiv = document.getElementById("altair-viz-78f87969726041b7bca17f8b97088ebe");
+    if (outputDiv.id !== "altair-viz-c2da199a3dbc462b9601e3272b7d7196") {
+      outputDiv = document.getElementById("altair-viz-c2da199a3dbc462b9601e3272b7d7196");
     }
 
     const paths = {
@@ -1741,7 +1741,7 @@ Note
 <span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Matrix shape: </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> documents × </span><span class="sc">{</span>tfidf_matrix<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> terms"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then if we visualize the genre centroids again, we should see fewer character names and more genre-distinctive terms:</p>
-<div id="3379a1e2" class="cell" data-execution_count="12">
+<div id="152d3f8c" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fingerprint_df <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_genre_fingerprint_without_entities.csv'</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the updated genre centroids</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>alt.Chart(fingerprint_df).mark_bar().encode(</span>
@@ -1754,23 +1754,23 @@ Note
 <div class="cell-output cell-output-display" data-execution_count="12">
 
 <style>
-  #altair-viz-91c02289f1504786863d737119edff9f.vega-embed {
+  #altair-viz-b3177068f4764ba68c63c86b9c8fa5ce.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-91c02289f1504786863d737119edff9f.vega-embed details,
-  #altair-viz-91c02289f1504786863d737119edff9f.vega-embed details summary {
+  #altair-viz-b3177068f4764ba68c63c86b9c8fa5ce.vega-embed details,
+  #altair-viz-b3177068f4764ba68c63c86b9c8fa5ce.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-91c02289f1504786863d737119edff9f"></div>
+<div id="altair-viz-b3177068f4764ba68c63c86b9c8fa5ce"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-91c02289f1504786863d737119edff9f") {
-      outputDiv = document.getElementById("altair-viz-91c02289f1504786863d737119edff9f");
+    if (outputDiv.id !== "altair-viz-b3177068f4764ba68c63c86b9c8fa5ce") {
+      outputDiv = document.getElementById("altair-viz-b3177068f4764ba68c63c86b9c8fa5ce");
     }
 
     const paths = {
@@ -2000,7 +2000,7 @@ Note
 <span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: (x <span class="op">-</span> x.<span class="bu">min</span>()) <span class="op">/</span> (x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
 <span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This will give us a dataframe where each row is a genre-topic pair with the mean topic weight for that genre, normalized to a 0–1 scale within each topic. Now we can visualize this as a heatmap:</p>
-<div id="dd706e6c" class="cell" data-execution_count="13">
+<div id="a76512d1" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>topic_genre_means <span class="op">=</span> pd.read_csv(<span class="st">'../../assets/files/combined_novels_topic_genre_means.csv'</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>alt.Chart(topic_genre_means).mark_rect().encode(</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">'topic:N'</span>, title<span class="op">=</span><span class="st">'LDA Topic'</span>),</span>
@@ -2022,23 +2022,23 @@ Note
 <div class="cell-output cell-output-display" data-execution_count="13">
 
 <style>
-  #altair-viz-81cf5e60f6be427b8e42d7fa7ced8372.vega-embed {
+  #altair-viz-3416ee9b9b3a47cdb4a3c53945baf71a.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-81cf5e60f6be427b8e42d7fa7ced8372.vega-embed details,
-  #altair-viz-81cf5e60f6be427b8e42d7fa7ced8372.vega-embed details summary {
+  #altair-viz-3416ee9b9b3a47cdb4a3c53945baf71a.vega-embed details,
+  #altair-viz-3416ee9b9b3a47cdb4a3c53945baf71a.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-81cf5e60f6be427b8e42d7fa7ced8372"></div>
+<div id="altair-viz-3416ee9b9b3a47cdb4a3c53945baf71a"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-81cf5e60f6be427b8e42d7fa7ced8372") {
-      outputDiv = document.getElementById("altair-viz-81cf5e60f6be427b8e42d7fa7ced8372");
+    if (outputDiv.id !== "altair-viz-3416ee9b9b3a47cdb4a3c53945baf71a") {
+      outputDiv = document.getElementById("altair-viz-3416ee9b9b3a47cdb4a3c53945baf71a");
     }
 
     const paths = {

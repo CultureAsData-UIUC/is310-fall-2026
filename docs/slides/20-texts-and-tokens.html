@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../assets/images/favicon.ico" rel="icon">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <title>IS310 - Culture As Data Fall 2026 – Structuring Data: Merging, Matching &amp; Augmentation</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Structuring Data: Merging, Matching &amp; Augmentation</h1>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="still-working-with-top-500-novels" class="slide level2">
+<h2>Still Working With Top 500 Novels</h2>
+<p><a href="https://www.responsible-datasets-in-context.com/posts/top-500-novels/top-500-novels.html" data-fig-align="center" target="_blank" width="650"><img data-src="https://www.responsible-datasets-in-context.com/posts/top-500-novels/images/top_500_kit.png"></a></p>
+</section>
+<section id="but-also-new-dataset-nyt-bestsellers" class="slide level2">
+<h2>But also new dataset: NYT Bestsellers</h2>
+<p><a href="https://data.post45.org/" data-fig-align="center" target="_blank" width="800"><img data-src="../assets/images/post45_data.png"></a></p>
+</section>
+<section id="what-does-one-row-represent" class="slide level2">
+<h2>What does one row represent?</h2>
+<p><a href="https://data.post45.org/nyt-fiction-bestsellers-data/" data-fig-align="center" target="_blank" width="800"><img data-src="../assets/images/nyt_data.png"></a></p>
+<p><strong>One title appearing during one week</strong></p>
+</section>
+<section id="how-can-we-explore-the-nyt-dataset" class="slide level2">
+<h2>How can we explore the NYT dataset?</h2>
+<p><em>What methods can we use to see an overview of the data? What is missing in the dataset?</em></p>
+</section>
+<section>
+<section id="merging-cultural-datasets" class="title-slide slide level1 center">
+<h1>Merging Cultural Datasets</h1>
+
+</section>
+<section id="how-do-we-combine-two-datasets-in-pandas" class="slide level2">
+<h2>How do we combine two datasets in Pandas?</h2>
+
+<img data-src="../assets/images/merge_example.png" class="quarto-figure quarto-figure-center r-stretch" width="850"><p><em>When do two records describe the same cultural object?</em></p>
+</section>
+<section id="how-do-we-decide-how-to-merge-datasets" class="slide level2">
+<h2>How do we decide how to merge datasets?</h2>
+<p><em>What do we need to check for merging?</em></p>
+<div class="fragment">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a><span class="bu">set</span>(novels_df.columns).intersection(</span>
+<span id="cb1-2"><a aria-label="2"></a>    <span class="bu">set</span>(nyt_bestsellers_df.columns)</span>
+<span id="cb1-3"><a aria-label="3"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="why-does-this-merge-appear-to-work-but-produce-no-matches" class="slide level2">
+<h2>Why does this merge appear to work but produce no matches?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-label="1"></a>merged_df <span class="op">=</span> novels_df.merge(</span>
+<span id="cb2-2"><a aria-label="2"></a>    nyt_bestsellers_df,</span>
+<span id="cb2-3"><a aria-label="3"></a>    how<span class="op">=</span><span class="st">'left'</span>,</span>
+<span id="cb2-4"><a aria-label="4"></a>    on<span class="op">=</span>[<span class="st">'author'</span>, <span class="st">'author_viaf'</span>, <span class="st">'oclc_eholdings'</span>,</span>
+<span id="cb2-5"><a aria-label="5"></a>        <span class="st">'oclc_holdings'</span>, <span class="st">'oclc_owi'</span>, <span class="st">'title'</span>]</span>
+<span id="cb2-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="which-values-actually-overlap" class="slide level2">
+<h2>Which values actually overlap?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a aria-label="1"></a>author_is_shared <span class="op">=</span> novels_df[<span class="st">'author'</span>].isin(</span>
+<span id="cb3-2"><a aria-label="2"></a>    nyt_bestsellers_df[<span class="st">'author'</span>]</span>
+<span id="cb3-3"><a aria-label="3"></a>)</span>
+<span id="cb3-4"><a aria-label="4"></a>title_is_shared <span class="op">=</span> novels_df[<span class="st">'title'</span>].isin(</span>
+<span id="cb3-5"><a aria-label="5"></a>    nyt_bestsellers_df[<span class="st">'title'</span>]</span>
+<span id="cb3-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-can-stephen-king-reveal-about-the-mismatch" class="slide level2">
+<h2>What can Stephen King reveal about the mismatch?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a>novel_titles <span class="op">=</span> novels_df[</span>
+<span id="cb4-2"><a aria-label="2"></a>    novels_df.author <span class="op">==</span> <span class="st">"Stephen King"</span></span>
+<span id="cb4-3"><a aria-label="3"></a>].title.unique()</span>
+<span id="cb4-4"><a aria-label="4"></a></span>
+<span id="cb4-5"><a aria-label="5"></a>nyt_titles <span class="op">=</span> nyt_bestsellers_df[</span>
+<span id="cb4-6"><a aria-label="6"></a>    nyt_bestsellers_df.author <span class="op">==</span> <span class="st">"Stephen King"</span></span>
+<span id="cb4-7"><a aria-label="7"></a>].title.unique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="string-methods-comparison-keys" class="title-slide slide level1 center">
+<h1>String Methods &amp; Comparison Keys</h1>
+
+</section>
+<section id="what-can-pandas-do-with-strings" class="slide level2">
+<h2>What can Pandas do with strings?</h2>
+<div class="r-fit-text">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Operation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>.str.lower()</code></td>
+<td>lowercase text</td>
+</tr>
+<tr class="even">
+<td><code>.str.upper()</code></td>
+<td>uppercase text</td>
+</tr>
+<tr class="odd">
+<td><code>.str.capitalize()</code></td>
+<td>capitalize the first character</td>
+</tr>
+<tr class="even">
+<td><code>.str.strip()</code></td>
+<td>remove surrounding whitespace</td>
+</tr>
+<tr class="odd">
+<td><code>.str.replace()</code></td>
+<td>replace matching text</td>
+</tr>
+<tr class="even">
+<td><code>.str.split()</code></td>
+<td>split one string into a list</td>
+</tr>
+<tr class="odd">
+<td><code>.str.contains()</code></td>
+<td>test whether text contains a pattern</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="does-capitalization-solve-the-title-mismatch" class="slide level2">
+<h2>Does capitalization solve the title mismatch?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a aria-label="1"></a>nyt_bestsellers_df <span class="op">=</span> nyt_bestsellers_df.rename(</span>
+<span id="cb5-2"><a aria-label="2"></a>    columns<span class="op">=</span>{<span class="st">'title'</span>: <span class="st">'nyt_title'</span>}</span>
+<span id="cb5-3"><a aria-label="3"></a>)</span>
+<span id="cb5-4"><a aria-label="4"></a></span>
+<span id="cb5-5"><a aria-label="5"></a>nyt_bestsellers_df[<span class="st">'title'</span>] <span class="op">=</span> (</span>
+<span id="cb5-6"><a aria-label="6"></a>    nyt_bestsellers_df[<span class="st">'nyt_title'</span>].<span class="bu">str</span>.capitalize()</span>
+<span id="cb5-7"><a aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-happens-to-alices-adventures-in-wonderland" class="slide level2">
+<h2>What happens to <em>Alice’s Adventures in Wonderland</em>?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a aria-label="1"></a>Alice's Adventures in Wonderland</span>
+<span id="cb6-2"><a aria-label="2"></a>Alice'S Adventures In Wonderland</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Which differences matter for identifying the work?</em></p>
+</section>
+<section id="why-preserve-the-original-values" class="slide level2">
+<h2>Why preserve the original values?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a>novels_df[<span class="st">'title_key'</span>] <span class="op">=</span> (</span>
+<span id="cb7-2"><a aria-label="2"></a>    novels_df[<span class="st">'title'</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.strip()</span>
+<span id="cb7-3"><a aria-label="3"></a>)</span>
+<span id="cb7-4"><a aria-label="4"></a>novels_df[<span class="st">'author_key'</span>] <span class="op">=</span> (</span>
+<span id="cb7-5"><a aria-label="5"></a>    novels_df[<span class="st">'author'</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.strip()</span>
+<span id="cb7-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="did-the-comparison-keys-reveal-overlap" class="slide level2">
+<h2>Did the comparison keys reveal overlap?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a>title_key_is_shared <span class="op">=</span> novels_df[<span class="st">'title_key'</span>].isin(</span>
+<span id="cb8-2"><a aria-label="2"></a>    nyt_bestsellers_df[<span class="st">'title_key'</span>]</span>
+<span id="cb8-3"><a aria-label="3"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="merge-types-research-questions" class="title-slide slide level1 center">
+<h1>Merge Types &amp; Research Questions</h1>
+
+</section>
+<section id="which-records-should-a-merge-preserve" class="slide level2">
+<h2>Which records should a merge preserve?</h2>
+
+<img data-src="https://miro.medium.com/max/700/1*9eH1_7VbTZPZd9jBiGIyNA.png" class="quarto-figure quarto-figure-center r-stretch" width="750"></section>
+<section id="which-shared-columns-should-become-merge-keys" class="slide level2">
+<h2>Which shared columns should become merge keys?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a>shared_columns <span class="op">=</span> <span class="bu">list</span>(</span>
+<span id="cb9-2"><a aria-label="2"></a>    <span class="bu">set</span>(novels_df.columns).intersection(</span>
+<span id="cb9-3"><a aria-label="3"></a>        <span class="bu">set</span>(nyt_bestsellers_df.columns)</span>
+<span id="cb9-4"><a aria-label="4"></a>    )</span>
+<span id="cb9-5"><a aria-label="5"></a>)</span>
+<span id="cb9-6"><a aria-label="6"></a></span>
+<span id="cb9-7"><a aria-label="7"></a>shared_columns.remove(<span class="st">'author'</span>)</span>
+<span id="cb9-8"><a aria-label="8"></a>shared_columns.remove(<span class="st">'title'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-do-the-merge-types-change-the-result" class="slide level2">
+<h2>How do the merge types change the result?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a>inner_merge_df <span class="op">=</span> novels_df.merge(</span>
+<span id="cb10-2"><a aria-label="2"></a>    nyt_bestsellers_df,</span>
+<span id="cb10-3"><a aria-label="3"></a>    how<span class="op">=</span><span class="st">'inner'</span>,</span>
+<span id="cb10-4"><a aria-label="4"></a>    on<span class="op">=</span>shared_columns,</span>
+<span id="cb10-5"><a aria-label="5"></a>    indicator<span class="op">=</span><span class="va">True</span></span>
+<span id="cb10-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-does-indicatortrue-reveal" class="slide level2">
+<h2>What does <code>indicator=True</code> reveal?</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th><code>_merge</code> value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>left_only</code></td>
+<td>found only in the left source</td>
+</tr>
+<tr class="even">
+<td><code>both</code></td>
+<td>matched across the two sources</td>
+</tr>
+<tr class="odd">
+<td><code>right_only</code></td>
+<td>found only in the right source</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="which-merge-answers-our-oclc-question" class="slide level2">
+<h2>Which merge answers our OCLC question?</h2>
+<p><strong>Which OCLC Top 500 novels also appeared on the NYT list?</strong></p>
+<div class="fragment">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a aria-label="1"></a>merged_df <span class="op">=</span> novels_df.merge(</span>
+<span id="cb11-2"><a aria-label="2"></a>    nyt_bestsellers_df,</span>
+<span id="cb11-3"><a aria-label="3"></a>    how<span class="op">=</span><span class="st">'left'</span>,</span>
+<span id="cb11-4"><a aria-label="4"></a>    on<span class="op">=</span>shared_columns,</span>
+<span id="cb11-5"><a aria-label="5"></a>    suffixes<span class="op">=</span>(<span class="st">'_oclc'</span>, <span class="st">'_nyt'</span>)</span>
+<span id="cb11-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="did-every-oclc-novel-appear-on-the-nyt-list" class="slide level2">
+<h2>Did every OCLC novel appear on the NYT list?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a aria-label="1"></a>nyt_novels_df <span class="op">=</span> merged_df[</span>
+<span id="cb12-2"><a aria-label="2"></a>    merged_df[<span class="st">'title_nyt'</span>].notna()</span>
+<span id="cb12-3"><a aria-label="3"></a>]</span>
+<span id="cb12-4"><a aria-label="4"></a></span>
+<span id="cb12-5"><a aria-label="5"></a>non_nyt_novels_df <span class="op">=</span> merged_df[</span>
+<span id="cb12-6"><a aria-label="6"></a>    merged_df[<span class="st">'title_nyt'</span>].isna()</span>
+<span id="cb12-7"><a aria-label="7"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-did-the-merge-change-the-unit-of-observation" class="slide level2">
+<h2>How did the merge change the unit of observation?</h2>
+<p><strong>Before:</strong> one row per OCLC novel</p>
+<div class="fragment">
+<p><strong>After:</strong> one row per matched novel-week appearance</p>
+</div>
+</section>
+<section id="how-can-we-visualize-unique-oclc-novels" class="slide level2">
+<h2>How can we visualize unique OCLC novels?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a aria-label="1"></a>oclc_publication_chart_df <span class="op">=</span> merged_df[</span>
+<span id="cb13-2"><a aria-label="2"></a>    [<span class="st">'top_500_rank'</span>, <span class="st">'oclc_pub_date'</span>, <span class="st">'has_title_nyt'</span>]</span>
+<span id="cb13-3"><a aria-label="3"></a>].drop_duplicates()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="why-summarize-before-plotting-60000-rows" class="slide level2">
+<h2>Why summarize before plotting 60,000 rows?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a aria-label="1"></a>nyt_appearance_chart_df <span class="op">=</span> right_merge_df[</span>
+<span id="cb14-2"><a aria-label="2"></a>    [<span class="st">'year'</span>, <span class="st">'in_oclc_top_500'</span>]</span>
+<span id="cb14-3"><a aria-label="3"></a>].value_counts().reset_index(</span>
+<span id="cb14-4"><a aria-label="4"></a>    name<span class="op">=</span><span class="st">'weekly_appearances'</span></span>
+<span id="cb14-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-does-altairs-row-limit-protect-us-from" class="slide level2">
+<h2>What does Altair’s row limit protect us from?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a aria-label="1"></a>alt.data_transformers.disable_max_rows()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Why might disabling this be a poor publishing choice?</em></p>
+</section></section>
+<section>
+<section id="from-unstructured-to-structured-data" class="title-slide slide level1 center">
+<h1>From Unstructured to Structured Data</h1>
+
+</section>
+<section id="is-text-already-structured" class="slide level2">
+<h2>Is text already structured?</h2>
+
+<img data-src="http://intellspot.com/wp-content/uploads/2020/04/Structured-vs-unstructured-data-an-infographic-1024x724.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
+<section id="what-is-the-difference-between-retrieval-and-extraction" class="slide level2">
+<h2>What is the difference between retrieval and extraction?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="https://en.wikipedia.org/wiki/Information_retrieval" target="_blank"><img data-src="../assets/images/IR_figure.png"></a></p>
+<p><strong>Information Retrieval</strong></p>
+</div><div class="column" style="width:50%;">
+<p><a href="https://en.wikipedia.org/wiki/Information_extraction" target="_blank"><img data-src="../assets/images/IE_figure.png"></a></p>
+<p><strong>Information Extraction</strong></p>
+</div></div>
+</section>
+<section id="what-does-part-of-speech-tagging-add" class="slide level2">
+<h2>What does part-of-speech tagging add?</h2>
+<p><a href="https://spacy.io/usage/linguistic-features#pos-tagging" data-fig-align="center" target="_blank" width="850"><img data-src="https://cdn-media-1.freecodecamp.org/images/1*f6e0uf5PX17pTceYU4rbCA.jpeg"></a></p>
+</section>
+<section id="how-did-grammatical-text-become-machine-readable-data" class="slide level2">
+<h2>How did grammatical text become machine-readable data?</h2>
+<p><a href="https://varieng.helsinki.fi/CoRD/corpora/BROWN/tags.html" data-fig-align="center" target="_blank" width="850"><img data-src="../assets/images/brown_corpus_tagged.webp"></a></p>
+</section>
+<section id="what-does-named-entity-recognition-add" class="slide level2">
+<h2>What does named entity recognition add?</h2>
+<p><a href="https://spacy.io/usage/linguistic-features#named-entities" data-fig-align="center" target="_blank" width="850"><img data-src="../assets/images/spacy_ner.png"></a></p>
+</section>
+<section id="when-did-named-entity-become-a-research-category" class="slide level2">
+<h2>When did “named entity” become a research category?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="https://en.wikipedia.org/wiki/Information_extraction#History" target="_blank"><img data-src="../assets/images/ner_history.png"></a></p>
+</div><div class="column" style="width:50%;">
+<p><a href="https://www-nlpir.nist.gov/related_projects/muc/muc_sw/muc_sw_manual.html" target="_blank"><img data-src="../assets/images/muc_example.png"></a></p>
+</div></div>
+</section>
+<section id="how-recent-is-ner-in-digital-humanities" class="slide level2">
+<h2>How recent is NER in digital humanities?</h2>
+<p><a href="https://dh-abstracts.library.cmu.edu/works?ordering=year&amp;text=%22named+entity+recognition%22&amp;conference=&amp;work_type=" data-fig-align="center" target="_blank" width="850"><img data-src="../assets/images/dh_ner_conference.png"></a></p>
+</section></section>
+<section>
+<section id="spacy-structuring-text" class="title-slide slide level1 center">
+<h1>spaCy &amp; Structuring Text</h1>
+
+</section>
+<section id="why-are-we-using-spacy" class="slide level2">
+<h2>Why are we using spaCy?</h2>
+<p><a href="https://spacy.io/" data-fig-align="center" target="_blank" width="850"><img data-src="https://spacy.io/images/architecture.svg"></a></p>
+</section>
+<section id="what-is-the-difference-between-a-library-and-a-trained-pipeline" class="slide level2">
+<h2>What is the difference between a library and a trained pipeline?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a aria-label="1"></a><span class="ex">pip</span> install spacy</span>
+<span id="cb16-2"><a aria-label="2"></a><span class="ex">python</span> <span class="at">-m</span> spacy download en_core_web_sm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-happens-when-we-call-nlptext" class="slide level2">
+<h2>What happens when we call <code>nlp(text)</code>?</h2>
+<div class="r-fit-text">
+<p><strong>Text</strong> → <strong>Tokenizer</strong> → <strong>Pipeline components</strong> → <strong>Annotated document</strong></p>
+<p><code>"Harry Potter..."</code> → words and punctuation → POS, syntax, entities → <code>Doc</code></p>
+</div>
+</section>
+<section id="what-does-spacy-return" class="slide level2">
+<h2>What does spaCy return?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a aria-label="1"></a>doc <span class="op">=</span> nlp(<span class="st">"Harry Potter and the Philosopher's Stone"</span>)</span>
+<span id="cb17-2"><a aria-label="2"></a></span>
+<span id="cb17-3"><a aria-label="3"></a><span class="bu">type</span>(doc)</span>
+<span id="cb17-4"><a aria-label="4"></a>doc[<span class="dv">0</span>]</span>
+<span id="cb17-5"><a aria-label="5"></a>doc.ents</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="where-do-spacys-labels-come-from" class="slide level2">
+<h2>Where do spaCy’s labels come from?</h2>
+<p><strong>Annotated examples</strong> → <strong>learned patterns</strong> → <strong>predictions for new text</strong></p>
+<div class="fragment">
+<p><em>What might change a prediction?</em></p>
+</div>
+</section>
+<section id="what-does-spacy-predict-for-one-title" class="slide level2">
+<h2>What does spaCy predict for one title?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a aria-label="1"></a>example_title <span class="op">=</span> nlp(</span>
+<span id="cb18-2"><a aria-label="2"></a>    <span class="st">"Harry Potter and the Philosopher's Stone"</span></span>
+<span id="cb18-3"><a aria-label="3"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-can-we-inspect-entity-predictions-visually" class="slide level2">
+<h2>How can we inspect entity predictions visually?</h2>
+<p><a href="https://spacy.io/usage/visualizers" data-fig-align="center" target="_blank" width="850"><img data-src="https://devopedia.org/images/article/256/8660.1580659054.png"></a></p>
+</section></section>
+<section>
+<section id="what-can-the-language-of-titles-tell-us" class="title-slide slide level1 center">
+<h1>What Can the Language of Titles Tell Us?</h1>
+
+</section>
+<section id="why-analyze-titles-rather-than-full-novels" class="slide level2">
+<h2>Why analyze titles rather than full novels?</h2>
+<p><strong>Only two matched novels have usable open-access Project Gutenberg text.</strong></p>
+<div class="fragment">
+<p>Can title language distinguish OCLC holdings from NYT bestsellers?</p>
+</div>
+</section>
+<section id="what-should-make-us-cautious-about-titles" class="slide level2">
+<h2>What should make us cautious about titles?</h2>
+<div class="r-fit-text">
+<ul>
+<li>Editions, translations, and platforms may use different titles.</li>
+<li>Punctuation, subtitles, series names, and capitalization vary.</li>
+<li>Different works can share a title.</li>
+<li>Short titles provide limited context for model predictions.</li>
+<li>Comparison keys improve matching while removing distinctions.</li>
+</ul>
+</div>
+</section>
+<section id="which-nyt-dataset-fits-a-title-level-question" class="slide level2">
+<h2>Which NYT dataset fits a title-level question?</h2>
+<p><strong>Weekly list:</strong> one row per title-week appearance</p>
+<div class="fragment">
+<p><strong>Title file:</strong> one intended row per bestseller title</p>
+</div>
+</section>
+<section id="do-comparison-keys-reveal-duplicate-records" class="slide level2">
+<h2>Do comparison keys reveal duplicate records?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a aria-label="1"></a>nyt_titles_df[<span class="st">'title_key'</span>] <span class="op">=</span> (</span>
+<span id="cb19-2"><a aria-label="2"></a>    nyt_titles_df[<span class="st">'title'</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.strip()</span>
+<span id="cb19-3"><a aria-label="3"></a>)</span>
+<span id="cb19-4"><a aria-label="4"></a>nyt_titles_df[<span class="st">'author_key'</span>] <span class="op">=</span> (</span>
+<span id="cb19-5"><a aria-label="5"></a>    nyt_titles_df[<span class="st">'author'</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.strip()</span>
+<span id="cb19-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-do-we-keep-one-row-per-title-author-key" class="slide level2">
+<h2>How do we keep one row per title-author key?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a aria-label="1"></a>nyt_titles_with_keys_df <span class="op">=</span> nyt_titles_df.dropna(</span>
+<span id="cb20-2"><a aria-label="2"></a>    subset<span class="op">=</span>[<span class="st">'title_key'</span>, <span class="st">'author_key'</span>]</span>
+<span id="cb20-3"><a aria-label="3"></a>)</span>
+<span id="cb20-4"><a aria-label="4"></a></span>
+<span id="cb20-5"><a aria-label="5"></a>nyt_unique_titles_df <span class="op">=</span> (</span>
+<span id="cb20-6"><a aria-label="6"></a>    nyt_titles_with_keys_df.drop_duplicates(</span>
+<span id="cb20-7"><a aria-label="7"></a>        subset<span class="op">=</span>[<span class="st">'title_key'</span>, <span class="st">'author_key'</span>]</span>
+<span id="cb20-8"><a aria-label="8"></a>    ).copy()</span>
+<span id="cb20-9"><a aria-label="9"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-do-we-create-three-comparison-groups" class="slide level2">
+<h2>How do we create three comparison groups?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a aria-label="1"></a>title_comparison_df <span class="op">=</span> oclc_title_columns_df.merge(</span>
+<span id="cb21-2"><a aria-label="2"></a>    nyt_title_columns_df,</span>
+<span id="cb21-3"><a aria-label="3"></a>    how<span class="op">=</span><span class="st">'outer'</span>,</span>
+<span id="cb21-4"><a aria-label="4"></a>    on<span class="op">=</span>[<span class="st">'title_key'</span>, <span class="st">'author_key'</span>],</span>
+<span id="cb21-5"><a aria-label="5"></a>    suffixes<span class="op">=</span>(<span class="st">'_oclc'</span>, <span class="st">'_nyt'</span>),</span>
+<span id="cb21-6"><a aria-label="6"></a>    indicator<span class="op">=</span><span class="va">True</span></span>
+<span id="cb21-7"><a aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-do-we-reconcile-titles-and-dates-from-two-sources" class="slide level2">
+<h2>How do we reconcile titles and dates from two sources?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a aria-label="1"></a>title_comparison_df[<span class="st">'title'</span>] <span class="op">=</span> (</span>
+<span id="cb22-2"><a aria-label="2"></a>    title_comparison_df[<span class="st">'title_oclc'</span>].fillna(</span>
+<span id="cb22-3"><a aria-label="3"></a>        title_comparison_df[<span class="st">'title_nyt'</span>]</span>
+<span id="cb22-4"><a aria-label="4"></a>    )</span>
+<span id="cb22-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-can-we-visit-each-dataframe-row" class="slide level2">
+<h2>How can we visit each DataFrame row?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a aria-label="1"></a><span class="cf">for</span> index, row <span class="kw">in</span> title_comparison_df.head(<span class="dv">3</span>).iterrows():</span>
+<span id="cb23-2"><a aria-label="2"></a>    <span class="bu">print</span>(index)</span>
+<span id="cb23-3"><a aria-label="3"></a>    <span class="bu">print</span>(row[<span class="st">'title_for_analysis'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-does-row-contain" class="slide level2">
+<h2>What does <code>row</code> contain?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a aria-label="1"></a><span class="cf">for</span> index, row <span class="kw">in</span> title_comparison_df.head(<span class="dv">1</span>).iterrows():</span>
+<span id="cb24-2"><a aria-label="2"></a>    <span class="bu">print</span>(<span class="bu">type</span>(row))</span>
+<span id="cb24-3"><a aria-label="3"></a>    <span class="bu">print</span>(row[[<span class="st">'title_for_analysis'</span>, <span class="st">'dataset_group'</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-can-we-augment-every-title" class="slide level2">
+<h2>How can we augment every title?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a aria-label="1"></a>title_analysis_rows <span class="op">=</span> []</span>
+<span id="cb25-2"><a aria-label="2"></a></span>
+<span id="cb25-3"><a aria-label="3"></a><span class="cf">for</span> index, row <span class="kw">in</span> title_comparison_df.iterrows():</span>
+<span id="cb25-4"><a aria-label="4"></a>    title <span class="op">=</span> row[<span class="st">'title_for_analysis'</span>]</span>
+<span id="cb25-5"><a aria-label="5"></a>    doc <span class="op">=</span> nlp(title)</span>
+<span id="cb25-6"><a aria-label="6"></a>    <span class="co"># Count predicted labels and save entities</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-is-the-unit-of-the-augmented-dataframe" class="slide level2">
+<h2>What is the unit of the augmented DataFrame?</h2>
+<p><strong>One row per title</strong></p>
+<div class="fragment">
+<p><strong>New fields:</strong> grammatical counts and predicted entities</p>
+</div>
+</section>
+<section id="how-can-we-compare-groups-of-different-sizes" class="slide level2">
+<h2>How can we compare groups of different sizes?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a aria-label="1"></a>title_measure_summary_df <span class="op">=</span> (</span>
+<span id="cb26-2"><a aria-label="2"></a>    title_analysis_df</span>
+<span id="cb26-3"><a aria-label="3"></a>    .groupby(<span class="st">'dataset_group'</span>)[title_measure_columns]</span>
+<span id="cb26-4"><a aria-label="4"></a>    .mean()</span>
+<span id="cb26-5"><a aria-label="5"></a>    .<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb26-6"><a aria-label="6"></a>    .reset_index()</span>
+<span id="cb26-7"><a aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="why-does-this-chart-require-long-data" class="slide level2">
+<h2>Why does this chart require long data?</h2>
+<p><a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.melt.html" data-fig-align="center" target="_blank" width="850"><img data-src="https://pandas.pydata.org/docs/_images/reshaping_melt.png"></a></p>
+</section>
+<section id="what-differs-across-the-three-title-groups" class="slide level2">
+<h2>What differs across the three title groups?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a aria-label="1"></a>alt.Chart(title_measure_long_df).mark_bar().encode(</span>
+<span id="cb27-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'dataset_group:N'</span>,</span>
+<span id="cb27-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'mean_count_per_title:Q'</span>,</span>
+<span id="cb27-4"><a aria-label="4"></a>    color<span class="op">=</span><span class="st">'dataset_group:N'</span>,</span>
+<span id="cb27-5"><a aria-label="5"></a>    column<span class="op">=</span><span class="st">'measure:N'</span></span>
+<span id="cb27-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="do-genres-cross-between-institutional-and-commercial-recognition" class="slide level2">
+<h2>Do genres cross between institutional and commercial recognition?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a aria-label="1"></a>genre_analysis_df[<span class="st">'matched_nyt'</span>] <span class="op">=</span> (</span>
+<span id="cb28-2"><a aria-label="2"></a>    genre_analysis_df[<span class="st">'dataset_group'</span>] <span class="op">==</span> <span class="st">'OCLC and NYT'</span></span>
+<span id="cb28-3"><a aria-label="3"></a>).astype(<span class="bu">int</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="why-compare-a-rate-rather-than-only-raw-counts" class="slide level2">
+<h2>Why compare a rate rather than only raw counts?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a aria-label="1"></a>genre_match_summary_df <span class="op">=</span> genre_analysis_df.groupby(</span>
+<span id="cb29-2"><a aria-label="2"></a>    <span class="st">'genre'</span></span>
+<span id="cb29-3"><a aria-label="3"></a>).agg(</span>
+<span id="cb29-4"><a aria-label="4"></a>    title_count<span class="op">=</span>(<span class="st">'title'</span>, <span class="st">'size'</span>),</span>
+<span id="cb29-5"><a aria-label="5"></a>    nyt_match_rate<span class="op">=</span>(<span class="st">'matched_nyt'</span>, <span class="st">'mean'</span>)</span>
+<span id="cb29-6"><a aria-label="6"></a>).reset_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-do-predictions-become-countable-records" class="slide level2">
+<h2>How do predictions become countable records?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a aria-label="1"></a>title_entities_df <span class="op">=</span> title_analysis_df.explode(</span>
+<span id="cb30-2"><a aria-label="2"></a>    <span class="st">'entities'</span></span>
+<span id="cb30-3"><a aria-label="3"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="which-entity-texts-occur-most-often" class="slide level2">
+<h2>Which entity texts occur most often?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a aria-label="1"></a>top_entities_df <span class="op">=</span> (</span>
+<span id="cb31-2"><a aria-label="2"></a>    entity_counts_df.groupby(<span class="st">'dataset_group'</span>).head(<span class="dv">10</span>)</span>
+<span id="cb31-3"><a aria-label="3"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-many-titles-contain-a-predicted-person-or-place" class="slide level2">
+<h2>How many titles contain a predicted person or place?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a aria-label="1"></a>focused_entity_df[<span class="st">'has_person'</span>] <span class="op">=</span> (</span>
+<span id="cb32-2"><a aria-label="2"></a>    focused_entity_df[<span class="st">'entities'</span>].<span class="bu">apply</span>(has_person)</span>
+<span id="cb32-3"><a aria-label="3"></a>)</span>
+<span id="cb32-4"><a aria-label="4"></a>focused_entity_df[<span class="st">'has_gpe'</span>] <span class="op">=</span> (</span>
+<span id="cb32-5"><a aria-label="5"></a>    focused_entity_df[<span class="st">'entities'</span>].<span class="bu">apply</span>(has_gpe)</span>
+<span id="cb32-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-does-.apply-do" class="slide level2">
+<h2>What does <code>.apply()</code> do?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a aria-label="1"></a>person_results <span class="op">=</span> (</span>
+<span id="cb33-2"><a aria-label="2"></a>    focused_entity_df[<span class="st">'entities'</span>].<span class="bu">apply</span>(has_person)</span>
+<span id="cb33-3"><a aria-label="3"></a>)</span>
+<span id="cb33-4"><a aria-label="4"></a></span>
+<span id="cb33-5"><a aria-label="5"></a>person_results.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="when-might-we-use-each-approach" class="slide level2">
+<h2>When might we use each approach?</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Approach</th>
+<th>What it visits</th>
+<th>Useful here when…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>iterrows()</code></td>
+<td>Each full DataFrame row</td>
+<td>One record requires several fields and several processing steps</td>
+</tr>
+<tr class="even">
+<td><code>.apply()</code></td>
+<td>Each value in one Series</td>
+<td>One reusable function transforms or tests every value in a column</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="how-can-one-chart-compare-both-entity-types" class="slide level2">
+<h2>How can one chart compare both entity types?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a aria-label="1"></a>focused_entity_long_df <span class="op">=</span> focused_entity_df.melt(</span>
+<span id="cb34-2"><a aria-label="2"></a>    id_vars<span class="op">=</span>[<span class="st">'title'</span>, <span class="st">'dataset_group'</span>, <span class="st">'genre'</span>,</span>
+<span id="cb34-3"><a aria-label="3"></a>             <span class="st">'publication_year'</span>],</span>
+<span id="cb34-4"><a aria-label="4"></a>    value_vars<span class="op">=</span>[<span class="st">'has_person'</span>, <span class="st">'has_gpe'</span>],</span>
+<span id="cb34-5"><a aria-label="5"></a>    var_name<span class="op">=</span><span class="st">'entity_type'</span>,</span>
+<span id="cb34-6"><a aria-label="6"></a>    value_name<span class="op">=</span><span class="st">'has_entity'</span></span>
+<span id="cb34-7"><a aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-share-of-titles-contain-people-or-places" class="slide level2">
+<h2>What share of titles contain people or places?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a aria-label="1"></a>alt.Chart(entity_group_summary_df).mark_bar().encode(</span>
+<span id="cb35-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'dataset_group:N'</span>,</span>
+<span id="cb35-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'title_share:Q'</span>,</span>
+<span id="cb35-4"><a aria-label="4"></a>    color<span class="op">=</span><span class="st">'dataset_group:N'</span>,</span>
+<span id="cb35-5"><a aria-label="5"></a>    column<span class="op">=</span><span class="st">'entity_type:N'</span></span>
+<span id="cb35-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="when-does-a-percentage-rest-on-too-little-data" class="slide level2">
+<h2>When does a percentage rest on too little data?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a aria-label="1"></a>genre_entity_chart_df <span class="op">=</span> genre_entity_summary_df[</span>
+<span id="cb36-2"><a aria-label="2"></a>    genre_entity_summary_df[<span class="st">'title_count'</span>] <span class="op">&gt;=</span> <span class="dv">5</span></span>
+<span id="cb36-3"><a aria-label="3"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="how-do-entity-predictions-differ-across-genres" class="slide level2">
+<h2>How do entity predictions differ across genres?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a aria-label="1"></a>alt.Chart(genre_entity_chart_df).mark_rect().encode(</span>
+<span id="cb37-2"><a aria-label="2"></a>    x<span class="op">=</span><span class="st">'entity_type:N'</span>,</span>
+<span id="cb37-3"><a aria-label="3"></a>    y<span class="op">=</span><span class="st">'genre:N'</span>,</span>
+<span id="cb37-4"><a aria-label="4"></a>    color<span class="op">=</span><span class="st">'title_share:Q'</span>,</span>
+<span id="cb37-5"><a aria-label="5"></a>    column<span class="op">=</span><span class="st">'dataset_group:N'</span></span>
+<span id="cb37-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-must-we-audit-before-interpreting-the-charts" class="slide level2">
+<h2>What must we audit before interpreting the charts?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a aria-label="1"></a>title_entities_df[</span>
+<span id="cb38-2"><a aria-label="2"></a>    title_entities_df[<span class="st">'entity_label'</span>].isin(</span>
+<span id="cb38-3"><a aria-label="3"></a>        [<span class="st">'PERSON'</span>, <span class="st">'GPE'</span>]</span>
+<span id="cb38-4"><a aria-label="4"></a>    )</span>
+<span id="cb38-5"><a aria-label="5"></a>][</span>
+<span id="cb38-6"><a aria-label="6"></a>    [<span class="st">'dataset_group'</span>, <span class="st">'title'</span>,</span>
+<span id="cb38-7"><a aria-label="7"></a>     <span class="st">'entity_text'</span>, <span class="st">'entity_label'</span>]</span>
+<span id="cb38-8"><a aria-label="8"></a>].head(<span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-changes-when-we-compare-predictions-over-time" class="slide level2">
+<h2>What changes when we compare predictions over time?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a aria-label="1"></a>temporal_entity_summary_df <span class="op">=</span> temporal_entity_df.groupby(</span>
+<span id="cb39-2"><a aria-label="2"></a>    [<span class="st">'year'</span>, <span class="st">'dataset_group'</span>, <span class="st">'entity_type'</span>]</span>
+<span id="cb39-3"><a aria-label="3"></a>).agg(</span>
+<span id="cb39-4"><a aria-label="4"></a>    titles_with_entity<span class="op">=</span>(<span class="st">'has_entity'</span>, <span class="st">'sum'</span>)</span>
+<span id="cb39-5"><a aria-label="5"></a>).reset_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section id="quick-exercise-try-spacy-with-your-dataset" class="title-slide slide level1 center">
+<h1>Quick Exercise: Try spaCy With Your Dataset</h1>
+<ol type="1">
+<li>Choose a short-text column.</li>
+<li>Process ten recorded values.</li>
+<li>Inspect entity text and labels.</li>
+<li>Identify one useful prediction and one uncertain prediction.</li>
+<li>Write one question and one limitation.</li>
+</ol>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
