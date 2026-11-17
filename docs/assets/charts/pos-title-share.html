@@ -1,0 +1,68 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Part-of-speech title shares</title><style>html,body{margin:0;padding:0;background:white;font-family:system-ui,sans-serif}body{display:flex;justify-content:center;align-items:flex-start;min-height:100vh}.vega-embed{width:100%!important;justify-content:center;padding:4px;box-sizing:border-box}.vega-embed summary{display:none}</style></head><body>
+<style>
+  #altair-viz-930e2e4b0a424728adc12d03f9aee016.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-930e2e4b0a424728adc12d03f9aee016.vega-embed details,
+  #altair-viz-930e2e4b0a424728adc12d03f9aee016.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-930e2e4b0a424728adc12d03f9aee016"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-930e2e4b0a424728adc12d03f9aee016") {
+      outputDiv = document.getElementById("altair-viz-930e2e4b0a424728adc12d03f9aee016");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.1.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.1.0"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-ffd8a62f4d12715b64188633662b2b02"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "dataset_group", "type": "nominal"}, "column": {"field": "dataset_group", "type": "nominal"}, "tooltip": [{"field": "dataset_group", "type": "nominal"}, {"field": "pos", "type": "nominal"}, {"field": "title_count", "type": "quantitative"}, {"field": "title_share", "format": ".1%", "type": "quantitative"}], "x": {"field": "pos", "type": "nominal"}, "y": {"axis": {"format": "%"}, "field": "title_share", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-ffd8a62f4d12715b64188633662b2b02": [{"dataset_group": "OCLC only", "title_count": 374, "pos": "NOUN", "title_share": 0.8475935828877005}, {"dataset_group": "NYT only", "title_count": 7291, "pos": "NOUN", "title_share": 0.8417226717871348}, {"dataset_group": "OCLC and NYT", "title_count": 126, "pos": "NOUN", "title_share": 0.873015873015873}, {"dataset_group": "OCLC only", "title_count": 374, "pos": "PROPN", "title_share": 0.3449197860962567}, {"dataset_group": "NYT only", "title_count": 7291, "pos": "PROPN", "title_share": 0.21341379783294473}, {"dataset_group": "OCLC and NYT", "title_count": 126, "pos": "PROPN", "title_share": 0.18253968253968253}, {"dataset_group": "OCLC only", "title_count": 374, "pos": "VERB", "title_share": 0.09893048128342247}, {"dataset_group": "NYT only", "title_count": 7291, "pos": "VERB", "title_share": 0.1618433685365519}, {"dataset_group": "OCLC and NYT", "title_count": 126, "pos": "VERB", "title_share": 0.15079365079365079}, {"dataset_group": "OCLC only", "title_count": 374, "pos": "ADJ", "title_share": 0.24598930481283424}, {"dataset_group": "NYT only", "title_count": 7291, "pos": "ADJ", "title_share": 0.26224111918804005}, {"dataset_group": "OCLC and NYT", "title_count": 126, "pos": "ADJ", "title_share": 0.21428571428571427}]}}, {"mode": "vega-lite"});
+</script></body></html>

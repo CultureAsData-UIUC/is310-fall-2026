@@ -1,0 +1,68 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Part-of-speech token shares</title><style>html,body{margin:0;padding:0;background:white;font-family:system-ui,sans-serif}body{display:flex;justify-content:center;align-items:flex-start;min-height:100vh}.vega-embed{width:100%!important;justify-content:center;padding:4px;box-sizing:border-box}.vega-embed summary{display:none}</style></head><body>
+<style>
+  #altair-viz-f10f8e4211484f6798d97359b1fee045.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-f10f8e4211484f6798d97359b1fee045.vega-embed details,
+  #altair-viz-f10f8e4211484f6798d97359b1fee045.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-f10f8e4211484f6798d97359b1fee045"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-f10f8e4211484f6798d97359b1fee045") {
+      outputDiv = document.getElementById("altair-viz-f10f8e4211484f6798d97359b1fee045");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.1.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.1.0"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-4a77e450d07587f9c584173ef2417772"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "dataset_group", "type": "nominal"}, "column": {"field": "dataset_group", "type": "nominal"}, "tooltip": [{"field": "dataset_group", "type": "nominal"}, {"field": "pos", "type": "nominal"}, {"field": "token_count", "type": "quantitative"}, {"field": "token_share", "format": ".1%", "type": "quantitative"}], "x": {"field": "pos", "type": "nominal"}, "y": {"axis": {"format": "%"}, "field": "token_share", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-4a77e450d07587f9c584173ef2417772": [{"dataset_group": "NYT only", "pos": "ADJ", "token_count": 2040, "token_share": 0.0961266610121572}, {"dataset_group": "NYT only", "pos": "ADP", "token_count": 1857, "token_share": 0.08750353406841957}, {"dataset_group": "NYT only", "pos": "ADV", "token_count": 395, "token_share": 0.01861276034304024}, {"dataset_group": "NYT only", "pos": "AUX", "token_count": 237, "token_share": 0.011167656205824144}, {"dataset_group": "NYT only", "pos": "CCONJ", "token_count": 255, "token_share": 0.01201583262651965}, {"dataset_group": "NYT only", "pos": "DET", "token_count": 3411, "token_share": 0.16072943172179813}, {"dataset_group": "NYT only", "pos": "INTJ", "token_count": 21, "token_share": 0.0009895391574780887}, {"dataset_group": "NYT only", "pos": "NOUN", "token_count": 8480, "token_share": 0.39958533597210444}, {"dataset_group": "NYT only", "pos": "NUM", "token_count": 275, "token_share": 0.012958250871736876}, {"dataset_group": "NYT only", "pos": "PART", "token_count": 438, "token_share": 0.02063895957025728}, {"dataset_group": "NYT only", "pos": "PRON", "token_count": 579, "token_share": 0.027283008199038734}, {"dataset_group": "NYT only", "pos": "PROPN", "token_count": 1880, "token_share": 0.08858731505041938}, {"dataset_group": "NYT only", "pos": "PUNCT", "token_count": 2, "token_share": 9.424182452172274e-05}, {"dataset_group": "NYT only", "pos": "SCONJ", "token_count": 84, "token_share": 0.003958156629912355}, {"dataset_group": "NYT only", "pos": "SYM", "token_count": 1, "token_share": 4.712091226086137e-05}, {"dataset_group": "NYT only", "pos": "VERB", "token_count": 1256, "token_share": 0.05918386579964188}, {"dataset_group": "NYT only", "pos": "X", "token_count": 11, "token_share": 0.000518330034869475}, {"dataset_group": "OCLC and NYT", "pos": "ADJ", "token_count": 29, "token_share": 0.07304785894206549}, {"dataset_group": "OCLC and NYT", "pos": "ADP", "token_count": 35, "token_share": 0.08816120906801007}, {"dataset_group": "OCLC and NYT", "pos": "ADV", "token_count": 3, "token_share": 0.007556675062972292}, {"dataset_group": "OCLC and NYT", "pos": "AUX", "token_count": 1, "token_share": 0.0025188916876574307}, {"dataset_group": "OCLC and NYT", "pos": "CCONJ", "token_count": 4, "token_share": 0.010075566750629723}, {"dataset_group": "OCLC and NYT", "pos": "DET", "token_count": 97, "token_share": 0.24433249370277077}, {"dataset_group": "OCLC and NYT", "pos": "NOUN", "token_count": 153, "token_share": 0.3853904282115869}, {"dataset_group": "OCLC and NYT", "pos": "NUM", "token_count": 7, "token_share": 0.017632241813602016}, {"dataset_group": "OCLC and NYT", "pos": "PART", "token_count": 12, "token_share": 0.030226700251889168}, {"dataset_group": "OCLC and NYT", "pos": "PRON", "token_count": 7, "token_share": 0.017632241813602016}, {"dataset_group": "OCLC and NYT", "pos": "PROPN", "token_count": 28, "token_share": 0.07052896725440806}, {"dataset_group": "OCLC and NYT", "pos": "VERB", "token_count": 21, "token_share": 0.05289672544080604}, {"dataset_group": "OCLC only", "pos": "ADJ", "token_count": 105, "token_share": 0.0779510022271715}, {"dataset_group": "OCLC only", "pos": "ADP", "token_count": 145, "token_share": 0.10764662212323682}, {"dataset_group": "OCLC only", "pos": "ADV", "token_count": 18, "token_share": 0.013363028953229399}, {"dataset_group": "OCLC only", "pos": "AUX", "token_count": 7, "token_share": 0.005196733481811433}, {"dataset_group": "OCLC only", "pos": "CCONJ", "token_count": 36, "token_share": 0.026726057906458798}, {"dataset_group": "OCLC only", "pos": "DET", "token_count": 253, "token_share": 0.18782479584261322}, {"dataset_group": "OCLC only", "pos": "INTJ", "token_count": 1, "token_share": 0.0007423904974016332}, {"dataset_group": "OCLC only", "pos": "NOUN", "token_count": 498, "token_share": 0.36971046770601335}, {"dataset_group": "OCLC only", "pos": "NUM", "token_count": 18, "token_share": 0.013363028953229399}, {"dataset_group": "OCLC only", "pos": "PART", "token_count": 21, "token_share": 0.015590200445434299}, {"dataset_group": "OCLC only", "pos": "PRON", "token_count": 22, "token_share": 0.016332590942835932}, {"dataset_group": "OCLC only", "pos": "PROPN", "token_count": 178, "token_share": 0.1321455085374907}, {"dataset_group": "OCLC only", "pos": "SCONJ", "token_count": 4, "token_share": 0.002969561989606533}, {"dataset_group": "OCLC only", "pos": "VERB", "token_count": 41, "token_share": 0.030438010393466965}]}}, {"mode": "vega-lite"});
+</script></body></html>

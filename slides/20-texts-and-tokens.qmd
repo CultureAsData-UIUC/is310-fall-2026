@@ -1,5 +1,5 @@
 ---
-title: "Structuring Data: Merging, Matching & Augmentation"
+title: "Texts & Tokens: Length, Grammar & Cultural Comparison"
 format:
   revealjs:
     theme: default
@@ -259,6 +259,48 @@ alt.data_transformers.disable_max_rows()
 *Why might disabling this be a poor publishing choice?*
 
 
+## What did we count in Section B?
+
+```python
+merged_df['title_len'] = merged_df['title_key'].str.len()
+merged_df['title_word_count'] = (
+    merged_df['title_key'].str.split().str.len()
+)
+```
+
+**Characters** include spaces and punctuation. **Words** here are whitespace-separated pieces.
+
+Neither measures the length of the full book. What would we need to measure that?
+
+
+## What does grouping by year and title length count?
+
+```python
+grouped_merged_df = (
+    merged_df[['book_publication_year', 'title_len']]
+    .groupby(['book_publication_year', 'title_len'])
+    .size().reset_index(name='book_counts')
+)
+```
+
+This reproduces our notebook grouping. `.size()` counts **rows**, so a weekly bestseller merge can count the same title repeatedly. Missing grouping values are excluded by default.
+
+
+## How can we plot the grouped counts?
+
+```python
+alt.Chart(grouped_merged_df).mark_bar().encode(
+    x=alt.X('title_len:O', title='Title characters'),
+    y=alt.Y('book_counts:Q', title='Merged rows'),
+    color=alt.Color('book_publication_year:T', title='Recorded year'),
+    tooltip=['book_publication_year:T', 'title_len:O',
+             'book_counts:Q']
+)
+```
+
+In our notebook, this date combines publication year with NYT list year. Are those the same event? Many years also make the colors difficult to read.
+
+
 # From Unstructured to Structured Data
 
 ## Is text already structured?
@@ -343,6 +385,9 @@ python -m spacy download en_core_web_sm
 ## What does spaCy return?
 
 ```python
+import spacy
+
+nlp = spacy.load("en_core_web_sm")
 doc = nlp("Harry Potter and the Philosopher's Stone")
 
 type(doc)
@@ -367,6 +412,48 @@ example_title = nlp(
     "Harry Potter and the Philosopher's Stone"
 )
 ```
+
+
+## How can we inspect parts of speech?
+
+```python
+for token in example_title:
+    print(token.text, token.pos_, token.tag_, token.lemma_)
+```
+
+| Attribute | What we inspect |
+|---|---|
+| `pos_` | Broad category, such as `NOUN` or `VERB` |
+| `tag_` | More detailed grammatical tag |
+| `lemma_` | Predicted base form |
+
+[spaCy linguistic features](https://spacy.io/usage/linguistic-features)
+
+
+## Is a proper noun the same as a named entity?
+
+```python
+for token in example_title:
+    if token.pos_ == 'PROPN':
+        print(token.text)
+
+for entity in example_title.ents:
+    print(entity.text, entity.label_)
+```
+
+POS labels describe individual tokens. NER predicts labeled spans that can contain several tokens. Their predictions need not agree.
+
+
+## How much does context change a grammatical prediction?
+
+```python
+for text in ['Beloved', 'She is beloved.',
+             'The Running Man', 'The man is running.']:
+    print(text)
+    print([(t.text, t.pos_) for t in nlp(text)])
+```
+
+Try the original title and its lowercase comparison key. Which predictions change? Keep original text for interpretation.
 
 
 ## How can we inspect entity predictions visually?
@@ -456,6 +543,79 @@ title_comparison_df['title'] = (
 ```
 
 
+## How do we label the three groups?
+
+```python
+title_comparison_df['dataset_group'] = (
+    title_comparison_df['_merge'].map({
+        'left_only': 'Novels only',
+        'both': 'Both',
+        'right_only': 'NYT only'
+    })
+)
+title_comparison_df['title_for_analysis'] = (
+    title_comparison_df['title']
+)
+```
+
+These groups describe matches under our title-author keys, not perfect identification of every shared work.
+
+
+## How long are the titles in each group?
+
+```python
+title_comparison_df['title_len'] = (
+    title_comparison_df['title'].str.len()
+)
+title_comparison_df['title_word_count'] = (
+    title_comparison_df['title'].str.split().str.len()
+)
+title_comparison_df.groupby('dataset_group', observed=True)[
+    ['title_len', 'title_word_count']
+].describe()
+```
+
+Use the title-level outer merge, with one row per title-author key in **each** input. A weekly merge would weight long-running bestsellers more heavily.
+
+
+## Can we color the distribution by title group?
+
+```python
+length_counts_df = (
+    title_comparison_df
+    .groupby(['dataset_group', 'title_word_count'], observed=True)
+    .size().reset_index(name='title_count')
+)
+alt.Chart(length_counts_df).mark_bar().encode(
+    x=alt.X('title_word_count:O', title='Words in title'),
+    y='title_count:Q',
+    color='dataset_group:N',
+    tooltip=['dataset_group:N', 'title_word_count:O', 'title_count:Q']
+)
+```
+
+Which group contributes the most titles? Does that mean its titles are longer?
+
+
+## How can we compare the shapes of unequal groups?
+
+```python
+length_counts_df['group_share'] = (
+    length_counts_df['title_count'] /
+    length_counts_df.groupby('dataset_group', observed=True)[
+        'title_count'].transform('sum')
+)
+alt.Chart(length_counts_df).mark_bar().encode(
+    x='title_word_count:O',
+    y=alt.Y('group_share:Q', axis=alt.Axis(format='%')),
+    color='dataset_group:N',
+    column='dataset_group:N'
+)
+```
+
+Each panel sums to 100% of its group's titles with measured length. Compare the distributions, not just their means.
+
+
 ## How can we visit each DataFrame row?
 
 ```python
@@ -484,6 +644,66 @@ for index, row in title_comparison_df.iterrows():
     doc = nlp(title)
     # Count predicted labels and save entities
 ```
+
+
+## How can we keep every token and its predicted grammar?
+
+```python
+token_rows = []
+for title_id, row in title_comparison_df.dropna(
+    subset=['title_for_analysis']).iterrows():
+    for token in nlp(row['title_for_analysis']):
+        if not token.is_punct and not token.is_space:
+            token_rows.append({
+                'title_id': title_id, 'title': row['title_for_analysis'],
+                'dataset_group': row['dataset_group'],
+                'token': token.text, 'pos': token.pos_,
+                'lemma': token.lemma_
+            })
+title_tokens_df = pd.DataFrame(token_rows)
+```
+
+
+## What grammatical patterns appear in the titles?
+
+```python
+pos_counts_df = (
+    title_tokens_df.groupby(['dataset_group', 'pos'], observed=True)
+    .size().reset_index(name='token_count')
+)
+pos_counts_df['token_share'] = (
+    pos_counts_df['token_count'] /
+    pos_counts_df.groupby('dataset_group', observed=True)[
+        'token_count'].transform('sum')
+)
+```
+
+One row now represents a **token**. Longer titles contribute more tokens. A token share is not the share of titles containing that category.
+
+
+## Do the groups use different grammatical categories?
+
+```python
+alt.Chart(pos_counts_df).mark_bar().encode(
+    x='pos:N',
+    y=alt.Y('token_share:Q', axis=alt.Axis(format='%')),
+    color='dataset_group:N',
+    column='dataset_group:N'
+)
+```
+
+Inspect nouns, proper nouns, verbs, and adjectives. Keep all categories in the denominator when comparing their shares.
+
+
+## Which titles support our interpretation of the chart?
+
+```python
+title_tokens_df[
+    title_tokens_df['pos'].isin(['NOUN', 'PROPN', 'VERB', 'ADJ'])
+][['dataset_group', 'title', 'token', 'pos']].head(30)
+```
+
+Compare examples from each group. Would you assign the same label? Could short titles, capitalization, or unusual wording explain a pattern?
 
 
 ## What is the unit of the augmented DataFrame?
@@ -529,7 +749,7 @@ alt.Chart(title_measure_long_df).mark_bar().encode(
 
 ```python
 genre_analysis_df['matched_nyt'] = (
-    genre_analysis_df['dataset_group'] == 'OCLC and NYT'
+    genre_analysis_df['dataset_group'] == 'Both'
 ).astype(int)
 ```
 
@@ -670,7 +890,7 @@ temporal_entity_summary_df = temporal_entity_df.groupby(
 
 1. Choose a short-text column.
 2. Process ten recorded values.
-3. Inspect entity text and labels.
+3. Inspect tokens and POS labels, then compare entity spans.
 4. Identify one useful prediction and one uncertain prediction.
 5. Write one question and one limitation.
 
