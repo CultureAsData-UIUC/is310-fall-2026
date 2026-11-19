@@ -796,7 +796,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To work with Ollama in Python, we first install the <code>ollama</code> package. You can do this in your terminal with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install ollama</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We then import the package and send a request to the model. The following code snippet is a simple example that asks the model to identify named people, fictional characters, and places in a book title. We begin with one request so that we can inspect the complete input and output before writing a loop.</p>
-<div id="4d0ba9b4" class="cell">
+<div id="9d92f6b2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ollama <span class="im">as</span> ol</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> ol.chat(</span>
@@ -828,7 +828,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="why-is-a-response-not-yet-a-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="why-is-a-response-not-yet-a-dataset">Why is a response not yet a dataset?</h2>
 <p>A conversational answer may change its wording or formatting from one request to another. Our first prompt did not explain how to organize the response or what to do when a title is ambiguous. We can start to play around with how might want the LLM to return a result:</p>
-<div id="e37fb5fd" class="cell">
+<div id="46cecacd" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>title <span class="op">=</span> <span class="st">"Harry Potter and the Sorcerer's Stone"</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="ss">f"""</span></span>
@@ -904,7 +904,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"word"</span><span class="fu">:</span> <span class="st">"Lincoln"</span><span class="fu">,</span> <span class="dt">"pos_label"</span><span class="fu">:</span> <span class="st">"PROPN"</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>spaCy uses the <a href="https://universaldependencies.org/u/pos/" target="_blank">Universal POS tag set</a>, which includes labels such as <code>NOUN</code>, <code>PROPN</code>, <code>VERB</code>, <code>ADJ</code>, and <code>DET</code>. Giving the LLM the same allowed labels does not make the two models equivalent, but it gives their outputs a shared structure that we can compare.</p>
 <p>We therefore define two connected Pydantic classes. <code>WordPOSLabel</code> describes one word-label pair. <code>ResponseFormatterTitle</code> describes the complete title response and contains a list of those pairs. This closely follows the nested structured-data approach used in the AI for Humanists notebook, while adapting it to our title question.</p>
-<div id="b66369a1" class="cell">
+<div id="e00eff98" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Literal</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel, Field</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -975,7 +975,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="how-do-we-request-structured-output" class="level2">
 <h2 class="anchored" data-anchor-id="how-do-we-request-structured-output">How do we request structured output?</h2>
 <p>We can pass the Pydantic schema to Ollama as the requested response format.</p>
-<div id="fa9d575c" class="cell">
+<div id="89e88883" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>system_prompt <span class="op">=</span> <span class="st">"""</span></span>
@@ -1011,7 +1011,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <strong>system message</strong> supplies instructions that should apply across records. The <strong>user message</strong> supplies the title currently being analyzed. <code>model_json_schema()</code> converts our Pydantic class into a JSON schema describing the required keys, types, and field descriptions. Passing that schema through Ollama’s <code>format=</code> argument asks the model to generate a response that follows it.</p>
 <p>This is stronger than merely writing “return JSON” in the prompt, but it is not infallible. We still validate the response and retain the original output rather than assuming that constrained generation always succeeds.</p>
 <p>The result is still text containing JSON. We parse that text and then ask Pydantic to validate it:</p>
-<div id="607917aa" class="cell">
+<div id="c7daa6f5" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>parsed_json <span class="op">=</span> json.loads(raw_output)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>parsed_response <span class="op">=</span> ResponseFormatterTitle.model_validate(parsed_json)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1025,7 +1025,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="how-do-we-process-several-titles" class="level2">
 <h2 class="anchored" data-anchor-id="how-do-we-process-several-titles">How do we process several titles?</h2>
 <p>Start with a deliberately small and difficult sample. It is easier to inspect four records carefully than to discover after thousands of requests that the categories were unclear.</p>
-<div id="af4d81bb" class="cell">
+<div id="c8e412a2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sample_titles <span class="op">=</span> [</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Harry Potter and the Sorcerer's Stone"</span>,</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Bridges of Madison County"</span>,</span>
@@ -1073,7 +1073,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="how-do-we-turn-the-results-into-a-dataframe" class="level2">
 <h2 class="anchored" data-anchor-id="how-do-we-turn-the-results-into-a-dataframe">How do we turn the results into a DataFrame?</h2>
-<div id="8cd6a7de" class="cell">
+<div id="bc1c11ef" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>title_llm_df <span class="op">=</span> pd.DataFrame(title_analysis_rows)</span>
@@ -1081,7 +1081,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Because each dictionary in <code>title_analysis_rows</code> uses the same field names, Pandas can turn the list directly into a DataFrame. The <code>person_or_character_names</code> and <code>place_names</code> columns contain names when the model found them and empty lists when it did not.</p>
 <p>If we later want one row per predicted name, we can use the <code>explode()</code> method introduced in our EDA lesson. For example, this creates one row for each predicted person name:</p>
-<div id="ce599090" class="cell">
+<div id="b8feb561" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>title_people_df <span class="op">=</span> title_llm_df.explode(<span class="st">'person_or_character_names'</span>).copy()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>title_people_df[</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'source_title'</span>, <span class="st">'person_or_character_names'</span>, <span class="st">'certainty'</span>, <span class="st">'rationale'</span>]</span>
@@ -1096,7 +1096,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install spacy tqdm</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> spacy download en_core_web_sm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then we worked with our datasets:</p>
-<div id="f92a0b11" class="cell">
+<div id="d354bc16" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the tab-separated novel metadata and the weekly NYT bestseller records.</span></span>
@@ -1163,7 +1163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>merged_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This follows our classroom approach. We first turn the weekly bestseller observations into title-level records, then merge using the columns shared by both DataFrames. Printing <code>shared_columns</code> makes those matching fields visible before the merge.</p>
-<div id="591f8f69" class="cell">
+<div id="2f11ce98" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1215,7 +1215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><code>title_labels</code> preserves the word-level output as pairs such as <code>('Lincoln', 'PROPN')</code>. The remaining values summarize selected labels as counts and retain the named entities. <code>tqdm.pandas()</code> adds <code>progress_apply()</code>, which behaves like the Pandas <code>apply()</code> method we used previously but displays how many rows have been processed. The function returns eight values, and <code>result_type='expand'</code> places them into eight corresponding columns.</p>
-<div id="187becda" class="cell">
+<div id="a00598a5" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tqdm.pandas(desc<span class="op">=</span><span class="st">'Processing titles through spaCy'</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>spacy_columns <span class="op">=</span> [</span>
@@ -1236,7 +1236,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This is a computationally selected subset rather than a random sample: it includes only titles where spaCy predicted at least one named entity and the OCLC data provides a genre. That makes it useful for comparing entity extraction across genres, but it cannot tell us how either method behaves on titles that spaCy missed or titles represented only in the NYT data.</p>
-<div id="608df817" class="cell">
+<div id="24f5ca16" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>titles_with_spacy_entities_df <span class="op">=</span> merged_df[</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    (merged_df[<span class="st">'spacy_entity_count'</span>] <span class="op">&gt;</span> <span class="dv">0</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (merged_df[<span class="st">'genre'</span>].notna())</span>
@@ -1261,7 +1261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now run the LLM on the same original title strings. We place one model request inside <code>process_title_with_llm()</code>. Applying that function to the title Series creates one returned Series per title, which Pandas combines into <code>comparison_llm_df</code>. <code>progress_apply()</code> performs the same row-by-row work as <code>apply()</code> while displaying progress.</p>
-<div id="811b0e1b" class="cell">
+<div id="e3420120" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_title_with_llm(title):</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> ol.chat(</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span><span class="st">'llama3.2'</span>,</span>
@@ -1299,7 +1299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Merge the LLM output back into the sampled records. The <code>spacy_</code> and <code>llm_</code> prefixes make the provenance of each generated field visible.</p>
-<div id="479b089c" class="cell">
+<div id="55a44c01" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>title_results_df <span class="op">=</span> title_sample_df.merge(</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    comparison_llm_df,</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'title'</span>,</span>
